@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ApplinPRE, ProfessorsResearchE, ProfessorsResearchO, ProfessorsResearchR, ProfessorsResearchS } from './alt-arts';
+import { ApplinPRE, DipplinPRE, HydrappleexPRE, TealMaskOgerponexPRE, HearthflameMaskOgerponexPRE, GoldeenPRE, WellspringMaskOgerponexPRE, JolteonPRE, IronHandsexPRE, IronThornsexPRE, DuskullPRE, DusclopsPRE, DusknoirPRE, ScreamTailPRE, FlutterManePRE, MunkidoriPRE, FezandipitiPRE, IronBoulderPRE, GroudonPRE, BloodmoonUrsalunaPRE, GreatTuskPRE, SandyShocksexPRE, OkidogiPRE, CornerstoneMaskOgerponexPRE, RoaringMoonPRE, DuraludonPRE, ArchaludonPRE, DreepyPRE, DrakloakPRE, DragapultexPRE, EeveePRE, NoctowlPRE, DunsparcePRE, DudunsparcePRE, FanRotomPRE, TerapagosexPRE, AreaZeroUnderdepthsPRE, BindingMochiPRE, BriarPRE, BuddyBuddyPoffinPRE, BugCatchingSetPRE, CarminePRE, CyphermaniacsCodebreakingPRE, CrispinPRE, EarthenVesselPRE, ExplorersGuidancePRE, FestivalGroundsPRE, GlassTrumpetPRE, KieranPRE, MaximumBeltPRE, PrimeCatcherPRE, ProfessorSadasVitalityPRE, ProfessorTurosScenarioPRE, RescueBoardPRE, ScoopUpCyclonePRE, SparklingCrystalPRE, TechnoRadarPRE, ProfessorsResearchO } from './alt-arts';
 import { Amarys } from './amarys';
 import { BlackBeltsTraining } from './black-belts-training';
 import { Bronzor } from './bronzor';
@@ -9,7 +9,7 @@ import { Espeonex } from './espeon-ex';
 import { Flareonex } from './flareon-ex';
 import { AmarysFA, AmarysSAR, AtticusFA, AtticusFA2, BloodmoonUrsalunaexSAR, CeruledgeexSAR, CornerstoneMaskOgerponexSAR, CrispinSAR, DragapultexSAR, DraytonSAR, EeveeexSAR, EriFA, EspeonexSAR, FlareonexSAR, GholdengoexSAR, GiacomoFA, GlaceonexSAR, HearthflameMaskOgerponexSAR, IronCrownexSAR, IronHandsexSAR, IronLeavesexUR, IronValiantexSAR, JaninesSecretArtSAR, JolteonexSAR, KieranSAR, LaceySAR, LeafeonexSAR, MelaFA, PalafinexSAR, PecharuntexSAR, PikachuexUR, RagingBoltexSAR, RoaringMoonexSAR, SandyShocksexSAR, SylveonexSAR, TealMaskOgerponexSAR, TealMaskOgerponexUR, TerapagosexSAR, TerapagosexUR, UmbreonexSAR, VaporeonexSAR, WalkingWakeexUR, WellspringMaskOgerponexSAR } from './full-art';
 import { Glaceonex } from './glaceon-ex';
-import {Hoothoot} from './hoothoot';
+import { Hoothoot } from './hoothoot';
 import { Jolteonex } from './jolteon-ex';
 import { Larvitar } from './larvitar';
 import { Leafeonex } from './leafeon-ex';
@@ -38,7 +38,7 @@ export const setPrismaticEvolution: Card[] = [
   new Leafeonex(),
   new Glaceonex(),
   new Sylveon(),
-  new Sneasel(),  
+  new Sneasel(),
   new Seaking(),
   new Regigigas(),
   new MaxRod(),
@@ -52,10 +52,63 @@ export const setPrismaticEvolution: Card[] = [
 
   // Reprints
   new ApplinPRE(),
+  new DipplinPRE(),
+  new HydrappleexPRE(),
+  new TealMaskOgerponexPRE(),
+  new HearthflameMaskOgerponexPRE(),
+  new GoldeenPRE(),
+  new WellspringMaskOgerponexPRE(),
+  new JolteonPRE(),
+  new IronHandsexPRE(),
+  new IronThornsexPRE(),
+  new DuskullPRE(),
+  new DusclopsPRE(),
+  new DusknoirPRE(),
+  new ScreamTailPRE(),
+  new FlutterManePRE(),
+  new MunkidoriPRE(),
+  new FezandipitiPRE(),
+  new IronBoulderPRE(),
+  new GroudonPRE(),
+  new BloodmoonUrsalunaPRE(),
+  new GreatTuskPRE(),
+  new SandyShocksexPRE(),
+  new OkidogiPRE(),
+  new CornerstoneMaskOgerponexPRE(),
+  new RoaringMoonPRE(),
+  new DuraludonPRE(),
+  new ArchaludonPRE(),
+  new DreepyPRE(),
+  new DrakloakPRE(),
+  new DragapultexPRE(),
+  new EeveePRE(),
+  new NoctowlPRE(),
+  new DunsparcePRE(),
+  new DudunsparcePRE(),
+  new FanRotomPRE(),
+  new TerapagosexPRE(),
+  new AreaZeroUnderdepthsPRE(),
+  new BindingMochiPRE(),
+  new BriarPRE(),
+  new BuddyBuddyPoffinPRE(),
+  new BugCatchingSetPRE(),
+  new CarminePRE(),
+  new CyphermaniacsCodebreakingPRE(),
+  new CrispinPRE(),
+  new EarthenVesselPRE(),
+  new ExplorersGuidancePRE(),
+  new FestivalGroundsPRE(),
+  new GlassTrumpetPRE(),
+  new KieranPRE(),
+  new MaximumBeltPRE(),
+  new PrimeCatcherPRE(),
+  new ProfessorSadasVitalityPRE(),
+  new ProfessorTurosScenarioPRE(),
+  new RescueBoardPRE(),
+  new ScoopUpCyclonePRE(),
+  new SparklingCrystalPRE(),
+  new TechnoRadarPRE(),
   new ProfessorsResearchO(),
-  new ProfessorsResearchE(),
-  new ProfessorsResearchR(),
-  new ProfessorsResearchS(),
 
   // Full arts
   new AmarysFA(),

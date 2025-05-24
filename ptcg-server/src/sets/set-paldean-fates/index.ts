@@ -17,7 +17,7 @@ import { ArbolivaSV, ArctibaxSV, ArmarougeSV, ArvenSV, BaxcaliburSV, CapsakidSV,
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
 
-export const setPaldeaFates: Card[] = [
+export const setPaldeanFates: Card[] = [
   new Charmeleon(),
   new Atticus(),
   new Clive(),
