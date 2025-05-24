@@ -7,6 +7,9 @@ import { Teddiursa } from './teddiursa';
 import { Typhlosionex } from './typhlosion-ex';
 import { Ursaring } from './ursaring';
 
+// Other prints
+import { WarpEnergyUF } from './other-prints';
+
 export const setEXUnseenForces: Card[] = [
   new MarysRequest(),
   new PokemonReversal(),
@@ -15,4 +18,7 @@ export const setEXUnseenForces: Card[] = [
   new Teddiursa(),
   new Typhlosionex(),
   new Ursaring(),
+
+  // Other prints
+  new WarpEnergyUF(),
 ];
