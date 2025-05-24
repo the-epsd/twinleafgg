@@ -1,5 +1,5 @@
 import { Giacomo } from '../set-paldea-evolved/giacomo';
-import { Atticus } from '../set-paldea-fates/atticus';
+import { Atticus } from '../set-paldean-fates/atticus';
 import { Gholdengoex } from '../set-paradox-rift/gholdengo-ex';
 import { IronHandsex } from '../set-paradox-rift/iron-hands-ex';
 import { IronValiantex } from '../set-paradox-rift/iron-valiant-ex';

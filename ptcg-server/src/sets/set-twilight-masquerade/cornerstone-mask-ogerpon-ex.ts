@@ -30,6 +30,7 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
       name: 'Demolish',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     }
   ];
