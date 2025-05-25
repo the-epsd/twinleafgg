@@ -1,6 +1,8 @@
 import { Card } from '../../game/store/card/card';
 import { Combee } from './combee';
 import { Gastly } from './gastly';
+import { Gengar } from './gengar';
+import { Haunter } from './haunter';
 import { LuxuryBall } from './luxury-ball';
 import { Machoke } from './machoke';
 import { Machamp } from './machamp';
@@ -12,6 +14,8 @@ import { Sableye } from './sableye';
 
 export const setStormfront: Card[] = [
   new Combee(),
+  new Gengar(),
+  new Haunter(),
   new LuxuryBall(),
   new Machoke(),
   new Machamp(),

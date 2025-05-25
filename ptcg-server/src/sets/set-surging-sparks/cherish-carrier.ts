@@ -21,7 +21,7 @@ export class CherishCarrier extends TrainerCard {
 
   public name: string = 'Precious Trolley';
 
-  public fullName: string = 'Cherish Carrier SSP';
+  public fullName: string = 'Precious Trolley SSP';
 
   public text: string =
     'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then shuffle your deck.';

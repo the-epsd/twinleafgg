@@ -23,7 +23,7 @@ export class UnitEnergyFDY extends EnergyCard {
   public fullName = 'Unit Energy FDY FLI';
 
   public text = 'This card provides [C] Energy.' +
-    '' +
+    '\n\n' +
     'While this card is attached to a Pokémon, it provides [F], [D], and [Y] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];

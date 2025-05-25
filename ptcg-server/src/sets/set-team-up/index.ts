@@ -9,6 +9,7 @@ import { CelebiVenusaurGX } from './celebi-and-venusaur-gx';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { CobalionGX } from './cobalion-gx';
 import { Dragonite } from './dragonite';
 import { EeveeSnorlaxGX } from './eevee-and-snorlax-gx';
 import { Ferrothorn } from './ferrothorn';
@@ -16,6 +17,7 @@ import { Galvantula } from './glavantula';
 import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
+import { IngoAndEmmet } from './ingo-and-emmet';
 import { Jasmine } from './jasmine';
 import { Jirachi } from './jirachi';
 import { Joltik } from './joltik';
@@ -27,6 +29,7 @@ import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Mimikyu } from './mimikyu';
 import { Moltres } from './moltres';
+import { Ninetales } from './ninetales';
 import { Pawniard } from './pawniard';
 import { Persian } from './persian';
 import { Pidgeotto } from './pidgeotto';
@@ -50,12 +53,14 @@ export const setTeamUp: Card[] = [
   new Charizard(),
   new Charmander(),
   new Charmeleon(),
+  new CobalionGX(),
   new Dragonite(),
   new Ferrothorn(),
   new Galvantula(),
   new GengarMimikyuGX(),
   new Hitmonchan(),
   new Hitmonlee(),
+  new IngoAndEmmet(),
   new Jasmine(),
   new Jirachi(),
   new Joltik(),
@@ -65,6 +70,7 @@ export const setTeamUp: Card[] = [
   new MetalGoggles(),
   new Mimikyu(),
   new Moltres(),
+  new Ninetales(),
   new Pawniard(),
   new Persian(),
   new Pidgeotto(),

@@ -27,6 +27,7 @@ import { Shuppet } from './shuppet';
 import { SkyPillar } from './sky-pillar';
 import { Slaking } from './slaking';
 import { Slakoth } from './slakoth';
+import { Slugma } from './slugma';
 import { StevensResolve } from './stevens-resolve';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
@@ -58,6 +59,7 @@ export const setCelestialStorm: Card[] = [
   new SkyPillar(),
   new Slaking(),
   new Slakoth(),
+  new Slugma(),
   new StevensResolve(),
   new Swampert(),
   new SuperScoopUpCES(),

@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Arcanine } from './arcanine';
 import { Aron } from './aron';
 import { Blacephalon } from './blacephalon';
+import { Charjabug } from './charjabug';
 import { Cleffa } from './cleffa';
 import { DedenneGX } from './dedenne-gx';
 import { DuskStone } from './dusk-stone';
@@ -53,6 +54,7 @@ export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
   new Aron(),
   new Blacephalon(),
+  new Charjabug(),
   new Cleffa(),
   new DedenneGX(),
   new DuskStone(),

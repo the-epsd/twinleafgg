@@ -5,6 +5,7 @@ import { FieryTorch } from './fiery-torch';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';
+import {MagneticStorm} from './magnetic-storm';
 import { Milotic } from './milotic';
 import { Miltank } from './miltank';
 import { Pidgey } from './pidgey';
@@ -39,4 +40,5 @@ export const setFlashfire: Card[] = [
   new StartlingMegaphone(),
   new ToxicroakEx(),
   new TrickShovel(),
+  new MagneticStorm(),
 ];

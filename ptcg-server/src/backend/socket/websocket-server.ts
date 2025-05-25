@@ -30,20 +30,17 @@ export class WebSocketServer {
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      pingInterval: 30000,        // Check connection every 30 seconds
-      pingTimeout: 60000,         // Set timeout to 60 seconds
-      connectTimeout: 60000,      // 60s connection timeout
-      transports: ['websocket', 'polling'],
+      pingInterval: 24 * 60 * 60 * 1000,    // Check connection every 24 hours
+      pingTimeout: 24 * 60 * 60 * 1000,     // Set timeout to 24 hours
+      connectTimeout: 60000,  // Increased to 60s connection timeout
+      transports: ['websocket', 'polling'],  // Allow polling as fallback
       allowUpgrades: true,
-      upgradeTimeout: 60000,
+      upgradeTimeout: 60000,   // Increased to 60s upgrade timeout
       perMessageDeflate: true,
       httpCompression: true,
       allowEIO3: true,
-      maxHttpBufferSize: 1e6,     // 1MB max payload
-      cors: config.backend.allowCors ? { origin: '*' } : undefined,
-      cookie: false,             // Disable cookies for better performance
-      serveClient: false,        // Don't serve the client
-      path: '/socket.io'         // Explicit path
+      maxHttpBufferSize: 1e8,
+      cors: config.backend.allowCors ? { origin: '*' } : undefined
     };
 
     try {
@@ -56,98 +53,15 @@ export class WebSocketServer {
         console.error('[Socket] Server error:', error);
       });
 
-      // Add connection monitoring
-      server.on('connection', (socket: Socket) => {
-        this.handleConnection(socket);
-        this.monitorConnection(socket);
-      });
+      server.on('connection', this.handleConnection.bind(this));
 
       // Set up stats monitoring
       this.statsInterval = setInterval(() => this.logServerStats(), this.STATS_INTERVAL);
 
-      console.log('[Socket] WebSocket server started with optimized settings');
+      console.log('[Socket] WebSocket server started');
     } catch (error: any) {
       console.error('[Socket] Error starting WebSocket server:', error);
     }
-  }
-
-  private monitorConnection(socket: Socket): void {
-    let lastPingTime = Date.now();
-    let missedPings = 0;
-    const MAX_MISSED_PINGS = 3;
-    let consecutiveErrors = 0;
-    const MAX_CONSECUTIVE_ERRORS = 5;
-    let lastActivityTime = Date.now();
-    const INACTIVITY_TIMEOUT = 300000; // 5 minutes
-
-    // Monitor packet activity
-    socket.conn.on('packet', (packet: Packet) => {
-      lastActivityTime = Date.now();
-
-      if (packet.type === 'ping') {
-        const now = Date.now();
-        const pingDelay = now - lastPingTime;
-
-        if (pingDelay > 30000) {
-          console.warn(`[Socket] High ping delay detected for ${socket.id}: ${pingDelay}ms`);
-          missedPings++;
-
-          if (missedPings >= MAX_MISSED_PINGS) {
-            console.warn(`[Socket] Too many missed pings for ${socket.id}, forcing reconnection`);
-            socket.disconnect(true); // Force client to reconnect
-          }
-        } else {
-          missedPings = 0;
-        }
-
-        lastPingTime = now;
-      }
-    });
-
-    // Monitor transport upgrades
-    socket.conn.on('upgrade', (transport: Transport) => {
-      console.log(`[Socket] Transport upgrade for ${socket.id}: ${transport.name}`);
-      // Reset error counters on successful upgrade
-      consecutiveErrors = 0;
-      missedPings = 0;
-    });
-
-    // Monitor transport errors
-    socket.conn.on('error', (error: Error) => {
-      console.error(`[Socket] Transport error for ${socket.id}:`, error);
-      consecutiveErrors++;
-
-      if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
-        console.warn(`[Socket] Too many consecutive errors for ${socket.id}, forcing reconnection`);
-        socket.disconnect(true);
-      }
-    });
-
-    // Monitor close events
-    socket.conn.on('close', (reason: string) => {
-      console.log(`[Socket] Connection closed for ${socket.id}: ${reason}`);
-    });
-
-    // Monitor inactivity
-    const inactivityCheck = setInterval(() => {
-      const now = Date.now();
-      if (now - lastActivityTime > INACTIVITY_TIMEOUT) {
-        console.warn(`[Socket] Inactivity timeout for ${socket.id}`);
-        clearInterval(inactivityCheck);
-        socket.disconnect(true);
-      }
-    }, 60000); // Check every minute
-
-    // Clean up interval on disconnect
-    socket.on('disconnect', () => {
-      clearInterval(inactivityCheck);
-    });
-
-    // Add heartbeat handler with timeout
-    socket.on('heartbeat', () => {
-      lastActivityTime = Date.now();
-      socket.emit('heartbeat_ack');
-    });
   }
 
   private handleConnection(socket: Socket): void {
@@ -170,17 +84,19 @@ export class WebSocketServer {
       this.core.connect(socketClient);
       socketClient.attachListeners();
 
-      // Add heartbeat handler with timeout
-      socket.on('heartbeat', () => {
-        socket.emit('heartbeat_ack');
+      socket.conn.on('upgrade', (transport: Transport) => {
+        console.log(`[Socket] Transport upgrade: ${user.name} [${connectionId}] -> ${transport.name}`);
       });
 
-      // Add error recovery
-      socket.on('error', (error) => {
-        console.error(`[Socket] Error: ${user.name} [${connectionId}] - ${error.message}`);
-        // Attempt to recover from error
-        if (socket.connected) {
-          socket.emit('error_recovery');
+      socket.conn.on('packet', (packet: Packet) => {
+        if (packet.type === 'ping') {
+          // Only log pings if they're delayed or if we're debugging
+          const now = Date.now();
+          const lastPing = (socket as any).lastPing || now;
+          if (now - lastPing > 24 * 60 * 60 * 1000) { // Log if ping interval is > 24h
+            console.log(`[Socket] Delayed heartbeat: ${user.name} [${connectionId}] (${now - lastPing}ms)`);
+          }
+          (socket as any).lastPing = now;
         }
       });
 
@@ -188,25 +104,16 @@ export class WebSocketServer {
         try {
           console.log(`[Socket] Disconnect: ${user.name} [${connectionId}] - ${reason}`);
           user.updateLastSeen();
-
-          // Only remove client if it's a clean disconnect
-          if (reason === 'client namespace disconnect' || reason === 'transport close') {
-            this.clients.delete(connectionId);
-            socketClient.dispose();
-          } else {
-            // For other disconnect reasons, keep the client and attempt recovery
-            setTimeout(() => {
-              if (!socket.connected) {
-                console.log(`[Socket] Recovery timeout for ${user.name} [${connectionId}]`);
-                this.clients.delete(connectionId);
-                socketClient.dispose();
-              }
-            }, 30000); // 30 second recovery window
-          }
+          this.clients.delete(connectionId);
+          socketClient.dispose();
         }
         catch (error: any) {
           console.error(`[Socket] Error during disconnect: ${user.name} [${connectionId}] - ${error.message}`);
         }
+      });
+
+      socket.on('error', (error) => {
+        console.error(`[Socket] Error: ${user.name} [${connectionId}] - ${error.message}`);
       });
 
     } catch (error: any) {
