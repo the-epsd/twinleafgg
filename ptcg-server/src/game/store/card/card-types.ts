@@ -1295,6 +1295,7 @@ export enum Format {
   RETRO,
   GLC,
   STANDARD_NIGHTLY,
+  RSPK,
   BW,
   XY,
   SM,

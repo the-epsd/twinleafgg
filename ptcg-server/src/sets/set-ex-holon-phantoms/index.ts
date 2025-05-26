@@ -11,6 +11,9 @@ import { Pidgey } from './pidgey';
 import { Pikachu } from './pikachu';
 import { Raichu } from './raichu';
 
+// Other prints
+import { RareCandyHP } from './other-prints';
+
 export const setEXHolonPhantoms: Card[] = [
   new HolonAdventurer(),
   new DeltaRainbowEnergy(),
@@ -22,6 +25,9 @@ export const setEXHolonPhantoms: Card[] = [
   new Pikachu(),
   new Raichu(),
   new HolonsCastform(),
+
+  // Other prints
+  new RareCandyHP(),
 
   // Basic energies
   new GrassEnergy(),
