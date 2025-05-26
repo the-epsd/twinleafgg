@@ -1,51 +1,13 @@
-import { Card } from '../../game/store/card/card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, Stage } from '../../game/store/card/card-types';
+import { TrainerType, SuperType, Stage, Format } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  let cards: Card[] = [];
-
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC } as any,
-    { min: 0, max: 2, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  player.deck.moveCardsTo(cards, player.hand);
-
-  if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
-  }
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
 
 export class PokemonFanClub extends TrainerCard {
 
@@ -68,9 +30,42 @@ export class PokemonFanClub extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+
+      effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      // Check if we're in Expanded format
+      const isRspk = (store as any).handler.format === Format.RSPK;
+
+      if (isRspk) {
+        SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+          store,
+          state,
+          player,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max: 2 }
+        );
+      } else {
+        SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+          store,
+          state,
+          player,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max: 2 }
+        )
+      }
+
+      player.supporter.moveCardTo(this, player.discard);
     }
 
     return state;

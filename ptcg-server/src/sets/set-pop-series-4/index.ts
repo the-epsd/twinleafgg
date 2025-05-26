@@ -1,6 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { PokemonFanClub } from './pokemon-fan-club';
+
+//Other prints
+import { PokemonFanClubP4 } from './other-prints';
 
 export const setPOPSeries4: Card[] = [
-  new PokemonFanClub(),
+
+  // Other prints
+  new PokemonFanClubP4(),
 ];
