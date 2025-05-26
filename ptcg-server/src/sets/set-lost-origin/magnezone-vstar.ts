@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, CardTag, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, State, StoreLike, ChooseCardsPrompt, ShuffleDeckPrompt, SuperType, TrainerType, GameError } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardType, CardTag, GameMessage, State, StoreLike, ChooseCardsPrompt, ShuffleDeckPrompt, SuperType, TrainerType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class MagnezoneVSTAR extends PokemonCard {
 
@@ -69,36 +69,11 @@ export class MagnezoneVSTAR extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-
       player.usedVSTAR = true;
-
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 2, allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 90);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-
-      });
-
-      return state;
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(90, effect, store, state, 0, 2);
     }
     return state;
   }

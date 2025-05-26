@@ -2,7 +2,7 @@ import { Attack, CardTag, CardType, PlayerType, PokemonCard, Power, PowerType, S
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
-import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jolteonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -46,7 +46,10 @@ export class Jolteonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+    if (JUST_EVOLVED(effect, this)) {
+      if (IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
       CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
           const opponent = StateUtils.getOpponent(state, effect.player);
