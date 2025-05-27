@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardType } from '../../game/store/card/card-types';
+import { TrainerType, CardType, isCoreFormat } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -29,15 +29,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // Count pokemons and items separately
+  // Determine format
+  const format = (store as any).handler.format;
+
+  // Count pokemons and items/tools separately
   let pokemons = 0;
-  let items = 0;
+  let itemsOrTools = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
       pokemons += 1;
-    } else if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
-      items += 1;
+    } else if (c instanceof TrainerCard && (c.trainerType === TrainerType.ITEM || (!isCoreFormat(format) && c.trainerType === TrainerType.TOOL))) {
+      itemsOrTools += 1;
     } else {
       blocked.push(index);
     }
@@ -45,10 +48,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Limit max for each type to 1
   const maxPokemons = Math.min(pokemons, 1);
-  const maxItems = Math.min(items, 1);
+  const maxItemsOrTools = Math.min(itemsOrTools, 1);
 
   // Total max is sum of max for each 
-  const count = maxPokemons + maxItems;
+  const count = maxPokemons + maxItemsOrTools;
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -56,7 +59,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxItems }
+    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxItems: maxItemsOrTools }
   ), selected => {
     cards = selected || [];
     next();

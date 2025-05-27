@@ -2,7 +2,7 @@ import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
 import { MarniesMorpeko } from './marnies-morpeko';
 import { StevensBeldum } from './stevens-beldum';
 
-export class EnergyRecyclerSV10 extends EnergyRecycler {
+export class EnergyRecyclerDRI extends EnergyRecycler {
   public regulationMark = 'I';
   public fullName = 'Energy Recycler SV10';
   public set = 'SV10';
