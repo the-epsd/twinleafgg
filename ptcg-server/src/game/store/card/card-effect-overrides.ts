@@ -4,6 +4,8 @@ import { StoreLike } from '../store-like';
 import { State } from '../state/state';
 import { Effect } from '../effects/effect';
 
+import { PokemonFanClub as PokemonFanClubP4 } from '../../../sets/set-pop-series-4/pokemon-fan-club';
+import { PokemonFanClub as PokemonFanClubUPR } from '../../../sets/set-ultra-prism/pokemon-fan-club';
 import { QuickBall as QuickBallMD } from '../../../sets/set-majestic-dawn/quick-ball';
 import { QuickBall as QuickBallSSH } from '../../../sets/set-sword-and-shield/quick-ball';
 import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
@@ -16,6 +18,10 @@ const effectOverrides: {
     default?: (this: TrainerCard, store: StoreLike, state: State, effect: Effect) => State
   }
 } = {
+  'Pokémon Fan Club': {
+    [Format.UNLIMITED]: PokemonFanClubP4.prototype.reduceEffect,
+    default: PokemonFanClubUPR.prototype.reduceEffect
+  },
   'Quick Ball': {
     [Format.UNLIMITED]: QuickBallMD.prototype.reduceEffect,
     default: QuickBallSSH.prototype.reduceEffect

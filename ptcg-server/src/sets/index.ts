@@ -39,6 +39,7 @@ export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
 export * from './set-ex-legend-maker';
 
+export * from './set-pop-series-4';
 export * from './set-pop-series-5';
 
 //DP Era
