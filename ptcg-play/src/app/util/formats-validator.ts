@@ -106,6 +106,14 @@ export class FormatValidator {
       const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
       return this.getValidFormats(quickBallSSH);
     }
+    if (card.name === 'Super Rod' && card.set !== 'PAL') {
+      const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };
+      return this.getValidFormats(superRodPAL);
+    }
+    if (card.name === 'Energy Recycler' && card.set !== 'SV10') {
+      const energyRecyclerSV10: any = { ...card, set: 'SV10', setNumber: '8', regulationMark: 'I' };
+      return this.getValidFormats(energyRecyclerSV10);
+    }
     const formats = [Format.UNLIMITED];
     [
       Format.GLC,

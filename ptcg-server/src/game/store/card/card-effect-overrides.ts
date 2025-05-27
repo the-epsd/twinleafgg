@@ -6,6 +6,8 @@ import { Effect } from '../effects/effect';
 
 import { QuickBall as QuickBallMD } from '../../../sets/set-majestic-dawn/quick-ball';
 import { QuickBall as QuickBallSSH } from '../../../sets/set-sword-and-shield/quick-ball';
+import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
+import { SuperRod as SuperRodPAL } from '../../../sets/set-paldea-evolved/super-rod';
 
 const effectOverrides: {
   [cardKey: string]: {
@@ -17,6 +19,10 @@ const effectOverrides: {
   'Quick Ball': {
     [Format.UNLIMITED]: QuickBallMD.prototype.reduceEffect,
     default: QuickBallSSH.prototype.reduceEffect
+  },
+  'Super Rod': {
+    [Format.UNLIMITED]: SuperRodNVI.prototype.reduceEffect,
+    default: SuperRodPAL.prototype.reduceEffect
   }
 };
 
