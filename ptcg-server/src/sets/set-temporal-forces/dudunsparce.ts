@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, ShuffleDeckPrompt, PowerType, PlayerType, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Dudunsparce extends PokemonCard {
 
@@ -60,8 +61,18 @@ export class Dudunsparce extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
+          const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(c => !(c instanceof PokemonCard));
+          cardList.clearEffects();
+          // Move Pokémon cards to the deck
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.deck, { cards: pokemons });
+          }
 
-          cardList.moveTo(player.deck);
+          // Move other cards (tools, energies, etc.) to the deck
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.deck, { cards: otherCards });
+          }
           cardList.clearEffects();
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

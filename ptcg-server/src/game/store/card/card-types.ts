@@ -1334,3 +1334,7 @@ declare global {
   const Y: typeof Energy.Y;
   const N: typeof Energy.N;
 }
+
+export function isCoreFormat(format: Format): boolean {
+  return format === Format.STANDARD || format === Format.EXPANDED || format === Format.UNLIMITED || format === Format.STANDARD_NIGHTLY || format === Format.GLC;
+}

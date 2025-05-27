@@ -54,8 +54,8 @@ export class FormatValidator {
       const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
       const arceusCount = cards.filter(card => card.name === 'Arceus').length;
 
-      if (arceusCount !== arceusCount && arceusCount > 4){
-        return formatList.filter(f => 
+      if (arceusCount !== arceusCount && arceusCount > 4) {
+        return formatList.filter(f =>
           f !== Format.GLC &&
           f !== Format.EXPANDED &&
           f !== Format.STANDARD &&
@@ -102,8 +102,19 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
+    if (card.name === 'Quick Ball' && card.set !== 'SSH') {
+      const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
+      return this.getValidFormats(quickBallSSH);
+    }
+    if (card.name === 'Super Rod' && card.set !== 'PAL') {
+      const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };
+      return this.getValidFormats(superRodPAL);
+    }
+    if (card.name === 'Energy Recycler' && card.set !== 'SV10') {
+      const energyRecyclerSV10: any = { ...card, set: 'SV10', setNumber: '8', regulationMark: 'I' };
+      return this.getValidFormats(energyRecyclerSV10);
+    }
     const formats = [Format.UNLIMITED];
-
     [
       Format.GLC,
       Format.EXPANDED,
@@ -130,6 +141,9 @@ export class FormatValidator {
       case Format.STANDARD:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
+        if (card.regulationMark === 'J') {
+          return false;
+        }
         return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
 
       case Format.STANDARD_NIGHTLY:

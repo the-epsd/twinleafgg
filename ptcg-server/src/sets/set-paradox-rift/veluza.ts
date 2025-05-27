@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -54,10 +54,14 @@ export class Veluza extends PokemonCard {
         return state;
       }
 
+      // Make a copy of the active's cards before they are discarded (like Exp. Share)
+      const activeCopy = new PokemonCardList();
+      activeCopy.cards = effect.target.cards.slice();
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
+        activeCopy,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY },
@@ -66,7 +70,9 @@ export class Veluza extends PokemonCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
+          // Use MOVE_CARDS for the transfer
+          const { MOVE_CARDS } = require('../../game/store/prefabs/prefabs');
+          state = MOVE_CARDS(store, state, activeCopy, target, { cards: [transfer.card] });
         }
       });
     }
