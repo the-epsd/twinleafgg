@@ -45,7 +45,8 @@ export enum CardTag {
   ARVENS = 'ARVENS',
   POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
   HOLONS = 'HOLONS',
-  TEAM_ROCKET = 'TEAM_ROCKET',
+  ROCKETS = 'ROCKETS', // For old cards
+  TEAM_ROCKET = 'TEAM_ROCKET', // For new cards
   UNOWN = 'UNOWN',
   PRIMAL = 'PRIMAL',
   ARCEUS = 'ARCEUS',
