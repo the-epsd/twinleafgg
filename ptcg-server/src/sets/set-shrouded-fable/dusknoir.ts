@@ -27,6 +27,7 @@ export class Dusknoir extends PokemonCard {
     name: 'Cursed Blast',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
+    knocksOutSelf: true,
     text: 'Once during your turn, you may put 13 damage counters on 1 of your opponent\'s Pokémon. If you placed any damage counters in this way, this Pokémon is Knocked Out.'
   }];
 

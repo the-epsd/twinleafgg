@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils, EnergyCard, PokemonCardList } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';

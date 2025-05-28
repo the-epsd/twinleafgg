@@ -5,6 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class IronBundle extends PokemonCard {
 
@@ -85,8 +86,17 @@ export class IronBundle extends PokemonCard {
         if (targets && targets.length > 0) {
           opponent.active.clearEffects();
           opponent.switchPokemon(targets[0]);
-          player.bench[benchIndex].moveTo(player.discard);
-          player.bench[benchIndex].clearEffects();
+          const cardList = player.bench[benchIndex];
+          const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+          // Move Pokémon cards to the discard
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+          }
+          // Move other cards (tools, energies, etc.) to the discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          }
           return state;
         }
       });
@@ -123,7 +133,7 @@ What are YOU doing here :thinkingemoji:
 ⠄⠄⣿⣿⣿⣿⠋⢠⣾⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄
 ⠄⠄⣿⣿⡿⠁⣰⣿⣿⣿⣿⣿⣿⣿⣿⠗⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⡟⠄⠄
 ⠄⠄⣿⡿⠁⣼⣿⣿⣿⣿⣿⣿⡿⠋⠄⠄⠄⣠⣄⢰⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄
-⠄⠄⡿⠁⣼⣿⣿⣿⣿⣿⣿⣿⡇⠄⢀⡴⠚⢿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢠⠄⠄
+⠄⠄⡿⠁⣼⣿⣿⣿⣿⣿⣿⣿⡇⠄⢀⡴⠚⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄
 ⠄⠄⠃⢰⣿⣿⣿⣿⣿⣿⡿⣿⣿⠴⠋⠄⠄⢸⣿⣿⣿⣿⣿⣿⣿⡟⢀⣾⠄⠄
 ⠄⠄⢀⣿⣿⣿⣿⣿⣿⣿⠃⠈⠁⠄⠄⢀⣴⣿⣿⣿⣿⣿⣿⣿⡟⢀⣾⣿⠄⠄
 ⠄⠄⢸⣿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⢶⣿⣿⣿⣿⣿⣿⣿⣿⠏⢀⣾⣿⣿⠄⠄

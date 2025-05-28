@@ -154,7 +154,7 @@ cardManager.defineSet(sets.setPaldeaEvolved);
 cardManager.defineSet(sets.setObsidianFlames);
 cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setParadoxRift);
-cardManager.defineSet(sets.setPaldeaFates);
+cardManager.defineSet(sets.setPaldeanFates);
 cardManager.defineSet(sets.setTemporalForces);
 cardManager.defineSet(sets.setTwilightMasquerade);
 cardManager.defineSet(sets.setShroudedFable);
