@@ -102,6 +102,10 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
+    if (card.name === 'Great Ball' && card.set !== 'PAL') {
+      const greatBallPAL: any = { ...card, set: 'PAL', setNumber: '183', regulationMark: 'G' };
+      return this.getValidFormats(greatBallPAL);
+    }
     if (card.name === 'Quick Ball' && card.set !== 'SSH') {
       const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
       return this.getValidFormats(quickBallSSH);
