@@ -8,6 +8,7 @@ import { Larvitar } from './larvitar';
 import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
 import { RocketsAdmin } from './rockets-admin';
+import { RocketsSneaselex } from './rockets-sneasel-ex';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
 
@@ -21,6 +22,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new PokemonRetriever(),
   new PowHandExtension(),
   new RocketsAdmin(),
+  new RocketsSneaselex(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
 ];
