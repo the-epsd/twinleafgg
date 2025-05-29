@@ -39,7 +39,6 @@ export class GameService {
 
   public join(gameId: number): Observable<GameState> {
     this.boardInteractionService.endBoardSelection();
-
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
@@ -137,6 +136,11 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
+  public trainerAbility(gameId: number, ability: string, target: CardTarget) {
+    this.socketService.emit('game:action:trainerAbility', { gameId, ability, target })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
   public attack(gameId: number, attack: string) {
     this.socketService.emit('game:action:attack', { gameId, attack })
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
@@ -214,8 +218,6 @@ export class GameService {
       const logs = [...gameStates[index].logs, ...state.logs];
       gameStates[index] = { ...gameStates[index], state, logs, playerStats };
       this.sessionService.set({ gameStates });
-
-      // Update the BoardInteractionService with the latest logs
       this.boardInteractionService.updateGameLogs(logs);
     }
   }

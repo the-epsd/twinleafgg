@@ -19,7 +19,6 @@ export class SocketService {
   private callbacks: { event: string, fn: any }[] = [];
   private enabled = false;
   private connectionSubject = new BehaviorSubject<boolean>(false);
-  private lastPingTime: number = 0;
 
   constructor() {
     this.setServerUrl(environment.apiUrl);
@@ -33,118 +32,16 @@ export class SocketService {
     if (this.socket) {
       this.socket.off('connect');
       this.socket.off('disconnect');
-      this.socket.off('connect_error');
-      this.socket.off('reconnect');
-      this.socket.off('reconnect_attempt');
-      this.socket.off('reconnect_error');
-      this.socket.off('reconnect_failed');
-      this.socket.off('ping');
     }
 
     this.socket = io(apiUrl, {
       autoConnect: false,
-      reconnection: true,
-      reconnectionAttempts: Infinity,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 30000,
-      timeout: 24 * 60 * 60 * 1000,
-      transports: ['websocket', 'polling'],
-      forceNew: true,
-      query: {},
-      randomizationFactor: 0.5
+      reconnection: false,
+      query: {}
     });
 
-    this.socket.on('connect', () => {
-      console.log('[Socket] Connected to server');
-      this.connectionSubject.next(true);
-      this.lastPingTime = Date.now();
-
-      if (this.socket.io.engine) {
-        this.socket.io.engine.on('upgrade', () => {
-          console.log('[Socket] Transport upgraded to:', this.socket.io.engine.transport.name);
-        });
-
-        this.socket.io.engine.on('downgrade', () => {
-          console.log('[Socket] Transport downgraded to:', this.socket.io.engine.transport.name);
-        });
-      }
-    });
-
-    this.socket.on('connect_error', (error) => {
-      if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
-        console.error('[Socket] Connection error:', error.message);
-      }
-      const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
-      setTimeout(() => {
-        if (!this.socket.connected) {
-          this.socket.connect();
-        }
-      }, delay);
-    });
-
-    this.socket.on('disconnect', (reason) => {
-      console.log(`[Socket] Disconnected: ${reason}`);
-      this.connectionSubject.next(false);
-
-      switch (reason) {
-        case 'io server disconnect':
-          console.log('[Socket] Server initiated disconnect, attempting reconnect');
-          this.socket.connect();
-          break;
-        case 'transport close':
-          const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
-          console.log(`[Socket] Transport closed, reconnecting in ${delay}ms`);
-          setTimeout(() => {
-            if (!this.socket.connected) {
-              this.socket.connect();
-            }
-          }, delay);
-          break;
-        case 'ping timeout':
-          console.log('[Socket] Ping timeout, attempting immediate reconnect');
-          this.socket.connect();
-          break;
-        default:
-          const defaultDelay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
-          console.log(`[Socket] Unknown disconnect reason, reconnecting in ${defaultDelay}ms`);
-          setTimeout(() => {
-            if (!this.socket.connected) {
-              this.socket.connect();
-            }
-          }, defaultDelay);
-      }
-    });
-
-    this.socket.on('reconnect', (attemptNumber) => {
-      console.log(`[Socket] Reconnected after ${attemptNumber} attempts`);
-      this.connectionSubject.next(true);
-      this.lastPingTime = Date.now();
-    });
-
-    this.socket.on('reconnect_attempt', (attemptNumber) => {
-      if (attemptNumber % 5 === 0) {
-        console.log(`[Socket] Reconnection attempt ${attemptNumber}`);
-      }
-    });
-
-    this.socket.on('reconnect_error', (error) => {
-      if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
-        console.error('[Socket] Reconnection error:', error.message);
-      }
-    });
-
-    this.socket.on('reconnect_failed', () => {
-      console.error('[Socket] Reconnection failed after all attempts');
-      this.connectionSubject.next(false);
-    });
-
-    this.socket.io.on('ping', () => {
-      const now = Date.now();
-      if (this.lastPingTime > 0 && now - this.lastPingTime > 30000) {
-        console.log(`[Socket] Delayed ping (${now - this.lastPingTime}ms)`);
-      }
-      this.lastPingTime = now;
-    });
+    this.socket.on('connect', () => this.connectionSubject.next(true));
+    this.socket.on('disconnect', () => this.connectionSubject.next(false));
   }
 
   public joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
@@ -176,13 +73,6 @@ export class SocketService {
     }
 
     (this.socket.io.opts.query as any).token = authToken;
-
-    this.off();
-
-    if (this.socket.connected) {
-      this.socket.disconnect();
-    }
-
     this.socket.connect();
     this.enabled = true;
   }
