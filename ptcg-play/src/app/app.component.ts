@@ -25,8 +25,6 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
-  // private readonly MAX_RECONNECT_ATTEMPTS = 3;
-  // private reconnectAttempts = 0;
 
   constructor(
     private alertService: AlertService,
@@ -61,23 +59,12 @@ export class AppComponent implements OnInit {
     ).subscribe({
       next: async connected => {
         if (!connected && this.isLoggedIn) {
-          console.log('[Client Disconnect] Socket connection lost while logged in');
           this.socketService.disable();
           this.dialog.closeAll();
           await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
           this.sessionService.clear();
           this.router.navigate(['/login']);
-        } else if (connected) {
-          console.log('[Client Connect] Socket connection established');
         }
-      }
-    });
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
-        this.authToken$.pipe(take(1)).subscribe(authToken => {
-          this.socketService.enable(authToken);
-        });
       }
     });
 
@@ -95,34 +82,16 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public ngOnDestroy() {
-    document.removeEventListener('visibilitychange', () => { });
-  }
-
   @HostListener('window:resize', ['$event'])
-  onResize(event?: Event) {
+  onResize() {
     const element = this.elementRef.nativeElement;
     const toolbarHeight = 64;
     const contentHeight = element.offsetHeight - toolbarHeight;
     const cardAspectRatio = 1.37;
-    const padding = 32;
+    const padding = 16;
     const cardHeight = (contentHeight - (padding * 5)) / 7;
     let cardSize = Math.floor(cardHeight / cardAspectRatio);
-    cardSize = Math.min(Math.max(cardSize, 60), 60);
+    cardSize = Math.min(Math.max(cardSize, 50), 100);
     element.style.setProperty('--card-size', cardSize + 'px');
   }
-
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event: BeforeUnloadEvent) {
-  //   // Check if user is in an active game
-  //   const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
-
-  //   if (activeGames && activeGames.length > 0) {
-  //     // Show a warning
-  //     const message = this.translate.instant('WARNING_ACTIVE_GAMES');
-  //     event.preventDefault();
-  //     event.returnValue = message;
-  //     return message;
-  //   }
-  // }
 }
