@@ -7,6 +7,7 @@ import { DarkTyranitar2 } from './dark-tyrantiar-2';
 import { Larvitar } from './larvitar';
 import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
+import { REnergy } from './r-energy';
 import { RocketsAdmin } from './rockets-admin';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
@@ -20,6 +21,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new Larvitar(),
   new PokemonRetriever(),
   new PowHandExtension(),
+  new REnergy(),
   new RocketsAdmin(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
