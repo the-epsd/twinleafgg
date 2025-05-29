@@ -42,10 +42,10 @@ import { Sneasel } from './sneasel';
 import { WeavileGX } from './weavile-gx';
 import { MegaSableyeTyranitarGX } from './mega-sableye-tyranitar-gx';
 import { PokemonResearchLab } from './pokemon-research-lab';
-import {UmbreonDarkraiGX} from './umbreon-and-darkrai-gx';
-import {SlowpokePsyduckGX} from './slowpoke-and-psyduck-gx';
-import {EspeonDeoxysGX} from './espeon-and-deoxys-gx';
-import {RowletAlolanExeggutorGX} from './rowlet-and-alolan-exeggutor-gx';
+import { UmbreonDarkraiGX } from './umbreon-and-darkrai-gx';
+import { SlowpokePsyduckGX } from './slowpoke-and-psyduck-gx';
+import { EspeonDeoxysGX } from './espeon-and-deoxys-gx';
+import { RowletAlolanExeggutorGX } from './rowlet-and-alolan-exeggutor-gx';
 import { Magnemite } from './magnemite';
 
 
@@ -61,6 +61,7 @@ export const setUnifiedMinds: Card[] = [
   new Drilbur(),
   new Eelektross(),
   new Elgyem(),
+  new EspeonDeoxysGX(),
   new FlyiniumZAirSlash(),
   new Froslass(),
   new GarchompGiratinaGX(),
@@ -74,6 +75,7 @@ export const setUnifiedMinds: Card[] = [
   new KeldeoGX(),
   new Magnemite(),
   new Lickilicky(),
+  new MegaSableyeTyranitarGX(),
   new MewtwoMewGX(),
   new Munchlax(),
   new Necrozma(),
@@ -84,18 +86,16 @@ export const setUnifiedMinds: Card[] = [
   new RecycleEnergy(),
   new ResetStamp(),
   new Riolu(),
+  new RowletAlolanExeggutorGX(),
+  new SlowpokePsyduckGX(),
   new SlumberingForest(),
+  new Sneasel(),
   new StadiumNav(),
   new TagSwitch(),
+  new UmbreonDarkraiGX(),
   new UTurnBoard(),
   new WeaknessGuardEnergy(),
   new Whimsicott(),
   new Wimpod(),
-  new Sneasel(),
   new WeavileGX(),
-  new MegaSableyeTyranitarGX(),
-  new UmbreonDarkraiGX(),
-  new SlowpokePsyduckGX(),
-  new EspeonDeoxysGX(),
-  new RowletAlolanExeggutorGX(),
 ];
