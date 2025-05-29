@@ -5,6 +5,7 @@ import { DarkPupitar } from './dark-pupitar';
 import { DarkTyranitar } from './dark-tyranitar';
 import { DarkTyranitar2 } from './dark-tyrantiar-2';
 import { Larvitar } from './larvitar';
+import { Magmar } from './magmar';
 import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
 import { RocketsAdmin } from './rockets-admin';
@@ -18,6 +19,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new DarkTyranitar(),
   new DarkTyranitar2(),
   new Larvitar(),
+  new Magmar(),
   new PokemonRetriever(),
   new PowHandExtension(),
   new RocketsAdmin(),
