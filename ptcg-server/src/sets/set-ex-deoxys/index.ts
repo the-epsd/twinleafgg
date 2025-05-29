@@ -2,6 +2,7 @@ import { Card } from '../../game';
 import { Altaria } from './altaria';
 import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
+import { LatiasStar } from './latias-star';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
 import { Ludicolo } from './ludicolo';
@@ -17,6 +18,7 @@ export const setEXDeoxys: Card[] = [
   new Altaria(),
   new Jirachi(),
   new Koffing(),
+  new LatiasStar(),
   new Lombre(),
   new Lotad(),
   new Ludicolo(),
