@@ -7,6 +7,7 @@ export interface ServerConfig {
   avatarMinSize: number;
   avatarMaxSize: number;
   replayFileSize: number;
+  refreshTokenInterval: number;
 }
 
 export interface RegisterRequest {

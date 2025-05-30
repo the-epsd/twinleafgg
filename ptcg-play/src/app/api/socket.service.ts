@@ -36,7 +36,7 @@ export class SocketService {
 
     this.socket = io(apiUrl, {
       autoConnect: false,
-      reconnection: false,
+      reconnection: true,
       query: {}
     });
 
