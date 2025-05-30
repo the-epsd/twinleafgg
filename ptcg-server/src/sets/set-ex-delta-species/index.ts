@@ -13,6 +13,7 @@ import { Jolteonex } from './jolteon-ex';
 import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
 import { Persian } from './persian';
+import { Rayquaza } from './rayquaza';
 import { SuperScoopUpDS } from './other-prints';
 
 export const setEXDeltaSpecies: Card[] = [
@@ -30,5 +31,6 @@ export const setEXDeltaSpecies: Card[] = [
   new Larvitar(),
   new Meowth(),
   new Persian(),
+  new Rayquaza(),
   new SuperScoopUpDS(),
 ];
