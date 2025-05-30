@@ -10,21 +10,21 @@ import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 70;
   public weakness = [];
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C];
   public attacks = [
     {
       name: 'Wildfire',
-      cost: [CardType.FIRE],
+      cost: [R],
       damage: 0,
       text: 'You may discard any number of [R] Energy cards attached to Moltres when you use this attack. If you do, discard that many cards from the top of your opponent\'s deck.'
     },
     {
       name: 'Dive Bomb',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE],
+      cost: [R, R, R, R],
       damage: 80,
       text: 'Flip a coin. If tails, this attack does nothing.'
     }
