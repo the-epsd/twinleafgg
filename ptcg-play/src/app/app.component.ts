@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 
 import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, filter, take } from 'rxjs/operators';
 
@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
+  public showToolbar = true;
 
   constructor(
     private alertService: AlertService,
@@ -42,6 +43,11 @@ export class AppComponent implements OnInit {
   ) {
     this.authToken$ = this.sessionService.get(session => session.authToken);
     setTimeout(() => this.onResize());
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showToolbar = !event.urlAfterRedirects.startsWith('/maintenance');
+      }
+    });
   }
 
   public ngOnInit() {
