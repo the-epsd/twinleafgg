@@ -13,7 +13,7 @@ export class Moltres extends PokemonCard {
   public cardType: CardType = CardType.FIRE;
   public hp: number = 70;
   public weakness = [];
-  public resistance = [{ type: CardType.FIGHTING, value: 30 }];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public attacks = [
     {
