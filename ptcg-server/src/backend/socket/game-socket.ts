@@ -210,4 +210,8 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
+  public onTimerUpdate(game: Game, playerStats: any[]): void {
+    this.socket.emit(`game[${game.id}]:timerUpdate`, { playerStats });
+  }
+
 }

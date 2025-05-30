@@ -85,6 +85,10 @@ export class SocketClient implements Client {
     this.messageSocket.onMessageRead(user);
   }
 
+  public onTimerUpdate(game: Game, playerStats: any[]): void {
+    this.gameSocket.onTimerUpdate(game, playerStats);
+  }
+
   public attachListeners(): void {
     this.socket.attachListeners();
   }

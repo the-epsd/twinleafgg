@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+
 import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ import { SessionService } from './shared/session/session.service';
 import { SocketService } from './api/socket.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -35,7 +37,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private socketService: SocketService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private snackBar: MatSnackBar
   ) {
     this.authToken$ = this.sessionService.get(session => session.authToken);
     setTimeout(() => this.onResize());
@@ -57,11 +60,15 @@ export class AppComponent implements OnInit {
     this.socketService.connection.pipe(
       untilDestroyed(this)
     ).subscribe({
-      next: async connected => {
+      next: connected => {
         if (!connected && this.isLoggedIn) {
           this.socketService.disable();
           this.dialog.closeAll();
-          await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
+          this.snackBar.open(
+            this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'),
+            undefined,
+            { duration: 5000 }
+          );
           this.sessionService.clear();
           this.router.navigate(['/login']);
         }
@@ -91,7 +98,7 @@ export class AppComponent implements OnInit {
     const padding = 16;
     const cardHeight = (contentHeight - (padding * 5)) / 7;
     let cardSize = Math.floor(cardHeight / cardAspectRatio);
-    cardSize = Math.min(Math.max(cardSize, 50), 100);
+    cardSize = Math.min(Math.max(cardSize, 60), 60);
     element.style.setProperty('--card-size', cardSize + 'px');
   }
 }
