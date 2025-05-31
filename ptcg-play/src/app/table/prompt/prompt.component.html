@@ -52,6 +52,8 @@
           [prompt]="prompt"></ptcg-prompt-confirm-cards>
         <ptcg-prompt-select-option *ngSwitchCase="'SelectOption'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-select-option>
+        <ptcg-prompt-show-mulligan *ngSwitchCase="'Show mulligan'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-show-mulligan>
         <div *ngSwitchDefault translate [translateParams]="{type: prompt?.type}">PROMPT_UNKNOWN_TYPE</div>
       </div>
     </div>
