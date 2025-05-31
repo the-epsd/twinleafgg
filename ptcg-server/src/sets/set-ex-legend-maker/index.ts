@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { CursedStone } from './cursed-stone';
 import { GiantStump } from './giant-stump';
+import { Girafarig } from './girafarig';
 import { Kecleon } from './kecleon';
 import { Lapras } from './lapras';
 import { Mewex } from './mew-ex';
@@ -12,6 +13,7 @@ import { Voltorb } from './voltorb';
 export const setEXLegendMaker: Card[] = [
   new CursedStone(),
   new GiantStump(),
+  new Girafarig(),
   new Kecleon(),
   new Lapras(),
   new Mewex(),
