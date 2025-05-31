@@ -1,4 +1,6 @@
 import { Card } from '../../game/store/card/card';
+import { Bagon } from './bagon';
+import { Bagon2 } from './bagon2';
 import { Beldum } from './beldum';
 import { Eevee } from './eevee';
 import { HolonMentor } from './holon-mentor';
@@ -13,9 +15,14 @@ import { Jolteonex } from './jolteon-ex';
 import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
 import { Persian } from './persian';
+import { Salamence } from './salamence';
+import { Shelgon } from './shelgon';
+import { Shelgon2 } from './shelgon2';
 import { SuperScoopUpDS } from './other-prints';
 
 export const setEXDeltaSpecies: Card[] = [
+  new Bagon(),
+  new Bagon2(),
   new Beldum(),
   new Eevee(),
   new HolonMentor(),
@@ -30,5 +37,8 @@ export const setEXDeltaSpecies: Card[] = [
   new Larvitar(),
   new Meowth(),
   new Persian(),
+  new Salamence(),
+  new Shelgon(),
+  new Shelgon2(),
   new SuperScoopUpDS(),
 ];
