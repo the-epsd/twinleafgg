@@ -32,7 +32,7 @@ export class Excadrillex extends PokemonCard {
   public regulationMark = 'I';
   public set: string = 'SV11B';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '';
+  public setNumber: string = '49';
   public name: string = 'Excadrill ex';
   public fullName: string = 'Excadrill ex SV11B';
 
