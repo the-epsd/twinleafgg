@@ -131,6 +131,7 @@ import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
 import { TeamRocketsZapdos } from './team-rockets-zapdos';
 import { TeamRocketsZubat } from './team-rockets-zubat';
 import { Torchic } from './torchic';
+import { TMMachine } from './tm-machine';
 
 export const setDestinedRivals: Card[] = [
 
@@ -155,6 +156,7 @@ export const setDestinedRivals: Card[] = [
   new Electabuzz(),
   new Electivireex(),
   new SacredAsh(),
+  new TMMachine(),
 
   new ArvensToedscool(),
   new ArvensToedscruel(),
