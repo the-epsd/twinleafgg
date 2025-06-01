@@ -33,7 +33,7 @@ import { Dipplin } from './dipplin';
 import { Hydrapple } from './hydrapple';
 import { Dwebble } from './dwebble';
 import { Crustle } from './crustle';
-import { MCsHypeUp } from './mcs-hype-up';
+import { EmceesHype } from './mcs-hype-up';
 import { MistysStarmie } from './mistys-starmie';
 import { CynthiasFeebas } from './cynthias-feebas';
 import { CynthiasMilotic } from './cynthias-milotic';
@@ -148,7 +148,7 @@ export const setDestinedRivals: Card[] = [
   new Hydrapple(),
   new Dwebble(),
   new Crustle(),
-  new MCsHypeUp(),
+  new EmceesHype(),
   new Yanma(),
   new Yanmegaex(),
   new Dondozoex(),

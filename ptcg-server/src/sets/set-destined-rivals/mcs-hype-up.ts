@@ -10,14 +10,14 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game';
 import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
-export class MCsHypeUp extends TrainerCard {
+export class EmceesHype extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'DRI';
-  public setNumber = '61';
+  public setNumber = '163';
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
-  public name: string = 'MC\'s Hype Up';
-  public fullName: string = 'MC\'s Hype Up DRI';
+  public name: string = 'Emcee\'s Hype';
+  public fullName: string = 'Emcee\'s Hype DRI';
   public text: string = 'Draw 2 cards. If your opponent has 3 or fewer Prize cards remaining, draw 2 more cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
