@@ -110,9 +110,9 @@ export class FormatValidator {
       const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };
       return this.getValidFormats(superRodPAL);
     }
-    if (card.name === 'Energy Recycler' && card.set !== 'SV10') {
-      const energyRecyclerSV10: any = { ...card, set: 'SV10', setNumber: '8', regulationMark: 'I' };
-      return this.getValidFormats(energyRecyclerSV10);
+    if (card.name === 'Energy Recycler' && card.set !== 'DRI') {
+      const energyRecyclerDRI: any = { ...card, set: 'DRI', setNumber: '164', regulationMark: 'I' };
+      return this.getValidFormats(energyRecyclerDRI);
     }
     const formats = [Format.UNLIMITED];
     [
@@ -406,21 +406,11 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'PAF': new Date('2024-01-26'),
   'TEF': new Date('2024-03-22'),
   'TWM': new Date('2024-05-22'),
-  'SV6a': new Date('2024-06-07'),
-  'SV7': new Date('2024-09-13'),
   'SFA': new Date('2024-08-02'),
   'SCR': new Date('2024-09-13'),
-  'SV7a': new Date('2024-09-13'),
-  'SV8': new Date('2024-11-08'),
   'SSP': new Date('2024-11-08'),
-  'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
   'JTG': new Date('2025-03-28'),
-  'SV9': new Date('2025-03-28'),
-  'SV9a': new Date('2025-05-17'),
-  'SV10': new Date('2025-05-17'),
-  'SVOD': new Date('2025-05-17'),
-  'SVOM': new Date('2025-05-17'),
   'DRI': new Date('2025-05-17'),
   'SV11': new Date('2025-07-18'),
   'SV11B': new Date('2025-07-18'),
