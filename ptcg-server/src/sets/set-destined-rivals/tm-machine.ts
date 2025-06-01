@@ -65,15 +65,15 @@ export class TMMachine extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SVP';
+  public set: string = 'DRI';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '189';
+  public setNumber: string = '181';
 
   public name: string = 'TM Machine';
 
-  public fullName: string = 'TM Machine SVP';
+  public fullName: string = 'TM Machine DRI';
 
   public text: string = 'Search your deck for up to 3 Pokémon Tool cards with Technical Machine in their name, ' +
     'reveal them, and put them into your hand. Then, shuffle your deck.';

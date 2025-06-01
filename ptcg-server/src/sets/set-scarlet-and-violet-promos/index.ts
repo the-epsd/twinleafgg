@@ -7,7 +7,6 @@ import { Pecharunt } from './pecharunt';
 import { Psyduck } from './psyduck';
 import { Scrafty } from './scrafty';
 import { Tinkatonex } from './tinkaton-ex';
-import { TMMachine } from './tm-machine';
 import { Toxtricityex } from './toxtricity-ex';
 
 
@@ -17,7 +16,6 @@ export const setScarletAndVioletPromos: Card[] = [
   new Mimikyuex(),
   new Pecharunt(),
   new Tinkatonex(),
-  new TMMachine(),
   new Toxtricityex(),
   new Scrafty(),
   new Psyduck(),
