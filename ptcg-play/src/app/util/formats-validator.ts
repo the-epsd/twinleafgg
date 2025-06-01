@@ -419,4 +419,10 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SV9': new Date('2025-03-28'),
   'SV9a': new Date('2025-05-17'),
   'SV10': new Date('2025-05-17'),
+  'SVOD': new Date('2025-05-17'),
+  'SVOM': new Date('2025-05-17'),
+  'DRI': new Date('2025-05-17'),
+  'SV11': new Date('2025-07-18'),
+  'SV11B': new Date('2025-07-18'),
+  'SV11W': new Date('2025-07-18'),
 }
