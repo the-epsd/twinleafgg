@@ -55,3 +55,4 @@ ptcg-server/output
 ptcg-server/dist
 
 # Specific Sets
+ptcg-server/src/sets/set-test/
