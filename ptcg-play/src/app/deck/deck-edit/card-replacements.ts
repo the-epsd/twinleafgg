@@ -2,7 +2,7 @@ export const setCodeReplacements = [
   { from: 'PR-SH', to: 'SWSH' },
   { from: 'SP', to: 'SWSH' },
   { from: 'PR-SW', to: 'SWSH' },
-  { from: 'PR-SV', to: 'SVP' }
+  { from: 'PR-SV', to: 'SVP' },
 ];
 
 export const cardReplacements = [
