@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard } from 'ptcg-server';
+import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard, CardsInfo, CardManager } from 'ptcg-server';
 
 import { ApiService } from '../../api/api.service';
 import { CardInfoPopupData, CardInfoPopupComponent } from './card-info-popup/card-info-popup.component';
@@ -18,6 +18,7 @@ export class CardsBaseService {
 
   private cards: Card[] = [];
   private names: string[] = [];
+  private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
 
   constructor(
@@ -26,7 +27,16 @@ export class CardsBaseService {
     private sessionService: SessionService,
     private http: HttpClient
   ) {
+    this.cardManager = CardManager.getInstance();
     this.loadCustomImages();
+  }
+
+  public loadCardsInfo(cardsInfo: CardsInfo) {
+    this.cardManager.loadCardsInfo(cardsInfo);
+    this.cards = this.cardManager.getAllCards().slice();
+    this.names = this.cards.map(c => c.fullName);
+    this.cards.sort(this.compareCards);
+    StateSerializer.setKnownCards(this.cards);
   }
 
   public setCards(cards: Card[]) {

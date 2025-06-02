@@ -62,7 +62,7 @@ export class ProfessorsResearchPAF extends ProfessorsResearch {
 }
 
 export class ProfessorsResearch2PAF extends ProfessorsResearch {
-  public fullName = 'Professor\'s Research PAF';
+  public fullName = 'Professor\'s Research PAF2';
   public set = 'PAF';
   public setNumber = '88';
 }

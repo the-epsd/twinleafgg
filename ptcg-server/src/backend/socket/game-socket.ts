@@ -39,7 +39,7 @@ export class GameSocket {
     this.socket.addListener('game:leave', this.leaveGame.bind(this));
     this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
     this.socket.addListener('game:action:ability', this.ability.bind(this));
-    this.socket.addListener('game:action:ability', this.trainerability.bind(this));
+    this.socket.addListener('game:action:trainerAbility', this.trainerAbility.bind(this));
     this.socket.addListener('game:action:attack', this.attack.bind(this));
     this.socket.addListener('game:action:stadium', this.stadium.bind(this));
     this.socket.addListener('game:action:play', this.playGame.bind(this));
@@ -113,7 +113,7 @@ export class GameSocket {
     }
     try {
       game.dispatch(this.client, action);
-    } catch (error) {
+    } catch (error: any) {
       response('error', error.message);
     }
     response('ok');
@@ -124,7 +124,7 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
-  private trainerability(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
+  private trainerAbility(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
     const action = new UseTrainerAbilityAction(this.client.id, params.ability, params.target);
     this.dispatch(params.gameId, action, response);
   }
@@ -167,7 +167,7 @@ export class GameSocket {
         response('error', ApiErrorEnum.PROMPT_INVALID_RESULT);
         return;
       }
-    } catch (error) {
+    } catch (error: any) {
       response('error', error);
       return;
     }
@@ -208,6 +208,10 @@ export class GameSocket {
   private changeAvatar(params: { gameId: number, avatarName: string }, response: Response<void>) {
     const action = new ChangeAvatarAction(this.client.id, params.avatarName);
     this.dispatch(params.gameId, action, response);
+  }
+
+  public onTimerUpdate(game: Game, playerStats: any[]): void {
+    this.socket.emit(`game[${game.id}]:timerUpdate`, { playerStats });
   }
 
 }
