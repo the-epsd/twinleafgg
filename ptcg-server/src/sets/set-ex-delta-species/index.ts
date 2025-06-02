@@ -1,4 +1,6 @@
 import { Card } from '../../game/store/card/card';
+import { Bagon } from './bagon';
+import { Bagon2 } from './bagon2';
 import { Beldum } from './beldum';
 import { Ditto } from './ditto';
 import { Eevee } from './eevee';
@@ -18,9 +20,14 @@ import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
 import { Persian } from './persian';
 import { Ralts } from './ralts';
+import { Salamence } from './salamence';
+import { Shelgon } from './shelgon';
+import { Shelgon2 } from './shelgon2';
 import { SuperScoopUpDS } from './other-prints';
 
 export const setEXDeltaSpecies: Card[] = [
+  new Bagon(),
+  new Bagon2(),
   new Beldum(),
   new Ditto(),
   new Eevee(),
@@ -40,5 +47,8 @@ export const setEXDeltaSpecies: Card[] = [
   new Meowth(),
   new Persian(),
   new Ralts(),
+  new Salamence(),
+  new Shelgon(),
+  new Shelgon2(),
   new SuperScoopUpDS(),
 ];
