@@ -101,4 +101,13 @@ export class PromptComponent implements OnChanges {
     // The new game over screen is now handled directly by the table component
     return undefined;
   }
+
+  public cannotBeMinimized(): boolean {
+    // Add all prompt types you want to NEVER be minimized here
+    return this.prompt?.type === 'Choose pokemon'; // Example: 'Alert' cannot be minimized
+  }
+
+  public isFullScreenPrompt(): boolean {
+    return this.prompt?.type === 'Choose pokemon';
+  }
 }
