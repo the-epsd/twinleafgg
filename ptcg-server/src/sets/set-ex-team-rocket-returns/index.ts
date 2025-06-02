@@ -11,6 +11,7 @@ import { Dratini } from './dratini';
 import { Larvitar } from './larvitar';
 import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
+import { REnergy } from './r-energy';
 import { RocketsAdmin } from './rockets-admin';
 import { RocketsPokeBall } from './rockets-poke-ball';
 import { RocketsSneaselex } from './rockets-sneasel-ex';
@@ -31,6 +32,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new Larvitar(),
   new PokemonRetriever(),
   new PowHandExtension(),
+  new REnergy(),
   new RocketsAdmin(),
   new RocketsPokeBall(),
   new RocketsSneaselex(),
