@@ -54,10 +54,10 @@ import { DragoniumZDragonClaw } from './dragonium-z';
 import { Gloom } from './gloom';
 import { Oddish } from './oddish';
 import { VileplumeGX } from './vileplume-gx';
-import {MegaLopunnyJigglypuffGX} from './mega-lopuny-and-jigglypuff-gx';
-import {VenusaurSnivyGX} from './venusaur-and-snivy-gx';
-import {LilliesFullForce} from './lillies-full-force';
-import {SolgaleoLunalaGX} from './solgaleo-and-lunala-gx';
+import { MegaLopunnyJigglypuffGX } from './mega-lopuny-and-jigglypuff-gx';
+import { VenusaurSnivyGX } from './venusaur-and-snivy-gx';
+import { LilliesFullForce } from './lillies-full-force';
+import { SolgaleoLunalaGX } from './solgaleo-and-lunala-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -89,9 +89,11 @@ export const setCosmicEclipse: Card[] = [
   new Guzzlord(),
   new LanasFishingRod(),
   new Lanturn(),
+  new LilliesFullForce(),
   new LilliesPokeDoll(),
   new Lillipup(),
   new MallowAndLana(),
+  new MegaLopunnyJigglypuffGX(),
   new Mimikyu(),
   new NaganadelGuzzlordGX(),
   new Natu(),
@@ -106,6 +108,7 @@ export const setCosmicEclipse: Card[] = [
   new Roxie(),
   new Sawsbuck(),
   new Slugma(),
+  new SolgaleoLunalaGX(),
   new Stoutland(),
   new Sunkern(),
   new Swirlix(),
@@ -116,11 +119,5 @@ export const setCosmicEclipse: Card[] = [
   new VileplumeGX(),
   new Wishiwashi(),
   new Woobat(),
-  new Swoobat(),
-  new Mimikyu(),
-  new OricorioGX(),
-  new MegaLopunnyJigglypuffGX(),
   new VenusaurSnivyGX(),
-  new LilliesFullForce(),
-  new SolgaleoLunalaGX(),
 ];
