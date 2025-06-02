@@ -1,0 +1,120 @@
+.maintenance-flat-bg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #1b202b;
+}
+
+.logo-img {
+  margin-top: 10.5rem;
+  width: 40%;
+  height: 40%;
+  object-fit: contain;
+
+  filter: drop-shadow(0 4px 16px rgba(58, 66, 87, 0.12));
+}
+
+.headline {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
+  color: #7c86a0;
+  text-align: center;
+}
+
+.message {
+  font-size: 1.08rem;
+  color: #7c86a0;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: #7c86a0;
+  font-size: 1rem;
+}
+
+// .status-icon {
+//   font-size: 1.2rem;
+//   color: #f4f4f8;
+// }
+
+.status-text b {
+  color: #7c86a0;
+  font-weight: 600;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #588e5d;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: bounce 1.2s infinite both;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-12px);
+  }
+}
+
+.follow {
+  font-size: 0.98rem;
+  color: #3a4257;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.discord-logo {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12));
+}
+
+@media (max-width: 480px) {
+  .headline {
+    font-size: 1.3rem;
+  }
+
+  .logo-img {
+    width: 256px;
+    height: 256px;
+    margin-bottom: 0.3rem;
+  }
+}

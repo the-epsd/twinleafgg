@@ -77,6 +77,8 @@ import { Jolteon } from '../set-pokemon-151/jolteon';
 import { Eevee } from '../set-surging-sparks/eevee';
 import { BloodmoonUrsalunaex } from '../set-twilight-masquerade/bloodmoon-ursaluna-ex';
 import { NsZorua } from '../set-journey-together/ns-zorua';
+import { MarniesMorpeko } from '../set-destined-rivals/marnies-morpeko';
+import { StevensBeldum } from '../set-destined-rivals/stevens-beldum';
 
 // export class QuaquavalSVP extends Quaquaval {
 //   public setNumber = '5';
@@ -778,4 +780,14 @@ export class NsZoruaSVP extends NsZorua {
   public setNumber = '189';
   public fullName: string = 'N\'s Zorua SVP';
   public set = 'SVP';
+}
+
+export class MarniesMorpekoIR extends MarniesMorpeko {
+  public fullName = 'Marnie\'s MorpekoIR SVP';
+  public setNumber = '206';
+}
+
+export class StevensBeldumIR extends StevensBeldum {
+  public fullName = 'Steven\'s BeldumIR SVP';
+  public setNumber = '207';
 }
