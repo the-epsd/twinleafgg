@@ -2,6 +2,7 @@ import { Card } from '../../game';
 import { DarkAmpharos } from './dark-ampharos';
 import { DarkDragonair } from './dark-dragonair';
 import { DarkDragonite } from './dark-dragonite';
+import { DarkElectrode } from './dark-electrode';
 import { DarkFlaaffy } from './dark-flaaffy';
 import { DarkPupitar } from './dark-pupitar';
 import { DarkTyranitar } from './dark-tyranitar';
@@ -14,11 +15,13 @@ import { RocketsAdmin } from './rockets-admin';
 import { RocketsPokeBall } from './rockets-poke-ball';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
+import { Voltorb } from './voltorb';
 
 export const setEXTeamRocketReturns: Card[] = [
   new DarkAmpharos(),
   new DarkDragonair(),
   new DarkDragonite(),
+  new DarkElectrode(),
   new DarkFlaaffy(),
   new DarkPupitar(),
   new DarkTyranitar(),
@@ -31,4 +34,5 @@ export const setEXTeamRocketReturns: Card[] = [
   new RocketsPokeBall(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
+  new Voltorb(),
 ];
