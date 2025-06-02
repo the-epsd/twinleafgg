@@ -4,6 +4,7 @@ import { LanettesNetSearch } from './lanettes-net-search';
 import { Lombre } from './lombre';
 import { MultiEnergy } from './multi-energy';
 import { Wobbuffet } from './wobbuffet';
+import { Zangoose } from './zangoose';
 
 export const setEXSandstorm: Card[] = [
   new Dunsparce(),
@@ -11,4 +12,5 @@ export const setEXSandstorm: Card[] = [
   new Lombre(),
   new MultiEnergy(),
   new Wobbuffet(),
+  new Zangoose(),
 ];
