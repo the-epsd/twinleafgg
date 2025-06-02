@@ -232,6 +232,7 @@
   "PROMPT_RESET": "Reset",
   "PROMPT_SELECT_TITLE": "Select",
   "PROMPT_SHOW_CARDS_TITLE": "Show cards",
+  "MULLIGAN_HAND": "Mulligan Hand",
   "PROMPT_UNKNOWN_TYPE": "Unknown prompt type: '{{type}}'.",
   "RANKING_POSITION": "Position",
   "RANKING_TITLE": "Ranking",

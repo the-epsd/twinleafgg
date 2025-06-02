@@ -138,7 +138,8 @@ export class Login extends Controller {
       avatarFileSize: config.backend.avatarFileSize,
       avatarMinSize: config.backend.avatarMinSize,
       avatarMaxSize: config.backend.avatarMaxSize,
-      replayFileSize: config.backend.replayFileSize
+      replayFileSize: config.backend.replayFileSize,
+      refreshTokenInterval: config.backend.refreshTokenInterval
     };
   }
 
