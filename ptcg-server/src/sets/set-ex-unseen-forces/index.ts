@@ -1,6 +1,9 @@
 import { Card } from '../../game';
+import { Bayleef } from './bayleef';
+import { Chikorita } from './chikorita';
 import { Lugiaex } from './lugia-ex';
 import { MarysRequest } from './marys-request';
+import { Meganiumex } from './meganium-ex';
 import { PokemonReversal } from './pokemon-reversal';
 import { ProfessorElmsTrainingMethod } from './professors-elm-training-method';
 import { SolidRage } from './solid-rage';
@@ -14,8 +17,11 @@ import { Ursaring } from './ursaring';
 import { WarpEnergyUF } from './other-prints';
 
 export const setEXUnseenForces: Card[] = [
+  new Bayleef(),
+  new Chikorita(),
   new Lugiaex(),
   new MarysRequest(),
+  new Meganiumex(),
   new PokemonReversal(),
   new ProfessorElmsTrainingMethod(),
   new SolidRage(),
