@@ -8,6 +8,7 @@ import { Meganium } from './meganium';
 import { MewStar } from './mew-star';
 import { MrStonesProject } from './mr-stones-project';
 import { Nidoqueen } from './nidoqueen';
+import { ProfessorOaksResearch } from './professor-oaks-research';
 import { Rayquazaex } from './rayquaza-ex';
 import { Trapinch } from './trapinch';
 import { Trapinch2 } from './trapinch2';
@@ -24,6 +25,7 @@ export const setEXDragonFrontiers: Card[] = [
   new MewStar(),
   new MrStonesProject(),
   new Nidoqueen(),
+  new ProfessorOaksResearch(),
   new Rayquazaex(),
   new Trapinch(),
   new Trapinch2(),
