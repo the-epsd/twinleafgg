@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { Lugiaex } from './lugia-ex';
 import { MarysRequest } from './marys-request';
 import { PokemonReversal } from './pokemon-reversal';
 import { SolidRage } from './solid-rage';
@@ -12,6 +13,7 @@ import { Ursaring } from './ursaring';
 import { WarpEnergyUF } from './other-prints';
 
 export const setEXUnseenForces: Card[] = [
+  new Lugiaex(),
   new MarysRequest(),
   new PokemonReversal(),
   new SolidRage(),
