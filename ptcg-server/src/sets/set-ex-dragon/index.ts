@@ -6,6 +6,7 @@ import { Magneton } from './magneton';
 import { Mareep } from './mareep';
 import { Meditite } from './meditite';
 import { MrBrineysCompassion } from './mr-brineys-compassion';
+import { Numel } from './numel';
 import { TvReporter } from './tv-reporter';
 
 export const setEXDragon: Card[] = [
@@ -16,5 +17,6 @@ export const setEXDragon: Card[] = [
   new Mareep(),
   new Meditite(),
   new MrBrineysCompassion(),
+  new Numel(),
   new TvReporter(),
 ];
