@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
 import { HolonAdventurer } from './holon-adventurer';
+import { Chimecho } from './chimecho';
 import { DeltaRainbowEnergy } from './delta-rainbow-energy';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
@@ -13,6 +14,7 @@ import { Raichu } from './raichu';
 
 export const setEXHolonPhantoms: Card[] = [
   new HolonAdventurer(),
+  new Chimecho(),
   new DeltaRainbowEnergy(),
   new Exeggcute(),
   new Exeggutor(),
