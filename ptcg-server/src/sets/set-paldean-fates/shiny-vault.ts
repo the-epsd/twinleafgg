@@ -149,13 +149,13 @@ export class EnteiSV extends Entei {
 export class CharcadetSV extends Charcadet {
   public setNumber = '114';
   public set = 'PAF';
-  public fullName: string = 'Charcadet PAF';
+  public fullName: string = 'CharcadetSV PAF';
 }
 
 export class ArmarougeSV extends Armarouge {
   public setNumber = '115';
   public set = 'PAF';
-  public fullName: string = 'Armarouge PAF';
+  public fullName: string = 'ArmarougeSV PAF';
 }
 
 export class SlowpokeSV extends Slowpoke {
@@ -246,7 +246,7 @@ export class WattrelSV extends Wattrel {
 export class KilowattrelSV extends Kilowattrel {
   public setNumber = '146';
   public set = 'PAF';
-  public fullName: string = 'Kilowattrel PAF';
+  public fullName: string = 'KilowattrelSV PAF';
 }
 
 export class CleffaSV extends Cleffa {
@@ -258,19 +258,19 @@ export class CleffaSV extends Cleffa {
 export class NatuSV extends Natu {
   public setNumber = '151';
   public set = 'PAF';
-  public fullName: string = 'Natu PAF';
+  public fullName: string = 'NatuSV PAF';
 }
 
 export class XatuSV extends Xatu {
   public setNumber = '152';
   public set = 'PAF';
-  public fullName: string = 'Xatu PAF';
+  public fullName: string = 'XatuSV PAF';
 }
 
 export class RaltsSV extends Ralts {
   public setNumber = '153';
   public set = 'PAF';
-  public fullName: string = 'Ralts PAF';
+  public fullName: string = 'RaltsSV PAF';
 }
 
 export class KirliaSV extends Kirlia {
@@ -306,7 +306,7 @@ export class KlefkiSV extends Klefki {
 export class MimikyuSV extends Mimikyu {
   public setNumber = '160';
   public set = 'PAF';
-  public fullName: string = 'Mimikyu PAF';
+  public fullName: string = 'MimikyuSV PAF';
 }
 
 export class TinkatinkSV extends Tinkatink {
@@ -366,7 +366,7 @@ export class RevavroomSV extends Revavroom {
 export class NoibatSV extends Noibat {
   public setNumber = '194';
   public set = 'PAF';
-  public fullName: string = 'Noibat PAF';
+  public fullName: string = 'NoibatSV PAF';
 }
 
 export class PidgeySV extends Pidgey {
@@ -458,13 +458,13 @@ export class MewexSV extends Mewex {
 export class GardevoirexSV extends Gardevoirex {
   public setNumber = '217';
   public set = 'PAF';
-  public fullName: string = 'Gardevoir ex PAF';
+  public fullName: string = 'Gardevoir exSV PAF';
 }
 
 export class NoivernexSV extends Noivernex {
   public setNumber = '220';
   public set = 'PAF';
-  public fullName: string = 'Noivern ex PAF';
+  public fullName: string = 'Noivern exSV PAF';
 }
 
 export class PidgeotexSV extends Pidgeotex {
@@ -476,7 +476,7 @@ export class PidgeotexSV extends Pidgeotex {
 export class SquawkabillyexSV extends Squawkabillyex {
   public setNumber = '223';
   public set = 'PAF';
-  public fullName: string = 'Squawkabilly ex PAF';
+  public fullName: string = 'Squawkabilly exSV PAF';
 }
 
 // Shiny Full arts

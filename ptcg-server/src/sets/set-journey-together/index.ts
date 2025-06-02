@@ -130,7 +130,6 @@ export const setJourneyTogether: Card[] = [
   new Lombre(),
   new Ludicolo(),
   new Petilil(),
-  new Lilligant(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),
