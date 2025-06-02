@@ -1,5 +1,6 @@
 import { Card } from '../../game';
 import { Altaria } from './altaria';
+import { Camerupt } from './camerupt';
 import { HealEnergy } from './heal-energy';
 import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
@@ -13,12 +14,14 @@ import { Lunatone } from './lunatone';
 import { Magcargo } from './magcargo';
 import { Minun } from './minun';
 import { Nosepass } from './nosepass';
+import { Numel } from './numel';
 import { ScrambleEnergy } from './scramble-energy';
 import { Slugma } from './slugma';
 import { Weezing } from './weezing';
 
 export const setEXDeoxys: Card[] = [
   new Altaria(),
+  new Camerupt(),
   new HealEnergy(),
   new Jirachi(),
   new Koffing(),
@@ -32,6 +35,7 @@ export const setEXDeoxys: Card[] = [
   new Magcargo(),
   new Minun(),
   new Nosepass(),
+  new Numel(),
   new ScrambleEnergy(),
   new Slugma(),
   new Weezing(),
