@@ -3,6 +3,7 @@ import { DesertRuins } from './desert-ruins';
 import { IslandCave } from './island-cave';
 import { Jirachi } from './jirachi';
 import { Ninetales } from './ninetales';
+import { Regirockex } from './regirock-ex';
 import { Vulpix } from './vulpix';
 
 export const setEXHiddenLegends: Card[] = [
@@ -10,5 +11,6 @@ export const setEXHiddenLegends: Card[] = [
   new IslandCave(),
   new Jirachi(),
   new Ninetales(),
+  new Regirockex(),
   new Vulpix(),
 ];
