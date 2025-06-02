@@ -1,5 +1,6 @@
 import { Card } from '../../game';
 import { BalloonBerry } from './balloon-berry';
+import { Latiasex } from './latias-ex';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Mareep } from './mareep';
@@ -9,6 +10,7 @@ import { TvReporter } from './tv-reporter';
 
 export const setEXDragon: Card[] = [
   new BalloonBerry(),
+  new Latiasex(),
   new Magnemite(),
   new Magneton(),
   new Mareep(),
