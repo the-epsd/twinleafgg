@@ -1,5 +1,6 @@
 import { Card } from '../../game';
 import { Altaria } from './altaria';
+import { HealEnergy } from './heal-energy';
 import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
 import { Lombre } from './lombre';
@@ -15,6 +16,7 @@ import { Weezing } from './weezing';
 
 export const setEXDeoxys: Card[] = [
   new Altaria(),
+  new HealEnergy(),
   new Jirachi(),
   new Koffing(),
   new Lombre(),
