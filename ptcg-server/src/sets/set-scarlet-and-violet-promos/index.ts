@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AegislashSVP, AlakazamexSVP, ArctibaxSVP, ArmarougeexSVP, BaxcaliburSVP, BloodmoonUrsalunaexSVP, BouffalantSVP, Charizardex2SVP, Charizardex3SVP, CharizardexSVP, CharmanderIRSVP, ChienPaoexSVP, ChienPaoSVP, ChiYuSVP, CinderaceexSVP, CleffaSVP, CrabominableSVP, CrocalorSVP, DrifblimSVP, EeveeSVP, FeraligatrSVP, FloragatoSVP, FlutterManeSVP, FroslassSVP, GougingFireexSVP, GougingFireSVP, GreatTuskexSVP, GrowlitheSVP, HawluchaSVP, InfernapeSVP, IonoSVP, IronBundleIRSVP, IronBundleSVP, IronCrownexSVP, IronLeavesexSVP, IronThornsSVP, IronValiantexSVP, JolteonSVP, KangaskhanexSVP, KingdraexSVP, KoraidonexSVP, KoraidonSVP, LaprasexSVP, MagnetonIRSVP, MagnetonSVP, MeowscaradaexFASVP, MeowscaradaexSVP, MetangSVP, MewexSVP, MimikyuSVP, Miraidonex2SVP, MiraidonexSVP, MiraidonSVP, MurkrowSVP, NoctowlSVP, NsZoruaSVP, PalafinexSVP, PalafinSVP, PawmotSVP, PecharuntIRSVP, PelipperSVP, PinecoSVP, Porygon2SVP, PupitarSVP, QuaquavalexFASVP, QuaquavalexSVP, RagingBoltexSVP, RevavroomSVP, RoaringMoonexSVP, ScreamTailSVP, SkeledirgeexFASVP, SkeledirgeexSVP, SmolivSVP, SnorlaxSVP, SquawkabillyexSVP, TatsugiriSVP, TealMaskOgerponexSVP, TerapagosexSVP, ThwackeySVP, TinkatonSVP, TogekissSVP, VictiniexSVP, WalkingWakeexSVP, XatuSVP, ZapdosexSVP } from './alt-arts';
+import { AegislashSVP, AlakazamexSVP, ArctibaxSVP, ArmarougeexSVP, BaxcaliburSVP, BloodmoonUrsalunaexSVP, BouffalantSVP, Charizardex2SVP, Charizardex3SVP, CharizardexSVP, CharmanderIRSVP, ChienPaoexSVP, ChienPaoSVP, ChiYuSVP, CinderaceexSVP, CleffaSVP, CrabominableSVP, CrocalorSVP, DrifblimSVP, EeveeSVP, FeraligatrSVP, FloragatoSVP, FlutterManeSVP, FroslassSVP, GougingFireexSVP, GougingFireSVP, GreatTuskexSVP, GrowlitheSVP, HawluchaSVP, InfernapeSVP, IonoSVP, IronBundleIRSVP, IronBundleSVP, IronCrownexSVP, IronLeavesexSVP, IronThornsSVP, IronValiantexSVP, JolteonSVP, KangaskhanexSVP, KingdraexSVP, KoraidonexSVP, KoraidonSVP, LaprasexSVP, MagnetonIRSVP, MagnetonSVP, MarniesMorpekoIR, MeowscaradaexFASVP, MeowscaradaexSVP, MetangSVP, MewexSVP, MimikyuSVP, Miraidonex2SVP, MiraidonexSVP, MiraidonSVP, MurkrowSVP, NoctowlSVP, NsZoruaSVP, PalafinexSVP, PalafinSVP, PawmotSVP, PecharuntIRSVP, PelipperSVP, PinecoSVP, Porygon2SVP, PupitarSVP, QuaquavalexFASVP, QuaquavalexSVP, RagingBoltexSVP, RevavroomSVP, RoaringMoonexSVP, ScreamTailSVP, SkeledirgeexFASVP, SkeledirgeexSVP, SmolivSVP, SnorlaxSVP, SquawkabillyexSVP, StevensBeldumIR, TatsugiriSVP, TealMaskOgerponexSVP, TerapagosexSVP, ThwackeySVP, TinkatonSVP, TogekissSVP, VictiniexSVP, WalkingWakeexSVP, XatuSVP, ZapdosexSVP } from './alt-arts';
 import { Ampharosex } from './ampharos-ex';
 import { Charmander } from './charmander';
 import { Mimikyuex } from './mimikyu-ex';
@@ -7,7 +7,6 @@ import { Pecharunt } from './pecharunt';
 import { Psyduck } from './psyduck';
 import { Scrafty } from './scrafty';
 import { Tinkatonex } from './tinkaton-ex';
-import { TMMachine } from './tm-machine';
 import { Toxtricityex } from './toxtricity-ex';
 
 
@@ -17,7 +16,6 @@ export const setScarletAndVioletPromos: Card[] = [
   new Mimikyuex(),
   new Pecharunt(),
   new Tinkatonex(),
-  new TMMachine(),
   new Toxtricityex(),
   new Scrafty(),
   new Psyduck(),
@@ -108,4 +106,6 @@ export const setScarletAndVioletPromos: Card[] = [
   new EeveeSVP(),
   new BloodmoonUrsalunaexSVP(),
   new NsZoruaSVP(),
+  new MarniesMorpekoIR(),
+  new StevensBeldumIR(),
 ];
