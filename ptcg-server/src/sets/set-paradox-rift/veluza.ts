@@ -4,7 +4,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Veluza extends PokemonCard {
 
@@ -70,9 +70,8 @@ export class Veluza extends PokemonCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          // Use MOVE_CARDS for the transfer
-          const { MOVE_CARDS } = require('../../game/store/prefabs/prefabs');
-          state = MOVE_CARDS(store, state, activeCopy, target, { cards: [transfer.card] });
+          // Move the card from the discard pile to the target (to avoid duplication)
+          state = MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card] });
         }
       });
     }
