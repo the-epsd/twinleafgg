@@ -37,7 +37,7 @@ export class FroakieFrubbles extends PokemonCard {
 
   public name: string = 'Froakie';
 
-  public fullName: string = 'Froakie FLI';
+  public fullName: string = 'Froakie FLI2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
