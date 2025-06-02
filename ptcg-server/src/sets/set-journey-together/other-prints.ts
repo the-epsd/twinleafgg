@@ -1,3 +1,5 @@
+import { BlackBeltsTraining } from '../set-prismatic-evolution/black-belts-training';
+import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 import { BrocksScouting } from './brocks-scouting';
 import { Dudunsparceex } from './dudunsparce-ex';
 import { HopsWooloo } from './hops-wooloo';
@@ -177,4 +179,18 @@ export class NsZoroarkexUR extends NsZoroarkex {
 export class SpikeEnergyUR extends SpikyEnergy {
   public fullName = 'Spike EnergyUR JTG';
   public setNumber = '190';
+}
+
+export class ProfessorsResearchJTG extends ProfessorsResearch {
+  public set = 'JTG';
+  public setNumber = '155';
+  public name = 'Professor\'s Research';
+  public fullName = 'Professor\'s Research JTG';
+}
+
+export class BlackBeltsTrainingJTG extends BlackBeltsTraining {
+  public set = 'JTG';
+  public setNumber = '145';
+  public name = 'Black Belt\'s Training';
+  public fullName = 'Black Belt\'s Training JTG';
 }

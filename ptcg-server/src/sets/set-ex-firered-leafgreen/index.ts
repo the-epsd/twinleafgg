@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Blastoiseex } from './blastoise-ex';
+import { CeliosNetwork } from './celios-network';
 import { Ditto } from './ditto';
 import { Electrodeex } from './electrode-ex';
 import { VsSeekerFL } from './other-prints';
@@ -12,6 +13,7 @@ import { Wartortle } from './wartortle';
 
 export const setEXFireRedLeafGreen: Card[] = [
   new Blastoiseex(),
+  new CeliosNetwork(),
   new Pidgey(),
   new Pidgeotto(),
   new Pidgeot(),

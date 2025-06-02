@@ -54,8 +54,8 @@ export class FormatValidator {
       const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
       const arceusCount = cards.filter(card => card.name === 'Arceus').length;
 
-      if (arceusCount !== arceusCount && arceusCount > 4){
-        return formatList.filter(f => 
+      if (arceusCount !== arceusCount && arceusCount > 4) {
+        return formatList.filter(f =>
           f !== Format.GLC &&
           f !== Format.EXPANDED &&
           f !== Format.STANDARD &&
@@ -102,8 +102,19 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
+    if (card.name === 'Quick Ball' && card.set !== 'SSH') {
+      const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
+      return this.getValidFormats(quickBallSSH);
+    }
+    if (card.name === 'Super Rod' && card.set !== 'PAL') {
+      const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };
+      return this.getValidFormats(superRodPAL);
+    }
+    if (card.name === 'Energy Recycler' && card.set !== 'DRI') {
+      const energyRecyclerDRI: any = { ...card, set: 'DRI', setNumber: '164', regulationMark: 'I' };
+      return this.getValidFormats(energyRecyclerDRI);
+    }
     const formats = [Format.UNLIMITED];
-
     [
       Format.GLC,
       Format.EXPANDED,
@@ -130,6 +141,9 @@ export class FormatValidator {
       case Format.STANDARD:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
+        if (card.regulationMark === 'J') {
+          return false;
+        }
         return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
 
       case Format.STANDARD_NIGHTLY:
@@ -392,17 +406,13 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'PAF': new Date('2024-01-26'),
   'TEF': new Date('2024-03-22'),
   'TWM': new Date('2024-05-22'),
-  'SV6a': new Date('2024-06-07'),
-  'SV7': new Date('2024-09-13'),
   'SFA': new Date('2024-08-02'),
   'SCR': new Date('2024-09-13'),
-  'SV7a': new Date('2024-09-13'),
-  'SV8': new Date('2024-11-08'),
   'SSP': new Date('2024-11-08'),
-  'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
   'JTG': new Date('2025-03-28'),
-  'SV9': new Date('2025-03-28'),
-  'SV9a': new Date('2025-05-17'),
-  'SV10': new Date('2025-05-17'),
+  'DRI': new Date('2025-05-17'),
+  'SV11': new Date('2025-07-18'),
+  'SV11B': new Date('2025-07-18'),
+  'SV11W': new Date('2025-07-18'),
 }

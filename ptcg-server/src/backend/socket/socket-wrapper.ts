@@ -26,17 +26,11 @@ export class SocketWrapper {
       const listener = this.listeners[i];
 
       this.socket.on(listener.message, async <T, R>(data: T, fn: Function) => {
-        if (!this.socket.connected) {
-          console.warn(`[Socket] Received message on disconnected socket: ${listener.message}`);
-          return;
-        }
-
         const response: Response<R> =
           (message: string, data?: R | ApiErrorEnum) => fn && fn({ message, data });
         try {
           await listener.handler(data, response);
-        } catch (error) {
-          console.error(`[Socket] Error handling message ${listener.message}:`, error);
+        } catch (error: any) {
           response('error', error.message);
         }
       });
@@ -49,24 +43,7 @@ export class SocketWrapper {
   }
 
   public emit(event: string, ...args: any[]): boolean {
-    try {
-      if (!this.socket.connected) {
-        console.warn(`[Socket] Attempting to emit to disconnected socket: ${event}`);
-        return false;
-      }
-      return this.socket.emit(event, ...args);
-    } catch (error: any) {
-      console.error(`[Socket] Error emitting event ${event}:`, error);
-      return false;
-    }
+    return this.socket.emit(event, ...args);
   }
 
-  public isConnected(): boolean {
-    try {
-      return this.socket && this.socket.connected;
-    } catch (error: any) {
-      console.error('[Socket] Error checking connection status:', error);
-      return false;
-    }
-  }
 }

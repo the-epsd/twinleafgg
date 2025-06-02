@@ -55,4 +55,5 @@ export interface Power {
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;
   barrage?: boolean;
+  knocksOutSelf?: boolean;
 }

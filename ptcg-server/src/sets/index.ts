@@ -144,7 +144,7 @@ export * from './set-paldea-evolved';
 export * from './set-obsidian-flames';
 export * from './set-pokemon-151';
 export * from './set-paradox-rift';
-export * from './set-paldea-fates';
+export * from './set-paldean-fates';
 export * from './set-temporal-forces';
 export * from './set-twilight-masquerade';
 export * from './set-shrouded-fable';
@@ -152,8 +152,7 @@ export * from './set-stellar-crown';
 export * from './set-surging-sparks';
 export * from './set-prismatic-evolution';
 export * from './set-journey-together';
-export * from './set-sv9a';
-export * from './set-sv10';
+export * from './set-destined-rivals';
 export * from './set-sv11';
 export * from './set-m1s';
 

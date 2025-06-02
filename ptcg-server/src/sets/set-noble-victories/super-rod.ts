@@ -16,20 +16,21 @@ function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperRod, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
-  let pokemonsOrEnergyInDiscard: number = 0;
+  // Find eligible cards (Pokémon or Basic Energy) and their indices
+  const eligibleIndices: number[] = [];
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isPokemon = c instanceof PokemonCard;
     const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
     if (isPokemon || isBasicEnergy) {
-      pokemonsOrEnergyInDiscard += 1;
+      eligibleIndices.push(index);
     } else {
       blocked.push(index);
     }
   });
 
   // Player does not have correct cards in discard
-  if (pokemonsOrEnergyInDiscard === 0) {
+  if (eligibleIndices.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -37,12 +38,24 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   let cards: Card[] = [];
+
+  // Dynamically set min and max for the prompt
+  let min: number;
+  let max: number;
+  if (eligibleIndices.length <= 3) {
+    min = eligibleIndices.length;
+    max = eligibleIndices.length;
+  } else {
+    min = 3;
+    max = 3;
+  }
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { },
-    { min: 1, max: 3, allowCancel: false, blocked }
+    {},
+    { min, max, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -61,8 +74,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class SuperRod extends TrainerCard {
-
-  public regulationMark = 'G';
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -85,9 +96,8 @@ export class SuperRod extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  
