@@ -6,6 +6,7 @@ import { Feebas } from './feebas';
 import { Feraligatr } from './feraligatr';
 import { FieryFlint } from './fiery-flint';
 import { Horsea } from './horsea';
+import { LancePrismStar } from './lance-prism-star';
 import { Quagsire } from './quagsire';
 import { Salandit } from './salandit';
 import { SwitchRaft } from './switch-raft';
@@ -22,6 +23,7 @@ export const setDragonsMajesty: Card[] = [
   new Feraligatr(),
   new FieryFlint(),
   new Horsea(),
+  new LancePrismStar(),
   new Quagsire(),
   new Salandit(),
   new SwitchRaft(),

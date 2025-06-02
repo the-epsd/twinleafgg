@@ -9,6 +9,7 @@ import { GardevoirGX } from './gardevoir-gx';
 import { Gloom } from './gloom';
 import { Guzma } from './guzma';
 import { Kiawe } from './kiawe';
+import { Lucario } from './lucario';
 import { Marill } from './marill';
 import { MarshadowGX } from './marshadow-gx';
 import { NecrozmaGX } from './necrozma-gx';
@@ -17,6 +18,7 @@ import { NoivernGX } from './noivern-gx';
 import { Plumeria } from './plumeria';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
+import { Riolu } from './riolu';
 import { SalazzleGX } from './salazzle-gx';
 import { Sophocles } from './sophocles';
 import { TapuBuluGX } from './tapu-bulu-gx';
@@ -36,12 +38,14 @@ export const setBurningShadows: Card[] = [
   new Gloom(),
   new Guzma(),
   new Kiawe(),
+  new Lucario(),
   new Marill(),
   new MarshadowGX(),
   new NecrozmaGX(),
   new Plumeria(),
   new Raichu(),
   new Ralts(),
+  new Riolu(),
   new SalazzleGX(),
   new Sophocles(),
   new TapuBuluGX(),

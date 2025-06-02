@@ -37,13 +37,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       state = store.reduceEffect(state, applyWeakness);
 
       effect.damage = applyWeakness.damage;
+
+      const targetOwner = StateUtils.findOwner(state, target);
+      targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
     }
 
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
-
-    const targetOwner = StateUtils.findOwner(state, target);
-    targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
 
     if (damage > 0) {
       store.log(state, GameLog.LOG_PLAYER_DEALS_DAMAGE, {
@@ -52,6 +52,9 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
         target: targetCard.name,
         effect: effect.attack.name,
       });
+
+      const targetOwner = StateUtils.findOwner(state, target);
+      targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
 
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
       afterDamageEffect.target = effect.target;
