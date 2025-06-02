@@ -3,6 +3,7 @@ import { Altaria } from './altaria';
 import { HealEnergy } from './heal-energy';
 import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
+import { LatiosStar } from './latios-star';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
 import { Ludicolo } from './ludicolo';
@@ -19,6 +20,7 @@ export const setEXDeoxys: Card[] = [
   new HealEnergy(),
   new Jirachi(),
   new Koffing(),
+  new LatiosStar(),
   new Lombre(),
   new Lotad(),
   new Ludicolo(),
