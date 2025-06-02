@@ -11,6 +11,7 @@ import { Bidoof } from './bidoof';
 import { CafeMaster } from './cafe-master';
 import { CherensCare } from './cherens-care';
 import { Cherubi } from './cherubi';
+import { Chimchar } from './chimchar';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
@@ -29,6 +30,7 @@ import { Gloria } from './gloria';
 import { Grotle } from './grotle';
 import { Haxorus } from './haxorus';
 import { Heatran } from './heatran';
+import { Infernape } from './infernape';
 import { Kindler } from './kindler';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
@@ -41,6 +43,7 @@ import { MarniesPride } from './marnies-pride';
 import { Milcery } from './milcery';
 import { Minccino } from './minccino';
 import { Moltres } from './moltres';
+import { Monferno } from './monferno';
 import { UltraBallHR } from './other-prints';
 import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
@@ -68,6 +71,7 @@ export const setBrilliantStars: Card[] = [
   new CafeMaster(),
   new CherensCare(),
   new Cherubi(),
+  new Chimchar(),
   new CleansingGloves(),
   new CollapsedStadium(),
   new CynthiasAmbition(),
@@ -86,6 +90,7 @@ export const setBrilliantStars: Card[] = [
   new Grotle(),
   new Haxorus(),
   new Heatran(),
+  new Infernape(),
   new Kindler(),
   new Lapras(),
   new LumineonV(),
@@ -95,6 +100,7 @@ export const setBrilliantStars: Card[] = [
   new MarniesPride(),
   new Milcery(),
   new Minccino(),
+  new Monferno(),
   new Moltres(),
   new RaichuV(),
   new RaikouV(),
