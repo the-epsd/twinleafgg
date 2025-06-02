@@ -13,6 +13,7 @@ import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
 import { RocketsAdmin } from './rockets-admin';
 import { RocketsPokeBall } from './rockets-poke-ball';
+import { RocketsSneaselex } from './rockets-sneasel-ex';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
 import { Voltorb } from './voltorb';
@@ -32,6 +33,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new PowHandExtension(),
   new RocketsAdmin(),
   new RocketsPokeBall(),
+  new RocketsSneaselex(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
   new Voltorb(),
