@@ -10,6 +10,8 @@ import { PokemonFanClub as PokemonFanClubP4 } from '../../../sets/set-pop-series
 import { PokemonFanClub as PokemonFanClubUPR } from '../../../sets/set-ultra-prism/pokemon-fan-club';
 import { QuickBall as QuickBallMD } from '../../../sets/set-majestic-dawn/quick-ball';
 import { QuickBall as QuickBallSSH } from '../../../sets/set-sword-and-shield/quick-ball';
+import { RareCandy as RareCandyHP } from '../../../sets/set-ex-holon-phantoms/rare-candy';
+import { RareCandy as RareCandySVI } from '../../../sets/set-scarlet-and-violet/rare-candy';
 import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
 import { SuperRod as SuperRodPAL } from '../../../sets/set-paldea-evolved/super-rod';
 
@@ -31,6 +33,10 @@ const effectOverrides: {
   'Quick Ball': {
     [Format.UNLIMITED]: QuickBallMD.prototype.reduceEffect,
     default: QuickBallSSH.prototype.reduceEffect
+  },
+  'Rare Candy': {
+    [Format.RSPK]: RareCandyHP.prototype.reduceEffect,
+    default: RareCandySVI.prototype.reduceEffect
   },
   'Super Rod': {
     [Format.UNLIMITED]: SuperRodNVI.prototype.reduceEffect,

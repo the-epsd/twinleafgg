@@ -12,6 +12,7 @@ import { Oddish } from './oddish';
 import { Pidgey } from './pidgey';
 import { Pikachu } from './pikachu';
 import { Raichu } from './raichu';
+import { RareCandy } from './rare-candy';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 
@@ -27,6 +28,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Pidgey(),
   new Pikachu(),
   new Raichu(),
+  new RareCandy(),
   new HolonsCastform(),
   new Trapinch(),
   new Vibrava(),

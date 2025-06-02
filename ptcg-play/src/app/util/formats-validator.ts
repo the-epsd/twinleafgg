@@ -114,6 +114,10 @@ export class FormatValidator {
       const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
       return this.getValidFormats(quickBallSSH);
     }
+    if (card.name === 'Rare Candy' && card.set !== 'SVI') {
+      const rareCandySVI: any = { ...card, set: 'SVI', setNumber: '191', regulationMark: 'G' };
+      return this.getValidFormats(rareCandySVI);
+    }
     if (card.name === 'Super Rod' && card.set !== 'PAL') {
       const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };
       return this.getValidFormats(superRodPAL);
