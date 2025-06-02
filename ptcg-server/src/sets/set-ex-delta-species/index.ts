@@ -20,6 +20,7 @@ import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
 import { Persian } from './persian';
 import { Ralts } from './ralts';
+import { Rayquaza } from './rayquaza';
 import { Salamence } from './salamence';
 import { Shelgon } from './shelgon';
 import { Shelgon2 } from './shelgon2';
@@ -47,6 +48,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Meowth(),
   new Persian(),
   new Ralts(),
+  new Rayquaza(),
   new Salamence(),
   new Shelgon(),
   new Shelgon2(),
