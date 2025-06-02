@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { Hoopa } from '../set-unified-minds/hoopa';
 import { Croconaw } from './croconaw';
+import { Hoopa } from './hoopa';
 import { Latios } from './latios';
 import { Marshadow } from './marshadow';
 import { Plusle } from './plusle';
