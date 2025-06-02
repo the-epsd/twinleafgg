@@ -4,6 +4,8 @@ import { StoreLike } from '../store-like';
 import { State } from '../state/state';
 import { Effect } from '../effects/effect';
 
+import { GreatBall as GreatBallRG } from '../../../sets/set-ex-firered-leafgreen/great-ball';
+import { GreatBall as GreatBallPAL } from '../../../sets/set-paldea-evolved/great-ball';
 import { QuickBall as QuickBallMD } from '../../../sets/set-majestic-dawn/quick-ball';
 import { QuickBall as QuickBallSSH } from '../../../sets/set-sword-and-shield/quick-ball';
 import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
@@ -16,6 +18,10 @@ const effectOverrides: {
     default?: (this: TrainerCard, store: StoreLike, state: State, effect: Effect) => State
   }
 } = {
+  'Great Ball': {
+    [Format.RSPK]: GreatBallRG.prototype.reduceEffect,
+    default: GreatBallPAL.prototype.reduceEffect
+  },
   'Quick Ball': {
     [Format.UNLIMITED]: QuickBallMD.prototype.reduceEffect,
     default: QuickBallSSH.prototype.reduceEffect
