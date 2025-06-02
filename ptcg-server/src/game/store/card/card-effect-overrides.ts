@@ -6,6 +6,8 @@ import { Effect } from '../effects/effect';
 
 import { GreatBall as GreatBallRG } from '../../../sets/set-ex-firered-leafgreen/great-ball';
 import { GreatBall as GreatBallPAL } from '../../../sets/set-paldea-evolved/great-ball';
+import { PokemonFanClub as PokemonFanClubP4 } from '../../../sets/set-pop-series-4/pokemon-fan-club';
+import { PokemonFanClub as PokemonFanClubUPR } from '../../../sets/set-ultra-prism/pokemon-fan-club';
 import { QuickBall as QuickBallMD } from '../../../sets/set-majestic-dawn/quick-ball';
 import { QuickBall as QuickBallSSH } from '../../../sets/set-sword-and-shield/quick-ball';
 import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
@@ -21,6 +23,10 @@ const effectOverrides: {
   'Great Ball': {
     [Format.RSPK]: GreatBallRG.prototype.reduceEffect,
     default: GreatBallPAL.prototype.reduceEffect
+  },
+  'Pokémon Fan Club': {
+    [Format.RSPK]: PokemonFanClubP4.prototype.reduceEffect,
+    default: PokemonFanClubUPR.prototype.reduceEffect
   },
   'Quick Ball': {
     [Format.UNLIMITED]: QuickBallMD.prototype.reduceEffect,

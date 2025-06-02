@@ -106,6 +106,10 @@ export class FormatValidator {
       const greatBallPAL: any = { ...card, set: 'PAL', setNumber: '183', regulationMark: 'G' };
       return this.getValidFormats(greatBallPAL);
     }
+    if (card.name === 'Pokémon Fan Club' && card.set !== 'UPR') {
+      const pokemonFanClubUPR: any = { ...card, set: 'UPR', setNumber: '133' };
+      return this.getValidFormats(pokemonFanClubUPR);
+    }
     if (card.name === 'Quick Ball' && card.set !== 'SSH') {
       const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
       return this.getValidFormats(quickBallSSH);
