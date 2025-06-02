@@ -4,11 +4,13 @@ import { Chikorita } from './chikorita';
 import { Lugiaex } from './lugia-ex';
 import { MarysRequest } from './marys-request';
 import { Meganiumex } from './meganium-ex';
+import { Onix } from './onix';
 import { PokemonReversal } from './pokemon-reversal';
 import { ProfessorElmsTrainingMethod } from './professors-elm-training-method';
 import { SolidRage } from './solid-rage';
 import { Stantler } from './stantler';
 import { Slowpoke } from './slowpoke';
+import { Steelixex } from './steelix-ex';
 import { Teddiursa } from './teddiursa';
 import { Typhlosionex } from './typhlosion-ex';
 import { Ursaring } from './ursaring';
@@ -22,11 +24,13 @@ export const setEXUnseenForces: Card[] = [
   new Lugiaex(),
   new MarysRequest(),
   new Meganiumex(),
+  new Onix(),
   new PokemonReversal(),
   new ProfessorElmsTrainingMethod(),
   new SolidRage(),
   new Stantler(),
   new Slowpoke(),
+  new Steelixex(),
   new Teddiursa(),
   new Typhlosionex(),
   new Ursaring(),
