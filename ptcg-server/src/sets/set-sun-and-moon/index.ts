@@ -1,5 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { Dartrix } from '../set-shining-fates/dartrix';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
@@ -25,6 +24,7 @@ import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
 import { TaurosGX } from './tauros-gx';
 import { Vikavolt } from './vikavolt';
+import { Dartrix } from './dartrix';
 
 export const setSunAndMoon: Card[] = [
   new AlolanGrimer(),
