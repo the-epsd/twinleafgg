@@ -63,7 +63,6 @@ export class MessageService {
   }
 
   public sendMessage(userId: number, text: string): Observable<MessageResponse> {
-    text = text.replace(/[^\x00-\x7F]/g, '');
     return this.socketService.emit('message:send', { userId, text });
   }
 
