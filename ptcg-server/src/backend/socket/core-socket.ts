@@ -26,9 +26,6 @@ export class CoreSocket {
     // core listeners
     this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
     this.socket.addListener('core:createGame', this.createGame.bind(this));
-    this.socket.addListener('heartbeat', this.onHeartbeat.bind(this));
-    this.socket.addListener('core:ping', this.onPing.bind(this));
-    this.socket.addListener('error', this.handleError.bind(this));
   }
 
   public onConnect(client: Client): void {
@@ -40,40 +37,6 @@ export class CoreSocket {
 
   public onDisconnect(client: Client): void {
     this.socket.emit('core:leave', client.id);
-  }
-
-  public onReconnect(client: Client): void {
-    console.log(`[Socket] Client ${client.id} reconnected`);
-
-    // Verify client state
-    const game = this.core.games.find(g => g.clients.some(c => c.id === client.id));
-    if (game) {
-      // Resync game state
-      this.socket.emit('core:gameState', CoreSocket.buildGameState(game));
-    }
-    // Resync user state
-    this.onUsersUpdate(this.core.clients.map(c => c.user));
-  }
-
-  public onHeartbeat(): void {
-    // Update last seen timestamp
-    if (this.client && this.client.user) {
-      this.client.user.lastSeen = Date.now();
-    }
-    // Acknowledge heartbeat
-    this.socket.emit('heartbeat_ack');
-  }
-
-  private onPing(data: void, response: Response<void>): void {
-    response('ok');
-  }
-
-  private handleError(error: Error): void {
-    console.error('[Socket] Error:', error);
-    // Emit recovery signal
-    this.socket.emit('error_recovery');
-    // Attempt to resync state
-    this.onReconnect(this.client);
   }
 
   public onGameAdd(game: Game): void {
