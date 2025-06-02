@@ -3,6 +3,7 @@ import { DesertRuins } from './desert-ruins';
 import { Feebas } from './feebas';
 import { IslandCave } from './island-cave';
 import { Jirachi } from './jirachi';
+import { Machop } from './machop';
 import { Milotic } from './milotic';
 import { Ninetales } from './ninetales';
 import { Regirockex } from './regirock-ex';
@@ -13,6 +14,7 @@ export const setEXHiddenLegends: Card[] = [
   new Feebas(),
   new IslandCave(),
   new Jirachi(),
+  new Machop(),
   new Milotic(),
   new Ninetales(),
   new Regirockex(),
