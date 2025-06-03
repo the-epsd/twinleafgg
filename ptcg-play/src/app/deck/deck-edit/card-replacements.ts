@@ -1,7 +1,8 @@
 export const setCodeReplacements = [
   { from: 'PR-SH', to: 'SWSH' },
   { from: 'SP', to: 'SWSH' },
-  { from: 'PR-SW', to: 'SWSH' }
+  { from: 'PR-SW', to: 'SWSH' },
+  { from: 'PR-SV', to: 'SVP' },
 ];
 
 export const cardReplacements = [
@@ -609,15 +610,11 @@ export const cardReplacements = [
   { from: 'N\'s Zoroark ex JTG 189', to: 'N\'s Zoroark exUR JTG 189' },
   { from: 'Spiky Energy JTG 190', to: 'Spike EnergyUR JTG 190' },
 
-  //SVOM
-  { from: 'Marnie\'s Morpeko SVOM 20', to: 'Marnie\'s MorpekoIR SVOM 20' },
-
-  //SVOD
-  { from: 'Steven\'s Beldum SVOD 19', to: 'Steven\'s BeldumIR SVOD 19' },
-
-  //SV9a
-  { from: 'Ethan\'s Ho-Oh ex SV9a 86', to: 'Ethan\'s Ho-Oh exSIR SV9a 86' },
-  { from: 'Cynthia\'s Roserade SV9a 65', to: 'Cynthia\'s RoseradeIR SV9a 65' },
+  //DRI
+  { from: 'Steven\'s Beldum DRI 19', to: 'Steven\'s BeldumIR DRI 19' },
+  { from: 'Marnie\'s Morpeko DRI 20', to: 'Marnie\'s MorpekoIR DRI 20' },
+  { from: 'Ethan\'s Ho-Oh ex DRI 239', to: 'Ethan\'s Ho-Oh exSIR DRI 239' },
+  { from: 'Cynthia\'s Roserade DRI 184', to: 'Cynthia\'s RoseradeIR DRI 184' },
 ];
 
 export const exportReplacements = [
@@ -1120,13 +1117,9 @@ export const exportReplacements = [
   { from: 'N\'s Zoroark exUR JTG 189', to: 'N\'s Zoroark ex JTG 189' },
   { from: 'Spike EnergyUR JTG 190', to: 'Spike Energy JTG 190' },
 
-  //SVOM
-  { from: 'Marnie\'s MorpekoIR SVOM 20', to: 'Marnie\'s Morpeko SVOM 20' },
-
-  //SVOD
-  { from: 'Steven\'s BeldumIR SVOD 19', to: 'Steven\'s Beldum SVOD 19' },
-
-  //SV9a
-  { from: 'Ethan\'s Ho-Oh exSIR SV9a 86', to: 'Ethan\'s Ho-Oh ex SV9a 86' },
-  { from: 'Cynthia\'s RoseradeIR SV9a 65', to: 'Cynthia\'s Roserade SV9a 65' },
+  //DRI
+  { from: 'Marnie\'s MorpekoIR DRI 20', to: 'Marnie\'s Morpeko DRI 20' },
+  { from: 'Steven\'s BeldumIR DRI 19', to: 'Steven\'s Beldum DRI 19' },
+  { from: 'Ethan\'s Ho-Oh exSIR DRI 86', to: 'Ethan\'s Ho-Oh ex DRI 86' },
+  { from: 'Cynthia\'s RoseradeIR DRI 65', to: 'Cynthia\'s Roserade DRI 65' },
 ];

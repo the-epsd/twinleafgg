@@ -135,11 +135,8 @@ export class Weavile extends PokemonCard {
           // no abilities on bench
         }
       }
-
       return state;
     }
-
     return state;
   }
-
 }

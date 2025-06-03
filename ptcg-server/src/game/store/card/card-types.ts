@@ -45,7 +45,8 @@ export enum CardTag {
   ARVENS = 'ARVENS',
   POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
   HOLONS = 'HOLONS',
-  TEAM_ROCKET = 'TEAM_ROCKET',
+  ROCKETS = 'ROCKETS', // For old cards
+  TEAM_ROCKET = 'TEAM_ROCKET', // For new cards
   UNOWN = 'UNOWN',
   PRIMAL = 'PRIMAL',
   ARCEUS = 'ARCEUS',
@@ -1295,6 +1296,7 @@ export enum Format {
   RETRO,
   GLC,
   STANDARD_NIGHTLY,
+  RSPK,
   BW,
   XY,
   SM,
@@ -1333,4 +1335,8 @@ declare global {
   const W: typeof Energy.W;
   const Y: typeof Energy.Y;
   const N: typeof Energy.N;
+}
+
+export function isCoreFormat(format: Format): boolean {
+  return format === Format.STANDARD || format === Format.EXPANDED || format === Format.UNLIMITED || format === Format.STANDARD_NIGHTLY || format === Format.GLC;
 }

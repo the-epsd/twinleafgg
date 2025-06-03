@@ -1,5 +1,5 @@
 import { GameMessage } from '../../game/game-message';
-import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -27,7 +27,7 @@ export class ShadowTriad extends TrainerCard {
       BLOCK_IF_DISCARD_EMPTY(player);
 
       const blocked: number[] = [];
-      player.deck.cards.forEach((card, index) => {
+      player.discard.cards.forEach((card, index) => {
         if (!(card.tags.includes(CardTag.TEAM_PLASMA))) {
           blocked.push(index);
         }
@@ -39,7 +39,7 @@ export class ShadowTriad extends TrainerCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
-        { superType: SuperType.POKEMON },
+        {},
         { min: 0, max: 1, allowCancel: true, blocked }
       ), selected => {
         const cards = selected || [];

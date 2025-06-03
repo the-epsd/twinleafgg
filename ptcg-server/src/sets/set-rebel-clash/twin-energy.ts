@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class TwinEnergy extends EnergyCard {
 
-  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -34,12 +34,11 @@ If this card is attached to a Pokémon V or a Pokémon-GX, it provides [C] Energ
         effect.source.getPokemonCard()!.tags.includes(CardTag.POKEMON_V) ||
         effect.source.getPokemonCard()!.tags.includes(CardTag.POKEMON_VSTAR) ||
         effect.source.getPokemonCard()!.tags.includes(CardTag.POKEMON_VMAX)) {
-        return state;
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
+      } else {
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS, CardType.COLORLESS] });
       }
-
-      effect.energyMap.push({ card: this, provides: [CardType.COLORLESS, CardType.COLORLESS] });
     }
-
     return state;
   }
 }

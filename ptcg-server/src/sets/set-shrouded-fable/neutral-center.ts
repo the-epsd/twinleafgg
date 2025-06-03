@@ -22,7 +22,7 @@ export class NeutralCenter extends TrainerCard {
 
   public name = 'Neutralization Zone';
 
-  public fullName = 'Neutral Center SFA';
+  public fullName = 'Neutralization Zone SFA';
 
   public text = `Prevent all damage done to Pokémon that don't have a Rule Box (both yours and your opponent's) by attacks from the opponent's Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)
 

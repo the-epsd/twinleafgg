@@ -99,11 +99,11 @@ export class Lanturn extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '46';
+  public setNumber: string = '49';
 
-  public name: string = 'Electabuzz';
+  public name: string = 'Lanturn';
 
-  public fullName: string = 'Electabuzz SCR';
+  public fullName: string = 'Lanturn SCR';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

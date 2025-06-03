@@ -19,7 +19,7 @@ import { Pineco } from '../set-paldea-evolved/pineco';
 import { Quaquavalex } from '../set-paldea-evolved/quaquaval-ex';
 import { Skeledirgeex } from '../set-paldea-evolved/skeledirge-ex';
 import { Tinkaton } from '../set-paldea-evolved/tinkaton';
-import { GreatTuskex } from '../set-paldea-fates/great-tusk-ex';
+import { GreatTuskex } from '../set-paldean-fates/great-tusk-ex';
 import { Aegislash } from '../set-paradox-rift/aegislash';
 import { Armarougeex } from '../set-paradox-rift/armarouge-ex';
 import { ChiYu } from '../set-paradox-rift/chi-yu';
@@ -76,7 +76,9 @@ import { Terapagosex } from '../set-stellar-crown/terapagos-ex';
 import { Jolteon } from '../set-pokemon-151/jolteon';
 import { Eevee } from '../set-surging-sparks/eevee';
 import { BloodmoonUrsalunaex } from '../set-twilight-masquerade/bloodmoon-ursaluna-ex';
-import {NsZorua} from '../set-journey-together/ns-zorua';
+import { NsZorua } from '../set-journey-together/ns-zorua';
+import { MarniesMorpeko } from '../set-destined-rivals/marnies-morpeko';
+import { StevensBeldum } from '../set-destined-rivals/stevens-beldum';
 
 // export class QuaquavalSVP extends Quaquaval {
 //   public setNumber = '5';
@@ -774,8 +776,18 @@ export class BloodmoonUrsalunaexSVP extends BloodmoonUrsalunaex {
   public set = 'SVP';
 }
 
-export class NsZoruaSVP extends NsZorua{
+export class NsZoruaSVP extends NsZorua {
   public setNumber = '189';
   public fullName: string = 'N\'s Zorua SVP';
   public set = 'SVP';
+}
+
+export class MarniesMorpekoIR extends MarniesMorpeko {
+  public fullName = 'Marnie\'s MorpekoIR SVP';
+  public setNumber = '206';
+}
+
+export class StevensBeldumIR extends StevensBeldum {
+  public fullName = 'Steven\'s BeldumIR SVP';
+  public setNumber = '207';
 }
