@@ -43,6 +43,7 @@ export enum CardTag {
   MISTYS = 'MISTYS',
   CYNTHIAS = 'CYNTHIAS',
   ARVENS = 'ARVENS',
+  AURAS = 'AURAS',
   POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
   HOLONS = 'HOLONS',
   ROCKETS = 'ROCKETS', // For old cards
