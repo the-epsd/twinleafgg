@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Worker extends TrainerCard {
 
@@ -47,15 +48,13 @@ export class Worker extends TrainerCard {
 
       player.deck.moveTo(player.hand, 3);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
-  
-  
         // Discard Stadium
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
+        MOVE_CARDS(store, state, cardList, player.discard, { sourceCard: this });
         return state;
       }
 

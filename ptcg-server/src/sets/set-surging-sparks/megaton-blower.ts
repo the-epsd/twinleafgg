@@ -37,7 +37,7 @@ export class MegatonBlower extends TrainerCard {
         const cardList = StateUtils.findCardList(state, stadiumCard);
         if (cardList) {
           const stadiumOwner = StateUtils.findOwner(state, cardList);
-          state = MOVE_CARDS(store, state, cardList, stadiumOwner.discard, { cards: [stadiumCard] });
+          state = MOVE_CARDS(store, state, cardList, stadiumOwner.discard, { cards: [stadiumCard], sourceCard: this });
         }
       }
 
