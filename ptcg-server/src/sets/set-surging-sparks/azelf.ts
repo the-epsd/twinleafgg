@@ -22,7 +22,7 @@ export class Azelf extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Heart Fulfilment',
+    name: 'Neurokenesis',
     cost: [P, C],
     damage: 10,
     damageCalculation: '+',

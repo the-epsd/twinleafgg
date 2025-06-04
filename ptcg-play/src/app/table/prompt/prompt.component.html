@@ -9,8 +9,8 @@
   </ng-template>
 </dnd-preview>
 
-<div class="ptcg-prompt">
-
+<!-- Only show the prompt UI if it's NOT a board overlay prompt -->
+<div class="ptcg-prompt" *ngIf="!isBoardOverlayPrompt()">
   <div class="ptcg-prompt-overlay" [ngClass]="{active: isPromptVisible}" *ngIf="!isFullScreenPrompt()">
   </div>
 
@@ -59,13 +59,13 @@
     </div>
   </div>
 
-  <ptcg-prompt-choose-pokemon *ngIf="isFullScreenPrompt()" [gameState]="gameState"
-    [prompt]="prompt"></ptcg-prompt-choose-pokemon>
-
   <div class="ptcg-minimized-prompt" *ngIf="minimized && prompt?.type !== 'Choose pokemon'">
     <button mat-fab color="primary" (click)="maximize()">
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
   </div>
-
 </div>
+
+<!-- Always render the choose-pokemon prompt if it's the current prompt -->
+<ptcg-prompt-choose-pokemon *ngIf="prompt?.type === 'Choose pokemon'" [gameState]="gameState" [prompt]="prompt">
+</ptcg-prompt-choose-pokemon>

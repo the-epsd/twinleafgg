@@ -102,9 +102,21 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
+    if (card.name === 'Great Ball' && card.set !== 'PAL') {
+      const greatBallPAL: any = { ...card, set: 'PAL', setNumber: '183', regulationMark: 'G' };
+      return this.getValidFormats(greatBallPAL);
+    }
+    if (card.name === 'Pokémon Fan Club' && card.set !== 'UPR') {
+      const pokemonFanClubUPR: any = { ...card, set: 'UPR', setNumber: '133' };
+      return this.getValidFormats(pokemonFanClubUPR);
+    }
     if (card.name === 'Quick Ball' && card.set !== 'SSH') {
       const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
       return this.getValidFormats(quickBallSSH);
+    }
+    if (card.name === 'Rare Candy' && card.set !== 'SVI') {
+      const rareCandySVI: any = { ...card, set: 'SVI', setNumber: '191', regulationMark: 'G' };
+      return this.getValidFormats(rareCandySVI);
     }
     if (card.name === 'Super Rod' && card.set !== 'PAL') {
       const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };

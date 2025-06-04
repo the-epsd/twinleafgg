@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -51,7 +52,7 @@ export class Delinquent extends TrainerCard {
         // Discard Stadium
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
+        MOVE_CARDS(store, state, cardList, player.discard, { sourceCard: this });
       }
 
       // Discard 3 cards from opponent's hand

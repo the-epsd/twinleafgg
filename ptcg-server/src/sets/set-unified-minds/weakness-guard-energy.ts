@@ -36,7 +36,7 @@ export class WeaknessGuardEnergy extends EnergyCard {
       if (!IS_SPECIAL_ENERGY_BLOCKED(store, state, opponent, this, effect.target)) {
         const target = effect.target.getPokemonCard();
         if (target) {
-          target.weakness = [];
+          effect.weakness = [];
         }
       }
     }

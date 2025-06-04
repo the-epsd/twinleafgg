@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -62,7 +63,7 @@ export class FieldBlower extends TrainerCard {
             action: () => {
               const cardList = StateUtils.findCardList(state, stadiumCard);
               const stadiumPlayer = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(stadiumPlayer.discard);
+              MOVE_CARDS(store, state, cardList, stadiumPlayer.discard, { sourceCard: this });
               store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
 
               let targets: PokemonCardList[] = [];
@@ -131,7 +132,7 @@ export class FieldBlower extends TrainerCard {
         // Discard Stadium
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const owner = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(owner.discard);
+        MOVE_CARDS(store, state, cardList, owner.discard, { sourceCard: this });
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
         player.supporter.moveCardTo(this, player.discard);
         return state;

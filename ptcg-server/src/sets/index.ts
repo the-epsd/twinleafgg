@@ -39,7 +39,13 @@ export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
 export * from './set-ex-legend-maker';
 
+//POP Series
+export * from './set-pop-series-4';
 export * from './set-pop-series-5';
+
+//Japan Promos ex-era
+export * from './set-pcg-l-promotional-cards';
+export * from './set-pcg-p-promotional-cards';
 
 //DP Era
 export * from './set-diamond-and-pearl';
