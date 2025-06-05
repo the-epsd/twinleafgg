@@ -15,6 +15,7 @@ import { Magcargo } from './magcargo';
 import { Minun } from './minun';
 import { Nosepass } from './nosepass';
 import { Numel } from './numel';
+import { Sableye } from './sableye';
 import { ScrambleEnergy } from './scramble-energy';
 import { Slugma } from './slugma';
 import { Weezing } from './weezing';
@@ -36,6 +37,7 @@ export const setEXDeoxys: Card[] = [
   new Minun(),
   new Nosepass(),
   new Numel(),
+  new Sableye(),
   new ScrambleEnergy(),
   new Slugma(),
   new Weezing(),

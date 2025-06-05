@@ -6,6 +6,7 @@ import { FlareonStar } from './flareon-star';
 import { JolteonStar } from './jolteon-star';
 import { Machoke } from './machoke';
 import { Machop } from './machop';
+import { Skitty } from './skitty';
 import { StevensAdvice } from './stevens-advice';
 
 export const setEXPowerKeepers: Card[] = [
@@ -15,6 +16,7 @@ export const setEXPowerKeepers: Card[] = [
   new JolteonStar(),
   new Machoke(),
   new Machop(),
+  new Skitty(),
   new StevensAdvice(),
 
   // Basic energies

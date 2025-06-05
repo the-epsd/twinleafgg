@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { Aipom } from './aipom';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Lugiaex } from './lugia-ex';
@@ -19,6 +20,7 @@ import { Ursaring } from './ursaring';
 import { WarpEnergyUF } from './other-prints';
 
 export const setEXUnseenForces: Card[] = [
+  new Aipom(),
   new Bayleef(),
   new Chikorita(),
   new Lugiaex(),

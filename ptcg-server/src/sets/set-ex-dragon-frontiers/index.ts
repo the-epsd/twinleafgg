@@ -3,12 +3,16 @@ import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Copycat } from './copycat';
 import { Flygonex } from './flygon-ex';
+import { Gardevoirex } from './gardevoir-ex';
+import { Kirlia } from './kirlia';
 import { Mantine } from './mantine';
 import { Meganium } from './meganium';
 import { MewStar } from './mew-star';
 import { MrStonesProject } from './mr-stones-project';
 import { Nidoqueen } from './nidoqueen';
 import { ProfessorOaksResearch } from './professor-oaks-research';
+import { Ralts } from './ralts';
+import { Ralts2 } from './ralts2';
 import { Rayquazaex } from './rayquaza-ex';
 import { Trapinch } from './trapinch';
 import { Trapinch2 } from './trapinch2';
@@ -20,12 +24,16 @@ export const setEXDragonFrontiers: Card[] = [
   new Chikorita(),
   new Copycat(),
   new Flygonex(),
+  new Gardevoirex(),
+  new Kirlia(),
   new Mantine(),
   new Meganium(),
   new MewStar(),
   new MrStonesProject(),
   new Nidoqueen(),
   new ProfessorOaksResearch(),
+  new Ralts(),
+  new Ralts2(),
   new Rayquazaex(),
   new Trapinch(),
   new Trapinch2(),
