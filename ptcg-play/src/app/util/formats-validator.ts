@@ -117,10 +117,6 @@ export class FormatValidator {
       const crushingHammerSVI: any = { ...card, set: 'SVI', setNumber: '168', regulationMark: 'G' };
       return this.getValidFormats(crushingHammerSVI);
     }
-    if (card.name === 'Energy Retrieval' && card.set !== 'SVI') {
-      const energyRetrievalSVI: any = { ...card, set: 'SVI', setNumber: '171', regulationMark: 'G' };
-      return this.getValidFormats(energyRetrievalSVI);
-    }
     if (card.name === 'Energy Search' && card.set !== 'SVI') {
       const energySearchSVI: any = { ...card, set: 'SVI', setNumber: '172', regulationMark: 'G' };
       return this.getValidFormats(energySearchSVI);
