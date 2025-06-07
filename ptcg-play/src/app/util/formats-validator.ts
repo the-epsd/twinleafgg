@@ -317,7 +317,14 @@ export class FormatValidator {
       case Format.GLC:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
+        // Force SV11, SV11B, SV11W to be legal in GLC regardless of date
+        const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
+        const isForceLegal = forceLegalSets.includes(card.set);
+        return (
+          (
+            (setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date())
+            || isForceLegal
+          ) &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
           !card.tags.some(t => [
             CardTag.ACE_SPEC.toString(),
@@ -330,7 +337,8 @@ export class FormatValidator {
             CardTag.POKEMON_GX.toString(),
             CardTag.PRISM_STAR.toString(),
             CardTag.POKEMON_VUNION.toString()
-          ].includes(t));
+          ].includes(t)
+          ));
 
       case Format.RETRO:
         return card.set === 'BS' ||

@@ -10,7 +10,7 @@ export class Ludicolo2 extends PokemonCard {
   public evolvesFrom = 'Lombre';
   public cardType: CardType = W;
   public hp: number = 100;
-  public weakness = [{ type: L, value: 2 }];
+  public weakness = [{ type: L }];
   public retreat = [C, C];
 
   public powers = [{

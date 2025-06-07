@@ -9,7 +9,7 @@ export class Dewott extends PokemonCard {
   public evolvesFrom = 'Oshawott';
   public cardType: CardType = W;
   public hp: number = 100;
-  public weakness = [{ type: L, value: 2 }];
+  public weakness = [{ type: L }];
   public retreat = [C];
 
   public attacks = [{
