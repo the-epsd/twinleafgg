@@ -7,6 +7,7 @@ import { Mareep } from './mareep';
 import { Meditite } from './meditite';
 import { MrBrineysCompassion } from './mr-brineys-compassion';
 import { Numel } from './numel';
+import { Treecko } from './treecko';
 import { TvReporter } from './tv-reporter';
 
 export const setEXDragon: Card[] = [
@@ -18,5 +19,6 @@ export const setEXDragon: Card[] = [
   new Meditite(),
   new MrBrineysCompassion(),
   new Numel(),
+  new Treecko(),
   new TvReporter(),
 ];

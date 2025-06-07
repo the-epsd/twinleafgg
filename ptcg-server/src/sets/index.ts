@@ -47,6 +47,9 @@ export * from './set-pop-series-5';
 export * from './set-pcg-l-promotional-cards';
 export * from './set-pcg-p-promotional-cards';
 
+// VS Packs
+export * from './set-vs-pack-auras-lucario';
+
 //DP Era
 export * from './set-diamond-and-pearl';
 export * from './set-mysterious-treasures';

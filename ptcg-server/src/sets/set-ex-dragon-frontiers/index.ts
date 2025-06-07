@@ -14,6 +14,7 @@ import { ProfessorOaksResearch } from './professor-oaks-research';
 import { Ralts } from './ralts';
 import { Ralts2 } from './ralts2';
 import { Rayquazaex } from './rayquaza-ex';
+import { StrengthCharm } from './strength-charm';
 import { Trapinch } from './trapinch';
 import { Trapinch2 } from './trapinch2';
 import { Vibrava } from './vibrava';
@@ -35,6 +36,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Ralts(),
   new Ralts2(),
   new Rayquazaex(),
+  new StrengthCharm(),
   new Trapinch(),
   new Trapinch2(),
   new Vibrava(),
