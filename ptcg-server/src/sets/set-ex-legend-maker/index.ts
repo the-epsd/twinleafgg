@@ -13,6 +13,7 @@ import { Mewex } from './mew-ex';
 import { Pikachu } from './pikachu';
 import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
+import { Roselia } from './roselia';
 import { Shuppet } from './shuppet';
 import { Solrock } from './solrock';
 import { Voltorb } from './voltorb';
@@ -32,6 +33,7 @@ export const setEXLegendMaker: Card[] = [
   new Pikachu(),
   new PowerTree(),
   new ReactEnergy(),
+  new Roselia(),
   new Shuppet(),
   new Solrock(),
   new Voltorb(),

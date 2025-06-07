@@ -106,6 +106,10 @@ export class FormatValidator {
       const greatBallPAL: any = { ...card, set: 'PAL', setNumber: '183', regulationMark: 'G' };
       return this.getValidFormats(greatBallPAL);
     }
+    if (card.name === 'Master Ball' && card.set !== 'TEF') {
+      const masterBallTEF: any = { ...card, set: 'TEF', setNumber: '153', regulationMark: 'H' };
+      return this.getValidFormats(masterBallTEF);
+    }
     if (card.name === 'Pokémon Fan Club' && card.set !== 'UPR') {
       const pokemonFanClubUPR: any = { ...card, set: 'UPR', setNumber: '133' };
       return this.getValidFormats(pokemonFanClubUPR);

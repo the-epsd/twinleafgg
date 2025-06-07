@@ -59,6 +59,9 @@ cardManager.defineSet(sets.setPOPSeries5);
 cardManager.defineSet(sets.setPCGLPromotionalCards);
 cardManager.defineSet(sets.setPCGPPromotionalCards);
 
+// VS Packs
+cardManager.defineSet(sets.setVSPackAurasLucario);
+
 cardManager.defineSet(sets.setDiamondAndPearl);
 cardManager.defineSet(sets.setMysteriousTreasures);
 cardManager.defineSet(sets.setSupremeVictors);

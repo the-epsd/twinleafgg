@@ -12,11 +12,14 @@ import { Ludicolo } from './ludicolo';
 import { Ludicolo2 } from './ludicolo2';
 import { Lunatone } from './lunatone';
 import { Magcargo } from './magcargo';
+import { MasterBall } from './master-ball';
 import { Minun } from './minun';
 import { Nosepass } from './nosepass';
 import { Numel } from './numel';
+import { Sableye } from './sableye';
 import { ScrambleEnergy } from './scramble-energy';
 import { Slugma } from './slugma';
+import { SpaceCenter } from './space-center';
 import { Weezing } from './weezing';
 
 export const setEXDeoxys: Card[] = [
@@ -33,10 +36,13 @@ export const setEXDeoxys: Card[] = [
   new Ludicolo2(),
   new Lunatone(),
   new Magcargo(),
+  new MasterBall(),
   new Minun(),
   new Nosepass(),
   new Numel(),
+  new Sableye(),
   new ScrambleEnergy(),
   new Slugma(),
+  new SpaceCenter(),
   new Weezing(),
 ];

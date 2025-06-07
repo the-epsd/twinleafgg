@@ -1,12 +1,13 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
 import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
 
 export class PowHandExtension extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+  public tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Pow! Hand Extension';
   public fullName: string = 'Pow! Hand Extension TRR';

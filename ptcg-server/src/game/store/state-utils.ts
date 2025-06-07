@@ -76,6 +76,9 @@ export class StateUtils {
           case 'Unit Energy FDY':
             blendTypes = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];
             break;
+          case 'Dark Metal Energy':
+            blendTypes = [CardType.DARK, CardType.METAL];
+            break;
         }
         if (blendTypes) {
           blendProvides.push(blendTypes);

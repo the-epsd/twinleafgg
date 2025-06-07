@@ -4,6 +4,7 @@ import { DarkDragonair } from './dark-dragonair';
 import { DarkDragonite } from './dark-dragonite';
 import { DarkElectrode } from './dark-electrode';
 import { DarkFlaaffy } from './dark-flaaffy';
+import { DarkMetalEnergy } from './dark-metal-energy';
 import { DarkPupitar } from './dark-pupitar';
 import { DarkTyranitar } from './dark-tyranitar';
 import { DarkTyranitar2 } from './dark-tyrantiar-2';
@@ -26,6 +27,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new DarkDragonite(),
   new DarkElectrode(),
   new DarkFlaaffy(),
+  new DarkMetalEnergy(),
   new DarkPupitar(),
   new DarkTyranitar(),
   new DarkTyranitar2(),
