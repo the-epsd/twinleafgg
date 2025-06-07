@@ -6,6 +6,7 @@ import { DndMultiBackendModule, MultiBackend, HTML5ToTouch } from '@ng-dnd/multi
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { io, Socket } from 'socket.io-client';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ApiModule } from './api/api.module';
 import { AppComponent } from './app.component';
@@ -51,6 +52,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
         deps: [HttpClient]
       }
     }),
+    BrowserAnimationsModule,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

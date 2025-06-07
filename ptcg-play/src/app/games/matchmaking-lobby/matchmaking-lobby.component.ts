@@ -42,16 +42,16 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public defaultDeckId: number | null = null;
   public formatDefaultDecks: { [key: string]: number } = {};
 
-  private queueTimeout: any;
-  private cooldownInterval: any;
-  private queueTimerInterval: any;
+  private queueTimeout: ReturnType<typeof setTimeout> | null = null;
+  private cooldownInterval: ReturnType<typeof setInterval> | null = null;
+  private queueTimerInterval: ReturnType<typeof setInterval> | null = null;
   private readonly MAX_QUEUE_TIME = 300; // 5 minutes
   public onCooldown = false;
   public cooldownSeconds = 0;
   private readonly COOLDOWN_DURATION = 3; // 3 seconds cooldown
   private destroy$ = new Subject<void>();
 
-  private subscriptions: Subscription[] = [];
+  private joinLeaveDebounce = false;
 
   constructor(
     private deckService: DeckService,
@@ -106,7 +106,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     if (this.inQueue) {
       this.leaveQueueSilently();
     }
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.socketService.off('matchmaking:queueUpdate');
+    this.socketService.off('matchmaking:gameCreated');
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -129,8 +130,10 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   private resetQueueState(): void {
     this.clearAllTimers();
     this.inQueue = false;
+    this.loading = false;
     this.timeInQueue = 0;
     this.queuedPlayers = [];
+    this.joinLeaveDebounce = false;
   }
 
   private setupSocketListeners(): void {
@@ -215,7 +218,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   }
 
   public joinQueue(): void {
-    if (!this.deckId || this.onCooldown || this.loading || this.connectionError) return;
+    if (!this.deckId || this.onCooldown || this.loading || this.connectionError || this.joinLeaveDebounce) return;
 
     if (!this.socketService.isConnected) {
       this.showErrorMessage('Not connected to server');
@@ -229,13 +232,16 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
+    this.joinLeaveDebounce = true;
 
     this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
           this.loading = false;
           this.inQueue = true;
           this.timeInQueue = 0;
+          this.joinLeaveDebounce = false;
           console.log('Joined matchmaking queue');
 
           // Start queue timer
@@ -251,8 +257,9 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.loading = false;
-          console.error('Failed to join queue:', error);
           this.inQueue = false;
+          this.joinLeaveDebounce = false;
+          console.error('Failed to join queue:', error);
           this.showErrorMessage('Failed to join matchmaking queue');
         }
       );
@@ -274,25 +281,29 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   }
 
   public leaveQueue(): void {
-    if (!this.inQueue) return;
+    if (!this.inQueue || this.joinLeaveDebounce) return;
 
     this.loading = true;
+    this.joinLeaveDebounce = true;
 
     this.socketService.leaveMatchmakingQueue()
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
           this.loading = false;
           this.resetQueueState();
           // Start cooldown countdown
           this.startCooldown();
+          this.joinLeaveDebounce = false;
           console.log('Left matchmaking queue');
         },
         (error) => {
           this.loading = false;
+          this.resetQueueState();
+          this.joinLeaveDebounce = false;
           console.error('Failed to leave queue:', error);
           // Even if the server failed to process the leave request,
           // we reset the client state
-          this.resetQueueState();
           this.showErrorMessage('Failed to leave matchmaking queue');
         }
       );

@@ -149,4 +149,9 @@ export class CoreSocket {
     };
   }
 
+  public dispose(): void {
+    this.socket.removeListener('core:getInfo');
+    this.socket.removeListener('core:createGame');
+  }
+
 }
