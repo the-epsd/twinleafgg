@@ -8,6 +8,7 @@ import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Cleffa } from './cleffa';
+import { Combee } from './combee';
 import { Dartrix } from './dartrix';
 import { Decidueyeex } from './decidueye-ex';
 import { Dragonair } from './dragonair';
@@ -54,6 +55,7 @@ import { Tympole } from './tympole';
 import { Tyranitarex } from './tyranitar-ex';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
+import { Vespiquenex } from './vespiquen-ex';
 import { Victiniex } from './victini-ex';
 import { Whiscash } from './whiscash';
 
@@ -68,6 +70,7 @@ export const setObsidianFlames: Card[] = [
   new Charmander(),
   new Charmeleon(),
   new Cleffa(),
+  new Combee(),
   new Dartrix(),
   new Dragonair(),
   new Dragoniteex(),
@@ -115,6 +118,7 @@ export const setObsidianFlames: Card[] = [
   new Glimmet(),
   new Glimmoraex(),
   new Geeta(),
+  new Vespiquenex(),
 
   // new Revavroomex(),
 
