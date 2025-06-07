@@ -1,3 +1,4 @@
+import { Cook } from '../set-fusion-strike/cook';
 import { LuminousEnergy } from '../set-paldea-evolved/luminous-energy';
 import { BuddyBuddyPoffin } from '../set-temporal-forces/buddy-buddy-poffin';
 import { EmergencyBoard } from '../set-temporal-forces/emergency-board';
@@ -33,6 +34,14 @@ import { Tatsugiri } from './tatsugiri';
 import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { Timburr } from './timburr';
 import { WellspringMaskOgerponex } from './wellspring-mask-ogerpon-ex';
+
+// Other Prints
+export class CookTWM extends Cook {
+  public regulationMark = 'H';
+  public set = 'TWM';
+  public setNumber = '147';
+  public fullName = 'Cook TWM';
+}
 
 // Illustration Rares
 export class DipplinIR extends Dipplin {
