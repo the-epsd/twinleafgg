@@ -8,6 +8,8 @@ import { Meganiumex } from './meganium-ex';
 import { Onix } from './onix';
 import { PokemonReversal } from './pokemon-reversal';
 import { ProfessorElmsTrainingMethod } from './professors-elm-training-method';
+import { Scyther } from './scyther';
+import { Scizorex } from './scizor-ex';
 import { SolidRage } from './solid-rage';
 import { Stantler } from './stantler';
 import { Slowpoke } from './slowpoke';
@@ -29,6 +31,8 @@ export const setEXUnseenForces: Card[] = [
   new Onix(),
   new PokemonReversal(),
   new ProfessorElmsTrainingMethod(),
+  new Scyther(),
+  new Scizorex(),
   new SolidRage(),
   new Stantler(),
   new Slowpoke(),

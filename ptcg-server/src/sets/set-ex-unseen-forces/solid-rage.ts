@@ -24,7 +24,7 @@ export class SolidRage extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachPokemonToolEffect && effect.trainerCard == this) {
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex) || effect.target.getPokemons().length < 2) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
