@@ -58,5 +58,7 @@ export class MatchmakingSocket {
     if (this.matchmakingService.isPlayerInQueue(this.client)) {
       this.matchmakingService.removeFromQueue(this.client);
     }
+    this.socket.removeListener('matchmaking:join');
+    this.socket.removeListener('matchmaking:leave');
   }
 }

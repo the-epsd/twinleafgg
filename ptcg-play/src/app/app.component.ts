@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
 
 import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
@@ -22,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
@@ -106,5 +106,9 @@ export class AppComponent implements OnInit {
     let cardSize = Math.floor(cardHeight / cardAspectRatio);
     cardSize = Math.min(Math.max(cardSize, 60), 60);
     element.style.setProperty('--card-size', cardSize + 'px');
+  }
+
+  ngOnDestroy() {
+    this.socketService.disable();
   }
 }

@@ -214,4 +214,23 @@ export class GameSocket {
     this.socket.emit(`game[${game.id}]:timerUpdate`, { playerStats });
   }
 
+  public dispose(): void {
+    this.socket.removeListener('game:join');
+    this.socket.removeListener('game:leave');
+    this.socket.removeListener('game:getStatus');
+    this.socket.removeListener('game:action:ability');
+    this.socket.removeListener('game:action:trainerAbility');
+    this.socket.removeListener('game:action:attack');
+    this.socket.removeListener('game:action:stadium');
+    this.socket.removeListener('game:action:play');
+    this.socket.removeListener('game:action:playCard');
+    this.socket.removeListener('game:action:resolvePrompt');
+    this.socket.removeListener('game:action:retreat');
+    this.socket.removeListener('game:action:reorderBench');
+    this.socket.removeListener('game:action:reorderHand');
+    this.socket.removeListener('game:action:passTurn');
+    this.socket.removeListener('game:action:appendLog');
+    this.socket.removeListener('game:action:changeAvatar');
+  }
+
 }

@@ -20,8 +20,6 @@ export class MatchmakingService {
   private readonly CHECK_INTERVAL = 2000; // Check for matches every 2 seconds
   private readonly VALIDATE_INTERVAL = 30000; // Validate connections every 30 seconds
   private readonly MAX_QUEUE_TIME = 300000; // 5 minutes maximum in queue
-  private readonly BOT_MATCH_TIMEOUT = 10000; // 10 seconds before matching with bot
-  private botMatchTimeouts: Map<Client, NodeJS.Timeout> = new Map();
 
   private constructor(private core: Core) {
     this.matchCheckInterval = setInterval(() => this.checkMatches(), this.CHECK_INTERVAL);
@@ -53,26 +51,12 @@ export class MatchmakingService {
       lastValidated: Date.now()
     });
 
-    // Set timeout for bot matching
-    const timeout = setTimeout(() => {
-      this.tryMatchWithBot(client, format);
-    }, this.BOT_MATCH_TIMEOUT);
-
-    this.botMatchTimeouts.set(client, timeout);
-
     this.broadcastQueueUpdate();
   }
 
   public removeFromQueue(client: Client): void {
     const wasInQueue = this.queue.some(p => p.client === client);
     this.queue = this.queue.filter(p => p.client !== client);
-
-    // Clear bot match timeout if exists
-    const timeout = this.botMatchTimeouts.get(client);
-    if (timeout) {
-      clearTimeout(timeout);
-      this.botMatchTimeouts.delete(client);
-    }
 
     if (wasInQueue) {
       this.broadcastQueueUpdate();
@@ -193,53 +177,6 @@ export class MatchmakingService {
     });
   }
 
-  private async tryMatchWithBot(player: Client, format: Format): Promise<void> {
-    // Check if player is still in queue
-    const queuedPlayer = this.queue.find(p => p.client === player);
-    if (!queuedPlayer) return;
-
-    // Get available bots for this format
-    const botManager = this.core.getBotManager();
-    const availableBots = botManager.getBotsForFormat(format);
-
-    if (availableBots.length === 0) {
-      return;
-    }
-
-    // Select a random bot
-    const randomBot = availableBots[Math.floor(Math.random() * availableBots.length)];
-    const botDeck = await randomBot.getDeck(format);
-
-    if (!botDeck) {
-      return;
-    }
-
-    // Create game settings
-    const gameSettings: GameSettings = {
-      format: format,
-      timeLimit: 1800,
-      rules: new Rules(),
-      recordingEnabled: true
-    };
-
-    // Create game with bot
-    const game = this.core.createGameWithDecks(
-      player,
-      queuedPlayer.deck,
-      gameSettings,
-      randomBot,
-      botDeck
-    );
-
-    if (game) {
-      // Notify player
-      queuedPlayer.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
-
-      // Remove player from queue
-      this.removeFromQueue(player);
-    }
-  }
-
   public dispose(): void {
     if (this.matchCheckInterval) {
       clearInterval(this.matchCheckInterval);
@@ -247,9 +184,6 @@ export class MatchmakingService {
     if (this.validateInterval) {
       clearInterval(this.validateInterval);
     }
-    // Clear all bot match timeouts
-    this.botMatchTimeouts.forEach(timeout => clearTimeout(timeout));
-    this.botMatchTimeouts.clear();
     // Clear queue on dispose
     this.queue = [];
   }

@@ -92,4 +92,11 @@ export class SocketClient implements Client {
   public attachListeners(): void {
     this.socket.attachListeners();
   }
+
+  public dispose(): void {
+    this.coreSocket.dispose();
+    this.gameSocket.dispose();
+    this.messageSocket.dispose();
+    this.matchmakingSocket.dispose();
+  }
 }
