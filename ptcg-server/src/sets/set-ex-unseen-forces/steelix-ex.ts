@@ -43,7 +43,7 @@ export class Steelixex extends PokemonCard {
   public fullName: string = 'Steelix ex UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AddSpecialConditionsEffect && effect.specialConditions.includes(SpecialCondition.POISONED)) {
+    if (effect instanceof AddSpecialConditionsEffect && effect.specialConditions.includes(SpecialCondition.POISONED) && effect.target.getPokemonCard() === this) {
       effect.preventDefault = true;
     }
 

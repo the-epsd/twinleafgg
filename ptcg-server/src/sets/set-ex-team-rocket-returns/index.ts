@@ -13,10 +13,12 @@ import { Larvitar } from './larvitar';
 import { Magmar } from './magmar';
 import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
+import { Rattata } from './rattata';
 import { REnergy } from './r-energy';
 import { RocketsAdmin } from './rockets-admin';
 import { RocketsPokeBall } from './rockets-poke-ball';
 import { RocketsSneaselex } from './rockets-sneasel-ex';
+import { RocketsWobbuffet } from './rockets-wobbuffet';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
 import { Voltorb } from './voltorb';
@@ -36,10 +38,12 @@ export const setEXTeamRocketReturns: Card[] = [
   new Magmar(),
   new PokemonRetriever(),
   new PowHandExtension(),
+  new Rattata(),
   new REnergy(),
   new RocketsAdmin(),
   new RocketsPokeBall(),
   new RocketsSneaselex(),
+  new RocketsWobbuffet(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
   new Voltorb(),

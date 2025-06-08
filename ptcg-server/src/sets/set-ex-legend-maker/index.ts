@@ -17,6 +17,8 @@ import { Roselia } from './roselia';
 import { Shuppet } from './shuppet';
 import { Solrock } from './solrock';
 import { Voltorb } from './voltorb';
+import { Wobbuffet } from './wobbuffet';
+import { Wynaut } from './wynaut';
 
 export const setEXLegendMaker: Card[] = [
   new Banetteex(),
@@ -37,4 +39,6 @@ export const setEXLegendMaker: Card[] = [
   new Shuppet(),
   new Solrock(),
   new Voltorb(),
+  new Wobbuffet(),
+  new Wynaut(),
 ];

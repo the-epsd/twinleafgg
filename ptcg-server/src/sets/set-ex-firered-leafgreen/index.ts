@@ -12,6 +12,7 @@ import { Nidorina } from './nidorina';
 import { Pidgeot } from './pidgeot';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
+import { Raticate } from './raticate';
 import { Squirtle } from './squirtle';
 import { Voltorb } from './voltorb';
 import { Wartortle } from './wartortle';
@@ -27,6 +28,7 @@ export const setEXFireRedLeafGreen: Card[] = [
   new Pidgey(),
   new Pidgeotto(),
   new Pidgeot(),
+  new Raticate(),
   new VsSeekerFL(),
   new Ditto(),
   new Electrodeex(),

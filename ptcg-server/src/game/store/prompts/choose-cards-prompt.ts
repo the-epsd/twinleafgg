@@ -171,7 +171,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     if ((maxPokemons !== undefined && maxPokemons < countMap[`${SuperType.POKEMON}`])
       || (maxBasicEnergies !== undefined && maxBasicEnergies < countMap[`${SuperType.ENERGY}-${EnergyType.BASIC}`])
       || (maxEnergies !== undefined && maxEnergies < countMap[`${SuperType.ENERGY}`])
-      || (maxTrainers !== undefined && maxTrainers < countMap[`${SuperType.TRAINER}-${SuperType.TRAINER}`])
+      || (maxTrainers !== undefined && maxTrainers < countMap[`${SuperType.TRAINER}`])
       || (maxItems !== undefined && maxItems < countMap[`${SuperType.TRAINER}-${TrainerType.ITEM}`])
       || (maxStadiums !== undefined && maxStadiums < countMap[`${SuperType.TRAINER}-${TrainerType.STADIUM}`])
       || (maxSupporters !== undefined && maxSupporters < countMap[`${SuperType.TRAINER}-${TrainerType.SUPPORTER}`])
