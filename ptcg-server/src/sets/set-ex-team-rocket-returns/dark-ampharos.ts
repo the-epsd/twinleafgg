@@ -10,7 +10,7 @@ export class DarkAmpharos extends PokemonCard {
   public additionalCardTypes = [D];
   public tags = [CardTag.DARK];
   public hp: number = 120;
-  public weakness = [{ type: F, value: 2 }];
+  public weakness = [{ type: F }];
   public retreat = [C, C];
 
   public powers = [{

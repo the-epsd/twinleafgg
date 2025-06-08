@@ -9,7 +9,7 @@ export class Pikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIGHTING, value: 2 }];
+  public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];
 
   public attacks = [
