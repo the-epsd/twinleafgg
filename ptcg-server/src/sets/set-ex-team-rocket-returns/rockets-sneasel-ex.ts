@@ -31,7 +31,7 @@ export class RocketsSneaselex extends PokemonCard {
   ];
 
   public set: string = 'TRR';
-  public name: string = 'Rocket\'s Seasel ex';
+  public name: string = 'Rocket\'s Sneasel ex';
   public fullName: string = 'Rocket\'s Seasel ex TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';

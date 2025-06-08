@@ -169,7 +169,7 @@ export class IronBoulderPRE extends IronBoulder {
 
 export class GroudonPRE extends Groudon {
   public set = 'PRE';
-  public setNumber = '47';
+  public setNumber = '49';
   public fullName = 'Groudon PRE';
 }
 
