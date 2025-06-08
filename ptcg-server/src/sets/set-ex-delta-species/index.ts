@@ -19,6 +19,8 @@ import { Kirlia } from './kirlia';
 import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
 import { Persian } from './persian';
+import { Porygon } from './porygon';
+import { Porygon2 } from './porygon2';
 import { Ralts } from './ralts';
 import { Rayquaza } from './rayquaza';
 import { Salamence } from './salamence';
@@ -47,6 +49,8 @@ export const setEXDeltaSpecies: Card[] = [
   new Larvitar(),
   new Meowth(),
   new Persian(),
+  new Porygon(),
+  new Porygon2(),
   new Ralts(),
   new Rayquaza(),
   new Salamence(),
