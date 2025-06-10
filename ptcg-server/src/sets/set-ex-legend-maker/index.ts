@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { Banetteex } from './banette-ex';
 import { CursedStone } from './cursed-stone';
+import { Delcatty } from './delcatty';
 import { GiantStump } from './giant-stump';
 import { Girafarig } from './girafarig';
 import { Kecleon } from './kecleon';
@@ -15,6 +16,7 @@ import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
 import { Roselia } from './roselia';
 import { Shuppet } from './shuppet';
+import { Skitty } from './skitty';
 import { Solrock } from './solrock';
 import { Voltorb } from './voltorb';
 import { Wobbuffet } from './wobbuffet';
@@ -23,6 +25,7 @@ import { Wynaut } from './wynaut';
 export const setEXLegendMaker: Card[] = [
   new Banetteex(),
   new CursedStone(),
+  new Delcatty(),
   new GiantStump(),
   new Girafarig(),
   new Kecleon(),
@@ -37,6 +40,7 @@ export const setEXLegendMaker: Card[] = [
   new ReactEnergy(),
   new Roselia(),
   new Shuppet(),
+  new Skitty(),
   new Solrock(),
   new Voltorb(),
   new Wobbuffet(),

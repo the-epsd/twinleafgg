@@ -1,6 +1,8 @@
 import { Card } from '../../game';
 import { Altaria } from './altaria';
 import { Camerupt } from './camerupt';
+import { Electrike } from './electrike';
+import { Electrike2 } from './electrike2';
 import { HealEnergy } from './heal-energy';
 import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
@@ -12,6 +14,7 @@ import { Ludicolo } from './ludicolo';
 import { Ludicolo2 } from './ludicolo2';
 import { Lunatone } from './lunatone';
 import { Magcargo } from './magcargo';
+import { Manectricex } from './manectric-ex';
 import { MasterBall } from './master-ball';
 import { Minun } from './minun';
 import { Nosepass } from './nosepass';
@@ -25,6 +28,8 @@ import { Weezing } from './weezing';
 export const setEXDeoxys: Card[] = [
   new Altaria(),
   new Camerupt(),
+  new Electrike(),
+  new Electrike2(),
   new HealEnergy(),
   new Jirachi(),
   new Koffing(),
@@ -36,6 +41,7 @@ export const setEXDeoxys: Card[] = [
   new Ludicolo2(),
   new Lunatone(),
   new Magcargo(),
+  new Manectricex(),
   new MasterBall(),
   new Minun(),
   new Nosepass(),

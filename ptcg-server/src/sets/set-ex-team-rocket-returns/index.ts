@@ -19,6 +19,7 @@ import { RocketsAdmin } from './rockets-admin';
 import { RocketsPokeBall } from './rockets-poke-ball';
 import { RocketsSneaselex } from './rockets-sneasel-ex';
 import { RocketsWobbuffet } from './rockets-wobbuffet';
+import { Seadra } from './seadra';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
 import { Voltorb } from './voltorb';
@@ -44,6 +45,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new RocketsPokeBall(),
   new RocketsSneaselex(),
   new RocketsWobbuffet(),
+  new Seadra(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
   new Voltorb(),
