@@ -298,6 +298,7 @@ export class DeckComponent implements OnInit {
       'standard_nightly': this.translate.instant('FORMAT_STANDARD_NIGHTLY'),
       'expanded': this.translate.instant('FORMAT_EXPANDED'),
       'unlimited': this.translate.instant('FORMAT_UNLIMITED'),
+      'RSPK': this.translate.instant('FORMAT_RSPK'),
       'retro': this.translate.instant('FORMAT_RETRO'),
       'glc': this.translate.instant('FORMAT_GLC')
     };

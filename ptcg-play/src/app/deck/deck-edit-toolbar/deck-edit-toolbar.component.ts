@@ -79,6 +79,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];

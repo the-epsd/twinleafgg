@@ -105,6 +105,7 @@ export class FormatValidator {
     // List of cards where any printing is legal in any format where the card is legal
     const anyPrintingAllowed = [
       'Pokémon Fan Club',
+      'Master Ball',
       'Quick Ball',
       'Crushing Hammer',
       'Energy Search',
@@ -151,6 +152,7 @@ export class FormatValidator {
       Format.EXPANDED,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
+      Format.RSPK,
       Format.RETRO
     ].forEach(format => {
       this.isValid(card, format, anyPrintingAllowed) ? formats.push(format) : null;
@@ -267,6 +269,36 @@ export class FormatValidator {
           card.set === 'JU' ||
           card.set === 'FO' ||
           card.set === 'PR';
+
+      case Format.RSPK:
+        return card.set === 'RS' ||
+          card.set === 'SS' ||
+          card.set === 'DR' ||
+          card.set === 'MA' ||
+          card.set === 'HL' ||
+          card.set === 'RG' ||
+          card.set === 'TRR' ||
+          card.set === 'DX' ||
+          card.set === 'EM' ||
+          card.set === 'UF' ||
+          card.set === 'DS' ||
+          card.set === 'LM' ||
+          card.set === 'HP' ||
+          card.set === 'CG' ||
+          card.set === 'DF' ||
+          card.set === 'PK' ||
+          card.set === 'P1' ||
+          card.set === 'P2' ||
+          card.set === 'P3' ||
+          card.set === 'P4' ||
+          card.set === 'P5' ||
+          card.set === 'MCVS' ||
+          card.set === 'MAL' ||
+          card.set === 'MSM' ||
+          card.set === 'MSD' ||
+          card.set === 'PCGP' ||
+          card.set === 'PCGL';
+
       case Format.WORLDS_2013:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
