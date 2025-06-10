@@ -5,6 +5,7 @@ import { Blastoise } from './blastoise';
 import { Castaway } from './castaway';
 import { CessationCrystal } from './cessation-crystal';
 import { Charmander } from './charmander';
+import { CrystalBeach } from './crystal-beach';
 import { Delcattyex } from './delcatty-ex';
 import { Diglett } from './diglett';
 import { Dugtrio } from './dugtrio';
@@ -25,6 +26,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Castaway(),
   new CessationCrystal(),
   new Charmander(),
+  new CrystalBeach(),
   new Delcattyex(),
   new Diglett(),
   new Dugtrio(),
