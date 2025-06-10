@@ -6,6 +6,7 @@ import { Ditto } from './ditto';
 import { Eevee } from './eevee';
 import { Gardevoir } from './gardevoir';
 import { HolonEnergyFF } from './holon-energy-ff';
+import { HolonLass } from './holon-lass';
 import { HolonMentor } from './holon-mentor';
 import { HolonScientist } from './holon-scientist';
 import { HolonTransceiver } from './holon-transceiver';
@@ -36,6 +37,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Eevee(),
   new Gardevoir(),
   new HolonEnergyFF(),
+  new HolonLass(),
   new HolonMentor(),
   new HolonScientist(),
   new HolonTransceiver(),

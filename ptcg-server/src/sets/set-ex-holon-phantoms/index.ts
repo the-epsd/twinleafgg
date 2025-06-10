@@ -8,6 +8,7 @@ import { Exeggutor } from './exeggutor';
 import { Flygon } from './flygon';
 import { HolonsCastform } from './holons-castform';
 import { Horsea } from './horsea';
+import { Latias } from './latias';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
 import { Pidgey } from './pidgey';
@@ -26,6 +27,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Exeggutor(),
   new Flygon(),
   new Horsea(),
+  new Latias(),
   new Meowth(),
   new Oddish(),
   new Pidgey(),
