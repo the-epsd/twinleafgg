@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, PokemonCardList, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -10,7 +10,9 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Manectricex extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom: string = 'Electrike';
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = L;
   public hp: number = 100;
   public weakness = [{ type: F }];

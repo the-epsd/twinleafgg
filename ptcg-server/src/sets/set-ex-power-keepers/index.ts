@@ -10,6 +10,9 @@ import { Machop } from './machop';
 import { Skitty } from './skitty';
 import { StevensAdvice } from './stevens-advice';
 
+// Other prints
+import { EnergySwitchPK } from './other-prints';
+
 export const setEXPowerKeepers: Card[] = [
   new BattleFrontier(),
   new CycloneEnergy(),
@@ -20,6 +23,9 @@ export const setEXPowerKeepers: Card[] = [
   new Machop(),
   new Skitty(),
   new StevensAdvice(),
+
+  // Other prints
+  new EnergySwitchPK(),
 
   // Basic energies
   new GrassEnergy(),
