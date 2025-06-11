@@ -48,6 +48,7 @@ export class DarkElectrode extends PokemonCard {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
+      const thisElectrode = StateUtils.findCardList(state, effect.card);
 
       if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
@@ -59,7 +60,14 @@ export class DarkElectrode extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      let thisCardList;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (card === effect.card) {
+          thisCardList = cardList;
+        }
+      });
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, thisCardList);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       if (checkProvidedEnergy.energyMap.length !== 0) {
@@ -85,7 +93,7 @@ export class DarkElectrode extends PokemonCard {
         cards = selected || [];
 
         if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, player.active);
+          player.deck.moveCardsTo(cards, thisElectrode);
         }
 
         SHUFFLE_DECK(store, state, player);

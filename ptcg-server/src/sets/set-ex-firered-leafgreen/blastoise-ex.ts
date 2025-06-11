@@ -12,7 +12,7 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Blastoiseex extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Wartortle';
   public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
