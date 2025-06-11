@@ -36,6 +36,7 @@ export enum CardTag {
   DELTA_SPECIES = 'DELTA_SPECIES',
   DARK = 'DARK',
   BROCKS = 'BROCKS',
+  BLAINES = 'BLAINES',
   LILLIES = 'LILLIES',
   NS = 'NS',
   IONOS = 'IONOS',

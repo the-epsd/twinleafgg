@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
 import { BlainesLastResort } from './blaines-last-resort';
+import { BlainesPonyta } from './blaines-ponyta';
 import { BrocksMankey } from './brocks-mankey';
 import { BrocksZubat } from './brocks-zubat';
 import { ErikasPerfume } from './erikas-perfume';
@@ -10,6 +11,7 @@ import { TheRocketsTrainingGym } from './the-rockets-training-gym';
 
 export const setGymHeros: Card[] = [
   new BlainesLastResort(),
+  new BlainesPonyta(),
   new BrocksMankey(),
   new BrocksZubat(),
   new ErikasPerfume(),

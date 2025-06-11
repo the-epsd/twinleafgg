@@ -2,12 +2,14 @@ import { Card } from '../../game';
 import { Aipom } from './aipom';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
+import { Forretress } from './forretress';
 import { Hitmonlee } from './hitmonlee';
 import { Lugiaex } from './lugia-ex';
 import { MarysRequest } from './marys-request';
 import { Meganiumex } from './meganium-ex';
 import { Murkrow } from './murkrow';
 import { Onix } from './onix';
+import { Pineco } from './pineco';
 import { PokemonReversal } from './pokemon-reversal';
 import { ProfessorElmsTrainingMethod } from './professors-elm-training-method';
 import { Scyther } from './scyther';
@@ -30,12 +32,14 @@ export const setEXUnseenForces: Card[] = [
   new Aipom(),
   new Bayleef(),
   new Chikorita(),
+  new Forretress(),
   new Hitmonlee(),
   new Lugiaex(),
   new MarysRequest(),
   new Meganiumex(),
   new Murkrow(),
   new Onix(),
+  new Pineco(),
   new PokemonReversal(),
   new ProfessorElmsTrainingMethod(),
   new Scyther(),

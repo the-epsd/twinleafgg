@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, GameError, PowerType, EnergyCard, Card, ChooseCardsPrompt, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -111,26 +111,30 @@ export class DarkElectrode extends PokemonCard {
         return state;
       }
 
-      // Get attached energy cards
-      const attachedEnergies = player.active.cards.filter(card => {
-        return card instanceof EnergyCard;
-      });
+      CONFIRMATION_PROMPT(store, state, player, result => {
+        if (result) {
+          // Get attached energy cards
+          const attachedEnergies = player.active.cards.filter(card => {
+            return card instanceof EnergyCard;
+          });
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
+          store.prompt(state, new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            player.active,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { superType: SuperType.ENERGY },
+            { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length }
+          ), transfers => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.active.moveCardTo(transfer.card, target);
+            }
+          });
         }
-      });
+      }, GameMessage.MOVE_ENERGY_TO_BENCH);
     }
 
     return state;
