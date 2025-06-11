@@ -391,8 +391,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.trainerCard = cardList.tool;
 
     for (const card of cardList.cards) {
-      // Check if card is an energy card or has a custom energy image
-      if (card.superType === SuperType.ENERGY || this.getCustomImageUrl(card)) {
+      // Add if it's a true energy card, or if it's attached as energy (in cardList.energyCards)
+      if (card.superType === SuperType.ENERGY || cardList.energyCards.includes(card)) {
         if (this.energyCards.length < MAX_ENERGY_CARDS) {
           this.energyCards.push(card);
         } else {
@@ -468,7 +468,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCustomImageUrl(card: Card): string {
+  getCustomImageUrl(card: Card, isAttachedAsEnergy: boolean = false): string {
     const customImageUrls = {
       'Grass Energy': 'assets/energy/grass.png',
       'Fire Energy': 'assets/energy/fire.png',
@@ -492,7 +492,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
       'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
     };
-    return customImageUrls[card.name] || '';
+    // Return a custom image if the card is an Energy card, or if it's attached as energy and matches a custom image
+    if ((card.superType === SuperType.ENERGY || isAttachedAsEnergy) && customImageUrls[card.name]) {
+      return customImageUrls[card.name];
+    }
+    return '';
   }
 
   public onCardClick(card: Card) {
