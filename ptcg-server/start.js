@@ -22,6 +22,7 @@ cardManager.defineSet(sets.setWOTCPromos);
 cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setGymHeros);
+cardManager.defineSet(sets.setGymChallenge);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
