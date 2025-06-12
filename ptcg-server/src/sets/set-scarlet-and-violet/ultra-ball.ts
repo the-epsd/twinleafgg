@@ -11,6 +11,7 @@ import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: UltraBall, effect: TrainerEffect): IterableIterator<State> {
@@ -34,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     { min: 2, max: 2, allowCancel: false }
   ), selected => {
     if (selected) {
-      player.hand.moveCardsTo(selected, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected });
     }
     next();
   });
