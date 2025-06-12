@@ -2,6 +2,7 @@ import { Card } from '../../game';
 import { Aipom } from './aipom';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
+import { FluffyBerry } from './fluffy-berry';
 import { Forretress } from './forretress';
 import { Hitmonlee } from './hitmonlee';
 import { Lugiaex } from './lugia-ex';
@@ -19,6 +20,7 @@ import { Stantler } from './stantler';
 import { Slowpoke } from './slowpoke';
 import { Smoochum } from './smoochum';
 import { Steelixex } from './steelix-ex';
+import { Sudowoodo } from './sudowoodo';
 import { Teddiursa } from './teddiursa';
 import { Typhlosionex } from './typhlosion-ex';
 import { Tyrogue } from './tyrogue';
@@ -32,6 +34,7 @@ export const setEXUnseenForces: Card[] = [
   new Aipom(),
   new Bayleef(),
   new Chikorita(),
+  new FluffyBerry(),
   new Forretress(),
   new Hitmonlee(),
   new Lugiaex(),
@@ -49,6 +52,7 @@ export const setEXUnseenForces: Card[] = [
   new Slowpoke(),
   new Smoochum(),
   new Steelixex(),
+  new Sudowoodo(),
   new Teddiursa(),
   new Typhlosionex(),
   new Tyrogue(),

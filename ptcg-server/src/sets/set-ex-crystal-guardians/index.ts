@@ -9,12 +9,14 @@ import { CrystalBeach } from './crystal-beach';
 import { Delcattyex } from './delcatty-ex';
 import { Diglett } from './diglett';
 import { Dugtrio } from './dugtrio';
+import { Fearow } from './fearow';
 import { Grovyle } from './grovyle';
 import { Jirachiex } from './jirachi-ex';
 import { Kyogreex } from './kyogre-ex';
 import { MysteriousShard } from './mysterious-shard';
 import { Sceptileex } from './sceptile-ex';
 import { Shuppet } from './shuppet';
+import { Spearow } from './spearow';
 import { Treecko } from './treecko';
 import { Treecko2 } from './treecko2';
 import { Windstorm } from './windstorm';
@@ -30,12 +32,14 @@ export const setEXCrystalGuardians: Card[] = [
   new Delcattyex(),
   new Diglett(),
   new Dugtrio(),
+  new Fearow(),
   new Grovyle(),
   new Jirachiex(),
   new Kyogreex(),
   new MysteriousShard(),
   new Sceptileex(),
   new Shuppet(),
+  new Spearow(),
   new Treecko(),
   new Treecko2(),
   new Windstorm(),

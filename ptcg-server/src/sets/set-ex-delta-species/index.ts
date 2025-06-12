@@ -8,6 +8,7 @@ import { Gardevoir } from './gardevoir';
 import { HolonEnergyFF } from './holon-energy-ff';
 import { HolonLass } from './holon-lass';
 import { HolonMentor } from './holon-mentor';
+import { HolonRuins } from './holon-ruins';
 import { HolonScientist } from './holon-scientist';
 import { HolonTransceiver } from './holon-transceiver';
 import { HolonResearcher } from './holon-researcher';
@@ -19,6 +20,7 @@ import { Jolteonex } from './jolteon-ex';
 import { Kirlia } from './kirlia';
 import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
+import { Mewtwo } from './mewtwo';
 import { Persian } from './persian';
 import { Porygon } from './porygon';
 import { Porygon2 } from './porygon2';
@@ -39,6 +41,7 @@ export const setEXDeltaSpecies: Card[] = [
   new HolonEnergyFF(),
   new HolonLass(),
   new HolonMentor(),
+  new HolonRuins(),
   new HolonScientist(),
   new HolonTransceiver(),
   new HolonResearcher(),
@@ -50,6 +53,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Kirlia(),
   new Larvitar(),
   new Meowth(),
+  new Mewtwo(),
   new Persian(),
   new Porygon(),
   new Porygon2(),
