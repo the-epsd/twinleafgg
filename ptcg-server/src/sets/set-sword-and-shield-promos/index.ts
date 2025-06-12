@@ -20,6 +20,7 @@ import { MorpekoVUNIONBottomRight } from './morpeko-v-union-br';
 import { MorpekoVUNIONTopLeft } from './morpeko-v-union-tl';
 import { MorpekoVUNIONTopRight } from './morpeko-v-union-tr';
 import { Oricorio } from './oricorio';
+import { ZeraoraVMAXSWSH, ZeraoraVSTARSWSH, ZeraoraVSWSH } from './other-prints';
 import { PikachuVUNIONBottomLeft } from './pikachu-v-union-bl';
 import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
 import { PikachuVUNIONTopLeft } from './pikachu-v-union-tl';
@@ -76,4 +77,8 @@ export const setSwordAndShieldPromos: Card[] = [
   new MorpekoVUNIONTopRight(),
   new MorpekoVUNIONBottomLeft(),
   new MorpekoVUNIONBottomRight(),
+
+  new ZeraoraVSWSH(),
+  new ZeraoraVMAXSWSH(),
+  new ZeraoraVSTARSWSH(),
 ];

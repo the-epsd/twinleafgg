@@ -9,7 +9,6 @@ import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';
 import { Croconaw } from './croconaw';
-
 import { DeliveryBox } from './delivery-box';
 import { Drilbur } from './drilbur';
 import { DrumsOfAwakening } from './drums-of-awakening';
@@ -89,7 +88,9 @@ import { Victini } from './victini';
 import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
 import { Wugtrioex } from './wugtrio-ex';
+import { Zeraora } from './zeraora';
 import { CiphermaniacsCodebreaking } from './cryptomaniacs-deciphering';
+
 export const setTemporalForces: Card[] = [
 
   new AncientBoosterEnergyCapsuleTEF(),
@@ -176,6 +177,7 @@ export const setTemporalForces: Card[] = [
   new Victini(),
   new Vikavolt(),
   new WalkingWakeex(),
+  new Zeraora(),
 
   //FA
   new GrotleIR(),
