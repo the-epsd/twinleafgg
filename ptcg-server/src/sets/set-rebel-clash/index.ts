@@ -3,17 +3,22 @@ import { Aegislash } from './aegislash';
 import { Applin } from './applin';
 import { Arrokuda } from './arrokuda';
 import { Barraskewda } from './barraskewda';
+import { BurningScarf } from './burning-scarf';
 import { Butterfree } from './butterfree';
 import { CapaciousBucket } from './capacious-bucket';
 import { CaptureEnergy } from './capture-energy';
 import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
-import {CursedShovel} from './cursed-shovel';
+import { CursedShovel } from './cursed-shovel';
 import { Dragapult } from './dragapult';
+import { DragapultV } from './dragapult-v';
+import { DragapultVMAX } from './dragapult-vmax';
 import { Duraludon } from './duraludon';
 import { Electivire } from './electivire';
 import { GalarMine } from './galar-mine';
 import { GalarianMeowth } from './galarian-meowth';
+import { GalarianRunerigus } from './galarian-runerigus';
+import { GalarianYamask } from './galarian-yamask';
 import { Honedge } from './honedge';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
@@ -31,16 +36,21 @@ export const setRebelClash: Card[] = [
   new Applin(),
   new Arrokuda(),
   new Barraskewda(),
+  new BurningScarf(),
   new Butterfree(),
   new CapaciousBucket(),
   new CaptureEnergy(),
   new Caterpie(),
   new Coalossal(),
   new Dragapult(),
+  new DragapultV(),
+  new DragapultVMAX(),
   new Duraludon(),
   new Electivire(),
   new GalarMine(),
   new GalarianMeowth(),
+  new GalarianRunerigus(),
+  new GalarianYamask(),
   new Honedge(),
   new HorrorPsychicEnergy(),
   new Metapod(),

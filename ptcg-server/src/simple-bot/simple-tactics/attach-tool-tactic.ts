@@ -1,5 +1,7 @@
-import { Action, Player, State, PlayCardAction, TrainerCard, TrainerType,
-  CardTarget, PlayerType} from '../../game';
+import {
+  Action, Player, State, PlayCardAction, TrainerCard, TrainerType,
+  CardTarget, PlayerType
+} from '../../game';
 import { SimpleTactic } from './simple-tactics';
 
 export class AttachToolTactic extends SimpleTactic {
@@ -38,7 +40,7 @@ export class AttachToolTactic extends SimpleTactic {
     targets.sort((a, b) => b.score - a.score);
     const target = targets[0].target;
     const index = player.hand.cards.indexOf(tools[0]);
-    return new PlayCardAction(player.id, index, target); 
+    return new PlayCardAction(player.id, index, target);
   }
 
 }

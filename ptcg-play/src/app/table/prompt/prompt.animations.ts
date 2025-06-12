@@ -4,16 +4,31 @@ import { animate, state, style, transition, trigger, AnimationTriggerMetadata } 
 export const ptcgPromptAnimations: {
   readonly promptContent: AnimationTriggerMetadata;
 } = {
-  /** Animation that is applied on the dialog container by defalt. */
+  /** Animation that is applied on the dialog container by default. */
   promptContent: trigger('state', [
-    // Note: The `enter` animation transitions to `transform: none`, because for some reason
-    // specifying the transform explicitly, causes IE both to blur the dialog content and
-    // decimate the animation performance. Leaving it as `none` solves both issues.
-    state('void, exit', style({opacity: 0, transform: 'scale(0.7)'})),
-    state('enter', style({transform: 'none'})),
+    // Initial hidden state
+    state('void, exit', style({
+      opacity: 0,
+      transform: 'scale(0.7)',
+      transformOrigin: 'center center'
+    })),
+
+    // Fully visible state
+    state('enter', style({
+      transform: 'translate3d(0, 0, 0)'
+    })),
+
+    // Enter animation
     transition('* => enter', animate('150ms cubic-bezier(0, 0, 0.2, 1)',
-        style({transform: 'none', opacity: 1}))),
-    transition('* => void, * => exit',
-        animate('75ms cubic-bezier(0.4, 0.0, 0.2, 1)', style({opacity: 0}))),
+      style({
+        transform: 'translate3d(0, 0, 0)',
+        opacity: 1
+      })
+    )),
+
+    // Exit animation (slightly longer for better UX)
+    transition('* => void, * => exit', animate('100ms cubic-bezier(0.4, 0.0, 0.2, 1)',
+      style({ opacity: 0 })
+    )),
   ])
 };

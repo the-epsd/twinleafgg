@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class GiftEnergy extends EnergyCard {
@@ -33,11 +34,16 @@ export class GiftEnergy extends EnergyCard {
     'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, draw cards until you have 7 cards in your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
         return state;
       }
 
@@ -64,8 +70,6 @@ export class GiftEnergy extends EnergyCard {
         player.marker.removeMarker(this.GIFT_ENERGY_MARKER);
       });
     }
-
     return state;
   }
-
 }

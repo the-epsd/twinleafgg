@@ -12,6 +12,7 @@ import { SlotType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { TrainerCard, TrainerType } from '../../game';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // CES Banette-GX 66 (https://limitlesstcg.com/cards/CES/66)
 export class BanetteGX extends PokemonCard {
@@ -58,7 +59,7 @@ export class BanetteGX extends PokemonCard {
   public set: string = 'CES';
 
   public setNumber: string = '66';
-  
+
   public cardImage = 'assets/cardback.png';
 
   public name: string = 'Banette-GX';
@@ -146,14 +147,10 @@ export class BanetteGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.discard.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
+
+      BLOCK_IF_DISCARD_EMPTY(player);
       // set GX attack as used for game
       player.usedGX = true;
 

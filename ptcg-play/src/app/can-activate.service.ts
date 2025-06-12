@@ -2,7 +2,6 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { LoginPopupService } from './login/login-popup/login-popup.service';
 import { SessionService } from './shared/session/session.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from './shared/alert/alert.service';
@@ -14,7 +13,6 @@ import { LoginService } from './api/services/login.service';
 export class CanActivateService implements CanActivate {
 
   constructor(
-    private loginPopupService: LoginPopupService,
     private sessionService: SessionService,
     private router: Router,
     private alertService: AlertService,
@@ -31,31 +29,14 @@ export class CanActivateService implements CanActivate {
     const isLoggedIn = !!loggedUser;
 
     if (isLoggedIn) {
-      const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
-
-      const betaEndedUsernames = []; // Add usernames here
-
-      if (bannedUsernames.includes(loggedUser.name)) {
-        this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
+      if (loggedUser.roleId === 1) {
+        this.alertService.toast(this.translate.instant('ERROR_ACCOUNT_BANNED'));
         this.sessionService.clear();
         this.loginService.logout();
-        this.loginPopupService.redirectUrl = state.url;
-        return this.router.parseUrl('/login');
-      } else if (betaEndedUsernames.includes(loggedUser.name)) {
-        this.alertService.toast(this.translate.instant('This portion of the Beta Program has ended. Thank you for your participation.'));
-        this.sessionService.clear();
-        this.loginService.logout();
-        this.loginPopupService.redirectUrl = state.url;
-        return this.router.parseUrl('/login');
+        return this.router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
       }
-
       return true;
     }
-
-    this.loginPopupService.redirectUrl = state.url;
-    return this.router.parseUrl('/login');
+    return this.router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
   }
-
-
-
 }

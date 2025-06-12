@@ -18,12 +18,9 @@
 }
 
 ::ng-deep .mat-dialog-container {
-  background: rgba(26, 32, 44, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(48, 59, 81, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(26, 32, 44);
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   .mat-dialog-actions {
     color: white;
@@ -33,6 +30,10 @@
   .mat-raised-button {
     background-color: #449058;
     border-radius: 16px;
+  }
+
+  .ptcg-card-list-pane {
+    background: rgb(22, 26, 36);
   }
 }
 

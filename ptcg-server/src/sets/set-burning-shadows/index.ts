@@ -9,18 +9,22 @@ import { GardevoirGX } from './gardevoir-gx';
 import { Gloom } from './gloom';
 import { Guzma } from './guzma';
 import { Kiawe } from './kiawe';
+import { Lucario } from './lucario';
 import { Marill } from './marill';
 import { MarshadowGX } from './marshadow-gx';
 import { NecrozmaGX } from './necrozma-gx';
-import {Noibat} from './noibat';
-import {NoivernGX} from './noivern-gx';
+import { Noibat } from './noibat';
+import { NoivernGX } from './noivern-gx';
 import { Plumeria } from './plumeria';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
+import { Riolu } from './riolu';
 import { SalazzleGX } from './salazzle-gx';
 import { Sophocles } from './sophocles';
 import { TapuBuluGX } from './tapu-bulu-gx';
-import {TapuFiniGX} from './tapu-fini-gx';
+import { TapuFiniGX } from './tapu-fini-gx';
+import { Vileplume } from './vileplume';
+import { Weavile } from './weavile';
 import { WishfulBaton } from './wishful-baton';
 
 export const setBurningShadows: Card[] = [
@@ -34,12 +38,14 @@ export const setBurningShadows: Card[] = [
   new Gloom(),
   new Guzma(),
   new Kiawe(),
+  new Lucario(),
   new Marill(),
   new MarshadowGX(),
   new NecrozmaGX(),
   new Plumeria(),
   new Raichu(),
   new Ralts(),
+  new Riolu(),
   new SalazzleGX(),
   new Sophocles(),
   new TapuBuluGX(),
@@ -47,4 +53,6 @@ export const setBurningShadows: Card[] = [
   new TapuFiniGX(),
   new Noibat(),
   new NoivernGX(),
+  new Vileplume(),
+  new Weavile()
 ];

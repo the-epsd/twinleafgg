@@ -2,13 +2,13 @@ import { Card } from '../../game/store/card/card';
 import { Beldum } from './beldum';
 import { BiancasDevotion } from './biancas-devotion';
 import { Brambleghast } from './brambleghast';
+import { Bramblin } from './bramblin';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
-import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './card-images';
+import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './other-prints';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';
 import { Croconaw } from './croconaw';
-import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
 import { DeliveryBox } from './delivery-box';
 import { Drilbur } from './drilbur';
 import { DrumsOfAwakening } from './drums-of-awakening';
@@ -21,7 +21,7 @@ import { ExplorersGuidance } from './explorers-guidance';
 import { Farigirafex } from './farigiraf-ex';
 import { Feraligatr } from './feraligatr';
 import { FlutterMane } from './flutter-mane';
-import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR } from './full-art';
+import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR, RelicanthIR } from './full-art';
 import { FullMetalLab } from './full-metal-lab';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
@@ -76,6 +76,7 @@ import { Scizorex } from './scizor-ex';
 import { Scovillainex } from './scovillain-ex';
 import { Scyther } from './scyther';
 import { Skitty } from './skitty';
+import { Slugma } from './slugma';
 import { Solosis } from './solosis';
 import { Torracat } from './torracat';
 import { Torterraex } from './torterra-ex';
@@ -88,18 +89,21 @@ import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
 import { Wugtrioex } from './wugtrio-ex';
 import { Zeraora } from './zeraora';
+import { CiphermaniacsCodebreaking } from './cryptomaniacs-deciphering';
+
 export const setTemporalForces: Card[] = [
 
   new AncientBoosterEnergyCapsuleTEF(),
   new Beldum(),
   new BiancasDevotion(),
   new Brambleghast(),
+  new Bramblin(),
   new BuddyBuddyPoffin(),
   new Charjabug(),
   new Chatot(),
   new Cinccino(),
   new Croconaw(),
-  new CryptomaniacsDeciphering(),
+  new CiphermaniacsCodebreaking(),
   new DeliveryBox(),
   new Drilbur(),
   new DrumsOfAwakening(),
@@ -162,6 +166,7 @@ export const setTemporalForces: Card[] = [
   new SandyShocks(),
   new Scovillainex(),
   new Skitty(),
+  new Slugma(),
   new Solosis(),
   new Torracat(),
   new Torterraex(),
@@ -178,6 +183,7 @@ export const setTemporalForces: Card[] = [
   new GrotleIR(),
   new CharjabugIR(),
   new ReuniclusIR(),
+  new RelicanthIR(),
   new GastlyIR(),
   new MetagrossIR(),
   new ChatotIR(),

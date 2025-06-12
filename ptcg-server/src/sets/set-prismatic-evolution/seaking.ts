@@ -1,5 +1,5 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { PokemonCard, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Attack, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -17,15 +17,13 @@ export class Seaking extends PokemonCard {
 
   public retreat = [C];
 
-  public canAttackTwice: boolean = false;
-
-  public powers = [{
+  public powers: Power[] = [{
     name: 'Festival Lead',
     powerType: PowerType.ABILITY,
     text: 'If Festival Grounds is in play, this Pokémon may use an attack it has twice. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
   }];
 
-  public attacks = [
+  public attacks: Attack[] = [
     {
       name: 'Rapid Draw',
       cost: [C],

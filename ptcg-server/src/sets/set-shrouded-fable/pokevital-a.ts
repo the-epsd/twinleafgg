@@ -70,12 +70,12 @@ export class PokeVitalA extends TrainerCard {
 
   public setNumber: string = '62';
 
-  public name: string = 'PokéVital A';
+  public name: string = 'Poké Vital A';
 
   public fullName: string = 'PokéVital A SFA';
 
   public text: string =
-    'Heal 150 damage from 1 of your Pokemon.' +
+    'Heal 150 damage from 1 of your Pokémon.' +
     '' +
     'If this card is in your discard pile, it can\'t be put into your deck or hand.';
 

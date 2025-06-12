@@ -79,14 +79,14 @@ export class Terapagosex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponent.active.isBasic() && opponent.active.stage == Stage.BASIC && opponentActive?.cardType !== CardType.COLORLESS) {
+      if (opponent.active.isStage(Stage.BASIC) && opponentActive?.cardType !== CardType.COLORLESS) {
         effect.preventDefault = true;
         return state;
       }
       return state;
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -95,10 +95,7 @@ export class Terapagosex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

@@ -58,16 +58,17 @@ export class PidgeotV extends PokemonCard {
 
         if (player.active.cards[0] !== this) {
         
-                const cardList = player.bench.find(c => c.cards.includes(this));
+          const cardList = player.bench.find(c => c.cards.includes(this));
 
-                if (cardList) {
-                  cardList.moveTo(player.deck);
-                  cardList.clearEffects();
-                }
-            
-                state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
+          if (cardList) {
+            cardList.moveTo(player.deck);
+            cardList.clearEffects();
+          }
+      
+          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
           });
+          
           return state;
         }
         

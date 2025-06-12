@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class AirBalloon extends TrainerCard {
@@ -28,6 +29,10 @@ export class AirBalloon extends TrainerCard {
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
 
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
       if (index !== -1) {
         effect.cost.splice(index, 2);
       }

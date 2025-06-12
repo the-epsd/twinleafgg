@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, Card } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DiscardCardsEffect, ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect, ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class SingleStrikeUrshifuVMAX extends PokemonCard {
@@ -59,10 +59,7 @@ export class SingleStrikeUrshifuVMAX extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const dealDamage = new DealDamageEffect(effect, 270);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 270);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

@@ -40,14 +40,12 @@ export class CoreSocket {
   }
 
   public onGameAdd(game: Game): void {
-    console.log(`New game created. Total active games: ${this.core.games.length}`);
     this.cache.lastLogIdCache[game.id] = 0;
     this.cache.gameInfoCache[game.id] = CoreSocket.buildGameInfo(game);
     this.socket.emit('core:createGame', this.cache.gameInfoCache[game.id]);
   }
 
   public onGameDelete(game: Game): void {
-    console.log(`Game deleted. Total active games: ${this.core.games.length - 1}`);
     delete this.cache.gameInfoCache[game.id];
     delete this.cache.lastLogIdCache[game.id];
     this.socket.emit('core:deleteGame', game.id);
@@ -113,7 +111,8 @@ export class CoreSocket {
       ranking: user.ranking,
       rank: user.getRank(),
       lastRankingChange: user.lastRankingChange,
-      avatarFile: user.avatarFile
+      avatarFile: user.avatarFile,
+      roleId: user.roleId
     };
   }
 
@@ -148,6 +147,11 @@ export class CoreSocket {
       playerStats: game.playerStats,
       format: game.format
     };
+  }
+
+  public dispose(): void {
+    this.socket.removeListener('core:getInfo');
+    this.socket.removeListener('core:createGame');
   }
 
 }

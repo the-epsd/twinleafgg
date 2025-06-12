@@ -1,61 +1,64 @@
 import { Client } from '../../game/client/client.interface';
 import { Core } from '../../game/core/core';
-import { Message } from '../../storage';
+import { Format } from '../../game';
 import { ApiErrorEnum } from '../common/errors';
-import { MessageInfo } from '../interfaces/message.interface';
-import MatchmakingService from '../services/matchmaking.service';
-import { CoreSocket } from './core-socket';
-import { Response, SocketWrapper } from './socket-wrapper';
+import { MatchmakingService } from '../services/matchmaking.service';
+import { SocketWrapper, Response } from './socket-wrapper';
+import { Message } from '../../storage';
 
 export class MatchmakingSocket {
-
-  private client: Client;
   private matchmakingService: MatchmakingService;
 
-  constructor(client: Client, private socket: SocketWrapper, private core: Core) {
-    this.client = client;
+  constructor(
+    private client: Client,
+    private socket: SocketWrapper,
+    private core: Core
+  ) {
     this.matchmakingService = MatchmakingService.getInstance(this.core);
 
-    // message socket listeners
-    this.socket.addListener('matchmaking:joinQueue', this.joinQueue.bind(this));
-    this.socket.addListener('matchmaking:leaveQueue', this.leaveQueue.bind(this));
+    this.socket.addListener('matchmaking:join', this.joinQueue.bind(this));
+    this.socket.addListener('matchmaking:leave', this.leaveQueue.bind(this));
   }
 
   public onJoinQueue(from: Client, message: Message): void {
-    const messageInfo: MessageInfo = this.buildMessageInfo(message);
-    const user = CoreSocket.buildUserInfo(from.user);
-    this.socket.emit('message:received', { message: messageInfo, user });
+    this.socket.emit('matchmaking:playerJoined', {
+      player: from.user.name
+    });
   }
 
   public onLeaveQueue(): void {
-    // this.socket.emit('message:read', { user: CoreSocket.buildUserInfo(user) });
+    this.socket.emit('matchmaking:queueUpdate', {
+      players: this.matchmakingService.getQueuedPlayers()
+    });
   }
 
-  private joinQueue(params: { format: string, deck: string[] }, response: Response<void>): void {
-    if (!params.format) {
+  public joinQueue(params: { format: Format, deck: string[] }, response: Response<void>): void {
+    if (!params || !params.format || !Array.isArray(params.deck) || params.deck.length === 0) {
       response('error', ApiErrorEnum.INVALID_FORMAT);
       return;
     }
-    console.log(`Player ${this.client.id} joined queue for format: ${params.format}`);
-    this.matchmakingService.addToQueue(this.client.id, params.format, params.deck);
+
+    this.matchmakingService.addToQueue(
+      this.client,
+      this.socket,
+      params.format,
+      params.deck
+    );
     response('ok');
   }
 
-  private leaveQueue(params: {}, response: Response<void>): void {
-    this.matchmakingService.removeFromQueue(this.client.id);
-
+  private leaveQueue(_params: void, response: Response<void>): void {
+    if (this.matchmakingService.isPlayerInQueue(this.client)) {
+      this.matchmakingService.removeFromQueue(this.client);
+    }
     response('ok');
   }
 
-  private buildMessageInfo(message: Message): MessageInfo {
-    const messageInfo: MessageInfo = {
-      messageId: message.id,
-      senderId: message.sender.id,
-      created: message.created,
-      text: message.text,
-      isRead: message.isRead
-    };
-    return messageInfo;
+  public dispose(): void {
+    if (this.matchmakingService.isPlayerInQueue(this.client)) {
+      this.matchmakingService.removeFromQueue(this.client);
+    }
+    this.socket.removeListener('matchmaking:join');
+    this.socket.removeListener('matchmaking:leave');
   }
-
 }

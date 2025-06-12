@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, SpecialCondition } from "../../game";
-import { DealDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, SpecialCondition } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

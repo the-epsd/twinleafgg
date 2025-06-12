@@ -7,7 +7,7 @@ import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects'
 
 export class GreninjaZoroarkGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public cardType: CardType = D;
   public hp: number = 250;
   public weakness = [{ type: F }];
@@ -70,8 +70,8 @@ export class GreninjaZoroarkGX extends PokemonCard {
         if (card instanceof PokemonCard 
           && (!card.tags.includes(CardTag.POKEMON_GX) && !card.tags.includes(CardTag.POKEMON_EX))
           && card.cardType !== D) { 
-            unionBlocked.push(index); 
-          }
+          unionBlocked.push(index); 
+        }
       });
 
       let cards: Card[] = [];

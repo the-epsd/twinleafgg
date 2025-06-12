@@ -2,12 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, EnergyCard, AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
-export class SolgaleoPS extends PokemonCard {
+export class SolgaleoPrismStar extends PokemonCard {
 
-  public tags = [ CardTag.PRISM_STAR ];
+  public tags = [CardTag.PRISM_STAR];
 
   public stage: Stage = Stage.BASIC;
 
@@ -19,28 +20,28 @@ export class SolgaleoPS extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Radiant Star',
-      cost: [ CardType.METAL ],
+      cost: [CardType.METAL],
       damage: 0,
       text: 'For each of your opponent\'s Pokémon in play, attach a [M] Energy card from your discard pile to your Pokémon in any way you like.'
     },
-  
+
     {
       name: 'Corona Impact',
-      cost: [ CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL ],
+      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL],
       damage: 160,
       text: 'This Pokémon can\'t attack during your next turn.'
     },
   ];
 
-  public set: string = 'SSH';
-
+  public set: string = 'UPR';
+  public setNumber: string = '89';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo Prism Star';
-
   public fullName: string = 'Solgaleo Prism Star FLI';
 
   // for preventing the pokemon from attacking on the next turn
@@ -48,36 +49,45 @@ export class SolgaleoPS extends PokemonCard {
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Radiant Star
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
 
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
+    // Remove markers when the pokemon is played
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    }
+
+    // Prevent all attacks, including TMs
+    if (effect instanceof UseAttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+    // Radiant Star
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC
-            && c.name === 'Metal Energy';
+          && c.energyType === EnergyType.BASIC
+          && c.name === 'Metal Energy';
       });
       if (!hasEnergyInDiscard) {
         return state;
       }
 
       const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-      if (benched === 0){
+      if (benched === 0) {
         return state;
       }
-    
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 0, max: benched }
       ), transfers => {
@@ -93,11 +103,7 @@ export class SolgaleoPS extends PokemonCard {
     }
 
     // Corona Impact
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
 

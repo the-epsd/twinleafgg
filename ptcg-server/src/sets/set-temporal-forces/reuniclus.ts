@@ -4,8 +4,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Reuniclus extends PokemonCard {
 
@@ -53,65 +54,52 @@ export class Reuniclus extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
-      let pokemons = 0;
+      const openSlots = player.bench.filter(b => b.cards.length === 0);
 
+      if (player.deck.cards.length === 0 || openSlots.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      // Count Pokemon in top 8 cards and track non-Pokemon positions
       const blocked: number[] = [];
+      let pokemonCount = 0;
       player.deck.cards.forEach((c, index) => {
         if (c instanceof PokemonCard) {
-          pokemons += 1;
+          pokemonCount += 1;
         } else {
           blocked.push(index);
         }
       });
 
-      // Allow player to search deck and choose up to 2 Basic Pokemon
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const maxPokemons = Math.min(pokemonCount, openSlots.length);
+      const deckTop = new CardList();
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 8 });
 
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      } else {
-        // Check if bench has open slots
-        const openSlots = player.bench.filter(b => b.cards.length === 0);
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+        deckTop,
+        { superType: SuperType.POKEMON },
+        { min: 0, max: openSlots.length, allowCancel: false, blocked, maxPokemons }
+      ), selectedCards => {
+        const cards = selectedCards || [];
 
-        if (openSlots.length === 0) {
-          // No open slots, throw error
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
-
-        const maxPokemons = Math.min(pokemons, 8);
-
-        const deckTop = new CardList();
-        player.deck.moveTo(deckTop, 8);
-
-        // We will discard this card after prompt confirmation
-        effect.preventDefault = true;
-
-        let cards: Card[] = [];
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-          deckTop,
-          { superType: SuperType.POKEMON },
-          { min: 0, max: 8, allowCancel: false, blocked, maxPokemons }
-        ), selectedCards => {
-          cards = selectedCards || [];
-
-          cards.forEach((card, index) => {
-            deckTop.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-            deckTop.moveTo(player.deck);
-
-          });
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-
-            return state;
-          });
+        // Move selected cards to open bench slots
+        cards.forEach((card, index) => {
+          const targetSlot = openSlots[index];
+          MOVE_CARDS(store, state, deckTop, targetSlot, { cards: [card] });
+          targetSlot.pokemonPlayedTurn = state.turn;
         });
-      }
+
+        // Move remaining cards back to deck
+        MOVE_CARDS(store, state, deckTop, player.deck);
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+          return state;
+        });
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

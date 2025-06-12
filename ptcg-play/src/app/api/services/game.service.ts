@@ -1,50 +1,36 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import {
-  Base64,
-  CardTarget,
-  ClientInfo,
-  Format,
-  GameState,
-  PlayerStats,
-  Replay,
-  State,
-  StateLog,
-  StateSerializer
+  ClientInfo, GameState, State, CardTarget, StateLog, Replay,
+  Base64, StateSerializer, PlayerStats
 } from 'ptcg-server';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs/operators';
 
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { AlertService } from '../../shared/alert/alert.service';
-import { LocalGameState } from '../../shared/session/session.interface';
-import { SessionService } from '../../shared/session/session.service';
 import { ApiError } from '../api.error';
 import { ApiService } from '../api.service';
+import { LocalGameState } from '../../shared/session/session.interface';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
-import { TournamentService } from './tournament.service';
+import { SessionService } from '../../shared/session/session.service';
+import { BoardInteractionService } from '../../shared/services/board-interaction.service';
 
 export interface GameUserInfo {
   gameId: number;
   userInfo: ClientInfo;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GameService {
-  private apiUrl = environment.apiUrl;
-  private queueSubject = new BehaviorSubject<string[]>([]);
+
   constructor(
-    private http: HttpClient,
     private api: ApiService,
     private alertService: AlertService,
     private sessionService: SessionService,
     private socketService: SocketService,
     private translate: TranslateService,
-    private tournamentService: TournamentService
+    private boardInteractionService: BoardInteractionService
   ) { }
 
   public getPlayerStats(gameId: number) {
@@ -52,6 +38,7 @@ export class GameService {
   }
 
   public join(gameId: number): Observable<GameState> {
+    this.boardInteractionService.endBoardSelection();
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
@@ -149,6 +136,11 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
+  public trainerAbility(gameId: number, ability: string, target: CardTarget) {
+    this.socketService.emit('game:action:trainerAbility', { gameId, ability, target })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
   public attack(gameId: number, attack: string) {
     this.socketService.emit('game:action:attack', { gameId, attack })
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
@@ -209,12 +201,15 @@ export class GameService {
     this.socketService.on(`game[${id}]:leave`, (clientId: number) => this.onLeave(id, clientId));
     this.socketService.on(`game[${id}]:stateChange`, (data: { stateData: string, playerStats: PlayerStats[] }) =>
       this.onStateChange(id, data.stateData, data.playerStats));
+    this.socketService.on(`game[${id}]:timerUpdate`, (data: { playerStats: PlayerStats[] }) =>
+      this.onTimerUpdate(id, data.playerStats));
   }
 
   private stopListening(id: number) {
     this.socketService.off(`game[${id}]:join`);
     this.socketService.off(`game[${id}]:leave`);
     this.socketService.off(`game[${id}]:stateChange`);
+    this.socketService.off(`game[${id}]:timerUpdate`);
   }
 
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {
@@ -226,6 +221,7 @@ export class GameService {
       const logs = [...gameStates[index].logs, ...state.logs];
       gameStates[index] = { ...gameStates[index], state, logs, playerStats };
       this.sessionService.set({ gameStates });
+      this.boardInteractionService.updateGameLogs(logs);
     }
   }
 
@@ -261,6 +257,16 @@ export class GameService {
     }
   }
 
+  private onTimerUpdate(gameId: number, playerStats: PlayerStats[]) {
+    const games = this.sessionService.session.gameStates;
+    const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
+    if (index !== -1) {
+      const gameStates = this.sessionService.session.gameStates.slice();
+      gameStates[index] = { ...gameStates[index], playerStats };
+      this.sessionService.set({ gameStates });
+    }
+  }
+
   private decodeStateData(stateData: string): State {
     const base64 = new Base64();
     const serializedState = base64.decode(stateData);
@@ -278,54 +284,6 @@ export class GameService {
       : 'ERROR_UNKNOWN';
 
     this.alertService.toast(this.translate.instant(key));
-  }
-
-  joinMatchmakingLobby(format: string): Observable<any> {
-    return this.socketService.joinLobby(format).pipe(
-      switchMap(() => new Observable<any>(observer => {
-        this.socketService.on('matchmaking:lobbyUpdate', (data: any) => observer.next(data));
-      })),
-      takeUntil(new Observable<any>(observer => {
-        this.socketService.on('gameStarted', () => observer.next());
-      }))
-    );
-  }
-
-  handleGameStart(): Observable<any> {
-    return new Observable<any>(observer => {
-      this.socketService.on('gameStarted', (gameData: any) => {
-        this.join(gameData.gameId).subscribe(
-          result => observer.next(result),
-          error => observer.error(error),
-          () => observer.complete()
-        );
-      });
-    });
-  }
-
-  joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
-    return this.socketService.joinMatchmakingQueue(format, deck);
-  }
-
-
-  leaveMatchmakingQueue(): Observable<any> {
-    return this.socketService.emit('matchmaking:leaveQueue');
-  }
-
-  checkQueueStatus(format: Format): Observable<any> {
-    return this.socketService.emit('checkQueueStatus', { format });
-  }
-
-  getQueueUpdates(): Observable<any> {
-    return new Observable<any>(observer => {
-      this.socketService.on('queueUpdate', (data) => {
-        observer.next(data);
-      });
-    });
-  }
-
-  updateQueuedPlayers(players: string[]) {
-    this.queueSubject.next(players);
   }
 
 }

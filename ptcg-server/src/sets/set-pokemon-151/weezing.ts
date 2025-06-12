@@ -1,8 +1,8 @@
-import { CardType, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { KnockOutEffect } from "../../game/store/effects/game-effects";
-import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, TAKE_X_PRIZES, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { CardType, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -56,7 +56,7 @@ export class Weezing extends PokemonCard {
         store.reduceEffect(state, dealDamage);
         
         return TAKE_X_PRIZES(store, state, player, dealDamage.prizeCount);
-      })
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

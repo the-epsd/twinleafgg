@@ -41,11 +41,8 @@ export class GalarMine extends TrainerCard {
       if (playerActive) {
         effect.cost.push(C, C);
       }
-
       return state;
-
     }
-
     return state;
   }
 }

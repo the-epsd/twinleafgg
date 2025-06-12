@@ -26,6 +26,7 @@ import { Kingler } from './kingler';
 import { Krabby } from './krabby';
 import { Lapras } from './lapras';
 import { Magmar } from './magmar';
+import { Moltres } from './moltres';
 import { MrFuji } from './mr-fuji';
 import { Muk } from './muk';
 import { MysteriousFossil } from './mysterious-fossil';
@@ -71,6 +72,7 @@ export const setFossil: Card[] = [
   new Krabby(),
   new Lapras(),
   new Magmar(),
+  new Moltres(),
   new MrFuji(),
   new Muk(),
   new MysteriousFossil(),

@@ -57,9 +57,9 @@ export function initNextTurn(store: StoreLike, state: State): State {
   store.log(state, GameLog.LOG_TURN, { turn: state.turn });
 
   // Skip draw card on first turn
-  //if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
-  //  return state;
-  //}
+  if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
+    return state;
+  }
 
   // Draw card at the beginning
   store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
@@ -87,7 +87,6 @@ export function initNextTurn(store: StoreLike, state: State): State {
   } catch {
     return state;
   }
-
   return state;
 }
 
@@ -111,6 +110,8 @@ function startNextTurn(store: StoreLike, state: State): State {
 function handleSpecialConditions(store: StoreLike, state: State, effect: BetweenTurnsEffect) {
   const player = effect.player;
   for (const sp of player.active.specialConditions) {
+    const flipsForSleep: CoinFlipPrompt[] = [];
+
     switch (sp) {
       case SpecialCondition.POISONED:
         player.active.damage += effect.poisonDamage;
@@ -143,7 +144,6 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
           break;
         }
 
-        const flipsForSleep = [];
         for (let i = 0; i < effect.player.active.sleepFlips; i++) {
           store.log(state, GameLog.LOG_FLIP_ASLEEP, { name: player.name });
           flipsForSleep.push(new CoinFlipPrompt(
@@ -175,29 +175,15 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     player.canEvolve = false;
 
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-      cardList.attacksThisTurn = 0;
-    });
-
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-      const pokemonCard = cardList.getPokemonCard();
-      if (pokemonCard && player.active.cards.includes(pokemonCard)) {
-        cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-        cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
-      }
-    });
-
-    effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
-
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      if (cardList === player.active) {
-        return;
-      }
       cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
       cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
     });
 
+    effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
+
     player.supporterTurn = 0;
+    player.active.attacksThisTurn = 0;
 
     if (player === undefined) {
       throw new GameError(GameMessage.NOT_YOUR_TURN);

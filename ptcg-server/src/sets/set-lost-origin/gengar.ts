@@ -61,7 +61,6 @@ export class Gengar extends PokemonCard {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      console.log('Number of bench slots open: ' + slots.length);
       // Check if card is in the discard
       if (!player.discard.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
-  PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
+  PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
+} from '../../game';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -40,7 +42,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
@@ -65,7 +67,7 @@ export class Shedinja extends PokemonCard {
 
   public hp: number = 40;
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Vessel of Life',
@@ -77,7 +79,7 @@ export class Shedinja extends PokemonCard {
   public attacks = [
     {
       name: 'Haunt',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Put 3 damage counters on your opponent\'s Active Pokémon.'
     }
@@ -103,7 +105,7 @@ export class Shedinja extends PokemonCard {
       effect.prizeCount -= 1;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

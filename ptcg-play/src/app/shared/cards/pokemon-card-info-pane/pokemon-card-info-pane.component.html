@@ -1,0 +1,139 @@
+<div class="ptcg-card-info-pane" *ngIf="cardList && getMainCard()">
+  <div class="ptcg-card-info-image">
+    <ptcg-card [card]="getMainCard()" [class.cardback]="facedown"
+      (click)="showCardImage(getMainCard(), facedown)"></ptcg-card>
+  </div>
+
+  <div class="ptcg-card-info-text">
+    <div class="title">
+      <span>{{getMainCard().name}}</span>
+      <span class="subtitle-set-code">{{getMainCard().set}} {{getMainCard().setNumber}}</span>
+      <div class="ptcg-u-spacer"></div>
+      <div class="subtitle-hp" *ngIf="getMaxHp()">
+        <span class="subtitle-hp-unit" translate>HP</span>
+        <span class="subtitle-hp-value" [class.damaged]="getCurrentHp() < getMaxHp()">
+          <!-- {{getCurrentHp()}}/{{getMaxHp()}} -->
+          {{getMainCard().hp}}
+        </span>
+      </div>
+      <div class="subtitle-card-type">
+        <ptcg-energy [type]="getMainCard().cardType" style="transform: translateY(14px);"></ptcg-energy>
+        <ng-container *ngIf="getMainCard().additionalCardTypes">
+          <ptcg-energy *ngFor="let type of getMainCard().additionalCardTypes" [type]="type"></ptcg-energy>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="subtitle">
+      <div class="subtitle-stage">
+        {{getFormattedStage(getMainCard().stage)}}
+      </div>
+      <div class="ptcg-u-spacer"></div>
+      <div class="subtitle-evolves-from" *ngIf="getMainCard().evolvesFrom">
+        Evolves from {{getMainCard().evolvesFrom}}
+      </div>
+    </div>
+
+    <!-- Powers/Abilities -->
+    <div class="powers" *ngIf="getDisplayPowers()?.length > 0">
+      <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
+        (click)="!isSelectionMode && clickAction({ability: power.name})"
+        [enabled]="enabledAbilities[power.name] && !isSelectionMode">
+        <div class="power">
+          <div class="power-header">
+            <div class="power-type" [ngSwitch]="power.powerType">
+              <div class="ability" *ngSwitchCase="PowerType.TRAINER_ABILITY" translate></div>
+              <div class="ability" *ngSwitchCase="PowerType.ABILITY" translate>ABILITY</div>
+              <div class="ability" *ngSwitchCase="PowerType.POKEPOWER" translate>POKÉ POWER</div>
+              <div class="ability" *ngSwitchCase="PowerType.POKEMON_POWER" translate>POKÉMON POWER</div>
+              <div class="poke-body" *ngSwitchCase="PowerType.POKEBODY" translate>POKÉ BODY</div>
+            </div>
+            <div class="power-name">{{power.name}}</div>
+          </div>
+          <div class="card-text">{{power.text}}</div>
+        </div>
+      </ptcg-hover-highlight>
+    </div>
+
+    <!-- Attacks -->
+    <div class="attacks" *ngIf="getDisplayAttacks()?.length > 0">
+      <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()"
+        (click)="!isSelectionMode && clickAction({attack: attack.name})"
+        [enabled]="options.enableAttack && !isSelectionMode">
+        <div class="attack" [class.disabled]="!hasEnoughEnergyForAttack(attack)">
+          <div class="attack-header">
+            <div class="attack-cost">
+              <ptcg-energy *ngIf="attack.cost.length === 0" style="transform: translateY(5px);"></ptcg-energy>
+              <ptcg-energy *ngFor="let cost of attack.cost; let i = index" [type]="cost"
+                style="transform: translateY(5px);"
+                [class.insufficient]="isEnergyTypeMissing(attack, cost, i)"></ptcg-energy>
+            </div>
+            <div class="attack-name">{{attack.name}}</div>
+            <div class="ptcg-u-spacer"></div>
+            <div class="attack-damage" *ngIf="attack.damage">{{attack.damage}}</div>
+          </div>
+          <div class="card-text">{{attack.text}}</div>
+        </div>
+      </ptcg-hover-highlight>
+    </div>
+
+    <!-- Stats (Weakness/Resistance/Retreat) -->
+    <div class="stats">
+      <div class="stats-item">
+        <div class="stats-item-header" translate>WEAKNESS</div>
+        <div class="stats-item-content">
+          <div class="stats-item-value" *ngFor="let weakness of getMainCard().weakness">
+            <ptcg-energy [type]="weakness.type" style="transform: translateY(0px) scale(0.8);"></ptcg-energy>
+            <span class="stats-item-value-modifier">
+              {{weakness.value ? '+' + weakness.value : 'x2'}}
+            </span>
+          </div>
+          <div class="stats-item-value empty" *ngIf="!getMainCard().weakness?.length"></div>
+        </div>
+      </div>
+
+      <div class="stats-item">
+        <div class="stats-item-header" translate>RESISTANCE</div>
+        <div class="stats-item-content">
+          <div class="stats-item-value" *ngFor="let resistance of getMainCard().resistance">
+            <ptcg-energy [type]="resistance.type" style="transform: translateY(0px) scale(0.8);"></ptcg-energy>
+            <span class="stats-item-value-modifier">
+              {{resistance.value}}
+            </span>
+          </div>
+          <div class="stats-item-value empty" *ngIf="!getMainCard().resistance?.length"></div>
+        </div>
+      </div>
+
+      <div class="stats-item">
+        <div class="stats-item-header" translate>RETREAT COST</div>
+        <div class="stats-item-content">
+          <div class="stats-item-value">
+            <ng-container *ngFor="let cost of getMainCard().retreat">
+              <ptcg-energy [type]="cost" style="transform: translateY(0px) scale(0.8);"></ptcg-energy>
+            </ng-container>
+            <div class="stats-item-value empty" *ngIf="!getMainCard().retreat?.length"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attached Cards -->
+    <!-- <div class="attached-cards" *ngIf="getAllAttachedCards().length > 0">
+      <div class="power">
+        <div class="power-header">
+          <div class="power-name">Attached Cards</div>
+        </div>
+        <div class="card-text" *ngFor="let card of getAllAttachedCards()">
+          {{card.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="debug-info" *ngIf="!cardList || !getMainCard()">
+  <p>Debug Info:</p>
+  <pre>CardList: {{cardList | json}}</pre>
+  <pre>Main Card: {{getMainCard() | json}}</pre>
+</div> -->

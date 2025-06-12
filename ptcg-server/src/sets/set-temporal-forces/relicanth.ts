@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, ChooseAttackPrompt, Player, EnergyMap } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckTableStateEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import {IS_ABILITY_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class Relicanth extends PokemonCard {
 
@@ -15,11 +15,11 @@ export class Relicanth extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Memory Dive',
-    useWhenInPlay: true,
+    useWhenInPlay: false,
     powerType: PowerType.ABILITY,
     text: 'Each of your evolved Pokémon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)'
   }];
@@ -27,7 +27,7 @@ export class Relicanth extends PokemonCard {
   public attacks = [
     {
       name: 'Razor Fin',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 30,
       text: ''
     }
@@ -46,78 +46,72 @@ export class Relicanth extends PokemonCard {
   public fullName: string = 'Relicanth TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof CheckTableStateEffect) {
       const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
 
-      if (pokemonCard === this || pokemonCard?.stage === Stage.BASIC) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      if (owner !== player) {
+        return state;
       }
 
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
+      if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
 
-      // No attacks to copy
-      if (pokemonCards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+
+      let isRelicanthInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isRelicanthInPlay = true;
+        }
+      });
+
+      if (!isRelicanthInPlay) {
+        return state;
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: true, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
+      // Enable showAllStageAbilities for evolved Pokémon
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.stage !== Stage.BASIC) {
+          player.showAllStageAbilities = true;
+        }
+      });
+
+      return state;
+    }
+
+    if (effect instanceof CheckPokemonAttacksEffect) {
+      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (owner !== player) {
+        return state;
+      }
+
+      let isRelicanthInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isRelicanthInPlay = true;
+        }
+      });
+
+      if (!isRelicanthInPlay) {
+        return state;
+      }
+
+      // Add attacks from previous evolutions to evolved Pokémon
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.stage !== Stage.BASIC) {
+          // Get all previous evolution attacks
+          for (const evolutionCard of cardList.cards) {
+            if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== card) {
+              effect.attacks.push(...(evolutionCard.attacks || []));
+            }
+          }
         }
       });
     }
 
     return state;
   }
-
-  private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-
-    player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-      if (cardList === player.active && player.active.getPokemonCard() !== undefined){
-        const pokemons = cardList.getPokemons();
-        this.checkAttack(state, store, player, pokemons.slice(0)[0], energyMap, pokemonCards, blocked);
-        if (player.active.getPokemonCard()?.stage === Stage.STAGE_2 && pokemons.slice(1)[0].stage !== Stage.STAGE_2){
-          this.checkAttack(state, store, player, pokemons.slice(1)[0], energyMap, pokemonCards, blocked);
-        }
-      }
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
-  ) {
-    const attacks = card.attacks.filter(attack => {
-      const checkAttackCost = new CheckAttackCostEffect(player, attack);
-      state = store.reduceEffect(state, checkAttackCost);
-      return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
-    });
-    const index = pokemonCards.length;
-    pokemonCards.push(card);
-    card.attacks.forEach(attack => {
-      if (!attacks.includes(attack)) {
-        blocked.push({ index, attack: attack.name });
-      }
-    });
-  }
-
 }

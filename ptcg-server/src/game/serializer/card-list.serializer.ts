@@ -10,7 +10,7 @@ export class CardListSerializer implements Serializer<CardList> {
   public readonly types = ['CardList', 'PokemonCardList'];
   public readonly classes = [CardList, PokemonCardList];
 
-  constructor () { }
+  constructor() { }
 
   public serialize(cardList: CardList): Serialized {
     const data: any = { ...cardList };
@@ -43,6 +43,13 @@ export class CardListSerializer implements Serializer<CardList> {
 
     const indexes: number[] = data.cards;
     data.cards = indexes.map(index => this.fromIndex(index, context));
+
+    // Explicitly handle PokemonCardList properties
+    if (instance instanceof PokemonCardList) {
+      instance.showBasicAnimation = data.showBasicAnimation || false;
+      instance.triggerAnimation = data.triggerAnimation || false;
+      instance.triggerAttackAnimation = data.triggerAttackAnimation || false;
+    }
 
     return Object.assign(instance, data);
   }

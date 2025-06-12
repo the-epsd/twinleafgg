@@ -3,6 +3,7 @@ import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects'
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DarkraiGX extends PokemonCard {
   public cardType: CardType = CardType.DARK;
@@ -50,7 +51,6 @@ export class DarkraiGX extends PokemonCard {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      console.log('Number of bench slots open: ' + slots.length);
       // Check if card is in the discard
       if (!player.discard.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -65,7 +65,7 @@ export class DarkraiGX extends PokemonCard {
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       // Add Marker (similar to propagation exeggcute, you can use this as much as you want)
       // source: https://compendium.pokegym.net/category/4-abilities/restoration/
       //player.marker.addMarker(this.NETHERWORLD_GATE_MARKER, this);
@@ -138,9 +138,7 @@ export class DarkraiGX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
 
       player.usedGX = true;
 

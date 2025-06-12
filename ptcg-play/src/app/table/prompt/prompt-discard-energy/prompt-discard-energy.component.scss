@@ -1,0 +1,484 @@
+@import '../../../../theme/variables.scss';
+
+/* Override parent prompt container's padding */
+:host {
+  ::ng-deep .ptcg-prompt-container {
+    padding-bottom: 0 !important;
+    z-index: 100 !important;
+    /* Ensure the prompt appears above the hand */
+  }
+}
+
+$ptcg-selection-container-padding: map-get($padding, small);
+$ptcg-selection-container-border-radius: map-get($padding, small);
+
+$card-width: 90px;
+$card-height: 126px;
+$card-border-radius: 8px;
+$section-bg-color: rgba(255, 255, 255, 0.05);
+$hover-color: rgba(255, 255, 255, 0.1);
+$selected-color: rgba(72, 166, 73, 0.3);
+$transition-speed: 0.2s;
+$energy-card-width: 72px;
+$energy-card-height: 101px;
+
+ptcg-board-card {
+  margin: 0 map-get($padding, small);
+  width: calc(0.75 * map-get($ptcg-size, card));
+
+  &.unavailable {
+    opacity: $ptcg-disabled-opacity;
+  }
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  // padding-top: 24px;
+}
+
+.button-container button:last-child {
+  margin-left: auto;
+}
+
+.ptcg-prompt-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.selected-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  justify-content: center;
+}
+
+.card-slot {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    mat-icon {
+      color: white;
+      font-size: 24px;
+    }
+  }
+
+  &:hover .card-overlay {
+    opacity: 1;
+  }
+}
+
+.available-cards {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.ptcg-prompt-discard-energy {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: -12px;
+  margin-top: -12px;
+  position: relative;
+  /* Required for proper z-index */
+  z-index: 100;
+  /* High z-index to appear above hand */
+}
+
+.ptcg-prompt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ptcg-prompt-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.ptcg-prompt-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.ptcg-prompt-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 16px 0;
+  // border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.status-message {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f44336;
+  font-weight: 500;
+  font-size: 14px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pokemon selection area */
+.pokemon-selection-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: $section-bg-color;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.pokemon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.pokemon-card {
+  position: relative;
+  width: $card-width;
+  height: $card-height;
+  border-radius: $card-border-radius;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  transition: transform $transition-speed ease, box-shadow $transition-speed ease, background-color $transition-speed ease;
+  overflow: visible;
+  /* Changed from hidden to allow icons to overflow */
+  padding: 0;
+
+  &.selectable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      background-color: $hover-color;
+    }
+  }
+
+  &:not(.selectable) {
+    opacity: 0.5;
+  }
+
+  &.selected {
+    background-color: $selected-color;
+    box-shadow: 0 0 0 2px #48a649;
+
+    &.selectable:hover {
+      background-color: mix($selected-color, $hover-color, 80%);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 0 2px #48a649;
+    }
+  }
+
+  &.top-player {
+    transform: rotate(180deg);
+
+    &.selectable:hover {
+      transform: rotate(180deg) translateY(-5px);
+    }
+
+    &.selected.selectable:hover {
+      transform: rotate(180deg) translateY(-5px);
+    }
+  }
+}
+
+.pokemon-label {
+  display: none;
+}
+
+.pokemon-img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: $card-border-radius;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.pokemon-name {
+  display: none;
+}
+
+/* Energy cards */
+.selected-energies,
+.available-energies {
+  background-color: $section-bg-color;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.selection-count {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #aaa;
+
+  &.invalid {
+    color: #f44336;
+  }
+}
+
+.selection-info {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #aaa;
+  text-align: center;
+
+  span {
+    display: block;
+    margin-bottom: 4px;
+  }
+}
+
+.energy-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.energy-card {
+  position: relative;
+  width: $energy-card-width;
+  height: $energy-card-height;
+  border-radius: $card-border-radius;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform $transition-speed ease, box-shadow $transition-speed ease;
+  margin: 4px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 2px #48a649;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 2px #48a649;
+    }
+  }
+}
+
+.energy-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity $transition-speed ease;
+
+  mat-icon {
+    color: white;
+    font-size: 24px;
+  }
+}
+
+.energy-card:hover .energy-card-overlay {
+  opacity: 1;
+}
+
+/* Empty states */
+.empty-state {
+  background-color: $section-bg-color;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Make empty states within energy sections more subtle */
+.available-energies .empty-state,
+.selected-energies .empty-state {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.card-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+/* Add this to your existing CSS */
+.minimize-icon {
+  font-size: 25px;
+  height: 25px;
+  width: 25px;
+  line-height: 12px;
+}
+
+.ptcg-prompt-controls {
+  button {
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+  }
+}
+
+/* Energy icons on Pokemon cards */
+.energy-icons-container {
+  position: absolute;
+  bottom: -12px;
+  left: -10px;
+  z-index: 10;
+  /* Keep above card but below prompt containers */
+  pointer-events: none;
+  /* Prevent icons from blocking clicks */
+}
+
+.energy-icons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  max-width: calc(100% - 10px);
+}
+
+.energy-icon {
+  width: 32px;
+  height: 32px;
+  clip-path: circle(34%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -15px;
+
+  /* First 5 icons get incrementally higher z-index to layer properly */
+  &:nth-child(1) {
+    z-index: 15;
+  }
+
+  &:nth-child(2) {
+    z-index: 14;
+  }
+
+  &:nth-child(3) {
+    z-index: 13;
+  }
+
+  &:nth-child(4) {
+    z-index: 12;
+  }
+
+  &:nth-child(5) {
+    z-index: 11;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .card-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+.energy-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 2px;
+  z-index: 16;
+}

@@ -3,10 +3,11 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PlayerType } from '../../game';
+import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class SpiralEnergy extends EnergyCard {
 
@@ -29,7 +30,7 @@ export class SpiralEnergy extends EnergyCard {
   public fullName = 'Spiral Energy CRE';
 
   public text = 'This card can only be attached to a Rapid Strike Pokémon. If this card is attached to anything other than a Rapid Strike Pokémon, discard this card.' +
-    '' +
+    '\n\n' +
     'As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time. The Pokémon this card is attached to can\'t be Paralyzed, and if it is already Paralyzed, it recovers from that Special Condition.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -44,36 +45,42 @@ export class SpiralEnergy extends EnergyCard {
       return state;
     }
 
-    // Discard card when not attached to Single Strike Pokemon
+    // Prevent attaching to non Rapid Strike Pokemon
     if (effect instanceof AttachEnergyEffect) {
+      if (effect.energyCard === this && !effect.target.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+    }
+
+    // Heal Paralysis, discard card when not attached to Rapid Strike Pokemon
+    if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
+          if (!cardList.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)) {
             return;
           }
-          const pokemon = cardList;
-          if (!pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
+
+          // Remove Paralysis before discarding as per ruling
+          cardList.removeSpecialCondition(SpecialCondition.PARALYZED);
+
+          if (!cardList.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
             cardList.moveCardTo(this, player.discard);
           }
         });
       });
-      return state;
     }
 
+    // Prevent Paralysis
     if (effect instanceof AddSpecialConditionsEffect || effect instanceof AddSpecialConditionsPowerEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
-            return;
-          }
-          if (cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
-            cardList.removeSpecialCondition(SpecialCondition.PARALYZED);
-          }
-          return state;
-        });
+      const player = StateUtils.findOwner(state, effect.target);
+
+      if (!effect.target.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
         return state;
-      });
+      }
+
+      effect.specialConditions = effect.specialConditions.filter(condition => condition !== SpecialCondition.PARALYZED);
     }
+
     return state;
   }
 

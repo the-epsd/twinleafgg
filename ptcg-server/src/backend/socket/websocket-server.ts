@@ -1,6 +1,5 @@
 import * as http from 'http';
 import { Server, Socket, ServerOptions } from 'socket.io';
-
 import { Core } from '../../game/core/core';
 import { SocketClient } from './socket-client';
 import { User } from '../../storage';
@@ -28,18 +27,16 @@ export class WebSocketServer {
 
     server.on('connection', (socket: Socket) => {
       const user: User = (socket as any).user;
-      console.log(`Connection opened - ${user.name} - Active connections: ${server.engine.clientsCount}`);
 
       const socketClient = new SocketClient(user, this.core, server, socket);
       this.core.connect(socketClient);
       socketClient.attachListeners();
 
       socket.on('disconnect', () => {
-        console.log(`Connection closed - ${user.name} - Active connections: ${server.engine.clientsCount - 1}`);
         this.core.disconnect(socketClient);
+        socketClient.dispose();
         user.updateLastSeen();
       });
     });
   }
-
 }

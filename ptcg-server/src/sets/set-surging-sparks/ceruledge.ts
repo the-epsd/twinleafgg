@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, EnergyCard } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, EnergyCard, PokemonCardList } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Ceruledge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,12 +35,13 @@ export class Ceruledge extends PokemonCard {
   public fullName: string = 'Ceruledge SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
+  public text: string =
+    'Discard all Special Energy from all of your opponent\'s Pokémon.';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
@@ -56,31 +57,26 @@ export class Ceruledge extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let allSpecialEnergy: EnergyCard[] = [];
+      // Function to discard special energy and tools from a PokemonCardList
+      const discardSpecialEnergy = (pokemonCardList: PokemonCardList) => {
+        const cardsToDiscard = pokemonCardList.cards.filter(card =>
+          (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL)
+        );
+        if (cardsToDiscard.length > 0) {
+          state = MOVE_CARDS(store, state, pokemonCardList, opponent.discard, { cards: cardsToDiscard });
+        }
+      };
 
+      // Discard from active Pokémon
+      discardSpecialEnergy(opponent.active);
 
-      // Check active Pokémon
-      const activeCheckProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
-      state = store.reduceEffect(state, activeCheckProvidedEnergy);
-      allSpecialEnergy = allSpecialEnergy.concat(activeCheckProvidedEnergy.energyMap.filter(em => em.card.energyType === EnergyType.SPECIAL).map(em => em.card as EnergyCard));
-
-      // Check bench Pokémon
-      opponent.bench.forEach(benchSlot => {
-        const benchCheckProvidedEnergy = new CheckProvidedEnergyEffect(opponent, benchSlot);
-        state = store.reduceEffect(state, benchCheckProvidedEnergy);
-        allSpecialEnergy = allSpecialEnergy.concat(benchCheckProvidedEnergy.energyMap.filter(em => em.card.energyType === EnergyType.SPECIAL).map(em => em.card as EnergyCard));
+      // Discard from bench Pokémon
+      opponent.bench.forEach(benchPokemon => {
+        discardSpecialEnergy(benchPokemon);
       });
-
-      // Discard all special energy
-      if (allSpecialEnergy.length > 0) {
-        allSpecialEnergy.forEach(energy => {
-          energy.cards.moveTo(opponent.discard);
-        });
-      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
       // Check marker
       if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');

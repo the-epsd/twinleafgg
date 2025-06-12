@@ -1,20 +1,23 @@
 import { Card } from '../../game/store/card/card';
-import { Annihilape } from '../set-scarlet-and-violet/annihilape';
+import { Annihilape } from '../set-surging-sparks/annihilape';
 import { AlolanDiglett } from './alolan-diglett';
 import { AlolanDugtrio } from './alolan-dugtrio';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { AmuletofHope } from './amulet-of-hope';
 import { Archaludonex } from './archaludon-ex';
+import { Armarouge } from './armarouge';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
 import { Blitzle } from './blitzle';
 import { Capsakid } from './capsakid.';
-import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
+import { CounterGainSSP, ScrambleSwitchSSP } from './other-prints';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
+import { Cetitan } from './cetitan';
+import { Cetoddle } from './cetoddle';
 import { Charcadet } from './charcadet';
 import { Charcadet2 } from './charcadet-2';
 import { CherishCarrier } from './cherish-carrier';
@@ -43,6 +46,7 @@ import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
 import { ArchaludonexFA, ArchaludonexSIR, CounterGainUR, CyranoFA, FeebasIR, HydreigonexFA, HydreigonexSIR, JetEnergyUR, LarvestaIR, LatiasexFA, LatiasexSIR, LisiasAppealFA, LisiasAppealSIR, MiloticexFA, MiloticexSIR, NightStretcherUR, PikachuexFA, PikachuexSIR, PikachuexUR, SurferFA } from './full-art';
 import { Gimmighoul } from './gimmighoul';
+import { Gholdengo } from './gholdengo';
 import { GougingFire } from './gouging-fire';
 import { GravityMountain } from './gravity-mountain';
 import { HelperBell } from './helper.bell';
@@ -68,7 +72,7 @@ import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
 import { Pansear } from './pansear';
-import { PerfectMixer } from './perfect-mixer';
+import { BrilliantBlender } from './brilliant-blender';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaquaval } from './quaquaval';
@@ -77,14 +81,17 @@ import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
 import { RichEnergy } from './rich-energy';
+import { Rotom } from './rotom';
 import { Sandygast } from './sandygast';
-import { ScovillainEXSSP } from './scovillain-ex';
+import { Scovillainex } from './scovillain-ex';
+import { Sealeo } from './sealeo';
 import { Shroodle } from './shroodle';
 import { Sizzlipede } from './sizzlipede';
 import { Skeledirge } from './skeledirge';
 import { Slakingex } from './slaking-ex';
-import { SlakothSSP } from './slakoth';
+import { Slakoth } from './slakoth';
 import { Smoochum } from './smoochum';
+import { Spheal } from './spheal';
 import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
 import { TapuKoko } from './tapu-koko';
@@ -95,14 +102,17 @@ import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
 import { Trapinch } from './trapinch';
+import { Tyme } from './tyme';
 import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
-import { VigorothSSP } from './vigoroth';
+import { Vigoroth } from './vigoroth';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
+import { Walrein } from './walrein';
 import { Wochien } from './wo-chien';
 import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
+import { Exeggutor } from './exeggutor';
 
 export const setSurgingSparks: Card[] = [
   new Dialga(),
@@ -122,6 +132,7 @@ export const setSurgingSparks: Card[] = [
   new Togepi(),
   new Togetic(),
   new Togekiss(),
+  new Exeggutor(),
   new Deino(),
   new Zweilous(),
   new Hydreigonex(),
@@ -136,7 +147,7 @@ export const setSurgingSparks: Card[] = [
   new Palkia(),
   new HoOh(),
   new Azumarill(),
-  new PerfectMixer(),
+  new BrilliantBlender(),
   new CherishCarrier(),
   new Marill(),
   new TeraOrb(),
@@ -178,6 +189,7 @@ export const setSurgingSparks: Card[] = [
   new ChienPao(),
   new DuskBall(),
   new Gimmighoul(),
+  new Gholdengo(),
   new EnergySearchPro(),
   new Surfer(),
   new GougingFire(),
@@ -192,21 +204,29 @@ export const setSurgingSparks: Card[] = [
   new IronCrown(),
   new JasminesGaze(),
   new Meowstic(),
-  new ScovillainEXSSP(),
+  new Scovillainex(),
   new Slakingex(),
-  new SlakothSSP(),
-  new VigorothSSP(),
+  new Slakoth(),
+  new Vigoroth(),
   new Zarude(),
   new Durantex(),
   new Sizzlipede(),
   new Centiskorch(),
   new Cyclizarex(),
+  new Sealeo(),
+  new Spheal(),
+  new Walrein(),
   new Blitzle(),
   new TapuKoko(),
   new Quaxly(),
   new Quaquaval(),
   new MeddlingMemo(),
   new Annihilape(),
+  new Tyme(),
+  new Cetoddle(),
+  new Cetitan(),
+  new Armarouge(),
+  new Rotom(),
 
   // Reprints
   new ScrambleSwitchSSP(),

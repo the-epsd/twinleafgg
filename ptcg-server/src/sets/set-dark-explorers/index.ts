@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Accelgor } from './accelgor';
-import { DarkPatchDEX, EnhancedHammerDEX } from './card-images';
+import { DarkPatchDEX, EnhancedHammerDEX } from './other-prints';
 import { DarkClaw } from './dark-claw';
 import { DarkraiEx } from './darkrai-ex';
 import { Empoleon } from './empoleon';
@@ -16,6 +16,7 @@ import { Shelmet } from './shelmet';
 import { TornadusEx } from './tornadus-ex';
 import { TwistMountain } from './twist-mountain';
 import { Tynamo } from './tynamo';
+import { Yamask } from './yamask';
 import { Zorua } from './zorua';
 
 export const setDarkExplorers: Card[] = [
@@ -37,5 +38,6 @@ export const setDarkExplorers: Card[] = [
   new TornadusEx(),
   new TwistMountain(),
   new Tynamo(),
+  new Yamask(),
   new Zorua(),
 ];

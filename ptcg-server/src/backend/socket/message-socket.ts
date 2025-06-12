@@ -31,7 +31,6 @@ export class MessageSocket {
 
   private async sendMessage(params: { userId: number, text: string },
     response: Response<{ message: MessageInfo, user: UserInfo }>): Promise<void> {
-    console.log(`Message from user ${this.client.id} to user ${params.userId}`);
     let messageInfo: MessageInfo;
     let userInfo: UserInfo;
 
@@ -91,6 +90,11 @@ export class MessageSocket {
       isRead: message.isRead
     };
     return messageInfo;
+  }
+
+  public dispose(): void {
+    this.socket.removeListener('message:send');
+    this.socket.removeListener('message:read');
   }
 
 }

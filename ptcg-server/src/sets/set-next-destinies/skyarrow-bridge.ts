@@ -24,7 +24,7 @@ export class SkyarrowBridge extends TrainerCard {
   public setNumber: string = '91';
 
   public text: string =
-    'The Retreat Cost of each Basic Pokemon in play is C less.';
+    'The Retreat Cost of each Basic Pokemon in play is [C] less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {

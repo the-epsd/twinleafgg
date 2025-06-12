@@ -4,7 +4,10 @@ import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Dustox } from './dustox';
 import { MRayquazaEX } from './m-rayquaza-ex';
+import {MRayquazaEx} from './mega-rayquaza-ex';
 import { Natu } from './natu';
+import {RayquazaEx} from './rayquaza-ex';
+import {RayquazaSpiritLink} from './rayquaza-spirit-link';
 import { Reshiram } from './reshiram';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
@@ -37,4 +40,7 @@ export const setRoaringSkies: Card[] = [
   new WideLens(),
   new Winona(),
   new Wurmple(),
+  new RayquazaEx(),
+  new MRayquazaEx(),
+  new RayquazaSpiritLink(),
 ];

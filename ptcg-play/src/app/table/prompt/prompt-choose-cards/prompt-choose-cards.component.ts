@@ -76,14 +76,13 @@ export class PromptChooseCardsComponent {
     }
   }
 
-
   public onChange(result: number[]) {
     if (!result || !this.promptValue) {
       this.isInvalid = true;
       this.result = [];
       return;
     }
-    
+
     const selectedCards = result.map(index => this.cards.cards[index]);
     const isValidSelection = this.promptValue.validate(selectedCards);
 

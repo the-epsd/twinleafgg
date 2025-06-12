@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class TrevenantDusknoirGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public cardType: CardType = P;
   public hp: number = 270;
   public weakness = [{ type: D }];
@@ -49,7 +49,7 @@ export class TrevenantDusknoirGX extends PokemonCard {
       if (opponent.hand.cards.length === 0){
         return state;
       }
-      let cardsToShuffle = Math.min(2, opponent.hand.cards.length);
+      const cardsToShuffle = Math.min(2, opponent.hand.cards.length);
 
       state = store.prompt(state, new ChooseCardsPrompt(
         player,

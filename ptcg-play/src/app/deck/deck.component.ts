@@ -10,8 +10,9 @@ import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
 import { Archetype, CardType } from 'ptcg-server';
-import { ArchetypeService } from './deck-archetype-service/archetype.service';
 import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
+import { Format } from 'ptcg-server';
+import { FormatValidator } from 'src/app/util/formats-validator';
 
 @UntilDestroy()
 
@@ -26,6 +27,9 @@ export class DeckComponent implements OnInit {
   public decks: DeckListEntry[] = [];
   public loading = false;
   public defaultDeckId: number | null = null;
+  public formatDefaultDecks: { [key: string]: number } = {};
+  public selectedFormat: string = 'all';
+  public filteredDecks: DeckListEntry[] = [];
 
   constructor(
     private alertService: AlertService,
@@ -33,29 +37,65 @@ export class DeckComponent implements OnInit {
     private cardsBaseService: CardsBaseService,
     private translate: TranslateService,
     private router: Router,
-    private archetypeService: ArchetypeService,
   ) { }
 
   public ngOnInit() {
     this.refreshList();
+    this.selectFormat('all');
+
+    // Load global default deck
     const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
     if (savedDefaultDeckId) {
       this.defaultDeckId = parseInt(savedDefaultDeckId, 10);
     }
+
+    // Load format-specific default decks
+    const savedFormatDefaults = localStorage.getItem('formatDefaultDecks');
+    if (savedFormatDefaults) {
+      this.formatDefaultDecks = JSON.parse(savedFormatDefaults);
+    }
   }
 
-  // Add to existing menu items
+  // Set default deck for all formats
   public async setAsDefault(deckId: number) {
     this.defaultDeckId = deckId;
-    // Save to localStorage or your backend
     localStorage.setItem('defaultDeckId', deckId.toString());
     this.alertService.toast(this.translate.instant('DECK_SET_AS_DEFAULT'));
+  }
+
+  // Set default deck for a specific format
+  public async setAsFormatDefault(deckId: number, format: string) {
+    this.formatDefaultDecks[format] = deckId;
+    localStorage.setItem('formatDefaultDecks', JSON.stringify(this.formatDefaultDecks));
+    this.alertService.toast(this.translate.instant('DECK_SET_AS_FORMAT_DEFAULT', { format: this.getFormatDisplayName(format) }));
+  }
+
+  // Get the default deck for the current format
+  public getFormatDefaultDeckId(format: string): number | null {
+    if (format === 'all' || !this.formatDefaultDecks[format]) {
+      return this.defaultDeckId;
+    }
+    return this.formatDefaultDecks[format];
+  }
+
+  // Check if a deck is the default for the current format
+  public isFormatDefaultDeck(deckId: number): boolean {
+    if (this.selectedFormat === 'all') {
+      return this.defaultDeckId === deckId;
+    }
+
+    const formatDefaultId = this.formatDefaultDecks[this.selectedFormat];
+    return formatDefaultId === deckId;
   }
 
   private refreshList() {
     this.loading = true;
     this.deckService.getList().pipe(
-      finalize(() => { this.loading = false; }),
+      finalize(() => {
+        this.loading = false;
+        // Update filtered decks based on current format
+        this.selectFormat(this.selectedFormat);
+      }),
       untilDestroyed(this)
     )
       .subscribe(response => {
@@ -179,8 +219,19 @@ export class DeckComponent implements OnInit {
     });
   }
 
-  getArchetype(deckItems: any[]): Archetype {
-    return ArchetypeUtils.getArchetype(deckItems);
+  getArchetype(deck: DeckListEntry, returnSingle: boolean = false): Archetype | Archetype[] {
+    if (!deck) return returnSingle ? Archetype.UNOWN : [Archetype.UNOWN];
+
+    // If manual archetypes are set, use those
+    if (deck.manualArchetype1 || deck.manualArchetype2) {
+      const archetypes = [];
+      if (deck.manualArchetype1) archetypes.push(deck.manualArchetype1);
+      if (deck.manualArchetype2) archetypes.push(deck.manualArchetype2);
+      return returnSingle ? archetypes[0] : archetypes;
+    }
+
+    // Otherwise use auto-detection
+    return ArchetypeUtils.getArchetype(deck.deckItems, returnSingle);
   }
 
   getDeckBackground(deckName: string): string {
@@ -204,5 +255,54 @@ export class DeckComponent implements OnInit {
     if (!error.handled) {
       this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
     }
+  }
+
+  public selectFormat(format: string) {
+    this.selectedFormat = format;
+
+    // Filter decks based on selected format
+    if (format === 'all') {
+      this.filteredDecks = this.decks;
+    } else {
+      // Convert format string to Format enum value
+      const formatEnum = Format[format.toUpperCase()];
+
+      this.filteredDecks = this.decks.filter(deck => {
+        // Each deck has valid formats shown in the deck-validity component
+        // This component uses FormatValidator to determine which formats are valid
+
+        // Skip empty decks
+        if (!deck.deckItems || deck.deckItems.length === 0) {
+          return false;
+        }
+
+        // Get card list for FormatValidator
+        const cardList = [];
+        deck.deckItems.forEach(item => {
+          if (item.card) {
+            cardList.push(item.card);
+          }
+        });
+
+        // Use FormatValidator to check if the selected format is valid for this deck
+        const validFormats = FormatValidator.getValidFormatsForCardList(cardList);
+        return validFormats.includes(Number(formatEnum));
+      });
+    }
+  }
+
+  public getFormatDisplayName(format: string): string {
+    // Maps format keys to their display names
+    const formatDisplayNames = {
+      'standard': this.translate.instant('FORMAT_STANDARD'),
+      'standard_nightly': this.translate.instant('FORMAT_STANDARD_NIGHTLY'),
+      'expanded': this.translate.instant('FORMAT_EXPANDED'),
+      'unlimited': this.translate.instant('FORMAT_UNLIMITED'),
+      'RSPK': this.translate.instant('FORMAT_RSPK'),
+      'retro': this.translate.instant('FORMAT_RETRO'),
+      'glc': this.translate.instant('FORMAT_GLC')
+    };
+
+    return formatDisplayNames[format] || format;
   }
 }

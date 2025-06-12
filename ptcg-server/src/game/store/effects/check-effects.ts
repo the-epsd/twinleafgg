@@ -1,4 +1,4 @@
-import { CardType, SpecialCondition } from '../card/card-types';
+import { CardType, EnergyType, SpecialCondition } from '../card/card-types';
 import { Effect } from './effect';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
@@ -151,12 +151,25 @@ export class CheckProvidedEnergyEffect implements Effect {
   public preventDefault = false;
   public player: Player;
   public source: PokemonCardList;
-  public energyMap: EnergyMap[] = [];
+  private _energyMap: EnergyMap[] = [];
   public totalProvidedTypes: EnergyMap[] = [];
+  public specialEnergiesProvideColorless: boolean = false;
 
   constructor(player: Player, source?: PokemonCardList) {
     this.player = player;
     this.source = source === undefined ? player.active : source;
+  }
+
+  // Apply effects such as Temple of Sinnoh and Spectral Breach
+  public get energyMap(): EnergyMap[] {
+    if (this.specialEnergiesProvideColorless) {
+      this._energyMap.forEach((value) => {
+        if (value.card.energyType === EnergyType.SPECIAL) {
+          value.provides = [CardType.COLORLESS];
+        }
+      });
+    }
+    return this._energyMap;
   }
 }
 
@@ -164,6 +177,7 @@ export class CheckTableStateEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_TABLE_STATE_EFFECT;
   public preventDefault = false;
   public benchSizes: number[];
+  public player!: Player;
 
   constructor(benchSizes: number[]) {
     this.benchSizes = benchSizes;

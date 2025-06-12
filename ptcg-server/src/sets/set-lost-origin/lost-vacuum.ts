@@ -4,7 +4,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectOptionPrompt, SlotType, StateUtils } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
 
 export class LostVacuum extends TrainerCard {
 
@@ -63,7 +65,7 @@ export class LostVacuum extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       // prepare card list without Junk Arm
@@ -137,7 +139,7 @@ export class LostVacuum extends TrainerCard {
               // Discard Stadium
               const cardList = StateUtils.findCardList(state, stadiumCard);
               const owner = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(owner.lostzone);
+              MOVE_CARDS(store, state, cardList, owner.lostzone, { sourceCard: this });
 
               player.supporter.moveCardTo(this, player.discard);
               return state;
@@ -145,7 +147,7 @@ export class LostVacuum extends TrainerCard {
 
           }
         ];
-        return store.prompt(state, new SelectPrompt(
+        return store.prompt(state, new SelectOptionPrompt(
           player.id,
           GameMessage.DISCARD_STADIUM_OR_TOOL,
           options.map(c => c.message),
@@ -170,8 +172,8 @@ export class LostVacuum extends TrainerCard {
         // Discard Stadium
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const owner = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(owner.lostzone);
-        
+        MOVE_CARDS(store, state, cardList, owner.discard, { sourceCard: this });
+
         player.supporter.moveCardTo(this, player.discard);
         return state;
       }

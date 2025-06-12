@@ -1,4 +1,5 @@
 import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, RetreatEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -22,37 +23,32 @@ export class MysteriousFossil extends TrainerCard {
   public archetype = [];
 
   public hp: number = 30;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public set: string = 'FO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '62';
-
   public name: string = 'Mysterious Fossil';
-
   public fullName: string = 'Mysterious Fossil FO';
 
   public powers: Power[] = [
     {
       name: 'Mysterious Fossil',
-      text: 'At any time during your turn before your attack, you may discard Mysterious Fossil from play.',
+      text: 'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.) At any time during your turn before your attack, you may discard Mysterious Fossil from play.',
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.TRAINER_ABILITY
     }
   ];
 
-  public text =
-    'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.)';
+  // public text =
+  //   'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -85,16 +81,16 @@ export class MysteriousFossil extends TrainerCard {
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
-      throw new GameError(GameMessage.CANNOT_RETREAT);
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
+      effect.preventDefault = true;
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.player.active.getPokemonCard() === this) {
       effect.prizeCount = 0;
       return state;
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

@@ -2,7 +2,7 @@ import { CardType, GameError, GameMessage, PokemonCard, PowerType, Stage, State,
 import { Effect } from '../../game/store/effects/effect';
 import { PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
-export class BeedrillVIV extends PokemonCard {
+export class Beedrill extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 

@@ -1,14 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
-import {HealTargetEffect} from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { HealTargetEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlastoisePiplupGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public cardType: CardType = W;
   public hp: number = 270;
   public weakness = [{ type: G }];
@@ -40,8 +41,8 @@ export class BlastoisePiplupGX extends PokemonCard {
     // Splash Maker
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
-      
+
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -73,14 +74,10 @@ export class BlastoisePiplupGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       const opponent = StateUtils.getOpponent(state, player);
-
       opponent.active.addSpecialCondition(SpecialCondition.PARALYZED);
 
       // Check for the extra energy cost.

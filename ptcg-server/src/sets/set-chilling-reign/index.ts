@@ -22,11 +22,12 @@ import { GalarianMoltresV } from './galarian-moltres-v';
 import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
-import {Gengar} from './gengar';
+import { Gengar } from './gengar';
 import { Golett } from './golett';
 import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
+import { ImpactEnergy } from './impact-energy';
 import { Inkay } from './inkay';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
@@ -51,6 +52,7 @@ import { SpiralEnergy } from './spiral-energy';
 import { Tauros } from './tauros';
 import { WeedleCRE } from './weedle';
 import { Zarude } from './zarude';
+import { Brawly } from './brawly';
 
 export const setChillingReign: Card[] = [
 
@@ -80,6 +82,7 @@ export const setChillingReign: Card[] = [
   new Golurk(),
   new IceRiderCalyrexV(),
   new IceRiderCalyrexVMAX(),
+  new ImpactEnergy(),
   new Inkay(),
   new Inteleon(),
   new JustifiedGloves(),
@@ -106,4 +109,5 @@ export const setChillingReign: Card[] = [
   new Zarude(),
   new Kecleon(),
   new Gengar(),
+  new Brawly()
 ];

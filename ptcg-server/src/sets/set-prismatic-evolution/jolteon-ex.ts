@@ -70,35 +70,25 @@ export class Jolteonex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],// Card source is target Pokemon
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { min: 0, max: 2, allowCancel: false }
       ), transfers => {
 
-        if (transfers === null || transfers.length === 0) {
+        if (transfers === null) {
           return state;
         }
 
-        for (const transfer of transfers) {
-          let totalDiscarded = 0;
+        const baseDamage = 60;
+        const additionalDamage = transfers.length * 90;
+        effect.damage = baseDamage + additionalDamage;
 
+        for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = player.discard;
           source.moveCardTo(transfer.card, target);
-
-          totalDiscarded = transfers.length;
-
-          // Base damage is 60
-          if (totalDiscarded === 0) {
-            effect.damage = 60;
-          } else if (totalDiscarded === 1) {
-            effect.damage = 150;  // 60 + 90
-          } else if (totalDiscarded === 2) {
-            effect.damage = 240;  // 60 + (90 * 2)
-          }
-
         }
-        console.log('Total Damage: ' + effect.damage);
+
         return state;
       });
     }
@@ -121,7 +111,7 @@ export class Jolteonex extends PokemonCard {
       effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -130,10 +120,7 @@ export class Jolteonex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

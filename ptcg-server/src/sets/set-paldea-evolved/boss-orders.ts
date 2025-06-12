@@ -1,10 +1,10 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, StateUtils, GameError, GameMessage } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -34,17 +34,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), result => {
     const cardList = result[0];
 
-    if (cardList.stage == Stage.BASIC) {
-      try {
-        const supporterEffect = new SupporterEffect(player, effect.trainerCard);
-        store.reduceEffect(state, supporterEffect);
-      } catch {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        return state;
+    if (cardList) {
+      const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
+      targetCard.target = cardList;
+      store.reduceEffect(state, targetCard);
+      if (targetCard.target) {
+        opponent.switchPokemon(targetCard.target);
       }
     }
 
-    opponent.switchPokemon(cardList);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   });

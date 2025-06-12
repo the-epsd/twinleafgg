@@ -1,45 +1,61 @@
 <div class="matchmaking-lobby">
   <div class="lobby-content">
-    <div class="top-section">
-      <mat-form-field appearance="fill">
-        <mat-label>{{ 'LABEL_SELECT_FORMAT' | translate }}</mat-label>
-        <mat-select [(ngModel)]="selectedFormat" [disabled]="inQueue"
-          (selectionChange)="onFormatSelected($event.value)">
-          <mat-option *ngFor="let format of formats" [value]="format.value">
-            {{ format.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <!-- Deck Card -->
+    <div class="deck-card" *ngIf="selectedDeck">
+      <div class="deck-archetype" style="background-color: #101219;">
+        <ptcg-archetype [class]="getArchetype(selectedDeck)"
+          style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
+      </div>
+      <div class="deck-info">
+        <div class="deck-name">
+          {{ selectedDeck.name }}
+        </div>
+        <!-- <div class="deck-status" *ngIf="getFormatDefaultDeckId(selectedFormat) === selectedDeck.id">
+          <mat-icon class="default-star">star</mat-icon>
+          <span>{{ 'DEFAULT' | translate }}</span>
+        </div> -->
+      </div>
     </div>
 
-    <mat-form-field appearance="fill" class="deck-select">
-      <mat-label>{{ 'GAMES_YOUR_DECK' | translate }}</mat-label>
-      <mat-select [(ngModel)]="deckId" [disabled]="inQueue">
-        <mat-option *ngFor="let deck of decksByFormat" [value]="deck.id">
-          <div class="deck-option">
-            <span>{{ deck.name }}</span>
-          </div>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div class="action-buttons">
-      <button mat-raised-button class="battle-button" (click)="joinQueue()" *ngIf="!inQueue" [disabled]="!deckId">
-        <!-- <mat-icon>sports_kabaddi</mat-icon> -->
-        {{ 'BUTTON_FIND_MATCH' | translate }}
-      </button>
-
-      <button mat-raised-button class="leave-button" (click)="leaveQueue()" *ngIf="inQueue">
-        <!-- <mat-icon>exit_to_app</mat-icon> -->
-        {{ 'BUTTON_LEAVE_QUEUE' | translate }}
-      </button>
+    <!-- No Deck Warning -->
+    <div class="deck-card" *ngIf="!selectedDeck">
+      <div class="deck-archetype">
+        <span class="no-deck-icon">?</span>
+      </div>
+      <div class="deck-info">
+        <div class="deck-name">{{ 'NO_DECK' | translate }}</div>
+      </div>
     </div>
 
-    <div class="queue-status" *ngIf="inQueue">
-      <h3>{{ 'LABEL_PLAYERS_IN_QUEUE' | translate }}</h3>
-      <ul>
-        <li *ngFor="let player of queuedPlayers">{{ player }}</li>
-      </ul>
+    <!-- Format Selection -->
+    <div class="format-selection">
+      <div class="format-button-wrapper">
+        <button mat-button *ngFor="let format of formats" [class.active]="selectedFormat === format.value"
+          (click)="onFormatSelected(format.value)" [disabled]="inQueue" class="no-ripple format-button">
+          {{ format.label | translate }}
+        </button>
+      </div>
     </div>
+
+    <!-- Connection Status -->
+    <div *ngIf="connectionError" class="connection-error">
+      <mat-icon>error_outline</mat-icon> Connection error
+    </div>
+
+    <!-- Queue Status -->
+    <!-- <div *ngIf="inQueue" class="queue-status">
+      <div class="queue-time">Time in queue: {{ getQueueTimeDisplay() }}</div>
+      <div class="players-count">Players in queue: {{ queuedPlayers.length }}</div>
+    </div> -->
+
+    <!-- Queue Button -->
+    <button mat-raised-button [class.in-queue]="inQueue" [class.error]="connectionError"
+      (click)="inQueue ? leaveQueue() : joinQueue()" [disabled]="!deckId || onCooldown || loading || connectionError"
+      class="queue-button">
+      <mat-spinner *ngIf="loading" diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
+      {{ (inQueue ? ('BUTTON_LEAVE_QUEUE' | translate) :
+      (onCooldown ? ('BUTTON_COOLDOWN' | translate) + ' (' + cooldownSeconds + ')' :
+      'BUTTON_FIND_MATCH' | translate)) }}
+    </button>
   </div>
 </div>

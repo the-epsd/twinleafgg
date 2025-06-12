@@ -6,7 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Bruno extends TrainerCard {
 
@@ -30,7 +30,6 @@ export class Bruno extends TrainerCard {
   public readonly BRUNO_MARKER = 'BRUNO_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -54,8 +53,14 @@ export class Bruno extends TrainerCard {
       if (HAS_MARKER(this.BRUNO_MARKER, player, this))
         cardsToDraw = 7;
 
-      SHUFFLE_CARDS_INTO_DECK(store, state, player, player.hand.cards.filter(c => c !== this));
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
+      SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, cardsToDraw);
+      player.supporter.moveCardTo(this, player.discard);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);

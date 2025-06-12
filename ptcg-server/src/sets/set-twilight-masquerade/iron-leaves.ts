@@ -50,8 +50,6 @@ export class IronLeaves extends PokemonCard {
 
   public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
-  // public damageDealt = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -75,38 +73,17 @@ export class IronLeaves extends PokemonCard {
           { superType: SuperType.POKEMON },
           { min: 1, max, allowCancel: false }
         )], selected => {
-          const cards = selected || [];
-          player.discard.moveCardsTo(cards, player.hand);
-        });
+        const cards = selected || [];
+        player.discard.moveCardsTo(cards, player.hand);
+      });
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+      effect.player.marker.removeMarker(this.RETALIATE_MARKER, this);
     }
 
-    // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
-    //   const player = StateUtils.getOpponent(state, effect.player);
-    //   const cardList = StateUtils.findCardList(state, this);
-    //   const owner = StateUtils.findOwner(state, cardList);
-
-    //   if (player !== owner) {
-    //     this.damageDealt = true;
-    //   }
-    // }
-
-    // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-    //   const cardList = StateUtils.findCardList(state, this);
-    //   const owner = StateUtils.findOwner(state, cardList);
-
-    //   if (owner === effect.player) {
-    //     this.damageDealt = false;
-    //   }
-    // }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
+      if (effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
         effect.damage += 60;
       }
     }
@@ -123,7 +100,7 @@ export class IronLeaves extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
+        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
       }
       return state;
     }

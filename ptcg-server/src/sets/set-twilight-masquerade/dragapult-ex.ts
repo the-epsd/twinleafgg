@@ -10,6 +10,7 @@ import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PutDamagePrompt } from '../..';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 
 function* usePhantomDive(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
@@ -23,7 +24,9 @@ function* usePhantomDive(next: Function, store: StoreLike, state: State, effect:
 
   const maxAllowedDamage: DamageMap[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    maxAllowedDamage.push({ target, damage: card.hp + 60 });
+    const checkHpEffect = new CheckHpEffect(player, cardList);
+    store.reduceEffect(state, checkHpEffect);
+    maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 60 });
   });
 
   const damage = 60;
@@ -95,7 +98,7 @@ export class Dragapultex extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -104,10 +107,7 @@ export class Dragapultex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

@@ -1,7 +1,7 @@
-import { Attack, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { HealEffect } from "../../game/store/effects/game-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mantyke extends PokemonCard {
 

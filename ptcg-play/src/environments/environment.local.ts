@@ -1,7 +1,7 @@
 export const environment = {
   apiUrl: 'http://localhost:8080',
-  timeout: 15 * 60 * 1000,
-  production: false,
+  timeout: 30 * 1000,
+  production: true,
   apiVersion: 2,
   defaultPageSize: 50,
   allowServerChange: true,

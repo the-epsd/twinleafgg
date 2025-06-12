@@ -13,6 +13,7 @@ import {
   PlayerType
 } from '../../game';
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class LumineonV extends PokemonCard {
 
@@ -134,9 +135,19 @@ export class LumineonV extends PokemonCard {
 
     if (effect instanceof AfterAttackEffect && this.usedAquaReturn) {
       const player = effect.player;
-
+      const pokemons = player.active.getPokemons();
+      const otherCards = player.active.cards.filter(card => !(card instanceof PokemonCard));
       player.active.clearEffects();
-      player.active.moveTo(player.deck);
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, player.active, player.discard, { cards: otherCards });
+      }
+
+      // Move Pokémon to deck
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, player.active, player.deck, { cards: pokemons });
+      }
       this.usedAquaReturn = false;
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

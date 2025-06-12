@@ -7,7 +7,8 @@ import { GameMessage } from '../game-message';
 import { User, Message, Deck } from '../../storage';
 import { Core } from '../core/core';
 import { State } from '../store/state/state';
-import {GameSettings} from '../core/game-settings';
+import { GameSettings } from '../core/game-settings';
+import { Format } from '../store/card/card-types';
 
 export abstract class BotClient implements Client {
 
@@ -16,11 +17,24 @@ export abstract class BotClient implements Client {
   public user: User;
   public core: Core | undefined;
   public games: Game[] = [];
+  protected decks: Map<Format, string[]> = new Map();
 
   constructor(name: string) {
     this.user = new User();
     this.user.name = name;
     this.name = name;
+  }
+
+  public async getDeck(format: Format): Promise<string[] | null> {
+    return this.decks.get(format) || null;
+  }
+
+  public hasDeckForFormat(format: Format): boolean {
+    return this.decks.has(format);
+  }
+
+  public setDeck(format: Format, deck: string[]): void {
+    this.decks.set(format, deck);
   }
 
   public abstract onConnect(client: Client): void;
@@ -38,7 +52,7 @@ export abstract class BotClient implements Client {
   public abstract onGameLeave(game: Game, client: Client): void;
 
   public abstract onStateChange(game: Game, state: State): void;
-  
+
   public abstract onMessage(from: Client, message: Message): void;
 
   public abstract onMessageRead(user: User): void;

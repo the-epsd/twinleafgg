@@ -1,3 +1,6 @@
+<!-- Move selection overlay out of container -->
+<ptcg-board-selection-overlay></ptcg-board-selection-overlay>
+
 <dnd-preview [allBackends]="true">
   <ng-template let-type let-item="item">
     <ng-container [ngSwitch]="type">
@@ -17,14 +20,13 @@
 <div id="bottom_div" [class.active]="isBottomPlayerActive"></div>
 
 <div class="ptcg-board-outer-container responsive-board">
-
   <div class="ptcg-board-container" [class.upside-down]="isUpsideDown" [dropTarget]="boardTarget">
-
     <div class="ptcg-board-player upside-down">
       <!-- Top Active -->
       <div class="ptcg-board-row ptcg-board-active">
         <ptcg-board-card [cardList]="topPlayer?.active" [owner]="topPlayer?.id === clientId"
-          (cardClick)="onCardClick($event, topPlayer?.active)">
+          (cardClick)="onCardClick($event, topPlayer?.active)" [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.ACTIVE"
+          [index]="0">
         </ptcg-board-card>
       </div>
 
@@ -32,7 +34,8 @@
       <div class="ptcg-board-row ptcg-board-bench">
         <ptcg-board-card *ngFor="let slot of topBench
         | slice:0:(topPlayer?.bench.length || defaultBenchSize); index as i" [cardList]="topPlayer?.bench[i]"
-          [owner]="topPlayer?.id === clientId" (cardClick)="onCardClick($event, topPlayer?.bench[i])">
+          [owner]="topPlayer?.id === clientId" (cardClick)="onCardClick($event, topPlayer?.bench[i])"
+          [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.BENCH" [index]="i">
         </ptcg-board-card>
       </div>
 
@@ -115,7 +118,8 @@
           <ptcg-board-card
             [class.draggable]="!gameState.deleted && bottomPlayer?.id === clientId && bottomPlayer?.active.cards.length > 0"
             [dragSource]="bottomActive.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.active"
-            [owner]="bottomPlayer?.id === clientId" (cardClick)="onActiveClick($event, bottomPlayer?.active)">
+            [owner]="bottomPlayer?.id === clientId" (cardClick)="onActiveClick($event, bottomPlayer?.active)"
+            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.ACTIVE" [index]="0">
           </ptcg-board-card>
         </div>
       </div>
@@ -129,7 +133,8 @@
             [class.draggable]="!gameState.deleted && bottomPlayer?.id === clientId && bottomPlayer?.bench[slot.index].cards.length > 0"
             [dragSource]="slot.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.bench[slot.index]"
             [owner]="bottomPlayer?.id === clientId"
-            (cardClick)="onBenchClick($event, bottomPlayer?.bench[slot.index], slot.index)">
+            (cardClick)="onBenchClick($event, bottomPlayer?.bench[slot.index], slot.index)"
+            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.BENCH" [index]="slot.index">
           </ptcg-board-card>
         </div>
       </div>
@@ -141,12 +146,9 @@
         </ptcg-board-card>
       </div>
 
-      <!-- Bottom Stadium -->
+      <!-- Stadium - Single Slot for both players -->
       <div class="ptcg-board-row ptcg-board-stadium">
-        <ptcg-board-card class="stadium-card" [cardList]="bottomPlayer?.stadium" [owner]="bottomPlayer?.id === clientId"
-          (cardClick)="onStadiumClick($event)">
-        </ptcg-board-card>
-        <ptcg-board-card class="stadium-card" [cardList]="topPlayer?.stadium" [owner]="topPlayer?.id === clientId"
+        <ptcg-board-card class="stadium-card" [cardList]="stadiumCard" [owner]="stadiumOwner"
           (cardClick)="onStadiumClick($event)">
         </ptcg-board-card>
       </div>

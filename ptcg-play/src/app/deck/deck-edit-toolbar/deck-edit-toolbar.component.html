@@ -120,8 +120,57 @@
 
       <span class="ptcg-u-spacer"></span>
 
+      <div class="archetype-selectors">
+        <mat-form-field class="narrow-select1">
+          <mat-select [value]="deck.manualArchetype1" [placeholder]="'Archetype 1'"
+            (selectionChange)="onArchetypeChange($event.value, deck.manualArchetype2)">
+            <mat-option [value]="null">
+              <div class="archetype-option">
+                <span>Auto</span>
+              </div>
+            </mat-option>
+            <mat-option [value]="undefined">
+              <div class="archetype-option">
+                <span>None</span>
+              </div>
+            </mat-option>
+            <div class="search-container">
+              <input matInput (keyup)="onArchetypeSearch($event.target.value)" placeholder="Search archetypes...">
+            </div>
+            <mat-option *ngFor="let archetype of filteredArchetypes" [value]="archetype.value">
+              <div class="archetype-option">
+                <span>{{ archetype.label }}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="narrow-select1">
+          <mat-select [value]="deck.manualArchetype2" [placeholder]="'Archetype 2'"
+            (selectionChange)="onArchetypeChange(deck.manualArchetype1, $event.value)">
+            <mat-option [value]="null">
+              <div class="archetype-option">
+                <span>Auto</span>
+              </div>
+            </mat-option>
+            <mat-option [value]="undefined">
+              <div class="archetype-option">
+                <span>None</span>
+              </div>
+            </mat-option>
+            <div class="search-container">
+              <input matInput (keyup)="onArchetypeSearch($event.target.value)" placeholder="Search archetypes...">
+            </div>
+            <mat-option *ngFor="let archetype of filteredArchetypes" [value]="archetype.value">
+              <div class="archetype-option">
+                <span>{{ archetype.label }}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']">
-        <!-- <mat-icon>arrow_back</mat-icon> -->
         <span translate>DECK_EDIT_BACK</span>
       </button>
 
@@ -143,4 +192,28 @@
     </mat-toolbar-row>
 
   </mat-toolbar>
+
+  <!-- <div class="archetype-selectors">
+    <mat-form-field appearance="outline">
+      <mat-label>Primary Archetype</mat-label>
+      <mat-select [value]="deck.manualArchetype1"
+        (selectionChange)="onArchetypeChange($event.value, deck.manualArchetype2)">
+        <mat-option [value]="null">Auto-detect</mat-option>
+        <mat-option *ngFor="let archetype of archetypes" [value]="archetype.value">
+          {{ archetype.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Secondary Archetype</mat-label>
+      <mat-select [value]="deck.manualArchetype2"
+        (selectionChange)="onArchetypeChange(deck.manualArchetype1, $event.value)">
+        <mat-option [value]="null">Auto-detect</mat-option>
+        <mat-option *ngFor="let archetype of archetypes" [value]="archetype.value">
+          {{ archetype.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div> -->
 </form>

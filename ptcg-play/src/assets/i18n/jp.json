@@ -111,6 +111,8 @@
   "GAMES_GAME_RULES": "ゲームルール",
   "GAMES_LIMIT_10_MIN": "10分",
   "GAMES_LIMIT_15_MIN": "15分",
+  "GAMES_LIMIT_20_MIN": "20分",
+  "GAMES_LIMIT_25_MIN": "25分",
   "GAMES_LIMIT_30_MIN": "30分",
   "GAMES_LIMIT_NO_LIMIT": "制限なし",
   "GAMES_NEED_DECK": "ゲームを開始する前に有効なデッキを準備する必要があります",
@@ -310,6 +312,7 @@
   "VALIDATION_MAX_FILE_SIZE": "最大ファイルサイズを超えました。",
   "VALIDATION_NAME_ALREADY_IN_USE": "この名前は既に使用されています。",
   "VALIDATION_PASSWORD_MATCH": "パスワードが一致しません。",
+  "DECK_SET_AS_DEFAULT": "デフォルトに設定",
   "GAME_MESSAGES": {
     "ACTION_IN_PROGRESS": "アクション進行中",
     "ALL_FIRE_ENERGIES": "すべての火エネルギー",

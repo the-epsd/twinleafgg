@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
-import { AromaticEnergy } from './aromatic-energy';
-import { BeedrillVIV } from './beedrill';
+import { Dusknoir } from './dusknoir';
+import { AromaticGrassEnergy } from './aromatic-grass-energy';
+import { Beedrill } from './beedrill';
 import { Beldum } from './beldum';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
@@ -8,16 +9,20 @@ import { Charmeleon } from './charmeleon';
 import { Chimecho } from './chimecho';
 import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Dhelmise } from './dhelmise';
-import { DonphanVIV } from './donphan';
+import { Donphan } from './donphan';
 import { Duraludon } from './duraludon';
+import { Duskull } from './duskull';
+import { Exploud } from './exploud';
 import { TalonflameVFA } from './full-art';
 import { Jirachi } from './jirachi';
 import { Leon } from './leon';
+import { Loudred } from './loudred';
 import { Magearna } from './magearna';
 import { Nessa } from './nessa';
-import { PhanpyVIV } from './phanpy';
+import { Phanpy } from './phanpy';
 import { Raikou } from './raikou';
-import { ShayminVIV } from './shaymin';
+import { Shaymin } from './shaymin';
+import { Shiftry } from './shiftry';
 import { Slugma } from './slugma';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
@@ -26,12 +31,12 @@ import { TalonflameV } from './talonflame-v';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
-import { WeedleVIV } from './weedle';
+import { Weedle } from './weedle';
 import { Zekrom } from './zekrom';
 
 export const setVividVoltage: Card[] = [
-  new AromaticEnergy(),
-  new BeedrillVIV(),
+  new AromaticGrassEnergy(),
+  new Beedrill(),
   new Beldum(),
   new Charmander(),
   new Charmeleon(),
@@ -39,15 +44,20 @@ export const setVividVoltage: Card[] = [
   new Chimecho(),
   new CoatingMetalEnergy(),
   new Dhelmise(),
-  new DonphanVIV(),
+  new Donphan(),
   new Duraludon(),
+  new Dusknoir(),
+  new Duskull(),
+  new Exploud(),
   new Jirachi(),
   new Leon(),
+  new Loudred(),
   new Magearna(),
   new Nessa(),
-  new PhanpyVIV(),
+  new Phanpy(),
   new Raikou(),
-  new ShayminVIV(),
+  new Shaymin(),
+  new Shiftry(),
   new Slugma(),
   new Snorlax(),
   new StoneFightingEnergy(),
@@ -56,7 +66,7 @@ export const setVividVoltage: Card[] = [
   new Wailmer(),
   new Wailord(),
   new WashWaterEnergy(),
-  new WeedleVIV(),
+  new Weedle(),
   new Zekrom(),
 
   // Full art

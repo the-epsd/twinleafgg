@@ -132,7 +132,7 @@ export class JirachiPrismStar extends PokemonCard {
         TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], { skipReduce: true });
       }
       return;
-    }
+    };
 
     if (!wantToUse) {
       effect.preventDefault = false;

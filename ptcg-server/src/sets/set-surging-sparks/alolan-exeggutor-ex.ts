@@ -1,5 +1,5 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../game';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { KnockOutOpponentEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
@@ -74,7 +74,7 @@ export class AlolanExeggutorex extends PokemonCard {
       const opponentActive = opponent.active.getPokemonCard();
       const opponentBench = opponent.bench.filter(card => card.getPokemonCard()?.stage === Stage.BASIC);
       opponentBench.forEach(card => {
-        if (card.stage !== Stage.BASIC) {
+        if (!card.isStage(Stage.BASIC)) {
           blocked.push();
         }
       });
@@ -115,6 +115,18 @@ export class AlolanExeggutorex extends PokemonCard {
           }
         }
       });
+    }
+
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      effect.preventDefault = true;
     }
     return state;
   }

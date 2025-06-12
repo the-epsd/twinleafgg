@@ -4,6 +4,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class ReshiramCharizardGX extends PokemonCard {
@@ -33,7 +34,7 @@ export class ReshiramCharizardGX extends PokemonCard {
       name: 'Double Blaze-GX',
       cost: [R, R, R],
       damage: 200,
-      shred: false,
+      shredAttack: false,
       gxAttack: true,
       damageCalculation: '+',
       text: 'If this Pokemon has at least 3 extra [R] Energy attached to it (in addition to this attack\'s cost), ' +
@@ -85,9 +86,7 @@ export class ReshiramCharizardGX extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       const extraEffectCost: CardType[] = [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE];
@@ -96,7 +95,7 @@ export class ReshiramCharizardGX extends PokemonCard {
       const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
 
       if (meetsExtraEffectCost) {
-        this.attacks[0].shred === true;
+        this.attacks[0].shredAttack === true;
         const applyWeakness = new ApplyWeaknessEffect(effect, effect.damage + 100);
         store.reduceEffect(state, applyWeakness);
         const damage = applyWeakness.damage;

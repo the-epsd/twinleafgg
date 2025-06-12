@@ -9,12 +9,10 @@
   </ng-template>
 </dnd-preview>
 
+<!-- Only show the prompt UI if it's NOT a board overlay prompt -->
 <div class="ptcg-prompt">
 
-  <div class="ptcg-prompt-overlay" [ngClass]="{active: isPromptVisible}">
-  </div>
-
-  <div class="ptcg-prompt-container-wrapper" [hidden]="!isPromptVisible">
+  <div *ngIf="prompt && !isFullScreenPrompt()" class="ptcg-prompt-container-wrapper">
     <div class="ptcg-prompt-container" *ngIf="prompt" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
       <div [ngSwitch]="prompt.type">
         <ptcg-prompt-confirm *ngSwitchCase="'Confirm'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-confirm>
@@ -29,8 +27,6 @@
           [prompt]="prompt"></ptcg-prompt-choose-energy>
         <ptcg-prompt-choose-prize *ngSwitchCase="'Choose prize'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-choose-prize>
-        <ptcg-prompt-choose-pokemon *ngSwitchCase="'Choose pokemon'" [gameState]="gameState"
-          [prompt]="prompt"></ptcg-prompt-choose-pokemon>
         <ptcg-prompt-game-over *ngSwitchCase="'Game over'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-game-over>
         <ptcg-prompt-invite-player *ngSwitchCase="'Invite player'" [gameState]="gameState"
@@ -52,15 +48,22 @@
           [prompt]="prompt"></ptcg-prompt-discard-energy>
         <ptcg-prompt-confirm-cards *ngSwitchCase="'Confirm cards'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-confirm-cards>
+        <ptcg-prompt-select-option *ngSwitchCase="'SelectOption'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-select-option>
+        <ptcg-prompt-show-mulligan *ngSwitchCase="'Show mulligan'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-show-mulligan>
         <div *ngSwitchDefault translate [translateParams]="{type: prompt?.type}">PROMPT_UNKNOWN_TYPE</div>
       </div>
     </div>
   </div>
 
-  <div class="ptcg-minimized-prompt" *ngIf="minimized">
+  <div class="ptcg-minimized-prompt" *ngIf="minimized && prompt?.type !== 'Choose pokemon'">
     <button mat-fab color="primary" (click)="maximize()">
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
   </div>
-
 </div>
+
+<!-- Always render the choose-pokemon prompt if it's the current prompt -->
+<ptcg-prompt-choose-pokemon *ngIf="prompt?.type === 'Choose pokemon'" [gameState]="gameState" [prompt]="prompt">
+</ptcg-prompt-choose-pokemon>

@@ -3,23 +3,17 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Card, ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, StateUtils, TrainerCard } from '../../game';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Kyurem extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'H';
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 130;
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Plasma Bane',
@@ -29,19 +23,16 @@ export class Kyurem extends PokemonCard {
 
   public attacks = [{
     name: 'Trifrost',
-    cost: [CardType.WATER, CardType.WATER, CardType.METAL, CardType.METAL, CardType.COLORLESS],
+    cost: [W, W, M, M, C],
     damage: 0,
     text: 'Discard all Energy from this Pokémon. This attack does 110 damage to 3 of your opponent\'s Pokémon.'
   }];
 
+  public regulationMark = 'H';
   public set: string = 'SFA';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '47';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem';
-
   public fullName: string = 'Kyurem SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -69,45 +60,11 @@ export class Kyurem extends PokemonCard {
           isColressInOpponentsDiscard = true;
         }
       });
-
-
       if (isColressInOpponentsDiscard) {
         // Remove the Water and Metal energy requirements
         effect.cost = effect.cost.filter(type => type !== CardType.WATER && type !== CardType.METAL);
       }
-
       return state;
-    }
-
-    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      new CheckPokemonAttacksEffect(player);
-
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      let isColressInOpponentsDiscard = false;
-      opponent.discard.cards.filter(card => {
-        if (card.name === 'Colress' || card.name === 'Colress\'s Experiment' || card.name === 'Colress\'s Obsession') {
-          isColressInOpponentsDiscard = true;
-        }
-      });
-
-      if (isColressInOpponentsDiscard) {
-
-        this.attacks[0].cost = [CardType.COLORLESS];
-
-      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -119,7 +76,7 @@ export class Kyurem extends PokemonCard {
       const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
-      store.reduceEffect(state, discardEnergy);
+      state = store.reduceEffect(state, discardEnergy);
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -132,8 +89,9 @@ export class Kyurem extends PokemonCard {
         targets.forEach(target => {
           const damageEffect = new PutDamageEffect(effect, 110);
           damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
+          state = store.reduceEffect(state, damageEffect);
         });
+        return state;
       });
     }
     return state;

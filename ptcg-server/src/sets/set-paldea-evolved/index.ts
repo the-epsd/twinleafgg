@@ -4,7 +4,6 @@ import { Artazon } from './artazon';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
 import { Bramblin } from './bramblin';
-import { BraveyCharm } from './bravery-charm';
 import { Cetitan } from './cetitan';
 import { Cetoddle } from './cetoddle';
 import { ChiYuex } from './chi-yu-ex';
@@ -71,12 +70,21 @@ import { Skeledirgeex } from './skeledirge-ex';
 import { Quaquavalex } from './quaquaval-ex';
 import { Copperajahex } from './copperajah-ex';
 import { Dunsparce } from './dunsparce';
-import {Glimmet} from './glimmet';
-import {Glimmet2} from './glimmet-2';
-import {Glimmora} from './glimmora';
+import { Glimmet } from './glimmet';
+import { Glimmet2 } from './glimmet-2';
+import { Glimmora } from './glimmora';
 import { Tinkatuff2 } from './tinkatuff-2';
-import {Belliboltex} from './bellibolt-ex';
-//import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
+import { Belliboltex } from './bellibolt-ex';
+import { BraveryCharm } from './bravery-charm';
+import { Girafarig } from './girafarig';
+import { CalamitousWasteland } from './calamitous-wasteland';
+import { CalamitousSnowyMountain } from './calamitous-snowy-mountain';
+import {Gothita} from './gothita';
+import {Gothorita} from './gothorita';
+import {Gothitelle} from './gothitelle';
+import {Larvitar} from './larvitar';
+import {Pupitar} from './pupitar';
+import {Tyranitar} from './tyranitar';
 
 export const setPaldeaEvolved: Card[] = [
 
@@ -85,7 +93,9 @@ export const setPaldeaEvolved: Card[] = [
   new Baxcalibur(),
   new BossOrders(),
   new Bramblin(),
-  new BraveyCharm(),
+  new BraveryCharm(),
+  new CalamitousSnowyMountain(),
+  new CalamitousWasteland(),
   new Cetitan(),
   new Cetoddle(),
   new ChiYuex(),
@@ -156,6 +166,13 @@ export const setPaldeaEvolved: Card[] = [
   new Glimmet2(),
   new Glimmora(),
   new Belliboltex(),
+  new Girafarig(),
+  new Gothita(),
+  new Gothorita(),
+  new Gothitelle(),
+  new Larvitar(),
+  new Pupitar(),
+  new Tyranitar(),
 
   // Full 
   new ArctibaxIR(),

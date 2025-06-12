@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, EnergyCard, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -26,6 +26,7 @@ export class Forretressex extends PokemonCard {
     name: 'Exploding Energy',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
+    knocksOutSelf: true,
     text: 'Once during your turn, you may search your deck for up to 5 Basic [G] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck. If you searched your deck in this way, this Pokémon is Knocked Out.'
   }];
 
@@ -55,31 +56,15 @@ export class Forretressex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const hasEnergyInHand = player.discard.cards.some(c => {
-        return c instanceof EnergyCard;
-      });
-      if (!hasEnergyInHand) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      const blocked2: CardTarget[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_EX)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_GX)) {
-          blocked2.push(target);
-        }
-      });
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
-        player.discard,
+        player.deck,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 0, max: 5, blockedTo: blocked2 },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+        { allowCancel: false, min: 0, max: 5 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -88,7 +73,7 @@ export class Forretressex extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          player.deck.moveCardTo(transfer.card, target);
         }
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
@@ -124,7 +109,7 @@ export class Forretressex extends PokemonCard {
       console.log('marker removed');
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -133,10 +118,7 @@ export class Forretressex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

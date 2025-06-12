@@ -3,6 +3,7 @@ import { EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -78,7 +79,7 @@ export class Faba extends TrainerCard {
 
             const cardList = targets[0];
 
-            if (cardList.stage == Stage.BASIC) {
+            if (cardList.isStage(Stage.BASIC)) {
               try {
                 const supporterEffect = new SupporterEffect(player, effect.trainerCard);
                 store.reduceEffect(state, supporterEffect);
@@ -116,7 +117,7 @@ export class Faba extends TrainerCard {
           // Discard Stadium
           const cardList = StateUtils.findCardList(state, stadiumCard);
           const owner = StateUtils.findOwner(state, cardList);
-          cardList.moveTo(owner.lostzone);
+          MOVE_CARDS(store, state, cardList, owner.lostzone, { sourceCard: this });
 
           player.supporter.moveCardTo(this, player.discard);
           return state;

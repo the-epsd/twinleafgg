@@ -30,6 +30,7 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
       name: 'Demolish',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     }
   ];
@@ -101,7 +102,7 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
       }
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -110,10 +111,7 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

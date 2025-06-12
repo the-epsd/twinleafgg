@@ -27,8 +27,7 @@ export class Cloyster extends PokemonCard {
   public attacks = [{
     name: 'Aqua Split',
     cost: [CardType.WATER, CardType.COLORLESS],
-    damage: 120,
-    damageCalculation: '+',
+    damage: 60,
     text: 'This attack also does 30 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 

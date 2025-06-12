@@ -22,7 +22,7 @@ export class Leafeonex extends PokemonCard {
 
   public weakness = [{ type: R }];
 
-  public retreat = [C];
+  public retreat = [C, C];
 
   public attacks = [
     {
@@ -47,7 +47,7 @@ export class Leafeonex extends PokemonCard {
   public fullName: string = 'Leafeon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Psybeam
+    // Leaf Typhoon
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -67,18 +67,22 @@ export class Leafeonex extends PokemonCard {
       effect.damage = energies * 60;
     }
 
-    // Psychic
+    // Moss Agate
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (cardList === player.active){
+          return;
+        }
+        
         const healTargetEffect = new HealTargetEffect(effect, 100);
         healTargetEffect.target = cardList;
         state = store.reduceEffect(state, healTargetEffect);
       });
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -87,10 +91,7 @@ export class Leafeonex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

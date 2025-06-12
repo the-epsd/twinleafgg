@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt } from '../../game';
+import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Magnezone extends PokemonCard {
 
@@ -10,7 +11,7 @@ export class Magnezone extends PokemonCard {
 
   public evolvesFrom = 'Magneton';
 
-  public cardType: CardType = CardType.METAL;  
+  public cardType: CardType = CardType.METAL;
 
   public hp: number = 150;
 
@@ -20,10 +21,10 @@ export class Magnezone extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public abilities = [{
+  public powers = [{
     name: 'Giga Magnet',
     useWhenInPlay: true,
-    powerType: PowerType.ABILITY, 
+    powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may look at the top 6 cards of your deck and attach any number of [M] Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.'
   }];
 
@@ -50,59 +51,80 @@ export class Magnezone extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.GIGA_MAGNET_MARKER, this)) {
+      const player = effect.player;
+      player.marker.removeMarker(this.GIGA_MAGNET_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      
       const player = effect.player;
       const temp = new CardList();
-  
-      player.deck.moveTo(temp, 6);
-  
-      // Check if any cards drawn are basic energy
-      const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy';
-      });
-  
-      // If no energy cards were drawn, move all cards to deck & shuffle
-      if (energyCardsDrawn.length == 0) {
-        temp.cards.slice(0, 6).forEach(card => {
-          temp.moveCardTo(card, player.deck); 
 
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      if (player.marker.hasMarker(this.GIGA_MAGNET_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (player.deck.cards.length == 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      // Look at top 6 cards
+      player.deck.moveTo(temp, 6);
+
+      // Filter for Metal Energy cards
+      const metalEnergyCards = temp.cards.filter(card =>
+        card instanceof EnergyCard &&
+        card.name === 'Metal Energy'
+      );
+
+      if (metalEnergyCards.length === 0) {
+        // If no Metal Energy found, return all cards to deck and shuffle
+        // Show the cards to the player first
+        return store.prompt(state, new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS,
+          temp.cards
+        ), () => {
+          temp.moveTo(player.deck);
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
+            return state;
           });
         });
-      } else {
-        
-        // Prompt to attach energy if any were drawn
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS, 
-          temp, // Only show drawn energies
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          {superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy'},
-          {min: 0, max: energyCardsDrawn.length}
-        ), transfers => {
-      
-          // Attach energy based on prompt selection
-          if (transfers) {
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              temp.moveCardTo(transfer.card, target); // Move card to target
-            }
-            temp.cards.forEach(card => {
-              temp.moveCardTo(card, player.deck); 
+      }
 
-              store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-              });
-            });
-            return state;
+      // Prompt to attach Metal Energy cards
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        temp,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, name: 'Metal Energy' },
+        { min: 0, max: metalEnergyCards.length }
+      ), transfers => {
+        if (transfers) {
+          // Attach selected energy cards
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            temp.moveCardTo(transfer.card, target);
           }
+        }
+
+        player.marker.addMarker(this.GIGA_MAGNET_MARKER, this);
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+
+        // Return remaining cards to deck and shuffle
+        temp.moveTo(player.deck);
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
           return state;
         });
-      }
-      return state;
+      });
     }
     return state;
   }

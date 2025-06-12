@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
-export class LucarioUPR extends PokemonCard {
+export class Lucario extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 

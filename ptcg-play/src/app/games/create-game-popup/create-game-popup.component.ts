@@ -1,10 +1,12 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Card, Format, GameSettings } from 'ptcg-server';
 import { Deck, DeckListEntry } from 'src/app/api/interfaces/deck.interface';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
 import { FormatValidator } from 'src/app/util/formats-validator';
 import { SelectPopupOption } from '../../shared/alert/select-popup/select-popup.component';
+import { SessionService } from 'src/app/shared/session/session.service';
+
 
 export interface CreateGamePopupData {
   decks: SelectPopupOption<DeckListEntry>[];
@@ -20,17 +22,19 @@ export interface CreateGamePopupResult {
   templateUrl: './create-game-popup.component.html',
   styleUrls: ['./create-game-popup.component.scss']
 })
-export class CreateGamePopupComponent {
+export class CreateGamePopupComponent implements OnInit {
 
   decks: SelectPopupOption<DeckListEntry>[];
   public deckId: number;
   public settings = new GameSettings();
+  public isAdmin = false;
 
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
@@ -41,12 +45,16 @@ export class CreateGamePopupComponent {
     { value: 0, viewValue: 'GAMES_LIMIT_NO_LIMIT' },
     { value: 600, viewValue: 'GAMES_LIMIT_10_MIN' },
     { value: 900, viewValue: 'GAMES_LIMIT_15_MIN' },
+    { value: 1200, viewValue: 'GAMES_LIMIT_20_MIN' },
+    { value: 1500, viewValue: 'GAMES_LIMIT_25_MIN' },
+    { value: 1800, viewValue: 'GAMES_LIMIT_30_MIN' },
   ];
 
   constructor(
     private dialogRef: MatDialogRef<CreateGamePopupComponent>,
     private cardsBaseService: CardsBaseService,
     @Inject(MAT_DIALOG_DATA) data: CreateGamePopupData,
+    private sessionService: SessionService
   ) {
     this.decks = data.decks;
     this.settings.format = Format.STANDARD;
@@ -58,6 +66,21 @@ export class CreateGamePopupComponent {
     });
 
     this.onFormatSelected(this.settings.format);
+  }
+
+  ngOnInit() {
+    // Check if user is admin (roleId === 4)
+    this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 4;
+    }).subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+      // Set recording enabled based on admin status
+      // If not admin, recording is always enabled
+      // If admin, recording starts as disabled but can be toggled
+      this.settings.recordingEnabled = !isAdmin;
+    });
   }
 
   hasValidDeck(): boolean {

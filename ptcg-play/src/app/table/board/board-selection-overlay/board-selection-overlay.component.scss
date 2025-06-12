@@ -1,0 +1,72 @@
+@import '../../../../theme/variables.scss';
+
+.ptcg-board-selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  overflow: visible;
+}
+
+.ptcg-overlay-message {
+  background: #101219 !important;
+  border: 2px solid #459058 !important;
+  color: white !important;
+  border-radius: 32px !important;
+  padding: 8px 24px;
+  margin: 10px auto;
+  max-width: 60%;
+  text-align: center;
+  pointer-events: auto;
+  position: fixed;
+  top: 2vh;
+  left: 50%;
+  transform: translateX(-50%) scale(0.75);
+  z-index: 1500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  p {
+    margin: 4px 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
+
+.ptcg-overlay-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  pointer-events: auto;
+  position: fixed;
+  bottom: 30vh;
+  left: 50%;
+  transform: translateX(-50%) scale(0.75);
+  z-index: 1500;
+
+  button {
+    margin: 0 10px;
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 8px 20px;
+
+    &[color="primary"] {
+      min-width: 120px;
+      font-weight: bold;
+      background-color: #449058 !important;
+      border-radius: 200px;
+    }
+  }
+}
+
+.confirm-button {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(68, 144, 88, 0.6);
+}

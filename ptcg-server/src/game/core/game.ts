@@ -23,7 +23,9 @@ export class Game implements StoreHandler {
   private store: Store;
   private matchRecorder: MatchRecorder;
   private timeoutRef: NodeJS.Timeout | undefined;
+  private lastActivity: number = Date.now();
   public format: Format = Format.STANDARD;
+  private periodicSyncRef: NodeJS.Timeout | undefined;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
@@ -37,7 +39,29 @@ export class Game implements StoreHandler {
     return this.store.state;
   }
 
+  public updateLastActivity(): void {
+    this.lastActivity = Date.now();
+  }
+
+  public getLastActivity(): number {
+    return this.lastActivity;
+  }
+
+  public isInactive(timeoutMs: number = 5 * 60 * 1000): boolean {
+    return Date.now() - this.lastActivity > timeoutMs;
+  }
+
+  public cleanup(): void {
+    this.stopTimer();
+    if (this.matchRecorder) {
+      this.matchRecorder.cleanup();
+    }
+    this.store.cleanup();
+    this.arbiter.cleanup();
+  }
+
   public onStateChange(state: State): void {
+    this.updateLastActivity();
     if (this.handleArbiterPrompts(state)) {
       return;
     }
@@ -48,20 +72,29 @@ export class Game implements StoreHandler {
 
     this.updateIsTimeRunning(state);
 
-    this.core.emit(c => c.onStateChange(this, state));
+    this.core.emit(c => {
+      if (typeof c.onStateChange === 'function') {
+        c.onStateChange(this, state);
+      }
+    });
 
     if (state.phase !== GamePhase.FINISHED && this.timeoutRef === undefined) {
       this.startTimer();
     }
 
+    if (state.phase !== GamePhase.FINISHED && this.periodicSyncRef === undefined) {
+      this.startPeriodicSync();
+    }
+
     if (state.phase === GamePhase.FINISHED) {
       this.stopTimer();
+      this.stopPeriodicSync();
       this.core.deleteGame(this);
     }
   }
 
   private handleArbiterPrompts(state: State): boolean {
-    let resolved: {id: number, action: ResolvePromptAction} | undefined;
+    let resolved: { id: number, action: ResolvePromptAction } | undefined;
     const unresolved = state.prompts.filter(item => item.result === undefined);
 
     for (let i = 0; i < unresolved.length; i++) {
@@ -198,6 +231,12 @@ export class Game implements StoreHandler {
           }
         }
       }
+      // Emit timer update to all clients
+      this.core.emit(c => {
+        if (typeof c.onTimerUpdate === 'function') {
+          c.onTimerUpdate(this, this.playerStats);
+        }
+      });
     }, intervalDelay);
   }
 
@@ -208,4 +247,20 @@ export class Game implements StoreHandler {
     }
   }
 
+  private startPeriodicSync() {
+    this.periodicSyncRef = setInterval(() => {
+      this.core.emit(c => {
+        if (typeof c.onStateChange === 'function') {
+          c.onStateChange(this, this.state);
+        }
+      });
+    }, 5000);
+  }
+
+  private stopPeriodicSync() {
+    if (this.periodicSyncRef !== undefined) {
+      clearInterval(this.periodicSyncRef);
+      this.periodicSyncRef = undefined;
+    }
+  }
 }

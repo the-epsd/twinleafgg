@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 
-export class VigorothSSP extends PokemonCard {
+export class Vigoroth extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -16,10 +16,15 @@ export class VigorothSSP extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Slashing Claw', cost: [CardType.COLORLESS, CardType.COLORLESS], damage: 50, text: '' }
+    {
+      name: 'Slashing Claw',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 50,
+      text: ''
+    }
   ];
 
-  public set: string = 'SVI';
+  public set: string = 'SSP';
 
   public setNumber = '146';
 

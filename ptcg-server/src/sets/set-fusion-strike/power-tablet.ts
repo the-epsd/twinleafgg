@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class PowerTablet extends TrainerCard {
 
@@ -38,7 +38,7 @@ export class PowerTablet extends TrainerCard {
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
-    if (effect instanceof PutDamageEffect && effect.player.active.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)) {
+    if (effect instanceof DealDamageEffect && effect.player.active.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.marker.hasMarker(this.POWER_TABLET_MARKER, this) && effect.damage > 0 && effect.target === opponent.active) {

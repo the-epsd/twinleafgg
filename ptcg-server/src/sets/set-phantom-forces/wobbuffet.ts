@@ -5,7 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { State } from '../../game/store/state/state';
@@ -56,13 +56,14 @@ export class Wobbuffet extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Bide Barricade') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       // Wobbuffet is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
+      const playerHasWobb = player.active.getPokemonCard() === this;
+      const opponentHasWobb = opponent.active.getPokemonCard() === this;
+      if (!playerHasWobb && !opponentHasWobb) {
         return state;
       }
 
@@ -87,6 +88,17 @@ export class Wobbuffet extends PokemonCard {
       } catch {
         return state;
       }
+
+      // Check if we can apply the Ability lock to target Pokemon
+      if (cardList instanceof PokemonCardList) {
+        const canApplyAbility = new EffectOfAbilityEffect(playerHasWobb ? player : opponent, this.powers[0], this, cardList);
+        store.reduceEffect(state, canApplyAbility);
+        if (!canApplyAbility.target) {
+          return state;
+        }
+      }
+
+      // Apply Ability lock
       if (!effect.power.exemptFromAbilityLock) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }

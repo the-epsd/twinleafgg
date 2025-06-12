@@ -2,18 +2,23 @@ import { Card } from '../../game/store/card/card';
 import { AcerolasPremonition } from './acerolas-premonition';
 import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
+import { Alcremie } from './alcremie';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { Bidoof } from './bidoof';
+import { CafeMaster } from './cafe-master';
 import { CherensCare } from './cherens-care';
+import { Cherubi } from './cherubi';
+import { Chimchar } from './chimchar';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
 import { Duskull } from './duskull';
+import { Eiscue } from './eiscue';
 import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
@@ -25,6 +30,7 @@ import { Gloria } from './gloria';
 import { Grotle } from './grotle';
 import { Haxorus } from './haxorus';
 import { Heatran } from './heatran';
+import { Infernape } from './infernape';
 import { Kindler } from './kindler';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
@@ -34,8 +40,11 @@ import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
 import { MarniesPride } from './marnies-pride';
+import { Milcery } from './milcery';
 import { Minccino } from './minccino';
 import { Moltres } from './moltres';
+import { Monferno } from './monferno';
+import { UltraBallHR } from './other-prints';
 import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
@@ -53,18 +62,23 @@ export const setBrilliantStars: Card[] = [
   new AcerolasPremonition(),
   new AggronV(),
   new AggronVMAX(),
+  new Alcremie(),
   new ArceusV(),
   new ArceusVSTAR(),
   new Axew(),
   new Bibarel(),
   new Bidoof(),
+  new CafeMaster(),
   new CherensCare(),
+  new Cherubi(),
+  new Chimchar(),
   new CleansingGloves(),
   new CollapsedStadium(),
   new CynthiasAmbition(),
   new Druddigon(),
   new DoubleTurboEnergy(),
   new Duskull(),
+  new Eiscue(),
   new Electabuzz(),
   new Electivire(),
   new Empoleon(),
@@ -76,6 +90,7 @@ export const setBrilliantStars: Card[] = [
   new Grotle(),
   new Haxorus(),
   new Heatran(),
+  new Infernape(),
   new Kindler(),
   new Lapras(),
   new LumineonV(),
@@ -83,7 +98,9 @@ export const setBrilliantStars: Card[] = [
   new Magmortar(),
   new Manaphy(),
   new MarniesPride(),
+  new Milcery(),
   new Minccino(),
+  new Monferno(),
   new Moltres(),
   new RaichuV(),
   new RaikouV(),
@@ -98,4 +115,7 @@ export const setBrilliantStars: Card[] = [
   new Riolu(),
   new Lucario(),
 
+
+  //FA
+  new UltraBallHR(),
 ];

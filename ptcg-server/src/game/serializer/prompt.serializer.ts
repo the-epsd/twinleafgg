@@ -23,6 +23,8 @@ import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
 import { RemoveDamagePrompt } from '../store/prompts/remove-damage-prompt';
 import { DiscardEnergyPrompt } from '../store/prompts/discard-energy-prompt';
 import { ConfirmCardsPrompt } from '../store/prompts/confirm-cards-prompt';
+import { SelectOptionPrompt } from '../store/prompts/select-option-prompt';
+import { ShowMulliganPrompt } from '../store/prompts/show-mulligan-prompt';
 
 export class PromptSerializer implements Serializer<Prompt<any>> {
 
@@ -51,6 +53,8 @@ export class PromptSerializer implements Serializer<Prompt<any>> {
     { classValue: RemoveDamagePrompt, type: 'RemoveDamagePrompt' },
     { classValue: DiscardEnergyPrompt, type: 'DiscardEnergyPrompt' },
     { classValue: ConfirmCardsPrompt, type: 'ConfirmCardsPrompt' },
+    { classValue: SelectOptionPrompt, type: 'SelectOptionPrompt' },
+    { classValue: ShowMulliganPrompt, type: 'ShowMulliganPrompt' },
   ];
 
   constructor() {

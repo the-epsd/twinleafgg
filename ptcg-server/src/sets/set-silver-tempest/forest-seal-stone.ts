@@ -5,6 +5,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class ForestSealStone extends TrainerCard {
@@ -52,6 +53,14 @@ export class ForestSealStone extends TrainerCard {
       );
 
       if (!hasValidCard) {
+        return state;
+      }
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
         return state;
       }
 

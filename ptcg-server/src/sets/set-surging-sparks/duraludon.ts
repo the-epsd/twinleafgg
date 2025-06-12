@@ -20,7 +20,7 @@ export class Duraludon extends PokemonCard {
       text: ''
     },
     {
-      name: 'Durant Beam',
+      name: 'Duralubeam',
       cost: [CardType.METAL, CardType.METAL, CardType.METAL],
       damage: 130,
       text: 'Discard 2 Energy from this Pokemon.'

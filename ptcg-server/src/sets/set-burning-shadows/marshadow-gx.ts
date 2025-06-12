@@ -4,6 +4,7 @@ import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, Choose
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MarshadowGX extends PokemonCard {
 
@@ -80,9 +81,7 @@ export class MarshadowGX extends PokemonCard {
       const player = effect.player;
 
       // gx thingies
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(player);

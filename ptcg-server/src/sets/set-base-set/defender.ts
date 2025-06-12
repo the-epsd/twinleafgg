@@ -43,7 +43,6 @@ export class Defender extends TrainerCard {
         if (results && results.length > 0) {
           const targetPokemon = results[0];
           targetPokemon.marker.addMarker(this.DEFENDER_MARKER, this);
-          targetPokemon.tool?.cards.cards.length === 0;
           const opponent = StateUtils.getOpponent(state, player);
           opponent.marker.addMarker(this.CLEAR_DEFENDER_MARKER, this);
         }

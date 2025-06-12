@@ -9,9 +9,9 @@ export class GyaradosV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_V];
 
-  public stage: Stage = Stage.VMAX;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Gyarados V';
 
@@ -21,16 +21,16 @@ export class GyaradosV extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Get Angry',
-    cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 20,
     text: 'This attack does 20 damage for each damage counter on this Pokémon.'
   }, {
     name: 'Max Tyrant',
-    cost: [ CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 180,
     text: ''
   }];
@@ -48,18 +48,18 @@ export class GyaradosV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
+
       // Get Drifloon's damage
       const gyaradosDamage = effect.player.active.damage;
-      
+
       // Calculate 20 damage per counter
       const damagePerCounter = 20;
       effect.damage = gyaradosDamage * damagePerCounter;
-      
+
       return state;
     }
-  
+
     return state;
   }
-  
+
 }

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GamePhase, GameError, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -9,6 +9,7 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShuckleGX extends PokemonCard {
 
@@ -117,9 +118,7 @@ export class ShuckleGX extends PokemonCard {
       const player = effect.player;
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

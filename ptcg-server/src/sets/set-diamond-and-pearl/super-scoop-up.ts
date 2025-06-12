@@ -1,12 +1,13 @@
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { BoardEffect, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, CoinFlipPrompt } from '../../game';
+import { PlayerType, SlotType, CoinFlipPrompt, PokemonCard } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -28,12 +29,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false }
   ), result => {
-    const cardList = result[0];
-    cardList.clearEffects();
-    cardList.damage = 0;
-    cardList.moveTo(player.hand);
-    cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    const cardList = result.length > 0 ? result[0] : null;
+    if (cardList !== null) {
+      const pokemons = cardList.getPokemons();
+      const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+
+      // Move other cards to hand
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+      }
+
+      // Move Pokémon to hand
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
+      }
+    }
   });
 }
 

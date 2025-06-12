@@ -5,13 +5,15 @@ import { DawnWingsNecrozmaGX } from './dawn-wings-necrozma-gx';
 import { DialgaGX } from './dialga-gx';
 import { DuskManeNecrozmaGX } from './dusk-mane-necrozma-gx';
 import { EscapeBoard } from './escape-board';
+import { Gabite } from './gabite';
+import { Garchomp } from './garchomp';
 import { Gardenia } from './gardenia';
 import { Gible } from './gible';
 import { GlaceonGX } from './glaceon-gx';
 import { Honchkrow } from './honchkrow';
 import { Lillie } from './lillie';
-import { LucarioUPR } from './lucario';
-import { LunalaPS } from './lunala-prism-star';
+import { Lucario } from './lucario';
+import { LunalaPrismStar } from './lunala-prism-star';
 import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { Mars } from './mars';
@@ -20,15 +22,19 @@ import { MtCoronet } from './mt-coronet';
 import { Murkrow } from './murkrow';
 import { Oranguru } from './oranguru';
 import { OrderPad } from './order-pad';
-import { PassimianUPR } from './passimian';
+import { Passimian } from './passimian';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Riolu } from './riolu';
 import { Roselia } from './roselia';
 import { Shiinotic } from './shiinotic';
+import { SilvallyGX } from './silvally-gx';
 import { Sneasel } from './sneasel';
-import {Spiritomb} from './spiritomb';
+import { SolgaleoPrismStar } from './solgaleo-prism-star';
+import { Spiritomb } from './spiritomb';
+import { SuperBoostEnergy } from './super-boost-energy-prism-star';
 import { TapuLele } from './tapu-lele';
 import { Turtwig } from './turtwig';
+import { TypeNull } from './type-null';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
 import { Volkner } from './volkner';
@@ -41,13 +47,15 @@ export const setUltraPrism: Card[] = [
   new DialgaGX(),
   new DuskManeNecrozmaGX(),
   new EscapeBoard(),
+  new Gabite(),
+  new Garchomp(),
   new Gardenia(),
   new Gible(),
   new GlaceonGX(),
   new Honchkrow(),
   new Lillie(),
-  new LucarioUPR(),
-  new LunalaPS(),
+  new Lucario(),
+  new LunalaPrismStar(),
   new Magnemite(),
   new Magnezone(),
   new Mars(),
@@ -56,7 +64,7 @@ export const setUltraPrism: Card[] = [
   new MtCoronet(),
   new Oranguru(),
   new OrderPad(),
-  new PassimianUPR(),
+  new Passimian(),
   new PokemonFanClub(),
   new Riolu(),
   new Roselia(),
@@ -69,4 +77,8 @@ export const setUltraPrism: Card[] = [
   new Volkner(),
   new Weavile(),
   new Spiritomb(),
+  new SolgaleoPrismStar(),
+  new SuperBoostEnergy(),
+  new TypeNull(),
+  new SilvallyGX(),
 ];

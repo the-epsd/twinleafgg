@@ -10,6 +10,7 @@ import { RadiantEternatus } from './radiant-eternatus';
 import { RegigigasV } from './regigigas-v';
 import { RegigigasVSTAR } from './regigigas-vstar';
 import { Salandit } from './salandit';
+import { SkySealStone } from './sky-seal-stone';
 import { Wailmer } from './wailmer';
 import { Yanmega } from './yanmega';
 import { Zacian } from './zacian';
@@ -37,6 +38,7 @@ export const setCrownZenith: Card[] = [
   new RegigigasV(),
   new RegigigasVSTAR(),
   new Salandit(),
+  new SkySealStone(),
   new Wailmer(),
   new Yanmega(),
   new Zacian(),

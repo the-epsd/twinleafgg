@@ -1,7 +1,7 @@
-import { Attack, CardType, PokemonCard, PokemonCardList, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { DealDamageEffect, PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, HAS_MARKER, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, PokemonCardList, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magby extends PokemonCard {
 

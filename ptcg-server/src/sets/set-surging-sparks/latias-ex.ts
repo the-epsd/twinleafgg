@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Latiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -68,37 +69,27 @@ export class Latiasex extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
+      const active = effect.player.active.getPokemonCard();
 
-      if (owner !== player) {
+      if (owner !== player || active === undefined) {
         return state;
       }
 
-      let inPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      let isLatiasexInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          inPlay = true;
+          isLatiasexInPlay = true;
         }
       });
 
-      if (inPlay) {
-
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.stage === Stage.BASIC) {
-            effect.cost = [];
-          }
-        });
+      if (!isLatiasexInPlay) {
+        return state;
       }
+
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && active.stage === Stage.BASIC) {
+        effect.cost = [];
+      }
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -1,4 +1,4 @@
-import { Attack, Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, ShuffleDeckPrompt, SlotType } from '../../game';
+import { Attack, Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, GameLog, PlayerType, PokemonCard, PokemonCardList, ShuffleDeckPrompt, SlotType } from '../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer, DarkCostReducer, WaterCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -6,6 +6,7 @@ import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/sto
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -59,6 +60,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
     return state; // canceled by user
   }
 
+  // Log the selected Pokémon targets
+  const targetNames = targets.map(target => target.getPokemonCard()?.name).filter(Boolean);
+  store.log(state, GameLog.LOG_TEXT, {
+    text: `${player.name} chooses to evolve ${targetNames.join(' and ')}`
+  });
+
   for (const target of targets) {
     const pokemonCard = target.getPokemonCard();
     if (pokemonCard === undefined) {
@@ -79,7 +86,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
       GameMessage.CHOOSE_CARD_TO_EVOLVE,
       player.deck,
       { superType: SuperType.POKEMON },
-      { min: 1, max: 1, allowCancel: true, blocked }
+      { min: 0, max: 1, allowCancel: false, blocked }
     ), selected => {
       cards = selected || [];
       next();
@@ -103,23 +110,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   });
 }
 
-
 export class TechnicalMachineEvolution extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public regulationMark = 'G';
-
-  public tags = [];
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '178';
-
   public name: string = 'Technical Machine: Evolution';
-
   public fullName: string = 'Technical Machine: Evolution PAR';
 
   public attacks: Attack[] = [{
@@ -136,6 +134,8 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
+
+      if (IS_TOOL_BLOCKED(store, state, player, this)) { return state; }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
@@ -183,6 +183,9 @@ export class TechnicalMachineEvolution extends TrainerCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
+
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

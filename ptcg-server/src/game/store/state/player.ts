@@ -1,3 +1,5 @@
+import { GameError } from '../../game-error';
+import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
@@ -50,8 +52,11 @@ export class Player {
 
   assembledVUNIONs: string[] = [];
 
-  public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
+  showAllStageAbilities: boolean = false;
 
+  legacyEnergyUsed: boolean = false;
+
+  public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
@@ -71,6 +76,11 @@ export class Player {
   public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
   public readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = 'PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
   public readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
+  public readonly ATTACK_EFFECT_SUPPORTER_LOCK = 'ATTACK_EFFECT_SUPPORTER_LOCK';
+  public readonly ATTACK_EFFECT_ITEM_LOCK = 'ATTACK_EFFECT_ITEM_LOCK';
+  public readonly ATTACK_EFFECT_TOOL_LOCK = 'ATTACK_EFFECT_TOOL_LOCK';
+  public readonly ATTACK_EFFECT_STADIUM_LOCK = 'ATTACK_EFFECT_STADIUM_LOCK';
+  public readonly ATTACK_EFFECT_SPECIAL_ENERGY_LOCK = 'ATTACK_EFFECT_SPECIAL_ENERGY_LOCK';
 
   public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
@@ -80,16 +90,20 @@ export class Player {
   usedSquawkAndSeizeThisTurn: any;
   usedTurnSkip: any;
   usedTableTurner: any;
+  usedMinusCharge: any;
+  usedPlusCharge: any;
+  usedTributeDance: any;
   chainsOfControlUsed: any;
   usedDragonsWish = false;
   pecharuntexIsInPlay = false;
   usedFanCall = false;
   canEvolve = false;
-
+  supportersForDetour = new CardList();
 
   //GX-Attack Dedicated Section
   public usedAlteredCreation: boolean = false;
   public alteredCreationDamage: boolean = false;
+  public usedFullMetalWall: boolean = false;
 
   // Taken prize cards ("taken" means "moved to the player's hand")
   prizesTaken: number = 0;
@@ -149,7 +163,7 @@ export class Player {
   }
 
   getPokemonInPlay(): PokemonCardList[] {
-    let list: PokemonCardList[] = [];
+    const list: PokemonCardList[] = [];
     this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
       if (cardList.cards.length !== 0)
         list.push(cardList);
@@ -195,6 +209,21 @@ export class Player {
       }
     });
     return result;
+  }
+
+  getSlot(slotType: SlotType): CardList {
+    switch (slotType) {
+      case SlotType.DISCARD:
+        return this.discard;
+      case SlotType.HAND:
+        return this.hand;
+      case SlotType.LOSTZONE:
+        return this.lostzone;
+      case SlotType.DECK:
+        return this.deck;
+      default:
+        throw new GameError(GameMessage.INVALID_TARGET);
+    }
   }
 
   switchPokemon(target: PokemonCardList) {

@@ -40,7 +40,6 @@ export class Mewtwoex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -64,7 +63,6 @@ export class Mewtwoex extends PokemonCard {
       });
     }
 
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
@@ -78,12 +76,10 @@ export class Mewtwoex extends PokemonCard {
           }
         });
       });
-
       effect.damage = 10 + psychicEnergies * 30;
     }
 
-
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -92,10 +88,7 @@ export class Mewtwoex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

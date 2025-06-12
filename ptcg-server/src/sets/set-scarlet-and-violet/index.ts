@@ -14,6 +14,7 @@ import { Cyclizar } from './cyclizar';
 import { Croagunk } from './croagunk';
 import { DefianceBand } from './defiance-band';
 import { Dolliv } from './dolliv';
+import { Dondozo } from './dondozo';
 import { Drifloon } from './drifloon';
 import { ElectricGenerator } from './electric-generator';
 import { EnergyRetrieval } from './energy-retrieval';
@@ -103,6 +104,7 @@ export const setScarletAndViolet: Card[] = [
   new Cyclizar(),
   new DefianceBand(),
   new Dolliv(),
+  new Dondozo(),
   new Drifloon(),
   new ElectricGenerator(),
   new EnergyRetrieval(),

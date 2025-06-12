@@ -3,28 +3,30 @@ import { Absolex } from './absol-ex';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Bonsly } from './bonsly';
-import { ArvenOBF } from './card-images';
+import { ArvenOBF } from './other-prints';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Cleffa } from './cleffa';
+import { Combee } from './combee';
 import { Dartrix } from './dartrix';
 import { Decidueyeex } from './decidueye-ex';
 import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
-import {Eiscueex} from './eiscue-ex';
+import { Eiscueex } from './eiscue-ex';
 import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-art';
-import {Glimmet} from './glimmet';
-import {Glimmoraex} from './glimmora-ex';
-import {Greavard} from './greavard';
-import {Houndstoneex} from './houndstone-ex';
+import { Geeta } from './geeta';
+import { Glimmet } from './glimmet';
+import { Glimmoraex } from './glimmora-ex';
+import { Greavard } from './greavard';
+import { Houndstoneex } from './houndstone-ex';
 import { Larvitar } from './larvitar';
 import { LetterOfEncouragement } from './letter-of-encouragement';
-import {Miraidonex} from './miraidon-ex';
+import { Miraidonex } from './miraidon-ex';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
 import { Palafin } from './palafin';
@@ -36,6 +38,7 @@ import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Pupitar } from './pupitar';
+// import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
@@ -46,11 +49,14 @@ import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
 import { TownStore } from './town-store';
+import { Toxel } from './toxel';
+import { Toxtricity } from './toxtricity';
 import { Tympole } from './tympole';
 import { Tyranitarex } from './tyranitar-ex';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
-import {Victiniex} from './victini-ex';
+import { Vespiquenex } from './vespiquen-ex';
+import { Victiniex } from './victini-ex';
 import { Whiscash } from './whiscash';
 
 
@@ -64,6 +70,7 @@ export const setObsidianFlames: Card[] = [
   new Charmander(),
   new Charmeleon(),
   new Cleffa(),
+  new Combee(),
   new Dartrix(),
   new Dragonair(),
   new Dragoniteex(),
@@ -101,6 +108,8 @@ export const setObsidianFlames: Card[] = [
   new Togepi(),
   new Togetic(),
   new Togekiss(),
+  new Toxel(),
+  new Toxtricity(),
   new Victiniex(),
   new Eiscueex(),
   new Miraidonex(),
@@ -108,6 +117,10 @@ export const setObsidianFlames: Card[] = [
   new Houndstoneex(),
   new Glimmet(),
   new Glimmoraex(),
+  new Geeta(),
+  new Vespiquenex(),
+
+  // new Revavroomex(),
 
   //Alt-s
 

@@ -9,17 +9,18 @@ import { Comfey } from './comfey';
 import { Crabominable } from './crabominable';
 import { Crabrawler } from './crabrawler';
 import { Crispin } from './crispin';
+import { DeluxeBomb } from './deluxe-bomb';
 import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
 import { Duraludon } from './duraludon';
-import { EeveeSCR } from './eevee';
+import { Eevee } from './eevee';
 import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
-import { GlisteningCrystal } from './glistening-crystal';
+import { SparklingCrystal } from './sparkling-crystal';
 import { GravityGemstone } from './gravity-gemstone';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
@@ -32,15 +33,21 @@ import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
-import {Milcery} from './milcery';
+import { Milcery } from './milcery';
 import { Noctowl } from './noctowl';
+import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
+import { Salandit } from './salandit';
+import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
 import { Slowking } from './slowking';
+import { Slowpoke } from './slowpoke';
 import { Terapagosex } from './terapagos-ex';
 import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
+import { Marill } from './marill';
+import { AntiqueCoverFossil } from './antique-cover-fossil';
 
 export const setStellarCrown: Card[] = [
   new Archaludon(),
@@ -57,13 +64,13 @@ export const setStellarCrown: Card[] = [
   new Drednaw(),
   new Drifblim(),
   new Duraludon(),
-  new EeveeSCR(),
+  new Eevee(),
   new Electabuzz(),
   new FanRotom(),
   new Galvantulaex(),
   new Garganaclex(),
   new GlassTrumpet(),
-  new GlisteningCrystal(),
+  new SparklingCrystal(),
   new GravityGemstone(),
   new GreatTree(),
   new Hoothoot(),
@@ -80,11 +87,45 @@ export const setStellarCrown: Card[] = [
   // new Orthwormex(),
   new Raboot(),
   new RagingBolt(),
+  new Salandit(),
+  new Salazzle(),
   new Scorbunny(),
   new Slowking(),
+  new Slowpoke(),
   new Terapagosex(),
   new Veluza(),
   new Zeraora(),
   new Milcery(),
+  new DeluxeBomb(),
+  new Marill(),
+  new AntiqueCoverFossil(),
+
+  //FA
+  new BulbasaurIR(),
+  new RabootIR(),
+  new SquirtleIR(),
+  new JoltikIR(),
+  new ZeraoraIR(),
+  new MilceryIR(),
+  new MedititeIR(),
+  new ArchaludonIR(),
+  new HydrappleexFA(),
+  new CinderaceexFA(),
+  new LaprasexFA(),
+  new GalvantulaexFA(),
+  new MedichamexFA(),
+  new OrthwormexFA(),
+  new BriarFA(),
+  new CrispinFA(),
+  new KofuFA(),
+  new LaceyFA(),
+  new HydrappleexSIR(),
+  new GalvantulaexSIR(),
+  new TerapagosexSIR(),
+  new BriarSIR(),
+  new LaceySIR(),
+  new TerapagosexHR(),
+  new AreaZeroUnderdepthsHR(),
+  new BraveryCharmHR(),
 
 ];

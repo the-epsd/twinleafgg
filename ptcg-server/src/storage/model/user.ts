@@ -24,6 +24,9 @@ export class User extends BaseEntity {
   @Column()
   public password: string = '';
 
+  @Column({ type: 'int', default: 0 })
+  public roleId: number = 0;
+
   @Column({ type: 'bigint', transformer: [bigint] })
   public registered: number = 0;
 
@@ -37,13 +40,13 @@ export class User extends BaseEntity {
   public avatarFile: string = '';
 
   @OneToMany(type => Deck, deck => deck.user)
-    decks!: Deck[];
+  decks!: Deck[];
 
   @OneToMany(type => Avatar, avatar => avatar.user)
-    avatars!: Avatar[];
+  avatars!: Avatar[];
 
   @OneToMany(type => Replay, replay => replay.user)
-    replays!: Replay[];
+  replays!: Replay[];
 
   public getRank(): Rank {
     let rank = rankLevels[0].rank;
@@ -61,5 +64,4 @@ export class User extends BaseEntity {
     await User.update(this.id, { lastSeen: this.lastSeen });
     return this;
   }
-
 }

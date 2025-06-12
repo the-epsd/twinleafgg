@@ -1,12 +1,12 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { GameError, GameMessage } from '../../game';
+import { GameError, GameMessage, StateUtils } from '../../game';
+import { ADD_MARKER, HAS_MARKER, PUT_DAMAGE, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class BlackBeltsTraining extends TrainerCard {
 
@@ -25,12 +25,13 @@ export class BlackBeltsTraining extends TrainerCard {
   public regulationMark = 'H';
 
   public text: string =
-    'During this turn, attacks used by your Pokémon do 40 more damage to your opponent\'s Active Pokémon ex(before applying Weakness and Resistance).';
+    'During this turn, attacks used by your Pokémon do 40 more damage to your opponent\'s Active Pokémon ex (before applying Weakness and Resistance).';
 
   private readonly BLACK_BELTS_TRAINING_MARKER = 'BLACK_BELTS_TRAINING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
 
@@ -41,24 +42,28 @@ export class BlackBeltsTraining extends TrainerCard {
       supporterTurn == 1;
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      player.marker.addMarker(this.BLACK_BELTS_TRAINING_MARKER, this);
+      ADD_MARKER(this.BLACK_BELTS_TRAINING_MARKER, player, this);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      return state;
     }
 
-    if (effect instanceof DealDamageEffect && effect.player.marker.hasMarker(this.BLACK_BELTS_TRAINING_MARKER, this)) {
-      if (effect.target.exPokemon() && effect.damage > 0) {
+    if (PUT_DAMAGE(effect) && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this) && effect.damage > 0) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const oppActiveCard = effect.target.getPokemonCard();
+      if (oppActiveCard && oppActiveCard.tags.includes(CardTag.POKEMON_ex)) {
+
+        if (effect.target !== player.active && effect.target !== opponent.active) {
+          return state;
+        }
+
         effect.damage += 40;
       }
-      return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BLACK_BELTS_TRAINING_MARKER, this)) {
-      effect.player.marker.removeMarker(this.BLACK_BELTS_TRAINING_MARKER, this);
-      return state;
+    if (effect instanceof EndTurnEffect && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this)) {
+      REMOVE_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this);
     }
-
     return state;
   }
-
 }

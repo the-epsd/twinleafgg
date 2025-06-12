@@ -1,26 +1,19 @@
 import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Archaludon extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Duraludon';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 180;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Metal Bridge',
@@ -28,47 +21,30 @@ export class Archaludon extends PokemonCard {
     text: 'All of your Pokémon that have [M] Energy attached have no Retreat Cost.'
   }];
 
-  public attacks = [
-    {
-      name: 'Iron Blaster',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      damage: 160,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Iron Blaster',
+    cost: [M, M, C],
+    damage: 160,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
-  public regulationMark: string = 'H';
+  public regulationMark = 'H';
+  public set = 'SCR';
+  public setNumber = '107';
+  public cardImage = 'assets/cardback.png';
+  public name = 'Archaludon';
+  public fullName = 'Archaludon SCR';
 
-  public set: string = 'SCR';
-
-  public name: string = 'Archaludon';
-
-  public fullName: string = 'Archaludon SCR';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '107';
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
-  public readonly OPPONENT_CANNOT_PLAY_STADIUMS_MARKER = 'OPPONENT_CANNOT_PLAY_STADIUMS_MARKER';
+  private readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  private readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner !== player) {
-        return state;
-      }
-
-      const checkPokemonType = new CheckPokemonTypeEffect(effect.player.active);
-      store.reduceEffect(state, checkPokemonType);
-
-      if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
         return state;
       }
 
@@ -93,33 +69,24 @@ export class Archaludon extends PokemonCard {
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
-      const activeHasMetalEnergy = checkProvidedEnergyEffect.energyMap.some(p => p.provides.includes(CardType.METAL));
+      const activeHasMetalEnergy = checkProvidedEnergyEffect.energyMap.some(p => p.provides.includes(M));
 
       if (inPlay && activeHasMetalEnergy) {
         effect.cost = [];
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
+    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this) || effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-        console.log('attack blocked');
+    if (effect instanceof AttackEffect) {
+      if (HAS_MARKER(this.ATTACK_USED_MARKER, effect.player, this) || HAS_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+    }
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
     }
 
     return state;

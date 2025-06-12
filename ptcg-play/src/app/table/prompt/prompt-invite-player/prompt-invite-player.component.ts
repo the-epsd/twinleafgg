@@ -26,6 +26,7 @@ export class PromptInvitePlayerComponent implements OnInit {
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
     [Format.EXPANDED]: 'LABEL_EXPANDED',
+    [Format.RSPK]: 'LABEL_RSPK',
     [Format.RETRO]: 'LABEL_RETRO'
   };
 
@@ -78,7 +79,7 @@ export class PromptInvitePlayerComponent implements OnInit {
         next: decks => {
           this.decks = decks
             .filter(deckEntry => deckEntry.isValid)
-            .map(deckEntry => ({value: deckEntry.id, viewValue: deckEntry.name}));
+            .map(deckEntry => ({ value: deckEntry.id, viewValue: deckEntry.name }));
           if (this.decks.length > 0) {
             this.deckId = this.decks[0].value;
           }

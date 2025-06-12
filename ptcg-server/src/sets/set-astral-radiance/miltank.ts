@@ -89,15 +89,9 @@ export class Miltank extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      //Get number of benched pokemon
-      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-
-      const totalBenched = opponentBenched;
-
-      effect.damage = 10 + totalBenched * 20;
+      effect.damage += (opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0) * 20);
     }
     return state;
   }

@@ -8,7 +8,7 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   let pokemonsWithTool = 0;
   const blocked: CardTarget[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -18,31 +18,31 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State,
       blocked.push(target);
     }
   });
-  
+
   if (pokemonsWithTool === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   const max = Math.min(2, pokemonsWithTool);
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { min: 1, max: max, allowCancel: true, blocked }
   ), results => {
     targets = results || [];
     next();
   });
-  
+
   if (targets.length === 0) {
     return state;
   }
-  
+
   targets.forEach(target => {
     const owner = StateUtils.findOwner(state, target);
     if (target.tool !== undefined) {
@@ -50,7 +50,7 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State,
       target.tool = undefined;
     }
   });
-  
+
   return state;
 }
 
@@ -66,18 +66,18 @@ export class Minccino extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Beat',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: ''
     },
     {
       name: 'Cleaning Up',
-      cost: [CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       text: 'Discard up to 2 Pokémon Tools from your opponent\'s Pokémon.'
     }

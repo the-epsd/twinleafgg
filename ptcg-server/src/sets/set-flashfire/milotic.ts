@@ -60,7 +60,7 @@ export class Milotic extends PokemonCard {
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC) {
-
+          // Allow basic energy cards to be selected
         } else {
           blocked.push(index);
         }

@@ -5,6 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class RockGuard extends TrainerCard {
@@ -37,7 +38,7 @@ export class RockGuard extends TrainerCard {
         return state;
       }
 
-
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (state.phase === GamePhase.ATTACK) {
         effect.source.damage += 60;

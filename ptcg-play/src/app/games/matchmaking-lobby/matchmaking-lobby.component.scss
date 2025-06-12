@@ -1,98 +1,267 @@
 .matchmaking-lobby {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 700px; // Smaller max-width
+  justify-content: space-evenly;
+  padding: 1rem;
 }
 
 .lobby-content {
-  width: 100%;
-  padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.top-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.rank-badge {
-  background: #459058;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.deck-tile {
-  margin: 0.5rem 0 2rem 0;
-  padding: 1.5rem;
-  text-align: center;
-}
-
-.deck-content {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   gap: 1rem;
 }
 
-.deck-name {
-  font-size: 1.25rem;
-  color: white;
-}
-
-.mat-form-field {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.battle-button {
-  width: 100%;
-  height: 3.5rem;
-  background: #459058;
-  color: white;
-  font-weight: bold;
+.deck-card {
+  background-color: #2a2f3a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 180px;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    background: #3b7a4a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.deck-archetype {
+  height: 145px;
+  background-color: #101219;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ptcg-archetype {
+    transform: scale(3);
+    image-rendering: pixelated;
+    transition: transform 0.3s ease;
+  }
+}
+
+.deck-info {
+  background-color: #384259;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.deck-name {
+  color: white;
+  font-size: 12px;
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deck-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+
+  .default-star {
+    color: gold;
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    margin-right: 4px;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.format-selection {
+  margin-bottom: 20px;
+
+  .format-button-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .format-button {
+    padding: 6px 16px;
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(42, 47, 58, 0.5);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    min-width: unset;
+
+    &:hover:not([disabled]) {
+      color: white;
+      background-color: rgba(42, 47, 58, 0.8);
+    }
+
+    &.active {
+      color: white;
+      background-color: #384259;
+      font-weight: bold;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+    }
+  }
+}
+
+.queue-button {
+  background-color: #449058;
+  color: white;
+  width: 200px;
+  padding: 8px 0;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 24px;
+  margin: 0 auto;
+  display: block;
+
+  &.in-queue {
+    background-color: #d94e4e;
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+  }
+}
+
+.start-button {
+  background-color: #459058;
+  color: white;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+  border: none;
+  min-width: unset;
+  line-height: 24px;
+
+  &:hover:not(:disabled) {
+    background-color: #459058;
   }
 }
 
 .leave-button {
-  width: 100%;
-  height: 3.5rem;
-  background: #dc2626;
+  background-color: #f44336;
   color: white;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+  border: none;
+  min-width: unset;
+  line-height: 24px;
 
   &:hover {
-    background: #b91c1c;
+    background-color: #d32f2f;
   }
 }
 
 .queue-status {
-  margin-top: 1rem;
   color: white;
+  text-align: center;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  background-color: #2a2f3a;
+  border-radius: 8px;
+  padding: 12px;
+  width: 200px;
 
-  h3 {
-    margin-bottom: 0.5rem;
+  .queue-time {
+    margin-bottom: 8px;
+    font-weight: 500;
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
+  .players-count {
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+}
 
-    li {
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.connection-error {
+  color: #d94e4e;
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+
+  mat-icon {
+    margin-right: 6px;
+  }
+}
+
+.no-deck-warning {
+  background-color: #2a2f3a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 140px;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  p {
+    height: 145px;
+    background-color: #101219;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
+.no-deck-icon {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
+}
+
+::ng-deep .no-ripple .mat-ripple-element {
+  display: none !important;
+}
+
+::ng-deep {
+  .mat-snack-bar-container {
+    border-radius: 32px !important;
+    background: #101219 !important;
+    border: 2px solid #459058 !important;
+    color: white !important;
+    transform: scale(0.75);
+  }
+
+  .error-snackbar {
+    background: #101219;
+    color: white;
+    min-width: 150px !important;
+    height: 40px !important;
+    margin-top: 60px !important;
+
+    // Message text styling
+    .mat-simple-snackbar {
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 500;
+      justify-content: center;
     }
   }
 }

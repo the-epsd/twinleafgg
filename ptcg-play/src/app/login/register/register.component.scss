@@ -13,3 +13,206 @@
   }
 
 }
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1c2128;
+  padding: 20px;
+  color: white;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #2d333b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #449058;
+  }
+
+  svg {
+    color: white;
+  }
+}
+
+// This is just to center the spinner
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Here is where the magic happens
+$offset: 187;
+$duration: 1.4s;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash $duration ease-in-out infinite,
+    colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% {
+    stroke: #449058;
+  }
+
+  100% {
+    stroke: #449058;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: $offset;
+  }
+
+  50% {
+    stroke-dashoffset: $offset/4;
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: $offset;
+    transform: rotate(450deg);
+  }
+}
+
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.logo {
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 40px;
+  }
+}
+
+.register-form {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  input {
+    padding: 12px;
+    border-radius: 4px;
+    border: none;
+    background-color: #2d333b;
+    color: white;
+    font-size: 14px;
+    height: 45px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #449058;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .field-hint {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: -4px;
+  }
+
+  .field-error {
+    font-size: 11px;
+    color: #ff4444;
+  }
+}
+
+.register-note {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.register-button {
+  background-color: #2d333b;
+  color: #449058;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 45px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #449058;
+    color: white;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}

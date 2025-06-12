@@ -21,7 +21,7 @@ export class PikachuVUNIONBottomLeft extends PokemonCard {
       text: 'Once per game during your turn, combine 4 different Pikachu V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.VUNION_ASSEMBLY,
     }
   ];
 
@@ -34,12 +34,12 @@ export class PikachuVUNIONBottomLeft extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';
   public name: string = 'Pikachu V-UNION';
-  public fullName: string = 'Pikachu V-UNION (Bottom Left) SP';
+  public fullName: string = 'Pikachu V-UNION (Bottom Left) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

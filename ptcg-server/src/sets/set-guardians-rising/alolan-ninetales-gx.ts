@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { ChooseEnergyPrompt, GameError } from '../../game';
+import { ChooseEnergyPrompt } from '../../game';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, EnergyCard, Card } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -8,12 +8,13 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Alolan Ninetales-GX 22 (https://limitlesstcg.com/cards/GRI/22)
 export class AlolanNinetalesGX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_GX];
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Vulpix';
   public cardType: CardType = CardType.WATER;
   public hp: number = 210;
@@ -99,11 +100,9 @@ export class AlolanNinetalesGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
-      player.usedGX = true; 
+      player.usedGX = true;
 
       opponent.active.damage += player.active.damage;
       player.active.damage = 0;

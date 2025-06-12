@@ -114,6 +114,7 @@ export class Sylveonex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         player.marker.addMarker(this.ANGELITE_MARKER, this);
+
         targets.forEach(target => {
           target.clearEffects();
           target.damage = 0;
@@ -126,7 +127,7 @@ export class Sylveonex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -135,12 +136,8 @@ export class Sylveonex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
-
     return state;
   }
 

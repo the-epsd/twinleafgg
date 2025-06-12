@@ -1,9 +1,10 @@
 import { Card } from '../../game/store/card/card';
 import { FirefighterPikachu } from './firefighter-pikachu';
-import { GreninjaGXSMP } from './greninja-gx';
+import { GreninjaGX } from './greninja-gx';
 import { JolteonGX } from './jolteon-gx';
 import { LucarioGX } from './lucario-gx';
 import { Lurantis } from './lurantis';
+import {CelebiVenusaurGXSMP, EeveeSnorlaxGXSMP, EspeonDeoxysGXSMP, LucarioMelmetalGXSMP, MagikarpWailordGXSMP, ReshiramCharizardGXSMP, UmbreonDarkraiGXSMP, VenusaurSnivyGXSMP} from './other-prints';
 import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
 import { ShiningCelebi } from './shining-celebi';
@@ -14,7 +15,7 @@ import { TrevenantDusknoirGX } from './trevenant-dusknoir-gx';
 
 export const setSunAndMoonPromos: Card[] = [
   new FirefighterPikachu(),
-  new GreninjaGXSMP(),
+  new GreninjaGX(),
   new JolteonGX(),
   new LucarioGX(),
   new Lurantis(),
@@ -25,4 +26,12 @@ export const setSunAndMoonPromos: Card[] = [
   new TapuKoko(),
   new TapuLele(),
   new TrevenantDusknoirGX(),
+  new UmbreonDarkraiGXSMP(),
+  new LucarioMelmetalGXSMP(),
+  new EeveeSnorlaxGXSMP(),
+  new MagikarpWailordGXSMP(),
+  new CelebiVenusaurGXSMP(),
+  new EspeonDeoxysGXSMP(),
+  new ReshiramCharizardGXSMP(),
+  new VenusaurSnivyGXSMP(),
 ];

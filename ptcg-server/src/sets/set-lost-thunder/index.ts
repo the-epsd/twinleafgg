@@ -12,12 +12,15 @@ import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Cutiefly } from './cutiefly';
 import { DittoPrismStar } from './ditto-prism-star';
+import { Donphan } from './donphan';
 import { Electropower } from './electropower';
 import { Faba } from './faba';
 import { Girafarig } from './girafarig';
 import { Giratina } from './giratina';
 import { Granbull } from './granbull';
 import { Grovyle } from './grovyle';
+import { HeatFactoryPrismStar } from './heat-factory-prism-star';
+import { Heracross } from './heracross';
 import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
 import { Kirlia } from './kirlia';
@@ -41,6 +44,7 @@ import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
 import { Shedinja } from './shedinja';
 import { ShuckleGX } from './shuckle-gx';
+import { Sightseer } from './sightseer';
 import { Skiploom } from './skiploom';
 import { Slowking } from './slowking';
 import { Slowpoke } from './slowpoke';
@@ -68,12 +72,15 @@ export const setLostThunder: Card[] = [
   new CustomCatcher(),
   new Cutiefly(),
   new DittoPrismStar(),
+  new Donphan(),
   new Electropower(),
   new Faba(),
   new Girafarig(),
   new Giratina(),
   new Granbull(),
   new Grovyle(),
+  new HeatFactoryPrismStar(),
+  new Heracross(),
   new Hoppip(),
   new Jumpluff(),
   new Kirlia(),
@@ -97,6 +104,7 @@ export const setLostThunder: Card[] = [
   new Ribombee(),
   new Shedinja(),
   new ShuckleGX(),
+  new Sightseer(),
   new Slowking(),
   new Slowpoke(),
   new Skiploom(),

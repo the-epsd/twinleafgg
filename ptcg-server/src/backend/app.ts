@@ -47,6 +47,34 @@ export class App {
 
     app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 }));
     app.use(cors());
+
+    // Health check endpoint - must be first route
+    app.get('/health', async (req, res) => {
+      try {
+        // Check database connection
+        const dbStatus = await storage.checkConnection();
+        res.status(200).json({
+          status: 'ok',
+          database: dbStatus ? 'connected' : 'disconnected',
+          timestamp: new Date().toISOString()
+        });
+      } catch (error: any) {
+        res.status(500).json({
+          status: 'error',
+          database: 'error',
+          error: error?.message || 'Unknown error',
+          timestamp: new Date().toISOString()
+        });
+      }
+    });
+
+    // Static files
+    if (config.sets.scansDir) {
+      app.use('/scans', express.static(config.sets.scansDir));
+    }
+    app.use('/avatars', express.static(config.backend.avatarsDir));
+
+    // API routes
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
@@ -58,14 +86,24 @@ export class App {
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
 
-    if (config.sets.scansDir) {
-      app.use('/scans', express.static(config.sets.scansDir));
-    }
-    app.use('/avatars', express.static(config.backend.avatarsDir));
-
     app.use((err: any, req: any, res: any, next: any) => {
-      console.error(err.stack);
-      res.status(500).send('Something broke!');
+      // Handle request aborted errors
+      if (err && (
+        (err.type === 'request.aborted') ||
+        (err.code === 'ECONNRESET') ||
+        (err.status === 400 && err.message === 'request aborted')
+      )) {
+        console.log(`[HTTP] Request aborted by client: ${req.method} ${req.url}`);
+        return;
+      }
+
+      // Log other errors
+      console.error('[HTTP Error]', err.stack);
+
+      // Only send response if headers haven't been sent yet
+      if (!res.headersSent) {
+        res.status(500).send('Something broke!');
+      }
     });
 
     return app;

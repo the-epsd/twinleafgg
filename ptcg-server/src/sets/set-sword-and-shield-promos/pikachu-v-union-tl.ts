@@ -4,19 +4,19 @@ import { AttachEnergyPrompt, CardTarget, CoinFlipPrompt, EnergyCard, GameError, 
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import {PikachuVUNIONTopRight} from './pikachu-v-union-tr';
-import {PikachuVUNIONBottomLeft} from './pikachu-v-union-bl';
-import {PikachuVUNIONBottomRight} from './pikachu-v-union-br';
-import {PlayItemEffect} from '../../game/store/effects/play-card-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { PikachuVUNIONTopRight } from './pikachu-v-union-tr';
+import { PikachuVUNIONBottomLeft } from './pikachu-v-union-bl';
+import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
+import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-  public tags = [ CardTag.POKEMON_VUNION ];
+  public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = L;
   public hp: number = 300;
   public weakness = [{ type: F }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [
     {
@@ -24,56 +24,56 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
       text: 'Once per game during your turn, combine 4 different Pikachu V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.VUNION_ASSEMBLY,
     }
   ];
 
   public attacks = [
     {
       name: 'Union Gain',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       text: 'Attach up to 2 [L] Energy cards from your discard pile to this Pokémon.'
     },
     {
       name: 'Shocking Shock',
-      cost: [ L, C ],
+      cost: [L, C],
       damage: 120,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
       name: 'Disconnect',
-      cost: [ L, L, C ],
+      cost: [L, L, C],
       damage: 150,
       text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.'
     },
     {
       name: 'Electro Ball Together',
-      cost: [ L, L, C ],
+      cost: [L, L, C],
       damage: 250,
       text: ''
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name: string = 'Pikachu V-UNION';
-  public fullName: string = 'Pikachu V-UNION (Top Left) SP';
+  public fullName: string = 'Pikachu V-UNION (Top Left) SWSH';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
       if (player.assembledVUNIONs.includes(this.name)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      if (slots.length === 0){
+      if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -82,19 +82,19 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
       player.discard.cards.forEach(card => {
-        if (card instanceof PikachuVUNIONTopLeft){ topLeftPiece = true; }
-        if (card instanceof PikachuVUNIONTopRight){ topRightPiece = true; }
-        if (card instanceof PikachuVUNIONBottomLeft){ bottomLeftPiece = true; }
-        if (card instanceof PikachuVUNIONBottomRight){ bottomRightPiece = true; }
+        if (card instanceof PikachuVUNIONTopLeft) { topLeftPiece = true; }
+        if (card instanceof PikachuVUNIONTopRight) { topRightPiece = true; }
+        if (card instanceof PikachuVUNIONBottomLeft) { bottomLeftPiece = true; }
+        if (card instanceof PikachuVUNIONBottomRight) { bottomRightPiece = true; }
       });
 
-      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece){
+      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {
-          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONTopRight){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONBottomLeft){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONBottomRight){ player.discard.moveCardTo(card, slots[0]); }});
+          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
           // gotta make sure the actual mon ends up on top
-          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONTopLeft){ player.discard.moveCardTo(card, slots[0]); }});
+          player.discard.cards.forEach(card => { if (card instanceof PikachuVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
           player.assembledVUNIONs.push(this.name);
           slots[0].pokemonPlayedTurn = state.turn;
         }
@@ -104,18 +104,18 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     }
 
     // Union Gain
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       let lightningsInDiscard = 0;
       // checking for energies in the discard
       player.discard.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy'){
+        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy') {
           lightningsInDiscard++;
         }
-      })
+      });
 
-      if (lightningsInDiscard > 0){
+      if (lightningsInDiscard > 0) {
         const blocked: CardTarget[] = [];
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
           if (card !== this) {
@@ -141,14 +141,14 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
             const target = StateUtils.getTarget(state, player, transfer.to);
             player.discard.moveCardTo(transfer.card, target);
           }
-        });   
+        });
       }
-    } 
+    }
 
     // Shocking Shock
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -160,11 +160,11 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     }
 
     // Disconnect
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);      
+      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
     }
 
     if (effect instanceof PlayItemEffect) {

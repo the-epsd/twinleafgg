@@ -6,9 +6,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, CardType, CardTag } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { MoveCardsEffect, UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { PlayItemEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class ThunderMountainPrismStar extends TrainerCard {
 
@@ -27,7 +26,7 @@ export class ThunderMountainPrismStar extends TrainerCard {
   public setNumber: string = '191';
 
   public text: string =
-    'The attacks of [L] Pokémon (both yours and your opponent\'s) cost[L] less.' +
+    'The attacks of [L] Pokémon (both yours and your opponent\'s) cost [L] less.' +
     'Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -54,14 +53,22 @@ export class ThunderMountainPrismStar extends TrainerCard {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
-    if (effect instanceof PlaySupporterEffect && StateUtils.getStadiumCard(state) === this) {
-      effect.preventDefault = true;
-      return state;
-    }
+    // Prevent effects of Item and Supporter cards on this Stadium
+    if (effect instanceof MoveCardsEffect
+      && StateUtils.getStadiumCard(state) === this) {
 
-    if (effect instanceof PlayItemEffect && StateUtils.getStadiumCard(state) === this) {
-      effect.preventDefault = true;
-      return state;
+      if (effect.sourceCard instanceof TrainerCard &&
+        (effect.sourceCard.trainerType === TrainerType.SUPPORTER || effect.sourceCard.trainerType === TrainerType.ITEM)) {
+
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard !== undefined) {
+          const cardList = StateUtils.findCardList(state, stadiumCard);
+          if (effect.source === cardList) {
+            effect.preventDefault = true;
+          }
+        }
+
+      }
     }
 
     return state;

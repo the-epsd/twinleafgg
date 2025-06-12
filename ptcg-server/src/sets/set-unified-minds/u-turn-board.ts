@@ -1,10 +1,11 @@
 import { Card } from '../../game';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -25,12 +26,17 @@ export class UTurnBoard extends TrainerCard {
   public readonly U_TURN_BOARD_MARKER = 'U_TURN_BOARD_MARKER';
 
   public text: string =
-    'The Retreat Cost of the Pokémon this card is attached to is [C] less. If this card is discarded from play, put it into your hand instead of the discard pile.';
+    `The Retreat Cost of the Pokémon this card is attached to is [C] less. 
+    
+    If this card is discarded from play, put it into your hand instead of the discard pile.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DiscardCardsEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
       effect.target.moveCardTo(this, player.hand);
     }
 
@@ -46,11 +52,11 @@ export class UTurnBoard extends TrainerCard {
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
-      if (effect.cost.length === 0) {
-        effect.cost = [];
-      } else {
-        effect.cost.splice(0, 1);
+      if (index !== -1) {
+        effect.cost.splice(index, 1);
       }
     }
 
@@ -73,7 +79,7 @@ export class UTurnBoard extends TrainerCard {
   }
 }
 
-// if (effect instanceof ToolEffect && effect.player.active.tool === this) {
+// if (effect instanceof ToolEffect && effect.player.active.tools.includes(this)) {
 //   const player = effect.player;
 //   player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
 // }

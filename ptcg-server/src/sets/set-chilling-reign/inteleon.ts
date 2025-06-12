@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -51,25 +51,25 @@ export class Inteleon extends PokemonCard {
 
   public fullName: string = 'Inteleon CRE';
 
-  public readonly DOUBLE_GUNNER_MARKER = 'DOUBLE_GUNNER_MARKER';
+  public readonly QUICK_SHOOTING_MARKER = 'QUICK_SHOOTING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+      player.marker.removeMarker(this.QUICK_SHOOTING_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.QUICK_SHOOTING_MARKER, this)) {
       const player = effect.player;
-      player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+      player.marker.removeMarker(this.QUICK_SHOOTING_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+      if (player.marker.hasMarker(this.QUICK_SHOOTING_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -84,19 +84,23 @@ export class Inteleon extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false },
+
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          target.damage += 20;
-          player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
-        });
 
+        if (targets.length > 0) {
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
+          store.reduceEffect(state, damageEffect);
+          if (damageEffect.target) {
+            damageEffect.target.damage += 20;
+          }
+        }
+        player.marker.addMarker(this.QUICK_SHOOTING_MARKER, this);
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
-
       });
     }
     return state;

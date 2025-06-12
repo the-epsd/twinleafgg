@@ -82,9 +82,7 @@ export class Magcargo extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = useSmoothOver(() => generator.next(), store, state, this, effect);
       return generator.next().value;
-
     }
     return state;
   }
-
 }

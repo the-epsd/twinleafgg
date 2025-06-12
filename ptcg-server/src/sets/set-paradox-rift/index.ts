@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Aegislash } from './aegislash';
 import { Aegislashex } from './aegislash-ex';
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
-import { ArmarougeEX } from './armarouge-ex';
+import { Armarougeex } from './armarouge-ex';
 import { Bombirdierex } from './bombirdier-ex';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
@@ -64,8 +64,9 @@ import { Remoraid } from './remoraid';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
-import { SkeledirgeEX } from './skeledirge-ex';
+import { Skeledirgeex } from './skeledirge-ex';
 import { SlitherWing } from './slither-wing';
+import {SnorlaxDoll} from './snorlax-doll';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
@@ -84,6 +85,9 @@ import { Toxtricityex } from './toxtricity-ex';
 import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
+import {Vanillish} from './vanillish';
+import {Vanillite} from './vanillite';
+import {Vanilluxe} from './vanilluxe';
 import { Veluza } from './veluza';
 import { Wimpod } from './wimpod';
 import { Xatu } from './xatu';
@@ -93,7 +97,7 @@ export const setParadoxRift: Card[] = [
   new Aegislash(),
   new Aegislashex(),
   new AncientBoosterEnergyCapsule(),
-  new ArmarougeEX(),
+  new Armarougeex(),
   new BruteBonnet(),
   new Bounsweet(),
   new Charcadet(),
@@ -150,7 +154,7 @@ export const setParadoxRift: Card[] = [
   new RoaringMoonex(),
   new SandyShocksex(),
   new ScreamTail(),
-  new SkeledirgeEX(),
+  new Skeledirgeex(),
   new SlitherWing(),
   new Snorunt(),
   new Steenee(),
@@ -179,6 +183,10 @@ export const setParadoxRift: Card[] = [
   new Golisopodex(),
   new Toxel(),
   new Toxtricityex(),
+  new Vanillite(),
+  new Vanillish(),
+  new Vanilluxe(),
+  new SnorlaxDoll(),
 
   //Full s
   new ToedscruelIR(),

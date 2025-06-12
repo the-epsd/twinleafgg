@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class Accelgor extends PokemonCard {
@@ -20,16 +21,16 @@ export class Accelgor extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [{
     name: 'Hammer In',
-    cost: [ CardType.GRASS ],
+    cost: [CardType.GRASS],
     damage: 20,
     text: ''
   }, {
     name: 'Deck and Cover',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 50,
     text: 'The Defending Pokemon is now Paralyzed and Poisoned. Shuffle this ' +
       'Pokemon and all cards attached to it into your deck.'
@@ -45,22 +46,28 @@ export class Accelgor extends PokemonCard {
 
   public setNumber: string = '11';
 
+  public usedDeckAndCover = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
       const specialConditionEffect = new AddSpecialConditionsEffect(
-        effect, [ SpecialCondition.PARALYZED, SpecialCondition.POISONED ]
+        effect, [SpecialCondition.PARALYZED, SpecialCondition.POISONED]
       );
       store.reduceEffect(state, specialConditionEffect);
+      this.usedDeckAndCover = true;
+    }
 
+    if (effect instanceof AfterAttackEffect && this.usedDeckAndCover) {
+      const player = effect.player;
       player.active.moveTo(player.deck);
       player.active.clearEffects();
+      this.usedDeckAndCover = false;
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
       });
+
     }
 
     return state;

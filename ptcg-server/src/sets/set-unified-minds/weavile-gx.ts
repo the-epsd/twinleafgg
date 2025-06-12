@@ -65,12 +65,12 @@ export class WeavileGX extends PokemonCard {
   public resistance = [{ type: P, value: -30 }];
   public retreat = [C];
 
-    public powers = [{
-      name: 'Shadow Connection',
-      powerType: PowerType.ABILITY,
-      useWhenInPlay: true,
-      text: 'As often as you like during your turn (before your attack), you may move a basic [D] Energy from 1 of your Pokémon to another of your Pokémon.'
-    }];
+  public powers = [{
+    name: 'Shadow Connection',
+    powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
+    text: 'As often as you like during your turn (before your attack), you may move a basic [D] Energy from 1 of your Pokémon to another of your Pokémon.'
+  }];
 
   public attacks = [
     {

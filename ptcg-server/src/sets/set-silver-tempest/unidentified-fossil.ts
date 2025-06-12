@@ -46,17 +46,19 @@ export class UnidentifiedFossil extends TrainerCard {
   public powers: Power[] = [
     {
       name: 'Unidentified Fossil',
-      text: 'At any time during your turn (before your attack), you may discard this card from play.',
+      text: `Play this card as if it were a 60-HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play.
+
+This card can't retreat.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.TRAINER_ABILITY
     }
   ];
 
-  public text =
-    'Play this card as if it were a 60-HP [C] Basic Pokémon.' +
-    '' +
-    'This card can\'t retreat.';
+  // public text =
+  //   'Play this card as if it were a 60-HP [C] Basic Pokémon.' +
+  //   '' +
+  //   'This card can\'t retreat.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -82,7 +84,7 @@ export class UnidentifiedFossil extends TrainerCard {
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

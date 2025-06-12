@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
+
 import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, filter, take } from 'rxjs/operators';
 
@@ -13,6 +13,8 @@ import { SessionService } from './shared/session/session.service';
 import { SocketService } from './api/socket.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -20,11 +22,12 @@ import { environment } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
+  public showToolbar = true;
 
   constructor(
     private alertService: AlertService,
@@ -35,20 +38,23 @@ export class AppComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private socketService: SocketService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private snackBar: MatSnackBar
   ) {
     this.authToken$ = this.sessionService.get(session => session.authToken);
     setTimeout(() => this.onResize());
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showToolbar = !event.urlAfterRedirects.startsWith('/maintenance');
+      }
+    });
   }
 
   public ngOnInit() {
-    // Connect to websockets after when logged in
     this.authToken$
       .pipe(untilDestroyed(this))
       .subscribe(authToken => {
         this.isLoggedIn = !!authToken;
-
-        // Connect to websockets
         if (this.isLoggedIn && !this.socketService.isEnabled) {
           this.socketService.enable(authToken);
         }
@@ -60,26 +66,21 @@ export class AppComponent implements OnInit {
     this.socketService.connection.pipe(
       untilDestroyed(this)
     ).subscribe({
-      next: async connected => {
+      next: connected => {
         if (!connected && this.isLoggedIn) {
           this.socketService.disable();
           this.dialog.closeAll();
-          await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
+          this.snackBar.open(
+            this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'),
+            undefined,
+            { duration: 5000 }
+          );
           this.sessionService.clear();
           this.router.navigate(['/login']);
         }
       }
     });
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
-        this.authToken$.pipe(take(1)).subscribe(authToken => {
-          this.socketService.enable(authToken);
-        });
-      }
-    });
-
-    // Refresh token with given interval
     interval(environment.refreshTokenInterval).pipe(
       untilDestroyed(this),
       filter(() => !!this.sessionService.session.authToken),
@@ -94,21 +95,20 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public ngOnDestroy() {
-    document.removeEventListener('visibilitychange', () => { });
-  }
-
   @HostListener('window:resize', ['$event'])
-  onResize(event?: Event) {
+  onResize() {
     const element = this.elementRef.nativeElement;
     const toolbarHeight = 64;
     const contentHeight = element.offsetHeight - toolbarHeight;
     const cardAspectRatio = 1.37;
-    const padding = 32;
+    const padding = 16;
     const cardHeight = (contentHeight - (padding * 5)) / 7;
     let cardSize = Math.floor(cardHeight / cardAspectRatio);
     cardSize = Math.min(Math.max(cardSize, 60), 60);
     element.style.setProperty('--card-size', cardSize + 'px');
   }
 
+  ngOnDestroy() {
+    this.socketService.disable();
+  }
 }

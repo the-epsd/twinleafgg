@@ -5,6 +5,7 @@
   flex: 1 1 auto;
   flex-direction: row;
   overflow: auto;
+  position: relative;
 }
 
 .ptcg-deck-edit-container {
@@ -41,6 +42,8 @@
 .ptcg-deck-edit-pane-secondary {
   flex: 1 1 auto;
   background-color: #2D3748;
+  position: relative;
+  margin-left: 0;
 }
 
 ptcg-deck-card {
@@ -91,3 +94,30 @@ ptcg-deck-card.placeholder {
 //   height: auto;
 //   min-height: 100%;
 // }
+
+.library-toggle {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1000;
+  background-color: #2D3748;
+  color: white;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #3a4659;
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}

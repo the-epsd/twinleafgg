@@ -60,7 +60,7 @@ export class Crispin extends TrainerCard {
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           selected
-        ), () => { });
+        ), () => state);
 
         player.deck.moveCardsTo(cards, cardList);
 
@@ -76,10 +76,6 @@ export class Crispin extends TrainerCard {
           ), transfers => {
             transfers = transfers || [];
 
-            if (transfers.length === 0) {
-              return;
-            }
-
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
               cardList.moveCardTo(transfer.card, target);
@@ -89,7 +85,6 @@ export class Crispin extends TrainerCard {
             const remainingCard = cardList.cards[0];
             cardList.moveCardTo(remainingCard, player.hand);
           });
-
         }
 
         if (cardList.cards.length === 1) {
@@ -101,9 +96,9 @@ export class Crispin extends TrainerCard {
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
+          return state;
         });
-      }
-      );
+      });
     }
     return state;
   }

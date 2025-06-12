@@ -34,7 +34,7 @@ export class AetherParadiseConvserationArea extends TrainerCard {
       store.reduceEffect(state, checkPokemonType);
       
       if ((checkPokemonType.cardTypes.includes(CardType.GRASS) || checkPokemonType.cardTypes.includes(CardType.LIGHTNING)) &&
-          effect.target.stage === Stage.BASIC) {
+        effect.target.isStage(Stage.BASIC)) {
         effect.damage = Math.max(0, effect.damage - 30);
         effect.damageReduced = true;     
       }

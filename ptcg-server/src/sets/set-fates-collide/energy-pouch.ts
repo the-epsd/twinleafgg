@@ -3,6 +3,7 @@ import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -35,7 +36,13 @@ export class EnergyPouch extends TrainerCard {
 
       const pokemonIndices = effect.target.cards.map((card, index) => index);
 
-
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       for (let i = pokemonIndices.length - 1; i >= 0; i--) {
         const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];

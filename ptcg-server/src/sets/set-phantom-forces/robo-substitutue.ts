@@ -24,36 +24,33 @@ export class RoboSubstitute extends TrainerCard {
   public archetype = [];
 
   public hp: number = 30;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public set: string = 'PHF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '102';
-
   public name: string = 'Robo Substitute';
-
   public fullName: string = 'Robo Substitute PHF';
 
   public powers: Power[] = [
     {
       name: 'Robo Substitute',
-      text: 'At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.',
+      text: `Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. 
+      
+      This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.TRAINER_ABILITY
     }
   ];
 
-  public text = 'Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
+  // public text = 'Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

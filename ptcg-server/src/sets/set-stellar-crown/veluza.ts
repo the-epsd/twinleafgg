@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 
 export class Veluza extends PokemonCard {
@@ -84,10 +84,7 @@ export class Veluza extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 110);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 110);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

@@ -6,6 +6,7 @@ import { PokemonCardList } from '../state/pokemon-card-list';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
 import { Card } from '../card/card';
+import { Stage } from '../card/card-types';
 
 export enum PlayCardEffects {
   ATTACH_ENERGY_EFFECT = 'ATTACH_ENERGY_EFFECT',
@@ -21,6 +22,7 @@ export enum PlayCardEffects {
   COIN_FLIP_EFFECT = 'COIN_FLIP_EFFECT',
   TRAINER_CARD_TO_DECK_EFFECT = 'TRAINER_CARD_TO_DECK_EFFECT',
   DISCARD_TO_HAND_EFFECT = 'DISCARD_TO_HAND_EFFECT',
+  TRAINER_TARGET_EFFECT = 'TRAINER_TARGET_EFFECT',
 }
 
 export class AttachEnergyEffect implements Effect {
@@ -48,6 +50,9 @@ export class PlayPokemonEffect implements Effect {
     this.player = player;
     this.pokemonCard = pokemonCard;
     this.target = target;
+    if (pokemonCard.stage === Stage.BASIC) {
+      this.target.showBasicAnimation = true;
+    }
   }
 }
 
@@ -187,5 +192,19 @@ export class DiscardToHandEffect implements Effect {
   constructor(player: Player, card: Card) {
     this.player = player;
     this.card = card;
+  }
+}
+
+export class TrainerTargetEffect implements Effect {
+  readonly type: string = PlayCardEffects.TRAINER_TARGET_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public trainerCard: TrainerCard;
+  public target: PokemonCardList | undefined;
+
+  constructor(player: Player, trainerCard: TrainerCard, target?: PokemonCardList) {
+    this.player = player;
+    this.trainerCard = trainerCard;
+    this.target = target;
   }
 }

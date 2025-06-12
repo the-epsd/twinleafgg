@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class ShayminVIV extends PokemonCard {
+export class Shaymin extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

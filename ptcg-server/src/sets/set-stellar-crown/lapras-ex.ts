@@ -1,4 +1,5 @@
 import { AttachEnergyPrompt, Card, CardList, CardTag, CardType, EnergyCard, GameMessage, PlayerType, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -67,7 +68,7 @@ export class Laprasex extends PokemonCard {
 
           const damagePerEnergy = 40;
 
-          effect.damage = this.attacks[0].damage + (checkProvidedEnergy.energyMap.length * damagePerEnergy);
+          effect.damage = checkProvidedEnergy.energyMap.length * damagePerEnergy;
         }
       });
 
@@ -133,19 +134,29 @@ export class Laprasex extends PokemonCard {
                 temp.moveCardTo(card, deckBottom);
                 deckBottom.applyOrder(order);
                 deckBottom.moveTo(player.deck);
-
               });
               return state;
             });
           }
         });
       }
-
       // Shuffle the deck
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         return state;
       });
+    }
+
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      effect.preventDefault = true;
     }
     return state;
   }

@@ -6,7 +6,7 @@ export class ToolsScore extends SimpleScore {
   public getScore(state: State, playerId: number): number {
     const player = this.getPlayer(state, playerId);
     const scores = this.options.scores.tools;
-    
+
     let score = 0;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       if (cardList.tool === undefined) {

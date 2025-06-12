@@ -1,13 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, CoinFlipPrompt, PlayerType, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameMessage, StateUtils, CoinFlipPrompt, PlayerType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 240;
@@ -56,28 +57,26 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
     // Rolling Panic
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      let heads = 0;
 
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          heads++;
-          return this.reduceEffect(store, state, effect);
-        }
-      });
-
-      effect.damage += heads * 30;
+      const flipCoin = (heads: number = 0): State => {
+        return store.prompt(state, [
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+        ], result => {
+          if (result === true) {
+            return flipCoin(heads + 1);
+          }
+          effect.damage += 30 * heads;
+          return state;
+        });
+      };
+      return flipCoin();
     }
 
     // Supreme Puff-GX
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
       player.marker.addMarker(this.SUPREME_PUFF_MARKER, this);
       effect.player.usedTurnSkip = true;
@@ -93,7 +92,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card !== opponent.active.getPokemonCard()){
+        if (card !== opponent.active.getPokemonCard()) {
           cardList.moveTo(opponent.deck);
         }
       });

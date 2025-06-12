@@ -3,13 +3,14 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, EnergyCard, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 
 export class GyaradosVMAX extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -21,16 +22,16 @@ export class GyaradosVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Hyper Beam',
-    cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
     damage: 120,
     text: 'Discard an Energy from your opponent\'s Active Pokémon.'
   }, {
     name: 'Max Tyrant',
-    cost: [ CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 240,
     text: ''
   }];
@@ -66,9 +67,7 @@ export class GyaradosVMAX extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         card = selected[0];
-
-        opponent.active.moveCardTo(card, opponent.discard);
-        return state;
+        return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
       });
     }
     return state;

@@ -23,10 +23,10 @@ export class UnitEnergyFDY extends EnergyCard {
   public fullName = 'Unit Energy FDY FLI';
 
   public text = 'This card provides [C] Energy.' +
-    '' +
+    '\n\n' +
     'While this card is attached to a Pokémon, it provides [F], [D], and [Y] Energy but provides only 1 Energy at a time.';
 
-  blendedEnergies = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];
+  public blendedEnergies = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -37,11 +37,18 @@ export class UnitEnergyFDY extends EnergyCard {
         return state;
       }
 
-      // Just tell the system we can provide F, D, or Y (one at a time).
-      effect.energyMap.push({
-        card: this,
-        provides: [CardType.FDY]
-      });
+      // Find the first energy type that's not already provided by other energies
+      const neededType = this.blendedEnergies.find(type =>
+        !effect.energyMap.some(energy => energy.provides.includes(type))
+      );
+
+      if (neededType) {
+        // Only provide the specific energy type that's needed
+        effect.energyMap.push({
+          card: this,
+          provides: [neededType]
+        });
+      }
     }
     return state;
   }

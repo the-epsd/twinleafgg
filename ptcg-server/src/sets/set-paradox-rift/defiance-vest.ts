@@ -5,6 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class DefianceVest extends TrainerCard {
@@ -33,7 +34,13 @@ export class DefianceVest extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {

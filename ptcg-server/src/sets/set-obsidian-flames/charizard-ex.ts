@@ -61,8 +61,6 @@ export class Charizardex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
-
-
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -122,7 +120,7 @@ export class Charizardex extends PokemonCard {
       effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -131,10 +129,7 @@ export class Charizardex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

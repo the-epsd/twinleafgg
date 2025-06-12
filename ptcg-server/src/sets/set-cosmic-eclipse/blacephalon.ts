@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, DamageMap, PlayerType, PutDamagePrompt, GameMessage, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -7,6 +7,7 @@ import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class Blacephalon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.ULTRA_BEAST];
   public cardType: CardType = CardType.PSYCHIC;
   public hp: number = 110;
   public weakness = [{ type: CardType.DARK }];

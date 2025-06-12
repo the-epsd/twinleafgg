@@ -3,6 +3,7 @@ import { CardType, PokemonType, Stage, SuperType, TrainerType } from '../../game
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class LilliesPokeDoll extends TrainerCard {
 
@@ -24,59 +25,59 @@ export class LilliesPokeDoll extends TrainerCard {
   public archetype = [];
 
   public hp: number = 30;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public set: string = 'CEC';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '197';
-
   public name: string = 'Lillie\'s Poké Doll';
-
   public fullName: string = 'Lillie\'s Poké Doll CEC';
 
   public powers: Power[] = [
     {
       name: 'Lillie\'s Poké Doll',
-      text: 'At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.',
+      text: `Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.
+
+This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.TRAINER_ABILITY
     }
   ];
 
-  public text =
-    'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
-    '' +
-    'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
+  // public text =
+  //   'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
+  //   '' +
+  //   'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
-      const cardList = effect.player.active;
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const pokeDollCardList = StateUtils.findCardList(state, this);
 
-      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: this.name });
-
-      if (player.bench.every(b => b.cards.length === 0)) {
-        // technical implementation does not matter exactly because this ends the game
-        effect.player.active.clearEffects();
-        effect.player.active.clearAttackEffects();
-        effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
-      } else {
-        player.switchPokemon(cardList);
-        const pokeDollCardList = StateUtils.findCardList(state, this);
-        pokeDollCardList.moveCardsTo(pokeDollCardList.cards.filter(c => c === this), effect.player.deck);
-        pokeDollCardList.moveCardsTo(pokeDollCardList.cards.filter(c => c !== this), effect.player.discard);
+      if (player.active.cards[0] !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: this.name });
+
+      // Move Lillie's Poke Doll to bottom of deck
+      state = MOVE_CARDS(store, state, pokeDollCardList, player.deck, {
+        cards: [this],
+        toBottom: true
+      });
+
+      // Move any attached cards to discard
+      state = MOVE_CARDS(store, state, pokeDollCardList, player.discard, {
+        cards: pokeDollCardList.cards.filter(c => c !== this)
+      });
     }
 
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {

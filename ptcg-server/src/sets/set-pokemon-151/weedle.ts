@@ -1,4 +1,4 @@
-import { Attack, CardType, PokemonCard, Stage, Weakness } from "../../game";
+import { Attack, CardType, PokemonCard, Stage, Weakness } from '../../game';
 
 export class Weedle extends PokemonCard {
 

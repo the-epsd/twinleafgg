@@ -5,11 +5,14 @@ import { Bronzong } from './bronzong';
 import { Bronzor } from './bronzor';
 import { Crobat } from './crobat';
 import { DimensionValley } from './dimension-valley';
+import {GengarEx} from './gengar-ex';
+import {GengarSpiritLink} from './gengar-spirit-link';
 import { Golbat } from './golbat';
 import { Joltik } from './joltik';
 import { Lampent } from './lampent';
 import { Litwick } from './litwick';
 import { LysandresTrumpCard } from './lysandres-trump-card';
+import {MGengarEx} from './mega-gengar-ex';
 import { MysteryEnergy } from './mystery-energy';
 import { Pumpkaboo } from './pumpkaboo';
 import { Pyroar } from './pyroar';
@@ -45,4 +48,7 @@ export const setPhantomForces: Card[] = [
   new TargetWhistle(),
   new VsSeeker(),
   new Wobbuffet(),
+  new GengarEx(),
+  new MGengarEx(),
+  new GengarSpiritLink(),
 ];

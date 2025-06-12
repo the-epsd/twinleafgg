@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShayminV extends PokemonCard {
 
@@ -48,16 +48,8 @@ export class ShayminV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-
-      const damagePerPrize = 40;
-
-      effect.damage = 60 + (prizesTaken * damagePerPrize);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 40);
     }
     return state;
   }

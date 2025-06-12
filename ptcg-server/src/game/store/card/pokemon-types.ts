@@ -24,6 +24,7 @@ export interface Attack {
   canUseOnFirstTurn?: boolean;
   name: string;
   text: string;
+  barrage?: boolean;
   effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;
 }
 
@@ -32,7 +33,16 @@ export enum PowerType {
   POKEPOWER,
   ABILITY,
   ANCIENT_TRAIT,
-  POKEMON_POWER
+  HELD_ITEM,
+  POKEMON_POWER,
+  VUNION_ASSEMBLY,
+  LEGEND_ASSEMBLY,
+  TRAINER_ABILITY,
+  HOLONS_SPECIAL_ENERGY_EFFECT,
+  MEGA_EVOLUTION_RULE,
+  LV_X_RULE,
+  BREAK_RULE,
+  ARCEUS_RULE,
 }
 
 export interface Power {
@@ -46,4 +56,5 @@ export interface Power {
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;
   barrage?: boolean;
+  knocksOutSelf?: boolean;
 }

@@ -28,7 +28,8 @@ import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-dis
 import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confirm-cards.component';
 import { ChooseStartingPokemonPromptComponent } from './choose-starting-pokemon-prompt/choose-starting-pokemon-prompt.component';
 import { ChooseCardsPanes2Component } from './choose-cards-panes-2/choose-cards-panes-2.component';
-
+import { PromptSelectOptionComponent } from './prompt-select-option/prompt-select-option.component';
+import { PromptShowMulliganComponent } from './prompt-show-mulligan/prompt-show-mulligan.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import { ChooseCardsPanes2Component } from './choose-cards-panes-2/choose-cards-
     PromptDiscardEnergyComponent,
     PromptConfirmCardsComponent,
     ChooseStartingPokemonPromptComponent,
-    ChooseCardsPanes2Component
+    ChooseCardsPanes2Component,
+    PromptSelectOptionComponent,
+    PromptShowMulliganComponent
   ],
   imports: [
     BoardModule,
@@ -65,7 +68,8 @@ import { ChooseCardsPanes2Component } from './choose-cards-panes-2/choose-cards-
     TranslateModule
   ],
   exports: [
-    PromptComponent
+    PromptComponent,
+    PromptSelectOptionComponent
   ]
 })
 export class PromptModule { }

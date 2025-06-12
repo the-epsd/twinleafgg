@@ -1,9 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { Hoopa } from '../set-unified-minds/hoopa';
 import { Croconaw } from './croconaw';
+import { Hoopa } from './hoopa';
 import { Latios } from './latios';
 import { Marshadow } from './marshadow';
 import { Plusle } from './plusle';
+import { Scraggy } from './scraggy';
+import { Shaymin } from './shaymin';
 import { ShiningGenesect } from './shining-genesect';
 import { ShiningMew } from './shining-mew';
 import { Venusaur } from './venusaur';
@@ -17,6 +19,8 @@ export const setShiningLegends: Card[] = [
   new Latios(),
   new Marshadow(),
   new Plusle(),
+  new Scraggy(),
+  new Shaymin(),
   new ShiningGenesect(),
   new ShiningMew(),
   new Venusaur(),

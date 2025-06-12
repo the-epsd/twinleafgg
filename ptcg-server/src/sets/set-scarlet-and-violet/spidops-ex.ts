@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType, CardTag } from '../../game';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -9,6 +9,7 @@ export class Spidopsex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = CardType.GRASS;
 
   public hp: number = 260;

@@ -3,6 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -25,21 +26,22 @@ export class WashWaterEnergy extends EnergyCard {
   public fullName = 'Wash Water Energy VIV';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [W] Energy.' +
-    '' +
-    'Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)';
+    `As long as this card is attached to a Pokémon, it provides [W] Energy.
+    
+Prevent all effects of attacks from your opponent's Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-
       effect.energyMap.push({ card: this, provides: [CardType.WATER] });
-
       return state;
     }
 
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target?.cards?.includes(this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.opponent, this, effect.target)) {
+        return state;
+      }
 
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);

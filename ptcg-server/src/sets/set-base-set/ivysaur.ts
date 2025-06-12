@@ -9,27 +9,12 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class Ivysaur extends PokemonCard {
 
-  public name = 'Ivysaur';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public set = 'BS';
-
-  public fullName = 'Ivysaur BS';
-
-  public cardType = CardType.GRASS;
-
   public stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Bulbasaur';
-
+  public cardType = CardType.GRASS;
   public hp = 60;
-
   public weakness = [{ type: CardType.FIRE }];
-
   public retreat = [CardType.COLORLESS];
-
-  public setNumber: string = '30';
 
   public attacks: Attack[] = [
     {
@@ -45,6 +30,12 @@ export class Ivysaur extends PokemonCard {
       text: 'The Defending Pokémon is now Poisoned.'
     }
   ];
+
+  public set = 'BS';
+  public setNumber: string = '30';
+  public cardImage: string = 'assets/cardback.png';
+  public name = 'Ivysaur';
+  public fullName = 'Ivysaur BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

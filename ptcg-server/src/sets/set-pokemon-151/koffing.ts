@@ -1,7 +1,7 @@
-import { CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from "../../game/store/prefabs/attack-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Koffing extends PokemonCard {
   public stage: Stage = Stage.BASIC;

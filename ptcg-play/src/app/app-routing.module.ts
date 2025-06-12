@@ -14,10 +14,9 @@ import { ReplaysComponent } from './replays/replays.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 import { SetNewPasswordComponent } from './login/set-new-password/set-new-password.component';
 import { TableComponent } from './table/table.component';
-import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
 import { VsScreenComponent } from './table/vs-screen/vs-screen.component';
-import { NewsComponent } from './news/news.component';
 import { TermsComponent } from './terms/terms.component';
+import { MaintenanceMessageComponent } from './maintenance/maintenance-message.component';
 
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
@@ -34,10 +33,9 @@ const routes: Routes = [
   { path: 'reset-password/:token', component: SetNewPasswordComponent },
   { path: 'vs-screen', component: VsScreenComponent },
   { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
-  { path: 'tournaments', component: TournamentListComponent },
-  { path: 'news', component: NewsComponent },
   { path: 'terms', component: TermsComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },
+  { path: 'maintenance', component: MaintenanceMessageComponent },
 ];
 
 @NgModule({

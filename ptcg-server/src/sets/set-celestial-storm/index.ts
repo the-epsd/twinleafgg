@@ -5,7 +5,7 @@ import { BanetteGX } from './banette-gx';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { Dhelmise } from './dhelmise';
-import {Dunsparce} from './dunsparce';
+import { Dunsparce } from './dunsparce';
 import { ElectrodeGX } from './electrode-gx';
 import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';
@@ -16,14 +16,18 @@ import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { Nuzleaf } from './nuzleaf';
 import { Oricorio } from './oricorio';
+import { SuperScoopUpCES } from './other-prints';
 import { Phanpy } from './phanpy';
 import { RayquazaGX } from './rayquaza-gx';
+import { Registeel } from './registeel';
 import { Sableye } from './sableye';
+import { Sceptile } from './sceptile';
 import { ShrineOfPunishment } from './shrine-of-punishment';
 import { Shuppet } from './shuppet';
 import { SkyPillar } from './sky-pillar';
 import { Slaking } from './slaking';
 import { Slakoth } from './slakoth';
+import { Slugma } from './slugma';
 import { StevensResolve } from './stevens-resolve';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
@@ -47,14 +51,18 @@ export const setCelestialStorm: Card[] = [
   new Oricorio(),
   new Phanpy(),
   new RayquazaGX(),
+  new Registeel(),
   new Sableye(),
+  new Sceptile(),
   new ShrineOfPunishment(),
   new Shuppet(),
   new SkyPillar(),
   new Slaking(),
   new Slakoth(),
+  new Slugma(),
   new StevensResolve(),
   new Swampert(),
+  new SuperScoopUpCES(),
   new TateAndLiza(),
   new Whismur(),
   new ArticunoGX(),

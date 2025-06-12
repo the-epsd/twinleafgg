@@ -35,6 +35,7 @@ export class Aegislash extends PokemonCard {
       name: 'Hard Bashing',
       cost: [CardType.METAL, CardType.COLORLESS],
       damage: 120,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
     },
   ];

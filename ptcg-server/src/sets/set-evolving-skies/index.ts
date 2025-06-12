@@ -7,6 +7,7 @@ import { Drampa } from './drampa';
 import { DreamBall } from './dream-ball';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
+import { Eldegoss } from './eldegoss';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Flaaffy } from './flaaffy';
@@ -18,6 +19,7 @@ import { GalarianMoltres } from './galarian-moltres';
 import { GalarianZapdos } from './galarian_zapdos';
 import { GyaradosV } from './gyarados-v';
 import { GyaradosVMAX } from './gyarados-vmax';
+import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
 import { LeafeonV } from './leafeon-v';
 import { LeafeonVMAX } from './leafeon-vmax';
@@ -30,6 +32,7 @@ import { RayquazaVMAX } from './rayquaza-vmax';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
+import { ShoppingCenter } from './shopping-center';
 import { Skiploom } from './skiploom';
 import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
@@ -44,10 +47,10 @@ import { Wishiwashi } from './wishiwashi';
 import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
-
+import { BoostShake } from './boost-shake';
 
 export const setEvolvingSkies: Card[] = [
-
+  new BoostShake(),
   new Copycat(),
   new Cryogonal(),
   new CrystalCave(),
@@ -56,6 +59,7 @@ export const setEvolvingSkies: Card[] = [
   new DreamBall(),
   new DuraludonV(),
   new DuraludonVMAX(),
+  new Eldegoss(),
   new EspeonV(),
   new EspeonVMAX(),
   new Flaaffy(),
@@ -66,7 +70,7 @@ export const setEvolvingSkies: Card[] = [
   new GalarianZapdos(),
   new GyaradosV(),
   new GyaradosVMAX(),
-  // new Hoppip(),
+  new Hoppip(),
   new Jumpluff(),
   new LeafeonV(),
   new LeafeonVMAX(),
@@ -93,6 +97,7 @@ export const setEvolvingSkies: Card[] = [
   new SwitchingCups(),
   new Vigoroth(),
   new VolcaronaV(),
+  new ShoppingCenter(),
 
   // Full  & Alternate 
   new RayquazaVAA(),

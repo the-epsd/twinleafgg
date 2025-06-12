@@ -5,6 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class RockyHelmet extends TrainerCard {
@@ -37,7 +38,13 @@ export class RockyHelmet extends TrainerCard {
         return state;
       }
 
-
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (state.phase === GamePhase.ATTACK) {
         effect.source.damage += 20;

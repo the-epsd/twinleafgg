@@ -1,71 +1,100 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../game';
-import { AttackEffect, Effect, PowerEffect } from '../../game/store/effects/game-effects';
+import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, PlayerType, StateUtils, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ChoosePokemonPrompt, SlotType } from '../../game';
+import { AttackEffect, Effect, EffectOfAbilityEffect, MoveCardsEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TestPokemon extends PokemonCard {
 
   public regulationMark = 'G';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.COLORLESS }];
-
+  public weakness = [{ type: C }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Extremely Cursed Blast',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, both players Active Pokemon are Knocked Out.'
-  }];
-
-  public attacks = [
+  public powers = [
     {
-      name: 'Put Opponent Card In Prizes',
-      cost: [],
-      damage: 0,
-      text: 'Add top 2 cards of opponent\'s deck to prizes',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-      }
+      name: 'Have Your Cake',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Add as many cards as you want from your deck to your hand.'
+    },
+    {
+      name: 'Extremely Cursed Blast',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, both players Active Pokemon are Knocked Out.'
+    },
+    {
+      name: 'Draw 1 From Top',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Draw 1 card from the top of your deck.'
+    },
+    {
+      name: 'Draw 1 From Bottom',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Draw 1 card from the bottom of your deck.'
     }
   ];
 
+  public attacks = [
+    {
+      name: 'A Bit Much',
+      cost: [],
+      damage: 100,
+      text: ''
+    },
+  ];
+
   public set: string = 'TEST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '1';
-
-  public name: string = 'Test';
-
-  public fullName: string = 'Test TEST';
+  public name: string = 'Test Pokemon';
+  public fullName: string = 'Test Pokemon TEST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    //   if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-    //     const player = effect.player;
-    //     const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof MoveCardsEffect && effect.cards?.includes(this) && effect.sourceCard?.name === 'Roxie') {
+      const playerPokemon = StateUtils.findOwner(state, effect.source);
+      const opponentPokemon = StateUtils.getOpponent(state, playerPokemon);
 
-    //     const deckTop = new CardList();
-    //     opponent.deck.moveTo(deckTop, 2);
+      opponentPokemon.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === opponentPokemon.active.getPokemonCard()) {
+          cardList.damage += 100;
+        }
+      });
+    }
 
-    //     deckTop.moveTo(opponent.prizes);
-
-    //     import { Pokemon } from '../models/pokemon';
-
-    //     const newPrizeCard1 = new Pokemon();
-
-    //     import { Card, PokemonCard } from '../models';
-
-    //     const newPrizeCard2 = new PokemonCard();
-
-    //     opponent.prizes.push(newPrizeCard1, newPrizeCard2);
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        {},
+        { min: 0, max: 60, allowCancel: false }
+      ), cards => {
+        player.deck.moveCardsTo(cards, player.hand);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+
+        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+
+        return state;
+      });
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -77,10 +106,56 @@ export class TestPokemon extends PokemonCard {
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
         if (cardList.getPokemonCard() === opponentActive) {
-          cardList.damage += 999;
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, cardList);
+          store.reduceEffect(state, damageEffect);
+          if (damageEffect.target) {
+            damageEffect.target.damage += 999;
+          }
         }
       });
     }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[2]) {
+      const player = effect.player;
+      player.deck.moveCardTo(player.deck.cards[0], player.hand);
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[3]) {
+      const player = effect.player;
+      player.deck.moveCardTo(player.deck.cards[player.deck.cards.length - 1], player.hand);
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const max = Math.min(2);
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: max, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+
+          if (target.isOpponentActive(state)) {
+            const damageEffect = new PutDamageEffect(effect, 100);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          }
+
+          if (target.isOpponentBench(state)) {
+            const damageEffect = new PutDamageEffect(effect, 50);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          }
+
+        });
+        return state;
+      });
+    }
+
     return state;
   }
 }

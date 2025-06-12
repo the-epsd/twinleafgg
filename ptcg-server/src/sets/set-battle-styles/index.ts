@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Bellsprout } from './bellsprout';
+import { Blipbug } from './blipbug';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
 import { Carkol } from './carkol';
@@ -8,6 +9,7 @@ import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';
 import { Cheryl } from './cheryl';
 import { Crobat } from './crobat';
+import { Dottler } from './dottler';
 import { Durant } from './durant';
 import { EmpoleonV } from './empoleon-v';
 import { EnergyRecycler } from './energy-recycler';
@@ -23,8 +25,10 @@ import { KorrinasFocus } from './korrinas-focus';
 import { KricketuneV } from './kricketune-v';
 import { LevelBall } from './level-ball';
 import { MimikyuV } from './mimikyu-v';
+import { Morpeko } from './morpeko';
 import { NecrozmaV } from './necrozma-v';
 import { Octillery } from './octillery';
+import { Orbeetle } from './orbeetle';
 import { Primeape } from './primeape';
 import { RapidStrikeEnergy } from './rapid-strike-energy';
 import { RapidStrikeScrollOfSwirls } from './rapid-strike-scroll-of-swirls';
@@ -53,6 +57,7 @@ import { Zubat } from './zubat';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
+  new Blipbug(),
   new Bronzong(),
   new Bruno(),
   new Carkol(),
@@ -61,6 +66,7 @@ export const setBattleStyles: Card[] = [
   new Cherubi(),
   new Cheryl(),
   new Crobat(),
+  new Dottler(),
   new Durant(),
   new EnergyRecycler(),
   new EmpoleonV(),
@@ -75,8 +81,10 @@ export const setBattleStyles: Card[] = [
   new KorrinasFocus(),
   new LevelBall(),
   new MimikyuV(),
+  new Morpeko(),
   new NecrozmaV(),
   new Octillery(),
+  new Orbeetle(),
   new Primeape(),
   new RapidStrikeEnergy(),
   new RapidStrikeScrollOfSwirls(),

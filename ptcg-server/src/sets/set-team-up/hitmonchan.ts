@@ -1,4 +1,4 @@
-import { State, StoreLike } from '../../game';
+import { ConfirmPrompt, GameMessage, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -26,8 +26,6 @@ export class Hitmonchan extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public usedHitAndRun: boolean = false;
-
   public attacks = [
     {
       name: 'Hit and Run',
@@ -43,6 +41,8 @@ export class Hitmonchan extends PokemonCard {
     }
   ];
 
+  public usedHitAndRun: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -51,7 +51,15 @@ export class Hitmonchan extends PokemonCard {
 
     if (AFTER_ATTACK(effect) && this.usedHitAndRun) {
       const player = effect.player;
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+          SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+        }
+      });
+      
       this.usedHitAndRun = false;
     }
     return state;

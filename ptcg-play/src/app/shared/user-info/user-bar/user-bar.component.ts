@@ -10,7 +10,15 @@ import { UserInfoPopupService } from '../user-info-popup/user-info-popup.service
 })
 export class UserBarComponent {
 
-  @Input() user: UserInfo;
+  @Input()
+  set user(value: UserInfo) {
+    this._user = value;
+  }
+  get user(): UserInfo {
+    return this._user;
+  }
+  private _user: UserInfo;
+
   @Input() marked = false;
   @Input() openUserPopup: boolean;
 

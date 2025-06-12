@@ -1,7 +1,7 @@
-import { Attack, CardType, PokemonCard, SpecialCondition, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { AddSpecialConditionsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Annihilape extends PokemonCard {
 
@@ -27,20 +27,19 @@ export class Annihilape extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
-      specialCondition.target = player.active;
-      return store.reduceEffect(state, specialCondition);
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Knock out both active Pokemon, the dumb way.
+      // Knock out both active Pokemon
       player.active.damage += 999;
-      opponent.active.damage += 999;
+
+      const dealDamage = new KnockOutOpponentEffect(effect, 999);
+      dealDamage.target = opponent.active;
+      store.reduceEffect(state, dealDamage);
     }
 
     return state;

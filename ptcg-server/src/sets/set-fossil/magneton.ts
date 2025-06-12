@@ -13,7 +13,7 @@ export class Magneton extends PokemonCard {
   public evolvesTo = ['Magnezone', 'Magnezone ex'];
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 80;
-  public weakness = [{ type: CardType.FIGHTING, value: 2 }];
+  public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public attacks = [

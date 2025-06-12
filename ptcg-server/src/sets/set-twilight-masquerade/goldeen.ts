@@ -1,7 +1,8 @@
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PokemonCard, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Goldeen extends PokemonCard {
 
@@ -17,22 +18,18 @@ export class Goldeen extends PokemonCard {
 
   public retreat = [C];
 
-  public canAttackTwice: boolean = false;
-
-  public powers = [{
+  public powers: Power[] = [{
     name: 'Festival Lead',
     powerType: PowerType.ABILITY,
     text: 'If Festival Grounds is in play, this Pokémon may use an attack it has twice. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Whirlpool',
-      cost: [C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Whirlpool',
+    cost: [C, C],
+    damage: 10,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'TWM';
 
@@ -69,8 +66,7 @@ export class Goldeen extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             card = selected[0];
-
-            opponent.active.moveCardTo(card, opponent.discard);
+            return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
           });
         }
       });

@@ -16,10 +16,10 @@ describe('PromptChooseCardsComponent', () => {
         ApiModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ PromptChooseCardsComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [PromptChooseCardsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

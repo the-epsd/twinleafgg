@@ -1,5 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
+import { State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Riolu2 extends PokemonCard {
   public regulationMark = 'G';
@@ -27,4 +30,13 @@ export class Riolu2 extends PokemonCard {
   public setNumber: string = '113';
   public name: string = 'Riolu';
   public fullName: string = 'Riolu2 SVI';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 20);
+    }
+
+    return state;
+  }
 }

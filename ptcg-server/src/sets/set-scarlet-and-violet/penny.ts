@@ -1,13 +1,14 @@
 import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { BoardEffect, Stage, TrainerType } from '../../game/store/card/card-types';
+import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { GameError } from '../../game';
+import { GameError, PokemonCard } from '../../game';
+import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class Penny extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -66,20 +67,21 @@ export class Penny extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
 
-          player.removePokemonEffects(cardList);
-          cardList.clearEffects();
-          cardList.damage = 0;
-          cardList.moveCardsTo(pokemons, player.hand);
-          cardList.moveTo(player.hand);
-          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          // Move other cards to hand
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+          }
 
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+          }
+          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }
-
     return state;
   }
-
 }

@@ -1,0 +1,17 @@
+<div class="ptcg-board-selection-overlay" *ngIf="isActive && prompt">
+  <!-- Semi-transparent background overlay -->
+  <div class="ptcg-overlay-background"></div>
+
+  <div class="ptcg-overlay-message">
+    <p [translate]="'GAME_MESSAGES.' + message"></p>
+  </div>
+
+  <div class="ptcg-overlay-controls">
+    <button mat-raised-button *ngIf="allowCancel" (click)="cancel()">
+      {{ 'BUTTON_CANCEL' | translate }}
+    </button>
+    <button mat-raised-button color="primary" [disabled]="!isValid" (click)="confirm()" class="confirm-button">
+      {{ 'BUTTON_OK' | translate }}
+    </button>
+  </div>
+</div>

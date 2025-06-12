@@ -29,3 +29,43 @@ ptcg-board-card {
     transform: rotate(180deg);
   }
 }
+
+.ptcg-interactive-selection-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  height: 2rem;
+  border-radius: 4px;
+
+  .minimize-button {
+    min-width: unset;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+  }
+}
+
+:host ::ng-deep {
+  ptcg-board-card:not(.unavailable) {
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.4);
+    transition: box-shadow 0.2s ease;
+  }
+
+  ptcg-board-card.selected {
+    box-shadow: 0 0 6px 1px rgba(76, 217, 100, 0.5);
+    transition: box-shadow 0.2s ease;
+  }
+}
+
+// If you're using a class-based approach instead of the element selector
+.valid-pokemon {
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.4);
+  transition: box-shadow 0.2s ease;
+}
+
+.selected-pokemon {
+  box-shadow: 0 0 6px 1px rgba(76, 217, 100, 0.5);
+  transition: box-shadow 0.2s ease;
+}

@@ -60,7 +60,7 @@ export class BellelbaAndBrycenMan extends TrainerCard {
       player.deck.moveTo(deckTop, cardsToDiscard);
       
       deckTop.cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name });
+        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: this.name });
       });
       
       deckTop.moveTo(player.discard, deckTop.cards.length);
@@ -71,7 +71,7 @@ export class BellelbaAndBrycenMan extends TrainerCard {
       opponent.deck.moveTo(opponentDeckTop, opponentCardsToDiscard);
       
       opponentDeckTop.cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name });
+        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name, effectName: this.name });
       });
       
       opponentDeckTop.moveTo(opponent.discard, opponentDeckTop.cards.length);
@@ -98,7 +98,7 @@ export class BellelbaAndBrycenMan extends TrainerCard {
             player.hand.moveCardsTo(cards, player.discard);
 
             cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name, effectName: this.name });
             });
             
             const oppoonentBenchDifference = opponentsBenchedPokemon - 3;
@@ -169,6 +169,7 @@ export class BellelbaAndBrycenMan extends TrainerCard {
         }
       });      
       
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
 

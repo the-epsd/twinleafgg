@@ -11,17 +11,28 @@ import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
 import { config } from '../../config';
 import { Format } from '../store/card/card-types';
+import { AbortGameAction } from '../store/actions/abort-game-action';
+import { AbortGameReason } from '../store/actions/abort-game-action';
+import { GamePhase } from '../store/state/state';
+import { BotManager } from '../bots/bot-manager';
 
 export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
   public messager: Messager;
+  private botManager: BotManager;
 
   constructor() {
     this.messager = new Messager(this);
+    this.botManager = BotManager.getInstance();
     const cleanerTask = new CleanerTask(this);
     cleanerTask.startTasks();
     this.startRankingDecrease();
+    this.startInactiveGameCleanup();
+  }
+
+  public getBotManager(): BotManager {
+    return this.botManager;
   }
 
   public connect(client: Client): Client {
@@ -34,14 +45,33 @@ export class Core {
   }
 
   public disconnect(client: Client): void {
-    const index = this.clients.indexOf(client);
-    if (index === -1) {
-      throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+    try {
+      const index = this.clients.indexOf(client);
+      if (index === -1) {
+        console.log(`[Core Disconnect] Client not found for user ${client.user.name} (${client.user.id})`);
+        throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+      }
+
+      // Log active games the user is leaving
+      if (client.games.length > 0) {
+        console.log(`[Core Disconnect] User ${client.user.name} (${client.user.id}) disconnected with ${client.games.length} active games`);
+        client.games.forEach(game => {
+          console.log(`[Game Disconnect] Game ${game.id}: ${game.state.phase} phase`);
+        });
+      }
+
+      client.games.forEach(game => this.leaveGame(client, game));
+      this.clients.splice(index, 1);
+      client.core = undefined;
+      this.emit(c => c.onDisconnect(client));
+    } catch (error) {
+      if (error instanceof GameError) {
+        console.error('[Core Disconnect Error]:', error.message);
+      } else {
+        console.error('[Core Disconnect Unknown Error]:', error);
+        throw error;
+      }
     }
-    client.games.forEach(game => this.leaveGame(client, game));
-    this.clients.splice(index, 1);
-    client.core = undefined;
-    this.emit(c => c.onDisconnect(client));
   }
 
   public createGame(
@@ -58,6 +88,7 @@ export class Core {
     }
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = false;
     }
     const game = new Game(this, generateId(this.games), gameSettings);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
@@ -83,6 +114,8 @@ export class Core {
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
+
+    console.log(`[Matchmaking] Match created between ${client.name} and ${client2.name} (Format: ${gameSettings.format})`);
 
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
@@ -142,10 +175,6 @@ export class Core {
       this.emit(c => c.onGameLeave(game, client));
       game.handleClientLeave(client);
     }
-    // Delete game, if there are no more clients left in the game
-    if (game.clients.length === 1) {
-      this.deleteGame(game);
-    }
     if (game.clients.length === 0) {
       this.deleteGame(game);
     }
@@ -167,6 +196,33 @@ export class Core {
 
       this.emit(c => c.onUsersUpdate(users));
     }, config.core.rankingDecreaseIntervalCount);
+  }
+
+  private startInactiveGameCleanup(): void {
+    const scheduler = Scheduler.getInstance();
+    // Check for inactive games every 5 minutes
+    scheduler.run(() => {
+      const inactiveTimeout = 5 * 60 * 1000; // 5 minutes
+
+      this.games.forEach(game => {
+        if (game.isInactive(inactiveTimeout)) {
+          console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
+          // Force end the game
+          const state = game.state;
+          if (state.phase !== GamePhase.FINISHED) {
+            state.players.forEach(player => {
+              const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
+              // Use the first client as the source for the abort action
+              if (game.clients.length > 0) {
+                game.dispatch(game.clients[0], action);
+              }
+            });
+          }
+          game.cleanup();
+          this.deleteGame(game);
+        }
+      });
+    }, 5 * 60); // Run every 5 minutes
   }
 
 }

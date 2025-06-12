@@ -2,10 +2,11 @@ import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { EnergyCard } from '../card/energy-card';
+import { PokemonCard } from '../card/pokemon-card';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { KnockOutEffect } from '../effects/game-effects';
-import { TAKE_SPECIFIC_PRIZES } from '../prefabs/prefabs';
+import { TAKE_SPECIFIC_PRIZES, MOVE_CARDS } from '../prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
@@ -59,7 +60,24 @@ function findKoPokemons(store: StoreLike, state: State): PokemonItem[] {
 //   }, []);
 // }
 
+// function handleMaxToolsChange(store: StoreLike, state: State): State {
+//   state.players.forEach((player, index) => {
+//     player.forEachPokemon(PlayerType.ANY, (cardList) => {
+//       if (cardList.tools.length > cardList.maxTools) {
+//         const amount = cardList.tools.length - cardList.maxTools;
+//         REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, cardList, SlotType.DISCARD, amount, amount);
+//       }
+//     });
+//   });
+//   return state;
+// }
+
 function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: number[]): State {
+  // Skip if we've already handled bench size changes in this state check
+  if (state.benchSizeChangeHandled) {
+    return state;
+  }
+
   state.players.forEach((player, index) => {
     const benchSize = benchSizes[index];
     // Add empty slots if bench is smaller
@@ -108,14 +126,26 @@ function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: numbe
       // Discard all empty slots and selected Pokemons
       for (let i = player.bench.length - 1; i >= 0; i--) {
         if (selected.includes(player.bench[i])) {
-          player.bench[i].moveTo(player.discard);
+          const cardList = player.bench[i];
+          const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+
+          // Move other cards to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          }
+
+          // Move Pokémon to discard
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+          }
           player.bench.splice(i, 1);
         }
       }
     });
-
   });
-
+  // Mark that we've handled bench size changes
+  state.benchSizeChangeHandled = true;
   return state;
 }
 
@@ -136,7 +166,6 @@ function chooseActivePokemons(state: State): ChoosePokemonPrompt[] {
       prompts.push(choose);
     }
   }
-
   return prompts;
 }
 
@@ -152,6 +181,18 @@ function choosePrizeCards(store: StoreLike, state: State, prizeGroups: PrizeGrou
         endGame(store, state, i === 0 ? GameWinner.PLAYER_1 : GameWinner.PLAYER_2);
         return [];
       }
+
+      // If prizes to take >= remaining prizes, automatically take all prizes and end game
+      if (group.count >= prizeLeft && prizeLeft > 0) {
+        // Move all remaining prize cards to destination (default: hand)
+        player.prizes.forEach(prizeList => {
+          prizeList.moveTo(group.destination || player.hand);
+        });
+        // End game with this player as winner
+        endGame(store, state, i === 0 ? GameWinner.PLAYER_1 : GameWinner.PLAYER_2);
+        return [];
+      }
+
       if (group.count > prizeLeft) {
         group.count = prizeLeft;
       }
@@ -161,7 +202,7 @@ function choosePrizeCards(store: StoreLike, state: State, prizeGroups: PrizeGrou
         if (group.destination === player.discard) {
           message = GameMessage.CHOOSE_PRIZE_CARD_TO_DISCARD;
         }
-        
+
         const prompt = new ChoosePrizePrompt(
           player.id,
           message,
@@ -336,29 +377,74 @@ function setupSuddenDeathGame(store: StoreLike, state: State, firstPlayer: numbe
   return generator.next().value;
 }
 
-function handlePrompts(
-  store: StoreLike,
-  state: State,
-  prompts: (ChoosePrizePrompt | ChoosePokemonPrompt)[],
-  onComplete: () => void
-): State {
-  const prompt = prompts.shift();
-  if (prompt === undefined) {
-    onComplete();
+export function* executeCheckState(next: Function, store: StoreLike, state: State, onComplete?: () => void): IterableIterator<State> {
+  const prizeGroups: PrizeGroup[][] = state.players.map(() => []);
+
+  // Handle KOs first
+  const pokemonsToDiscard = findKoPokemons(store, state);
+  for (const pokemonToDiscard of pokemonsToDiscard) {
+    const owner = state.players[pokemonToDiscard.playerNum];
+    const knockOutEffect = new KnockOutEffect(owner, pokemonToDiscard.cardList);
+    state = store.reduceEffect(state, knockOutEffect);
+
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
+
+    if (knockOutEffect.preventDefault === false) {
+      const opponentIndex = pokemonToDiscard.playerNum === 0 ? 1 : 0;
+      const defaultDestination = state.players[opponentIndex].hand;
+      const destination = knockOutEffect.prizeDestination || defaultDestination;
+
+      let group = prizeGroups[opponentIndex].find(g => g.destination === destination);
+      if (!group) {
+        group = { destination, count: 0 };
+        prizeGroups[opponentIndex].push(group);
+      }
+      group.count += knockOutEffect.prizeCount;
+    }
+  }
+
+  // Check table state and handle bench size after KOs
+  const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
+  store.reduceEffect(state, checkTableStateEffect);
+  handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  // Check if the game has ended before proceeding with prompts
+  if (state.phase === GamePhase.FINISHED) {
     return state;
   }
 
-  const player = state.players.find(p => p.id === prompt.playerId);
-  if (player === undefined) {
-    throw new GameError(GameMessage.ILLEGAL_ACTION);
-  }
+  // Handle prize selection first - opponent then player
+  const prizePrompts = choosePrizeCards(store, state, prizeGroups);
+  for (const prompt of prizePrompts) {
+    const player = state.players.find(p => p.id === prompt.playerId);
+    if (!player) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
 
-  return store.prompt(state, prompt, (result) => {
-    if (prompt instanceof ChoosePrizePrompt) {
+    state = store.prompt(state, prompt, (result) => {
       const destination: CardList = prompt.options.destination || player.hand;
       TAKE_SPECIFIC_PRIZES(store, state, player, result, { destination });
-      handlePrompts(store, state, prompts, onComplete);
-    } else if (prompt instanceof ChoosePokemonPrompt) {
+    });
+
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
+  }
+
+  // Then handle new active Pokemon selection - opponent then player
+  const activePrompts = chooseActivePokemons(state);
+  for (const prompt of activePrompts) {
+    const player = state.players.find(p => p.id === prompt.playerId);
+    if (!player) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    state = store.prompt(state, prompt, (result) => {
       const selectedPokemon = result as PokemonCardList[];
       if (selectedPokemon.length !== 1) {
         throw new GameError(GameMessage.ILLEGAL_ACTION);
@@ -374,70 +460,18 @@ function handlePrompts(
         playerActive.movedToActiveThisTurn = true;
       }
       player.bench[benchIndex] = temp;
-      handlePrompts(store, state, prompts, onComplete);
-    }
-  });
-}
-
-export function* executeCheckState(next: Function, store: StoreLike, state: State, onComplete?: () => void): IterableIterator<State> {
-  // Instead of a simple array of numbers per player, we build an array of PrizeGroup arrays.
-  // This is necessary because for some effects (e.g. Billowing Smoke) we need to differentiate how many prizes
-  // are related to each Knock Out in order, for example, to preemptively determine their destination
-  const prizeGroups: PrizeGroup[][] = state.players.map(() => []);
-  
-  // This effect checks the general data from the table (bench size)
-  const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
-  store.reduceEffect(state, checkTableStateEffect);
-
-  handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  const pokemonsToDiscard = findKoPokemons(store, state);
-  for (const pokemonToDiscard of pokemonsToDiscard) {
-    const owner = state.players[pokemonToDiscard.playerNum];
-    const knockOutEffect = new KnockOutEffect(owner, pokemonToDiscard.cardList);
-    state = store.reduceEffect(state, knockOutEffect);
+    });
 
     if (store.hasPrompts()) {
       yield store.waitPrompt(state, () => next());
     }
-
-    if (knockOutEffect.preventDefault === false) {
-      // Prizes go to the opponent of the knocked out Pokemon.
-      const opponentIndex = pokemonToDiscard.playerNum === 0 ? 1 : 0;
-      // Default destination is the opponent's hand.
-      const defaultDestination = state.players[opponentIndex].hand;
-      // If the knockout effect has a custom prize destination, use it; otherwise default.
-      const destination = knockOutEffect.prizeDestination || defaultDestination;
-
-      // Try to merge prize groups that share the same destination.
-      let group = prizeGroups[opponentIndex].find(g => g.destination === destination);
-      if (!group) {
-        group = { destination, count: 0 };
-        prizeGroups[opponentIndex].push(group);
-      }
-      group.count += knockOutEffect.prizeCount;
-    }
   }
 
-  const prompts: (ChoosePrizePrompt | ChoosePokemonPrompt)[] = [
-    ...choosePrizeCards(store, state, prizeGroups),
-    ...chooseActivePokemons(state)
-  ];
+  checkWinner(store, state, onComplete);
 
-  const completed: boolean[] = state.players.map(() => false);
-  for (let i = 0; i < state.players.length; i++) {
-    const player = state.players[i];
-    const playerPrompts = prompts.filter(p => p.playerId === player.id);
-    state = handlePrompts(store, state, playerPrompts, () => {
-      completed[i] = true;
-      if (completed.every(c => c)) {
-        checkWinner(store, state, onComplete);
-      }
-    });
-  }
+  // Reset the bench size change handled flag after all effects are resolved
+  state.benchSizeChangeHandled = false;
+
   return state;
 }
 

@@ -4,9 +4,9 @@ import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameErr
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
-export class GreninjaGXSMP extends PokemonCard {
+export class GreninjaGX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_GX];
 
@@ -47,9 +47,9 @@ export class GreninjaGXSMP extends PokemonCard {
 
   public set: string = 'SMP';
 
-  public setNumber = 'SM197';
+  public setNumber = '197';
 
-  public cardImage = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
   public name: string = 'Greninja-GX';
 
@@ -89,9 +89,7 @@ export class GreninjaGXSMP extends PokemonCard {
       }
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 
@@ -101,11 +99,22 @@ export class GreninjaGXSMP extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
-      ), selection => {
-        selection.forEach(r => {
-          r.moveTo(opponent.hand);
-          r.clearEffects();
-        });
+      ), result => {
+        const cardList = result.length > 0 ? result[0] : null;
+        if (cardList !== null) {
+          const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+
+          // Move other cards to hand
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, opponent.hand, { cards: otherCards });
+          }
+
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, opponent.hand, { cards: pokemons });
+          }
+        }
       });
     }
     return state;

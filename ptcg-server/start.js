@@ -1,5 +1,4 @@
 require('./config');
-const os = require('os');
 
 const { App } = require('./output/backend/app');
 const { BotManager } = require('./output/game/bots/bot-manager');
@@ -7,6 +6,7 @@ const { SimpleBot } = require('./output/simple-bot/simple-bot');
 const { CardManager } = require('./output/game/cards/card-manager');
 const { StateSerializer } = require('./output/game/serializer/state-serializer');
 const { config } = require('./output/config');
+const { Format } = require('./output/game/store/card/card-types');
 const sets = require('./output/sets');
 const process = require('process');
 
@@ -21,26 +21,59 @@ cardManager.defineSet(sets.setTeamRocket);
 cardManager.defineSet(sets.setWOTCPromos);
 cardManager.defineSet(sets.setVendingSeries);
 
+cardManager.defineSet(sets.setGymHeros);
+cardManager.defineSet(sets.setGymChallenge);
+
 cardManager.defineSet(sets.setBaseSetEnergy);
 
+cardManager.defineSet(sets.setNeoGenesis);
+cardManager.defineSet(sets.setNeoDiscovery)
+
+//E-Card Era
+cardManager.defineSet(sets.setExpedition);
+cardManager.defineSet(sets.setAquapolis);
+cardManager.defineSet(sets.setSkyridge);
+
+cardManager.defineSet(sets.setBestOfGame);
+
 //ex Era shit
-cardManager.defineSet(sets.setDragon);
-cardManager.defineSet(sets.setDragonFrontiers);
-cardManager.defineSet(sets.setDeoxys);
-cardManager.defineSet(sets.setUnseenForces);
-cardManager.defineSet(sets.setTeamRocketReturns);
-cardManager.defineSet(sets.setCrystalGuardians);
-cardManager.defineSet(sets.setPowerKeepers);
-cardManager.defineSet(sets.setFireRedLeafGreen);
-cardManager.defineSet(sets.setDeltaSpecies);
+cardManager.defineSet(sets.setEXRubyAndSapphire);
+cardManager.defineSet(sets.setEXSandstorm);
+cardManager.defineSet(sets.setEXHolonPhantoms);
+cardManager.defineSet(sets.setEXHiddenLegends)
+cardManager.defineSet(sets.setEXDragon);
+cardManager.defineSet(sets.setEXTeamMagmaVsTeamAqua);
+cardManager.defineSet(sets.setEXDragonFrontiers);
+cardManager.defineSet(sets.setEXDeoxys);
+cardManager.defineSet(sets.setEXEmerald);
+cardManager.defineSet(sets.setEXUnseenForces);
+cardManager.defineSet(sets.setEXTeamRocketReturns);
+cardManager.defineSet(sets.setEXCrystalGuardians);
+cardManager.defineSet(sets.setEXPowerKeepers);
+cardManager.defineSet(sets.setEXFireRedLeafGreen);
+cardManager.defineSet(sets.setEXDeltaSpecies);
+cardManager.defineSet(sets.setEXLegendMaker);
+
+cardManager.defineSet(sets.setPOPSeries4);
+cardManager.defineSet(sets.setPOPSeries5);
+
+cardManager.defineSet(sets.setPCGLPromotionalCards);
+cardManager.defineSet(sets.setPCGPPromotionalCards);
+
+// VS Packs
+cardManager.defineSet(sets.setVSPackAurasLucario);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
+cardManager.defineSet(sets.setMysteriousTreasures);
+cardManager.defineSet(sets.setSupremeVictors);
+cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
 cardManager.defineSet(sets.setPlatinum);
+cardManager.defineSet(sets.setRisingRivals)
 
 cardManager.defineSet(sets.setBattleRoadPromos);
-
+cardManager.defineSet(sets.setCallOfLegends);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
 cardManager.defineSet(sets.setLPPromos);
@@ -129,16 +162,17 @@ cardManager.defineSet(sets.setPaldeaEvolved);
 cardManager.defineSet(sets.setObsidianFlames);
 cardManager.defineSet(sets.setPokemon151);
 cardManager.defineSet(sets.setParadoxRift);
-cardManager.defineSet(sets.setPaldeaFates);
+cardManager.defineSet(sets.setPaldeanFates);
 cardManager.defineSet(sets.setTemporalForces);
 cardManager.defineSet(sets.setTwilightMasquerade);
 cardManager.defineSet(sets.setShroudedFable);
 cardManager.defineSet(sets.setStellarCrown);
 cardManager.defineSet(sets.setSurgingSparks);
 cardManager.defineSet(sets.setPrismaticEvolution);
-cardManager.defineSet(sets.setSV9);
-cardManager.defineSet(sets.setSV9a);
-cardManager.defineSet(sets.setSV10);
+cardManager.defineSet(sets.setJourneyTogether);
+cardManager.defineSet(sets.setDestinedRivals);
+cardManager.defineSet(sets.setSV11);
+cardManager.defineSet(sets.setM1S);
 
 cardManager.defineSet(sets.setTest);
 
@@ -153,32 +187,15 @@ const botManager = BotManager.getInstance();
 // botManager.registerBot(new SimpleBot('Gardevoir'));
 // botManager.registerBot(new SimpleBot('Charizard'));
 // botManager.registerBot(new SimpleBot('LostBox'));
-// botManager.registerBot(new SimpleBot('Lugia'));
+// const lugiaBot = new SimpleBot('Lugia');
+// lugiaBot.setDeck(Format.STANDARD_NIGHTLY, ["Lillie's Clefairy ex JTG", "Team Rocket's Articuno DRI", "Team Rocket's Mewtwo ex DRI", "Team Rocket's Mewtwo ex DRI", "Team Rocket's Mimikyu DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Spidops DRI", "Team Rocket's Spidops DRI", "Team Rocket's Spidops DRI", "Team Rocket's Spidops DRI", "Team Rocket's Archer DRI", "Team Rocket's Ariana DRI", "Team Rocket's Ariana DRI", "Team Rocket's Ariana DRI", "Team Rocket's Ariana DRI", "Team Rocket's Giovanni DRI", "Team Rocket's Giovanni DRI", "Team Rocket's Giovanni DRI", "Team Rocket's Petrel DRI", "Team Rocket's Proton DRI", "Team Rocket's Proton DRI", "Earthen Vessel PAR", "Earthen Vessel PAR", "Earthen Vessel PAR", "Energy Switch SVI", "Energy Switch SVI", "Energy Switch SVI", "Energy Switch SVI", "Night Stretcher SFA", "Night Stretcher SFA", "Team Rocket's Great Ball DRI", "Team Rocket's Great Ball DRI", "Team Rocket's Receiver DRI", "Team Rocket's Receiver DRI", "Team Rocket's Receiver DRI", "Team Rocket's Receiver DRI", "Ultra Ball PAF", "Ultra Ball PAF", "Ultra Ball PAF", "Ultra Ball PAF", "Bravery Charm PAL", "Bravery Charm PAL", "Lucky Helmet TWM", "Lucky Helmet TWM", "Maximum Belt TEF", "Team Rocket's Factory DRI", "Team Rocket's Factory DRI", "Team Rocket's Factory DRI", "Grass Energy SVE", "Grass Energy SVE", "Grass Energy SVE", "Psychic Energy SVE", "Psychic Energy SVE", "Team Rocket Energy DRI", "Team Rocket Energy DRI", "Team Rocket Energy DRI", "Team Rocket Energy DRI"]);
+// botManager.registerBot(lugiaBot);
 // botManager.registerBot(new SimpleBot('Dragapult'));
 // botManager.registerBot(new SimpleBot('Standard'));
 // botManager.registerBot(new SimpleBot('GLC'));
 // botManager.registerBot(new SimpleBot('Retro'));
 
 const app = new App();
-
-// function logCPUUsage() {
-//   const cpuUsage = os.loadavg()[0] * 1000;
-//   console.log(`Current CPU Usage: ${cpuUsage.toFixed(2)}%`);
-// }
-
-// // Add CPU monitoring
-// function monitorCPU() {
-//   const cpuUsage = os.loadavg()[0] * 1000;
-//   const threshold = 50;
-
-//   if (cpuUsage > threshold) {
-//     console.log('CPU usage exceeded 50%, restarting server...');
-//     process.exit(1);
-//   }
-// }
-
-// setInterval(logCPUUsage, 60000); // Log every 1 minute
-// setInterval(monitorCPU, 300000); // Monitor every 5 minutes
 
 app.connectToDatabase()
   .catch(error => {

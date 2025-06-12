@@ -4,10 +4,11 @@ import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, Player
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect, UseAttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MewtwoMewGX extends PokemonCard {
 
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
 
   public stage: Stage = Stage.BASIC;
 
@@ -76,7 +77,7 @@ export class MewtwoMewGX extends PokemonCard {
       const player = effect.player;
 
       // Handle GX attack marker
-      if (player.usedGX == true) { throw new GameError(GameMessage.LABEL_GX_USED); }
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       // Check for the extra energy cost.

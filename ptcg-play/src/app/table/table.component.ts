@@ -1,11 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Player, GamePhase, Card, Format } from 'ptcg-server';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Player, GamePhase, Card, Format, GameWinner } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { withLatestFrom, switchMap, finalize } from 'rxjs/operators';
-
+import { withLatestFrom, switchMap, finalize, tap, map } from 'rxjs/operators';
 import { ApiError } from '../api/api.error';
 import { AlertService } from '../shared/alert/alert.service';
 import { DeckService } from '../api/services/deck.service';
@@ -13,7 +12,8 @@ import { GameService } from '../api/services/game.service';
 import { LocalGameState } from '../shared/session/session.interface';
 import { SessionService } from '../shared/session/session.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
-import { FormatValidator } from '../util/formats-validator';
+import { BoardInteractionService } from '../shared/services/board-interaction.service';
+import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +21,7 @@ import { FormatValidator } from '../util/formats-validator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
 
   public gameState: LocalGameState;
   public gameStates$: Observable<LocalGameState[]>;
@@ -31,7 +31,11 @@ export class TableComponent implements OnInit {
   public clientId: number;
   public loading: boolean;
   public waiting: boolean;
+  public isAdmin: boolean;
+  public isTO: boolean;
   private gameId: number;
+  public showGameOver = false;
+  public gameOverPrompt: GameOverPrompt;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
@@ -39,6 +43,7 @@ export class TableComponent implements OnInit {
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
     [Format.EXPANDED]: 'LABEL_EXPANDED',
+    [Format.RSPK]: 'LABEL_RSPK',
     [Format.RETRO]: 'LABEL_RETRO'
   };
 
@@ -50,13 +55,31 @@ export class TableComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private translate: TranslateService,
-    private cardsBaseService: CardsBaseService
+    private cardsBaseService: CardsBaseService,
+    private boardInteractionService: BoardInteractionService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
+    this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 4;
+    }).subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
+    this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 5;
+    }).subscribe(isTO => {
+      this.isTO = isTO;
+    });
   }
 
   ngOnInit() {
+    // Ensure any active board selection is cleared when table initializes
+    this.boardInteractionService.endBoardSelection();
+
     this.route.paramMap
       .pipe(
         withLatestFrom(this.gameStates$, this.clientId$),
@@ -77,6 +100,11 @@ export class TableComponent implements OnInit {
         this.gameState = gameStates.find(state => state.localId === this.gameId);
         this.updatePlayers(this.gameState, clientId);
       });
+  }
+
+  ngOnDestroy() {
+    // Make sure selection state is cleared when leaving the table view
+    this.boardInteractionService.endBoardSelection();
   }
 
   public play() {
@@ -169,6 +197,29 @@ export class TableComponent implements OnInit {
         && state.phase === GamePhase.PLAYER_TURN;
       this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
     }
+
+    // Check if the game is in the FINISHED phase and update the game over state
+    if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
+      this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);
+      this.showGameOver = true;
+    } else {
+      this.showGameOver = false;
+    }
   }
 
+  private updateGameState(state: LocalGameState) {
+    this.gameState = state;
+
+    // Show game over screen when the game is finished
+    if (state && state.state && state.state.phase === GamePhase.FINISHED && !state.gameOver) {
+      this.showGameOver = true;
+      this.gameOverPrompt = new GameOverPrompt(this.clientId, state.state.winner);
+    } else {
+      this.showGameOver = false;
+      this.gameOverPrompt = undefined;
+    }
+
+    // Update player information
+    this.updatePlayers(state, this.clientId);
+  }
 }

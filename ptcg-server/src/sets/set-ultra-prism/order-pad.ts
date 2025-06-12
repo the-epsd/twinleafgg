@@ -12,6 +12,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
 
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -24,10 +25,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let coin1Result = false;
   yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
     coin1Result = result;
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     next();
   });
 
   let cards: any[] = [];
+
   if (coin1Result) {
     yield store.prompt(state, new ChooseCardsPrompt(
       player,
@@ -38,26 +41,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards = selected || [];
       next();
     });
+    if (cards.length > 0) {
+      player.deck.moveCardsTo(cards, player.hand);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    }
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => state);
 
-    player.deck.moveCardsTo(cards, player.hand);
-  } else {
-    return state;
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+    return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
+      player.deck.applyOrder(order);
+    });
   }
-  
-  const opponent = StateUtils.getOpponent(state, player);
-  
-  yield store.prompt(state, new ShowCardsPrompt(
-    opponent.id,
-    GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-    cards
-  ), () => state);
-  
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-    player.deck.applyOrder(order);
-  });
-
 }
 
 export class OrderPad extends TrainerCard {
@@ -81,7 +80,6 @@ export class OrderPad extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-
     return state;
   }
 }                         

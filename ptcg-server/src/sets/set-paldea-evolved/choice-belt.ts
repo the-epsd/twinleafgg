@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class ChoiceBelt extends TrainerCard {
@@ -28,11 +29,17 @@ export class ChoiceBelt extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
@@ -40,11 +47,15 @@ export class ChoiceBelt extends TrainerCard {
 
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.tags.includes(CardTag.POKEMON_V) || targetCard && targetCard.tags.includes(CardTag.POKEMON_VMAX) || targetCard && targetCard.tags.includes(CardTag.POKEMON_VSTAR)) {
-        effect.damage += 30;
-      }
-    }
 
+        const attack = effect.attack;
+        if (attack && attack.damage > 0 && effect.target === opponent.active) {
+
+          effect.damage += 30;
+        }
+      }
+      return state;
+    }
     return state;
   }
-
 }

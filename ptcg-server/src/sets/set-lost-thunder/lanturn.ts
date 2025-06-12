@@ -26,6 +26,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, self: Lantur
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && c.trainerType == TrainerType.ITEM) {
+      // Allow item trainer cards to be selected
     } else {
       blocked.push(index);
     }
@@ -33,7 +34,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, self: Lantur
 
   const min = Math.min(itemsInDiscardPile, 4);
   const max = Math.min(itemsInDiscardPile, 4);
-  
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DECK,
@@ -66,7 +67,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, self: Lantur
 export class Lanturn extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public evolvesFrom: string = 'Chinchou';
 
   public cardType: CardType = CardType.LIGHTNING;
@@ -74,11 +75,11 @@ export class Lanturn extends PokemonCard {
   public hp: number = 110;
 
   public weakness = [{ type: CardType.FIGHTING }];
-  
+
   public resistance = [{ type: CardType.METAL, value: -20 }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  
+
   public attacks = [
     {
       name: 'Salvage',
@@ -98,11 +99,11 @@ export class Lanturn extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '46';
+  public setNumber: string = '49';
 
-  public name: string = 'Electabuzz';
+  public name: string = 'Lanturn';
 
-  public fullName: string = 'Electabuzz SCR';
+  public fullName: string = 'Lanturn SCR';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -111,7 +112,7 @@ export class Lanturn extends PokemonCard {
       const generator = useAttack(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialConditionEffect);

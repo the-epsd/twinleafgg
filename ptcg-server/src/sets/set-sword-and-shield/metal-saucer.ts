@@ -78,8 +78,8 @@ export class MetalSaucer extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, name: 'Metal Energy' },
         { allowCancel: true, min: 1, max: 1, blockedTo }
       ), transfers => {
         transfers = transfers || [];

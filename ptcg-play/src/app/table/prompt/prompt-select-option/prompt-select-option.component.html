@@ -1,0 +1,25 @@
+<div class="ptcg-prompt-title">
+  <h2 translate>PROMPT_SELECT_TITLE</h2>
+  <div class="ptcg-u-spacer"></div>
+  <button mat-button mat-icon-button (click)="minimize()">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+</div>
+
+<div class="ptcg-prompt-content">
+  <p [translate]="'GAME_MESSAGES.' + message"></p>
+
+  <div class="options">
+    <ptcg-hover-highlight *ngFor="let option of options; index as i" (click)="selectOption(i)" [enabled]="!disabled[i]">
+      <div class="option" [class.selected]="result !== -1 && result === i" [class.disabled]="disabled[i]">
+        <div class="option-text">{{ option }}</div>
+      </div>
+    </ptcg-hover-highlight>
+  </div>
+</div>
+
+<!-- <div class="ptcg-prompt-actions">
+  <button mat-raised-button *ngIf="allowCancel" [disabled]="gameState.deleted" (click)="cancel()">
+    {{ 'BUTTON_CANCEL' | translate }}
+  </button> -->
+<!-- </div> -->

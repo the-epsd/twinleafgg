@@ -1,31 +1,152 @@
-<div class="host">
-  <div class="ptcg-prompt-title">
-    <h2 translate>PROMPT_MOVE_ENERGY_TITLE</h2>
-    <div class="ptcg-u-spacer"></div>
-    <button mat-button mat-icon-button (click)="minimize()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
+<div class="ptcg-prompt-discard-energy">
+  <div class="ptcg-prompt-header">
+    <div class="ptcg-prompt-title">
+      {{ prompt.message }}
+    </div>
+    <div class="ptcg-prompt-controls">
+      <button mat-icon-button (click)="minimize()">
+        <mat-icon class="minimize-icon">keyboard_arrow_down</mat-icon>
+      </button>
+    </div>
   </div>
 
-  <div class="ptcg-damage-prompt-content">
-    <ptcg-choose-pokemons-pane [pokemonData]="pokemonData" (cardClick)="onCardClick($event)">
-    </ptcg-choose-pokemons-pane>
+  <div class="ptcg-prompt-content">
+    <!-- Pokemon selection area -->
+    <div class="pokemon-selection-area">
+      <!-- Active Pokemon -->
+      <div class="pokemon-row" *ngIf="activeItems.length > 0">
+        <div class="pokemon-card" *ngFor="let pokemon of activeItems"
+          [class.top-player]="pokemon.playerType === PlayerType.TOP_PLAYER" [class.selected]="pokemon.selected"
+          [class.selectable]="pokemon.cardList.cards.length > 0 && getVisibleEnergyCards(pokemon).length > 0"
+          (click)="pokemon.cardList.cards.length > 0 && getVisibleEnergyCards(pokemon).length > 0 ? selectPokemon(pokemon) : null"
+          (contextmenu)="pokemon.cardList.cards.length > 0 ? showCardInfo(pokemon.cardList.cards[0], pokemon.cardList) : null; $event.preventDefault()">
+          <div class="pokemon-img" *ngIf="pokemon.cardList.cards.length > 0">
+            <div class="card-fallback" *ngIf="!getCardScanUrl(pokemon.cardList.getPokemonCard())">
+              {{ pokemon.cardList.getPokemonCard()?.name }}
+            </div>
+            <img *ngIf="getCardScanUrl(pokemon.cardList.getPokemonCard())"
+              [src]="getCardScanUrl(pokemon.cardList.getPokemonCard())" alt="Pokemon">
 
-    <ptcg-choose-cards-panes [cards]="currentPokemonCards" [filter]="filter" [blocked]="blocked" [maxCards]="max"
-      [promptValue]="{options: {max: max}}" (changeCards)="onChange($event)">
-    </ptcg-choose-cards-panes>
+            <!-- Energy icons display -->
+            <div class="energy-icons-container">
+              <div class="energy-icons">
+                <ng-container *ngFor="let energy of getVisibleEnergyCards(pokemon).slice().reverse()">
+                  <div class="energy-icon">
+                    <img *ngIf="getCustomEnergyImageUrl(energy)" [src]="getCustomEnergyImageUrl(energy)"
+                      [alt]="energy.name">
+                    <img *ngIf="!getCustomEnergyImageUrl(energy)" [src]="getCardScanUrl(energy)" [alt]="energy.name"
+                      class="card-image">
+                  </div>
+                </ng-container>
+                <!-- Show count if there are more than displayed -->
+                <div class="energy-count" *ngIf="getTotalEnergyCount(pokemon) > 5">
+                  {{getTotalEnergyCount(pokemon)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bench Pokemon -->
+      <div class="pokemon-row" *ngIf="benchItems.length > 0">
+        <div class="pokemon-card" *ngFor="let pokemon of benchItems"
+          [class.top-player]="pokemon.playerType === PlayerType.TOP_PLAYER" [class.selected]="pokemon.selected"
+          [class.selectable]="pokemon.cardList.cards.length > 0 && getVisibleEnergyCards(pokemon).length > 0"
+          (click)="pokemon.cardList.cards.length > 0 && getVisibleEnergyCards(pokemon).length > 0 ? selectPokemon(pokemon) : null"
+          (contextmenu)="pokemon.cardList.cards.length > 0 ? showCardInfo(pokemon.cardList.cards[0], pokemon.cardList) : null; $event.preventDefault()">
+          <div class="pokemon-img" *ngIf="pokemon.cardList.cards.length > 0">
+            <div class="card-fallback" *ngIf="!getCardScanUrl(pokemon.cardList.getPokemonCard())">
+              {{ pokemon.cardList.getPokemonCard()?.name }}
+            </div>
+            <img *ngIf="getCardScanUrl(pokemon.cardList.getPokemonCard())"
+              [src]="getCardScanUrl(pokemon.cardList.getPokemonCard())" alt="Pokemon">
+
+            <!-- Energy icons display -->
+            <div class="energy-icons-container">
+              <div class="energy-icons">
+                <ng-container *ngFor="let energy of getVisibleEnergyCards(pokemon).slice().reverse()">
+                  <div class="energy-icon">
+                    <img *ngIf="getCustomEnergyImageUrl(energy)" [src]="getCustomEnergyImageUrl(energy)"
+                      [alt]="energy.name">
+                    <img *ngIf="!getCustomEnergyImageUrl(energy)" [src]="getCardScanUrl(energy)" [alt]="energy.name"
+                      class="card-image">
+                  </div>
+                </ng-container>
+                <!-- Show count if there are more than displayed -->
+                <div class="energy-count" *ngIf="getTotalEnergyCount(pokemon) > 5">
+                  {{getTotalEnergyCount(pokemon)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Available energies display (always at the top, even when empty) -->
+    <div class="available-energies">
+      <h3 *ngIf="selectedPokemon">Available Energies</h3>
+      <div class="energy-cards" *ngIf="selectedPokemon && availableEnergies.length > 0">
+        <div class="energy-card" *ngFor="let energy of availableEnergies" [class.selected]="isEnergySelected(energy)"
+          (click)="toggleEnergySelection(energy)" (contextmenu)="showCardInfo(energy); $event.preventDefault()">
+          <div class="card-fallback" *ngIf="!getCardScanUrl(energy)">
+            {{ energy.name }}
+          </div>
+          <img *ngIf="getCardScanUrl(energy)" [src]="getCardScanUrl(energy)" alt="Energy">
+        </div>
+      </div>
+      <!-- Empty state message for available energies -->
+      <div class="empty-state" *ngIf="selectedPokemon && availableEnergies.length === 0">
+        <p>No energy cards available on this Pokemon.</p>
+      </div>
+      <!-- Instructions if no Pokemon selected -->
+      <div class="empty-state" *ngIf="!selectedPokemon">
+        <p>Select a Pokemon to view its attached energy cards.</p>
+      </div>
+    </div>
+
+    <!-- Selected energies display -->
+    <div class="selected-energies">
+      <h3>
+        Selected Energies
+        <span class="selection-count"
+          [class.invalid]="selectedEnergies.length < minSelection || (maxSelection !== undefined && selectedEnergies.length > maxSelection)">
+          ({{ selectedEnergies.length }}{{ maxSelection !== undefined ? '/' + maxSelection : '' }})
+        </span>
+      </h3>
+      <div class="energy-cards" *ngIf="selectedEnergies.length > 0">
+        <div class="energy-card" *ngFor="let selection of selectedEnergies" (click)="removeEnergySelection(selection)"
+          (contextmenu)="showCardInfo(selection.card); $event.preventDefault()">
+          <div class="card-fallback" *ngIf="!selection.scanUrl">
+            {{ selection.card.name }}
+          </div>
+          <img *ngIf="selection.scanUrl" [src]="selection.scanUrl" alt="Energy">
+          <div class="energy-card-overlay">
+            <mat-icon>close</mat-icon>
+          </div>
+        </div>
+      </div>
+      <!-- Empty state for selected energies -->
+      <div class="empty-state" *ngIf="selectedEnergies.length === 0">
+        <p>No energy cards selected.</p>
+      </div>
+      <!-- <div class="selection-info" *ngIf="minSelection > 0 || maxSelection !== undefined">
+        <span *ngIf="minSelection > 0">Select at least {{ minSelection }} energy card(s).</span>
+        <span *ngIf="maxSelection !== undefined">Select at most {{ maxSelection }} energy card(s).</span>
+      </div> -->
+    </div>
   </div>
 
-  <div class="ptcg-prompt-actions">
-    <button mat-raised-button [disabled]="results.length === 0" (click)="reset()">
-      {{ 'PROMPT_RESET' | translate }}
+  <div class="ptcg-prompt-footer">
+    <button mat-raised-button (click)="resetSelection()">
+      Reset
     </button>
-    <div class="ptcg-u-spacer"></div>
-    <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
-      {{ 'BUTTON_CANCEL' | translate }}
+    <button mat-raised-button *ngIf="allowedCancel" (click)="cancel()">
+      Cancel
     </button>
-    <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
-      {{ 'BUTTON_OK' | translate }}
+    <button mat-raised-button color="primary" [disabled]="isInvalid || isConfirming" (click)="confirm()">
+      Confirm
     </button>
   </div>
 </div>

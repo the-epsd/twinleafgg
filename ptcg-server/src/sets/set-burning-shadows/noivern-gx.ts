@@ -101,7 +101,7 @@ export class NoivernGX extends PokemonCard {
         const damage = new PutDamageEffect(effect, 50);
         damage.target = cardList;
         store.reduceEffect(state, damage);
-      })
+      });
     }
 
     return state;

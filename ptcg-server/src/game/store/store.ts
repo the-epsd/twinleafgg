@@ -86,23 +86,8 @@ export class Store implements StoreLike {
   }
 
   public reduceEffect(state: State, effect: Effect): State {
-    // this.checkEffectHistory(state, effect);
 
     state = this.propagateEffect(state, effect);
-
-    // const cardEffect = <any>effect;
-
-    // if (cardEffect.card)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.fullName}`);
-
-    // if (cardEffect.energyCard)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.fullName}`);
-
-    // if (cardEffect.trainerCard)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.fullName}`);
-
-    // if (cardEffect.pokemonCard)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.fullName}`);
 
     if (effect.preventDefault === true) {
       return state;
@@ -119,34 +104,6 @@ export class Store implements StoreLike {
 
     return state;
   }
-
-  // checkEffectHistory(state: State, effect: Effect) {
-  //   if (this.effectHistory.length === 300) {
-  //     this.effectHistory.shift();
-  //   }
-
-  //   this.effectHistory.push(effect);
-  //   if (this.effectHistory.length === 300) {
-  //     let isLoop = true;
-
-  //     const firstEffect = this.effectHistory[0];
-
-  //     this.effectHistory.forEach((effect, index) => {
-  //       if (index % 5 !== 0) {
-  //         return;
-  //       }
-
-  //       if (!this.compareEffects(effect, firstEffect)) {
-  //         isLoop = false;
-  //       }
-  //     });
-
-  //     if (isLoop) {
-  //       console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
-  //       throw new Error('Loop detected');
-  //     }
-  //   }
-  // }
 
   compareEffects(effect1: Effect, effect2: Effect): boolean {
     if (effect1.type !== effect2.type) {
@@ -256,6 +213,13 @@ export class Store implements StoreLike {
     return this.promptItems.length > 0;
   }
 
+  public cleanup(): void {
+    this.promptItems = [];
+    this.waitItems = [];
+    this.logId = 0;
+    this.state = new State();
+  }
+
   private reduce(state: State, action: Action): State {
     const stateBackup = deepClone(state, [Card]);
     this.promptItems.length = 0;
@@ -282,26 +246,37 @@ export class Store implements StoreLike {
 
   private propagateEffect(state: State, effect: Effect): State {
     const cards: Card[] = [];
-
-    try {
-      for (const player of state.players) {
-        player.stadium.cards.forEach(c => cards.push(c));
-        player.supporter.cards.forEach(c => cards.push(c));
-        player.active.cards.forEach(c => cards.push(c));
-        for (const bench of player.bench) {
-          bench.cards.forEach(c => cards.push(c));
-        }
-        for (const prize of player.prizes) {
-          prize.cards.forEach(c => cards.push(c));
-        }
-        player.hand.cards.forEach(c => cards.push(c));
-        player.deck.cards.forEach(c => cards.push(c));
-        player.discard.cards.forEach(c => cards.push(c));
+    for (const player of state.players) {
+      player.stadium.cards.forEach(c => cards.push(c));
+      player.supporter.cards.forEach(c => cards.push(c));
+      player.active.cards.forEach(c => cards.push(c));
+      for (const bench of player.bench) {
+        bench.cards.forEach(c => cards.push(c));
       }
-      cards.sort(c => c.superType);
-      cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
-      return state;
-    } finally {
+      for (const prize of player.prizes) {
+        prize.cards.forEach(c => cards.push(c));
+      }
+      player.hand.cards.forEach(c => cards.push(c));
+      player.deck.cards.forEach(c => cards.push(c));
+      player.discard.cards.forEach(c => cards.push(c));
     }
+    cards.sort(c => c.superType);
+    cards.forEach(c => { state = this.callReduceEffect(c, this, state, effect); });
+    return state;
+  }
+
+  // Utility function to call reduceEffect with override support
+  private callReduceEffect(card: Card, store: StoreLike, state: State, effect: Effect): State {
+    // Only try override for TrainerCard (for now)
+    if ((card as any).trainerType !== undefined) {
+      // Import here to avoid circular dependency at module level
+      const { getOverriddenReduceEffect } = require('./card/card-effect-overrides');
+      let format = (store as any)?.handler?.gameSettings?.format ?? 0;
+      const override = getOverriddenReduceEffect(card, format);
+      if (override) {
+        return override(store, state, effect);
+      }
+    }
+    return card.reduceEffect(store, state, effect);
   }
 }

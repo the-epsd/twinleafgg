@@ -2,6 +2,7 @@ import { CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, 
 import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -17,77 +18,22 @@ export class ScoopUpNet extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-    //   const player = effect.player;
-
-    //   return store.prompt(
-    //     state,
-    //     new ChoosePokemonPrompt(
-    //       effect.player.id,
-    //       GameMessage.CHOOSE_POKEMON,
-    //       PlayerType.BOTTOM_PLAYER,
-    //       [SlotType.ACTIVE, SlotType.BENCH],
-    //       { allowCancel: false, min: 1, max: 1 }
-    //     ),
-    //     (results) => {
-    //       if (results && results.length > 0) {
-    //         const targetPokemon = results[0];
-
-    //         if (targetPokemon === effect.player.active) {
-    //           return store.prompt(state, new ChoosePokemonPrompt(
-    //             player.id,
-    //             GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    //             PlayerType.BOTTOM_PLAYER,
-    //             [SlotType.BENCH],
-    //             { allowCancel: false }
-    //           ), result => {
-    //             const cardList = result[0];
-    //             targetPokemon.damage = 0;
-    //             targetPokemon.clearEffects();
-    //             targetPokemon.cards.forEach((card, index) => {
-    //               if (card instanceof PokemonCard) {
-    //                 store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
-    //               }
-    //             });
-
-    //             player.switchPokemon(cardList);
-
-    //             const scoopedPokemon = targetPokemon.cards.filter(c => c instanceof PokemonCard)[0];
-    //             const benchedCardList = player.bench.find(b => b.cards.includes(scoopedPokemon));
-    //             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    //             benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
-    //             benchedCardList!.moveCardsTo(benchedCardList!.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
-    //           });
-    //         } else {
-    //           targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => c instanceof PokemonCard), effect.player.hand);
-    //           targetPokemon.moveCardsTo(targetPokemon.cards.filter(c => !(c instanceof PokemonCard)), effect.player.discard);
-    //           targetPokemon.clearEffects();
-    //           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    //           targetPokemon.cards.forEach((card, index) => {
-    //             if (card instanceof PokemonCard) {
-    //               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: card.name });
-    //             }
-    //           });
-    //         }
-    //       }
-
-    //       return state;
-    //     }
-    //   );
-    // }
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX)) {
-          blocked.push();
+        if (card instanceof PokemonCard && (
+          card.tags.includes(CardTag.POKEMON_GX) ||
+          card.tags.includes(CardTag.POKEMON_V) ||
+          card.tags.includes(CardTag.POKEMON_VSTAR) ||
+          card.tags.includes(CardTag.POKEMON_VMAX)
+        )) {
+          blocked.push(target);
         }
       });
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      // We will discard this card after prompt confirmation
+      MOVE_CARD_TO(state, effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -95,16 +41,23 @@ export class ScoopUpNet extends TrainerCard {
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false, blocked: blocked }
+        { allowCancel: false, blocked }
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-          cardList.clearEffects();
-          cardList.damage = 0;
-          cardList.moveCardsTo(pokemons, player.hand);
-          cardList.moveTo(player.discard);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+
+          // Move other cards to hand
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          }
+
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+          }
+          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

@@ -69,7 +69,6 @@ export class Natu extends PokemonCard {
       });
 
       effect.damage = energyCount * 10;
-
     }
 
     return state;

@@ -1,4 +1,4 @@
-import { CardTag, CardType, Format } from 'ptcg-server';
+import { CardTag, CardType, Format, Archetype } from 'ptcg-server';
 import { Response } from './response.interface';
 import { DeckItem } from 'src/app/deck/deck-card/deck-card.interface';
 
@@ -11,6 +11,8 @@ export interface DeckListEntry {
   format: Format[];
   isValid: boolean;
   deckItems: DeckItem[];
+  manualArchetype1?: Archetype;
+  manualArchetype2?: Archetype;
 }
 
 export interface DeckListResponse extends Response {
@@ -25,6 +27,8 @@ export interface Deck {
   format: Format[];
   isValid: boolean;
   cards: string[];
+  manualArchetype1?: Archetype;
+  manualArchetype2?: Archetype;
 }
 
 export interface DeckResponse extends Response {

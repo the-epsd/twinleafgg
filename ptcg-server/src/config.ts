@@ -1,11 +1,10 @@
-
 export const config = {
   backend: {
     address: 'https://play-server.twinleaf.gg',
     port: 8080,
     registrationEnabled: true,  // Completly disables/enables registration
     allowCors: true,
-    tokenExpire: 86400,
+    tokenExpire: 21600,
     defaultPageSize: 50,
     avatarsDir: '',
     avatarsUrl: '/avatars/{name}',
@@ -13,8 +12,18 @@ export const config = {
     avatarMinSize: 64,
     avatarMaxSize: 512,
     replayFileSize: 512 * 1024,
-    rateLimitCount: 25, // Ban IP after that many wrong password errors
-    rateLimitTime: 300 // How long the user should be banned
+    rateLimitCount: 10000,     // Increased from 100 to 1000 HTTP requests
+    wsRateLimitCount: 10000,   // Increased from 200 to 2000 WebSocket messages
+    rateLimitTime: 60000,     // Keeping this at 1 minute
+    apiUrl: 'https://play-server.twinleaf.gg',
+    timeout: 60 * 60 * 1000,
+    production: true,
+    apiVersion: 2,
+    allowServerChange: true,
+    refreshTokenInterval: 60 * 60 * 1000,
+    enableImageCache: true,
+    defaultLanguage: 'en',
+    languages: { en: 'English', jp: 'Japanese', fr: 'French' },
   },
   core: {
     debug: false,
@@ -29,17 +38,17 @@ export const config = {
     // If you wish to disable this feature set IntervalCount to 0
     rankingDecraseRate: 0.975, // 1 - 0.025 for 2.5% decrease
     rankingDecraseTime: 7 * 24 * 60 * 60 * 1000, // Reduced to 7 days
-    rankingDecreaseIntervalCount: 2, // Check every other scheduler tick
+    rankingDecreaseIntervalCount: 0, // Check every other scheduler tick
 
     // Deletes matches older than `keepMatchTike` from the database, to keep it small.
     // If you wish to disable this feature set IntervalCount to 0
     keepMatchTime: 14 * 24 * 60 * 60 * 1000, // Reduced to 14 days
-    keepMatchIntervalCount: 1,
+    keepMatchIntervalCount: 0,
 
     // Deletes users that doesn't log in in the `keepUserTime` and their ranking is 0
     // If you wish to disable this feature set IntervalCount to 0
     keepUserTime: 14 * 24 * 60 * 60 * 1000, // Increased to 14 days
-    keepUserIntervalCount: 1
+    keepUserIntervalCount: 0
   },
   bots: {
     // Default password for bot user

@@ -13,19 +13,19 @@ import { DamageMap, PutDamagePrompt, GameMessage } from '../../game';
 function* usePsypower(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-    
+
   const maxAllowedDamage: DamageMap[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
     maxAllowedDamage.push({ target, damage: card.hp + 30 });
   });
-  
+
   const damage = 30;
-  
+
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     damage,
     maxAllowedDamage,
     { allowCancel: false }
@@ -50,7 +50,7 @@ export class Mew extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Bench Barrier',
@@ -60,7 +60,7 @@ export class Mew extends PokemonCard {
 
   public attacks = [{
     name: 'Psypower',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Put 3 damage counters on your opponent\'s Pokémon in any way you like.'
   }];
@@ -117,8 +117,6 @@ export class Mew extends PokemonCard {
 
       effect.preventDefault = true;
     }
-
     return state;
   }
-
 }

@@ -1,6 +1,6 @@
-import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Onix extends PokemonCard {
 
@@ -60,7 +60,7 @@ export class Onix extends PokemonCard {
         if (result)
           return;
         effect.damage = 0;
-      })
+      });
     }
 
     return state;

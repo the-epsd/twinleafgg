@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShayminVSTAR extends PokemonCard {
 
@@ -27,7 +28,6 @@ export class ShayminVSTAR extends PokemonCard {
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'During your turn, you may heal 120 damage from each of your Benched [G] Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
-
   }];
 
   public attacks = [
@@ -72,16 +72,8 @@ export class ShayminVSTAR extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-
-      const damagePerPrize = 40;
-
-      effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 40);
     }
 
     return state;

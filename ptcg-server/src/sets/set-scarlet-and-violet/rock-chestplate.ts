@@ -4,6 +4,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils, TrainerCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class RockChestplate extends TrainerCard {
@@ -34,10 +35,17 @@ export class RockChestplate extends TrainerCard {
         return state;
       }
 
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
       const player = StateUtils.findOwner(state, effect.target);
       const sourceCard = player.active.getPokemonCard();
 
-
+      // Do not ignore self-damage
+      const opponent = StateUtils.findOwner(state, effect.source);
+      if (player === opponent) {
+        return state;
+      }
 
       if (sourceCard?.cardType == CardType.FIGHTING) {
 

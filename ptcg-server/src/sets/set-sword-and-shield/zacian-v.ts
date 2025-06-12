@@ -23,11 +23,11 @@ export class ZacianV extends PokemonCard {
   }];
 
   public attacks = [{
-      name: 'Brave Blade',
-      cost: [M, M, M],
-      damage: 230,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }];
+    name: 'Brave Blade',
+    cost: [M, M, M],
+    damage: 230,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
   public set: string = 'SSH';
   public regulationMark = 'D';
@@ -44,7 +44,7 @@ export class ZacianV extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]){
       const player = effect.player;
 
-      let topdecks = new CardList();
+      const topdecks = new CardList();
       player.deck.moveTo(topdecks, 3);
 
       let metals = 0;

@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, StateUtils } from '../../game';
+import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, HAS_MARKER, REMOVE_MARKER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Rillaboom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -65,36 +66,21 @@ export class Rillaboom extends PokemonCard {
         { allowCancel: true, min: 0, max: 2, sameTarget: true },
       ), transfers => {
         transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0) {
-          return state;
-        }
         player.marker.addMarker(this.VOLTAGE_BEAT_MARKER, this);
+        ABILITY_USED(player, this);
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-          }
-        });
+        SHUFFLE_DECK(store, state, player);
       });
 
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Rillaboom) {
-          player.marker.removeMarker(this.VOLTAGE_BEAT_MARKER);
-        }
-      });
-      return state;
+    if (effect instanceof EndTurnEffect && HAS_MARKER(this.VOLTAGE_BEAT_MARKER, effect.player, this)) {
+      REMOVE_MARKER(this.VOLTAGE_BEAT_MARKER, effect.player, this);
     }
     return state;
   }

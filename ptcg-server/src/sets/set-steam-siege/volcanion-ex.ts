@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, PowerType, CardType, ChooseCardsPrompt, EnergyCard, EnergyType, GameError, GameMessage, State, StoreLike, SuperType } from '../../game';
+import { PokemonCard, Stage, PowerType, CardType, ChooseCardsPrompt, EnergyCard, EnergyType, GameError, GameMessage, State, StoreLike, SuperType, CardTag } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -7,6 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class VolcanionEX extends PokemonCard {
   public cardType = R;
   public additionalCardTypes = [W];
+  public tags = [CardTag.POKEMON_EX];
   public stage = Stage.BASIC;
   public hp = 180;
   public weakness = [{ type: W }];

@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, Card, CardTarget, ChooseEnergyPrompt, PokemonCardList } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, CardTarget, ChoosePokemonPrompt, GameMessage, PokemonCardList, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class HisuianSamurottV extends PokemonCard {
 
@@ -93,23 +92,7 @@ export class HisuianSamurottV extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);
-
-      return store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
 
     return state;

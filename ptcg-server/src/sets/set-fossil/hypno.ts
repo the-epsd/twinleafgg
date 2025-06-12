@@ -12,7 +12,7 @@ export class Hypno extends PokemonCard {
   public evolvesFrom = 'Drowzee';
   public cardType: CardType = CardType.PSYCHIC;
   public hp: number = 90;
-  public weakness = [{ type: CardType.PSYCHIC, value: 2 }];
+  public weakness = [{ type: CardType.PSYCHIC }];
   public resistance = [];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public attacks = [

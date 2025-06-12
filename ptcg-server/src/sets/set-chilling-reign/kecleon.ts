@@ -15,9 +15,9 @@ export class Kecleon extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-      name: 'Chromashift',
-      powerType: PowerType.ABILITY,
-      text: 'This Pokémon is the same type as any basic Energy attached to it. (If it has 2 or more different types of basic Energy attached, this Pokémon is each of those types.)'
+    name: 'Chromashift',
+    powerType: PowerType.ABILITY,
+    text: 'This Pokémon is the same type as any basic Energy attached to it. (If it has 2 or more different types of basic Energy attached, this Pokémon is each of those types.)'
   }];
 
   public attacks = [{
@@ -40,7 +40,7 @@ export class Kecleon extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this){
-          let energies = new CardList();
+          const energies = new CardList();
           energies.cards = cardList.cards.filter(card => card instanceof EnergyCard && card.energyType === EnergyType.BASIC);
 
           if (energies.cards.length === 0){

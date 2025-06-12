@@ -5,11 +5,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import {GreninjaVUNIONTopRight} from './greninja-v-union-tr';
-import {GreninjaVUNIONBottomLeft} from './greninja-v-union-bl';
-import {GreninjaVUNIONBottomRight} from './greninja-v-union-br';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {PlayItemEffect} from '../../game/store/effects/play-card-effects';
+import { GreninjaVUNIONTopRight } from './greninja-v-union-tr';
+import { GreninjaVUNIONBottomLeft } from './greninja-v-union-bl';
+import { GreninjaVUNIONBottomRight } from './greninja-v-union-br';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 
 export class GreninjaVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -25,7 +25,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
       text: 'Once per game during your turn, combine 4 different Greninja V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.VUNION_ASSEMBLY,
     },
     {
       name: 'Ninja Body',
@@ -122,7 +122,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
 
     // Ninja Body
-    if (effect instanceof PlayItemEffect && effect.target && effect.target.cards.includes(this)){
+    if (effect instanceof PlayItemEffect && effect.target && effect.target.cards.includes(this)) {
       /*const player = StateUtils.findOwner(state, effect.target);
 
       try {
@@ -140,16 +140,16 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
 
     // Antidote Jutsu
-    if (effect instanceof AddSpecialConditionsEffect && effect.target.cards.includes(this) && effect.specialConditions.includes(SpecialCondition.POISONED)){
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.cards.includes(this) && effect.specialConditions.includes(SpecialCondition.POISONED)) {
       effect.preventDefault = true;
     }
 
     // Feel the Way
-    if (effect instanceof PowerEffect && effect.power === this.powers[3]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[3]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (this.marker.hasMarker(this.FEEL_THE_WAY_MARKER, this)){
+      if (this.marker.hasMarker(this.FEEL_THE_WAY_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -177,7 +177,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy') {
           watersInDiscard++;
         }
-      })
+      });
 
       if (watersInDiscard > 0) {
         const blocked: CardTarget[] = [];
@@ -213,11 +213,13 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const opponent = effect.opponent;
 
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const damage = new PutDamageEffect(effect, 100);
-        damage.target = cardList;
-        store.reduceEffect(state, damage);
-      })
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (target.slot === SlotType.BENCH) {
+          const damage = new PutDamageEffect(effect, 100);
+          damage.target = cardList;
+          store.reduceEffect(state, damage);
+        }
+      });
     }
 
     // Waterfall Bind
@@ -237,7 +239,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
       effect.player.active.marker.removeMarker(this.WATERFALL_BIND_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FEEL_THE_WAY_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FEEL_THE_WAY_MARKER, this)) {
       effect.player.marker.removeMarker(this.FEEL_THE_WAY_MARKER, this);
       this.marker.removeMarker(this.FEEL_THE_WAY_MARKER, this);
     }

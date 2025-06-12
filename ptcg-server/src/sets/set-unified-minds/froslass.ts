@@ -60,7 +60,7 @@ export class Froslass extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
-        90,
+        70,
         maxAllowedDamage,
         { allowCancel: false, allowPlacePartialDamage: true }
       ), targets => {

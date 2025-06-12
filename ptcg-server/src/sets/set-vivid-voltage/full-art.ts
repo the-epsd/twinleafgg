@@ -1,4 +1,4 @@
-import { TalonflameV } from "./talonflame-v";
+import { TalonflameV } from './talonflame-v';
 
 export class TalonflameVFA extends TalonflameV {
   public setNumber: string = '168';

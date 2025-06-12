@@ -18,20 +18,25 @@
 
       <!-- Player's hand -->
       <div class="opp-hand">
-        <ptcg-hand [player]="topPlayer" [gameState]="gameState" [clientId]="clientId" [isOpponent]="true"></ptcg-hand>
+        <ptcg-hand [player]="topPlayer" [gameState]="gameState" [clientId]="clientId" [isOpponent]="true"
+          [isAdmin]="isAdmin" [isTO]="isTO"></ptcg-hand>
       </div>
       <ptcg-board [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer" [bottomPlayer]="bottomPlayer">
       </ptcg-board>
 
       <!-- Player's hand -->
 
-      <ptcg-hand [clientId]="clientId" [gameState]="gameState" [player]="bottomPlayer">
-      </ptcg-hand>
+      <ptcg-hand [clientId]="clientId" [gameState]="gameState" [player]="bottomPlayer" [isAdmin]="isAdmin"
+        [isTO]="isTO"></ptcg-hand>
 
 
       <!-- Player prompt -->
       <ptcg-prompt [gameState]="gameState" [clientId]="clientId">
       </ptcg-prompt>
+
+      <!-- Game Over screen -->
+      <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">
+      </ptcg-game-over>
     </div>
   </ptcg-content>
 

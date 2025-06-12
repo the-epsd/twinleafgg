@@ -1,10 +1,12 @@
 import { Card } from '../../game/store/card/card';
+import { Aipom } from './aipom';
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
 import { Buzzwole } from './buzzwole';
 import { ChaoticSwell } from './chaotic-swell';
 import { Clay } from './clay';
+import { Clefairy } from './clefairy';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
 import { Drampa } from './drampa';
 import { DrawEnergy } from './draw-energy';
@@ -19,6 +21,7 @@ import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
+import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
@@ -29,6 +32,7 @@ import { Pikachu } from './pikachu';
 import { Ponyta } from './ponyta';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Rosa } from './rosa';
+import { Roxie } from './roxie';
 import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
 import { Stoutland } from './stoutland';
@@ -41,19 +45,35 @@ import { BlastoisePiplupGX } from './blastoise-piplup-gx';
 import { CharizardBraixenGX } from './charizard-braixen-gx';
 import { TogepiCleffaIgglybuffGX } from './togepi-cleffa-igglybuff-gx';
 import { Carvanha } from './carvanha';
-import {NaganadelGuzzlordGX} from './naganadel-guzzlord-gx';
-import {Woobat} from './woobat';
-import {Swoobat} from './swoobat';
+import { NaganadelGuzzlordGX } from './naganadel-guzzlord-gx';
+import { Woobat } from './woobat';
+import { Swoobat } from './swoobat';
+import { Mimikyu } from './mimikyu';
+import { OricorioGX } from './oricorio-gx';
+import { DragoniumZDragonClaw } from './dragonium-z';
+import { Gloom } from './gloom';
+import { Oddish } from './oddish';
+import { VileplumeGX } from './vileplume-gx';
+import { MegaLopunnyJigglypuffGX } from './mega-lopuny-and-jigglypuff-gx';
+import { VenusaurSnivyGX } from './venusaur-and-snivy-gx';
+import { LilliesFullForce } from './lillies-full-force';
+import { SolgaleoLunalaGX } from './solgaleo-and-lunala-gx';
 
 
 export const setCosmicEclipse: Card[] = [
+  new Aipom(),
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
+  new BlastoisePiplupGX(),
   new Buzzwole(),
+  new Carvanha(),
   new ChaoticSwell(),
+  new CharizardBraixenGX(),
   new Clay(),
+  new Clefairy(),
   new CynthiaAndCaitlin(),
+  new DragoniumZDragonClaw(),
   new Drampa(),
   new DrawEnergy(),
   new Dusclops(),
@@ -62,34 +82,42 @@ export const setCosmicEclipse: Card[] = [
   new Flabebe(),
   new Flabebe2(),
   new Floette(),
+  new Gloom(),
   new Golett(),
   new GreatCatcher(),
   new GuzmaAndHala(),
   new Guzzlord(),
   new LanasFishingRod(),
+  new Lanturn(),
+  new LilliesFullForce(),
   new LilliesPokeDoll(),
   new Lillipup(),
   new MallowAndLana(),
+  new MegaLopunnyJigglypuffGX(),
+  new Mimikyu(),
+  new NaganadelGuzzlordGX(),
   new Natu(),
+  new Oddish(),
   new Onix(),
+  new OricorioGX(),
   new Phione(),
   new Pikachu(),
   new Ponyta(),
   new ProfessorOaksSetup(),
   new Rosa(),
+  new Roxie(),
   new Sawsbuck(),
   new Slugma(),
+  new SolgaleoLunalaGX(),
   new Stoutland(),
   new Sunkern(),
   new Swirlix(),
-  new TagCall(),
-  new UltraNecrozma(),
-  new Wishiwashi(),
-  new BlastoisePiplupGX(),
-  new CharizardBraixenGX(),
-  new TogepiCleffaIgglybuffGX(),
-  new Carvanha(),
-  new NaganadelGuzzlordGX(),
-  new Woobat(),
   new Swoobat(),
+  new TagCall(),
+  new TogepiCleffaIgglybuffGX(),
+  new UltraNecrozma(),
+  new VileplumeGX(),
+  new Wishiwashi(),
+  new Woobat(),
+  new VenusaurSnivyGX(),
 ];

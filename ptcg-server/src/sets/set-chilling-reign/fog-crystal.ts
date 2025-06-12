@@ -83,8 +83,7 @@ export class FogCrystal extends TrainerCard {
   public fullName: string = 'Fog Crystal CRE';
 
   public text: string =
-    'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +
-    'and put it into your hand. Shuffle your deck afterward.';
+    'Search your deck for a [P] Energy card or a Basic [P] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

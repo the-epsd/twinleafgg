@@ -1,0 +1,268 @@
+@use 'sass:math';
+@import '../../../../theme/variables.scss';
+
+.ptcg-card-info-pane {
+  display: flex;
+  gap: 32px;
+  min-height: min-content;
+  align-items: center;
+  border-radius: map-get($padding, small);
+}
+
+.ptcg-card-info-image {
+  cursor: pointer;
+  flex: 1 1 33%;
+  min-width: 275px;
+  transform: perspective(1000px) rotateY(12.5deg);
+  transform-origin: right center;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  padding: map-get($padding, normal);
+  margin-left: map-get($padding, normal);
+}
+
+.ptcg-card-info-text {
+  flex: 1 1 67%;
+  padding: map-get($padding, normal);
+}
+
+.title {
+  align-items: baseline;
+  border-top-left-radius: map-get($padding, small);
+  border-top-right-radius: map-get($padding, small);
+  display: flex;
+  padding: 12px;
+  background-color: #1a202c7a;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.subtitle {
+  align-items: baseline;
+  display: flex;
+  padding: 12px;
+  background-color: #2127347a;
+  border-bottom-left-radius: map-get($padding, small);
+  border-bottom-right-radius: map-get($padding, small);
+  margin-bottom: map-get($padding, normal);
+}
+
+.subtitle-set-code {
+  font-size: 10px;
+  margin: map-get($padding, small) 0;
+  padding: map-get($padding, small);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.subtitle-hp {
+  font-size: 11px;
+  margin: 0 math.div(map-get($padding, small), 4);
+
+  .subtitle-hp-value {
+    font-size: 1.4em;
+    font-weight: bold;
+
+    &.damaged {
+      color: #d32f2f;
+    }
+  }
+}
+
+.subtitle-card-type {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: -12px;
+}
+
+.subtitle-stage {
+  font-weight: bold;
+}
+
+.power {
+  margin: map-get($padding, small) 0;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: map-get($padding, small);
+}
+
+.power-header {
+  display: flex;
+  align-items: baseline;
+  min-height: 32px;
+}
+
+.power-type {
+  color: #ff5c5c;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-right: map-get($padding, small);
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.power-name {
+  font-weight: bold;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.attack {
+  margin: map-get($padding, small) 0;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: map-get($padding, small);
+  transition: background-color 0.3s ease;
+
+  &.disabled {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.attack-header {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.attack-cost {
+  display: flex;
+  align-items: center;
+  height: 32px;
+
+  ptcg-energy+ptcg-energy {
+    margin-left: -4px;
+  }
+
+  ptcg-energy.insufficient {
+    filter: grayscale(0.9);
+    opacity: 0.5;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+
+    &:hover {
+      filter: grayscale(0.3);
+      opacity: 0.7;
+    }
+  }
+}
+
+.attack-name {
+  padding: 0 map-get($padding, small);
+  font-weight: bold;
+  font-size: 16px;
+  transform: translateY(-1px);
+}
+
+.attack-damage {
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 16px;
+  transform: translateY(-1px);
+}
+
+.card-text {
+  padding-top: map-get($padding, small);
+  white-space: pre-wrap;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stats {
+  display: flex;
+  padding: 12px;
+  background-color: #2127347a;
+  border-radius: 12px;
+  margin: map-get($padding, normal) 0;
+  justify-content: space-around;
+}
+
+.stats-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 16px;
+  position: relative;
+
+  &:last-child {
+    flex: 1.5;
+
+    .stats-item-value {
+      transform: translateX(4px);
+      min-width: 150px;
+    }
+  }
+}
+
+.stats-item-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stats-item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -4px;
+  width: 100%;
+}
+
+.stats-item-value {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  gap: 4px;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  flex-wrap: wrap;
+
+  ptcg-energy {
+    display: flex;
+    align-items: center;
+  }
+
+  ptcg-energy+ptcg-energy {
+    margin-left: -8px;
+  }
+
+  // Closer spacing for retreat cost icons
+  .stats-item:last-child & ptcg-energy+ptcg-energy {
+    margin-left: -14px; // Only 2px visible gap between icons
+  }
+
+  .stats-item-value-modifier {
+    position: absolute;
+    left: calc(50% + 12px);
+  }
+
+  &.empty {
+    color: #aaffe0;
+    font-style: italic;
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+.stats-item-value-modifier {
+  font-weight: bold;
+  font-size: 16px;
+  min-width: 24px;
+  margin-left: -2px;
+}
+
+.ptcg-u-spacer {
+  flex: 1 1 auto;
+}
+
+.attached-cards {
+  margin-top: map-get($padding, normal);
+}

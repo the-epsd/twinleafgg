@@ -1,6 +1,6 @@
-import { CardTag, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { ADD_POISON_TO_PLAYER_ACTIVE, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { CardTag, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { ADD_POISON_TO_PLAYER_ACTIVE, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BruteBonnet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -43,7 +43,7 @@ export class BruteBonnet extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 5 * opponent.active.damage)
+      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 5 * opponent.active.damage);
     }
 
     return state;

@@ -25,7 +25,7 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
       text: 'Once per game during your turn, combine 4 different Zacian V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.VUNION_ASSEMBLY,
     }
   ];
 
@@ -114,7 +114,7 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy'){
           metalsInDiscard++;
         }
-      })
+      });
 
       if (metalsInDiscard > 0){
         const blocked: CardTarget[] = [];

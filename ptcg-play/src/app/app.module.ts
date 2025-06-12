@@ -5,6 +5,8 @@ import { DndModule } from '@ng-dnd/core';
 import { DndMultiBackendModule, MultiBackend, HTML5ToTouch } from '@ng-dnd/multi-backend';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { io, Socket } from 'socket.io-client';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ApiModule } from './api/api.module';
 import { AppComponent } from './app.component';
@@ -19,17 +21,13 @@ import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
-import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
-import { TournamentJoiningComponent } from './tournaments/tournament-join/tournament-join.component';
-import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
-import { NewsModule } from './news/news.module';
 import { TermsModule } from './terms/terms.module';
+import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
+import { MaintenanceModule } from './maintenance/maintenance.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TournamentJoiningComponent,
-    TournamentListComponent,
   ],
   imports: [
     ApiModule,
@@ -39,7 +37,6 @@ import { TermsModule } from './terms/terms.module';
     LoginModule,
     MainModule,
     MessagesModule,
-    NewsModule,
     ProfileModule,
     RankingModule,
     ReplaysModule,
@@ -54,10 +51,13 @@ import { TermsModule } from './terms/terms.module';
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CardInfoDialogComponent
+  ]
 })
 export class AppModule {
   constructor(languageService: LanguageService) {

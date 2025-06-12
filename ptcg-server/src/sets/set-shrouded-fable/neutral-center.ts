@@ -22,11 +22,11 @@ export class NeutralCenter extends TrainerCard {
 
   public name = 'Neutralization Zone';
 
-  public fullName = 'Neutral Center SFA';
+  public fullName = 'Neutralization Zone SFA';
 
-  public text = 'Pokémon that don\'t have a Rule Box don\'t take any damage from attacks from their opponent\'s Pokémon ex and Pokémon V.' +
-    '' +
-    'If this card is in your discard pile, it can\'t be put into your hand or put back into your deck.';
+  public text = `Prevent all damage done to Pokémon that don't have a Rule Box (both yours and your opponent's) by attacks from the opponent's Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)
+
+This card can't be put into your hand or deck from the discard pile. `;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

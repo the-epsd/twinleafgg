@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, StateUtils, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Durantex extends PokemonCard {
 
@@ -26,14 +27,12 @@ export class Durantex extends PokemonCard {
     text: 'When you play this Pokemon from your hand onto your Bench during your turn, you may use this ability. Discard the top card of your opponent\'s deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Revenge Crush',
-      cost: [G, C, C],
-      damage: 120,
-      text: 'This attack does 30 more damage for each Prize Card your opponent has taken.'
-    }
-  ];
+  public attacks = [{
+    name: 'Revenge Crush',
+    cost: [G, C, C],
+    damage: 120,
+    text: 'This attack does 30 more damage for each Prize Card your opponent has taken.'
+  }];
 
   public regulationMark = 'H';
 
@@ -77,11 +76,8 @@ export class Durantex extends PokemonCard {
     }
 
     // Revenge Crush
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      effect.damage += (6 - opponent.getPrizeLeft()) * 30;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 30);
     }
     return state;
   }

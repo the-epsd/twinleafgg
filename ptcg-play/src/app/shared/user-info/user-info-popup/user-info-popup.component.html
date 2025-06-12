@@ -13,6 +13,10 @@
   <button mat-raised-button *ngIf="visitor$ | async" [routerLink]="['/message', userId]" (click)="close()">
     {{ 'BUTTON_SEND_MESSAGE' | translate }}
   </button>
+  <button mat-raised-button *ngIf="isAdmin$ | async" [style.background-color]="(isBanned$ | async) ? '' : '#FF0000'"
+    [style.color]="(isBanned$ | async) ? '' : 'white'" (click)="banUser(userId)">
+    {{ (isBanned$ | async) ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
+  </button>
 
   <span class="ptcg-u-spacer"></span>
 

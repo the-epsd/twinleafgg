@@ -1,8 +1,8 @@
-import { CardType, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
+import { CardType, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class GalarianMrMime extends PokemonCard {
 

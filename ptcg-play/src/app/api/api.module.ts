@@ -18,7 +18,6 @@ import { ReplayService } from './services/replay.service';
 import { ResetPasswordService } from './services/reset-password.service';
 import { SharedModule } from '../shared/shared.module';
 import { SocketService } from './socket.service';
-import { Subscription } from 'rxjs';
 
 @NgModule({
   imports: [
@@ -27,7 +26,7 @@ import { Subscription } from 'rxjs';
     SharedModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     ApiService,
     AvatarService,
     CardsService,
@@ -44,14 +43,13 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class ApiModule {
-  private subscription: Subscription;
-  
   constructor(
     mainService: MainService,
     messageService: MessageService,
     socketService: SocketService
   ) {
-    this.subscription = socketService.connection
+
+    socketService.connection
       .pipe(
         filter(connected => connected),
         switchMap(() => mainService.getCoreInfo())
@@ -60,11 +58,6 @@ export class ApiModule {
         mainService.init(coreInfo);
         messageService.init();
       });
-  }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

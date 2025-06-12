@@ -25,5 +25,4 @@ export class ShowCardsPrompt extends Prompt<true> {
       allowCancel: false
     }, options);
   }
-
 }

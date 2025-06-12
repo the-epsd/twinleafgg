@@ -4,6 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { StateUtils } from '../../game';
 
 
 export class MistEnergy extends EnergyCard {
@@ -33,6 +35,12 @@ export class MistEnergy extends EnergyCard {
 
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, opponent, this, effect.target)) {
+        return state;
+      }
+
       const sourceCard = effect.source.getPokemonCard();
 
       if (sourceCard) {

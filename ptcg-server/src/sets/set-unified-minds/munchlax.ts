@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
+import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
 
 export class Munchlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,9 +33,7 @@ export class Munchlax extends PokemonCard {
 
       let cards: Card[] = [];
 
-      if (player.discard.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
+      BLOCK_IF_DISCARD_EMPTY(player);
 
       // Checking to see if ability is being blocked
       try {

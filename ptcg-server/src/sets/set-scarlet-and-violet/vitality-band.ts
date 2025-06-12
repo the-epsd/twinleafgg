@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class VitalityBand extends TrainerCard {
@@ -28,14 +29,19 @@ export class VitalityBand extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
       }
-      effect.damage += 10;
+
+      if (effect.damage > 0 && effect.target === opponent.active) {
+        effect.damage += 10;
+      }
     }
     return state;
   }

@@ -25,7 +25,9 @@ export class Decks extends Controller {
       name: deck.name,
       isValid: deck.isValid,
       cards: JSON.parse(deck.cards),
-      cardTypes: JSON.parse(deck.cardTypes)
+      cardTypes: JSON.parse(deck.cardTypes),
+      manualArchetype1: deck.manualArchetype1,
+      manualArchetype2: deck.manualArchetype2
     }));
 
     res.send({ ok: true, decks });
@@ -48,7 +50,9 @@ export class Decks extends Controller {
       name: entity.name,
       isValid: entity.isValid,
       cardTypes: JSON.parse(entity.cardTypes),
-      cards: JSON.parse(entity.cards)
+      cards: JSON.parse(entity.cards),
+      manualArchetype1: entity.manualArchetype1,
+      manualArchetype2: entity.manualArchetype2
     };
 
     res.send({ ok: true, deck });
@@ -101,6 +105,8 @@ export class Decks extends Controller {
     deck.cards = JSON.stringify(body.cards);
     deck.isValid = deckUtils.isValid();
     deck.cardTypes = JSON.stringify(deckUtils.getDeckType());
+    deck.manualArchetype1 = body.manualArchetype1 || '';
+    deck.manualArchetype2 = body.manualArchetype2 || '';
 
     try {
       deck = await deck.save();
@@ -114,7 +120,9 @@ export class Decks extends Controller {
       ok: true, deck: {
         id: deck.id,
         name: deck.name,
-        cards: body.cards
+        cards: body.cards,
+        manualArchetype1: deck.manualArchetype1,
+        manualArchetype2: deck.manualArchetype2
       }
     });
   }

@@ -2,10 +2,11 @@ import { PokemonCard, CardTag, Stage, CardType, State, StateUtils, GameError, Ga
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, Effect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BuzzwoleGX extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_GX];
+  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.BASIC;
 
@@ -122,9 +123,7 @@ export class BuzzwoleGX extends PokemonCard {
       }
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

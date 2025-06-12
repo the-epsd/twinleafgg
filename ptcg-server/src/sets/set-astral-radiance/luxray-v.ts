@@ -1,14 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, CardType, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, TrainerCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, Card } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LuxrayV extends PokemonCard {
 
-  public cardType = CardType.LIGHTNING;
+  public cardType = L;
 
   public tags = [CardTag.POKEMON_V];
 
@@ -16,22 +16,22 @@ export class LuxrayV extends PokemonCard {
 
   public hp = 210;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
   public resistance = [];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Fang Snipe',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: 'Your opponent reveals their hand. Discard a Trainer card you find there.'
     },
     {
       name: 'Radiating Pulse',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [L, L, C],
       damage: 120,
       text: 'Discard 2 Energy from this Pokémon. Your opponent\'s Active Pokémon is now Paralyzed.'
     }
@@ -51,12 +51,11 @@ export class LuxrayV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const cards = opponent.hand.cards.filter(c => c instanceof TrainerCard);
-
+      let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -64,13 +63,16 @@ export class LuxrayV extends PokemonCard {
         { superType: SuperType.TRAINER },
         { min: 0, max: 1, allowCancel: false }
       ), selected => {
-        selected = cards || [];
-
-        opponent.hand.moveCardsTo(cards, opponent.discard);
+        cards = selected || [];
+        // Operation canceled by the user
+        if (cards.length === 0) {
+          return state;
+        }
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards });
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -65,7 +65,7 @@ export class TreasureTracker extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '146';
+  public setNumber: string = '131';
 
   public name: string = 'Treasure Tracker';
 

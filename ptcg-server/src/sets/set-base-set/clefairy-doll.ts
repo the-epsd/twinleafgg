@@ -26,6 +26,9 @@ export class ClefairyDoll extends TrainerCard {
   public cardType: CardType = C;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public weakness = [];
   public resistance = [];
@@ -36,19 +39,19 @@ export class ClefairyDoll extends TrainerCard {
   public powers = [
     {
       name: 'Clefairy Doll',
-      powerType: PowerType.ABILITY,
+      powerType: PowerType.TRAINER_ABILITY,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      text: 'At any time during your turn before your attack, you may discard Clefairy Doll.'
+      text: 'Play Clefairy Doll as if it were a Basic Pokémon. While in play, Clefairy Doll counts a a Pokémon (instead of a Trainer card). Clefairy Doll has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Clefairy Doll is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. At any time during your turn before your attack, you may discard Clefairy Doll.'
     }
   ];
 
-  public text = 'Play Clefairy Doll as if it were a Basic Pokémon. While in play, Clefairy Doll counts a a Pokémon (instead of a Trainer card). Clefairy Doll has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Clefairy Doll is Knocked Out, it doesn\'t count as a Knocked Out Pokémon.';
+  // public text = 'Play Clefairy Doll as if it were a Basic Pokémon. While in play, Clefairy Doll counts a a Pokémon (instead of a Trainer card). Clefairy Doll has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Clefairy Doll is Knocked Out, it doesn\'t count as a Knocked Out Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Clefairy Doll can't be affected by special conditions
-    if (effect instanceof AddSpecialConditionsEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
       effect.preventDefault = true;
     }
 
@@ -82,12 +85,12 @@ export class ClefairyDoll extends TrainerCard {
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
       effect.prizeCount = 0;
       return state;
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

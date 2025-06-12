@@ -3,6 +3,7 @@ import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/stor
 import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TapuKokoPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -11,7 +12,7 @@ export class TapuKokoPrismStar extends PokemonCard {
   public hp: number = 130;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.METAL, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Dance of the Ancients',
@@ -95,12 +96,18 @@ export class TapuKokoPrismStar extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-
             const pokemons = cardList.getPokemons();
-            cardList.moveCardsTo(pokemons, player.lostzone);
-            cardList.moveTo(player.discard);
+            const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
             cardList.clearEffects();
+            // Move Pokémon cards to the Lost Zone
+            if (pokemons.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.lostzone, { cards: pokemons });
+            }
 
+            // Move other cards (tools, energies, etc.) to the discard
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
           }
         });
 

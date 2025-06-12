@@ -2,7 +2,7 @@ import { BiancasDevotion } from './biancas-devotion';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';
-import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
+import { CiphermaniacsCodebreaking } from './cryptomaniacs-deciphering';
 import { Eri } from './eri';
 import { ExplorersGuidance } from './explorers-guidance';
 import { Gastly } from './gastly';
@@ -15,6 +15,7 @@ import { Metagross } from './metagross';
 import { Minccino } from './minccino';
 import { MortysConviction } from './mortys-conviction';
 import { RagingBoltex } from './raging-bolt-ex';
+import { Relicanth } from './relicanth';
 import { Reuniclus } from './reuniclus';
 import { Salvatore } from './salvatore';
 import { Torterraex } from './torterra-ex';
@@ -70,10 +71,10 @@ export class ReuniclusIR extends Reuniclus {
 //   public fullName: string = 'CutieflyIR TEF';
 // }
 
-// export class RelicanthIR extends Relicanth {
-//   public setNumber = '173';
-//   public fullName: string = 'RelicanthIR TEF';
-// }
+export class RelicanthIR extends Relicanth {
+  public setNumber = '173';
+  public fullName: string = 'RelicanthIR TEF';
+}
 
 // export class ExcadrillIR extends Excadrill {
 //   public setNumber = '174';
@@ -195,7 +196,7 @@ export class BiancasDevotionFA extends BiancasDevotion {
   public fullName: string = 'BiancasDevotionFA TEF';
 }
 
-export class CryptomaniacsDecipheringFA extends CryptomaniacsDeciphering {
+export class CryptomaniacsDecipheringFA extends CiphermaniacsCodebreaking {
   public setNumber = '198';
   public fullName: string = 'CiphermaniacsCodebreakingFA TEF';
 }

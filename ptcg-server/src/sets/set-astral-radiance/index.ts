@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import {Absol} from './absol';
+import { Absol } from './absol';
 import { Adaman } from './adaman';
 import { Bronzor } from './bronzor';
 import { CancelingCologne } from './canceling-cologne';
@@ -35,7 +35,7 @@ import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
 import { Magneton } from './magneton';
-import {Magnezone} from './magnezone';
+import { Magnezone } from './magnezone';
 import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
@@ -46,6 +46,7 @@ import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { RadiantGreninja } from './radiant-greninja';
 import { RadiantHawlucha } from './radiant-hawlucha';
+import { RadiantHeatran } from './radiant-heatran';
 import { Ralts } from './ralts';
 import { Regice } from './regice';
 import { Regidrago } from './regidrago';
@@ -116,6 +117,7 @@ export const setAstralRadiance: Card[] = [
   new OriginFormePalkiaVSTAR(),
   new RadiantGreninja(),
   new RadiantHawlucha(),
+  new RadiantHeatran(),
   new Ralts(),
   new Regice(),
   new Regidrago(),

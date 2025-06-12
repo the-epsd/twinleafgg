@@ -16,17 +16,18 @@ export class Archen extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Prehistoric Call',
     powerType: PowerType.ABILITY,
+    useFromDiscard: true,
     text: 'Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put this Pokémon on the bottom of your deck.'
   }];
-  
+
   public attacks = [{
     name: 'Wing Attack',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 20,
     text: ''
   }];
@@ -45,7 +46,7 @@ export class Archen extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      
+
       // Check if card is in the discard
       if (!player.discard.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -53,7 +54,7 @@ export class Archen extends PokemonCard {
 
       const card = player.discard.cards.filter(c => c === this)[0];
       player.discard.moveCardTo(card, player.deck);
-      
+
       store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: this.name });
     }
 

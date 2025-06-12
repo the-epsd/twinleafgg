@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt, StateUtils, EnergyCard, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -12,6 +12,7 @@ export class Starmie extends PokemonCard {
   public hp: number = 90;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public attacks = [{
     name: 'Multishot Star',

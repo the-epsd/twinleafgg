@@ -24,7 +24,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
       text: 'Once per game during your turn, combine 4 different Mewtwo V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.VUNION_ASSEMBLY,
     },
     {
       name: 'Photon Barrier',
@@ -63,7 +63,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
   public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '308';
+  public setNumber: string = '159';
   public name: string = 'Mewtwo V-UNION';
   public fullName: string = 'Mewtwo V-UNION (Top Left) SWSH';
 
@@ -138,7 +138,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy') {
           psychicsInDiscard++;
         }
-      })
+      });
 
       if (psychicsInDiscard > 0) {
         const blocked: CardTarget[] = [];

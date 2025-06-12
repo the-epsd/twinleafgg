@@ -33,7 +33,7 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State, effect: 
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
     PlayerType.ANY,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { min: 1, max: max, allowCancel: true, blocked }
   ), results => {
     targets = results || [];
@@ -77,8 +77,8 @@ export class Purrloin extends PokemonCard {
   public fullName: string = 'Purrloin UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) { 
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useCleaningUp(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

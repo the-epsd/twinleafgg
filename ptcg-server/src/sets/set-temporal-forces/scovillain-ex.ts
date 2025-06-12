@@ -38,27 +38,26 @@ export class Scovillainex extends PokemonCard {
   public name: string = 'Scovillain ex';
   public fullName: string = 'Scovillain ex TEF';
 
-  public readonly SPICY_BIND_MARKER = 'SPICY_BIND_MARKER';
+  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
-      store.reduceEffect(state, specialConditionEffect);
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.SPICY_BIND_MARKER, this);
+
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
+      store.reduceEffect(state, specialConditionEffect);
+      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.SPICY_BIND_MARKER, this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.SPICY_BIND_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;

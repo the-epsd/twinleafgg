@@ -86,12 +86,12 @@ export class Typhlosion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
 
-  public readonly AFTERBURNER_MAREKER = 'DYNAMOTOR_MAREKER';
+  public readonly AFTERBURNER_MARKER = 'AFTERBURNER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.AFTERBURNER_MAREKER, this);
+      player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
       return state;
     }
 
@@ -114,7 +114,7 @@ export class Typhlosion extends PokemonCard {
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.AFTERBURNER_MAREKER, this)) {
+      if (player.marker.hasMarker(this.AFTERBURNER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -132,7 +132,7 @@ export class Typhlosion extends PokemonCard {
         if (transfers.length === 0) {
           return;
         }
-        player.marker.addMarker(this.AFTERBURNER_MAREKER, this);
+        player.marker.addMarker(this.AFTERBURNER_MARKER, this);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
@@ -142,7 +142,7 @@ export class Typhlosion extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.AFTERBURNER_MAREKER, this);
+      effect.player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
     }
 
     return state;

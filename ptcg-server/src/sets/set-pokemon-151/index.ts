@@ -10,6 +10,7 @@ import { Chansey } from './chansey';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { Cloyster } from './cloytser';
 import { CyclingRoad } from './cycling-road';
 import { Ditto } from './ditto';
 import { Dodrio } from './dodrio';
@@ -26,7 +27,7 @@ import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
 import { Golbat } from './golbat';
 import { Grabber } from './grabber';
-import { HitmonleeMEW } from './hitmonlee';
+import { Hitmonlee } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
 import { Jynxex } from './jynx-ex';
@@ -76,6 +77,7 @@ export const setPokemon151: Card[] = [
   new Charizardex(),
   new Charmeleon(),
   new Charmander(),
+  new Cloyster(),
   new CyclingRoad(),
   new Ditto(),
   new Dodrio(),
@@ -91,7 +93,7 @@ export const setPokemon151: Card[] = [
   new Gloom(),
   new Golbat(),
   new Grabber(),
-  new HitmonleeMEW(),
+  new Hitmonlee(),
   new Ivysaur(),
   new Jolteon(),
   new Kangaskhanex(),

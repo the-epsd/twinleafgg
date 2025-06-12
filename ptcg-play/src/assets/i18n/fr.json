@@ -129,6 +129,8 @@
   "GAMES_GAME_RULES": "Règles de jeu",
   "GAMES_LIMIT_10_MIN": "10 min",
   "GAMES_LIMIT_15_MIN": "15 min",
+  "GAMES_LIMIT_20_MIN": "20 min",
+  "GAMES_LIMIT_25_MIN": "25 min",
   "GAMES_LIMIT_30_MIN": "30 min",
   "GAMES_LIMIT_NO_LIMIT": "Aucune limite",
   "GAMES_NEED_DECK": "Vous devez préparer un deck valide avant de commencer une partie.",
@@ -334,6 +336,7 @@
   "VALIDATION_MAX_FILE_SIZE": "Taille maximale de fichier dépassée.",
   "VALIDATION_NAME_ALREADY_IN_USE": "Nom d'utilisateur déjà utilisé.",
   "VALIDATION_PASSWORD_MATCH": "Les mots de passe ne correspondent pas.",
+  "DECK_SET_AS_DEFAULT": "Définir par défaut",
   "GAME_MESSAGES": {
     "RETURN_TO_TOP_OF_DECK": "Voulez-vous placer cette carte sur le dessus de votre deck ?",
     "ORDER_OPPONENT_DECK": "Replacer les cartes de votre adversaire dans l'ordre de votre choix au dessus de son deck.",
@@ -544,5 +547,13 @@
     "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE": "{{name}} place {{card}} de sa main dans la Zone Perdue.",
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} soigne {{pokemon}} de {{healingAmount}}.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} a ajouté {{card}} à sa main depuis ses Cartes Récompense avec Hisuian Heavy Ball (Masse Ball de Hisui)."
-  }
+  },
+  "PROFILE_BAN_USER": "Bannir l'utilisateur",
+  "PROFILE_BAN_SUCCESS": "L'utilisateur a été banni avec succès",
+  "PROFILE_BAN_ERROR": "Erreur lors du bannissement de l'utilisateur",
+  "SOCKET_DISCONNECTED": "Déconnecté du serveur",
+  "SOCKET_RECONNECTING": "Reconnexion... (Essai {attempt})",
+  "SOCKET_RECONNECT_ATTEMPT": "Essai de reconnexion {attempt}",
+  "SOCKET_RECONNECTED": "Reconnecté avec succès",
+  "SOCKET_RECONNECT_FAILED": "Échec de la reconnexion au serveur"
 }

@@ -37,12 +37,10 @@ export class SocketClient implements Client {
   }
 
   public onConnect(client: Client): void {
-    console.log(`Client connected - ID: ${client.id}, Name: ${client.name}`);
     this.coreSocket.onConnect(client);
   }
 
   public onDisconnect(client: Client): void {
-    console.log(`Client disconnected - ID: ${client.id}, Name: ${client.name}`);
     this.coreSocket.onDisconnect(client);
   }
 
@@ -75,7 +73,7 @@ export class SocketClient implements Client {
     this.matchmakingSocket.onJoinQueue(from, message);
   }
 
-  public onLeaveQueue(client: Client): void {
+  public onLeaveQueue(): void {
     this.matchmakingSocket.onLeaveQueue();
   }
 
@@ -87,8 +85,18 @@ export class SocketClient implements Client {
     this.messageSocket.onMessageRead(user);
   }
 
+  public onTimerUpdate(game: Game, playerStats: any[]): void {
+    this.gameSocket.onTimerUpdate(game, playerStats);
+  }
+
   public attachListeners(): void {
     this.socket.attachListeners();
   }
 
+  public dispose(): void {
+    this.coreSocket.dispose();
+    this.gameSocket.dispose();
+    this.messageSocket.dispose();
+    this.matchmakingSocket.dispose();
+  }
 }

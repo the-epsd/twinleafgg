@@ -77,17 +77,14 @@ export class MewVMAX extends PokemonCard {
     name: 'Cross Fusion Strike',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
-    text: 'This Pokemon can use the attacks of any Pokemon in play ' +
-      '(both yours and your opponent\'s). (You still need the necessary ' +
-      'Energy to use each attack.)'
+    text: 'Choose 1 of your Benched Fusion Strike Pokémon\'s attacks and use it as this attack.'
   },
   {
     name: 'Max Miracle',
     cost: [CardType.PSYCHIC, CardType.PSYCHIC],
     damage: 130,
     shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your ' +
-      'opponent\'s Active Pokémon.'
+    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }
   ];
 
@@ -108,10 +105,7 @@ export class MewVMAX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 130);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 130);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

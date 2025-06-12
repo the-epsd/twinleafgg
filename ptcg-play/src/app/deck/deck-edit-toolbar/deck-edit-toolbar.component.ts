@@ -6,7 +6,7 @@ import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, Archetype } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
@@ -35,6 +35,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
   @Output() export = new EventEmitter<void>();
 
   @Output() clearDeck = new EventEmitter<void>();
+
+  @Output() deckChange = new EventEmitter<Deck>();
 
   @Input() selected: CardType[] = [];
 
@@ -77,6 +79,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
@@ -95,23 +98,40 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   public cardTags = [
     { value: CardTag.POKEMON_ex, label: 'Pokémon ex' },
-    { value: CardTag.POKEMON_V, label: 'Pokémon V' },
-    { value: CardTag.POKEMON_VMAX, label: 'Pokémon VMAX' },
-    { value: CardTag.POKEMON_VSTAR, label: 'Pokémon VSTAR' },
-    { value: CardTag.POKEMON_TERA, label: 'Pokémon Terastal' },
-    { value: CardTag.RADIANT, label: 'Radiant' },
+    { value: CardTag.POKEMON_TERA, label: 'Tera Pokémon' },
     { value: CardTag.FUTURE, label: 'Future' },
     { value: CardTag.ANCIENT, label: 'Ancient' },
+    { value: CardTag.ACE_SPEC, label: 'ACE SPEC' },
+    { value: CardTag.POKEMON_V, label: 'Pokémon V' },
+    { value: CardTag.POKEMON_VSTAR, label: 'Pokémon VSTAR' },
+    { value: CardTag.POKEMON_VMAX, label: 'Pokémon VMAX' },
+    { value: CardTag.POKEMON_VUNION, label: 'Pokémon V-UNION' },
+    { value: CardTag.RADIANT, label: 'Radiant' },
     { value: CardTag.SINGLE_STRIKE, label: 'Single Strike' },
     { value: CardTag.RAPID_STRIKE, label: 'Rapid Strike' },
     { value: CardTag.FUSION_STRIKE, label: 'Fusion Strike' },
-    { value: CardTag.POKEMON_GX, label: 'Pokémon GX' },
+    { value: CardTag.POKEMON_GX, label: 'Pokémon-GX' },
     { value: CardTag.TAG_TEAM, label: 'Tag Team' },
     { value: CardTag.ULTRA_BEAST, label: 'Ultra Beast' },
-    { value: CardTag.POKEMON_EX, label: 'Pokémon EX' },
+    { value: CardTag.PRISM_STAR, label: 'Prism Star' },
+    { value: CardTag.POKEMON_EX, label: 'Pokémon-EX' },
+    { value: CardTag.BREAK, label: 'Pokémon BREAK' },
+    { value: CardTag.MEGA, label: 'Mega Pokémon' },
     { value: CardTag.TEAM_PLASMA, label: 'Team Plasma' },
+    { value: CardTag.TEAM_MAGMA, label: 'Team Magma' },
+    { value: CardTag.NS, label: 'N\'s Pokémon' },
+    { value: CardTag.IONOS, label: 'Iono\'s Pokémon' },
+    { value: CardTag.HOPS, label: 'Hop\'s Pokémon' },
+    { value: CardTag.LILLIES, label: 'Lillie\'s Pokémon' },
+    { value: CardTag.STEVENS, label: 'Steven\'s Pokémon' },
+    { value: CardTag.MARNIES, label: 'Marnie\'s Pokémon' },
+    { value: CardTag.ETHANS, label: 'Ethan\'s Pokémon' },
+    { value: CardTag.MISTYS, label: 'Misty\'s Pokémon' },
+    { value: CardTag.PRIME, label: 'Pokémon Prime' },
+    { value: CardTag.LEGEND, label: 'Pokémon LEGEND' },
     { value: CardTag.POKEMON_LV_X, label: 'Pokémon LV.X' },
     { value: CardTag.POKEMON_SP, label: 'Pokémon SP' },
+    { value: CardTag.DELTA_SPECIES, label: 'Delta Species' },
   ];
 
   public attackCost = [
@@ -294,6 +314,33 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   public exportToFile() {
     this.export.next();
+  }
+
+  public archetypes = Object.values(Archetype)
+    .filter(value => typeof value === 'string')
+    .map(value => ({
+      value: value as Archetype,
+      label: value.toString().toLowerCase().replace(/_/g, ' ')
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+
+  public filteredArchetypes = this.archetypes;
+
+  public onArchetypeSearch(searchText: string) {
+    if (!searchText) {
+      this.filteredArchetypes = this.archetypes;
+      return;
+    }
+    const searchLower = searchText.toLowerCase();
+    this.filteredArchetypes = this.archetypes.filter(archetype =>
+      archetype.label.includes(searchLower)
+    );
+  }
+
+  public onArchetypeChange(archetype1: Archetype | null, archetype2: Archetype | null) {
+    this.deck.manualArchetype1 = archetype1;
+    this.deck.manualArchetype2 = archetype2;
+    this.deckChange.emit(this.deck);
   }
 
 }

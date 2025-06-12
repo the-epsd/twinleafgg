@@ -14,6 +14,7 @@ import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 export class GardevoirGX extends PokemonCard {
@@ -144,16 +145,11 @@ export class GardevoirGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
+
+      BLOCK_IF_DISCARD_EMPTY(player);
       // set GX attack as used for game
       player.usedGX = true;
-
-      // Player does not have correct cards in discard
-      if (player.discard.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
 
       let cards: Card[] = [];
       state = store.prompt(state, new ChooseCardsPrompt(

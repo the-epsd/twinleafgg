@@ -49,7 +49,7 @@ export class Hoothoot extends PokemonCard {
       ], results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
-        effect.damage += 10 * heads;
+        effect.damage = 10 * heads;
       });
     }
     return state;
