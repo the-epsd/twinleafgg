@@ -2,17 +2,18 @@ import { Card, GameError, GameMessage, PlayerType, StateUtils } from '../../game
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class SplashEnergy extends EnergyCard {
 
-  public provides: CardType[] = [CardType.COLORLESS];
+  public provides: CardType[] = [];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -28,9 +29,9 @@ export class SplashEnergy extends EnergyCard {
 
   public text =
     'This card can only be attached to [W] Pokémon. This card provides [W] Energy only while this card is attached to a [W] Pokémon.' +
-    '' +
+    '\n\n' +
     'If the [W] Pokémon this card is attached to is Knocked Out by damage from an opponent\'s attack, put that Pokémon into your hand. (Discard all cards attached to it.)' +
-    '' +
+    '\n\n' +
     '(If this card is attached to anything other than a [W] Pokémon, discard this card.)';
 
   public damageDealt = false;
@@ -39,6 +40,17 @@ export class SplashEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // Provide energy when attached to Water Pokemon
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
+      store.reduceEffect(state, checkPokemonType);
+
+      if (checkPokemonType.cardTypes.includes(CardType.WATER)) {
+        effect.energyMap.push({ card: this, provides: [CardType.WATER] });
+      }
+    }
+
+    // Prevent attaching to non Water Pokemon
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
@@ -48,6 +60,24 @@ export class SplashEnergy extends EnergyCard {
       }
     }
 
+    // Discard card when not attached to Water Pokemon
+    if (effect instanceof CheckTableStateEffect) {
+      state.players.forEach(player => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (!cardList.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)) {
+            return;
+          }
+
+          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+          store.reduceEffect(state, checkPokemonType);
+          if (!checkPokemonType.cardTypes.includes(CardType.WATER)) {
+            cardList.moveCardTo(this, player.discard);
+          }
+        });
+      });
+    }
+
+    // Update tracker for whether a knockout was from direct damage or not
     if (effect instanceof AttackEffect && effect.target?.cards?.includes(this)) {
       this.damageDealt = false;
     }
@@ -66,38 +96,19 @@ export class SplashEnergy extends EnergyCard {
       }
     }
 
-    // Discard card when not attached to Water Pokemon
-    if (effect instanceof AttachEnergyEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
-            return;
-          }
-          const pokemon = cardList;
-          if (pokemon.getPokemonCard()?.cardType !== CardType.WATER) {
-            cardList.moveCardTo(this, player.discard);
-          }
-        });
-      });
-      return state;
-    }
-
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      effect.energyMap.push({ card: this, provides: [CardType.WATER] });
-      return state;
-    }
-
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && this.damageDealt) {
       const player = effect.player;
+      const target = effect.target;
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
 
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
+        return state;
+      }
 
-
-      const target = effect.target;
       const cards = target.getPokemons();
       cards.forEach(card => {
         player.marker.addMarker(this.SPLASH_ENERGY_MARKER, card);

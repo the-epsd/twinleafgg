@@ -19,6 +19,7 @@ import { Girafarig } from './girafarig';
 import { Giratina } from './giratina';
 import { Granbull } from './granbull';
 import { Grovyle } from './grovyle';
+import { HeatFactoryPrismStar } from './heat-factory-prism-star';
 import { Heracross } from './heracross';
 import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
@@ -78,6 +79,7 @@ export const setLostThunder: Card[] = [
   new Giratina(),
   new Granbull(),
   new Grovyle(),
+  new HeatFactoryPrismStar(),
   new Heracross(),
   new Hoppip(),
   new Jumpluff(),

@@ -77,6 +77,7 @@ import { Scizorex } from './scizor-ex';
 import { Scovillainex } from './scovillain-ex';
 import { Scyther } from './scyther';
 import { Skitty } from './skitty';
+import { Slugma } from './slugma';
 import { Solosis } from './solosis';
 import { Torracat } from './torracat';
 import { Torterraex } from './torterra-ex';
@@ -164,6 +165,7 @@ export const setTemporalForces: Card[] = [
   new SandyShocks(),
   new Scovillainex(),
   new Skitty(),
+  new Slugma(),
   new Solosis(),
   new Torracat(),
   new Torterraex(),

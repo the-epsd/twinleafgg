@@ -70,7 +70,7 @@ export class Magnemite extends PokemonCard {
       if (pokemonCard) {
         const magnemiteCount = player.bench.reduce((count, benchCard) => {
           const benchPokemon = benchCard.getPokemonCard();
-          return benchPokemon && benchPokemon.fullName === this.name ? count + 1 : count;
+          return benchPokemon && benchPokemon.name === this.name ? count + 1 : count;
         }, 0);
 
         for (let i = 0; i < magnemiteCount; i++) {

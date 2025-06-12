@@ -20,7 +20,7 @@ import { AreaZeroUnderdepths } from '../set-stellar-crown/area-zero-underdepths'
 import { Briar } from '../set-stellar-crown/briar';
 import { Crispin } from '../set-stellar-crown/crispin';
 import { Duraludon } from '../set-stellar-crown/duraludon';
-import { Eevee } from '../set-stellar-crown/eevee';
+import { Eevee } from '../set-surging-sparks/eevee';
 import { FanRotom } from '../set-stellar-crown/fan-rotom';
 import { GlassTrumpet } from '../set-stellar-crown/glass-trumpet';
 import { Hydrappleex } from '../set-stellar-crown/hydrapple-ex';
@@ -169,7 +169,7 @@ export class IronBoulderPRE extends IronBoulder {
 
 export class GroudonPRE extends Groudon {
   public set = 'PRE';
-  public setNumber = '47';
+  public setNumber = '49';
   public fullName = 'Groudon PRE';
 }
 

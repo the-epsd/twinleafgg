@@ -32,7 +32,7 @@ export class PokemonReversal extends TrainerCard {
       ), flipResult => {
         if (flipResult) {
           store.prompt(state, new ChoosePokemonPrompt(
-            opponent.id,
+            player.id,
             GameMessage.CHOOSE_POKEMON_TO_SWITCH,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH],

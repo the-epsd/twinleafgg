@@ -24,7 +24,9 @@ export class SuperBoostEnergy extends EnergyCard {
   public fullName = 'Super Boost Energy UPR';
 
   public text =
-    'This card provides [C] Energy.\nWhile this card is attached to a Stage 2 Pokémon, it provides every type of Energy but provides only 1 Energy at a time. If you have 3 or more Stage 2 Pokémon in play, it provides every type of Energy but provides 4 Energy at a time.';
+    'This card provides [C] Energy.' +
+    '\n\n' +
+    'While this card is attached to a Stage 2 Pokémon, it provides every type of Energy but provides only 1 Energy at a time. If you have 3 or more Stage 2 Pokémon in play, it provides every type of Energy but provides 4 Energy at a time.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

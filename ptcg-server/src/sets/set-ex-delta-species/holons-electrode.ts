@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, EnergyCard, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
+import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -52,7 +52,10 @@ export class HolonsElectrode extends PokemonCard {
       let isEnergyOnBench = false;
       let isEnergyOnActive = false;
 
-      const activeEnergyCount = player.active.cards.filter(card => card instanceof EnergyCard).length;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+      const activeEnergyCount = checkProvidedEnergy.energyMap.length;
+
       if (activeEnergyCount > 0) { isEnergyOnActive = true; }
 
       const blockedTo: CardTarget[] = [];
@@ -70,9 +73,11 @@ export class HolonsElectrode extends PokemonCard {
           return;
         }
 
-        const basicEnergyCount = bench.cards.filter(card => card instanceof EnergyCard).length;
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, bench);
+        state = store.reduceEffect(state, checkProvidedEnergy);
+        const energyCount = checkProvidedEnergy.energyMap.length;
 
-        if (basicEnergyCount > 0) {
+        if (energyCount > 0) {
           isEnergyOnBench = true;
         } else {
           const target: CardTarget = {

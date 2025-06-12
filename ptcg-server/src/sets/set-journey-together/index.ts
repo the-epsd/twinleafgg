@@ -61,7 +61,7 @@ import { NsReshiram } from './ns-reshiram';
 import { NsSigilyph } from './ns-sigilyph';
 import { NsZoroarkex } from './ns-zoroark-ex';
 import { NsZorua } from './ns-zorua';
-import { BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
+import { BlackBeltsTrainingJTG, BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, ProfessorsResearchJTG, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
 import { Petilil } from './petilil';
 import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
@@ -76,6 +76,7 @@ import { SpikyEnergy } from './spiky-energy';
 import { Sprigatito } from './sprigatito';
 import { Swinub } from './swinub';
 import { TapuKokoex } from './tapu-koko-ex';
+import { Toedscool } from './toedscool';
 import { Torchic } from './torchic';
 import { Tyranitar } from './tyranitar';
 import { Volcanionex } from './volcanion-ex';
@@ -109,6 +110,7 @@ export const setJourneyTogether: Card[] = [
   new Banette(),
   new Volcanionex(),
   new Sprigatito(),
+  new Toedscool(),
   new Floragato(),
   new Meowscarada(),
   new IrisFightingSpirit(),
@@ -130,7 +132,6 @@ export const setJourneyTogether: Card[] = [
   new Lombre(),
   new Ludicolo(),
   new Petilil(),
-  new Lilligant(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),
@@ -202,4 +203,7 @@ export const setJourneyTogether: Card[] = [
   new IonosBelliboltexUR(),
   new NsZoroarkexUR(),
   new SpikeEnergyUR(),
+
+  new ProfessorsResearchJTG(),
+  new BlackBeltsTrainingJTG(),
 ];

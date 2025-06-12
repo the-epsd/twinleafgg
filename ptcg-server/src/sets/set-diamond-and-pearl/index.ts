@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy } from './basic-energies';
 import { Cleffa } from './cleffa';
 import { Meditite } from './meditite';
 import { PokedexHandy } from './pokedex-handy';
@@ -13,4 +14,14 @@ export const setDiamondAndPearl: Card[] = [
   new SpeedStadium(),
   new SuperScoopUp(),
   new Wynaut(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
 ];

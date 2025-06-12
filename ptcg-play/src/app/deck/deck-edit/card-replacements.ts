@@ -1,7 +1,8 @@
 export const setCodeReplacements = [
   { from: 'PR-SH', to: 'SWSH' },
   { from: 'SP', to: 'SWSH' },
-  { from: 'PR-SW', to: 'SWSH' }
+  { from: 'PR-SW', to: 'SWSH' },
+  { from: 'PR-SV', to: 'SVP' },
 ];
 
 export const cardReplacements = [
@@ -609,15 +610,93 @@ export const cardReplacements = [
   { from: 'N\'s Zoroark ex JTG 189', to: 'N\'s Zoroark exUR JTG 189' },
   { from: 'Spiky Energy JTG 190', to: 'Spike EnergyUR JTG 190' },
 
-  //SVOM
-  { from: 'Marnie\'s Morpeko SVOM 20', to: 'Marnie\'s MorpekoIR SVOM 20' },
+  //DRI
+  { from: 'Steven\'s Beldum DRI 19', to: 'Steven\'s BeldumIR DRI 19' },
+  { from: 'Marnie\'s Morpeko DRI 20', to: 'Marnie\'s MorpekoIR DRI 20' },
+  { from: 'Ethan\'s Ho-Oh ex DRI 239', to: 'Ethan\'s Ho-Oh exSIR DRI 239' },
+  { from: 'Cynthia\'s Roserade DRI 184', to: 'Cynthia\'s RoseradeIR DRI 184' },
 
-  //SVOD
-  { from: 'Steven\'s Beldum SVOD 19', to: 'Steven\'s BeldumIR SVOD 19' },
+  //SV11B ARs
+  { from: 'Snivy SV11B 87', to: 'SnivyAR SV11B 87' },
+  { from: 'Servine SV11B 88', to: 'ServineAR SV11B 88' },
+  { from: 'Victini SV11B 97', to: 'VictiniAR SV11B 97' },
+  { from: 'Larvesta SV11B 103', to: 'LarvestaAR SV11B 103' },
+  { from: 'Volcarona SV11B 104', to: 'VolcaronaAR SV11B 104' },
+  { from: 'Tympole SV11B 107', to: 'TympoleAR SV11B 107' },
+  { from: 'Palpitoad SV11B 108', to: 'PalpitoadAR SV11B 108' },
+  { from: 'Seismitoad SV11B 109', to: 'SeismitoadAR SV11B 109' },
+  { from: 'Tirtouga SV11B 110', to: 'TirtougaAR SV11B 110' },
+  { from: 'Carracosta SV11B 111', to: 'CarracostaAR SV11B 111' },
+  { from: 'Alomomola SV11B 112', to: 'AlomomolaAR SV11B 112' },
+  { from: 'Emolga SV11B 113', to: 'EmolgaAR SV11B 113' },
+  { from: 'Tynamo SV11B 117', to: 'TynamoAR SV11B 117' },
+  { from: 'Eelektrik SV11B 118', to: 'EelektrikAR SV11B 118' },
+  { from: 'Drillbur SV11B 130', to: 'DrillburAR SV11B 130' },
+  { from: 'Cobalion SV11B 149', to: 'CobalionAR SV11B 149' },
+  { from: 'Axew SV11B 150', to: 'AxewAR SV11B 150' },
+  { from: 'Fraxure SV11B 151', to: 'FraxureAR SV11B 151' },
+  { from: 'Haxorus SV11B 152', to: 'HaxorusAR SV11B 152' },
+  //SV11B FAs
+  { from: 'Serperior ex SV11B 159', to: 'Serperior exFA SV11B 159' },
+  { from: 'Kyurem ex SV11B 160', to: 'Kyurem exFA SV11B 160' },
+  { from: 'Zekrom ex SV11B 161', to: 'Zekrom exFA SV11B 161' },
+  { from: 'Meloetta ex SV11B 162', to: 'Meloetta exFA SV11B 162' },
+  { from: 'Excadrill ex SV11B 163', to: 'Excadrill exFA SV11B 163' },
+  { from: 'Genesect ex SV11B 164', to: 'Genesect exFA SV11B 164' },
+  { from: 'N\'s Plot SV11B 165', to: 'N\'s PlotFA SV11B 165' },
+  { from: 'Fennel SV11B 166', to: 'FennelFA SV11B 166' },
+  //SV11B SIRs
+  { from: 'Serperior ex SV11B 167', to: 'Serperior exSIR SV11B 167' },
+  { from: 'Kyurem ex SV11B 168', to: 'Kyurem exSIR SV11B 168' },
+  { from: 'Zekrom ex SV11B 169', to: 'Zekrom exSIR SV11B 169' },
+  { from: 'Meloetta ex SV11B 170', to: 'Meloetta exSIR SV11B 170' },
+  { from: 'Excadrill ex SV11B 171', to: 'Excadrill exSIR SV11B 171' },
+  { from: 'Genesect ex SV11B 172', to: 'Genesect exSIR SV11B 172' },
+  { from: 'N\'s Plot SV11B 173', to: 'NsPlotSIR SV11B 173' },
+  //SV11B BRs
+  { from: 'Zekrom ex SV11B 174', to: 'Zekrom exBR SV11B 174' },
 
-  //SV9a
-  { from: 'Ethan\'s Ho-Oh ex SV9a 86', to: 'Ethan\'s Ho-Oh exSIR SV9a 86' },
-  { from: 'Cynthia\'s Roserade SV9a 65', to: 'Cynthia\'s RoseradeIR SV9a 65' },
+  //SV11W ARs
+  { from: 'Cottonee SV11W 90', to: 'CottoneeAR SV11W 90' },
+  { from: 'Virizion SV11W 95', to: 'VirizionAR SV11W 95' },
+  { from: 'Tepig SV11W 96', to: 'TepigAR SV11W 96' },
+  { from: 'Pignite SV11W 97', to: 'PigniteAR SV11W 97' },
+  { from: 'Emboar SV11W 98', to: 'EmboarAR SV11W 98' },
+  { from: 'Oshawott SV11W 102', to: 'OshawottAR SV11W 102' },
+  { from: 'Dewott SV11W 103', to: 'DewottAR SV11W 103' },
+  { from: 'Samurott SV11W 104', to: 'SamurottAR SV11W 104' },
+  { from: 'Frillish SV11W 100', to: 'FrillishAR SV11W 100' },
+  { from: 'Joltik SV11W 113', to: 'JoltikAR SV11W 113' },
+  { from: 'Galvantula SV11W 114', to: 'GalvantulaAR SV11W 114' },
+  { from: 'Frillish SV11W 124', to: 'FrillishAR SV11W 124' },
+  { from: 'Archen SV11W 129', to: 'ArchenAR SV11W 129' },
+  { from: 'Archeops SV11W 130', to: 'ArcheopsAR SV11W 130' },
+  { from: 'Terrakion SV11W 133', to: 'TerrakionAR SV11W 133' },
+  { from: 'Zorua SV11W 140', to: 'ZoruaAR SV11W 140' },
+  { from: 'Zoroark SV11W 141', to: 'ZoroarkAR SV11W 141' },
+  { from: 'Deino SV11W 142', to: 'DeinoAR SV11W 142' },
+  { from: 'Zweilous SV11W 143', to: 'ZweilousAR SV11W 143' },
+
+  //SV11W FAs
+  { from: 'Whimsicott ex SV11W 159', to: 'Whimsicott exFA SV11W 159' },
+  { from: 'Reshiram ex SV11W 160', to: 'Reshiram exFA SV11W 160' },
+  { from: 'Keldeo ex SV11W 161', to: 'Keldeo exFA SV11W 161' },
+  { from: 'Jellicent ex SV11W 162', to: 'Jellicent exFA SV11W 162' },
+  { from: 'Hydreigon ex SV11W 163', to: 'Hydreigon exFA SV11W 163' },
+  { from: 'Bouffalant ex SV11W 164', to: 'Bouffalant exFA SV11W 164' },
+  { from: 'Hilda SV11W 166', to: 'HildaFA SV11W 166' },
+
+  //SV11W SIRs
+  { from: 'Whimsicott ex SV11W 167', to: 'Whimsicott exSIR SV11W 167' },
+  { from: 'Reshiram ex SV11W 168', to: 'Reshiram exSIR SV11W 168' },
+  { from: 'Keldeo ex SV11W 169', to: 'Keldeo exSIR SV11W 169' },
+  { from: 'Jellicent ex SV11W 170', to: 'Jellicent exSIR SV11W 170' },
+  { from: 'Hydreigon ex SV11W 171', to: 'Hydreigon exSIR SV11W 171' },
+  { from: 'Bouffalant ex SV11W 172', to: 'Bouffalant exSIR SV11W 172' },
+  { from: 'Hilda SV11W 173', to: 'HildaSIR SV11W 173' },
+
+  //SV11W White Rare
+  { from: 'Reshiram ex SV11W 174', to: 'Reshiram exWR SV11W 174' },
 ];
 
 export const exportReplacements = [
@@ -1120,13 +1199,91 @@ export const exportReplacements = [
   { from: 'N\'s Zoroark exUR JTG 189', to: 'N\'s Zoroark ex JTG 189' },
   { from: 'Spike EnergyUR JTG 190', to: 'Spike Energy JTG 190' },
 
-  //SVOM
-  { from: 'Marnie\'s MorpekoIR SVOM 20', to: 'Marnie\'s Morpeko SVOM 20' },
+  //DRI
+  { from: 'Marnie\'s MorpekoIR DRI 20', to: 'Marnie\'s Morpeko DRI 20' },
+  { from: 'Steven\'s BeldumIR DRI 19', to: 'Steven\'s Beldum DRI 19' },
+  { from: 'Ethan\'s Ho-Oh exSIR DRI 86', to: 'Ethan\'s Ho-Oh ex DRI 86' },
+  { from: 'Cynthia\'s RoseradeIR DRI 65', to: 'Cynthia\'s Roserade DRI 65' },
 
-  //SVOD
-  { from: 'Steven\'s BeldumIR SVOD 19', to: 'Steven\'s Beldum SVOD 19' },
+  //SV11B ARs
+  { from: 'SnivyAR SV11B 87', to: 'Snivy SV11B 87' },
+  { from: 'ServineAR SV11B 88', to: 'Servine SV11B 88' },
+  { from: 'VictiniAR SV11B 97', to: 'Victini SV11B 97' },
+  { from: 'LarvestaAR SV11B 103', to: 'Larvesta SV11B 103' },
+  { from: 'VolcaronaAR SV11B 104', to: 'Volcarona SV11B 104' },
+  { from: 'TympoleAR SV11B 107', to: 'Tympole SV11B 107' },
+  { from: 'PalpitoadAR SV11B 108', to: 'Palpitoad SV11B 108' },
+  { from: 'SeismitoadAR SV11B 109', to: 'Seismitoad SV11B 109' },
+  { from: 'TirtougaAR SV11B 110', to: 'Tirtouga SV11B 110' },
+  { from: 'CarracostaAR SV11B 111', to: 'Carracosta SV11B 111' },
+  { from: 'AlomomolaAR SV11B 112', to: 'Alomomola SV11B 112' },
+  { from: 'EmolgaAR SV11B 113', to: 'Emolga SV11B 113' },
+  { from: 'TynamoAR SV11B 117', to: 'Tynamo SV11B 117' },
+  { from: 'EelektrikAR SV11B 118', to: 'Eelektrik SV11B 118' },
+  { from: 'DrillburAR SV11B 130', to: 'Drillbur SV11B 130' },
+  { from: 'CobalionAR SV11B 149', to: 'Cobalion SV11B 149' },
+  { from: 'AxewAR SV11B 150', to: 'Axew SV11B 150' },
+  { from: 'FraxureAR SV11B 151', to: 'Fraxure SV11B 151' },
+  { from: 'HaxorusAR SV11B 152', to: 'Haxorus SV11B 152' },
+  //SV11B FAs
+  { from: 'SerperiorexFA SV11B 159', to: 'Serperiorex SV11B 159' },
+  { from: 'KyuremexFA SV11B 160', to: 'Kyuremex SV11B 160' },
+  { from: 'ZekromexFA SV11B 161', to: 'Zekromex SV11B 161' },
+  { from: 'MeloettaexFA SV11B 162', to: 'Meloettaex SV11B 162' },
+  { from: 'ExcadrillexFA SV11B 163', to: 'Excadrillex SV11B 163' },
+  { from: 'GenesectexFA SV11B 164', to: 'Genesectex SV11B 164' },
+  { from: 'NsPlotFA SV11B 165', to: 'NsPlot SV11B 165' },
+  { from: 'FennelFA SV11B 166', to: 'Fennel SV11B 166' },
+  //SV11B SIRs
+  { from: 'SerperiorexSIR SV11B 167', to: 'Serperior ex SV11B 167' },
+  { from: 'KyuremexSIR SV11B 168', to: 'Kyurem ex SV11B 168' },
+  { from: 'ZekromexSIR SV11B 169', to: 'Zekrom ex SV11B 169' },
+  { from: 'MeloettaexSIR SV11B 170', to: 'Meloetta ex SV11B 170' },
+  { from: 'ExcadrillexSIR SV11B 171', to: 'Excadrill ex SV11B 171' },
+  { from: 'GenesectexSIR SV11B 172', to: 'Genesect ex SV11B 172' },
+  { from: 'NsPlotSIR SV11B 173', to: 'NsPlot SV11B 173' },
+  //SV11B BRs
+  { from: 'ZekromexBR SV11B 174', to: 'Zekrom ex SV11B 174' },
 
-  //SV9a
-  { from: 'Ethan\'s Ho-Oh exSIR SV9a 86', to: 'Ethan\'s Ho-Oh ex SV9a 86' },
-  { from: 'Cynthia\'s RoseradeIR SV9a 65', to: 'Cynthia\'s Roserade SV9a 65' },
+  //SV11W ARs
+  { from: 'CottoneeAR SV11W 90', to: 'Cottonee SV11W 90' },
+  { from: 'VirizionAR SV11W 95', to: 'Virizion SV11W 95' },
+  { from: 'TepigAR SV11W 96', to: 'Tepig SV11W 96' },
+  { from: 'PigniteAR SV11W 97', to: 'Pignite SV11W 97' },
+  { from: 'EmboarAR SV11W 98', to: 'Emboar SV11W 98' },
+  { from: 'OshawottAR SV11W 102', to: 'Oshawott SV11W 102' },
+  { from: 'DewottAR SV11W 103', to: 'Dewott SV11W 103' },
+  { from: 'SamurottAR SV11W 104', to: 'Samurott SV11W 104' },
+  { from: 'FrillishAR SV11W 100', to: 'Frillish SV11W 100' },
+  { from: 'JoltikAR SV11W 113', to: 'Joltik SV11W 113' },
+  { from: 'GalvantulaAR SV11W 114', to: 'Galvantula SV11W 114' },
+  { from: 'FrillishAR SV11W 124', to: 'Frillish SV11W 124' },
+  { from: 'ArchenAR SV11W 129', to: 'Archen SV11W 129' },
+  { from: 'ArcheopsAR SV11W 130', to: 'Archeops SV11W 130' },
+  { from: 'TerrakionAR SV11W 133', to: 'Terrakion SV11W 133' },
+  { from: 'ZoruaAR SV11W 140', to: 'Zorua SV11W 140' },
+  { from: 'ZoroarkAR SV11W 141', to: 'Zoroark SV11W 141' },
+  { from: 'DeinoAR SV11W 142', to: 'Deino SV11W 142' },
+  { from: 'ZweilousAR SV11W 143', to: 'Zweilous SV11W 143' },
+
+  //SV11W FAs
+  { from: 'WhimsicottexFA SV11W 159', to: 'Whimsicott ex SV11W 159' },
+  { from: 'Reshiram exFA SV11W 160', to: 'Reshiram ex SV11W 160' },
+  { from: 'Keldeo exFA SV11W 161', to: 'Keldeo ex SV11W 161' },
+  { from: 'Jellicent exFA SV11W 162', to: 'Jellicent ex SV11W 162' },
+  { from: 'Hydreigon exFA SV11W 163', to: 'Hydreigon ex SV11W 163' },
+  { from: 'Bouffalant exFA SV11W 164', to: 'Bouffalant ex SV11W 164' },
+  { from: 'HildaFA SV11W 166', to: 'Hilda SV11W 166' },
+
+  //SV11W SIRs
+  { from: 'WhimsicottexSIR SV11W 167', to: 'Whimsicott ex SV11W 167' },
+  { from: 'Reshiram exSIR SV11W 168', to: 'Reshiram ex SV11W 168' },
+  { from: 'Keldeo exSIR SV11W 169', to: 'Keldeo ex SV11W 169' },
+  { from: 'Jellicent exSIR SV11W 170', to: 'Jellicent ex SV11W 170' },
+  { from: 'Hydreigon exSIR SV11W 171', to: 'Hydreigon ex SV11W 171' },
+  { from: 'Bouffalant exSIR SV11W 172', to: 'Bouffalant ex SV11W 172' },
+  { from: 'HildaSIR SV11W 173', to: 'Hilda SV11W 173' },
+
+  //SV11W White Rare
+  { from: 'ReshiramexWR SV11W 174', to: 'Reshiram ex SV11W 174' },
 ];

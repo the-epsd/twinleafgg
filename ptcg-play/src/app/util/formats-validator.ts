@@ -54,8 +54,8 @@ export class FormatValidator {
       const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
       const arceusCount = cards.filter(card => card.name === 'Arceus').length;
 
-      if (arceusCount !== arceusCount && arceusCount > 4){
-        return formatList.filter(f => 
+      if (arceusCount !== arceusCount && arceusCount > 4) {
+        return formatList.filter(f =>
           f !== Format.GLC &&
           f !== Format.EXPANDED &&
           f !== Format.STANDARD &&
@@ -102,53 +102,154 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
-    const formats = [Format.UNLIMITED];
+    // List of cards where any printing is legal in any format where the card is legal
+    const anyPrintingAllowed = [
+      'Pokémon Fan Club',
+      'Master Ball',
+      'Quick Ball',
+      'Crushing Hammer',
+      'Energy Search',
+      'Energy Switch',
+      'Exp. Share',
+      'Judge',
+      'Nest Ball',
+      'Pal Pad',
+      'Poké Ball',
+      'Pokégear 3.0',
+      'Pokémon Catcher',
+      'Potion',
+      "Professor's Research",
+      'Rare Candy',
+      'Rocky Helmet',
+      'Switch',
+      'Ultra Ball',
+      'Vitality Band',
+      "Boss's Orders",
+      'Choice Belt',
+      'Great Ball',
+      'Super Rod',
+      'Superior Energy Retrieval',
+      'Leftovers',
+      'Counter Catcher',
+      'Cook',
+      'Enhanced Hammer',
+      'Lucky Helmet',
+      'Counter Gain',
+      'Dusk Ball',
+      'Super Potion',
+      'Energy Recycler',
+      'Sacred Ash',
+      'Air Balloon',
+      'Prism Energy',
+      'Energy Retrieval',
+      'Tool Scrapper',
+      'Cheren',
+    ];
 
+    const formats = [Format.UNLIMITED];
     [
       Format.GLC,
       Format.EXPANDED,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
+      Format.RSPK,
       Format.RETRO
     ].forEach(format => {
-      this.isValid(card, format) ? formats.push(format) : null;
+      this.isValid(card, format, anyPrintingAllowed) ? formats.push(format) : null;
     });
 
     return formats;
   }
 
-  static isValid(card: Card, format: Format): boolean {
-
+  static isValid(card: Card, format: Format, anyPrintingAllowed?: string[]): boolean {
     if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
+    }
+
+    // If this card is in the anyPrintingAllowed list, ignore set restrictions
+    if (anyPrintingAllowed && anyPrintingAllowed.includes(card.name)) {
+      switch (format) {
+        case Format.UNLIMITED:
+          return true;
+        case Format.STANDARD:
+          var banList = BanLists[format];
+          if (card.regulationMark === 'J') {
+            return false;
+          }
+          // Use SVI set date for Standard legality window
+          var setDate = SetReleaseDates['SVI'];
+          return setDate <= new Date();
+        case Format.STANDARD_NIGHTLY:
+          return card.regulationMark === 'G' ||
+            card.regulationMark === 'H' ||
+            card.regulationMark === 'I' ||
+            card.regulationMark === 'J';
+        case Format.EXPANDED:
+          var banList = BanLists[format];
+          // Use earliest legal set date for Expanded
+          var setDate = SetReleaseDates['BWP'];
+          return setDate <= new Date() &&
+            !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
+        case Format.GLC:
+          var banList = BanLists[format];
+          // Use earliest legal set date for GLC
+          var setDate = SetReleaseDates['BWP'];
+          // Force SV11, SV11B, SV11W to be legal in GLC regardless of date
+          const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
+          const isForceLegal = forceLegalSets.includes(card.set);
+          return (
+            (setDate <= new Date() || isForceLegal) &&
+            !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
+            !card.tags.some(t => [
+              CardTag.ACE_SPEC.toString(),
+              CardTag.POKEMON_EX.toString(),
+              CardTag.POKEMON_ex.toString(),
+              CardTag.POKEMON_V.toString(),
+              CardTag.POKEMON_VMAX.toString(),
+              CardTag.POKEMON_VSTAR.toString(),
+              CardTag.RADIANT.toString(),
+              CardTag.POKEMON_GX.toString(),
+              CardTag.PRISM_STAR.toString(),
+              CardTag.POKEMON_VUNION.toString()
+            ].includes(t)
+            ));
+        case Format.RETRO:
+          return true; // Any set allowed for these cards in Retro
+      }
     }
 
     switch (format) {
       case Format.UNLIMITED:
         return true;
-
       case Format.STANDARD:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
+        if (card.regulationMark === 'J') {
+          return false;
+        }
         return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
-
       case Format.STANDARD_NIGHTLY:
         var banList = BanLists[format];
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
           card.regulationMark === 'I' ||
           card.regulationMark === 'J';
-
       case Format.EXPANDED:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
-
       case Format.GLC:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
+        // Force SV11, SV11B, SV11W to be legal in GLC regardless of date
+        const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
+        const isForceLegal = forceLegalSets.includes(card.set);
+        return (
+          (
+            (setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date())
+            || isForceLegal
+          ) &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
           !card.tags.some(t => [
             CardTag.ACE_SPEC.toString(),
@@ -161,13 +262,42 @@ export class FormatValidator {
             CardTag.POKEMON_GX.toString(),
             CardTag.PRISM_STAR.toString(),
             CardTag.POKEMON_VUNION.toString()
-          ].includes(t));
-
+          ].includes(t)
+          ));
       case Format.RETRO:
         return card.set === 'BS' ||
           card.set === 'JU' ||
           card.set === 'FO' ||
           card.set === 'PR';
+
+      case Format.RSPK:
+        return card.set === 'RS' ||
+          card.set === 'SS' ||
+          card.set === 'DR' ||
+          card.set === 'MA' ||
+          card.set === 'HL' ||
+          card.set === 'RG' ||
+          card.set === 'TRR' ||
+          card.set === 'DX' ||
+          card.set === 'EM' ||
+          card.set === 'UF' ||
+          card.set === 'DS' ||
+          card.set === 'LM' ||
+          card.set === 'HP' ||
+          card.set === 'CG' ||
+          card.set === 'DF' ||
+          card.set === 'PK' ||
+          card.set === 'P1' ||
+          card.set === 'P2' ||
+          card.set === 'P3' ||
+          card.set === 'P4' ||
+          card.set === 'P5' ||
+          card.set === 'MCVS' ||
+          card.set === 'MAL' ||
+          card.set === 'MSM' ||
+          card.set === 'MSD' ||
+          card.set === 'PCGP' ||
+          card.set === 'PCGL';
 
       case Format.WORLDS_2013:
         var banList = BanLists[format];
@@ -177,7 +307,7 @@ export class FormatValidator {
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
     }
 
-    if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
+    if (banList && banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
       return false;
     }
     return false;
@@ -392,17 +522,13 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'PAF': new Date('2024-01-26'),
   'TEF': new Date('2024-03-22'),
   'TWM': new Date('2024-05-22'),
-  'SV6a': new Date('2024-06-07'),
-  'SV7': new Date('2024-09-13'),
   'SFA': new Date('2024-08-02'),
   'SCR': new Date('2024-09-13'),
-  'SV7a': new Date('2024-09-13'),
-  'SV8': new Date('2024-11-08'),
   'SSP': new Date('2024-11-08'),
-  'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
   'JTG': new Date('2025-03-28'),
-  'SV9': new Date('2025-03-28'),
-  'SV9a': new Date('2025-05-17'),
-  'SV10': new Date('2025-05-17'),
+  'DRI': new Date('2025-05-17'),
+  'SV11': new Date('2025-07-18'),
+  'SV11B': new Date('2025-07-18'),
+  'SV11W': new Date('2025-07-18'),
 }

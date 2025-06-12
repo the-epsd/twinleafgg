@@ -35,6 +35,8 @@ export class PokemonCardList extends CardList {
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
   public static readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
+  public static readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
+  public static readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
   public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
   public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
   public static readonly PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
@@ -75,9 +77,12 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Unidentified Fossil') {
         result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Plume Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Cover Fossil') {
+        result.push(card as PokemonCard);
       }
     }
-
     return result;
   }
 
@@ -105,6 +110,8 @@ export class PokemonCardList extends CardList {
     this.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER);
     this.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER);
     this.marker.removeMarker(PokemonCardList.CLEAR_KNOCKOUT_MARKER);
+    this.marker.removeMarker(PokemonCardList.NEXT_TURN_MORE_DAMAGE_MARKER);
+    this.marker.removeMarker(PokemonCardList.NEXT_TURN_MORE_DAMAGE_MARKER_2);
     this.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
     this.marker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
     this.marker.removeMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);

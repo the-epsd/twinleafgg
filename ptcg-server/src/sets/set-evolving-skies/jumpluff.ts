@@ -35,7 +35,7 @@ export class Jumpluff extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect) {
+    if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
       if (!IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
         this.powers[0].barrage = true;
       } else {

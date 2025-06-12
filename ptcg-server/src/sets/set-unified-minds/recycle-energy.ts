@@ -1,9 +1,10 @@
-import { Card } from '../../game';
+import { Card, PokemonCardList } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -24,23 +25,29 @@ export class RecycleEnergy extends EnergyCard {
   public fullName = 'Recycle Energy UNM';
 
   public text =
-    `This card provides C Energy.' +
+    `This card provides [C] Energy.
     
-    'If this card is discarded from play, put it into your hand instead of the discard pile.`;
+If this card is discarded from play, put it into your hand instead of the discard pile.`;
 
   public RECYCLE_ENERGY_MARKER = 'RECYCLE_ENERGY_MARKER';
+
+  public attachedTo?: PokemonCardList;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-      const player = effect.player;
-      player.marker.addMarker(this.RECYCLE_ENERGY_MARKER, this);
+      this.attachedTo = effect.target;
+      effect.player.marker.addMarker(this.RECYCLE_ENERGY_MARKER, this);
     }
 
     if (effect instanceof CheckTableStateEffect && state.players.some(p => p.discard.cards.includes(this))) {
       state.players.forEach(player => {
-
         if (!player.marker.hasMarker(this.RECYCLE_ENERGY_MARKER, this)) {
+          return;
+        }
+
+        if (this.attachedTo && IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, this.attachedTo)) {
+          player.marker.removeMarker(this.RECYCLE_ENERGY_MARKER, this);
           return;
         }
 
@@ -50,6 +57,7 @@ export class RecycleEnergy extends EnergyCard {
 
         player.discard.moveCardsTo(rescued, player.hand);
         player.marker.removeMarker(this.RECYCLE_ENERGY_MARKER, this);
+        this.attachedTo = undefined;
       });
     }
     return state;

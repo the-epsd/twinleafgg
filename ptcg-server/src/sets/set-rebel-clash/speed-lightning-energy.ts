@@ -3,8 +3,9 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class SpeedLightningEnergy extends EnergyCard {
 
@@ -25,7 +26,9 @@ export class SpeedLightningEnergy extends EnergyCard {
   public setNumber: string = '173';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [L] Energy. When you attach this card from your hand to a [L] Pokémon, draw 2 cards.';
+    `As long as this card is attached to a Pokémon, it provides [L] Energy.
+    
+When you attach this card from your hand to a [L] Pokémon, draw 2 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -35,10 +38,19 @@ export class SpeedLightningEnergy extends EnergyCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
 
-      if (effect.target.getPokemonCard()?.cardType === CardType.LIGHTNING) {
-        player.deck.moveTo(player.hand, 2);
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
+        return state;
       }
+
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
+      store.reduceEffect(state, checkPokemonType);
+      if (!checkPokemonType.cardTypes.includes(CardType.LIGHTNING)) {
+        return state;
+      }
+
+      player.deck.moveTo(player.hand, 2);
     }
+
     return state;
   }
 

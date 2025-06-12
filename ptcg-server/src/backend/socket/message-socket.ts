@@ -92,4 +92,9 @@ export class MessageSocket {
     return messageInfo;
   }
 
+  public dispose(): void {
+    this.socket.removeListener('message:send');
+    this.socket.removeListener('message:read');
+  }
+
 }

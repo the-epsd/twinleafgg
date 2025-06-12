@@ -14,7 +14,7 @@ export class Ludicolo extends PokemonCard {
   public powers = [{
     name: 'Swing Dance',
     powerType: PowerType.POKEPOWER,
-    useWhileInPlay: true,
+    useWhenInPlay: true,
     text: 'Once during your turn (before your attack), you may draw a card. This power can\'t be used if Ludicolo is affected by a Special Condition.'
   }];
 

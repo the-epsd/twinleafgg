@@ -7,11 +7,11 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE, THIS_ATTACKS_DAMAGE_ISNT_AFFECTE
 
 export class Tinkatuff2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom: string = 'Tinkatink';
   public cardType: CardType = P;
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C];
-  public evolvesFrom: string = 'Tinkatink';
 
   public attacks = [{
     name: 'Play Rough',

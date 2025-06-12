@@ -2,7 +2,6 @@ import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Blitzle } from './blitzle';
-import { SuperRodNVI } from './other-prints';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
@@ -21,8 +20,10 @@ import { Tynamo2 } from './tynamo-2';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
+import { Victini } from './victini';
 import { Xtransceiver } from './xtransceiver';
 import { Zweilous } from './zweilous';
+import { SuperRod } from './super-rod';
 
 export const setNobleVictories: Card[] = [
   new Archen(),
@@ -38,7 +39,7 @@ export const setNobleVictories: Card[] = [
   new Petilil(),
   new PlumeFossil(),
   new Seismitoad(),
-  new SuperRodNVI(),
+  new SuperRod(),
   new Terrakion(),
   new Trubbish(),
   new Tympole(),
@@ -47,6 +48,7 @@ export const setNobleVictories: Card[] = [
   new Vanillish(),
   new Vanillite(),
   new Vanilluxe(),
+  new Victini(),
   new Xtransceiver(),
   new Zweilous(),
 ];

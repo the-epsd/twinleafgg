@@ -12,9 +12,18 @@ export const config = {
     avatarMinSize: 64,
     avatarMaxSize: 512,
     replayFileSize: 512 * 1024,
-    rateLimitCount: 1000,     // Increased from 100 to 1000 HTTP requests
-    wsRateLimitCount: 2000,   // Increased from 200 to 2000 WebSocket messages
+    rateLimitCount: 10000,     // Increased from 100 to 1000 HTTP requests
+    wsRateLimitCount: 10000,   // Increased from 200 to 2000 WebSocket messages
     rateLimitTime: 60000,     // Keeping this at 1 minute
+    apiUrl: 'https://play-server.twinleaf.gg',
+    timeout: 60 * 60 * 1000,
+    production: true,
+    apiVersion: 2,
+    allowServerChange: true,
+    refreshTokenInterval: 60 * 60 * 1000,
+    enableImageCache: true,
+    defaultLanguage: 'en',
+    languages: { en: 'English', jp: 'Japanese', fr: 'French' },
   },
   core: {
     debug: false,

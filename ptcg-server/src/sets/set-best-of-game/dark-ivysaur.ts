@@ -19,7 +19,6 @@ export class DarkIvysaur extends PokemonCard {
 
   public powers = [{
     name: 'Vine Pull',
-    useWhenInPlay: true,
     powerType: PowerType.POKEBODY,
     text: 'Once during your turn when Dark Ivysaur retreats, choose 1 of your opponent\'s Benched Pokémon and switch it with his or her Active Pokémon.'
   }];
@@ -36,8 +35,8 @@ export class DarkIvysaur extends PokemonCard {
   public set = 'BP';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
-  public name = 'Ivysaur';
-  public fullName = 'Ivysaur BP';
+  public name = 'Dark Ivysaur';
+  public fullName = 'Dark Ivysaur BP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -45,11 +44,11 @@ export class DarkIvysaur extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
-    
+
       if (!hasBench) {
         return state;
       }
-    
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
@@ -58,7 +57,7 @@ export class DarkIvysaur extends PokemonCard {
         { allowCancel: false }
       ), result => {
         const cardList = result[0];
-    
+
         if (cardList) {
           opponent.switchPokemon(cardList);
         }
@@ -74,9 +73,9 @@ export class DarkIvysaur extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         maxAllowedDamage.push({ target, damage: card.hp + 30 });
       });
-    
+
       const damage = 30;
-    
+
       return store.prompt(state, new PutDamagePrompt(
         effect.opponent.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,

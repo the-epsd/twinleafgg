@@ -1,12 +1,14 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTarget, AttachEnergyPrompt } from '../../game';
 import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
+import { MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
 
 export class PowHandExtension extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+  public tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Pow! Hand Extension';
   public fullName: string = 'Pow! Hand Extension TRR';
@@ -30,32 +32,34 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      const blockedFrom: CardTarget[] = [];
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        if (cardList === player.active) {
+          blockedFrom.push(target);
+        }
+      });
+
       const options: { message: GameMessage, action: () => void }[] = [
         {
           message: GameMessage.MOVE_ENERGY_CARDS,
           action: () => {
 
-            return store.prompt(state, new MoveEnergyPrompt(
+            store.prompt(state, new AttachEnergyPrompt(
               player.id,
-              GameMessage.MOVE_ENERGY_CARDS,
+              GameMessage.ATTACH_ENERGY_TO_BENCH,
+              opponent.active,
               PlayerType.TOP_PLAYER,
-              [SlotType.ACTIVE],
+              [SlotType.BENCH],
               { superType: SuperType.ENERGY },
-              { min: 0, max: 1, allowCancel: false }
+              { allowCancel: false, min: 0, max: 1 }
             ), transfers => {
-              if (transfers === null) {
-                return state;
-              }
-
+              transfers = transfers || [];
               for (const transfer of transfers) {
-                const source = StateUtils.getTarget(state, opponent, transfer.from);
-                const target = StateUtils.getTarget(state, opponent, transfer.to);
-                source.moveCardTo(transfer.card, target);
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                MOVE_CARD_TO(state, transfer.card, target);
               }
-
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              return state;
             });
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
           }
         },
         {

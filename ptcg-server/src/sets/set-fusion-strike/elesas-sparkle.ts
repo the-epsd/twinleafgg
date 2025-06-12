@@ -27,7 +27,7 @@ export class ElesasSparkle extends TrainerCard {
   public fullName: string = 'Elesa\'s Sparkle FST';
 
   public text: string =
-    '';
+    'Choose up to 2 of your Fusion Strike Pokémon. For each of those Pokémon, search your deck for a Fusion Strike Energy card and attach it to that Pokémon. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

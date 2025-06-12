@@ -1,6 +1,6 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTarget, GameStoreMessage, PokemonCard, Card, ChooseCardsPrompt } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
@@ -8,13 +8,14 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class SurpriseTimeMachine extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+  public tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Surprise! Time Machine';
   public fullName: string = 'Surprise! Time Machine TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public text = 'Choose 1 of your Evolved Pokémon, remove the highest Stage Evolution card from it, and shuffle it into your deck (this counts as devolving that Pokémon). If that Pokémon remains in play, search your deck for an Evolution card that evolves from that Pokémon and put it onto that Pokémon (this counts as evolving that Pokémon). Shuffle your deck afterward.';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -48,7 +49,7 @@ export class SurpriseTimeMachine extends TrainerCard {
 
             //Devolve
             targetPokemon.moveCardsTo([targetPokemon.cards[targetPokemon.cards.length - 1]], player.deck);
-            
+
             //Evolve
             const blocked2: number[] = [];
             player.deck.cards.forEach((card, index) => {
@@ -57,7 +58,7 @@ export class SurpriseTimeMachine extends TrainerCard {
               }
             });
 
-            
+
             //Death Check?
             const checkHpEffect = new CheckHpEffect(player, targetPokemon);
             store.reduceEffect(state, checkHpEffect);

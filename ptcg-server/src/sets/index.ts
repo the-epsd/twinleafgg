@@ -7,6 +7,7 @@ export * from './set-vending-series';
 export * from './set-wotc-promos';
 
 export * from './set-gym-heros';
+export * from './set-gym-challenge';
 
 //Retro Energy
 export * from './set-base-set-energy';
@@ -15,6 +16,7 @@ export * from './set-neo-genesis';
 export * from './set-neo-discovery';
 
 //E-Card Era
+export * from './set-expedition';
 export * from './set-aquapolis';
 export * from './set-skyridge';
 
@@ -37,6 +39,17 @@ export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
 export * from './set-ex-legend-maker';
+
+//POP Series
+export * from './set-pop-series-4';
+export * from './set-pop-series-5';
+
+//Japan Promos ex-era
+export * from './set-pcg-l-promotional-cards';
+export * from './set-pcg-p-promotional-cards';
+
+// VS Packs
+export * from './set-vs-pack-auras-lucario';
 
 //DP Era
 export * from './set-diamond-and-pearl';
@@ -141,7 +154,7 @@ export * from './set-paldea-evolved';
 export * from './set-obsidian-flames';
 export * from './set-pokemon-151';
 export * from './set-paradox-rift';
-export * from './set-paldea-fates';
+export * from './set-paldean-fates';
 export * from './set-temporal-forces';
 export * from './set-twilight-masquerade';
 export * from './set-shrouded-fable';
@@ -149,8 +162,7 @@ export * from './set-stellar-crown';
 export * from './set-surging-sparks';
 export * from './set-prismatic-evolution';
 export * from './set-journey-together';
-export * from './set-sv9a';
-export * from './set-sv10';
+export * from './set-destined-rivals';
 export * from './set-sv11';
 export * from './set-m1s';
 

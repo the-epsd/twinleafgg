@@ -1,7 +1,7 @@
 import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -45,13 +45,6 @@ export class Archaludon extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner !== player) {
-        return state;
-      }
-
-      const checkPokemonType = new CheckPokemonTypeEffect(effect.player.active);
-      store.reduceEffect(state, checkPokemonType);
-
-      if (!checkPokemonType.cardTypes.includes(M)) {
         return state;
       }
 

@@ -261,7 +261,22 @@ export class Store implements StoreLike {
       player.discard.cards.forEach(c => cards.push(c));
     }
     cards.sort(c => c.superType);
-    cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
+    cards.forEach(c => { state = this.callReduceEffect(c, this, state, effect); });
     return state;
+  }
+
+  // Utility function to call reduceEffect with override support
+  private callReduceEffect(card: Card, store: StoreLike, state: State, effect: Effect): State {
+    // Only try override for TrainerCard (for now)
+    if ((card as any).trainerType !== undefined) {
+      // Import here to avoid circular dependency at module level
+      const { getOverriddenReduceEffect } = require('./card/card-effect-overrides');
+      let format = (store as any)?.handler?.gameSettings?.format ?? 0;
+      const override = getOverriddenReduceEffect(card, format);
+      if (override) {
+        return override(store, state, effect);
+      }
+    }
+    return card.reduceEffect(store, state, effect);
   }
 }

@@ -11,7 +11,7 @@ export class Serperiorex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 320;
-  public weakness = [{ type: R, value: 2 }];
+  public weakness = [{ type: R }];
   public retreat = [C, C];
 
   public powers = [{

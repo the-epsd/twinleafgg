@@ -15,6 +15,6 @@
     {{ 'BUTTON_NO' | translate }}
   </button>
   <button mat-raised-button [disabled]="gameState.deleted" (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
+    {{ prompt.message === 'GO_FIRST' ? ('BUTTON_YES' | translate) : ('BUTTON_OK' | translate) }}
   </button>
 </div>

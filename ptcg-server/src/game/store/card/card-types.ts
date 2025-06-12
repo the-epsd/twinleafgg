@@ -10,6 +10,7 @@ export enum CardTag {
   ACE_SPEC = 'ACE_SPEC',
   RADIANT = 'RADIANT',
   ROCKETS_SECRET_MACHINE = 'ROCKETS_SECRET_MACHINE',
+  TECHNICAL_MACHINE = 'TECHNICAL_MACHINE', // For old TMs only
   TEAM_PLASMA = 'TEAM_PLASMA',
   FUSION_STRIKE = 'FUSION_STRIKE',
   SINGLE_STRIKE = 'SINGLE_STRIKE',
@@ -20,6 +21,7 @@ export enum CardTag {
   POKEMON_TERA = 'POKEMON_TERA',
   ULTRA_BEAST = 'ULTRA_BEAST',
   TAG_TEAM = 'TAG_TEAM',
+  TEAM_AQUA = 'TEAM_AQUA',
   TEAM_MAGMA = 'TEAM_MAGMA',
   PRISM_STAR = 'PRISM_STAR',
   STAR = 'STAR',
@@ -33,6 +35,8 @@ export enum CardTag {
   PLAY_DURING_SETUP = 'PLAY_DURING_SETUP',
   DELTA_SPECIES = 'DELTA_SPECIES',
   DARK = 'DARK',
+  BROCKS = 'BROCKS',
+  BLAINES = 'BLAINES',
   LILLIES = 'LILLIES',
   NS = 'NS',
   IONOS = 'IONOS',
@@ -43,12 +47,15 @@ export enum CardTag {
   MISTYS = 'MISTYS',
   CYNTHIAS = 'CYNTHIAS',
   ARVENS = 'ARVENS',
+  AURAS = 'AURAS',
   POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
   HOLONS = 'HOLONS',
-  TEAM_ROCKET = 'TEAM_ROCKET',
+  ROCKETS = 'ROCKETS', // For old cards
+  TEAM_ROCKET = 'TEAM_ROCKET', // For new cards
   UNOWN = 'UNOWN',
   PRIMAL = 'PRIMAL',
   ARCEUS = 'ARCEUS',
+  VS = 'VS', // Japanese VS Pack (from movie or theater promos)
 }
 
 export enum SuperType {
@@ -1295,6 +1302,7 @@ export enum Format {
   RETRO,
   GLC,
   STANDARD_NIGHTLY,
+  RSPK,
   BW,
   XY,
   SM,
@@ -1333,4 +1341,8 @@ declare global {
   const W: typeof Energy.W;
   const Y: typeof Energy.Y;
   const N: typeof Energy.N;
+}
+
+export function isCoreFormat(format: Format): boolean {
+  return format === Format.STANDARD || format === Format.EXPANDED || format === Format.UNLIMITED || format === Format.STANDARD_NIGHTLY || format === Format.GLC;
 }

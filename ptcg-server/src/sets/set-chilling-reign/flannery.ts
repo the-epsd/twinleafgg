@@ -9,8 +9,9 @@ import {
   PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
   PokemonCardList, ChooseCardsPrompt, Card, EnergyCard
 } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, trainerCard: TrainerCard): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -93,7 +94,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     // Discard Stadium
     const cardList = StateUtils.findCardList(state, stadiumCard);
     const playerStadium = StateUtils.findOwner(state, cardList);
-    cardList.moveTo(playerStadium.discard);
+    MOVE_CARDS(store, state, cardList, playerStadium.discard, { sourceCard: trainerCard });
     return state;
   }
 }
@@ -118,7 +119,7 @@ export class Flannery extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
     return state;

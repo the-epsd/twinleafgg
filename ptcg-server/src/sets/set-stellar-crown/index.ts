@@ -47,6 +47,7 @@ import { Terapagosex } from './terapagos-ex';
 import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
 import { Marill } from './marill';
+import { AntiqueCoverFossil } from './antique-cover-fossil';
 
 export const setStellarCrown: Card[] = [
   new Archaludon(),
@@ -97,6 +98,7 @@ export const setStellarCrown: Card[] = [
   new Milcery(),
   new DeluxeBomb(),
   new Marill(),
+  new AntiqueCoverFossil(),
 
   //FA
   new BulbasaurIR(),

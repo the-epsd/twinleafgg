@@ -1,7 +1,8 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Dipplin extends PokemonCard {
 
@@ -26,6 +27,7 @@ export class Dipplin extends PokemonCard {
     name: 'Do the Wave',
     cost: [CardType.GRASS],
     damage: 20,
+    barrage: false,
     text: 'This attack does 20 damage for each of your Benched Pokémon.'
   }];
 
@@ -37,39 +39,26 @@ export class Dipplin extends PokemonCard {
   public fullName: string = 'Dipplin TWM1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Handle the Do the Wave attack
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const activePokemon = opponent.active.getPokemonCard();
-      const stadiumCard = StateUtils.getStadiumCard(state);
 
       if (activePokemon) {
         const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
         effect.damage = playerBenched * 20;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
+      if (!IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+        // Dynamically set barrage if Festival Grounds is in play
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard && stadiumCard.name === 'Festival Grounds') {
+          this.attacks[0].barrage = true;
+        } else {
+          this.attacks[0].barrage = false;
+        }
       }
-
-      // Check if 'Festival Plaza' stadium is in play
-      if (stadiumCard && stadiumCard.name === 'Festival Grounds') {
-        this.canAttackTwice = true;
-      } else {
-        this.canAttackTwice = false;
-      }
-
-      // Increment attacksThisTurn
-      player.active.attacksThisTurn = (player.active.attacksThisTurn || 0) + 1;
-
     }
     return state;
   }

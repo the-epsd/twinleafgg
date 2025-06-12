@@ -6,6 +6,7 @@ import { DndMultiBackendModule, MultiBackend, HTML5ToTouch } from '@ng-dnd/multi
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { io, Socket } from 'socket.io-client';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ApiModule } from './api/api.module';
 import { AppComponent } from './app.component';
@@ -20,9 +21,9 @@ import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
-// import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
 import { TermsModule } from './terms/terms.module';
 import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
+import { MaintenanceModule } from './maintenance/maintenance.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CardInfoDialogComponent } from './table/board/board-card/board-card.com
         deps: [HttpClient]
       }
     }),
+    BrowserAnimationsModule,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

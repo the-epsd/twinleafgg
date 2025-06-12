@@ -17,6 +17,7 @@ import { ShadowTriad } from './shadow-triad';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { TeamPlasmaBall } from './team-plasma-ball';
 import { ThundurusEX } from './thundurus-ex';
+import { Weavile } from './weavile';
 
 export const setPlasmaFreeze: Card[] = [
   new Absol(),
@@ -37,4 +38,5 @@ export const setPlasmaFreeze: Card[] = [
   new SuperiorEnergyRetrieval(),
   new TeamPlasmaBall(),
   new ThundurusEX(),
+  new Weavile(),
 ];
