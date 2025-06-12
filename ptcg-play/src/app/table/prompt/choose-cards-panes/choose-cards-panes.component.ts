@@ -59,7 +59,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
   }
 
   toggleCardSelection(card: any) {
-    if (this.noBottomPane || !this.filterMap[card.fullName]) {
+    if (this.noBottomPane || !this.filterMap[card.fullName] || card.isAvailable === false) {
       return;
     }
 
@@ -154,7 +154,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
         this.updateTempLists(sortable, item);
         this.commitTempLists();
       },
-      canDrag: () => this.dragConfig.dragEnabled,
+      canDrag: (item: PromptItem) => this.dragConfig.dragEnabled && item.isAvailable,
       endDrag: () => {
         this.revertTempLists();
       }
