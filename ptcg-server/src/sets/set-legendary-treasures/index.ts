@@ -8,6 +8,7 @@ import { Gothorita } from './gothorita';
 import { MeloettaEX } from './meloetta-ex';
 import { MewEx } from './mew-ex';
 import { Riolu } from './riolu';
+import { Spiritomb } from './spiritomb';
 import { Trubbish } from './trubbish';
 
 export const setLegendaryTreasures: Card[] = [
@@ -20,6 +21,7 @@ export const setLegendaryTreasures: Card[] = [
   new MeloettaEX(),
   new MewEx(),
   new Riolu(),
+  new Spiritomb(),
   new Trubbish(),
 
 ];
