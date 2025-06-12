@@ -76,6 +76,7 @@ import { SpikyEnergy } from './spiky-energy';
 import { Sprigatito } from './sprigatito';
 import { Swinub } from './swinub';
 import { TapuKokoex } from './tapu-koko-ex';
+import { Toedscool } from './toedscool';
 import { Torchic } from './torchic';
 import { Tyranitar } from './tyranitar';
 import { Volcanionex } from './volcanion-ex';
@@ -109,6 +110,7 @@ export const setJourneyTogether: Card[] = [
   new Banette(),
   new Volcanionex(),
   new Sprigatito(),
+  new Toedscool(),
   new Floragato(),
   new Meowscarada(),
   new IrisFightingSpirit(),
