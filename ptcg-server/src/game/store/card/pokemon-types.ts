@@ -24,6 +24,7 @@ export interface Attack {
   canUseOnFirstTurn?: boolean;
   name: string;
   text: string;
+  barrage?: boolean;
   effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;
 }
 
