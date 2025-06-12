@@ -1,12 +1,14 @@
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy, FairyEnergy } from './basic-energies';
 import { Charmeleon } from './charmeleon';
+import { JolteonEX } from './jolteon-ex';
 import { MaxRevive } from './max-revive';
 import { RedCard } from './red-card';
 import { Revitalizer } from './revitalizer';
 import { TeamFlareGrunt } from './team-flare-grunt';
 
 export const setGenerations: Card[] = [
+  new JolteonEX(),
   new MaxRevive(),
   new RedCard(),
   new Revitalizer(),

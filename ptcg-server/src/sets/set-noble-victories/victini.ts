@@ -31,7 +31,7 @@ export class Victini extends PokemonCard {
       const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
       if (playerBench <= 4) {
-        return state;
+        effect.damage = 0;
       }
     }
 
