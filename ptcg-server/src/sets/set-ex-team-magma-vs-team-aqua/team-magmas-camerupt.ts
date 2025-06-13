@@ -14,7 +14,7 @@ export class TeamMagmasCamerupt extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Oveheat',
+    name: 'Overheat',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
     text: 'Once during your turn (before your attack), you may search your discard pile for a basic Energy card and attach it to Team Magma\'s Camerupt. Put 2 damage counters on Team Mamga\'s Camerupt. This power can\'t be used if Team Magma\'s Camerupt is affected by a Special Condition.'

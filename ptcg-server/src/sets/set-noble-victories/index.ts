@@ -20,6 +20,7 @@ import { Tynamo2 } from './tynamo-2';
 import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
+import { Victini } from './victini';
 import { Xtransceiver } from './xtransceiver';
 import { Zweilous } from './zweilous';
 import { SuperRod } from './super-rod';
@@ -47,6 +48,7 @@ export const setNobleVictories: Card[] = [
   new Vanillish(),
   new Vanillite(),
   new Vanilluxe(),
+  new Victini(),
   new Xtransceiver(),
   new Zweilous(),
 ];

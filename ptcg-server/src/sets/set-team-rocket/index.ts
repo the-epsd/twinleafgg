@@ -1,5 +1,7 @@
 import { Card } from '../../game';
 import { Challenge } from './challenge';
+import { DarkDragonair } from './dark-dragonair';
+import { DarkDragonite } from './dark-dragonite';
 import { DarkGloom } from './dark-gloom';
 import { DarkGolduck } from './dark-golduck';
 import { DarkVileplume } from './dark-vileplume';
@@ -14,6 +16,7 @@ import { Porygon } from './porygon';
 import { PotionEnergy } from './potion-energy';
 import { Rattata } from './rattata';
 import { RocketsSneakAttack } from './rockets-sneak-attack';
+import { Squirtle } from './squirtle';
 import { TheBosssWay } from './the-bosss-way';
 import { Voltorb } from './voltorb';
 
@@ -22,6 +25,8 @@ import { RainbowEnergyTR } from './other-prints';
 
 export const setTeamRocket: Card[] = [
   new Challenge(),
+  new DarkDragonair(),
+  new DarkDragonite(),
   new DarkGloom(),
   new DarkGolduck(),
   new DarkVileplume(),
@@ -36,6 +41,7 @@ export const setTeamRocket: Card[] = [
   new PotionEnergy(),
   new Rattata(),
   new RocketsSneakAttack(),
+  new Squirtle(),
   new TheBosssWay(),
   new Voltorb(),
 

@@ -509,7 +509,6 @@ export const cardReplacements = [
 
   //SSP
   { from: 'Charcadet SSP 33', to: 'Charcadet 2 SSP 33' },
-
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
   { from: 'Feebas SSP 198', to: 'FeebasIR SSP 198' },
@@ -1098,6 +1097,9 @@ export const exportReplacements = [
   { from: 'LaceySIR SCR 172', to: 'Lacey SCR 172' },
   { from: 'Terapagos exHR SCR 173', to: 'Terapagos ex SCR 173' },
   { from: 'Area Zero UnderdepthsHR SCR 174', to: 'Area Zero Underdepths SCR 174' },
+  
+  //SSP
+  { from: 'Charcadet 2 SSP 33', to: 'Charcadet SSP 33' },
 
   //SSP FA
   { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },

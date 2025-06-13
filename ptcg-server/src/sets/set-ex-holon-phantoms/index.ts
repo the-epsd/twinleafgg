@@ -7,9 +7,12 @@ import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
 import { Flygon } from './flygon';
 import { HolonsCastform } from './holons-castform';
+import { Horsea } from './horsea';
+import { Latias } from './latias';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
 import { Pidgey } from './pidgey';
+import { Pidgeotto } from './pidgeotto';
 import { Pikachu } from './pikachu';
 import { Raichu } from './raichu';
 import { RareCandy } from './rare-candy';
@@ -23,9 +26,12 @@ export const setEXHolonPhantoms: Card[] = [
   new Exeggcute(),
   new Exeggutor(),
   new Flygon(),
+  new Horsea(),
+  new Latias(),
   new Meowth(),
   new Oddish(),
   new Pidgey(),
+  new Pidgeotto(),
   new Pikachu(),
   new Raichu(),
   new RareCandy(),

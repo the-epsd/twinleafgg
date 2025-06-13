@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanRaichu } from './alolan-raichu';
+import { Archen } from './archen';
 import { Beheeyem } from './beheeyem';
 import { CherishBall } from './cherish-ball';
 import { Cottonee } from './cottonee';
@@ -52,6 +53,7 @@ import { Magnemite } from './magnemite';
 export const setUnifiedMinds: Card[] = [
   new AlolanGrimer(),
   new AlolanRaichu(),
+  new Archen(),
   new Beheeyem(),
   new CherishBall(),
   new Cottonee(),

@@ -65,9 +65,6 @@ export class BoardSelectionOverlayComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
-
-    // Ensure selection mode is deactivated on component destruction
-    this.boardInteractionService.endBoardSelection();
   }
 
   /**

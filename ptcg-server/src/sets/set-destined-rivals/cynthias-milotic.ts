@@ -5,7 +5,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CynthiasMilotic extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Cynthia\'s Feebas';
   public tags = [CardTag.CYNTHIAS];
   public cardType: CardType = W;
   public hp: number = 130;

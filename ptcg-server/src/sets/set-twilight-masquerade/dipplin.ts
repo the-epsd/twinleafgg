@@ -1,15 +1,8 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
-import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
-import { GameMessage } from '../../game/game-message';
-import { ChooseAttackPrompt } from '../../game/store/prompts/choose-attack-prompt';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { checkState } from '../../game/store/effect-reducers/check-effect';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Dipplin extends PokemonCard {
 
@@ -34,6 +27,7 @@ export class Dipplin extends PokemonCard {
     name: 'Do the Wave',
     cost: [CardType.GRASS],
     damage: 20,
+    barrage: false,
     text: 'This attack does 20 damage for each of your Benched Pokémon.'
   }];
 
@@ -43,9 +37,6 @@ export class Dipplin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dipplin';
   public fullName: string = 'Dipplin TWM1';
-
-  // Track if the ability is active and Dipplin can attack twice
-  private abilityActive: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle the Do the Wave attack
@@ -59,98 +50,16 @@ export class Dipplin extends PokemonCard {
         effect.damage = playerBenched * 20;
       }
 
-      // Track attacks this turn
-      player.active.attacksThisTurn = (player.active.attacksThisTurn || 0) + 1;
-
-      // Check if ability should be active
-      this.checkAbilityActive(store, state, player);
-    }
-
-    // Handle the UseAttackEffect for second attack logic
-    if (effect instanceof UseAttackEffect &&
-      effect.attack === this.attacks[0] &&
-      this.abilityActive &&
-      (effect.player.active.attacksThisTurn || 0) === 1) {
-
-      // Check if opponent has an active Pokemon
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      if (opponent.active.cards.length > 0) {
-        // Prompt for second attack
-        store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.WANT_TO_ATTACK_AGAIN
-        ), wantToAttackAgain => {
-          if (wantToAttackAgain) {
-            // Get all available attacks including tool attacks
-            const attackableCards = effect.player.active.cards.filter(card =>
-              card.superType === SuperType.POKEMON ||
-              (card.superType === SuperType.TRAINER && card instanceof TrainerCard && card.trainerType === TrainerType.TOOL && card.attacks.length > 0)
-            );
-
-            // Use ChooseAttackPrompt for second attack
-            store.prompt(state, new ChooseAttackPrompt(
-              effect.player.id,
-              GameMessage.CHOOSE_ATTACK_TO_COPY,
-              attackableCards,
-              { allowCancel: false }
-            ), selectedAttack => {
-              if (selectedAttack) {
-                // Create and execute second attack
-                const secondAttackEffect = new AttackEffect(effect.player, opponent, selectedAttack);
-                state = store.reduceEffect(state, secondAttackEffect);
-
-                // Apply damage from second attack if any
-                if (secondAttackEffect.damage > 0) {
-                  const dealDamage = new DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
-                  state = store.reduceEffect(state, dealDamage);
-                }
-
-                // Process after attack effects
-                state = store.reduceEffect(state, new AfterAttackEffect(effect.player));
-
-                // Check for knockouts again
-                state = checkState(store, state);
-
-                // End turn after second attack
-                state = store.reduceEffect(state, new EndTurnEffect(effect.player));
-              }
-            });
-          } else {
-            // End turn if player declined second attack
-            state = store.reduceEffect(state, new EndTurnEffect(effect.player));
-          }
-        });
-      } else {
-        // End turn if opponent has no active Pokemon
-        state = store.reduceEffect(state, new EndTurnEffect(effect.player));
+      if (!IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+        // Dynamically set barrage if Festival Grounds is in play
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        if (stadiumCard && stadiumCard.name === 'Festival Grounds') {
+          this.attacks[0].barrage = true;
+        } else {
+          this.attacks[0].barrage = false;
+        }
       }
     }
-
     return state;
-  }
-
-  // Check if the Festival Lead ability is active
-  private checkAbilityActive(store: StoreLike, state: State, player: any): void {
-    // Try to reduce PowerEffect, to check if something is blocking our ability
-    try {
-      const stub = new PowerEffect(player, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, this);
-      store.reduceEffect(state, stub);
-
-      // Check if 'Festival Grounds' stadium is in play
-      const stadiumCard = StateUtils.getStadiumCard(state);
-      this.abilityActive = !!(stadiumCard && stadiumCard.name === 'Festival Grounds');
-
-      // Update the canAttackTwice property directly
-      this.canAttackTwice = this.abilityActive;
-
-    } catch {
-      // If the ability is blocked, we can't attack twice
-      this.abilityActive = false;
-      this.canAttackTwice = false;
-    }
   }
 }

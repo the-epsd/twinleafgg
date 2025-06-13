@@ -6,6 +6,7 @@ import { EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, Pokem
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Gardevoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -64,6 +65,12 @@ export class Gardevoir extends PokemonCard {
       }
 
       let hasEnergy = false;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+      const activeEnergyCount = checkProvidedEnergy.energyMap.length;
+
+      if (activeEnergyCount > 0) { hasEnergy = true; }
+
       let pokemonCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         pokemonCount += 1;

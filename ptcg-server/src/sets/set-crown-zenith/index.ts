@@ -20,6 +20,7 @@ import { Zamazenta } from './zamazenta';
 import { ZamazentaV } from './zamazenta-v';
 import { Zarude } from './zarude';
 import { ZeraoraV } from './zeraora-v';
+import { ZeraoraVMAX } from './zeraora-vmax';
 import { ZeraoraVSTAR } from './zeraora-vstar';
 
 export const setCrownZenith: Card[] = [
@@ -46,4 +47,5 @@ export const setCrownZenith: Card[] = [
   new Zarude(),
   new ZeraoraV(),
   new ZeraoraVSTAR(),
+  new ZeraoraVMAX(),
 ];

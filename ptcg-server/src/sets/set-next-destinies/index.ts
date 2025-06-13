@@ -9,6 +9,7 @@ import { PrismEnergy } from './prism-energy';
 import { ReshiramEx } from './reshiram-ex';
 import { ShayminEX } from './shaymin-ex';
 import { SkyarrowBridge } from './skyarrow-bridge';
+import { Sneasel } from './sneasel';
 import { ZekromEx } from './zekrom-ex';
 
 export const setNextDestinies: Card[] = [
@@ -22,6 +23,7 @@ export const setNextDestinies: Card[] = [
   new ReshiramEx(),
   new ShayminEX(),
   new SkyarrowBridge(),
+  new Sneasel(),
   new ZekromEx(),
 
 ];

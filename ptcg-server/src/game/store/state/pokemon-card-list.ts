@@ -77,9 +77,12 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Unidentified Fossil') {
         result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Plume Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Cover Fossil') {
+        result.push(card as PokemonCard);
       }
     }
-
     return result;
   }
 

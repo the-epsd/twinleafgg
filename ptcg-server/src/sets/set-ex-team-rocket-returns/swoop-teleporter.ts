@@ -4,7 +4,7 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/ca
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARD_TO, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARD_TO, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -58,7 +58,7 @@ export class SwoopTeleporter extends TrainerCard {
         let cards: Card[] = [];
         return store.prompt(state, new ChooseCardsPrompt(
           player,
-          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          GameMessage.CHOOSE_CARDS,
           player.deck,
           { superType: SuperType.POKEMON, stage: Stage.BASIC },
           { min: 1, max: 1, allowCancel: false, blocked }
@@ -69,11 +69,16 @@ export class SwoopTeleporter extends TrainerCard {
             return state;
           }
 
+          // Discard the pokemon
+          target[0].cards.forEach(c => {
+            if (c instanceof PokemonCard && !target[0].energyCards.includes(c)) {
+              MOVE_CARD_TO(state, c, player.discard);
+            }
+          });
+
+          // Move the selected card to the bench slot
           cards.forEach((card, index) => {
-            MOVE_CARDS(store, state, target[0], player.discard);
-            //target[0].moveCardTo(card, player.deck);
             MOVE_CARD_TO(state, card, target[0]);
-            //player.deck.moveCardTo(card, target[0]);
           });
 
           store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK, { name: player.name, card: target[0].getPokemonCard()!.name, secondCard: cards[0].name });

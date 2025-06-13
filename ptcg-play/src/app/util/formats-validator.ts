@@ -102,197 +102,125 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
-    //UPR
-    if (card.name === 'Pokémon Fan Club' && card.set !== 'UPR') {
-      const pokemonFanClubUPR: any = { ...card, set: 'UPR', setNumber: '133' };
-      return this.getValidFormats(pokemonFanClubUPR);
-    }
-    //SSH
-    if (card.name === 'Quick Ball' && card.set !== 'SSH') {
-      const quickBallSSH: any = { ...card, set: 'SSH', setNumber: '179', regulationMark: 'D' };
-      return this.getValidFormats(quickBallSSH);
-    }
-    //SVI
-    if (card.name === 'Crushing Hammer' && card.set !== 'SVI') {
-      const crushingHammerSVI: any = { ...card, set: 'SVI', setNumber: '168', regulationMark: 'G' };
-      return this.getValidFormats(crushingHammerSVI);
-    }
-    if (card.name === 'Energy Search' && card.set !== 'SVI') {
-      const energySearchSVI: any = { ...card, set: 'SVI', setNumber: '172', regulationMark: 'G' };
-      return this.getValidFormats(energySearchSVI);
-    }
-    if (card.name === 'Energy Switch' && card.set !== 'SVI') {
-      const energySwitchSVI: any = { ...card, set: 'SVI', setNumber: '173', regulationMark: 'G' };
-      return this.getValidFormats(energySwitchSVI);
-    }
-    if (card.name === 'Exp. Share' && card.set !== 'SVI') {
-      const expShareSVI: any = { ...card, set: 'SVI', setNumber: '174', regulationMark: 'G' };
-      return this.getValidFormats(expShareSVI);
-    }
-    if (card.name === 'Judge' && card.set !== 'SVI') {
-      const judgeSVI: any = { ...card, set: 'SVI', setNumber: '176', regulationMark: 'G' };
-      return this.getValidFormats(judgeSVI);
-    }
-    if (card.name === 'Nest Ball' && card.set !== 'SVI') {
-      const nestBallSVI: any = { ...card, set: 'SVI', setNumber: '181', regulationMark: 'G' };
-      return this.getValidFormats(nestBallSVI);
-    }
-    if (card.name === 'Pal Pad' && card.set !== 'SVI') {
-      const palPadSVI: any = { ...card, set: 'SVI', setNumber: '182', regulationMark: 'G' };
-      return this.getValidFormats(palPadSVI);
-    }
-    if (card.name === 'Poké Ball' && card.set !== 'SVI') {
-      const pokeBallSVI: any = { ...card, set: 'SVI', setNumber: '183', regulationMark: 'G' };
-      return this.getValidFormats(pokeBallSVI);
-    }
-    if (card.name === 'Pokégear 3.0' && card.set !== 'SVI') {
-      const pokegear30SVI: any = { ...card, set: 'SVI', setNumber: '186', regulationMark: 'G' };
-      return this.getValidFormats(pokegear30SVI);
-    }
-    if (card.name === 'Pokémon Catcher' && card.set !== 'SVI') {
-      const pokemonCatcherSVI: any = { ...card, set: 'SVI', setNumber: '187', regulationMark: 'G' };
-      return this.getValidFormats(pokemonCatcherSVI);
-    }
-    if (card.name === 'Potion' && card.set !== 'SVI') {
-      const potionSVI: any = { ...card, set: 'SVI', setNumber: '188', regulationMark: 'G' };
-      return this.getValidFormats(potionSVI);
-    }
-    if (card.name === 'Professor\'s Research' && card.set !== 'SVI') {
-      const professorsResearchSVI: any = { ...card, set: 'SVI', setNumber: '189', regulationMark: 'G' };
-      return this.getValidFormats(professorsResearchSVI);
-    }
-    if (card.name === 'Rare Candy' && card.set !== 'SVI') {
-      const rareCandySVI: any = { ...card, set: 'SVI', setNumber: '191', regulationMark: 'G' };
-      return this.getValidFormats(rareCandySVI);
-    }
-    if (card.name === 'Rocky Helmet' && card.set !== 'SVI') {
-      const rockyHelmetSVI: any = { ...card, set: 'SVI', setNumber: '193', regulationMark: 'G' };
-      return this.getValidFormats(rockyHelmetSVI);
-    }
-    if (card.name === 'Switch' && card.set !== 'SVI') {
-      const switchSVI: any = { ...card, set: 'SVI', setNumber: '194', regulationMark: 'G' };
-      return this.getValidFormats(switchSVI);
-    }
-    if (card.name === 'Ultra Ball' && card.set !== 'SVI') {
-      const ultraBallSVI: any = { ...card, set: 'SVI', setNumber: '196', regulationMark: 'G' };
-      return this.getValidFormats(ultraBallSVI);
-    }
-    if (card.name === 'Vitality Band' && card.set !== 'SVI') {
-      const vitalityBandSVI: any = { ...card, set: 'SVI', setNumber: '197', regulationMark: 'G' };
-      return this.getValidFormats(vitalityBandSVI);
-    }
-    //PAL
-    if (card.name === 'Boss\'s Orders' && card.set !== 'PAL') {
-      const bossOrdersPAL: any = { ...card, set: 'PAL', setNumber: '172', regulationMark: 'G' };
-      return this.getValidFormats(bossOrdersPAL);
-    }
-    if (card.name === 'Choice Belt' && card.set !== 'PAL') {
-      const choiceBeltPAL: any = { ...card, set: 'PAL', setNumber: '176', regulationMark: 'G' };
-      return this.getValidFormats(choiceBeltPAL);
-    }
-    if (card.name === 'Great Ball' && card.set !== 'PAL') {
-      const greatBallPAL: any = { ...card, set: 'PAL', setNumber: '183', regulationMark: 'G' };
-      return this.getValidFormats(greatBallPAL);
-    }
-    if (card.name === 'Super Rod' && card.set !== 'PAL') {
-      const superRodPAL: any = { ...card, set: 'PAL', setNumber: '188', regulationMark: 'G' };
-      return this.getValidFormats(superRodPAL);
-    }
-    if (card.name === 'Superior Energy Retrieval' && card.set !== 'PAL') {
-      const superiorEnergyRetrievalPAL: any = { ...card, set: 'PAL', setNumber: '189', regulationMark: 'G' };
-      return this.getValidFormats(superiorEnergyRetrievalPAL);
-    }
-    //MEW
-    if (card.name === 'Leftovers' && card.set !== 'MEW') {
-      const leftoversMEW: any = { ...card, set: 'MEW', setNumber: '163', regulationMark: 'G' };
-      return this.getValidFormats(leftoversMEW);
-    }
-    //PAR
-    if (card.name === 'Counter Catcher' && card.set !== 'PAR') {
-      const counterCatcherPAR: any = { ...card, set: 'PAR', setNumber: '160', regulationMark: 'G' };
-      return this.getValidFormats(counterCatcherPAR);
-    }
-    //TWM
-    if (card.name === 'Cook' && card.set !== 'TWM') {
-      const cookTWM: any = { ...card, set: 'TWM', setNumber: '147', regulationMark: 'H' };
-      return this.getValidFormats(cookTWM);
-    }
-    if (card.name === 'Enhanced Hammer' && card.set !== 'TWM') {
-      const enhancedHammerTWM: any = { ...card, set: 'TWM', setNumber: '148', regulationMark: 'H' };
-      return this.getValidFormats(enhancedHammerTWM);
-    }
-    if (card.name === 'Lucky Helmet' && card.set !== 'TWM') {
-      const luckyHelmetTWM: any = { ...card, set: 'TWM', setNumber: '158', regulationMark: 'H' };
-      return this.getValidFormats(luckyHelmetTWM);
-    }
-    //SSP
-    if (card.name === 'Counter Gain' && card.set !== 'SSP') {
-      const counterGainSSP: any = { ...card, set: 'SSP', setNumber: '169', regulationMark: 'H' };
-      return this.getValidFormats(counterGainSSP);
-    }
-    if (card.name === 'Dusk Ball' && card.set !== 'SSP') {
-      const duskBallSSP: any = { ...card, set: 'SSP', setNumber: '175', regulationMark: 'H' };
-      return this.getValidFormats(duskBallSSP);
-    }
-    //JTG
-    if (card.name === 'Super Potion' && card.set !== 'JTG') {
-      const superPotionJTG: any = { ...card, set: 'JTG', setNumber: '158', regulationMark: 'I' };
-      return this.getValidFormats(superPotionJTG);
-    }
-    // DRI
-    if (card.name === 'Energy Recycler' && card.set !== 'DRI') {
-      const energyRecyclerDRI: any = { ...card, set: 'DRI', setNumber: '164', regulationMark: 'I' };
-      return this.getValidFormats(energyRecyclerDRI);
-    }
-    if (card.name === 'Sacred Ash' && card.set !== 'DRI') {
-      const sacredAshDRI: any = { ...card, set: 'DRI', setNumber: '168', regulationMark: 'I' };
-      return this.getValidFormats(sacredAshDRI);
-    }
-    //SV11
-    if (card.name === 'Air Balloon' && card.set !== 'SV11B') {
-      const airBalloonSV11: any = { ...card, set: 'SV11B', setNumber: '82', regulationMark: 'I' };
-      return this.getValidFormats(airBalloonSV11);
-    }
-    if (card.name === 'Prism Energy' && card.set !== 'SV11B') {
-      const prismEnergySV11: any = { ...card, set: 'SV11B', setNumber: '86', regulationMark: 'I' };
-      return this.getValidFormats(prismEnergySV11);
-    }
-    if (card.name === 'Energy Retrieval' && card.set !== 'SV11W') {
-      const energyRetrievalSV11: any = { ...card, set: 'SV11W', setNumber: '79', regulationMark: 'G' };
-      return this.getValidFormats(energyRetrievalSV11);
-    }
-    if (card.name === 'Tool Scrapper' && card.set !== 'SV11W') {
-      const toolScrapperSV11: any = { ...card, set: 'SV11W', setNumber: '80', regulationMark: 'G' };
-      return this.getValidFormats(toolScrapperSV11);
-    }
-    if (card.name === 'Cheren' && card.set !== 'SV11W') {
-      const cherenSV11: any = { ...card, set: 'SV11W', setNumber: '84', regulationMark: 'G' };
-      return this.getValidFormats(cherenSV11);
-    }
+    // List of cards where any printing is legal in any format where the card is legal
+    const anyPrintingAllowed = [
+      'Pokémon Fan Club',
+      'Master Ball',
+      'Quick Ball',
+      'Crushing Hammer',
+      'Energy Search',
+      'Energy Switch',
+      'Exp. Share',
+      'Judge',
+      'Nest Ball',
+      'Pal Pad',
+      'Poké Ball',
+      'Pokégear 3.0',
+      'Pokémon Catcher',
+      'Potion',
+      "Professor's Research",
+      'Rare Candy',
+      'Rocky Helmet',
+      'Switch',
+      'Ultra Ball',
+      'Vitality Band',
+      "Boss's Orders",
+      'Choice Belt',
+      'Great Ball',
+      'Super Rod',
+      'Superior Energy Retrieval',
+      'Leftovers',
+      'Counter Catcher',
+      'Cook',
+      'Enhanced Hammer',
+      'Lucky Helmet',
+      'Counter Gain',
+      'Dusk Ball',
+      'Super Potion',
+      'Energy Recycler',
+      'Sacred Ash',
+      'Air Balloon',
+      'Prism Energy',
+      'Energy Retrieval',
+      'Tool Scrapper',
+      'Cheren',
+    ];
+
     const formats = [Format.UNLIMITED];
     [
       Format.GLC,
       Format.EXPANDED,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
+      Format.RSPK,
       Format.RETRO
     ].forEach(format => {
-      this.isValid(card, format) ? formats.push(format) : null;
+      this.isValid(card, format, anyPrintingAllowed) ? formats.push(format) : null;
     });
 
     return formats;
   }
 
-  static isValid(card: Card, format: Format): boolean {
-
+  static isValid(card: Card, format: Format, anyPrintingAllowed?: string[]): boolean {
     if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
+    }
+
+    // If this card is in the anyPrintingAllowed list, ignore set restrictions
+    if (anyPrintingAllowed && anyPrintingAllowed.includes(card.name)) {
+      switch (format) {
+        case Format.UNLIMITED:
+          return true;
+        case Format.STANDARD:
+          var banList = BanLists[format];
+          if (card.regulationMark === 'J') {
+            return false;
+          }
+          // Use SVI set date for Standard legality window
+          var setDate = SetReleaseDates['SVI'];
+          return setDate <= new Date();
+        case Format.STANDARD_NIGHTLY:
+          return card.regulationMark === 'G' ||
+            card.regulationMark === 'H' ||
+            card.regulationMark === 'I' ||
+            card.regulationMark === 'J';
+        case Format.EXPANDED:
+          var banList = BanLists[format];
+          // Use earliest legal set date for Expanded
+          var setDate = SetReleaseDates['BWP'];
+          return setDate <= new Date() &&
+            !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
+        case Format.GLC:
+          var banList = BanLists[format];
+          // Use earliest legal set date for GLC
+          var setDate = SetReleaseDates['BWP'];
+          // Force SV11, SV11B, SV11W to be legal in GLC regardless of date
+          const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
+          const isForceLegal = forceLegalSets.includes(card.set);
+          return (
+            (setDate <= new Date() || isForceLegal) &&
+            !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
+            !card.tags.some(t => [
+              CardTag.ACE_SPEC.toString(),
+              CardTag.POKEMON_EX.toString(),
+              CardTag.POKEMON_ex.toString(),
+              CardTag.POKEMON_V.toString(),
+              CardTag.POKEMON_VMAX.toString(),
+              CardTag.POKEMON_VSTAR.toString(),
+              CardTag.RADIANT.toString(),
+              CardTag.POKEMON_GX.toString(),
+              CardTag.PRISM_STAR.toString(),
+              CardTag.POKEMON_VUNION.toString()
+            ].includes(t)
+            ));
+        case Format.RETRO:
+          return true; // Any set allowed for these cards in Retro
+      }
     }
 
     switch (format) {
       case Format.UNLIMITED:
         return true;
-
       case Format.STANDARD:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
@@ -300,20 +228,17 @@ export class FormatValidator {
           return false;
         }
         return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
-
       case Format.STANDARD_NIGHTLY:
         var banList = BanLists[format];
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
           card.regulationMark === 'I' ||
           card.regulationMark === 'J';
-
       case Format.EXPANDED:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
-
       case Format.GLC:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
@@ -339,12 +264,40 @@ export class FormatValidator {
             CardTag.POKEMON_VUNION.toString()
           ].includes(t)
           ));
-
       case Format.RETRO:
         return card.set === 'BS' ||
           card.set === 'JU' ||
           card.set === 'FO' ||
           card.set === 'PR';
+
+      case Format.RSPK:
+        return card.set === 'RS' ||
+          card.set === 'SS' ||
+          card.set === 'DR' ||
+          card.set === 'MA' ||
+          card.set === 'HL' ||
+          card.set === 'RG' ||
+          card.set === 'TRR' ||
+          card.set === 'DX' ||
+          card.set === 'EM' ||
+          card.set === 'UF' ||
+          card.set === 'DS' ||
+          card.set === 'LM' ||
+          card.set === 'HP' ||
+          card.set === 'CG' ||
+          card.set === 'DF' ||
+          card.set === 'PK' ||
+          card.set === 'P1' ||
+          card.set === 'P2' ||
+          card.set === 'P3' ||
+          card.set === 'P4' ||
+          card.set === 'P5' ||
+          card.set === 'MCVS' ||
+          card.set === 'MAL' ||
+          card.set === 'MSM' ||
+          card.set === 'MSD' ||
+          card.set === 'PCGP' ||
+          card.set === 'PCGL';
 
       case Format.WORLDS_2013:
         var banList = BanLists[format];
@@ -354,7 +307,7 @@ export class FormatValidator {
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
     }
 
-    if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
+    if (banList && banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
       return false;
     }
     return false;

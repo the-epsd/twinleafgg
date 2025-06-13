@@ -21,6 +21,9 @@ import { Tyrogue } from './tyrogue';
 import { Unown } from './unown';
 import { Vulpix } from './vulpix';
 
+// Other prints
+import { PokemonReversalHS } from './other-prints';
+
 export const setHeartGoldAndSoulSilver: Card[] = [
   new Cleffa(),
   new Cyndaquil(),
@@ -43,4 +46,7 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new Unown(),
   new Vulpix(),
   new WaterEnergy(),
+
+  // Other prints
+  new PokemonReversalHS(),
 ];

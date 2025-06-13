@@ -168,6 +168,7 @@
   "LABEL_EXPANDED": "Expanded",
   "LABEL_GLC": "GLC",
   "LABEL_UNLIMITED": "Unlimited",
+  "LABEL_RSPK": "RS-PK",
   "LABEL_RETRO": "Retro",
   "LOGIN_CHANGE_SERVER": "Change server address",
   "LOGIN_CHANGE_SERVER_SUCCESS": "Server address successfully changed.",
@@ -349,6 +350,7 @@
   "FORMAT_STANDARD_NIGHTLY": "Standard Nightly",
   "FORMAT_EXPANDED": "Expanded",
   "FORMAT_UNLIMITED": "Unlimited",
+  "FORMAT_RSPK": "RS-PK",
   "FORMAT_RETRO": "Retro",
   "FORMAT_GLC": "GLC",
   "GAME_MESSAGES": {

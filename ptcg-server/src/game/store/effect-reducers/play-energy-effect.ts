@@ -4,6 +4,7 @@ import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
+import { EnergyType } from '../card/card-types';
 
 
 export function playEnergyReducer(store: StoreLike, state: State, effect: Effect): State {
@@ -14,6 +15,10 @@ export function playEnergyReducer(store: StoreLike, state: State, effect: Effect
     const pokemonCard = effect.target.getPokemonCard();
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);
+    }
+    if (effect.energyCard.energyType === EnergyType.SPECIAL
+      && effect.player.marker.hasMarker(effect.player.ATTACK_EFFECT_SPECIAL_ENERGY_LOCK)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     store.log(state, GameLog.LOG_PLAYER_ATTACHES_CARD, {

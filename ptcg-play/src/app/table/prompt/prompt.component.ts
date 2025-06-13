@@ -56,14 +56,6 @@ export class PromptComponent implements OnChanges {
     const promptId = prompt ? prompt.id : -1;
     const currentId = this.prompt ? this.prompt.id : -1;
 
-    // If the prompt is a board overlay prompt, do not show any prompt UI
-    if (prompt && this.isBoardOverlayPromptType(prompt.type)) {
-      this.prompt = prompt;
-      this.isPromptVisible = false;
-      this.minimized = false;
-      return;
-    }
-
     if (currentId !== promptId || differentGame) {
       this.prompt = undefined;
       // setTimeout, because we would like the new prompt animate before displaying
@@ -117,14 +109,5 @@ export class PromptComponent implements OnChanges {
 
   public isFullScreenPrompt(): boolean {
     return this.prompt?.type === 'Choose pokemon';
-  }
-
-  public isBoardOverlayPrompt(): boolean {
-    // Add all prompt types that use the board overlay here
-    return this.prompt?.type === 'Choose pokemon';
-  }
-
-  private isBoardOverlayPromptType(type: string): boolean {
-    return type === 'Choose pokemon';
   }
 }

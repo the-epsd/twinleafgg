@@ -7,6 +7,7 @@ export * from './set-vending-series';
 export * from './set-wotc-promos';
 
 export * from './set-gym-heros';
+export * from './set-gym-challenge';
 
 //Retro Energy
 export * from './set-base-set-energy';

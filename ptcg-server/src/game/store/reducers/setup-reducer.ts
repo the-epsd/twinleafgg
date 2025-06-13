@@ -22,6 +22,7 @@ import { SelectPrompt } from '../prompts/select-prompt';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { PokemonCard } from '../card/pokemon-card';
 import { ShowMulliganPrompt } from '../prompts/show-mulligan-prompt';
+import { ConfirmPrompt } from '../prompts/confirm-prompt';
 
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: State): void {
   if (cards.length === 0) {
@@ -55,13 +56,12 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   } else {
     const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
     yield store.prompt(state, coinFlipPrompt, whoBegins => {
-      const goFirstPrompt = new SelectPrompt(
+      const goFirstPrompt = new ConfirmPrompt(
         whoBegins ? player.id : opponent.id,
-        GameMessage.GO_FIRST,
-        [GameMessage.YES, GameMessage.NO]
+        GameMessage.GO_FIRST
       );
       store.prompt(state, goFirstPrompt, choice => {
-        if (choice === 0) {
+        if (choice === true) {
           state.activePlayer = whoBegins ? 0 : 1;
         } else {
           state.activePlayer = whoBegins ? 1 : 0;

@@ -34,8 +34,8 @@ export class HolonsCastform extends PokemonCard {
   public name: string = 'Holon\'s Castform';
   public fullName: string = 'Holon\'s Castform HP';
 
-  // Which energies this provides when attached as an energy
-  public provides: CardType[] = [CardType.ANY, CardType.ANY];
+  // Which energies this provides when not attached as an energy
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // The Special Energy Stuff
@@ -134,7 +134,7 @@ export class HolonsCastform extends PokemonCard {
       // Check if this card is registered as an energy card in the PokemonCardList
       const pokemonList = effect.source;
       if (pokemonList.energyCards.includes(this)) {
-        effect.energyMap.push({ card: this, provides: this.provides });
+        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
       }
     }
 

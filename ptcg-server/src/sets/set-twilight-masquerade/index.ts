@@ -47,6 +47,7 @@ import { Heatran } from './heatran';
 import { HisuianArcanine } from './hisuian-arcanine';
 import { HisuianGrowlithe } from './hisuian-growlithe';
 import { HyperAroma } from './hyper-aroma';
+import { Illumise } from './illumise';
 import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
@@ -190,6 +191,7 @@ export const setTwilightMasquerade: Card[] = [
   new Poliwag(),
   new Poliwhirl(),
   new Poliwrath(),
+  new Illumise(),
   new BoomerangEnergy(),
   new Feebas(),
   new Girafarig(),

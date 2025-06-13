@@ -42,8 +42,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       // Move Pokémon to hand
       if (pokemons.length > 0) {
         MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
       }
-      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
     }
   });
 }
