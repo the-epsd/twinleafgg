@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { Card, CardTarget, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { BLOCK_IF_HAS_SPECIAL_CONDITION, IS_POKEPOWER_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -50,11 +50,17 @@ export class Sceptile extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergy);
-        const blockedCards: Card[] = [];
 
+        const blockedCards: Card[] = [];
         checkProvidedEnergy.energyMap.forEach(em => {
           if (!em.provides.includes(CardType.GRASS) && !em.provides.includes(CardType.ANY)) {
             blockedCards.push(em.card);
+          }
+        });
+
+        cardList.cards.forEach(em => {
+          if (cardList.getPokemons().includes(em as PokemonCard)) {
+            blockedCards.push(em);
           }
         });
 
@@ -76,7 +82,7 @@ export class Sceptile extends PokemonCard {
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY },
+        {},
         { allowCancel: true, blockedMap }
       ), transfers => {
         if (transfers === null) {
@@ -87,6 +93,17 @@ export class Sceptile extends PokemonCard {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
+
+          if (transfer.card instanceof PokemonCard) {
+            // Remove it from the source
+            source.removePokemonAsEnergy(transfer.card);
+
+            // Reposition it to be with energy cards (at the beginning of the card list)
+            target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
+
+            // Register this card as energy in the PokemonCardList
+            target.addPokemonAsEnergy(transfer.card);
+          }
         }
       });
     }

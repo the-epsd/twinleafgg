@@ -67,8 +67,8 @@ export class Jirachi extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      if (player.active.cards[0] !== this) {
-        return state; // Not active
+      if (player.active.getPokemonCard() !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (player.active.specialConditions.length > 0) {
