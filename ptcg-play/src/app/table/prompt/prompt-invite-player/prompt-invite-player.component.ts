@@ -26,6 +26,10 @@ export class PromptInvitePlayerComponent implements OnInit {
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
     [Format.EXPANDED]: 'LABEL_EXPANDED',
+    [Format.SWSH]: 'LABEL_SWSH',
+    [Format.SM]: 'LABEL_SM',
+    [Format.XY]: 'LABEL_XY',
+    [Format.BW]: 'LABEL_BW',
     [Format.RSPK]: 'LABEL_RSPK',
     [Format.RETRO]: 'LABEL_RETRO'
   };

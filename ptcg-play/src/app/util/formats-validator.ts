@@ -268,6 +268,18 @@ export class FormatValidator {
         return card.set === 'BS' ||
           card.set === 'JU' ||
           card.set === 'FO' ||
+          card.set === 'TR' ||
+          card.set === 'G1' ||
+          card.set === 'G2' ||
+          card.set === 'SI' ||
+          card.set === 'N1' ||
+          card.set === 'N2' ||
+          card.set === 'N3' ||
+          card.set === 'N4' ||
+          card.set === 'LC' ||
+          card.set === 'EX' ||
+          card.set === 'AQ' ||
+          card.set === 'SK' ||
           card.set === 'PR';
 
       case Format.RSPK:
@@ -299,12 +311,77 @@ export class FormatValidator {
           card.set === 'PCGP' ||
           card.set === 'PCGL';
 
-      case Format.WORLDS_2013:
-        var banList = BanLists[format];
-        var setDate = SetReleaseDates[card.set];
-        return setDate >= SetReleaseDates['BWP'] &&
-          setDate <= SetReleaseDates['PLF'] &&
-          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
+      case Format.SWSH:
+        return card.set === 'SWSH' ||
+          card.set === 'SSH' ||
+          card.set === 'RCL' ||
+          card.set === 'DAA' ||
+          card.set === 'CPA' ||
+          card.set === 'VIV' ||
+          card.set === 'SHF' ||
+          card.set === 'BST' ||
+          card.set === 'CRE' ||
+          card.set === 'EVS' ||
+          card.set === 'CEL' ||
+          card.set === 'FST' ||
+          card.set === 'BRS' ||
+          card.set === 'ASR' ||
+          card.set === 'PGO' ||
+          card.set === 'LOR' ||
+          card.set === 'SIT' ||
+          card.set === 'CRZ';
+
+      case Format.SM:
+        return card.set === 'SUM' ||
+          card.set === 'SMP' ||
+          card.set === 'SM10a' ||
+          card.set === 'GRI' ||
+          card.set === 'BUS' ||
+          card.set === 'SLG' ||
+          card.set === 'CIN' ||
+          card.set === 'UPR' ||
+          card.set === 'FLI' ||
+          card.set === 'CES' ||
+          card.set === 'DRM' ||
+          card.set === 'LOT' ||
+          card.set === 'TEU' ||
+          card.set === 'DET' ||
+          card.set === 'UNB' ||
+          card.set === 'UNM' ||
+          card.set === 'HIF' ||
+          card.set === 'CEC';
+
+      case Format.XY:
+        return card.set === 'XY' ||
+          card.set === 'KSS' ||
+          card.set === 'FLF' ||
+          card.set === 'FFI' ||
+          card.set === 'PHF' ||
+          card.set === 'PRC' ||
+          card.set === 'DCR' ||
+          card.set === 'ROS' ||
+          card.set === 'AOR' ||
+          card.set === 'BKT' ||
+          card.set === 'BKP' ||
+          card.set === 'GEN' ||
+          card.set === 'FCO' ||
+          card.set === 'STS' ||
+          card.set === 'EVO' ||
+          card.set === 'XYP';
+
+      case Format.BW:
+        return card.set === 'BW' ||
+          card.set === 'EPO' ||
+          card.set === 'NVI' ||
+          card.set === 'NXD' ||
+          card.set === 'DEX' ||
+          card.set === 'DRX' ||
+          card.set === 'DRV' ||
+          card.set === 'BCR' ||
+          card.set === 'PLS' ||
+          card.set === 'PLF' ||
+          card.set === 'PLB' ||
+          card.set === 'LTR';
     }
 
     if (banList && banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
@@ -385,7 +462,10 @@ export const BanLists: { [key: number]: string[] } = {
   [Format.UNLIMITED]: [],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
-  [Format.WORLDS_2013]: [],
+  [Format.BW]: [],
+  [Format.XY]: [],
+  [Format.SM]: [],
+  [Format.SWSH]: [],
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {

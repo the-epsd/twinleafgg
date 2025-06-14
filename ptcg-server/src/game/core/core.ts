@@ -90,6 +90,15 @@ export class Core {
       gameSettings.rules.attackFirstTurn = true;
       gameSettings.rules.firstTurnDrawCard = false;
     }
+    if (gameSettings.format === Format.RSPK) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = false;
+    }
+    if (gameSettings.format === Format.BW) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = true;
+      gameSettings.rules.firstTurnUseSupporter = true;
+    }
     const game = new Game(this, generateId(this.games), gameSettings);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
     if (invited) {

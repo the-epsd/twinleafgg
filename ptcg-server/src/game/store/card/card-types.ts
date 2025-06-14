@@ -1308,7 +1308,6 @@ export enum Format {
   SM,
   SWSH,
   SV,
-  WORLDS_2013,
 }
 
 export const Energy = {
