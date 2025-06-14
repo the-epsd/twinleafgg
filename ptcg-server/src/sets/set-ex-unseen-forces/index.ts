@@ -28,7 +28,7 @@ import { UnownE } from './unown-e';
 import { Ursaring } from './ursaring';
 
 // Other prints
-import { WarpEnergyUF } from './other-prints';
+import { BoostEnergyUF, WarpEnergyUF } from './other-prints';
 
 export const setEXUnseenForces: Card[] = [
   new Aipom(),
@@ -60,5 +60,6 @@ export const setEXUnseenForces: Card[] = [
   new Ursaring(),
 
   // Other prints
+  new BoostEnergyUF(),
   new WarpEnergyUF(),
 ];

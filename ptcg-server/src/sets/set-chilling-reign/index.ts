@@ -19,6 +19,7 @@ import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
 import { GalarianMoltresV } from './galarian-moltres-v';
+import { GalarianWeezing } from './galarian-weezing';
 import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
@@ -75,6 +76,7 @@ export const setChillingReign: Card[] = [
   new Froslass(),
   new GalarianArticunoV(),
   new GalarianMoltresV(),
+  new GalarianWeezing(),
   new GalarianZapdosV(),
   new Gardevoir(),
   new Gallade(),

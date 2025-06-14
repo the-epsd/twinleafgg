@@ -573,7 +573,7 @@
     "LOG_TURN": "Turn {{turn}}.",
     "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}} puts {{card}} in their hand.",
     "LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK": "{{ name }} puts {{ card }} on the bottom of their deck.",
-    "LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER": "{{name}} discards {{card}} from the field with field blower.",
+    "LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER": "{{name}} discards {{card}} from the field with {{effectName}}.",
     "LOG_PLAYER_DISCARDS_CARD": "{{name}} discards {{card}} from {{effectName}}.",
     "LOG_PLAYER_DISCARDS_CARD_FROM_HAND": "{{name}} discards {{card}} from their hand.",
     "LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE": "{{name}} switches {{card}} to the active spot.",

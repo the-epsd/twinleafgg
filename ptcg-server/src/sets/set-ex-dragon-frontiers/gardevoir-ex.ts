@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Card, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARD_TO, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Gardevoirex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -89,19 +90,71 @@ export class Gardevoirex extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
+      const blockedFrom: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList !== player.active) {
+          blockedFrom.push(target);
+        }
+      });
+
+      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkProvidedEnergy);
+
+        const blockedCards: Card[] = [];
+        checkProvidedEnergy.energyMap.forEach(em => {
+          if (!em.provides.includes(CardType.FIRE) && !em.provides.includes(CardType.ANY)) {
+            blockedCards.push(em.card);
+          }
+        });
+
+        cardList.cards.forEach(em => {
+          if (cardList.getPokemons().includes(em as PokemonCard)) {
+            blockedCards.push(em);
+          }
+        });
+
+        const blocked: number[] = [];
+        blockedCards.forEach(bc => {
+          const index = cardList.cards.indexOf(bc);
+          if (index !== -1 && !blocked.includes(index)) {
+            blocked.push(index);
+          }
+        });
+
+        if (blocked.length !== 0) {
+          blockedMap.push({ source: target, blocked });
+        }
+      });
+
+      store.prompt(state, new MoveEnergyPrompt(
+        effect.player.id,
+        GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, name: 'Fire Energy' },
-        { allowCancel: false, min: 0, max: 1 }
+        [SlotType.BENCH, SlotType.ACTIVE],
+        {},
+        { allowCancel: true, blockedMap, blockedFrom, min: 0, max: 1 }
       ), transfers => {
-        transfers = transfers || [];
+        if (transfers === null) {
+          return;
+        }
+
         for (const transfer of transfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          MOVE_CARD_TO(state, transfer.card, target);
+          source.moveCardTo(transfer.card, target);
+
+          if (transfer.card instanceof PokemonCard) {
+            // Remove it from the source
+            source.removePokemonAsEnergy(transfer.card);
+
+            // Reposition it to be with energy cards (at the beginning of the card list)
+            target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
+
+            // Register this card as energy in the PokemonCardList
+            target.addPokemonAsEnergy(transfer.card);
+          }
         }
       });
     }

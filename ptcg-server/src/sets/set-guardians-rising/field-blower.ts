@@ -64,7 +64,7 @@ export class FieldBlower extends TrainerCard {
               const cardList = StateUtils.findCardList(state, stadiumCard);
               const stadiumPlayer = StateUtils.findOwner(state, cardList);
               MOVE_CARDS(store, state, cardList, stadiumPlayer.discard, { sourceCard: this });
-              store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name, effectName: this.name });
 
               let targets: PokemonCardList[] = [];
               return store.prompt(state, new ChoosePokemonPrompt(
@@ -79,7 +79,7 @@ export class FieldBlower extends TrainerCard {
                   const owner = StateUtils.findOwner(state, target);
                   if (target.tool !== undefined) {
                     target.moveCardTo(target.tool, owner.discard);
-                    store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
+                    store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name, effectName: this.name });
                     target.tool = undefined;
                   }
                 });
