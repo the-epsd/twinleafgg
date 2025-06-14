@@ -4,6 +4,8 @@ import { Bagon2 } from './bagon2';
 import { Beldum } from './beldum';
 import { Ditto } from './ditto';
 import { Eevee } from './eevee';
+import { Eevee2 } from './eevee2';
+import { Flareonex } from './flareon-ex';
 import { Gardevoir } from './gardevoir';
 import { HolonEnergyFF } from './holon-energy-ff';
 import { HolonLass } from './holon-lass';
@@ -37,6 +39,8 @@ export const setEXDeltaSpecies: Card[] = [
   new Beldum(),
   new Ditto(),
   new Eevee(),
+  new Eevee2(),
+  new Flareonex(),
   new Gardevoir(),
   new HolonEnergyFF(),
   new HolonLass(),

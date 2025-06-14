@@ -2,6 +2,7 @@ import { Card } from '../../game';
 import { Aipom } from './aipom';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
+import { Espeonex } from './espeon-ex';
 import { FluffyBerry } from './fluffy-berry';
 import { Forretress } from './forretress';
 import { Hitmonlee } from './hitmonlee';
@@ -18,6 +19,7 @@ import { Scizorex } from './scizor-ex';
 import { SolidRage } from './solid-rage';
 import { Stantler } from './stantler';
 import { Slowpoke } from './slowpoke';
+import { Slugma } from './slugma';
 import { Smoochum } from './smoochum';
 import { Steelixex } from './steelix-ex';
 import { Sudowoodo } from './sudowoodo';
@@ -34,6 +36,7 @@ export const setEXUnseenForces: Card[] = [
   new Aipom(),
   new Bayleef(),
   new Chikorita(),
+  new Espeonex(),
   new FluffyBerry(),
   new Forretress(),
   new Hitmonlee(),
@@ -50,6 +53,7 @@ export const setEXUnseenForces: Card[] = [
   new SolidRage(),
   new Stantler(),
   new Slowpoke(),
+  new Slugma(),
   new Smoochum(),
   new Steelixex(),
   new Sudowoodo(),

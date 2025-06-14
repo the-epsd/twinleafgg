@@ -2,6 +2,8 @@ import { Card } from '../../game';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Copycat } from './copycat';
+import { Electabuzz } from './electabuzz';
+import { Elekid } from './elekid';
 import { Flygonex } from './flygon-ex';
 import { Gardevoirex } from './gardevoir-ex';
 import { Horsea } from './horsea';
@@ -10,6 +12,7 @@ import { Kingdraex } from './kingdra-ex';
 import { Kirlia } from './kirlia';
 import { Latiasex } from './latias-ex';
 import { Latiosex } from './latios-ex';
+import { Lickitung } from './lickitung';
 import { Mantine } from './mantine';
 import { Meganium } from './meganium';
 import { MewStar } from './mew-star';
@@ -30,6 +33,8 @@ export const setEXDragonFrontiers: Card[] = [
   new Bayleef(),
   new Chikorita(),
   new Copycat(),
+  new Electabuzz(),
+  new Elekid(),
   new Flygonex(),
   new Gardevoirex(),
   new Horsea(),
@@ -38,6 +43,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Kirlia(),
   new Latiasex(),
   new Latiosex(),
+  new Lickitung(),
   new Mantine(),
   new Meganium(),
   new MewStar(),

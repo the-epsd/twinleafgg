@@ -1,54 +1,54 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, GameError, PokemonCardList, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, GameError, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
 
-export class Smoochum extends PokemonCard {
+export class Elekid extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = W;
-  public hp: number = 50;
-  public weakness = [{ type: M }];
+  public cardType: CardType = F;
+  public hp: number = 40;
+  public weakness = [{ type: F }];
   public retreat = [C];
 
   public powers = [{
     name: 'Baby Evolution',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may put Jynx from your hand onto Smoochum (this counts as evolving Smoochum) and remove all damage counters from Smoochum.'
+    text: 'Once during your turn (before your attack), you may put Electabuzz from your hand onto Elekid (this counts as evolving Elekid) and remove all damage counters from Elekid.'
   }];
 
   public attacks = [{
-    name: 'Blown Kiss',
+    name: 'Thunder Spear',
     cost: [C],
     damage: 0,
-    text: 'Put 1 damage counter on 1 of your opponent\'s Pokémon.'
+    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 10 damage to that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
-  public set: string = 'UF';
+  public set: string = 'DF';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '31';
-  public name: string = 'Smoochum';
-  public fullName: string = 'Smoochum UF';
+  public setNumber: string = '48';
+  public name: string = 'Elekid';
+  public fullName: string = 'Elekid DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasJynx = player.hand.cards.some(card => card instanceof PokemonCard && card.name === 'Jynx');
+      const hasElectabuzz = player.hand.cards.some(card => card instanceof PokemonCard && card.name === 'Electabuzz');
 
-      // Check if Jynx is in the player's hand
-      if (!hasJynx) {
+      // Check if Electabuzz is in the player's hand
+      if (!hasElectabuzz) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       // Blocking pokemon cards, that cannot be valid evolutions
       const blocked: number[] = [];
       player.hand.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.name !== 'Jynx') {
+        if (card instanceof PokemonCard && card.name !== 'Electabuzz') {
           blocked.push(index);
         }
       });
@@ -82,23 +82,7 @@ export class Smoochum extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutCountersEffect(effect, 10);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
-      });
+      THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(10, effect, store, state);
     }
 
     return state;

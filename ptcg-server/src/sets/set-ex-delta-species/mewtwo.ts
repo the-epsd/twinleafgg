@@ -6,7 +6,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import {
   PowerType, StoreLike, State, PlayerType, SlotType,
   MoveEnergyPrompt, StateUtils,
-  CardTarget
+  CardTarget,
+  Card
 } from '../../game';
 import { IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -41,6 +42,7 @@ export class Mewtwo extends PokemonCard {
   public setNumber: string = '12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
@@ -50,7 +52,7 @@ export class Mewtwo extends PokemonCard {
 
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card === this) {
+        if (card.name === this.name) {
           blockedTo.push(target);
         }
       });
@@ -60,13 +62,24 @@ export class Mewtwo extends PokemonCard {
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergy);
 
-        // Block all cards that do NOT provide energy
+        const blockedCards: Card[] = [];
+        checkProvidedEnergy.energyMap.forEach(em => {
+          if (em.provides.length === 0) {
+            blockedCards.push(em.card);
+          }
+        });
+
+        cardList.cards.forEach(em => {
+          if (cardList.getPokemons().includes(em as PokemonCard)) {
+            blockedCards.push(em);
+          }
+        });
+
         const blocked: number[] = [];
-        cardList.cards.forEach((c, idx) => {
-          // Find if this card is in the energyMap and provides at least one energy
-          const providesEnergy = checkProvidedEnergy.energyMap.some(em => em.card === c && em.provides.length > 0);
-          if (!providesEnergy) {
-            blocked.push(idx);
+        blockedCards.forEach(bc => {
+          const index = cardList.cards.indexOf(bc);
+          if (index !== -1 && !blocked.includes(index)) {
+            blocked.push(index);
           }
         });
 
@@ -81,7 +94,7 @@ export class Mewtwo extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         {},
-        { allowCancel: true, blockedMap, blockedTo }
+        { allowCancel: false, blockedMap, blockedTo }
       ), transfers => {
         if (transfers === null) {
           return;
@@ -91,7 +104,21 @@ export class Mewtwo extends PokemonCard {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
+
+          // Handle holon mons
+          if (transfer.card instanceof PokemonCard) {
+            // Remove it from the source
+            source.removePokemonAsEnergy(transfer.card);
+
+            // Reposition it to be with energy cards (at the beginning of the card list)
+            target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
+
+            // Register this card as energy in the PokemonCardList
+            target.addPokemonAsEnergy(transfer.card);
+          }
         }
+
+        return state;
       });
     }
 
