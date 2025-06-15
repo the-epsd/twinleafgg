@@ -131,6 +131,11 @@ export class PokemonCardList extends CardList {
     this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
 
     this.marker.markers = [];
+
+    this.triggerAnimation = false;
+    this.showBasicAnimation = false;
+    this.triggerAttackAnimation = false;
+
     this.removeSpecialCondition(SpecialCondition.POISONED);
     this.removeSpecialCondition(SpecialCondition.ASLEEP);
     this.removeSpecialCondition(SpecialCondition.BURNED);
