@@ -9,10 +9,9 @@ import { DeckService } from '../api/services/deck.service';
 import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
-import { Archetype, CardType } from 'ptcg-server';
+import { Archetype } from 'ptcg-server';
 import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
 import { Format } from 'ptcg-server';
-import { FormatValidator } from 'src/app/util/formats-validator';
 
 @UntilDestroy()
 
@@ -273,17 +272,9 @@ export class DeckComponent implements OnInit {
       }
     } else {
       // For other formats, show only decks valid for that format
-      const validDecks = this.decks.filter(deck => {
-        if (Array.isArray(deck.format) && deck.format.includes(Format['THEME'])) {
-          // Only include theme decks if toggle is on and the deck is valid for this format
-          return this.showThemeDecksInAllTab && deck.format.includes(Format[format.toUpperCase()]);
-        }
-        // Validate using FormatValidator
-        const cards = deck.deckItems?.map(item => item.card).filter(Boolean) || [];
-        const validFormats = FormatValidator.getValidFormatsForCardList(cards);
-        return validFormats.includes(Format[format.toUpperCase()]);
-      });
-      this.filteredDecks = validDecks;
+      this.filteredDecks = this.decks.filter(deck =>
+        Array.isArray(deck.format) && deck.format.includes(Format[format.toUpperCase()])
+      );
     }
   }
 

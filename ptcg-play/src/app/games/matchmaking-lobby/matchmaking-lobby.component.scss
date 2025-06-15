@@ -236,32 +236,3 @@
   color: rgba(255, 255, 255, 0.7);
   font-weight: bold;
 }
-
-::ng-deep .no-ripple .mat-ripple-element {
-  display: none !important;
-}
-
-::ng-deep {
-  .mat-snack-bar-container {
-    border-radius: 32px !important;
-    background: #101219 !important;
-    border: 2px solid #459058 !important;
-    color: white !important;
-    transform: scale(0.75);
-  }
-
-  .error-snackbar {
-    background: #101219;
-    color: white;
-    min-width: 150px !important;
-    height: 40px !important;
-    margin-top: 60px !important;
-
-    // Message text styling
-    .mat-simple-snackbar {
-      font-family: 'Segoe UI', sans-serif;
-      font-weight: 500;
-      justify-content: center;
-    }
-  }
-}

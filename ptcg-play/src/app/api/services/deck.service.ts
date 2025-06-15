@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { DeckListResponse, DeckResponse } from '../interfaces/deck.interface';
 import { Response } from '../interfaces/response.interface';
-import { Card, Format, Archetype } from 'ptcg-server';
+import { Format, Archetype } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
-import { FormatValidator } from 'src/app/util/formats-validator';
 
 
 @Injectable()
@@ -73,6 +72,17 @@ export class DeckService {
       id: deckId,
       name
     });
+  }
+
+  /**
+   * Calls the backend to get valid formats for a list of card names.
+   * @param cardNames string[]
+   * @returns Observable<number[]>
+   */
+  public getValidFormatsForCardList(cardNames: string[]) {
+    return this.api.post<any>('/v1/decks/validate-formats', { cardNames }).pipe(
+      map(response => response.formats || [])
+    );
   }
 
 }

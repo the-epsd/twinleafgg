@@ -49,3 +49,82 @@
 .energy-symbol {
   font-family: 'PTCG', sans-serif;
 }
+
+// Style the dropdown panel
+::ng-deep .mat-select-panel {
+  background: #1a1f29;
+  border-radius: 16px;
+  margin-top: 40px;
+
+  .mat-option {
+    color: white;
+    font-size: 12px;
+    height: 32px;
+    line-height: 32px;
+
+    &:hover:not(.mat-option-disabled),
+    &:focus:not(.mat-option-disabled) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &.mat-selected:not(.mat-option-disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+  }
+}
+
+//mat-menu-content
+
+// Custom styles for the mat-select trigger
+::ng-deep .mat-select-trigger {
+  // Text color of the selected value
+  color: #ccc;
+}
+
+// Custom styles for the mat-select arrow icon
+::ng-deep .mat-select-arrow {
+  // Color of the arrow icon
+  color: #999;
+}
+
+::ng-deep .no-ripple .mat-ripple-element {
+  display: none !important;
+}
+
+::ng-deep {
+  .mat-snack-bar-container {
+    border-radius: 32px !important;
+    background: #101219 !important;
+    border: 2px solid #459058 !important;
+    color: white !important;
+    transform: scale(0.75);
+    display: inline-block !important;
+    min-width: unset !important;
+    width: auto !important;
+    max-width: 80vw !important;
+  }
+
+  .error-snackbar {
+    background: #101219;
+    color: white;
+    min-width: unset !important;
+    width: auto !important;
+    height: 40px !important;
+    margin-top: 60px !important;
+
+    // Message text styling
+    .mat-simple-snackbar {
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 500;
+      justify-content: center;
+    }
+  }
+}
+
+::ng-deep .mat-menu-panel {
+  .mat-menu-item {
+    height: 36px;
+    line-height: 36px;
+  }
+}

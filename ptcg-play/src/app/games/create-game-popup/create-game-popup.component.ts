@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Card, Format, GameSettings } from 'ptcg-server';
-import { Deck, DeckListEntry } from 'src/app/api/interfaces/deck.interface';
+import { Format, GameSettings } from 'ptcg-server';
+import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
-import { FormatValidator } from 'src/app/util/formats-validator';
 import { SelectPopupOption } from '../../shared/alert/select-popup/select-popup.component';
 import { SessionService } from 'src/app/shared/session/session.service';
 
@@ -64,21 +63,6 @@ export class CreateGamePopupComponent implements OnInit {
     this.decks = data.decks;
     this.settings.format = Format.STANDARD;
 
-    this.decks.forEach(deck => {
-      // Only assign for user decks (not theme decks)
-      // Theme decks have negative IDs (or use another property if needed)
-      if (
-        deck.value.id >= 0 && // Only user decks
-        (!Array.isArray(deck.value.format) || deck.value.format.length === 0) &&
-        deck.value.cards &&
-        deck.value.cards.length > 0
-      ) {
-        const deckCards: Card[] = [];
-        deck.value.cards.forEach(card => deckCards.push(this.cardsBaseService.getCardByName(card)));
-        deck.value.format = FormatValidator.getValidFormatsForCardList(deckCards);
-      }
-    });
-
     this.onFormatSelected(this.settings.format);
   }
 
@@ -99,14 +83,14 @@ export class CreateGamePopupComponent implements OnInit {
 
   hasValidDeck(): boolean {
     const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
-    return selectedDeck && selectedDeck.value.format.includes(this.settings.format);
+    return selectedDeck && selectedDeck.value.format.includes(this.settings.format) && selectedDeck.value.isValid;
   }
 
 
   public confirm() {
     // Check if the selected deck is valid for the chosen format
     const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
-    if (selectedDeck && !selectedDeck.value.format.includes(this.settings.format)) {
+    if (!selectedDeck || !selectedDeck.value.format.includes(this.settings.format) || !selectedDeck.value.isValid) {
       // Show an error message or alert
       console.error('Selected deck is not valid for the chosen format.');
       return;
@@ -124,11 +108,13 @@ export class CreateGamePopupComponent implements OnInit {
 
   onFormatSelected(format: Format) {
     this.formatValidDecks = this.decks.filter(d =>
-      d.value.format.includes(format)
+      d.value.format.includes(format) && d.value.isValid
     ).map(d => ({ value: d.value.id, viewValue: d.value.name }));
 
     if (this.formatValidDecks.length > 0) {
       this.deckId = this.formatValidDecks[0].value;
+    } else {
+      this.deckId = null;
     }
   }
 }
