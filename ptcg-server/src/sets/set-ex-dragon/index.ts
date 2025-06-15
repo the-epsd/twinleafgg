@@ -8,6 +8,7 @@ import { Meditite } from './meditite';
 import { MrBrineysCompassion } from './mr-brineys-compassion';
 import { Numel } from './numel';
 import { Rayquazaex } from './rayquaza-ex';
+import { Salamence } from './salamence';
 import { Treecko } from './treecko';
 import { TvReporter } from './tv-reporter';
 
@@ -21,6 +22,7 @@ export const setEXDragon: Card[] = [
   new MrBrineysCompassion(),
   new Numel(),
   new Rayquazaex(),
+  new Salamence(),
   new Treecko(),
   new TvReporter(),
 ];

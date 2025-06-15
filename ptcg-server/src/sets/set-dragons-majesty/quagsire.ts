@@ -35,7 +35,7 @@ function* useWashOut(next: Function, store: StoreLike, state: State, effect: Pow
 
   const blocked2: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (player.active.cards[0] !== card) {
+    if (player.active.getPokemonCard() !== card) {
       blocked2.push(target);
     }
   });

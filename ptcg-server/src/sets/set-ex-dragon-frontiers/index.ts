@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { Altariaex } from './altaria-ex';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Copycat } from './copycat';
@@ -24,12 +25,14 @@ import { Ralts2 } from './ralts2';
 import { Rayquazaex } from './rayquaza-ex';
 import { Seadra } from './seadra';
 import { StrengthCharm } from './strength-charm';
+import { Swablu } from './swablu';
 import { Trapinch } from './trapinch';
 import { Trapinch2 } from './trapinch2';
 import { Vibrava } from './vibrava';
 import { Vibrava2 } from './vibrava2';
 
 export const setEXDragonFrontiers: Card[] = [
+  new Altariaex(),
   new Bayleef(),
   new Chikorita(),
   new Copycat(),
@@ -55,6 +58,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Rayquazaex(),
   new Seadra(),
   new StrengthCharm(),
+  new Swablu(),
   new Trapinch(),
   new Trapinch2(),
   new Vibrava(),

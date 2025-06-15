@@ -20,6 +20,7 @@ import { Minun } from './minun';
 import { Nosepass } from './nosepass';
 import { Numel } from './numel';
 import { Sableye } from './sableye';
+import { Salamenceex } from './salamence-ex';
 import { ScrambleEnergy } from './scramble-energy';
 import { Slugma } from './slugma';
 import { SpaceCenter } from './space-center';
@@ -47,6 +48,7 @@ export const setEXDeoxys: Card[] = [
   new Nosepass(),
   new Numel(),
   new Sableye(),
+  new Salamenceex(),
   new ScrambleEnergy(),
   new Slugma(),
   new SpaceCenter(),

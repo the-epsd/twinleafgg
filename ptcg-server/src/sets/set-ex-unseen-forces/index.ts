@@ -26,6 +26,7 @@ import { Sudowoodo } from './sudowoodo';
 import { Teddiursa } from './teddiursa';
 import { Typhlosionex } from './typhlosion-ex';
 import { Tyrogue } from './tyrogue';
+import { Umbreonex } from './umbreon-ex';
 import { UnownE } from './unown-e';
 import { Ursaring } from './ursaring';
 
@@ -60,6 +61,7 @@ export const setEXUnseenForces: Card[] = [
   new Teddiursa(),
   new Typhlosionex(),
   new Tyrogue(),
+  new Umbreonex(),
   new UnownE(),
   new Ursaring(),
 
