@@ -6,6 +6,7 @@ import { Controller, Get, Post } from './controller';
 import { DeckSaveRequest } from '../interfaces';
 import { ApiErrorEnum } from '../common/errors';
 import { User, Deck } from '../../storage';
+import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 
 export class Decks extends Controller {
 
@@ -30,7 +31,15 @@ export class Decks extends Controller {
       manualArchetype2: deck.manualArchetype2
     }));
 
-    res.send({ ok: true, decks });
+    // Inject theme decks (with negative IDs)
+    const themeDecks = THEME_DECKS.map(deck => ({
+      ...deck,
+      // Ensure the structure matches user decks
+      cardTypes: [],
+      deckItems: [],
+    }));
+
+    res.send({ ok: true, decks: [...decks, ...themeDecks] });
   }
 
   @Get('/get/:id')
@@ -38,6 +47,12 @@ export class Decks extends Controller {
   public async onGet(req: Request, res: Response) {
     const userId: number = req.body.userId;
     const deckId: number = parseInt(req.params.id, 10);
+    // Check if this is a theme deck
+    const themeDeck = THEME_DECKS.find(d => d.id === deckId);
+    if (themeDeck) {
+      res.send({ ok: true, deck: themeDeck });
+      return;
+    }
     const entity = await Deck.findOne(deckId, { relations: ['user'] });
 
     if (entity === undefined || entity.user.id !== userId) {

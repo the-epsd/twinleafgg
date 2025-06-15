@@ -123,7 +123,7 @@
       <div class="archetype-selectors">
         <mat-form-field class="narrow-select1">
           <mat-select [value]="deck.manualArchetype1" [placeholder]="'Archetype 1'"
-            (selectionChange)="onArchetypeChange($event.value, deck.manualArchetype2)">
+            (selectionChange)="onArchetypeChange($event.value, deck.manualArchetype2)" [disabled]="isThemeDeck">
             <mat-option [value]="null">
               <div class="archetype-option">
                 <span>Auto</span>
@@ -147,7 +147,7 @@
 
         <mat-form-field class="narrow-select1">
           <mat-select [value]="deck.manualArchetype2" [placeholder]="'Archetype 2'"
-            (selectionChange)="onArchetypeChange(deck.manualArchetype1, $event.value)">
+            (selectionChange)="onArchetypeChange(deck.manualArchetype1, $event.value)" [disabled]="isThemeDeck">
             <mat-option [value]="null">
               <div class="archetype-option">
                 <span>Auto</span>
@@ -170,22 +170,23 @@
         </mat-form-field>
       </div>
 
-      <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']">
+      <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']"
+        [disabled]="!isThemeDeck && disabled">
         <span translate>DECK_EDIT_BACK</span>
       </button>
 
       <!-- <button mat-raised-button [disabled]="disabled" (click)="onClearDeck()">
                     {{ 'BUTTON_CLEAR_DECK' | translate }}
                   </button> -->
-      <button mat-raised-button class="green-button" (click)="exportToFile()">
+      <button mat-raised-button class="green-button" (click)="exportToFile()" [disabled]="!isThemeDeck && disabled">
         {{ 'BUTTON_EXPORT' | translate }}
       </button>
 
-      <button mat-raised-button class="green-button" (click)="importFromClipboard()">
+      <button mat-raised-button class="green-button" (click)="importFromClipboard()" [disabled]="disabled">
         {{ 'BUTTON_IMPORT' | translate }}
       </button>
 
-      <button mat-raised-button class="green-button" (click)="onSave()">
+      <button mat-raised-button class="green-button" (click)="onSave()" [disabled]="disabled">
         {{ 'BUTTON_SAVE' | translate }}
       </button>
 

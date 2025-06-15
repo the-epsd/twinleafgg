@@ -5,6 +5,12 @@
 
       <span class="ptcg-u-spacer"></span>
 
+      <!-- Show toggle in all tabs except Theme Decks tab -->
+      <mat-slide-toggle *ngIf="selectedFormat !== 'theme'" [(ngModel)]="showThemeDecksInAllTab"
+        (change)="selectFormat(selectedFormat)" style="margin-right: 16px;">
+        {{ 'Show Theme Decks' | translate }}
+      </mat-slide-toggle>
+
       <button mat-raised-button class="deck-button" (click)="createDeck()">
         <span>{{ 'DECK_CREATE' | translate }}</span>
       </button>
@@ -40,6 +46,9 @@
       </button>
       <button mat-button class="format-tab" [class.active]="selectedFormat === 'glc'" (click)="selectFormat('glc')">
         {{ 'FORMAT_GLC' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'theme'" (click)="selectFormat('theme')">
+        {{ 'FORMAT_THEME' | translate }}
       </button>
     </div>
 

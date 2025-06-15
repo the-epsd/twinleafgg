@@ -22,22 +22,13 @@ export class DeckService {
   }
 
   public getListByFormat(format: Format) {
-
     if (!format) {
       return this.getList().pipe(map(decks => decks.decks));
     }
-
     return this.getList().pipe(
       map(decks => {
         return decks.decks.filter(deck => {
-          const deckCards: Card[] = [];
-          deck.cards.forEach(card => {
-            deckCards.push(this.cardsBaseService.getCardByName(card));
-          });
-
-          deck.format = FormatValidator.getValidFormatsForCardList(deckCards);
-
-          return deck.format.includes(format);
+          return Array.isArray(deck.format) && deck.format.includes(format);
         });
       })
     )

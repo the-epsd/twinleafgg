@@ -41,6 +41,7 @@ export class CreateGamePopupComponent implements OnInit {
     { value: Format.BW, label: 'LABEL_BW' },
     { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.THEME, label: 'FORMAT_THEME' },
   ];
 
   public formatValidDecks: SelectPopupOption<number>[];
@@ -63,10 +64,19 @@ export class CreateGamePopupComponent implements OnInit {
     this.decks = data.decks;
     this.settings.format = Format.STANDARD;
 
-    data.decks.forEach(deck => {
-      const deckCards: Card[] = [];
-      deck.value.cards.forEach(card => deckCards.push(this.cardsBaseService.getCardByName(card)));
-      deck.value.format = FormatValidator.getValidFormatsForCardList(deckCards);
+    this.decks.forEach(deck => {
+      // Only assign for user decks (not theme decks)
+      // Theme decks have negative IDs (or use another property if needed)
+      if (
+        deck.value.id >= 0 && // Only user decks
+        (!Array.isArray(deck.value.format) || deck.value.format.length === 0) &&
+        deck.value.cards &&
+        deck.value.cards.length > 0
+      ) {
+        const deckCards: Card[] = [];
+        deck.value.cards.forEach(card => deckCards.push(this.cardsBaseService.getCardByName(card)));
+        deck.value.format = FormatValidator.getValidFormatsForCardList(deckCards);
+      }
     });
 
     this.onFormatSelected(this.settings.format);

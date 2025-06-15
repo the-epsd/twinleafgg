@@ -40,8 +40,10 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   @Input() selected: CardType[] = [];
 
+  @Input() isThemeDeck: boolean = false;
 
   public onClearDeck() {
+    if (this.disabled) return;
     this.clearDeck.emit();
   }
 
@@ -86,6 +88,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
     { value: Format.BW, label: 'LABEL_BW' },
     { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.THEME, label: 'FORMAT_THEME' },
   ];
 
   public energyTypes = [
@@ -255,7 +258,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
   }
 
   public onSave() {
-    this.save.next();
+    if (this.disabled) return;
+    this.save.emit();
   }
 
   public onSearch(value: string) {
@@ -266,6 +270,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
 
   public importFromClipboard() {
+    if (this.disabled) return;
 
     // Read clipboard text
     navigator.clipboard.readText()
@@ -317,6 +322,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
   }
 
   public exportToFile() {
+    if (this.disabled) return;
     this.export.next();
   }
 

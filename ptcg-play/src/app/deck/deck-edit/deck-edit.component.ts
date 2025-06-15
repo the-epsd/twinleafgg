@@ -13,7 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
@@ -32,6 +32,7 @@ export class DeckEditComponent implements OnInit {
   public deckItems: DeckItem[] = [];
   public toolbarFilter: DeckEditToolbarFilter;
   public DeckEditPane = DeckEditPane;
+  public isThemeDeck = false;
 
   constructor(
     private alertService: AlertService,
@@ -59,6 +60,8 @@ export class DeckEditComponent implements OnInit {
         this.loading = false;
         this.deck = response.deck;
         this.deckItems = this.loadDeckItems(response.deck.cards);
+        // Detect theme deck
+        this.isThemeDeck = Array.isArray(this.deck.format) && this.deck.format.includes(Format['THEME']);
       }, async () => {
         await this.alertService.confirm(this.translate.instant('DECK_EDIT_LOADING_ERROR'));
         this.router.navigate(['/decks']);

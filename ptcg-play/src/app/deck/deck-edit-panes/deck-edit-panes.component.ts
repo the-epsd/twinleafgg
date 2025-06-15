@@ -38,6 +38,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.tempList = this.sortByPokemonEvolution([...value]);
   }
 
+  @Input() disabled: boolean = false;
+  @Input() isThemeDeck: boolean = false;
+
   public deckTarget: DropTarget<DraggedItem<DeckItem>, any>;
   public deckHighlight$: Observable<boolean>;
   public libraryTarget: DropTarget<DraggedItem<DeckItem>, any>;
@@ -224,6 +227,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   public async addCardToDeck(item: DeckItem) {
+    if (this.disabled) return;
+
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     let list = this.tempList.slice();
 
@@ -297,6 +302,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   public async removeCardFromDeck(item: DeckItem) {
+    if (this.disabled) return;
+
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     if (index === -1) {
       return;
@@ -520,6 +527,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   public async setCardCount(item: DeckItem) {
+    if (this.disabled) return;
+
     const MAX_CARD_VALUE = 99;
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     if (index !== -1) {
@@ -558,6 +567,10 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Only set showLibrary to false if it's still at its default (true) and this is a theme deck
+    if (this.isThemeDeck && this.showLibrary === true) {
+      this.showLibrary = false;
+    }
     this.cards = this.loadLibraryCards();
   }
 

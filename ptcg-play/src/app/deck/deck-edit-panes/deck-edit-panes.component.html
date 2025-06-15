@@ -20,7 +20,7 @@
 <div class="ptcg-deck-edit-pane-secondary" [dropTarget]="deckTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="deckHighlight$ | async">
   <button mat-icon-button class="library-toggle" (click)="toggleLibrary()"
-    [matTooltip]="(showLibrary ? 'Hide' : 'Show') + ' Card Library'">
+    [matTooltip]="(showLibrary ? 'Hide' : 'Show') + ' Card Library'" [disabled]="disabled">
     <mat-icon>{{ showLibrary ? 'chevron_left' : 'chevron_right' }}</mat-icon>
   </button>
   <div #deckPane>

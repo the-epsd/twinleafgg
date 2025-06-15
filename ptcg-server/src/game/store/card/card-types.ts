@@ -1308,6 +1308,7 @@ export enum Format {
   SM,
   SWSH,
   SV,
+  THEME,
 }
 
 export const Energy = {

@@ -357,6 +357,7 @@
   "FORMAT_RSPK": "RS-PK",
   "FORMAT_RETRO": "Retro",
   "FORMAT_GLC": "GLC",
+  "FORMAT_THEME": "Theme Decks",
   "GAME_MESSAGES": {
     "ACTION_IN_PROGRESS": "Action in progress",
     "ALL_FIRE_ENERGIES": "All fire energies",

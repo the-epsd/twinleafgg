@@ -31,7 +31,8 @@ export class PromptInvitePlayerComponent implements OnInit {
     [Format.XY]: 'LABEL_XY',
     [Format.BW]: 'LABEL_BW',
     [Format.RSPK]: 'LABEL_RSPK',
-    [Format.RETRO]: 'LABEL_RETRO'
+    [Format.RETRO]: 'LABEL_RETRO',
+    [Format.THEME]: 'FORMAT_THEME',
   };
 
   public loading = true;
