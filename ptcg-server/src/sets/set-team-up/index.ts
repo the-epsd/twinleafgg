@@ -41,6 +41,8 @@ import { Weedle } from './weedle';
 import { Weedle2 } from './weedle-2';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
+import { Pidgey } from './pidgey';
+import { Pidgeot } from './pidgeot';
 
 export const setTeamUp: Card[] = [
   // new Absol(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
@@ -73,7 +75,9 @@ export const setTeamUp: Card[] = [
   new Ninetales(),
   new Pawniard(),
   new Persian(),
+  new Pidgeot(),
   new Pidgeotto(),
+  new Pidgey(),
   new PokemonCommunication(),
   new ShayminPrismStar(),
   new TapuKokoPrismStar(),
