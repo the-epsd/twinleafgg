@@ -30,6 +30,7 @@ import { MetalGoggles } from './metal-goggles';
 import { Mimikyu } from './mimikyu';
 import { Moltres } from './moltres';
 import { Ninetales } from './ninetales';
+import { Ponyta } from './ponyta';
 import { Pawniard } from './pawniard';
 import { Persian } from './persian';
 import { Pidgeotto } from './pidgeotto';
@@ -43,6 +44,13 @@ import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
 import { Pidgey } from './pidgey';
 import { Pidgeot } from './pidgeot';
+import { BrocksGritTEU } from './other-prints';
+import { Charmander2 } from './charmander-2';
+import { Rapidash } from './rapidash';
+import { NidoranFemale } from './nidoran-female';
+import { Nidoqueen } from './nidoqueen';
+import { Nidorina } from './nidorina';
+import { Farfetchd } from './farfetchd';
 
 export const setTeamUp: Card[] = [
   // new Absol(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
@@ -54,6 +62,7 @@ export const setTeamUp: Card[] = [
   new Bronzor(),
   new Charizard(),
   new Charmander(),
+  new Charmander2(),
   new Charmeleon(),
   new CobalionGX(),
   new Dragonite(),
@@ -73,12 +82,14 @@ export const setTeamUp: Card[] = [
   new Mimikyu(),
   new Moltres(),
   new Ninetales(),
+  new Ponyta(),
   new Pawniard(),
   new Persian(),
   new Pidgeot(),
   new Pidgeotto(),
   new Pidgey(),
   new PokemonCommunication(),
+  new Rapidash(),
   new ShayminPrismStar(),
   new TapuKokoPrismStar(),
   new ViridianForest(),
@@ -90,4 +101,11 @@ export const setTeamUp: Card[] = [
   new EeveeSnorlaxGX(),
   new MagikarpWailordGX(),
   new CelebiVenusaurGX(),
+  new Nidoqueen(),
+  new Nidorina(),
+  new NidoranFemale(),
+  new Farfetchd(),
+
+  //Other Prints
+  new BrocksGritTEU(),
 ];
