@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PowerType, GameError, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 
 export class Electabuzz extends PokemonCard {
@@ -41,13 +41,15 @@ export class Electabuzz extends PokemonCard {
 
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
-      const cardList = StateUtils.findCardList(state, effect.card) as PokemonCardList
+      const cardList = StateUtils.findCardList(state, effect.card) as PokemonCardList;
       if (cardList.getPokemons().length < 2) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       const bottomCards = player.deck.cards.slice(-1);
       player.deck.moveCardsTo(bottomCards, player.hand);
+
+      ABILITY_USED(player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

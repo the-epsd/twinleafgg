@@ -8,9 +8,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public evolvesFrom = 'Magnemite';
   public cardType: CardType = L;
   public hp: number = 50;
   public weakness = [{ type: F }];
