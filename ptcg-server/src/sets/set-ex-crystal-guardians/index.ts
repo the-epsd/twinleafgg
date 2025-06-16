@@ -21,6 +21,9 @@ import { Treecko } from './treecko';
 import { Treecko2 } from './treecko2';
 import { Windstorm } from './windstorm';
 
+// Other prints
+import { PotionCG } from './other-prints';
+
 export const setEXCrystalGuardians: Card[] = [
   new AlakazamStar(),
   new Banette(),
@@ -43,4 +46,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Treecko(),
   new Treecko2(),
   new Windstorm(),
+
+  // Other prints
+  new PotionCG(),
 ];

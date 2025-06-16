@@ -10,6 +10,9 @@ import { Lapras } from './lapras';
 import { Moltres } from './moltres';
 import { UndergroundExpedition } from './underground-expedition';
 
+// Other prints
+import { FishermanSK } from './other-prints';
+
 export const setSkyridge: Card[] = [
   new BuriedFossil(),
   new DesertShaman(),
@@ -21,4 +24,7 @@ export const setSkyridge: Card[] = [
   new Lapras(),
   new Moltres(),
   new UndergroundExpedition(),
+
+  // Other prints
+  new FishermanSK(),
 ];

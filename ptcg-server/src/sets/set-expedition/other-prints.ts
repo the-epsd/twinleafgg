@@ -1,5 +1,6 @@
 
 import { Copycat } from "../set-ex-dragon-frontiers/copycat";
+import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
 import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
 import { ProfessorOaksResearch } from "../set-ex-dragon-frontiers/professor-oaks-research";
 
@@ -8,6 +9,13 @@ export class CopycatEX extends Copycat {
   public set = 'EX';
   public setNumber = '138';
   public text = 'Shuffle your hand into your deck. Then, count the number of cards in your opponent\'s hand and draw that many cards.';
+}
+
+export class EnergySearchEX extends EnergySearch {
+  public fullName = 'Energy Search EX';
+  public set = 'EX';
+  public setNumber = '153';
+  public text = 'Search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 }
 
 export class ProfessorElmsTrainingMethodEX extends ProfessorElmsTrainingMethod {

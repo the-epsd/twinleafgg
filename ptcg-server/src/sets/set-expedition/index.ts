@@ -10,6 +10,7 @@ import { PokemonNurse } from './pokemon-nurse';
 
 // Other prints
 import { CopycatEX } from './other-prints';
+import { EnergySearchEX } from './other-prints';
 import { ProfessorElmsTrainingMethodEX } from './other-prints';
 import { ProfessorOaksResearchEX } from './other-prints';
 
@@ -24,6 +25,7 @@ export const setExpedition: Card[] = [
 
   // Other prints
   new CopycatEX(),
+  new EnergySearchEX(),
   new ProfessorElmsTrainingMethodEX(),
   new ProfessorOaksResearchEX(),
 
