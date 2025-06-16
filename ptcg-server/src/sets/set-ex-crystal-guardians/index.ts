@@ -17,6 +17,7 @@ import { MysteriousShard } from './mysterious-shard';
 import { Sceptileex } from './sceptile-ex';
 import { Shuppet } from './shuppet';
 import { Spearow } from './spearow';
+import { Tauros } from './tauros';
 import { Treecko } from './treecko';
 import { Treecko2 } from './treecko2';
 import { Windstorm } from './windstorm';
@@ -43,6 +44,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Sceptileex(),
   new Shuppet(),
   new Spearow(),
+  new Tauros(),
   new Treecko(),
   new Treecko2(),
   new Windstorm(),

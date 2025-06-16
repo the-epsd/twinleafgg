@@ -81,6 +81,8 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Cover Fossil') {
         result.push(card as PokemonCard);
+      } else if (card.name === 'Claw Fossil') {
+        result.push(card as PokemonCard);
       }
     }
     return result;
