@@ -104,10 +104,10 @@ export class PromptComponent implements OnChanges {
 
   public cannotBeMinimized(): boolean {
     // Add all prompt types you want to NEVER be minimized here
-    return this.prompt?.type === 'Choose pokemon'; // Example: 'Alert' cannot be minimized
+    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'WaitPrompt';
   }
 
   public isFullScreenPrompt(): boolean {
-    return this.prompt?.type === 'Choose pokemon';
+    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'WaitPrompt';
   }
 }

@@ -466,6 +466,19 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         });
       }
     }
+
+    // Handle Attack animation
+    if (this.mainCard &&
+      this.mainCard.superType === SuperType.POKEMON &&
+      cardList.triggerAttackAnimation &&
+      !this.showAttackAnimation &&
+      !this.isInPrompt) {
+      this.showAttackAnimation = true;
+      setTimeout(() => {
+        this.showAttackAnimation = false;
+        cardList.triggerAttackAnimation = false;
+      }, 1000);
+    }
   }
 
   getCustomImageUrl(card: Card, isAttachedAsEnergy: boolean = false): string {
@@ -544,6 +557,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   public showTestAnimation = false;
   public showBasicAnimation = false;
+  public showAttackAnimation = false;
   private isAnimating = false;
 
   @Input() set testEntrance(value: boolean) {
@@ -575,5 +589,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  @Input() showDefendAnimation = false; // Set to true to trigger defend animation (bench or active)
 }
 
