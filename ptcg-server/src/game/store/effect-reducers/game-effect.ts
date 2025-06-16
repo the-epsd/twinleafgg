@@ -138,6 +138,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   store.log(state, GameLog.LOG_PLAYER_USES_ATTACK, { name: player.name, attack: attack.name });
   state.phase = GamePhase.ATTACK;
 
+  // At the start of the attack, initialize pendingAttackTargets
+  //  (attackingPokemon as any).pendingAttackTargets = [];
+
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
   state = store.reduceEffect(state, attackEffect);
 
@@ -150,7 +153,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   attackingPokemon.triggerAttackAnimation = true;
   // Yield a wait prompt for the animation (1 second)
   yield store.prompt(state, new WaitPrompt(player.id, 1000, 'Attack animation'), () => {
-    // After wait, clear the animation flag
+    // After wait, clear the animation flag and targets
     attackingPokemon.triggerAttackAnimation = false;
     next();
   });

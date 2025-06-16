@@ -589,7 +589,5 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  @Input() showDefendAnimation = false; // Set to true to trigger defend animation (bench or active)
 }
 

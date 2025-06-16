@@ -55,8 +55,6 @@ export class BoardComponent implements OnDestroy {
   public PlayerType = PlayerType;
   public SlotType = SlotType;
 
-  // Animation state for defender
-  public defendAnimation: { player: PlayerType, slot: SlotType, index: number } | null = null;
 
   get isTopPlayerActive(): boolean {
     return this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.topPlayer?.id;
@@ -623,84 +621,5 @@ export class BoardComponent implements OnDestroy {
         const target: CardTarget = { player, slot, index };
       });
 
-  }
-
-  // Listen for attack animation triggers and coordinate defender animation
-  ngDoCheck() {
-    // Check all board cards for attack animation triggers
-    // Bottom player (self)
-    if (this.bottomPlayer) {
-      // Active
-      const active = this.bottomPlayer.active as PokemonCardList;
-      if (active?.triggerAttackAnimation && !this.defendAnimation) {
-        const target = this.getAttackTarget(this.topPlayer, this.bottomPlayer, active);
-        if (target) {
-          setTimeout(() => {
-            this.defendAnimation = target;
-            setTimeout(() => {
-              this.defendAnimation = null;
-            }, 800); // defender animation duration
-          }, 675); // delay until attacker slams down
-        }
-      }
-      // Bench
-      for (let i = 0; i < this.bottomPlayer.bench.length; i++) {
-        const bench = this.bottomPlayer.bench[i] as PokemonCardList;
-        if (bench?.triggerAttackAnimation && !this.defendAnimation) {
-          const target = this.getAttackTarget(this.topPlayer, this.bottomPlayer, bench, i);
-          if (target) {
-            setTimeout(() => {
-              this.defendAnimation = target;
-              setTimeout(() => {
-                this.defendAnimation = null;
-              }, 800);
-            }, 675);
-          }
-        }
-      }
-    }
-    // Top player (opponent)
-    if (this.topPlayer) {
-      // Active
-      const active = this.topPlayer.active as PokemonCardList;
-      if (active?.triggerAttackAnimation && !this.defendAnimation) {
-        const target = this.getAttackTarget(this.bottomPlayer, this.topPlayer, active);
-        if (target) {
-          setTimeout(() => {
-            this.defendAnimation = target;
-            setTimeout(() => {
-              this.defendAnimation = null;
-            }, 800);
-          }, 675);
-        }
-      }
-      // Bench
-      for (let i = 0; i < this.topPlayer.bench.length; i++) {
-        const bench = this.topPlayer.bench[i] as PokemonCardList;
-        if (bench?.triggerAttackAnimation && !this.defendAnimation) {
-          const target = this.getAttackTarget(this.bottomPlayer, this.topPlayer, bench, i);
-          if (target) {
-            setTimeout(() => {
-              this.defendAnimation = target;
-              setTimeout(() => {
-                this.defendAnimation = null;
-              }, 800);
-            }, 675);
-          }
-        }
-      }
-    }
-  }
-
-  // Helper to determine which card is being attacked (active or bench)
-  private getAttackTarget(opponent: Player, attacker: Player, attackerCardList: PokemonCardList, benchIndex?: number): { player: PlayerType, slot: SlotType, index: number } | null {
-    // If attacker is active, target is opponent's active (default)
-    // If attacker is bench, target is opponent's active (unless attack specifies otherwise)
-    // For now, always animate opponent's active. For future: use effect.target info if available.
-    // TODO: If you have a way to know the exact target (e.g., from effect or prompt), use it here.
-    // For now, animate opponent's active.
-    if (!opponent) return null;
-    // If attack is from bench, could be targeting opponent's bench (future)
-    return { player: opponent.id === this.topPlayer.id ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER, slot: SlotType.ACTIVE, index: 0 };
   }
 }

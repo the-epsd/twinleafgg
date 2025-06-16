@@ -26,8 +26,7 @@
       <div class="ptcg-board-row ptcg-board-active">
         <ptcg-board-card [cardList]="topPlayer?.active" [owner]="topPlayer?.id === clientId"
           (cardClick)="onCardClick($event, topPlayer?.active)" [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.ACTIVE"
-          [index]="0"
-          [showDefendAnimation]="defendAnimation?.player === PlayerType.TOP_PLAYER && defendAnimation?.slot === SlotType.ACTIVE && defendAnimation?.index === 0">
+          [index]="0">
         </ptcg-board-card>
       </div>
 
@@ -36,8 +35,7 @@
         <ptcg-board-card *ngFor="let slot of topBench
         | slice:0:(topPlayer?.bench.length || defaultBenchSize); index as i" [cardList]="topPlayer?.bench[i]"
           [owner]="topPlayer?.id === clientId" (cardClick)="onCardClick($event, topPlayer?.bench[i])"
-          [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.BENCH" [index]="i"
-          [showDefendAnimation]="defendAnimation?.player === PlayerType.TOP_PLAYER && defendAnimation?.slot === SlotType.BENCH && defendAnimation?.index === i">
+          [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.BENCH" [index]="i">
         </ptcg-board-card>
       </div>
 
@@ -121,8 +119,7 @@
             [class.draggable]="!gameState.deleted && bottomPlayer?.id === clientId && bottomPlayer?.active.cards.length > 0"
             [dragSource]="bottomActive.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.active"
             [owner]="bottomPlayer?.id === clientId" (cardClick)="onActiveClick($event, bottomPlayer?.active)"
-            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.ACTIVE" [index]="0"
-            [showDefendAnimation]="defendAnimation?.player === PlayerType.BOTTOM_PLAYER && defendAnimation?.slot === SlotType.ACTIVE && defendAnimation?.index === 0">
+            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.ACTIVE" [index]="0">
           </ptcg-board-card>
         </div>
       </div>
@@ -137,8 +134,7 @@
             [dragSource]="slot.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.bench[slot.index]"
             [owner]="bottomPlayer?.id === clientId"
             (cardClick)="onBenchClick($event, bottomPlayer?.bench[slot.index], slot.index)"
-            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.BENCH" [index]="slot.index"
-            [showDefendAnimation]="defendAnimation?.player === PlayerType.BOTTOM_PLAYER && defendAnimation?.slot === SlotType.BENCH && defendAnimation?.index === slot.index">
+            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.BENCH" [index]="slot.index">
           </ptcg-board-card>
         </div>
       </div>

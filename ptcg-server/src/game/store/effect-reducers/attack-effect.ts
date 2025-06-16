@@ -14,6 +14,7 @@ import {
 } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
+import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -60,6 +61,18 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
     }
+
+    // --- Track damaged targets for animation ---
+    if (effect.attackEffect && effect.attackEffect.player && (effect.attackEffect.player.active as any).pendingAttackTargets) {
+      try {
+        const cardTarget = getCardTarget(effect.attackEffect.player, state, target);
+        const pending = (effect.attackEffect.player.active as any).pendingAttackTargets;
+        if (Array.isArray(pending) && !pending.some(t => t.player === cardTarget.player && t.slot === cardTarget.slot && t.index === cardTarget.index)) {
+          pending.push(cardTarget);
+        }
+      } catch (e) { /* ignore if cannot resolve target */ }
+    }
+    // --- End tracking ---
   }
 
   if (effect instanceof DealDamageEffect) {
