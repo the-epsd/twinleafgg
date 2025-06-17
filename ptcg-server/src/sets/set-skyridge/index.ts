@@ -8,6 +8,7 @@ import { Haunter } from './haunter';
 import { Kabuto } from './kabuto';
 import { Lapras } from './lapras';
 import { Moltres } from './moltres';
+import { RelicHunter } from './relic-hunter';
 import { UndergroundExpedition } from './underground-expedition';
 
 // Other prints
@@ -23,6 +24,7 @@ export const setSkyridge: Card[] = [
   new Kabuto(),
   new Lapras(),
   new Moltres(),
+  new RelicHunter(),
   new UndergroundExpedition(),
 
   // Other prints

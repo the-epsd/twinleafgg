@@ -7,18 +7,16 @@ import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class HolonAdventurer extends TrainerCard {
-
+export class RocketsMission extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.DELTA_SPECIES];
-  public set: string = 'HP';
+  public set: string = 'TRR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '85';
-  public name: string = 'Holon Adventurer';
-  public fullName: string = 'Holon Adventurer HP';
+  public setNumber: string = '88';
+  public name: string = 'Rocket\'s Mission';
+  public fullName: string = 'Rocket\'s Mission TRR';
 
   public text: string =
-    'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nDraw 3 cards. If you discarded a Pokémon that has δ on its card, draw 4 cards instead.';
+    'Discard a card from your hand. Then, draw 3 cards. If you discarded a Pokémon that has Dark or Rocket\'s in its name, draw 4 cards instead.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -60,7 +58,7 @@ export class HolonAdventurer extends TrainerCard {
           }
           let cardsToDraw = 3
 
-          if (cards[0] instanceof PokemonCard && cards[0].tags.includes(CardTag.DELTA_SPECIES)) {
+          if (cards[0] instanceof PokemonCard && (cards[0].tags.includes(CardTag.ROCKETS) || cards[0].tags.includes(CardTag.DARK))) {
             cardsToDraw = 4;
           }
 

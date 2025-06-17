@@ -3,6 +3,7 @@ import { Copycat } from "../set-ex-dragon-frontiers/copycat";
 import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
 import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
 import { ProfessorOaksResearch } from "../set-ex-dragon-frontiers/professor-oaks-research";
+import { Switch } from "../set-scarlet-and-violet/switch";
 
 export class CopycatEX extends Copycat {
   public fullName = 'Copycat EX';
@@ -30,4 +31,11 @@ export class ProfessorOaksResearchEX extends ProfessorOaksResearch {
   public set = 'EX';
   public setNumber = '149';
   public text = 'Shuffle your hand into your deck, then draw 5 cards.'
+}
+
+export class SwitchEX extends Switch {
+  public fullName = 'Switch EX';
+  public set = 'EX';
+  public setNumber = '157';
+  public text = 'Switch your Active Pokémon with 1 of your Benched Pokémon.';
 }

@@ -6,16 +6,19 @@ import { DarkElectrode } from './dark-electrode';
 import { DarkFlaaffy } from './dark-flaaffy';
 import { DarkMetalEnergy } from './dark-metal-energy';
 import { DarkPupitar } from './dark-pupitar';
+import { DarkSteelix } from './dark-steelix';
 import { DarkTyranitar } from './dark-tyranitar';
 import { DarkTyranitar2 } from './dark-tyrantiar-2';
 import { Dratini } from './dratini';
 import { Larvitar } from './larvitar';
 import { Magmar } from './magmar';
+import { Onix } from './onix';
 import { PokemonRetriever } from './pokemon-retriever';
 import { PowHandExtension } from './pow-hand-extension';
 import { Rattata } from './rattata';
 import { REnergy } from './r-energy';
 import { RocketsAdmin } from './rockets-admin';
+import { RocketsMission } from './rockets-mission';
 import { RocketsPokeBall } from './rockets-poke-ball';
 import { RocketsScytherex } from './rockets-scyther-ex';
 import { RocketsSneaselex } from './rockets-sneasel-ex';
@@ -34,16 +37,19 @@ export const setEXTeamRocketReturns: Card[] = [
   new DarkFlaaffy(),
   new DarkMetalEnergy(),
   new DarkPupitar(),
+  new DarkSteelix(),
   new DarkTyranitar(),
   new DarkTyranitar2(),
   new Dratini(),
   new Larvitar(),
   new Magmar(),
+  new Onix(),
   new PokemonRetriever(),
   new PowHandExtension(),
   new Rattata(),
   new REnergy(),
   new RocketsAdmin(),
+  new RocketsMission(),
   new RocketsPokeBall(),
   new RocketsScytherex(),
   new RocketsSneaselex(),
