@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, GameError, PokemonCardList, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
@@ -8,6 +8,7 @@ import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class Smoochum extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = W;
   public hp: number = 50;
   public weakness = [{ type: M }];

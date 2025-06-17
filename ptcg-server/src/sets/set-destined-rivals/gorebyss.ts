@@ -14,7 +14,7 @@ export class Gorebyss extends PokemonCard {
 
   public attacks = [{
     name: 'Crescendo Wave',
-    cost: [W, C, C],
+    cost: [W],
     damage: 30,
     damageCalculation: 'x',
     text: 'This attack does 30 damage for each [W] Energy attached to this Pokémon. Before doing damage, you may attach as many Basic [W] Energy cards as you like from your hand to this Pokémon.'

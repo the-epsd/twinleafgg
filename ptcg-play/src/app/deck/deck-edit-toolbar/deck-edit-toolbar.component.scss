@@ -91,27 +91,3 @@
     }
   }
 }
-
-// Style the dropdown panel
-::ng-deep .mat-select-panel {
-  background: #1a1f29;
-  border-radius: 8px;
-  margin-top: 4px;
-
-  .mat-option {
-    color: white;
-    font-size: 12px;
-    height: 32px;
-    line-height: 32px;
-
-    &:hover:not(.mat-option-disabled),
-    &:focus:not(.mat-option-disabled) {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    &.mat-selected:not(.mat-option-disabled) {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-  }
-}

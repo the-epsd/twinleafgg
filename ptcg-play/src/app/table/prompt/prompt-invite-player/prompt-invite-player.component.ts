@@ -9,6 +9,7 @@ import { DeckService } from 'src/app/api/services/deck.service';
 import { GameService } from '../../../api/services/game.service';
 import { SelectPopupOption } from '../../../shared/alert/select-popup/select-popup.component';
 import { LocalGameState } from '../../../shared/session/session.interface';
+import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 
 @UntilDestroy()
 @Component({
@@ -26,8 +27,13 @@ export class PromptInvitePlayerComponent implements OnInit {
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
     [Format.EXPANDED]: 'LABEL_EXPANDED',
+    [Format.SWSH]: 'LABEL_SWSH',
+    [Format.SM]: 'LABEL_SM',
+    [Format.XY]: 'LABEL_XY',
+    [Format.BW]: 'LABEL_BW',
     [Format.RSPK]: 'LABEL_RSPK',
-    [Format.RETRO]: 'LABEL_RETRO'
+    [Format.RETRO]: 'LABEL_RETRO',
+    [Format.THEME]: 'FORMAT_THEME',
   };
 
   public loading = true;
@@ -37,7 +43,8 @@ export class PromptInvitePlayerComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private deckService: DeckService,
-    private gameService: GameService
+    private gameService: GameService,
+    private cardsBaseService: CardsBaseService
   ) { }
 
   public minimize() {
@@ -69,6 +76,7 @@ export class PromptInvitePlayerComponent implements OnInit {
   }
 
   private loadDecks() {
+    console.log('[InvitePlayer] gameState.format:', this.gameState.format);
     this.loading = true;
     this.deckService.getListByFormat(this.gameState.format)
       .pipe(
@@ -77,14 +85,19 @@ export class PromptInvitePlayerComponent implements OnInit {
       ).
       subscribe({
         next: decks => {
+          console.log('[InvitePlayer] Raw response from deckService.getListByFormat:', decks);
+          console.log('[InvitePlayer] Decks received from backend:', decks);
           this.decks = decks
             .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => ({ value: deckEntry.id, viewValue: deckEntry.name }));
+          console.log('[InvitePlayer] Final decks shown to user:', this.decks);
           if (this.decks.length > 0) {
             this.deckId = this.decks[0].value;
+            console.log('[InvitePlayer] Default selected deckId:', this.deckId);
           }
         },
         error: (error: ApiError) => {
+          console.error('[InvitePlayer] Error loading decks:', error);
           this.alertService.toast(error.message);
           this.decks = [];
         }

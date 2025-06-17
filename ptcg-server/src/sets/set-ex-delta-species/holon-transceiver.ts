@@ -5,7 +5,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -54,7 +54,7 @@ export class HolonTransceiver extends TrainerCard {
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.deck,
               { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-              { min: 1, max: 1, allowCancel: false, blocked }
+              { min: 0, max: 1, allowCancel: false, blocked }
             ), selected => {
               cards = selected || [];
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
@@ -74,9 +74,9 @@ export class HolonTransceiver extends TrainerCard {
           action: () => {
             let cards: Card[] = [];
 
-            const blocked = player.deck.cards
+            const blocked = player.discard.cards
               .filter(c => !c.name.includes('Holon'))
-              .map(c => player.deck.cards.indexOf(c));
+              .map(c => player.discard.cards.indexOf(c));
 
             store.prompt(state, new ChooseCardsPrompt(
               player,
@@ -88,8 +88,7 @@ export class HolonTransceiver extends TrainerCard {
               cards = selected || [];
 
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-
-              MOVE_CARDS_TO_HAND(store, state, player, cards);
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards });
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
               return state;

@@ -31,6 +31,7 @@ export class Game implements StoreHandler {
     this.id = id;
     this.store = new Store(this);
     this.store.state.rules = gameSettings.rules;
+    this.store.state.gameSettings = gameSettings;
     this.matchRecorder = new MatchRecorder(core);
     this.format = gameSettings.format;
   }

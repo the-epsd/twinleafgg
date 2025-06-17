@@ -48,6 +48,12 @@ import { SlowpokePsyduckGX } from './slowpoke-and-psyduck-gx';
 import { EspeonDeoxysGX } from './espeon-and-deoxys-gx';
 import { RowletAlolanExeggutorGX } from './rowlet-and-alolan-exeggutor-gx';
 import { Magnemite } from './magnemite';
+import { BugCatcher } from './bug-catcher';
+import { Dragonair } from './dragonair';
+import { Dragonite } from './dragonite';
+import { Dratini } from './dratini';
+import { Thundurus } from './thundurus';
+import { Tornadus } from './tornadus';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -55,11 +61,15 @@ export const setUnifiedMinds: Card[] = [
   new AlolanRaichu(),
   new Archen(),
   new Beheeyem(),
+  new BugCatcher(),
   new CherishBall(),
   new Cottonee(),
   new Cryogonal(),
   new Excadrill(),
   new DarkCity(),
+  new Dragonair(),
+  new Dragonite(),
+  new Dratini(),
   new Drilbur(),
   new Eelektross(),
   new Elgyem(),
@@ -94,6 +104,8 @@ export const setUnifiedMinds: Card[] = [
   new Sneasel(),
   new StadiumNav(),
   new TagSwitch(),
+  new Thundurus(),
+  new Tornadus(),
   new UmbreonDarkraiGX(),
   new UTurnBoard(),
   new WeaknessGuardEnergy(),

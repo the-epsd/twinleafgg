@@ -70,7 +70,7 @@ export class Mismagius extends PokemonCard {
       store.reduceEffect(state, checkHpEffect);
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-        effect.source.damage += 60;
+        effect.source.damage += 80;
       }
     }
 

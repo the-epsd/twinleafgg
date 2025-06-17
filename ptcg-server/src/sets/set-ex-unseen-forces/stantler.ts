@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 
 export class Stantler extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,24 +33,25 @@ export class Stantler extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (effect.target.stage !== Stage.BASIC) {
-        effect.target.addSpecialCondition(SpecialCondition.CONFUSED);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      if (effect.opponent.active.getPokemons().length > 1) {
+        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let cards: Card[] = [];
+      const minDiscard = Math.min(opponent.hand.cards.filter(c => c.superType === SuperType.TRAINER).length, 1);
 
+      let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         { superType: SuperType.TRAINER },
-        { min: 1, max: 1, allowCancel: false }
+        { min: minDiscard, max: 1, allowCancel: false }
       ), selected => {
         cards = selected || [];
         opponent.hand.moveCardsTo(cards, opponent.discard);

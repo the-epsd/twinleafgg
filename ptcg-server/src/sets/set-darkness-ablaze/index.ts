@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Arctozolt } from './arctozolt';
 import { BigParasol } from './big-parasol';
 import { BillowingSmoke } from './billowing-smoke';
 import { BirdKeeper } from './bird-keeper';
@@ -33,6 +34,7 @@ import { VikavoltV } from './vikavolt-v';
 import { YellHorn } from './yell-horn';
 
 export const setDarknessAblaze: Card[] = [
+  new Arctozolt(),
   new BigParasol(),
   new BillowingSmoke(),
   new BirdKeeper(),

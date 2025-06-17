@@ -25,6 +25,7 @@ export enum CardTag {
   TEAM_MAGMA = 'TEAM_MAGMA',
   PRISM_STAR = 'PRISM_STAR',
   STAR = 'STAR',
+  BABY = 'BABY',
   BREAK = 'BREAK',
   PRIME = 'PRIME',
   HOLO = 'HOLO',
@@ -1308,7 +1309,7 @@ export enum Format {
   SM,
   SWSH,
   SV,
-  WORLDS_2013,
+  THEME,
 }
 
 export const Energy = {

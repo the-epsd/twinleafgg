@@ -81,6 +81,8 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Cover Fossil') {
         result.push(card as PokemonCard);
+      } else if (card.name === 'Claw Fossil') {
+        result.push(card as PokemonCard);
       }
     }
     return result;
@@ -131,6 +133,11 @@ export class PokemonCardList extends CardList {
     this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
 
     this.marker.markers = [];
+
+    this.triggerAnimation = false;
+    this.showBasicAnimation = false;
+    this.triggerAttackAnimation = false;
+
     this.removeSpecialCondition(SpecialCondition.POISONED);
     this.removeSpecialCondition(SpecialCondition.ASLEEP);
     this.removeSpecialCondition(SpecialCondition.BURNED);

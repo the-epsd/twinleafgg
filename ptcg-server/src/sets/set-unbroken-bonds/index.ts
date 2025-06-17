@@ -43,6 +43,7 @@ import { Slowbro } from './slowbro';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Tyrogue } from './tyrogue';
+import { Venonat } from './venonat';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
 import { StealthyHood } from './stealthy-hood';
@@ -90,6 +91,7 @@ export const setUnbrokenBonds: Card[] = [
   new Spiritomb(),
   new TripleAccelerationEnergy(),
   new Tyrogue(),
+  new Venonat(),
   new Volcanion(),
   new Zeraora(),
   new GreninjaZoroarkGX(),

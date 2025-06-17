@@ -44,6 +44,7 @@ import { OriginFormeDialgaV } from './origin-forme-dialga-v';
 import { OriginFormeDialgaVSTAR } from './origin-forme-dialga-vstar';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
+import { Petilil } from './petilil';
 import { RadiantGreninja } from './radiant-greninja';
 import { RadiantHawlucha } from './radiant-hawlucha';
 import { RadiantHeatran } from './radiant-heatran';
@@ -115,6 +116,7 @@ export const setAstralRadiance: Card[] = [
   new OriginFormeDialgaVSTAR(),
   new OriginFormePalkiaV(),
   new OriginFormePalkiaVSTAR(),
+  new Petilil(),
   new RadiantGreninja(),
   new RadiantHawlucha(),
   new RadiantHeatran(),

@@ -36,6 +36,7 @@ import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
+import { WaitPrompt } from '../prompts/wait-prompt';
 
 
 function applyWeaknessAndResistance(
@@ -137,12 +138,26 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   store.log(state, GameLog.LOG_PLAYER_USES_ATTACK, { name: player.name, attack: attack.name });
   state.phase = GamePhase.ATTACK;
 
+  // At the start of the attack, initialize pendingAttackTargets
+  //  (attackingPokemon as any).pendingAttackTargets = [];
+
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
   state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
   }
+
+  // --- Attack Animation Trigger (moved here) ---
+  // Set triggerAttackAnimation on the attacking Pokemon
+  attackingPokemon.triggerAttackAnimation = true;
+  // Yield a wait prompt for the animation (1 second)
+  yield store.prompt(state, new WaitPrompt(player.id, 1000, 'Attack animation'), () => {
+    // After wait, clear the animation flag and targets
+    attackingPokemon.triggerAttackAnimation = false;
+    next();
+  });
+  // --- End Attack Animation Trigger ---
 
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);

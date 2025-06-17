@@ -136,6 +136,9 @@ export const cardReplacements = [
   //SHF
   { from: 'Snom SHF SV33', to: 'Snom SHFSV SV33' },
 
+  //TEU
+  { from: 'Charmander TEU 12', to: 'Charmander TEU2 12' },
+
   //STS
   { from: 'Pokémon Ranger STS 104', to: 'Pokemon Ranger STS 104' },
 
@@ -726,6 +729,9 @@ export const exportReplacements = [
   //SHF
   { from: 'Snom SHFSV SV33', to: 'Snom SHF SV33' },
 
+  //TEU
+  { from: 'Charmander TEU2 12', to: 'Charmander TEU 12' },
+
   //STS
   { from: 'Pokemon Ranger STS 104', to: 'Pokémon Ranger STS 104' },
 
@@ -1097,7 +1103,7 @@ export const exportReplacements = [
   { from: 'LaceySIR SCR 172', to: 'Lacey SCR 172' },
   { from: 'Terapagos exHR SCR 173', to: 'Terapagos ex SCR 173' },
   { from: 'Area Zero UnderdepthsHR SCR 174', to: 'Area Zero Underdepths SCR 174' },
-  
+
   //SSP
   { from: 'Charcadet 2 SSP 33', to: 'Charcadet SSP 33' },
 

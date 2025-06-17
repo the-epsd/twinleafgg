@@ -67,3 +67,5 @@
 <!-- Always render the choose-pokemon prompt if it's the current prompt -->
 <ptcg-prompt-choose-pokemon *ngIf="prompt?.type === 'Choose pokemon'" [gameState]="gameState" [prompt]="prompt">
 </ptcg-prompt-choose-pokemon>
+
+<ptcg-prompt-wait *ngIf="prompt?.type === 'WaitPrompt'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-wait>

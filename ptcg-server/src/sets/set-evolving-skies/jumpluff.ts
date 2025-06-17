@@ -15,7 +15,7 @@ export class Jumpluff extends PokemonCard {
   public powers = [{
     name: 'Fluffy Barrage',
     powerType: PowerType.ABILITY,
-    barrage: false,
+    barrage: true,
     text: 'This Pokémon may attack twice each turn. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
   }];
 

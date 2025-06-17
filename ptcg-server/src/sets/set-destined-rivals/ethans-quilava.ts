@@ -63,6 +63,7 @@ export class EthansQuilava extends PokemonCard {
         { min: 0, max: 1 }
       ), cards => {
         if (!cards || cards.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
 

@@ -42,7 +42,7 @@ export class HolonMentor extends TrainerCard {
         return acc;
       }, [] as number[]);
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 3, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 3, allowCancel: false, blocked });
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;

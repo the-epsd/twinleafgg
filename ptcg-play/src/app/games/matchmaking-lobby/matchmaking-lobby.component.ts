@@ -25,11 +25,15 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
-    { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.GLC, label: 'LABEL_GLC' },
+    { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    { value: Format.SWSH, label: 'LABEL_SWSH' },
+    { value: Format.SM, label: 'LABEL_SM' },
+    { value: Format.XY, label: 'LABEL_XY' },
+    { value: Format.BW, label: 'LABEL_BW' },
     { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
-    { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
 
   public selectedFormat: Format = Format.STANDARD;

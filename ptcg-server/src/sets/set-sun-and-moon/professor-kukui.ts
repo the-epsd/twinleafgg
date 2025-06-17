@@ -36,10 +36,16 @@ export class ProfessorKukui extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.marker.addMarker(this.PROFESSOR_KUKUI_MARKER, this);
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
-      player.deck.moveTo(player.hand, 2);
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+      }
 
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+      player.deck.moveTo(player.hand, 2);
+      player.marker.addMarker(this.PROFESSOR_KUKUI_MARKER, this);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
 

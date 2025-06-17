@@ -9,10 +9,9 @@ import { DeckService } from '../api/services/deck.service';
 import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
-import { Archetype, CardType } from 'ptcg-server';
+import { Archetype } from 'ptcg-server';
 import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
 import { Format } from 'ptcg-server';
-import { FormatValidator } from 'src/app/util/formats-validator';
 
 @UntilDestroy()
 
@@ -30,6 +29,7 @@ export class DeckComponent implements OnInit {
   public formatDefaultDecks: { [key: string]: number } = {};
   public selectedFormat: string = 'all';
   public filteredDecks: DeckListEntry[] = [];
+  public showThemeDecksInAllTab = false;
 
   constructor(
     private alertService: AlertService,
@@ -260,39 +260,25 @@ export class DeckComponent implements OnInit {
   public selectFormat(format: string) {
     this.selectedFormat = format;
 
-    // Filter decks based on selected format
-    if (format === 'all') {
-      this.filteredDecks = this.decks;
+    if (format === 'theme') {
+      // Show only theme decks
+      this.filteredDecks = this.decks.filter(deck => Array.isArray(deck.format) && deck.format.includes(Format['THEME']));
+    } else if (format === 'all') {
+      // Show all user decks, plus theme decks if toggle is on
+      if (this.showThemeDecksInAllTab) {
+        this.filteredDecks = this.decks;
+      } else {
+        this.filteredDecks = this.decks.filter(deck => !Array.isArray(deck.format) || !deck.format.includes(Format['THEME']));
+      }
     } else {
-      // Convert format string to Format enum value
-      const formatEnum = Format[format.toUpperCase()];
-
-      this.filteredDecks = this.decks.filter(deck => {
-        // Each deck has valid formats shown in the deck-validity component
-        // This component uses FormatValidator to determine which formats are valid
-
-        // Skip empty decks
-        if (!deck.deckItems || deck.deckItems.length === 0) {
-          return false;
-        }
-
-        // Get card list for FormatValidator
-        const cardList = [];
-        deck.deckItems.forEach(item => {
-          if (item.card) {
-            cardList.push(item.card);
-          }
-        });
-
-        // Use FormatValidator to check if the selected format is valid for this deck
-        const validFormats = FormatValidator.getValidFormatsForCardList(cardList);
-        return validFormats.includes(Number(formatEnum));
-      });
+      // For other formats, show only decks valid for that format
+      this.filteredDecks = this.decks.filter(deck =>
+        Array.isArray(deck.format) && deck.format.includes(Format[format.toUpperCase()])
+      );
     }
   }
 
   public getFormatDisplayName(format: string): string {
-    // Maps format keys to their display names
     const formatDisplayNames = {
       'standard': this.translate.instant('FORMAT_STANDARD'),
       'standard_nightly': this.translate.instant('FORMAT_STANDARD_NIGHTLY'),
@@ -300,9 +286,9 @@ export class DeckComponent implements OnInit {
       'unlimited': this.translate.instant('FORMAT_UNLIMITED'),
       'RSPK': this.translate.instant('FORMAT_RSPK'),
       'retro': this.translate.instant('FORMAT_RETRO'),
-      'glc': this.translate.instant('FORMAT_GLC')
+      'glc': this.translate.instant('FORMAT_GLC'),
+      'theme': this.translate.instant('FORMAT_THEME'),
     };
-
     return formatDisplayNames[format] || format;
   }
 }

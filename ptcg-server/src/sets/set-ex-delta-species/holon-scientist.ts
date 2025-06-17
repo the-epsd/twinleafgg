@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -40,8 +40,9 @@ export class HolonScientist extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (cards.length == 1) {
-        player.hand.moveCardsTo(player.hand.cards, player.discard);
+      if (cards.length === 1) {
+        MOVE_CARDS(store, state, player.hand, player.discard);
+        DRAW_CARDS(player, opponent.hand.cards.length);
       }
 
       if (cards.length > 1) {

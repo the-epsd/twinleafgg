@@ -2,7 +2,7 @@ import { Player } from './player';
 import { Prompt } from '../prompts/prompt';
 import { StateLog } from './state-log';
 import { Rules } from './rules';
-import { Attack } from '../..';
+import { Attack, GameSettings } from '../..';
 
 export enum GamePhase {
   WAITING_FOR_PLAYERS,
@@ -51,4 +51,6 @@ export class State {
   public isSuddenDeath?: boolean;
 
   public benchSizeChangeHandled: boolean = false;
+
+  public gameSettings: GameSettings = new GameSettings();
 }
