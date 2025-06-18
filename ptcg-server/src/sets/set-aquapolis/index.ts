@@ -8,6 +8,7 @@ import { Horsea } from './horsea';
 import { Kingdra } from './kingdra';
 import { Lugia } from './lugia';
 import { Magnemite } from './magnemite';
+import { MetalEnergySpecial } from './metal-energy-special';
 import { Porygon } from './porygon';
 import { Porygon2 } from './porygon2';
 import { Seadra } from './seadra';
@@ -16,7 +17,6 @@ import { TownVolunteers } from './town-volunteers';
 import { Zapdos } from './zapdos';
 
 // Other prints
-import { MetalEnergySpecialAQ } from './other-prints';
 import { PokemonFanClubAQ } from './other-prints';
 import { RainbowEnergyAQ } from './other-prints';
 import { WarpEnergyAQ } from './other-prints';
@@ -31,6 +31,7 @@ export const setAquapolis: Card[] = [
   new Kingdra(),
   new Lugia(),
   new Magnemite(),
+  new MetalEnergySpecial(),
   new Porygon(),
   new Porygon2(),
   new Seadra(),
@@ -39,7 +40,6 @@ export const setAquapolis: Card[] = [
   new Zapdos(),
 
   // Other prints
-  new MetalEnergySpecialAQ(),
   new PokemonFanClubAQ(),
   new RainbowEnergyAQ(),
   new WarpEnergyAQ(),

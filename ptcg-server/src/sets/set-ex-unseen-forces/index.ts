@@ -6,6 +6,9 @@ import { Espeonex } from './espeon-ex';
 import { FluffyBerry } from './fluffy-berry';
 import { Forretress } from './forretress';
 import { Hitmonlee } from './hitmonlee';
+import { Hitmontop } from './hitmontop';
+import { Houndoom } from './houndoom';
+import { Houndour } from './houndour';
 import { Lugiaex } from './lugia-ex';
 import { MarysRequest } from './marys-request';
 import { Meganiumex } from './meganium-ex';
@@ -31,7 +34,11 @@ import { UnownE } from './unown-e';
 import { Ursaring } from './ursaring';
 
 // Other prints
-import { BoostEnergyUF, WarpEnergyUF } from './other-prints';
+import {
+  BoostEnergyUF,
+  PokeBallUF,
+  WarpEnergyUF
+} from './other-prints';
 
 export const setEXUnseenForces: Card[] = [
   new Aipom(),
@@ -41,6 +48,9 @@ export const setEXUnseenForces: Card[] = [
   new FluffyBerry(),
   new Forretress(),
   new Hitmonlee(),
+  new Hitmontop(),
+  new Houndoom(),
+  new Houndour(),
   new Lugiaex(),
   new MarysRequest(),
   new Meganiumex(),
@@ -67,5 +77,6 @@ export const setEXUnseenForces: Card[] = [
 
   // Other prints
   new BoostEnergyUF(),
+  new PokeBallUF(),
   new WarpEnergyUF(),
 ];

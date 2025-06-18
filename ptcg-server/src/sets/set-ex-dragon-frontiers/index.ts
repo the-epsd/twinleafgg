@@ -2,7 +2,9 @@ import { Card } from '../../game';
 import { Altariaex } from './altaria-ex';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
+import { Cloyster } from './cloyster';
 import { Copycat } from './copycat';
+import { Dragoniteex } from './dragonite-ex';
 import { Electabuzz } from './electabuzz';
 import { Elekid } from './elekid';
 import { Flygonex } from './flygon-ex';
@@ -24,6 +26,7 @@ import { Ralts } from './ralts';
 import { Ralts2 } from './ralts2';
 import { Rayquazaex } from './rayquaza-ex';
 import { Seadra } from './seadra';
+import { Shelder } from './shelder';
 import { StrengthCharm } from './strength-charm';
 import { Swablu } from './swablu';
 import { Trapinch } from './trapinch';
@@ -35,7 +38,9 @@ export const setEXDragonFrontiers: Card[] = [
   new Altariaex(),
   new Bayleef(),
   new Chikorita(),
+  new Cloyster(),
   new Copycat(),
+  new Dragoniteex(),
   new Electabuzz(),
   new Elekid(),
   new Flygonex(),
@@ -57,6 +62,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Ralts2(),
   new Rayquazaex(),
   new Seadra(),
+  new Shelder(),
   new StrengthCharm(),
   new Swablu(),
   new Trapinch(),

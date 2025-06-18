@@ -20,7 +20,7 @@ export class Houndoom extends PokemonCard {
   public weakness = [{ type: W }];
   public powers = [{
     name: 'Lonesome',
-    powerType: PowerType.ABILITY,
+    powerType: PowerType.POKEBODY,
     text: 'As long as you have less Pokémon in play than your opponent, your opponent can\'t play any Trainer cards (except for Supporter cards) from his or her hand.'
   }];
   public attacks = [

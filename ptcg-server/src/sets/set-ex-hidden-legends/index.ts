@@ -6,6 +6,7 @@ import { IslandCave } from './island-cave';
 import { Jirachi } from './jirachi';
 import { Kyogreex } from './kyogre-ex';
 import { Machop } from './machop';
+import { MagneticStorm } from './magnetic-storm';
 import { Milotic } from './milotic';
 import { Ninetales } from './ninetales';
 import { Regirockex } from './regirock-ex';
@@ -19,6 +20,7 @@ export const setEXHiddenLegends: Card[] = [
   new Jirachi(),
   new Kyogreex(),
   new Machop(),
+  new MagneticStorm(),
   new Milotic(),
   new Ninetales(),
   new Regirockex(),

@@ -11,6 +11,8 @@ import { Nidorina } from './nidorina';
 import { Pidgeot } from './pidgeot';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
+import { PokeDexHANDY909 } from './pokedex-handy909';
+import { Porygon } from './porygon';
 import { Raticate } from './raticate';
 import { Squirtle } from './squirtle';
 import { Voltorb } from './voltorb';
@@ -31,6 +33,8 @@ export const setEXFireRedLeafGreen: Card[] = [
   new Pidgey(),
   new Pidgeotto(),
   new Pidgeot(),
+  new PokeDexHANDY909(),
+  new Porygon(),
   new Raticate(),
   new Ditto(),
   new Electrodeex(),

@@ -35,7 +35,7 @@ export class Porygon2 extends PokemonCard {
 
   public set: string = 'AQ';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '128';
+  public setNumber: string = '28';
   public name: string = 'Porygon2';
   public fullName: string = 'Porygon2 AQ';
 

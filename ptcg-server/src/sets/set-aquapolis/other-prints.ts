@@ -1,14 +1,6 @@
-import { MetalEnergySpecial } from "../set-undaunted/metal-energy-special";
 import { PokemonFanClub } from "../set-pop-series-4/pokemon-fan-club";
 import { RainbowEnergy } from "../set-sun-and-moon/rainbow-energy";
 import { WarpEnergy } from "../set-shining-legends/warp-energy";
-
-export class MetalEnergySpecialAQ extends MetalEnergySpecial {
-  public fullName = 'Metal Energy AQ';
-  public set = 'AQ';
-  public setNumber = '143';
-  public text = 'Damage done to the Pokémon Metal Energy is attached to is reduced by 10 (after applying Weakness and Resistance). If the Pokémon Metal Energy is attached to isn\'t [M], whenever it damages a Pokémon, reduce that damage by 10 (before applying Weakness and Resistance). Metal Energy provides [M] Energy. (Doesn\'t count as a basic Energy card.)';
-}
 
 export class PokemonFanClubAQ extends PokemonFanClub {
   public fullName = 'Pokemon Fan Club AQ';
