@@ -3,7 +3,8 @@ import {
   ReorderHandAction, ReorderBenchAction, PlayCardAction, CardTarget,
   RetreatAction, AttackAction, UseAbilityAction, StateSerializer,
   UseStadiumAction, GameLog,
-  UseTrainerAbilityAction
+  UseTrainerAbilityAction,
+  UseEnergyAbilityAction
 } from '../../game';
 import { Base64 } from '../../utils';
 import { ChangeAvatarAction } from '../../game/store/actions/change-avatar-action';
@@ -40,6 +41,7 @@ export class GameSocket {
     this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
     this.socket.addListener('game:action:ability', this.ability.bind(this));
     this.socket.addListener('game:action:trainerAbility', this.trainerAbility.bind(this));
+    this.socket.addListener('game:action:energyAbility', this.energyAbility.bind(this));
     this.socket.addListener('game:action:attack', this.attack.bind(this));
     this.socket.addListener('game:action:stadium', this.stadium.bind(this));
     this.socket.addListener('game:action:play', this.playGame.bind(this));
@@ -126,6 +128,11 @@ export class GameSocket {
 
   private trainerAbility(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
     const action = new UseTrainerAbilityAction(this.client.id, params.ability, params.target);
+    this.dispatch(params.gameId, action, response);
+  }
+
+  private energyAbility(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
+    const action = new UseEnergyAbilityAction(this.client.id, params.ability, params.target);
     this.dispatch(params.gameId, action, response);
   }
 

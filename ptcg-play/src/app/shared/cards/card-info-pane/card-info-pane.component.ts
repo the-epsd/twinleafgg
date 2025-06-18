@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard, PokemonCardList } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard, PokemonCardList, EnergyCard } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
@@ -104,7 +104,7 @@ export class CardInfoPaneComponent implements OnChanges {
 
   private buildEnabledAbilities(): { [name: string]: boolean } {
     const enabledAbilities: { [name: string]: boolean } = {};
-    if (this.card && this.card.superType === SuperType.POKEMON || this.card.superType === SuperType.TRAINER) {
+    if (this.card && (this.card.superType === SuperType.POKEMON || this.card.superType === SuperType.TRAINER || this.card.superType === SuperType.ENERGY)) {
       const pokemonCard = this.card as PokemonCard;
       pokemonCard.powers.forEach(power => {
         if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
@@ -115,6 +115,14 @@ export class CardInfoPaneComponent implements OnChanges {
       });
       const trainerCard = this.card as TrainerCard;
       trainerCard.powers.forEach(power => {
+        if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
+          || (this.options.enableAbility.useFromDiscard && power.useFromDiscard)
+          || (this.options.enableAbility.useFromHand && power.useFromHand)) {
+          enabledAbilities[power.name] = true;
+        }
+      });
+      const energyCard = this.card as EnergyCard;
+      energyCard.powers.forEach(power => {
         if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
           || (this.options.enableAbility.useFromDiscard && power.useFromDiscard)
           || (this.options.enableAbility.useFromHand && power.useFromHand)) {

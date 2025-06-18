@@ -71,6 +71,22 @@ export class UseTrainerPowerEffect implements Effect {
   }
 }
 
+export class UseEnergyPowerEffect implements Effect {
+  readonly type: string = GameEffects.USE_POWER_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public power: Power;
+  public card: EnergyCard;
+  public target: CardTarget;
+
+  constructor(player: Player, power: Power, card: EnergyCard, target: CardTarget) {
+    this.player = player;
+    this.power = power;
+    this.card = card;
+    this.target = target;
+  }
+}
+
 export class PowerEffect implements Effect {
   readonly type: string = GameEffects.POWER_EFFECT;
   public preventDefault = false;
