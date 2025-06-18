@@ -6,7 +6,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_MARKER, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 
 export class Rattata extends PokemonCard {
@@ -72,6 +72,8 @@ export class Rattata extends PokemonCard {
 
       return state;
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.TRICKERY_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 10);

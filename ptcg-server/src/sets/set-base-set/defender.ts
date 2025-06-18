@@ -23,13 +23,15 @@ export class Defender extends TrainerCard {
 
   public setNumber: string = '80';
 
+  public putIntoPlay = true;
+
   public text: string = 'Attach Defender to 1 of your Pokémon. At the end of your opponent\'s next turn, discard Defender. Damage done to that Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).';
 
   public readonly DEFENDER_MARKER = 'DEFENDER_MARKER';
   public readonly CLEAR_DEFENDER_MARKER = 'CLEAR_DEFENDER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 

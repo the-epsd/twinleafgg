@@ -58,8 +58,12 @@ export class ComputerError extends TrainerCard {
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-      const endTurnEffect = new EndTurnEffect(player);
-      store.reduceEffect(state, endTurnEffect);
+      // Pretty much just for Chaos Gym: if used while not your turn, there is no end turn effect
+      // Better to refer to whoever's turn it is, but idk how to do that
+      if (effect.player === StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
+        const endTurnEffect = new EndTurnEffect(player);
+        store.reduceEffect(state, endTurnEffect);
+      }
     }
 
     return state;
