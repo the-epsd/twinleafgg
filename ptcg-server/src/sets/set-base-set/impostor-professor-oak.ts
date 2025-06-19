@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt, StateUtils } from '../../game';
+import { StateUtils } from '../../game';
+import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class ImpostorProfessorOak extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -26,15 +27,10 @@ export class ImpostorProfessorOak extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Shuffle opponent's hand into their deck
-      opponent.hand.moveCardsTo(opponent.hand.cards, opponent.deck);
-
-      store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
-
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck);
+      SHUFFLE_DECK(store, state, opponent);
       // Draw 7 cards for the opponent
-      opponent.deck.moveTo(opponent.hand, 7);
+      DRAW_CARDS(opponent, 7);
 
       // Discard the played Trainer card
       player.supporter.moveCardTo(effect.trainerCard, player.discard);

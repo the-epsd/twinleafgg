@@ -19,6 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (coinResult === false) {
+    MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
     return state;
   }
 

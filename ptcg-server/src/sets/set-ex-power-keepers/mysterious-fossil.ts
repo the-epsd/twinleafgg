@@ -69,6 +69,10 @@ export class MysteriousFossil extends TrainerCard {
       }
     }
 
+    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
+      effect.prizeCount = 0;
+    }
+
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;
 

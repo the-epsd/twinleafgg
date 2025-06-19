@@ -6,7 +6,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, R
 export class Flygon extends PokemonCard {
   public cardType = G;
   public additionalCardTypes = [M];
-  public stage = Stage.STAGE_2;
+  public stage = Stage.BASIC;
   public evolvesFrom = 'Vibrava';
   public tags = [CardTag.DELTA_SPECIES];
   public hp = 110;

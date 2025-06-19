@@ -19,18 +19,18 @@ export class Palafin extends PokemonCard {
 
   public hp: number = 150;
 
-  public weakness = [ {type: CardType.LIGHTNING} ];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Jet Punch',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 30,
     text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }, {
     name: 'Justice Kick',
-    cost: [ CardType.WATER, CardType.WATER ],
+    cost: [CardType.WATER, CardType.WATER],
     damage: 210,
     text: 'If this Pokémon didn\'t move from the Bench to the Active Spot this turn, this attack does nothing.'
   }];
@@ -49,7 +49,6 @@ export class Palafin extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -57,24 +56,24 @@ export class Palafin extends PokemonCard {
         effect.damage = 0;
         return state;
       }
-      
+
       effect.damage = 210;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-        
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-        
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -84,7 +83,7 @@ export class Palafin extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
-        
+
       return state;
     }
     return state;
