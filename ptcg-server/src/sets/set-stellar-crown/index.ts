@@ -33,6 +33,7 @@ import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
+import { Melmetal } from './melmetal';
 import { Milcery } from './milcery';
 import { Noctowl } from './noctowl';
 import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
@@ -84,6 +85,7 @@ export const setStellarCrown: Card[] = [
   new Laprasex(),
   new Medichamex(),
   new Meditite(),
+  new Melmetal(),
   new Noctowl(),
   // new Orthwormex(),
   new Raboot(),

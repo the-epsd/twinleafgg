@@ -174,6 +174,10 @@ export class Rayquazaex extends PokemonCard {
             damageEffect = new DealDamageEffect(effect, 50);
           }
           damageEffect.target = target;
+          if (target !== opponent.active) {
+            effect.ignoreWeakness = true;
+            effect.ignoreResistance = true;
+          }
           store.reduceEffect(state, damageEffect);
         });
         return state;

@@ -61,7 +61,7 @@ export class SwoopTeleporter extends TrainerCard {
           GameMessage.CHOOSE_CARDS,
           player.deck,
           { superType: SuperType.POKEMON, stage: Stage.BASIC },
-          { min: 1, max: 1, allowCancel: false, blocked }
+          { min: 0, max: 1, allowCancel: false, blocked }
         ), selectedCards => {
           cards = selectedCards || [];
 

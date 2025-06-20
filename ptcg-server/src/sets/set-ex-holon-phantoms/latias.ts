@@ -79,7 +79,7 @@ export class Latias extends PokemonCard {
       const isEvolved = cardList instanceof PokemonCardList && cardList.getPokemons().length > 1;
       const isPokemonEx = cardList instanceof PokemonCardList && pokemonCard.tags.includes(CardTag.POKEMON_ex);
       if (!effect.power.exemptFromAbilityLock) {
-        if (isEvolved && !isPokemonEx && effect.power.powerType === PowerType.POKEPOWER) {
+        if (isEvolved && !isPokemonEx && effect.power.powerType === PowerType.POKEBODY) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
       }
