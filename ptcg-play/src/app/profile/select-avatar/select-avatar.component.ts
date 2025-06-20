@@ -29,7 +29,6 @@ export class SelectAvatarComponent implements OnInit {
     private avatarService: AvatarService,
     private sessionService: SessionService,
     private translate: TranslateService,
-    private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService
   ) {
@@ -72,7 +71,7 @@ export class SelectAvatarComponent implements OnInit {
 
   private refreshAvatars(): void {
     this.loading = true;
-    this.avatarService.getPredefinedAvatars()
+    this.avatarService.getAvailableAvatars()
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this)

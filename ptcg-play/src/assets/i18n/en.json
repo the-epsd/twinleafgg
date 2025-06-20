@@ -604,5 +604,7 @@
   "SOCKET_RECONNECTING": "Reconnecting... (Attempt {attempt})",
   "SOCKET_RECONNECT_ATTEMPT": "Reconnection attempt {attempt}",
   "SOCKET_RECONNECTED": "Reconnected successfully",
-  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server"
+  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server",
+  "MAIN_BATTLE_PASS": "Battle Pass",
+  "MAIN_BUY_CARDS": "Buy Cards"
 }

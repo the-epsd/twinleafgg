@@ -1,6 +1,9 @@
 import 'reflect-metadata';
 import { Connection, createConnection, EntityManager } from 'typeorm';
-import { Avatar, Conversation, Deck, Match, Message, Replay, User } from './model';
+import {
+  Avatar, Conversation, Deck, Match, Message, Replay, User,
+  BattlePassSeason, UserBattlePass, UserUnlockedItem
+} from './';
 
 export class Storage {
 
@@ -20,6 +23,7 @@ export class Storage {
 
     this.connection = await createConnection({
       ...storageConfig,
+      timezone: 'Z',
       entities: [
         Avatar,
         Conversation,
@@ -27,7 +31,10 @@ export class Storage {
         Match,
         Message,
         Replay,
-        User
+        User,
+        BattlePassSeason,
+        UserBattlePass,
+        UserUnlockedItem
       ],
       synchronize: true,
       logging: false

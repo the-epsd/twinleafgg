@@ -555,5 +555,7 @@
   "SOCKET_RECONNECTING": "Reconnexion... (Essai {attempt})",
   "SOCKET_RECONNECT_ATTEMPT": "Essai de reconnexion {attempt}",
   "SOCKET_RECONNECTED": "Reconnecté avec succès",
-  "SOCKET_RECONNECT_FAILED": "Échec de la reconnexion au serveur"
+  "SOCKET_RECONNECT_FAILED": "Échec de la reconnexion au serveur",
+  "MAIN_BATTLE_PASS": "Passe de combat",
+  "MAIN_BUY_CARDS": "Acheter des cartes"
 }
