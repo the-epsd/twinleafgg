@@ -48,6 +48,7 @@ import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
 import { Marill } from './marill';
 import { AntiqueCoverFossil } from './antique-cover-fossil';
+import { Toedscool } from './toedscool';
 
 export const setStellarCrown: Card[] = [
   new Archaludon(),
@@ -99,6 +100,7 @@ export const setStellarCrown: Card[] = [
   new DeluxeBomb(),
   new Marill(),
   new AntiqueCoverFossil(),
+  new Toedscool(),
 
   //FA
   new BulbasaurIR(),
