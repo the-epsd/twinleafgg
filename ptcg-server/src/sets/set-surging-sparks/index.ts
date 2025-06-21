@@ -28,6 +28,7 @@ import { Cofagrigus } from './cofagrigus';
 import { Crocalor } from './crocalor';
 import { Cyclizarex } from './cyclizar-ex';
 import { Cyrano } from './cyrano';
+import { Dedenne } from './dedenne';
 import { Deino } from './deino';
 import { Dialga } from './dialga';
 import { DragonsElixir } from './dragons-elixir';
@@ -124,6 +125,7 @@ export const setSurgingSparks: Card[] = [
   new ExcitingStadium(),
   new GravityMountain(),
   new Cyrano(),
+  new Dedenne(),
   new MiraculousIntercom(),
   new Fuecoco(),
   new Crocalor(),

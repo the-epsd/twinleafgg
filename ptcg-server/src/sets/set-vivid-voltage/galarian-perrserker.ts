@@ -27,6 +27,7 @@ export class GalarianPerrserker extends PokemonCard {
   }];
 
   public set: string = 'VIV';
+  public regulationMark: string = 'D';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '113';
   public name: string = 'Galarian Perserker';

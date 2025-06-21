@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS, MOVE_CARDS_TO_HAND, MULTIPLE_COIN_FLIPS_PROMPT, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS, MOVE_CARDS_TO_HAND, MULTIPLE_COIN_FLIPS_PROMPT, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,6 +36,8 @@ export class Clefable extends PokemonCard {
   public readonly MOONLIGHT_MARKER = 'MOONLIGHT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.MOONLIGHT_MARKER, this);
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;

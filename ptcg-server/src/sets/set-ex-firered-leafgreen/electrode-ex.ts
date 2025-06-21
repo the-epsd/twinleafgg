@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
+  PowerType, StoreLike, State, StateUtils, GameMessage,
   PlayerType, SlotType,
   AttachEnergyPrompt,
   EnergyCard,
@@ -47,12 +47,6 @@ export class Electrodeex extends PokemonCard {
     //Versatile pokebody
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard;
-      });
-      if (!hasEnergyInDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {

@@ -1,6 +1,6 @@
 import { CoinFlipPrompt, GameError, StateUtils } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -10,6 +10,8 @@ import { StoreLike } from '../../game/store/store-like';
 export class TeamRocketsHandiwork extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public tags = [CardTag.TEAM_ROCKET];
 
   public set: string = 'FCO';
 

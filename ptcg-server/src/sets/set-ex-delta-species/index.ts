@@ -25,6 +25,8 @@ import { Jolteonex } from './jolteon-ex';
 import { Kirlia } from './kirlia';
 import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
+import { Metagross } from './metagross';
+import { Metang } from './metang';
 import { Mewtwo } from './mewtwo';
 import { Persian } from './persian';
 import { Porygon } from './porygon';
@@ -63,6 +65,8 @@ export const setEXDeltaSpecies: Card[] = [
   new Kirlia(),
   new Larvitar(),
   new Meowth(),
+  new Metagross(),
+  new Metang(),
   new Mewtwo(),
   new Persian(),
   new Porygon(),

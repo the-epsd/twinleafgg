@@ -1,5 +1,6 @@
 import { Card } from '../../game';
 import { Aipom } from './aipom';
+import { Ariados } from './ariados';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Espeonex } from './espeon-ex';
@@ -24,6 +25,7 @@ import { Stantler } from './stantler';
 import { Slowpoke } from './slowpoke';
 import { Slugma } from './slugma';
 import { Smoochum } from './smoochum';
+import { Spinarak } from './spinarak';
 import { Steelixex } from './steelix-ex';
 import { Sudowoodo } from './sudowoodo';
 import { Teddiursa } from './teddiursa';
@@ -42,6 +44,7 @@ import {
 
 export const setEXUnseenForces: Card[] = [
   new Aipom(),
+  new Ariados(),
   new Bayleef(),
   new Chikorita(),
   new Espeonex(),
@@ -66,6 +69,7 @@ export const setEXUnseenForces: Card[] = [
   new Slowpoke(),
   new Slugma(),
   new Smoochum(),
+  new Spinarak(),
   new Steelixex(),
   new Sudowoodo(),
   new Teddiursa(),

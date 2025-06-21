@@ -55,9 +55,9 @@ export class TeamMagmasCamerupt extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
+      store.prompt(state, new ChooseCardsPrompt(
         player,
-        GameMessage.CHOOSE_CARD_TO_DECK,
+        GameMessage.CHOOSE_ENERGY_FROM_DISCARD,
         player.discard,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { min: 1, max: 1, allowCancel: false }

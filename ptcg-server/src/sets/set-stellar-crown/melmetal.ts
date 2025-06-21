@@ -27,6 +27,7 @@ export class Melmetal extends PokemonCard {
   }];
 
   public set: string = 'SCR';
+  public regulationMark: string = 'H';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Melmetal';

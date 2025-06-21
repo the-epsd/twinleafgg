@@ -19,6 +19,7 @@ import { GalarMine } from './galar-mine';
 import { GalarianMeowth } from './galarian-meowth';
 import { GalarianRunerigus } from './galarian-runerigus';
 import { GalarianYamask } from './galarian-yamask';
+import { Garbodor } from './garbodor';
 import { Honedge } from './honedge';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
@@ -51,6 +52,7 @@ export const setRebelClash: Card[] = [
   new GalarianMeowth(),
   new GalarianRunerigus(),
   new GalarianYamask(),
+  new Garbodor(),
   new Honedge(),
   new HorrorPsychicEnergy(),
   new Metapod(),
