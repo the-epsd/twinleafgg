@@ -19,6 +19,14 @@ $avatar-size: map-get($ptcg-size, avatar);
   }
 }
 
+.ptcg-user-avatar,
+.ptcg-contact-avatar,
+.ptcg-message-avatar,
+.ptcg-profile-avatar>* {
+  width: $avatar-size;
+  height: $avatar-size;
+}
+
 .ptcg-badge {
   background-color: red;
 }

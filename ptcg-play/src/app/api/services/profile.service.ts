@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '../api.service';
-import { ProfileResponse, MatchHistoryResponse } from '../interfaces/profile.interface';
+import { ProfileResponse, MatchHistoryResponse, CustomAvatarInfo } from '../interfaces/profile.interface';
 import { Response } from '../interfaces/response.interface';
 
 @Injectable()
@@ -32,6 +32,10 @@ export class ProfileService {
 
   public changeEmail(email: string) {
     return this.api.post<Response>('/v1/profile/changeEmail', { email });
+  }
+
+  public updateAvatar(avatar: Partial<CustomAvatarInfo>) {
+    return this.api.post<ProfileResponse>('/v1/profile/updateAvatar', avatar);
   }
 
   public updateUserRole(targetUserId: number, roleId: number) {

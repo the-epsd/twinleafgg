@@ -17,6 +17,7 @@ import { ChangePasswordPopupComponent } from './change-password-popup/change-pas
 import { ChangeCardImagesPopupComponent } from './change-card-images-popup/change-card-images-popup.component';
 import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
 import { GamesModule } from '../games/games.module';
+import { AvatarCustomizationPopupComponent } from './avatar-customization-popup/avatar-customization-popup.component';
 
 @NgModule({
   imports: [
@@ -42,13 +43,15 @@ import { GamesModule } from '../games/games.module';
     ChangePasswordPopupComponent,
     EditAvatarsPopupComponent,
     ProfileComponent,
-    SelectAvatarComponent
+    SelectAvatarComponent,
+    AvatarCustomizationPopupComponent
   ],
   entryComponents: [
     ChangeEmailPopupComponent,
     ChangeCardImagesPopupComponent,
     ChangePasswordPopupComponent,
-    EditAvatarsPopupComponent
+    EditAvatarsPopupComponent,
+    AvatarCustomizationPopupComponent
   ],
   exports: [
   ]

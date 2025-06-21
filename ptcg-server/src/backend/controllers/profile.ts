@@ -6,7 +6,7 @@ import { Controller, Get, Post } from './controller';
 import { ApiErrorEnum } from '../common/errors';
 import { MatchInfo } from '../interfaces/profile.interface';
 import { Md5 } from '../../utils/md5';
-import { User, Match } from '../../storage';
+import { User, Match, CustomAvatar } from '../../storage';
 import { UserInfo } from '../interfaces/core.interface';
 import { config } from '../../config';
 
@@ -25,7 +25,7 @@ export class Profile extends Controller {
   @AuthToken()
   public async onMe(req: Request, res: Response) {
     const userId: number = req.body.userId;
-    const user = await User.findOne(userId);
+    const user = await User.findOne(userId, { relations: ['customAvatar'] });
     if (user === undefined) {
       res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
@@ -38,7 +38,7 @@ export class Profile extends Controller {
   @AuthToken()
   public async onGet(req: Request, res: Response) {
     const userId: number = parseInt(req.params.id, 10);
-    const user = await User.findOne(userId);
+    const user = await User.findOne(userId, { relations: ['customAvatar'] });
     if (user === undefined) {
       res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
@@ -202,5 +202,54 @@ export class Profile extends Controller {
       res.send({ error: ApiErrorEnum.SERVER_ERROR });
       return;
     }
+  }
+
+  @Post('/updateAvatar')
+  @AuthToken()
+  @Validate({
+    face: check().optional().isString(),
+    hair: check().optional().isString(),
+    glasses: check().optional().isString(),
+    shirt: check().optional().isString(),
+    hat: check().optional().isString(),
+    accessory: check().optional().isString()
+  })
+  public async onUpdateAvatar(req: Request, res: Response) {
+    const userId: number = req.body.userId;
+    let user = await User.findOne(userId);
+
+    if (user === undefined) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
+      return;
+    }
+
+    let customAvatar = await CustomAvatar.findOne({ where: { user } });
+    if (customAvatar === undefined) {
+      customAvatar = new CustomAvatar();
+      customAvatar.user = user;
+    }
+
+    const { face, hair, glasses, shirt, hat, accessory } = req.body;
+    if (face) customAvatar.face = face;
+    if (hair) customAvatar.hair = hair;
+    if (glasses) customAvatar.glasses = glasses;
+    if (shirt) customAvatar.shirt = shirt;
+    if (hat) customAvatar.hat = hat;
+    if (accessory) customAvatar.accessory = accessory;
+
+    await customAvatar.save();
+
+    // Re-fetch the user to get the eagerly-loaded customAvatar relation
+    user = await User.findOne(userId, { relations: ['customAvatar'] });
+
+    if (!user) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
+      return;
+    }
+
+    const userInfo = this.buildUserInfo(user);
+    res.send({ ok: true, user: userInfo });
   }
 }

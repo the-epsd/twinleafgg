@@ -20,7 +20,8 @@ export class UserBarComponent {
   private _user: UserInfo;
 
   @Input() marked = false;
-  @Input() openUserPopup: boolean;
+  @Input() openUserPopup = true;
+  @Input() highlight: boolean;
 
   constructor(
     private userInfoPopupService: UserInfoPopupService

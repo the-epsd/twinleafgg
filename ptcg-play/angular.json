@@ -24,10 +24,12 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/card-images",
+              "src/assets/custom-avatar"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/theme/app.scss"
             ],
             "scripts": [],
             "vendorChunk": true,

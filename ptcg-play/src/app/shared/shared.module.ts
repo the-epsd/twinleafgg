@@ -74,4 +74,4 @@ import { ArchetypeComponent } from './cards/archetype/archetype.component';
     SessionService
   ]
 })
-export class SharedModule {}
+export class SharedModule { }

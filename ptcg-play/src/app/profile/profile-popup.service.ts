@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ChangeEmailPopupComponent } from './change-email-popup/change-email-popup.component';
 import { ChangePasswordPopupComponent } from './change-password-popup/change-password-popup.component';
 import { EditAvatarsPopupComponent } from './edit-avatars-popup/edit-avatars-popup.component';
+import { AvatarCustomizationPopupComponent } from './avatar-customization-popup/avatar-customization-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,15 @@ export class ProfilePopupService {
       maxWidth: '100%',
       width: '450px',
       data: { userId }
+    });
+
+    return dialogRef;
+  }
+
+  public openAvatarCustomizationPopup(): MatDialogRef<AvatarCustomizationPopupComponent, undefined> {
+    const dialogRef = this.dialog.open(AvatarCustomizationPopupComponent, {
+      maxWidth: '100%',
+      width: '500px'
     });
 
     return dialogRef;

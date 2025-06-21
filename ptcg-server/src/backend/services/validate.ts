@@ -27,7 +27,7 @@ export function Validate(validationMap: ValidationMap) {
           const value = req.body[param];
           if (!validationMap[param].validate(value)) {
             res.statusCode = 400;
-            res.send({error: ApiErrorEnum.VALIDATION_INVALID_PARAM, param});
+            res.send({ error: ApiErrorEnum.VALIDATION_INVALID_PARAM, param });
             return;
           }
         }
@@ -40,14 +40,23 @@ export function Validate(validationMap: ValidationMap) {
 export class Validator {
   public valid: boolean = true;
   private validators: ValidationFn[] = [];
+  private isOptional = false;
 
   public validate(value: any): boolean {
+    if (this.isOptional && value === undefined) {
+      return true;
+    }
     for (let i = 0; i < this.validators.length; i++) {
       if (this.validators[i](value) === false) {
         return false;
       }
     }
     return true;
+  }
+
+  public optional(): Validator {
+    this.isOptional = true;
+    return this;
   }
 
   public required(): Validator {

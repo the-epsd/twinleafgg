@@ -1,5 +1,16 @@
 import { Response } from './response.interface';
-import { UserInfo, MatchInfo } from 'ptcg-server';
+import { UserInfo as UserInfoBase, MatchInfo } from 'ptcg-server';
+
+export interface CustomAvatarInfo {
+  face: string;
+  hair: string;
+  glasses: string;
+  shirt: string;
+  hat: string;
+  accessory: string;
+}
+
+export type UserInfo = UserInfoBase & { customAvatar?: CustomAvatarInfo };
 
 export interface ProfileResponse extends Response {
   user: UserInfo;

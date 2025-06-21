@@ -27,7 +27,7 @@ export class PlayerAvatarComponent {
 
   public nextRequest = new Subject<void>();
   public avatarFile = '';
-  private userValue: UserInfo | undefined;
+  public userValue: UserInfo | undefined;
   private name: string | undefined;
 
   constructor(

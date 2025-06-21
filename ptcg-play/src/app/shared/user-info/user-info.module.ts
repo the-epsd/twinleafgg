@@ -11,6 +11,7 @@ import { RankComponent } from './rank/rank.component';
 import { UserBarComponent } from './user-bar/user-bar.component';
 import { UserInfoPaneComponent } from './user-info-pane/user-info-pane.component';
 import { UserInfoPopupComponent } from './user-info-popup/user-info-popup.component';
+import { CustomAvatarComponent } from '../custom-avatar/custom-avatar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UserInfoPopupComponent } from './user-info-popup/user-info-popup.compon
     RankComponent,
     UserBarComponent,
     UserInfoPaneComponent,
-    UserInfoPopupComponent
+    UserInfoPopupComponent,
+    CustomAvatarComponent
   ],
   entryComponents: [
     AvatarPopupComponent,
@@ -37,7 +39,8 @@ import { UserInfoPopupComponent } from './user-info-popup/user-info-popup.compon
     BadgeComponent,
     RankComponent,
     UserBarComponent,
-    UserInfoPaneComponent
+    UserInfoPaneComponent,
+    CustomAvatarComponent
   ]
 })
 export class UserInfoModule { }
