@@ -43,6 +43,7 @@ export enum PowerType {
   LV_X_RULE,
   BREAK_RULE,
   ARCEUS_RULE,
+  ENERGY_ABILITY
 }
 
 export interface Power {

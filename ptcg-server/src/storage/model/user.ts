@@ -1,9 +1,10 @@
-import { BaseEntity, Column, Entity, Unique, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BaseEntity, Column, Entity, Unique, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { Avatar } from './avatar';
 import { Deck } from './deck';
 import { Replay } from './replay';
 import { Rank, rankLevels } from '../../backend/interfaces/rank.enum';
 import { bigint } from '../transformers/bigint';
+import { CustomAvatar } from './custom-avatar';
 
 @Entity()
 @Unique(['name'])
@@ -38,6 +39,9 @@ export class User extends BaseEntity {
 
   @Column()
   public avatarFile: string = '';
+
+  @OneToOne(() => CustomAvatar, customAvatar => customAvatar.user, { cascade: true, eager: true })
+  public customAvatar!: CustomAvatar;
 
   @OneToMany(type => Deck, deck => deck.user)
   decks!: Deck[];

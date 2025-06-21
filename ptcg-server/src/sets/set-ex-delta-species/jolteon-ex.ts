@@ -32,7 +32,7 @@ export class Jolteonex extends PokemonCard {
     },
     {
       name: 'Thunder Blast',
-      cost: [L, C],
+      cost: [L, C, C],
       damage: 70,
       text: 'Discard a [L] Energy card attached to Jolteon ex.'
     },

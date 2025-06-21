@@ -49,7 +49,7 @@ function* playCardRspk(next: Function, store: StoreLike, state: State, effect: T
     return c instanceof PokemonCard && c.stage === Stage.STAGE_1;
   }) as PokemonCard[];
 
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (l, card, target) => {
     if (card.stage === Stage.BASIC && stage2.some(s => isMatchingStage2(stage1Ref, card, s))) {
       hasBasicPokemon = true;
       return;
@@ -88,19 +88,28 @@ function* playCardRspk(next: Function, store: StoreLike, state: State, effect: T
     return state; // invalid target?
   }
 
+  // Block all cards in hand that are not valid evolutions for the selected Basic
   const blocked2: number[] = [];
   player.hand.cards.forEach((c, index) => {
-    if (c instanceof PokemonCard) {
-      if (c.stage === Stage.STAGE_2 || c.stage === Stage.STAGE_1) {
-        if (isMatchingStage2(stage1Ref, pokemonCard, c)) {
-          return;
-        }
-        if (c.evolvesFrom === pokemonCard.name) {
-          return;
-        }
-      } else {
+    if (!(c instanceof PokemonCard)) {
+      blocked2.push(index);
+      return;
+    }
+    if (c.stage === Stage.STAGE_1) {
+      if (c.evolvesFrom !== pokemonCard.name) {
         blocked2.push(index);
+        return;
       }
+    } else if (c.stage === Stage.STAGE_2) {
+      // Only allow Stage 2 that matches the selected Basic via a Stage 1
+      if (!isMatchingStage2(stage1Ref, pokemonCard, c)) {
+        blocked2.push(index);
+        return;
+      }
+    } else {
+      // Not a Stage 1 or Stage 2
+      blocked2.push(index);
+      return;
     }
   });
 

@@ -1,16 +1,17 @@
 import { PlayerType, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {PutDamageEffect} from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GarchompC extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.POKEMON_SP];
   public cardType: CardType = C;
   public hp: number = 80;
   public weakness = [{ type: C }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
@@ -34,11 +35,11 @@ export class GarchompC extends PokemonCard {
   public fullName: string = 'Garchomp C SV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 1, this)){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card !== player.active){
+        if (card !== player.active) {
           const damage = new PutDamageEffect(effect, 10);
           damage.target = card;
           store.reduceEffect(state, damage);

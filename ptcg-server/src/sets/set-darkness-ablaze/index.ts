@@ -21,6 +21,7 @@ import { Klang } from './klang';
 import { Lugia } from './lugia';
 import { Polteageist } from './polteageist';
 import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
+import { Purrloin } from './purrloin';
 import { RareFossil } from './rare-fossil';
 import { RoseTower } from './rose-tower';
 import { Rowlet } from './rowlet';
@@ -55,6 +56,7 @@ export const setDarknessAblaze: Card[] = [
   new Lugia(),
   new Polteageist(),
   new PowerfulColorlessEnergy(),
+  new Purrloin(),
   new RareFossil(),
   new RoseTower(),
   new Rowlet(),

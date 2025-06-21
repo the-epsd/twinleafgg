@@ -183,6 +183,8 @@
   "MAIN_TABLE_NAME": "#{{id}} {{name}}",
   "MAIN_TABLE_UNKNOWN": "#{{id}} 不明",
   "MAIN_TITLE": "twinleaf.gg",
+  "MAIN_BATTLE_PASS": "バトルパス",
+  "MAIN_BUY_CARDS": "カード購入",
   "MESSAGES_DELETE_CONVERSATION": "会話を削除",
   "MESSAGES_DELETE_CONVERSATION_CONFIRM": "この会話をプロフィールから削除しますか？",
   "MESSAGES_ENTER_MESSAGE": "メッセージを入力",

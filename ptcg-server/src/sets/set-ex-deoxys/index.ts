@@ -19,6 +19,7 @@ import { MasterBall } from './master-ball';
 import { Minun } from './minun';
 import { Nosepass } from './nosepass';
 import { Numel } from './numel';
+import { RayquazaStar } from './rayquaza-star';
 import { Sableye } from './sableye';
 import { Salamenceex } from './salamence-ex';
 import { ScrambleEnergy } from './scramble-energy';
@@ -47,6 +48,7 @@ export const setEXDeoxys: Card[] = [
   new Minun(),
   new Nosepass(),
   new Numel(),
+  new RayquazaStar(),
   new Sableye(),
   new Salamenceex(),
   new ScrambleEnergy(),

@@ -36,6 +36,18 @@ export class UseTrainerAbilityAction implements Action {
 
 }
 
+export class UseEnergyAbilityAction implements Action {
+
+  readonly type: string = 'USE_ENERGY_ABILITY_ACTION';
+
+  constructor(
+    public clientId: number,
+    public name: string,
+    public target: CardTarget
+  ) { }
+
+}
+
 export class UseStadiumAction implements Action {
 
   readonly type: string = 'USE_STADIUM_ACTION';

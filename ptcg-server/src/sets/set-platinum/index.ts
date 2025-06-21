@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { BronzongG } from './bronzong-g';
 import { CrobatG } from './crobat-g';
 import { Delcatty } from './delcatty';
 import { Dialga } from './dialga';
@@ -17,6 +18,7 @@ import { Vulpix } from './vulpix';
 
 export const setPlatinum: Card[] = [
   new SkuntankG(),
+  new BronzongG(),
   new CrobatG(),
   new Delcatty(),
   new Dialga(),

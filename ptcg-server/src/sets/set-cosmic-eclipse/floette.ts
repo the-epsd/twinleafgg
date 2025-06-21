@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
+import { GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, MOVE_CARD_TO, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Floette extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -16,7 +16,7 @@ export class Floette extends PokemonCard {
   public powers = [{
     name: 'Flower Picking',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may choose a random card from your opponent\'s hand.Your opponent reveals that card and shuffles it into their deck.'
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
   }];
 
   public attacks = [{
@@ -34,40 +34,21 @@ export class Floette extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
 
-      // Opponent has no cards in the hand
-      if (opponent.hand.cards.length === 0) {
-        return state;
-      }
+      CONFIRMATION_PROMPT(store, state, effect.player, wantToUse => {
+        if (wantToUse) {
+          const player = effect.player;
+          const opponent = StateUtils.getOpponent(state, player);
 
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DECK,
-        opponent.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false, isSecret: true }
-      ), selected => {
-        cards = selected || [];
-
-        if (cards.length > 0) {
-          state = store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards), () => state
-          );
+          if (opponent.hand.cards.length > 0) {
+            const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+            const randomCard = opponent.hand.cards[randomIndex];
+            MOVE_CARD_TO(state, randomCard, opponent.deck);
+            SHUFFLE_DECK(store, state, opponent);
+          }
         }
-
-        opponent.hand.moveCardsTo(cards, opponent.deck);
-
-        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
-        });
-      });
-
+      }, GameMessage.WANT_TO_USE_ABILITY);
     }
 
     return state;

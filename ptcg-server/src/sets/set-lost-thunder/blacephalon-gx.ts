@@ -10,7 +10,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlacephalonGX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_GX, CardTag.ULTRA_BEAST ];
+  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.BASIC;
 
@@ -20,26 +20,26 @@ export class BlacephalonGX extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Bursting Burn',
-      cost: [ CardType.FIRE ],
+      cost: [CardType.FIRE],
       damage: 0,
       text: 'Your opponent\'s Active Pokémon is now Burned and Confused.'
     },
 
     {
       name: 'Mind Blown',
-      cost: [ CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE],
       damage: 50,
       text: 'Put any amount of [R] Energy attached to your Pokémon in the Lost Zone. This attack does 50 damage for each card put in the Lost Zone in this way.'
     },
 
     {
       name: 'Burst-GX',
-      cost: [ CardType.FIRE ],
+      cost: [CardType.FIRE],
       damage: 0,
       text: 'Discard 1 of your Prize cards. If it\'s an Energy card, attach it to 1 of your Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
@@ -58,7 +58,7 @@ export class BlacephalonGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bursting Burn
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED, SpecialCondition.BURNED]);
       return store.reduceEffect(state, specialCondition);
     }
@@ -92,7 +92,7 @@ export class BlacephalonGX extends PokemonCard {
           let totalDiscarded = 0;
 
           const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = player.discard;
+          const target = player.lostzone;
           source.moveCardTo(transfer.card, target);
 
           totalDiscarded = transfers.length;
@@ -100,7 +100,7 @@ export class BlacephalonGX extends PokemonCard {
           effect.damage = totalDiscarded * 50;
 
         }
-        
+
         return state;
       });
     }
@@ -124,7 +124,7 @@ export class BlacephalonGX extends PokemonCard {
         const discardedEnergy = holdingZone.cards.filter(card => {
           return card instanceof EnergyCard;
         });
-  
+
         if (discardedEnergy.length == 0) {
           holdingZone.moveTo(player.discard);
         }
@@ -135,7 +135,7 @@ export class BlacephalonGX extends PokemonCard {
             GameMessage.ATTACH_ENERGY_TO_BENCH,
             holdingZone,
             PlayerType.BOTTOM_PLAYER,
-            [ SlotType.ACTIVE, SlotType.BENCH ],
+            [SlotType.ACTIVE, SlotType.BENCH],
             { superType: SuperType.ENERGY },
             { allowCancel: false, min: 1, max: 1 }
           ), transfers => {

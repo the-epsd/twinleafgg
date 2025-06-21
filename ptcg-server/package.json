@@ -15,6 +15,7 @@
     "start:dev": "nodemon -e ts --inspect --exec \"npx tsc && npx kill-port 8080 && npm run start\"",
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "coverage": "npm test && nyc report -r html",
+    "postcompile": "cp -r src/storage/battle-pass-seasons dist/storage/ && cp -r src/storage/battle-pass-seasons output/storage/",
     "copy:avatars": "node -e \"require('fs').cpSync('./avatars', './dist/avatars', {recursive: true});\""
   },
   "author": "",

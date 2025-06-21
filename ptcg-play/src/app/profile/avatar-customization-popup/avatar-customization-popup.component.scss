@@ -1,0 +1,42 @@
+.container {
+  position: relative;
+}
+
+.spinner-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-preview {
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin-bottom: 1em;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span:first-child {
+    flex-basis: 100px;
+  }
+}

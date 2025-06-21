@@ -6,42 +6,43 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
+import { PlayerType } from '../../game';
 
 export class PlusPower extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'BS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '84';
-
   public name: string = 'PlusPower';
-
   public fullName: string = 'PlusPower BS';
+  public putIntoPlay = true;
 
   public text: string =
     'Attach PlusPower to your Active Pokémon. At the end of your turn, discard PlusPower. If this Pokémon\'s attack does damage to the Defending Pokémon (after applying Weakness and Resistance), the attack does 10 more damage to the Defending Pokémon.';
 
-  private readonly PLUS_POWER_MARKER = 'PLUS_POWER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      player.marker.addMarker(this.PLUS_POWER_MARKER, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      MOVE_CARD_TO(state, this, player.active);
     }
 
-    if (effect instanceof DealDamageEffect) {
-      const marker = effect.player.marker;
-      if (marker.hasMarker(this.PLUS_POWER_MARKER, this) && effect.damage > 0) {
+    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
+      // must deal > 0 damage to active Pokémon
+      if (effect.damage && effect.damage > 0 && (effect.target === effect.opponent.active || effect.target === effect.player.active)) {
         effect.damage += 10;
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PLUS_POWER_MARKER, this)) {
-      effect.player.marker.removeMarker(this.PLUS_POWER_MARKER, this);
+    // Discard PlusPower at the end of the turn
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+        if (cardList.cards.includes(this)) {
+          cardList.moveCardTo(this, player.discard);
+        }
+      });
     }
 
     return state;

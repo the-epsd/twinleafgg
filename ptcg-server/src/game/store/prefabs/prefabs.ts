@@ -509,6 +509,15 @@ export function IS_POKEBODY_BLOCKED(store: StoreLike, state: State, player: Play
   } catch {
     return true;
   }
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEMON_POWER,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
   return false;
 }
 
@@ -527,15 +536,6 @@ export function IS_POKEPOWER_BLOCKED(store: StoreLike, state: State, player: Pla
   } catch {
     return true;
   }
-  return false;
-}
-
-/**
- * Checks if pokemon powers are blocked on `card` for `player`.
- * @returns `true` if the pokemon power is blocked, `false` if the pokepower is able to go thru.
- */
-export function IS_POKEMON_POWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
-  // Try to reduce PowerEffect, to check if something is blocking our pokepower
   try {
     store.reduceEffect(state, new PowerEffect(player, {
       name: 'test',
@@ -546,6 +546,47 @@ export function IS_POKEMON_POWER_BLOCKED(store: StoreLike, state: State, player:
     return true;
   }
   return false;
+}
+
+/**
+ * Checks if pokemon powers are blocked on `card` for `player`.
+ * @returns `true` if the pokemon power is blocked, `false` if the pokepower is able to go thru.
+ */
+export function IS_POKEMON_POWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect for POKEMON_POWER
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEMON_POWER,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  // Try both POKEPOWER and POKEBODY, return true only if BOTH are blocked
+  let pokePowerBlocked = false;
+  let pokeBodyBlocked = false;
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEPOWER,
+      text: ''
+    }, card));
+  } catch {
+    pokePowerBlocked = true;
+  }
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEBODY,
+      text: ''
+    }, card));
+  } catch {
+    pokeBodyBlocked = true;
+  }
+  // Return true only if both POKEPOWER and POKEBODY are blocked
+  return pokePowerBlocked && pokeBodyBlocked;
+  // Ruling: if both pokePower and pokeBody are blocked, then the pokemon power is blocked.
 }
 
 /**

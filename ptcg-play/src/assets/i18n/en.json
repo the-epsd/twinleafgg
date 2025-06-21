@@ -208,6 +208,7 @@
   "PROFILE_CHANGE_EMAIL_HINT": "This e-mail address can be used to recover your password.",
   "PROFILE_CHANGE_EMAIL_SUCCESS": "The e-mail address successfully changed.",
   "PROFILE_CURRENT_PASSWORD": "Current password",
+  "PROFILE_CUSTOMIZE_AVATAR": "Customize Avatar",
   "PROFILE_EDIT_AVATARS": "Edit avatars",
   "PROFILE_EDIT_PROFILE": "Edit profile",
   "PROFILE_ENTER_AVATAR_NAME": "Enter avatar name",
@@ -604,5 +605,7 @@
   "SOCKET_RECONNECTING": "Reconnecting... (Attempt {attempt})",
   "SOCKET_RECONNECT_ATTEMPT": "Reconnection attempt {attempt}",
   "SOCKET_RECONNECTED": "Reconnected successfully",
-  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server"
+  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server",
+  "MAIN_BATTLE_PASS": "Battle Pass",
+  "MAIN_BUY_CARDS": "Buy Cards"
 }

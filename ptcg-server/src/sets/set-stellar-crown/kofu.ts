@@ -13,6 +13,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
   let cards: Card[] = [];
 
+  const supporterTurn = player.supporterTurn;
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
   if (player.hand.cards.length <= 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }

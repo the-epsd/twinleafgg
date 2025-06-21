@@ -1,5 +1,5 @@
 import { GameError, GameMessage, PlayerType, StoreLike, State } from '../../game';
-import { CardTag, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
+import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -12,7 +12,6 @@ export class DoubleRainbowEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
@@ -27,13 +26,13 @@ export class DoubleRainbowEnergy extends EnergyCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const attachedTo = effect.target.getPokemonCard();
 
-      if (!!attachedTo && (attachedTo.stage === Stage.BASIC || attachedTo.stage === Stage.RESTORED || attachedTo.tags.includes(CardTag.POKEMON_ex))) {
+      if (!!attachedTo && effect.target.getPokemons().length <= 1) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
 
     // Reduce damage done to opponent's Pokemon by 10
-    if ((effect instanceof DealDamageEffect) && effect.source.cards.includes(this) && !effect.target.cards.includes(this)) {
+    if ((effect instanceof DealDamageEffect) && effect.source.cards.includes(this)) {
       effect.damage -= 10;
     }
 
@@ -52,7 +51,7 @@ export class DoubleRainbowEnergy extends EnergyCard {
 
           const attachedTo = cardList.getPokemonCard();
 
-          if (!!attachedTo && (attachedTo.stage === Stage.BASIC || attachedTo.stage === Stage.RESTORED || attachedTo.tags.includes(CardTag.POKEMON_ex))) {
+          if (!!attachedTo && cardList.getPokemons().length <= 1) {
             cardList.moveCardTo(this, player.discard);
           }
         });

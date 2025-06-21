@@ -1,0 +1,53 @@
+<div class="container">
+  <h1 mat-dialog-title>Customize Avatar</h1>
+  <div mat-dialog-content>
+    <div class="avatar-preview">
+      <app-custom-avatar [avatar]="avatar"></app-custom-avatar>
+    </div>
+    <div class="options">
+      <div class="option-row">
+        <span>Face</span>
+        <button mat-icon-button (click)="previous('face')"><mat-icon>chevron_left</mat-icon></button>
+        <span>{{ avatar.face }}</span>
+        <button mat-icon-button (click)="next('face')"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+      <div class="option-row">
+        <span>Hair</span>
+        <button mat-icon-button (click)="previous('hair')"><mat-icon>chevron_left</mat-icon></button>
+        <span>{{ avatar.hair }}</span>
+        <button mat-icon-button (click)="next('hair')"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+      <div class="option-row">
+        <span>Glasses</span>
+        <button mat-icon-button (click)="previous('glasses')"><mat-icon>chevron_left</mat-icon></button>
+        <span>{{ avatar.glasses || 'None' }}</span>
+        <button mat-icon-button (click)="next('glasses')"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+      <div class="option-row">
+        <span>Shirt</span>
+        <button mat-icon-button (click)="previous('shirt')"><mat-icon>chevron_left</mat-icon></button>
+        <span>{{ avatar.shirt }}</span>
+        <button mat-icon-button (click)="next('shirt')"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+      <div class="option-row">
+        <span>Hat</span>
+        <button mat-icon-button (click)="previous('hat')"><mat-icon>chevron_left</mat-icon></button>
+        <span>{{ avatar.hat || 'None' }}</span>
+        <button mat-icon-button (click)="next('hat')"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+      <div class="option-row">
+        <span>Accessory</span>
+        <button mat-icon-button (click)="previous('accessory')"><mat-icon>chevron_left</mat-icon></button>
+        <span>{{ avatar.accessory || 'None' }}</span>
+        <button mat-icon-button (click)="next('accessory')"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" (click)="save()" [disabled]="loading">Save</button>
+  </div>
+  <div class="spinner-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

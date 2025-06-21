@@ -1,0 +1,94 @@
+@use '~@angular/material' as mat;
+
+@mixin ptcg-battle-pass-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  $bg-color: mat.get-color-from-palette($background, background);
+  $bg-light-color: mat.get-color-from-palette($background, hover);
+  $bg-dark-color: mat.get-color-from-palette($background, status-bar);
+  $text-color: mat.get-color-from-palette($foreground, text);
+  $text-secondary-color: mat.get-color-from-palette($foreground, secondary-text);
+  $primary-color: mat.get-color-from-palette($primary);
+  $accent-color: mat.get-color-from-palette($accent);
+  $border-color: mat.get-color-from-palette($foreground, divider);
+  $disabled-color: mat.get-color-from-palette($foreground, disabled);
+
+  .battle-pass-page {
+    background: $bg-color;
+    color: $text-color;
+
+    .header-container {
+      .header-content p {
+        color: $text-secondary-color;
+      }
+
+      .progress-container {
+        background: $bg-light-color;
+      }
+
+      .xp-details {
+        color: $text-secondary-color;
+      }
+
+      .xp-bar-container {
+        background-color: $bg-dark-color;
+      }
+
+      .xp-bar {
+        background-color: $primary-color;
+      }
+    }
+
+    .claim-divider {
+      background-color: $border-color;
+    }
+
+    .reward-item.premium.locked {
+      .premium-tag {
+        background-color: $disabled-color;
+      }
+    }
+
+    .reward-card {
+      background: $bg-light-color;
+      border: 1px solid $border-color;
+
+      .reward-type {
+        color: $text-secondary-color;
+      }
+
+      .premium-tag {
+        background-color: $accent-color;
+        color: mat.get-contrast-color-from-palette($accent, 500);
+      }
+    }
+
+    .level-actions .claim-button {
+      background-color: $accent-color;
+      color: mat.get-contrast-color-from-palette($accent, 500);
+
+      &:hover:not(:disabled) {
+        background-color: mat.get-color-from-palette($accent, 700);
+      }
+
+      &:disabled {
+        background-color: $disabled-color;
+      }
+    }
+
+    ::-webkit-scrollbar-track {
+      background: $bg-dark-color;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: $primary-color;
+
+      &:hover {
+        background: mat.get-color-from-palette($primary, 700);
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { Regirock } from './regirock';
 import { StarkMountain } from './stark-mountain';
 import { UnownR } from './unown-r';
 import { Uxie } from './uxie';
+import { UxieLVX } from './uxie-lv-x';
 
 export const setLegendsAwakened: Card[] = [
   new Azelf(),
@@ -17,4 +18,5 @@ export const setLegendsAwakened: Card[] = [
   new StarkMountain(),
   new UnownR(),
   new Uxie(),
+  new UxieLVX()
 ];

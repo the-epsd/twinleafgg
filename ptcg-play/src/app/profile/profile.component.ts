@@ -94,6 +94,10 @@ export class ProfileComponent implements OnInit {
     this.profilePopupService.openChangePasswordPopup();
   }
 
+  customizeAvatar() {
+    this.profilePopupService.openAvatarCustomizationPopup();
+  }
+
   editAvatars(userId: number) {
     this.profilePopupService.openEditAvatarsPopup(userId);
   }

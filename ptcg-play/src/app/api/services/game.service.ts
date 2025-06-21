@@ -141,6 +141,11 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
+  public energyAbility(gameId: number, ability: string, target: CardTarget) {
+    this.socketService.emit('game:action:energyAbility', { gameId, ability, target })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
   public attack(gameId: number, attack: string) {
     this.socketService.emit('game:action:attack', { gameId, attack })
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));

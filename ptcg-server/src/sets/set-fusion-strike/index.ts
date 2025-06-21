@@ -46,6 +46,7 @@ import { Staryu } from './staryu';
 import { Steelix } from './steelix';
 import { Swampert } from './swampert';
 import { Totodile } from './totodile';
+import { Trubbish } from './trubbish';
 import { TsareenaV } from './tsareena-v';
 import { Yveltal } from './yveltal';
 
@@ -101,4 +102,5 @@ export const setFusionStrike: Card[] = [
   new Steelix(),
   new Swampert(),
   new Totodile(),
+  new Trubbish(),
 ];

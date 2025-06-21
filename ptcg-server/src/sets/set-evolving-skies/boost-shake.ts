@@ -32,9 +32,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Build possible evolution card names
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (list.pokemonPlayedTurn >= state.turn) {
-      return;
-    }
     const valid = evolutions.filter(e => e.evolvesFrom === card.name);
     valid.forEach(c => {
       if (!evolutionNames.includes(c.name)) {
@@ -77,7 +74,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const blocked2: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (card.name !== evolution.evolvesFrom || list.pokemonPlayedTurn === state.turn) {
+    if (card.name !== evolution.evolvesFrom) {
       blocked2.push(target);
     }
   });

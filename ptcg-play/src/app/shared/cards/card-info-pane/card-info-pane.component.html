@@ -155,6 +155,23 @@
       <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
     </div>
 
+    <ptcg-hover-highlight *ngFor="let power of card.powers"
+      (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
+      [enabled]="enabledAbilities[power.name]">
+      <div class="power">
+        <div class="power-header">
+          <div class="power-type" [ngSwitch]="power.powerType">
+            <div class="ability" *ngSwitchCase="PowerType.ENERGY_ABILITY" translate></div>
+            <div class="ability" *ngSwitchCase="PowerType.ABILITY" translate>CARDS_ABILITY</div>
+          </div>
+          <div class="power-name">
+            {{ power.name }}
+          </div>
+        </div>
+        <div class="card-text" [innerHTML]="transformEnergyText(power.text)"></div>
+      </div>
+    </ptcg-hover-highlight>
+
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.TRAINER">

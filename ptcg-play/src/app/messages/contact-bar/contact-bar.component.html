@@ -1,12 +1,18 @@
-<div class="ptcg-contact-bar" [class.active]="active" [class.marked]="marked"
-  [routerLink]="['/message', user.userId]"
-  *ngIf="user$ | async ; let user">
+<div class="ptcg-contact-bar" [class.active]="active" [class.marked]="marked" [routerLink]="['/message', user.userId]"
+  *ngIf="user$ | async as user">
 
-  <ptcg-avatar class="ptcg-contact-avatar" [avatarFile]="user.avatarFile">
-  </ptcg-avatar>
+  <div class="ptcg-contact-avatar-box">
+    <!-- <app-custom-avatar *ngIf="user.customAvatar; else defaultAvatar" [avatar]="user.customAvatar"></app-custom-avatar>
+    <ng-template #defaultAvatar> -->
+    <ptcg-avatar class="ptcg-contact-avatar" [avatarFile]="user.avatarFile">
+    </ptcg-avatar>
+    <!-- </ng-template> -->
+  </div>
 
   <div class="ptcg-contact-info">
-    <div class="ptcg-contact-name">{{ user.name }}</div>
+    <div class="ptcg-contact-name" [style.color]="user.ranking ? user.ranking.color : null">
+      {{ user.name }}
+    </div>
     <div class="ptcg-contact-message">
       {{ conversation.lastMessage?.text }}
     </div>

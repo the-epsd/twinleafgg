@@ -58,7 +58,7 @@ export class Venusaur extends PokemonCard {
         return state;
       }
 
-      const energyInHand = player.hand.cards.filter(c => c.superType === SuperType.ENERGY);
+      const energyInHand = player.hand.cards.filter(c => c.superType === SuperType.ENERGY && c !== effect.energyCard);
 
       if (!IS_POKEPOWER_BLOCKED(store, state, player, this) && energyInHand.length > 0) {
         if (owner === player && effect.target === active) {

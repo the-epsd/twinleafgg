@@ -36,6 +36,7 @@ const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },
   { path: 'maintenance', component: MaintenanceMessageComponent },
+  { path: 'battle-pass', loadChildren: () => import('./battle-pass/battle-pass.module').then(m => m.BattlePassModule) },
 ];
 
 @NgModule({

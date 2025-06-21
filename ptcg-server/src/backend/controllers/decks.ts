@@ -764,6 +764,7 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.set === 'P3' ||
         card.set === 'P4' ||
         card.set === 'P5' ||
+        card.set === 'NP' ||
         card.set === 'MCVS' ||
         card.set === 'MAL' ||
         card.set === 'MSM' ||
