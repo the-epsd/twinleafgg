@@ -22,12 +22,11 @@ interface GameLog {
 })
 export class GameLogsComponent {
 
-  private readonly LOG_COUNT_LIMIT = 50;
-
   public loading = true;
   public logs: GameLog[] = [];
   public message = '';
   public isDeleted: boolean;
+  public showScrollToBottom = false;
   private state: LocalGameState;
 
   @Input() set gameState(gameState: LocalGameState) {
@@ -84,6 +83,16 @@ export class GameLogsComponent {
 
   }
 
+  public onScroll(event: Event) {
+    const element = event.target as HTMLElement;
+    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+    this.showScrollToBottom = !atBottom;
+  }
+
+  public onScrollToBottom() {
+    this.scrollToBottom();
+  }
+
   public trackByFn(log: GameLog) {
     return log.id;
   }
@@ -92,6 +101,15 @@ export class GameLogsComponent {
     if (logs.length === 0 || !this.state) {
       return;
     }
+
+    let autoScroll = true;
+    try {
+      const scrollablePane = this.elementRef.nativeElement
+        .getElementsByClassName('ptcg-game-logs-content')[0] as HTMLElement;
+      if (scrollablePane.scrollTop + scrollablePane.clientHeight < scrollablePane.scrollHeight - 10) {
+        autoScroll = false;
+      }
+    } catch (err) { }
 
     // delete future logs (when user rewind state in replays)
     let maxLogId = 0;
@@ -118,13 +136,9 @@ export class GameLogsComponent {
     // Sort logs by their id
     this.logs.sort((a, b) => a.id - b.id);
 
-    // Remove logs over the limit
-    if (this.logs.length > this.LOG_COUNT_LIMIT) {
-      const toDelete = this.logs.length - this.LOG_COUNT_LIMIT;
-      this.logs.splice(0, toDelete);
+    if (autoScroll) {
+      this.scrollToBottom();
     }
-
-    this.scrollToBottom();
   }
 
   private buildGameLog(log: StateLog): GameLog | undefined {
@@ -145,9 +159,9 @@ export class GameLogsComponent {
     if (user !== undefined) {
       name = user.name;
       if (activePlayer && log.client === activePlayer.id) {
-        className = 'ptcg-player-active'; // Active player (you)
+        className = 'ptcg-player-active';
       } else {
-        className = 'ptcg-player-opponent'; // Opponent
+        className = 'ptcg-player-opponent';
       }
       return {
         id: log.id,
