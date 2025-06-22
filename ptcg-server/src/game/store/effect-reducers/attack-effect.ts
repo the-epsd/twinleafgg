@@ -14,6 +14,7 @@ import {
 } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
+import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -37,13 +38,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       state = store.reduceEffect(state, applyWeakness);
 
       effect.damage = applyWeakness.damage;
+
+      const targetOwner = StateUtils.findOwner(state, target);
+      targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
     }
 
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
-
-    const targetOwner = StateUtils.findOwner(state, target);
-    targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
 
     if (damage > 0) {
       store.log(state, GameLog.LOG_PLAYER_DEALS_DAMAGE, {
@@ -53,10 +54,25 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
         effect: effect.attack.name,
       });
 
+      const targetOwner = StateUtils.findOwner(state, target);
+      targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
+
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
     }
+
+    // --- Track damaged targets for animation ---
+    if (effect.attackEffect && effect.attackEffect.player && (effect.attackEffect.player.active as any).pendingAttackTargets) {
+      try {
+        const cardTarget = getCardTarget(effect.attackEffect.player, state, target);
+        const pending = (effect.attackEffect.player.active as any).pendingAttackTargets;
+        if (Array.isArray(pending) && !pending.some(t => t.player === cardTarget.player && t.slot === cardTarget.slot && t.index === cardTarget.index)) {
+          pending.push(cardTarget);
+        }
+      } catch (e) { /* ignore if cannot resolve target */ }
+    }
+    // --- End tracking ---
   }
 
   if (effect instanceof DealDamageEffect) {

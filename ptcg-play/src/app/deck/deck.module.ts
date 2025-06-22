@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TypeIconsModule } from '../shared/type-icons/type-icons.module';
 import { DeckCardDialogComponent } from './deck-card-dialog/deck-card-dialog.component';
 import { DeckValidityModule } from '../shared/deck-validity/deck-validity.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { DeckValidityModule } from '../shared/deck-validity/deck-validity.module
     ReactiveFormsModule,
     DeckValidityModule,
     SharedModule,
-    TypeIconsModule
+    TypeIconsModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
     ImportDeckPopupComponent

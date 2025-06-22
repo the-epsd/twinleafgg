@@ -13,6 +13,7 @@ import { Donphan } from './donphan';
 import { Duraludon } from './duraludon';
 import { Duskull } from './duskull';
 import { Exploud } from './exploud';
+import { GalarianPerrserker } from './galarian-perrserker';
 import { TalonflameVFA } from './full-art';
 import { Jirachi } from './jirachi';
 import { Leon } from './leon';
@@ -49,6 +50,7 @@ export const setVividVoltage: Card[] = [
   new Dusknoir(),
   new Duskull(),
   new Exploud(),
+  new GalarianPerrserker(),
   new Jirachi(),
   new Leon(),
   new Loudred(),

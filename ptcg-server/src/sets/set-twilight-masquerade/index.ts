@@ -47,6 +47,7 @@ import { Heatran } from './heatran';
 import { HisuianArcanine } from './hisuian-arcanine';
 import { HisuianGrowlithe } from './hisuian-growlithe';
 import { HyperAroma } from './hyper-aroma';
+import { Illumise } from './illumise';
 import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
@@ -66,7 +67,7 @@ import { Monferno } from './monferno';
 import { Morpeko } from './morpeko';
 import { Munkidori } from './munkidori';
 import { Okidogi } from './okidogi';
-import { DipplinIR, PoltchageistIR, InfernapeIR, FroslassIR, PhioneIR, HisuianGrowlitheIR, TimburrIR, LaironIR, ApplinIR, TatsugiriIR, ChanseyIR, SinistchaexFA, TealMaskOgerponexFA, MagcargoexFA, HearthflameMaskOgerponexFA, PalafinexFA, WellspringMaskOgerponexFA, LuxrayexFA, IronThornsexFA, ScreamTailexFA, GreninjaexFA, CornerstoneMaskOgerponexFA, DragapultexFA, BlisseyexFA, BloodmoonUrsalunaexFA, CaretakerFA, CarmineFA, HasselFA, KieranFA, LanasAidFA, PerrinFA, SinistchaexSIR, TealMaskOgerponexSIR, HearthflameMaskOgerponexSIR, WellspringMaskOgerponexSIR, GreninjaexSIR, CornerstoneMaskOgerponexSIR, BloodmoonUrsalunaexSIR, CarmineSIR, KieranSIR, LanasAidSIR, PerrinSIR, TealMaskOgerponexHR, BloodmoonUrsalunaexHR, BuddyBuddyPoffinHR, EnhancedHammerHR, RescueBoardHR, LuminousEnergyHR } from './other-prints';
+import { DipplinIR, PoltchageistIR, InfernapeIR, FroslassIR, PhioneIR, HisuianGrowlitheIR, TimburrIR, LaironIR, ApplinIR, TatsugiriIR, ChanseyIR, SinistchaexFA, TealMaskOgerponexFA, MagcargoexFA, HearthflameMaskOgerponexFA, PalafinexFA, WellspringMaskOgerponexFA, LuxrayexFA, IronThornsexFA, ScreamTailexFA, GreninjaexFA, CornerstoneMaskOgerponexFA, DragapultexFA, BlisseyexFA, BloodmoonUrsalunaexFA, CaretakerFA, CarmineFA, HasselFA, KieranFA, LanasAidFA, PerrinFA, SinistchaexSIR, TealMaskOgerponexSIR, HearthflameMaskOgerponexSIR, WellspringMaskOgerponexSIR, GreninjaexSIR, CornerstoneMaskOgerponexSIR, BloodmoonUrsalunaexSIR, CarmineSIR, KieranSIR, LanasAidSIR, PerrinSIR, TealMaskOgerponexHR, BloodmoonUrsalunaexHR, BuddyBuddyPoffinHR, EnhancedHammerHR, RescueBoardHR, LuminousEnergyHR, CookTWM } from './other-prints';
 import { Palafin } from './palafin';
 import { Palafinex } from './palafin-ex';
 import { PerformanceFlute } from './performance-flute';
@@ -106,6 +107,7 @@ export const setTwilightMasquerade: Card[] = [
   new Chimchar(),
   new Clefable(),
   new Conkeldurr(),
+  new CookTWM(),
   new CornerstoneMaskOgerponex(),
   new Dreepy(),
   new Drakloak(),
@@ -189,6 +191,7 @@ export const setTwilightMasquerade: Card[] = [
   new Poliwag(),
   new Poliwhirl(),
   new Poliwrath(),
+  new Illumise(),
   new BoomerangEnergy(),
   new Feebas(),
   new Girafarig(),

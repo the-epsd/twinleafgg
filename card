@@ -1,0 +1,2 @@
+#!/bin/sh
+npx ts-node ptcg-server/src/sets/generate-card-from-tcgdex.ts "$@"

@@ -6,6 +6,8 @@
   flex-direction: row;
   overflow: auto;
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .ptcg-deck-edit-container {
@@ -27,10 +29,10 @@
 .ptcg-deck-edit-pane,
 .ptcg-deck-edit-pane-secondary {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-  // padding: 15px;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
   overflow-y: auto;
 }
 
@@ -72,11 +74,15 @@ ptcg-deck-card.placeholder {
 }
 
 .deck-validity-container {
-  position: fixed;
-  bottom: 5.5%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 0;
+  background: #2D3748;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
 }
 
 // .deck-pane-container {

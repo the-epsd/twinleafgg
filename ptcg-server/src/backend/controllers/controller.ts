@@ -38,7 +38,8 @@ export abstract class Controller {
       lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
       connected,
-      roleId: user.roleId
+      roleId: user.roleId,
+      customAvatar: user.customAvatar
     };
   }
 

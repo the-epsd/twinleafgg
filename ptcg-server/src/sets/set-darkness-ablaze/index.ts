@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Arctozolt } from './arctozolt';
 import { BigParasol } from './big-parasol';
 import { BillowingSmoke } from './billowing-smoke';
 import { BirdKeeper } from './bird-keeper';
@@ -20,6 +21,7 @@ import { Klang } from './klang';
 import { Lugia } from './lugia';
 import { Polteageist } from './polteageist';
 import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
+import { Purrloin } from './purrloin';
 import { RareFossil } from './rare-fossil';
 import { RoseTower } from './rose-tower';
 import { Rowlet } from './rowlet';
@@ -33,6 +35,7 @@ import { VikavoltV } from './vikavolt-v';
 import { YellHorn } from './yell-horn';
 
 export const setDarknessAblaze: Card[] = [
+  new Arctozolt(),
   new BigParasol(),
   new BillowingSmoke(),
   new BirdKeeper(),
@@ -53,6 +56,7 @@ export const setDarknessAblaze: Card[] = [
   new Lugia(),
   new Polteageist(),
   new PowerfulColorlessEnergy(),
+  new Purrloin(),
   new RareFossil(),
   new RoseTower(),
   new Rowlet(),

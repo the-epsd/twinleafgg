@@ -75,7 +75,7 @@ export class Login extends Controller {
   })
   public async onLogin(req: Request, res: Response) {
     const body: LoginRequest = req.body;
-    const user = await User.findOne({ name: body.name });
+    const user = await User.findOne({ where: { name: body.name }, relations: ['customAvatar'] });
 
     if (this.rateLimit.isLimitExceeded(req.ip)) {
       res.status(400);
@@ -138,7 +138,8 @@ export class Login extends Controller {
       avatarFileSize: config.backend.avatarFileSize,
       avatarMinSize: config.backend.avatarMinSize,
       avatarMaxSize: config.backend.avatarMaxSize,
-      replayFileSize: config.backend.replayFileSize
+      replayFileSize: config.backend.replayFileSize,
+      refreshTokenInterval: config.backend.refreshTokenInterval
     };
   }
 

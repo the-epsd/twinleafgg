@@ -25,11 +25,13 @@ export class Game implements StoreHandler {
   private timeoutRef: NodeJS.Timeout | undefined;
   private lastActivity: number = Date.now();
   public format: Format = Format.STANDARD;
+  private periodicSyncRef: NodeJS.Timeout | undefined;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
     this.store = new Store(this);
     this.store.state.rules = gameSettings.rules;
+    this.store.state.gameSettings = gameSettings;
     this.matchRecorder = new MatchRecorder(core);
     this.format = gameSettings.format;
   }
@@ -71,14 +73,23 @@ export class Game implements StoreHandler {
 
     this.updateIsTimeRunning(state);
 
-    this.core.emit(c => c.onStateChange(this, state));
+    this.core.emit(c => {
+      if (typeof c.onStateChange === 'function') {
+        c.onStateChange(this, state);
+      }
+    });
 
     if (state.phase !== GamePhase.FINISHED && this.timeoutRef === undefined) {
       this.startTimer();
     }
 
+    if (state.phase !== GamePhase.FINISHED && this.periodicSyncRef === undefined) {
+      this.startPeriodicSync();
+    }
+
     if (state.phase === GamePhase.FINISHED) {
       this.stopTimer();
+      this.stopPeriodicSync();
       this.core.deleteGame(this);
     }
   }
@@ -221,6 +232,12 @@ export class Game implements StoreHandler {
           }
         }
       }
+      // Emit timer update to all clients
+      this.core.emit(c => {
+        if (typeof c.onTimerUpdate === 'function') {
+          c.onTimerUpdate(this, this.playerStats);
+        }
+      });
     }, intervalDelay);
   }
 
@@ -228,6 +245,23 @@ export class Game implements StoreHandler {
     if (this.timeoutRef !== undefined) {
       clearInterval(this.timeoutRef);
       this.timeoutRef = undefined;
+    }
+  }
+
+  private startPeriodicSync() {
+    this.periodicSyncRef = setInterval(() => {
+      this.core.emit(c => {
+        if (typeof c.onStateChange === 'function') {
+          c.onStateChange(this, this.state);
+        }
+      });
+    }, 5000);
+  }
+
+  private stopPeriodicSync() {
+    if (this.periodicSyncRef !== undefined) {
+      clearInterval(this.periodicSyncRef);
+      this.periodicSyncRef = undefined;
     }
   }
 }

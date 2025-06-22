@@ -8,19 +8,28 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt } from '../../game';
 
-function* useCallForFamily(next: Function, store: StoreLike, state: State,
+function* useCallForFamilyNidoran(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
+
+  // Only allow Nidoran M or Nidoran F
+  const allowedNames = ['Nidoran M', 'Nidoran F'];
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, idx) => {
+    if (!(card instanceof PokemonCard) || card.stage !== Stage.BASIC || !allowedNames.includes(card.name)) {
+      blocked.push(idx);
+    }
+  });
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC, name: 'Nidoran ♀' || 'Nidoran ♂' },
-    { min: 0, max, allowCancel: false }
+    { superType: SuperType.POKEMON, stage: Stage.BASIC },
+    { min: 0, max, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -92,7 +101,7 @@ export class NidoranFemale extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const generator = useCallForFamily(() => generator.next(), store, state, effect);
+      const generator = useCallForFamilyNidoran(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 

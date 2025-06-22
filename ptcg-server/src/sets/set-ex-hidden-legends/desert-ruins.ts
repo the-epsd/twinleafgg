@@ -28,7 +28,7 @@ export class DesertRuins extends TrainerCard {
       // idk why this hits both player's pokemon, it might be getting confused as to what the player specified is so it defaults to both, but hey, it works, so i don't care.
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_ex))) {
+        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_ex)) && pokemon.hp >= 100) {
           cardList.damage += 10;
         }
       });

@@ -51,7 +51,7 @@ export class AlphLithograph extends TrainerCard {
   public setNumber: string = 'FOUR';
 
   public text: string =
-    'Look at all of your face down prize cards!';
+    'LOOK AT ALL OF YOUR FACE DOWN PRIZE CARDS!';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -5,7 +5,9 @@
   'selectable': isSelectable,
   'selected': isSelected,
   'test-entrance': showTestAnimation,
-  'basic-entrance': showBasicAnimation
+  'basic-entrance': showBasicAnimation,
+  'attack-animation': showAttackAnimation,
+  'attack-raise-slam': showAttackAnimation
   }">
   <div class="ptcg-board-card" [class.asleep-position]="specialConditions.includes(SpecialCondition.ASLEEP)">
     <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.ASLEEP)">
@@ -21,7 +23,7 @@
         </div>
 
         <div class="ptcg-energy-cards">
-          <ptcg-card [card]="energyCard" [customImageUrl]="getCustomImageUrl(energyCard)"
+          <ptcg-card [card]="energyCard" [customImageUrl]="getCustomImageUrl(energyCard, true)"
             [attr.data-name]="energyCard.name" *ngFor="let energyCard of energyCards"
             (click)="onCardClick(energyCard)"></ptcg-card>
         </div>

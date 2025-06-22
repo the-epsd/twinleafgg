@@ -25,6 +25,8 @@ import { Magnezone } from './magnezone';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
 import { MysteriousTreasure } from './mysterious-treasure';
+import { NaganadelGX } from './naganadel-gx';
+import { Poipole } from './poipole';
 import { Rockruff } from './rockruff';
 import { Sliggoo } from './sliggoo';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
@@ -59,6 +61,8 @@ export const setForbiddenLight: Card[] = [
   new Malamar(),
   new MetalFryingPan(),
   new MysteriousTreasure(),
+  new NaganadelGX(),
+  new Poipole(),
   new Rockruff(),
   new Sliggoo(),
   new UltraNecrozmaGX(),

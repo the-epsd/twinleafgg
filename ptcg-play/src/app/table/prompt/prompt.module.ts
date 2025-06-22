@@ -29,6 +29,9 @@ import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confir
 import { ChooseStartingPokemonPromptComponent } from './choose-starting-pokemon-prompt/choose-starting-pokemon-prompt.component';
 import { ChooseCardsPanes2Component } from './choose-cards-panes-2/choose-cards-panes-2.component';
 import { PromptSelectOptionComponent } from './prompt-select-option/prompt-select-option.component';
+import { PromptShowMulliganComponent } from './prompt-show-mulligan/prompt-show-mulligan.component';
+import { PromptWaitComponent } from './prompt-wait/prompt-wait.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -57,13 +60,16 @@ import { PromptSelectOptionComponent } from './prompt-select-option/prompt-selec
     PromptConfirmCardsComponent,
     ChooseStartingPokemonPromptComponent,
     ChooseCardsPanes2Component,
-    PromptSelectOptionComponent
+    PromptSelectOptionComponent,
+    PromptShowMulliganComponent,
+    PromptWaitComponent
   ],
   imports: [
     BoardModule,
     CommonModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     PromptComponent,

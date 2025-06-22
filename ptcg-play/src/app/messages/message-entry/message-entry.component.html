@@ -1,28 +1,23 @@
-<div class="ptcg-message-entry" [class.myself]="writtenByMe" *ngIf="user$ | async ; let user">
-
-  <mat-card class="ptcg-message-text">
-
-    <mat-card-content>
-      {{ message.text }}
-    </mat-card-content>
-
-    <mat-card-footer>
-      <div class="ptcg-message-footer">
-        <div class="ptcg-message-from">
-          {{ 'MESSAGES_MESSAGE_FROM' | translate: { name: user.name } }},
-          {{ message.created | date: ('DATE_FORMAT' | translate) }}
-        </div>
-        <div class="ptcg-message-seen" *ngIf="message.isRead">
-          <mat-icon>done</mat-icon>
-        </div>
+<div class="ptcg-message-entry" [class.ptcg-written-by-me]="writtenByMe" *ngIf="user$ | async as user">
+  <div class="ptcg-message-avatar-box">
+    <!-- <app-custom-avatar *ngIf="user.customAvatar; else defaultAvatar" [avatar]="user.customAvatar"></app-custom-avatar>
+    <ng-template #defaultAvatar> -->
+    <ptcg-avatar class="ptcg-message-avatar" [avatarFile]="user.avatarFile" (click)="onAvatarClick()">
+    </ptcg-avatar>
+    <!-- </ng-template> -->
+  </div>
+  <div class="ptcg-message-content">
+    <div class="ptcg-message-header">
+      <span class="ptcg-message-sender" [routerLink]="['/profile', message.senderId]">
+        {{ 'MESSAGES_MESSAGE_FROM' | translate: { name: user.name } }},
+        {{ message.created | date: ('DATE_FORMAT' | translate) }}
+      </span>
+      <div class="ptcg-message-seen" *ngIf="message.isRead">
+        <mat-icon>done</mat-icon>
       </div>
-    </mat-card-footer>
-
-  </mat-card>
-
-  <ptcg-avatar class="ptcg-message-avatar"
-    openAvatarPopup="true"
-    [avatarFile]="user.avatarFile">
-  </ptcg-avatar>
-
+    </div>
+    <div class="ptcg-message-text">
+      {{ message.text }}
+    </div>
+  </div>
 </div>

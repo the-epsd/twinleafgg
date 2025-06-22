@@ -2,7 +2,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CoinFlipPrompt, GameError } from '../../game';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 
 export class PokemonReversal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -31,22 +31,27 @@ export class PokemonReversal extends TrainerCard {
         player.id, GameMessage.COIN_FLIP
       ), flipResult => {
         if (flipResult) {
-          store.prompt(state, new ChoosePokemonPrompt(
-            opponent.id,
+          return store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
             GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.BOTTOM_PLAYER,
+            PlayerType.TOP_PLAYER,
             [SlotType.BENCH],
             { allowCancel: false }
-          ), targets => {
-            if (targets && targets.length > 0) {
-              opponent.active.clearEffects();
-              opponent.switchPokemon(targets[0]);
-              return state;
+          ), result => {
+            const cardList = result[0];
+
+            if (cardList) {
+              const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
+              targetCard.target = cardList;
+              store.reduceEffect(state, targetCard);
+              if (targetCard.target) {
+                opponent.switchPokemon(targetCard.target);
+              }
             }
           });
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
-
     }
 
     return state;

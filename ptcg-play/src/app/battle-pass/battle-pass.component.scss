@@ -1,0 +1,199 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.battle-pass-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+// Header and Progress
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+
+  .header-content {
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .progress-container {
+    width: 400px;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+  }
+
+  .level-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .level-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .xp-details {
+    font-size: 0.9rem;
+  }
+
+  .xp-bar-container {
+    width: 100%;
+    height: 12px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .xp-bar {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+  }
+}
+
+// Rewards Track
+.rewards-track-container {
+  flex-grow: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 16px;
+}
+
+.rewards-track {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.reward-level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0 16px;
+
+  .level-number {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+}
+
+.claim-divider-container {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .claim-divider {
+    height: 2px;
+    width: 100%;
+  }
+}
+
+.reward-item {
+  width: 150px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.premium.locked {
+    opacity: 0.5;
+  }
+}
+
+.reward-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+
+  .reward-type {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .reward-name {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .premium-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+}
+
+.reward-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.level-actions {
+  margin-top: 16px;
+
+  .claim-button {
+    border: none;
+    padding: 10px 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}

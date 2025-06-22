@@ -14,6 +14,7 @@ import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
 import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage } from 'ptcg-server';
 import html2canvas from 'html2canvas';
+import { DeckService } from 'src/app/api/services/deck.service';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -36,7 +37,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   @Input() set deckItems(value: DeckItem[]) {
     this.list = value;
     this.tempList = this.sortByPokemonEvolution([...value]);
+    this.updateDeckFormats();
   }
+
+  @Input() disabled: boolean = false;
+  @Input() isThemeDeck: boolean = false;
 
   public deckTarget: DropTarget<DraggedItem<DeckItem>, any>;
   public deckHighlight$: Observable<boolean>;
@@ -48,13 +53,16 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   list: DeckItem[] = [];
   tempList: DeckItem[] = [];
+  public deckFormats: number[] = [];
+  public deckIsValid: boolean = false;
 
   constructor(
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
     private ngZone: NgZone,
     private dnd: DndService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private deckService: DeckService
   ) {
     [this.deckTarget, this.deckHighlight$] = this.initDropTarget(DeckEditPane.DECK);
     [this.libraryTarget, this.libraryHighlight$] = this.initDropTarget(DeckEditPane.LIBRARY);
@@ -224,6 +232,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   public async addCardToDeck(item: DeckItem) {
+    if (this.disabled) return;
+
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     let list = this.tempList.slice();
 
@@ -294,9 +304,12 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     this.tempList = this.list = this.sortByPokemonEvolution(list);
     this.deckItemsChange.next(this.list);
+    this.updateDeckFormats();
   }
 
   public async removeCardFromDeck(item: DeckItem) {
+    if (this.disabled) return;
+
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     if (index === -1) {
       return;
@@ -312,6 +325,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     this.tempList = this.list = this.sortByPokemonEvolution(list);
     this.deckItemsChange.next(this.list);
+    this.updateDeckFormats();
   }
 
   private sortDeckCards(cards: DeckItem[]): DeckItem[] {
@@ -520,6 +534,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   public async setCardCount(item: DeckItem) {
+    if (this.disabled) return;
+
     const MAX_CARD_VALUE = 99;
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     if (index !== -1) {
@@ -551,6 +567,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
+    this.updateDeckFormats();
   }
 
   public showCardInfo(item: LibraryItem) {
@@ -558,6 +575,10 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Only set showLibrary to false if it's still at its default (true) and this is a theme deck
+    if (this.isThemeDeck && this.showLibrary === true) {
+      this.showLibrary = false;
+    }
     this.cards = this.loadLibraryCards();
   }
 
@@ -595,5 +616,26 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   public toggleLibrary() {
     this.showLibrary = !this.showLibrary;
+  }
+
+  private updateDeckFormats() {
+    // Get card names from tempList
+    const cardNames = this.tempList.flatMap(item => Array(item.count).fill(item.card.name));
+    if (cardNames.length === 0) {
+      this.deckFormats = [];
+      this.deckIsValid = false;
+      return;
+    }
+    this.deckService.getValidFormatsForCardList(cardNames).subscribe(
+      (response: any) => {
+        // response is { ok: true, formats: number[] }
+        this.deckFormats = response.formats || [];
+        this.deckIsValid = this.deckFormats.length > 0;
+      },
+      () => {
+        this.deckFormats = [];
+        this.deckIsValid = false;
+      }
+    );
   }
 }

@@ -1,11 +1,16 @@
-<div class="ptcg-user-bar" [class.marked]="marked" [class.clickable]="openUserPopup && user.userId">
+<div class="ptcg-user-bar" [ngClass]="{ 'ptcg-user-highlight': highlight }" [class.marked]="marked"
+  [class.clickable]="openUserPopup && user?.userId">
 
-  <ptcg-avatar class="ptcg-user-avatar" [avatarFile]="user.avatarFile" [hoverable]="openUserPopup && user.userId"
-    [openAvatarPopup]="openUserPopup && user.userId">
-  </ptcg-avatar>
+  <div class="ptcg-user-avatar-box">
+    <!-- <app-custom-avatar *ngIf="user.customAvatar; else defaultAvatar" [avatar]="user.customAvatar"></app-custom-avatar>
+    <ng-template #defaultAvatar> -->
+    <ptcg-avatar class="ptcg-user-avatar" [avatarFile]="user.avatarFile">
+    </ptcg-avatar>
+    <!-- </ng-template> -->
+  </div>
 
-  <div class="ptcg-user-info">
-    <div class="ptcg-user-name">
+  <div class="ptcg-user-info" *ngIf="user">
+    <div class="ptcg-user-name" [style.color]="user.ranking ? user.ranking.color : null">
       <span class="ptcg-user-name-text" (click)="showUserInfoPopup(user)">
         {{ user.name }}
       </span>

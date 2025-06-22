@@ -27,7 +27,7 @@ export class Onix extends PokemonCard {
 
   public hp = 90;
 
-  public weakness = [{ type: CardType.GRASS, value: 2 }];
+  public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 

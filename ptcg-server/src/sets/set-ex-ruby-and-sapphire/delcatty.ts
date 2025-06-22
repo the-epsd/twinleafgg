@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, PlayerType } from '../../game';
+import { PowerType, StoreLike, State, GameError, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EnergyCard } from '../../game/store/card/energy-card';
@@ -64,7 +64,7 @@ export class Delcatty extends PokemonCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -94,27 +94,14 @@ export class Delcatty extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
+      const cardList = player.active;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.getPokemonCard() === this) {
-          const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
-          store.reduceEffect(state, checkProvidedEnergy);
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
 
-          const blockedCards: Card[] = [];
-
-          checkProvidedEnergy.energyMap.forEach(em => {
-            if (!em.provides.includes(CardType.ANY)) {
-              blockedCards.push(em.card);
-            }
-          });
-
-          const damagePerEnergy = 10;
-
-          effect.damage = checkProvidedEnergy.energyMap.length * damagePerEnergy;
-        }
-      });
-
-      return state;
+      let energies: number = 0;
+      checkProvidedEnergyEffect.energyMap.forEach(energy => { energy.provides.forEach(e => { energies++; }); });
+      effect.damage = 10 * energies;
     }
 
     //Marker remover

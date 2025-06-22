@@ -1,0 +1,72 @@
+<div class="battle-pass-page" *ngIf="!loading">
+
+  <!-- Header and Progress Bar -->
+  <div class="header-container" *ngIf="season && progress">
+    <div class="header-content">
+      <h1>{{ season.name }}</h1>
+      <p>{{ season.description }}</p>
+    </div>
+    <div class="progress-container">
+      <div class="level-info">
+        <div class="level-display">Level {{ progress.level }}</div>
+        <div class="xp-details">{{ getCurrentLevelExp() }} / {{ getTotalLevelExp() }} XP</div>
+      </div>
+      <div class="xp-bar-container">
+        <div class="xp-bar" [style.width.%]="getExpPercentage()"></div>
+      </div>
+      <button class="debug-button" (click)="addDebugExp()">+100 XP (Debug)</button>
+    </div>
+  </div>
+
+  <!-- Horizontal Rewards Track -->
+  <div class="rewards-track-container" #rewardsTrackContainer (wheel)="onWheelScroll($event)">
+    <div class="rewards-track">
+      <div class="reward-level" *ngFor="let level of levels"
+        [class.unlocked]="progress && progress.level >= level.level">
+
+        <div class="level-number">{{ level.level }}</div>
+
+        <!-- Free Reward -->
+        <div class="reward-item free">
+          <div class="reward-card" *ngIf="level.freeReward">
+            <div class="reward-type">{{ level.freeReward.type }}</div>
+            <div class="reward-name">{{ level.freeReward.name }}</div>
+          </div>
+          <div class="reward-placeholder" *ngIf="!level.freeReward"></div>
+        </div>
+
+        <div class="claim-divider-container">
+          <div class="claim-divider"></div>
+        </div>
+
+        <!-- Premium Reward -->
+        <div class="reward-item premium" [class.locked]="!isPremium">
+          <div class="reward-card" *ngIf="level.premiumReward">
+            <div class="reward-type">{{ level.premiumReward.type }}</div>
+            <div class="reward-name">{{ level.premiumReward.name }}</div>
+            <div class="premium-tag">Premium</div>
+          </div>
+          <div class="reward-placeholder" *ngIf="!level.premiumReward"></div>
+        </div>
+
+        <!-- Claim Button -->
+        <div class="level-actions">
+          <button class="claim-button" (click)="claim(level.level)" [disabled]="!isClaimable(level.level)">
+            {{ (progress && progress.claimedRewards.includes(level.level)) ? 'Claimed' : 'Claim' }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading Spinner -->
+<div class="loading-spinner" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="no-season-container" *ngIf="!loading && !season">
+  <p>There is no active Battle Pass season at the moment.</p>
+</div>

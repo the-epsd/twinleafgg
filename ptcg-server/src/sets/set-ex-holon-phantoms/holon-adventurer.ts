@@ -39,6 +39,9 @@ export class HolonAdventurer extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      effect.preventDefault = true;
+
       if (cards.length == 1) {
         player.hand.moveCardsTo(player.hand.cards, player.discard);
       }
@@ -69,9 +72,6 @@ export class HolonAdventurer extends TrainerCard {
           DRAW_CARDS(player, cardsToDraw);
         });
       }
-
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      effect.preventDefault = true;
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;

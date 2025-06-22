@@ -1,5 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { Dartrix } from '../set-shining-fates/dartrix';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
@@ -25,6 +24,8 @@ import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
 import { TaurosGX } from './tauros-gx';
 import { Vikavolt } from './vikavolt';
+import { Dartrix } from './dartrix';
+import { DarknessEnergy, FairyEnergy, FightingEnergy, FireEnergy, GrassEnergy, LightningEnergy, MetalEnergy, PsychicEnergy, WaterEnergy } from './basic-energies';
 
 export const setSunAndMoon: Card[] = [
   new AlolanGrimer(),
@@ -61,4 +62,15 @@ export const setSunAndMoon: Card[] = [
 
   // Full Arts
   new RotomDexSR(),
+
+  //Basic Energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
+  new FairyEnergy(),
 ];

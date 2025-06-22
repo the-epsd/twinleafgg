@@ -104,7 +104,6 @@ export class GamesComponent implements OnInit {
         untilDestroyed(this),
         switchMap(decks => {
           const options = decks.decks
-            .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => {
               return { value: deckEntry, viewValue: deckEntry.name }
             });

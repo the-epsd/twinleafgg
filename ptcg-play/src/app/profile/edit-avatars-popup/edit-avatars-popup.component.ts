@@ -4,7 +4,7 @@ import { AvatarInfo } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../../api/api.error';
 import { AvatarService } from '../../api/services/avatar.service';
@@ -24,6 +24,8 @@ export class EditAvatarsPopupComponent implements OnInit {
   public defaultAvatar$: Observable<string>;
   public avatars: AvatarInfo[] = [];
   private userId: number;
+  private user$: Observable<any>;
+  private user: any;
 
   constructor(
     private alertService: AlertService,
@@ -34,10 +36,9 @@ export class EditAvatarsPopupComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.userId = data.userId;
-    this.defaultAvatar$ = this.sessionService.get(session => {
-      const user = session.users[data.userId];
-      return user ? user.avatarFile : '';
-    });
+    this.user$ = this.sessionService.get(session => session.users[this.userId]);
+    this.user$.pipe(untilDestroyed(this)).subscribe(user => this.user = user);
+    this.defaultAvatar$ = this.user$.pipe(map(user => user ? user.avatarFile : ''));
   }
 
   public markAsDefault(avatar: AvatarInfo) {
@@ -62,7 +63,7 @@ export class EditAvatarsPopupComponent implements OnInit {
 
   private refreshAvatars(): void {
     this.loading = true;
-    this.avatarService.getPredefinedAvatars()
+    this.avatarService.getAvailableAvatars()
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this)

@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, PlayerType, StateUtils, ChooseAttackPrompt, GameMessage, Attack, GameLog } from '../../game';
-import {DealDamageEffect} from '../../game/store/effects/attack-effects';
-import {Effect} from '../../game/store/effects/effect';
-import {AttackEffect} from '../../game/store/effects/game-effects';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useFoulPlay(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -81,19 +81,19 @@ export class Zoroark extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'SV11W';
-  public setNumber: string = '58';
+  public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark';
   public fullName: string = 'Zoroark SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mind Jack
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
       let benched = 0;
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card !== opponent.active){
+        if (card !== opponent.active) {
           benched++;
         }
       });

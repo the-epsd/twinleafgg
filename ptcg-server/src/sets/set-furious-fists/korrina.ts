@@ -11,11 +11,18 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { GameError } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Korrina, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
   let cards: Card[] = [];
 
   let pokemons = 0;
@@ -44,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxTrainers }
   ), selected => {
     cards = selected || [];
@@ -60,7 +67,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-  
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

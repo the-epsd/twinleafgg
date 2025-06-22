@@ -30,11 +30,12 @@ export class Ferrothorn extends PokemonCard {
       + 'a Benched Pokémon in this way. (Don\'t apply Weakness or Resistance for Benched Pokémon.)'
   }];
 
-  public set = 'UNB';
+  public set = 'TEU';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '124';
+  public setNumber: string = '103';
   public name = 'Ferrothorn';
-  public fullName = 'Ferrothorn UNB';
+  public fullName = 'Ferrothorn TEU';
+  public legacyFullName = 'Ferrothorn UNB';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

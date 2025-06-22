@@ -33,6 +33,8 @@ import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
+import { Melmetal } from './melmetal';
+import { Meltan } from './meltan';
 import { Milcery } from './milcery';
 import { Noctowl } from './noctowl';
 import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
@@ -42,11 +44,13 @@ import { Salandit } from './salandit';
 import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
 import { Slowking } from './slowking';
+import { Slowpoke } from './slowpoke';
 import { Terapagosex } from './terapagos-ex';
 import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
 import { Marill } from './marill';
 import { AntiqueCoverFossil } from './antique-cover-fossil';
+import { Toedscool } from './toedscool';
 
 export const setStellarCrown: Card[] = [
   new Archaludon(),
@@ -82,6 +86,8 @@ export const setStellarCrown: Card[] = [
   new Laprasex(),
   new Medichamex(),
   new Meditite(),
+  new Melmetal(),
+  new Meltan(),
   new Noctowl(),
   // new Orthwormex(),
   new Raboot(),
@@ -90,6 +96,7 @@ export const setStellarCrown: Card[] = [
   new Salazzle(),
   new Scorbunny(),
   new Slowking(),
+  new Slowpoke(),
   new Terapagosex(),
   new Veluza(),
   new Zeraora(),
@@ -97,6 +104,7 @@ export const setStellarCrown: Card[] = [
   new DeluxeBomb(),
   new Marill(),
   new AntiqueCoverFossil(),
+  new Toedscool(),
 
   //FA
   new BulbasaurIR(),

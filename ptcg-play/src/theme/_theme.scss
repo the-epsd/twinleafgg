@@ -13,6 +13,7 @@
 @import '../app/shared/user-info/_user-info.theme.scss';
 @import '../app/table/_table-theme.scss';
 @import '../app/table/prompt/_prompt-theme.scss';
+@import '../app/battle-pass/_battle-pass.theme.scss';
 
 @mixin ptcg-theme($theme) {
   @include ptcg-sidebar-theme($theme);
@@ -30,6 +31,7 @@
   @include ptcg-profile-theme($theme);
   @include ptcg-replays-theme($theme);
   @include ptcg-messages-theme($theme);
+  @include ptcg-battle-pass-theme($theme);
 }
 
 @mixin ptcg-typography($config) {

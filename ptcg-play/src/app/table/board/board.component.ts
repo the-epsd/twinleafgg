@@ -55,6 +55,7 @@ export class BoardComponent implements OnDestroy {
   public PlayerType = PlayerType;
   public SlotType = SlotType;
 
+
   get isTopPlayerActive(): boolean {
     return this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.topPlayer?.id;
   }

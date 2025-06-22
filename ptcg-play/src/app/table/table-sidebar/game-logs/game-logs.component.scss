@@ -88,3 +88,15 @@
 .ptcg-player-opponent {
   color: red;
 }
+
+.ptcg-log-entry {
+  word-break: break-word;
+}
+
+::ng-deep .ptcg-player {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+::ng-deep .ptcg-opponent {
+  background-color: rgba(255, 0, 0, 0.1);
+}

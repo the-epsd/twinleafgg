@@ -16,14 +16,14 @@ export class Rayquazaex extends PokemonCard {
   public powers = [{
     name: 'Rage Aura',
     powerType: PowerType.POKEBODY,
-    text: 'If you have more Prize cards left than your opponent, ignore all [C] Energy necessary to use Rayquaza ex\'s Special Circuit and Sky- high Claws attacks.'
+    text: 'If you have more Prize cards left than your opponent, ignore all [C] Energy necessary to use Rayquaza ex\'s Special Circuit and Sky-high Claws attacks.'
   }];
 
   public attacks = [{
     name: 'Special Circuit',
     cost: [L, C],
     damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon.This attack does 30 damage to the Pokémon. If you choose a Pokémon that has any Poké - Powers or Poké - Bodies, this attack does 50 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    text: 'Choose 1 of your opponent\'s Pokémon.This attack does 30 damage to the Pokémon. If you choose a Pokémon that has any Poké-Powers or Poké-Bodies, this attack does 50 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Sky-High Claws',
@@ -122,7 +122,7 @@ export class Rayquazaex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected;
@@ -174,6 +174,10 @@ export class Rayquazaex extends PokemonCard {
             damageEffect = new DealDamageEffect(effect, 50);
           }
           damageEffect.target = target;
+          if (target !== opponent.active) {
+            effect.ignoreWeakness = true;
+            effect.ignoreResistance = true;
+          }
           store.reduceEffect(state, damageEffect);
         });
         return state;

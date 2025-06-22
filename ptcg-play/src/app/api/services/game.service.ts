@@ -39,7 +39,6 @@ export class GameService {
 
   public join(gameId: number): Observable<GameState> {
     this.boardInteractionService.endBoardSelection();
-
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
@@ -137,6 +136,16 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
+  public trainerAbility(gameId: number, ability: string, target: CardTarget) {
+    this.socketService.emit('game:action:trainerAbility', { gameId, ability, target })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
+  public energyAbility(gameId: number, ability: string, target: CardTarget) {
+    this.socketService.emit('game:action:energyAbility', { gameId, ability, target })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
   public attack(gameId: number, attack: string) {
     this.socketService.emit('game:action:attack', { gameId, attack })
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
@@ -197,12 +206,15 @@ export class GameService {
     this.socketService.on(`game[${id}]:leave`, (clientId: number) => this.onLeave(id, clientId));
     this.socketService.on(`game[${id}]:stateChange`, (data: { stateData: string, playerStats: PlayerStats[] }) =>
       this.onStateChange(id, data.stateData, data.playerStats));
+    this.socketService.on(`game[${id}]:timerUpdate`, (data: { playerStats: PlayerStats[] }) =>
+      this.onTimerUpdate(id, data.playerStats));
   }
 
   private stopListening(id: number) {
     this.socketService.off(`game[${id}]:join`);
     this.socketService.off(`game[${id}]:leave`);
     this.socketService.off(`game[${id}]:stateChange`);
+    this.socketService.off(`game[${id}]:timerUpdate`);
   }
 
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {
@@ -214,8 +226,6 @@ export class GameService {
       const logs = [...gameStates[index].logs, ...state.logs];
       gameStates[index] = { ...gameStates[index], state, logs, playerStats };
       this.sessionService.set({ gameStates });
-
-      // Update the BoardInteractionService with the latest logs
       this.boardInteractionService.updateGameLogs(logs);
     }
   }
@@ -248,6 +258,16 @@ export class GameService {
       const clientIds = game.clientIds.filter(id => id !== clientId);
       const gameStates = this.sessionService.session.gameStates.slice();
       gameStates[index] = { ...gameStates[index], clientIds };
+      this.sessionService.set({ gameStates });
+    }
+  }
+
+  private onTimerUpdate(gameId: number, playerStats: PlayerStats[]) {
+    const games = this.sessionService.session.gameStates;
+    const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
+    if (index !== -1) {
+      const gameStates = this.sessionService.session.gameStates.slice();
+      gameStates[index] = { ...gameStates[index], playerStats };
       this.sessionService.set({ gameStates });
     }
   }

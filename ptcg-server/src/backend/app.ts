@@ -20,6 +20,7 @@ import {
   Ranking,
   Replays,
   ResetPassword,
+  BattlePass,
 } from './controllers';
 
 export class App {
@@ -85,6 +86,7 @@ export class App {
     define('/v1/ranking', Ranking);
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
+    define('/v1/battlepass', BattlePass);
 
     app.use((err: any, req: any, res: any, next: any) => {
       // Handle request aborted errors

@@ -2,7 +2,8 @@ import { Attack, CardTag, CardType, ChoosePokemonPrompt, GameError, GameMessage,
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kyurem extends PokemonCard {
 
@@ -20,7 +21,12 @@ export class Kyurem extends PokemonCard {
       damage: 30,
       text: 'Does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
-    { name: 'Blizzard Burn', cost: [W, W, C], damage: 120, text: 'This Pokémon can\'t attack during your next turn.' },
+    {
+      name: 'Blizzard Burn',
+      cost: [W, W, C],
+      damage: 120,
+      text: 'This Pokémon can\'t attack during your next turn.'
+    },
   ];
 
   public set: string = 'PLF';
@@ -29,15 +35,19 @@ export class Kyurem extends PokemonCard {
   public name: string = 'Kyurem';
   public fullName: string = 'Kyurem PLF';
 
-  // for preventing the pokemon from attacking on the next turn
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // removing the markers for preventing the pokemon from attacking
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    }
 
     if (effect instanceof AttackEffect) {
       if (HAS_MARKER(this.ATTACK_USED_MARKER, effect.player, this) || HAS_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this)) {
@@ -72,7 +82,11 @@ export class Kyurem extends PokemonCard {
 
     // Knuckle Impact
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      // Check marker
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
 
     return state;

@@ -11,8 +11,8 @@ export class AvatarService {
     private api: ApiService,
   ) { }
 
-  public getPredefinedAvatars() {
-    return this.api.get<AvatarListResponse>('/v1/avatars/predefined');
+  public getAvailableAvatars() {
+    return this.api.get<AvatarListResponse>('/v1/avatars/available');
   }
 
   public getList(userId?: number) {

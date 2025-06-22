@@ -24,6 +24,7 @@ export interface Attack {
   canUseOnFirstTurn?: boolean;
   name: string;
   text: string;
+  barrage?: boolean;
   effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;
 }
 
@@ -42,6 +43,7 @@ export enum PowerType {
   LV_X_RULE,
   BREAK_RULE,
   ARCEUS_RULE,
+  ENERGY_ABILITY
 }
 
 export interface Power {
@@ -55,4 +57,5 @@ export interface Power {
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;
   barrage?: boolean;
+  knocksOutSelf?: boolean;
 }

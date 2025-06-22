@@ -16,6 +16,7 @@ import { SetNewPasswordComponent } from './login/set-new-password/set-new-passwo
 import { TableComponent } from './table/table.component';
 import { VsScreenComponent } from './table/vs-screen/vs-screen.component';
 import { TermsComponent } from './terms/terms.component';
+import { MaintenanceMessageComponent } from './maintenance/maintenance-message.component';
 
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
@@ -34,6 +35,8 @@ const routes: Routes = [
   { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
   { path: 'terms', component: TermsComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },
+  { path: 'maintenance', component: MaintenanceMessageComponent },
+  { path: 'battle-pass', loadChildren: () => import('./battle-pass/battle-pass.module').then(m => m.BattlePassModule) },
 ];
 
 @NgModule({

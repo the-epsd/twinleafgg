@@ -10,7 +10,7 @@ export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
   public cardType: CardType = F;
-  public hp: number = 50;
+  public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];
 
