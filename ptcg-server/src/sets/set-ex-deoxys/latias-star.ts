@@ -22,7 +22,7 @@ export class LatiasStar extends PokemonCard {
       text: 'Remove 1 damage counter from each of your Pokémon (including Latias Star).'
     },
     {
-      name: 'Shining Star',
+      name: 'Shooting Star',
       cost: [R, W, P],
       damage: 50,
       damageCalculation: '+',

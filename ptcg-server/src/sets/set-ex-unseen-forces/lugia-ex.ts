@@ -28,7 +28,7 @@ export class Lugiaex extends PokemonCard {
     name: 'Elemental Blast',
     cost: [R, W, L],
     damage: 200,
-    text: 'AttaDiscard a [R] Energy, [W] Energy, and [L] Energy attached to Lugia ex.'
+    text: 'Discard a [R] Energy, [W] Energy, and [L] Energy attached to Lugia ex.'
   }];
 
   public set: string = 'UF';

@@ -16,6 +16,7 @@ import { Lunatone } from './lunatone';
 import { Magcargo } from './magcargo';
 import { Manectricex } from './manectric-ex';
 import { MasterBall } from './master-ball';
+import { Metagross } from './metagross';
 import { Minun } from './minun';
 import { Nosepass } from './nosepass';
 import { Numel } from './numel';
@@ -45,6 +46,7 @@ export const setEXDeoxys: Card[] = [
   new Magcargo(),
   new Manectricex(),
   new MasterBall(),
+  new Metagross(),
   new Minun(),
   new Nosepass(),
   new Numel(),

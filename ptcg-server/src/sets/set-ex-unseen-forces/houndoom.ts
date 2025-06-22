@@ -10,6 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
 import { Card } from '../../game';
 import { PlayItemEffect, AttachPokemonToolEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
+import { IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -49,6 +50,10 @@ export class Houndoom extends PokemonCard {
       StateUtils.isPokemonInPlay(effect.player, this)) {
       const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
       const opponent = StateUtils.getOpponent(state, owner);
+
+      if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
+        return state;
+      }
 
       // Count Pokémon for owner
       let ownerPokemonCount = 0;

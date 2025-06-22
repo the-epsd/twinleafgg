@@ -1,10 +1,11 @@
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Orthworm extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -71,18 +72,18 @@ export class Orthworm extends PokemonCard {
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      const thisCardList: PokemonCardList[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.getPokemonCard() === this) {
+          thisCardList.push(cardList);
+        }
+      });
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, thisCardList[0]);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       let metalEnergy = 0;

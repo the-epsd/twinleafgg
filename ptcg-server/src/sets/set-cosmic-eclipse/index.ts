@@ -24,6 +24,7 @@ import { LanasFishingRod } from './lanas-fishing-rod';
 import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
+import { Magneton } from './magneton';
 import { MallowAndLana } from './mallow-and-lana';
 import { Natu } from './natu';
 import { Onix } from './onix';
@@ -92,6 +93,7 @@ export const setCosmicEclipse: Card[] = [
   new LilliesFullForce(),
   new LilliesPokeDoll(),
   new Lillipup(),
+  new Magneton(),
   new MallowAndLana(),
   new MegaLopunnyJigglypuffGX(),
   new Mimikyu(),
