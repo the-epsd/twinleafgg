@@ -17,14 +17,20 @@ export class CardManager {
 
   public defineSet(set: Card[]): void {
     for (const card of set) {
-      let index = this.cardIndex[card.fullName];
-      if (index !== undefined && this.cards[index] !== card) {
+      if (this.cardIndex[card.fullName] !== undefined) {
         throw new Error('Multiple cards with the same name: ' + card.fullName);
       }
-      if (index === undefined) {
-        index = this.cards.length;
-        this.cardIndex[card.fullName] = index;
-        this.cards.push(card);
+
+      const index = this.cards.length;
+      this.cards.push(card);
+      this.cardIndex[card.fullName] = index;
+
+      const p = card as any;
+      if (p.legacyFullName) {
+        if (this.cardIndex[p.legacyFullName] !== undefined) {
+          throw new Error('Multiple cards with the same name: ' + p.legacyFullName);
+        }
+        this.cardIndex[p.legacyFullName] = index;
       }
     }
   }

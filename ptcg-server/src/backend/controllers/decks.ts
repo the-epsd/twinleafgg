@@ -101,6 +101,13 @@ export class Decks extends Controller {
       return;
     }
 
+    // Resolve legacy names to their new fullNames
+    const cardManager = CardManager.getInstance();
+    const resolvedCards = body.cards.map(cardName => {
+      const card = cardManager.getCardByName(cardName);
+      return card ? card.fullName : cardName; // Fallback to original if not found
+    });
+
     const userId: number = req.body.userId;
     const user = await User.findOne(userId);
 
@@ -120,9 +127,9 @@ export class Decks extends Controller {
       return;
     }
 
-    const deckUtils = new DeckAnalyser(body.cards);
+    const deckUtils = new DeckAnalyser(resolvedCards);
     deck.name = body.name.trim();
-    deck.cards = JSON.stringify(body.cards);
+    deck.cards = JSON.stringify(resolvedCards);
     deck.isValid = deckUtils.isValid();
     deck.cardTypes = JSON.stringify(deckUtils.getDeckType());
     deck.manualArchetype1 = body.manualArchetype1 || '';
@@ -140,7 +147,7 @@ export class Decks extends Controller {
       ok: true, deck: {
         id: deck.id,
         name: deck.name,
-        cards: body.cards,
+        cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2
       }
@@ -261,14 +268,20 @@ export class Decks extends Controller {
     return res.json({ ok: true, formats });
   }
 
-  private validateCards(deck: string[]) {
-    if (!(deck instanceof Array)) {
-      return false;
-    }
-
+  private validateCards(deck: string[]): boolean {
     const cardManager = CardManager.getInstance();
-    for (let i = 0; i < deck.length; i++) {
-      if (typeof deck[i] !== 'string' || !cardManager.isCardDefined(deck[i])) {
+    const validNames = new Set<string>();
+
+    cardManager.getAllCards().forEach(c => {
+      validNames.add(c.fullName);
+      const p = c as any;
+      if (p.legacyFullName) {
+        validNames.add(p.legacyFullName);
+      }
+    });
+
+    for (const cardName of deck) {
+      if (!validNames.has(cardName)) {
         return false;
       }
     }
