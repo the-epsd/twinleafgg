@@ -750,12 +750,12 @@ export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
 }
 
 export function BLOCK_IF_HAS_SPECIAL_CONDITION(player: Player, source: Card) {
-  if (player.active.cards[0] === source && player.active.specialConditions.length > 0)
+  if (player.active.getPokemonCard() === source && player.active.specialConditions.length > 0)
     throw new GameError(GameMessage.CANNOT_USE_POWER);
 }
 
 export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card) {
-  if (player.active.cards[0] === source &&
+  if (player.active.getPokemonCard() === source &&
     player.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
     player.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
     player.active.specialConditions.includes(SpecialCondition.PARALYZED)) {

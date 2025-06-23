@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, StateUtils } from '../../game';
+import { StoreLike, State, PlayerType, StateUtils, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -56,7 +56,7 @@ export class Cofagrigus extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.powers.length > 0) {
+        if (card.powers.length > 0 && card.powers.some(power => power.powerType === PowerType.ABILITY)) {
           if (!IS_ABILITY_BLOCKED(store, state, player, card)) {
             const damageEffect = new PutCountersEffect(effect, 60);
             damageEffect.target = cardList;
@@ -66,7 +66,7 @@ export class Cofagrigus extends PokemonCard {
       });
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.powers.length > 0) {
+        if (card.powers.length > 0 && card.powers.some(power => power.powerType === PowerType.ABILITY)) {
           if (!IS_ABILITY_BLOCKED(store, state, opponent, card)) {
             const damageEffect = new PutCountersEffect(effect, 60);
             damageEffect.target = cardList;

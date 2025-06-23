@@ -47,30 +47,23 @@ export class Houndoom extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if ((effect instanceof PlayItemEffect || effect instanceof AttachPokemonToolEffect || effect instanceof PlayStadiumEffect) &&
-      StateUtils.isPokemonInPlay(effect.player, this)) {
-      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-      const opponent = StateUtils.getOpponent(state, owner);
+      StateUtils.isPokemonInPlay(StateUtils.getOpponent(state, effect.player), this)) {
+      const player = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      const opponent = StateUtils.getOpponent(state, player);
 
-      if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
+      if (effect.player !== opponent) {
         return state;
       }
 
-      // Count Pokémon for owner
-      let ownerPokemonCount = 0;
-      if (owner.active.cards.length > 0) ownerPokemonCount++;
-      owner.bench.forEach(bench => {
-        if (bench.cards.length > 0) ownerPokemonCount++;
-      });
+      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
 
-      // Count Pokémon for opponent
-      let opponentPokemonCount = 0;
-      if (opponent.active.cards.length > 0) opponentPokemonCount++;
-      opponent.bench.forEach(bench => {
-        if (bench.cards.length > 0) opponentPokemonCount++;
-      });
+      const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+      const opponentBench = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
-      // If owner has less Pokémon and it's opponent's turn, block the trainer card
-      if (ownerPokemonCount < opponentPokemonCount && effect.player === opponent) {
+      // If owner has less Pokémon, block the trainer card
+      if (playerBench < opponentBench) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
