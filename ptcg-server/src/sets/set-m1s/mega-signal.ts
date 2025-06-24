@@ -3,7 +3,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { Card } from '../../game/store/card/card';
 
@@ -14,11 +14,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let cards: Card[] = [];
 
   const blocked: number[] = [];
-  let hasMegaEx = false;
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.stage === Stage.MEGA && card.tags.includes(CardTag.POKEMON_ex)) {
-      hasMegaEx = true;
-    } else {
+    if (card instanceof PokemonCard && !card.tags.includes(CardTag.POKEMON_ex) && !card.tags.includes(CardTag.MEGA)) {
       blocked.push(index);
     }
   });
