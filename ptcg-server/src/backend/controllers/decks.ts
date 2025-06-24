@@ -65,6 +65,14 @@ export class Decks extends Controller {
       return;
     }
 
+    // Try to parse artworks from entity if present (future-proofing)
+    let artworks: { code: string; artworkId?: number }[] | undefined = undefined;
+    if (entity.artworks) {
+      try {
+        artworks = JSON.parse(entity.artworks);
+      } catch { }
+    }
+
     const deck = {
       id: entity.id,
       name: entity.name,
@@ -72,7 +80,8 @@ export class Decks extends Controller {
       cardTypes: JSON.parse(entity.cardTypes),
       cards: JSON.parse(entity.cards),
       manualArchetype1: entity.manualArchetype1,
-      manualArchetype2: entity.manualArchetype2
+      manualArchetype2: entity.manualArchetype2,
+      ...(artworks ? { artworks } : {})
     };
 
     res.send({ ok: true, deck });
@@ -134,7 +143,10 @@ export class Decks extends Controller {
     deck.cardTypes = JSON.stringify(deckUtils.getDeckType());
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
-
+    // Save artworks if present
+    if ('artworks' in body && body.artworks) {
+      deck.artworks = JSON.stringify(body.artworks);
+    }
     try {
       deck = await deck.save();
     } catch (error) {
@@ -149,7 +161,8 @@ export class Decks extends Controller {
         name: deck.name,
         cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
-        manualArchetype2: deck.manualArchetype2
+        manualArchetype2: deck.manualArchetype2,
+        ...(body.artworks ? { artworks: body.artworks } : {})
       }
     });
   }

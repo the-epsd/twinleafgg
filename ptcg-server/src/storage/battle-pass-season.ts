@@ -5,7 +5,7 @@ import * as path from 'path';
 export interface BattlePassReward {
   level: number;
   item: string;
-  type: 'avatar' | 'card_back' | 'playmat' | 'marker' | 'booster';
+  type: 'avatar' | 'card_back' | 'playmat' | 'marker' | 'card_artwork';
   name: string;
   isPremium: boolean;
 }

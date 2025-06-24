@@ -150,4 +150,11 @@ export class CardsBaseService {
       .catch(() => undefined);
   }
 
+  public getArtworkUrl(card: Card, artwork?: { imageUrl: string }): string {
+    if (artwork && artwork.imageUrl) {
+      return artwork.imageUrl;
+    }
+    return this.getScanUrl(card);
+  }
+
 }

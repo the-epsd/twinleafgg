@@ -1,5 +1,3 @@
-
-
 export interface Response {
-  ok: number;
+  ok: boolean | number;
 }

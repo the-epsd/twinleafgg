@@ -13,6 +13,7 @@ export interface DeckListEntry {
   deckItems: DeckItem[];
   manualArchetype1?: Archetype;
   manualArchetype2?: Archetype;
+  artworks?: { code: string; artworkId?: number }[];
 }
 
 export interface DeckListResponse extends Response {
@@ -29,6 +30,7 @@ export interface Deck {
   cards: string[];
   manualArchetype1?: Archetype;
   manualArchetype2?: Archetype;
+  artworks?: { code: string; artworkId?: number }[];
 }
 
 export interface DeckResponse extends Response {

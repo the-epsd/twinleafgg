@@ -33,6 +33,7 @@ export class DeckEditComponent implements OnInit {
   public toolbarFilter: DeckEditToolbarFilter;
   public DeckEditPane = DeckEditPane;
   public isThemeDeck = false;
+  public selectedArtworks: { code: string; artworkId?: number }[] = [];
 
   constructor(
     private alertService: AlertService,
@@ -60,6 +61,8 @@ export class DeckEditComponent implements OnInit {
         this.loading = false;
         this.deck = response.deck;
         this.deckItems = this.loadDeckItems(response.deck.cards);
+        // Load artworks if present
+        this.selectedArtworks = response.deck.artworks || [];
         // Detect theme deck
         this.isThemeDeck = Array.isArray(this.deck.format) && this.deck.format.includes(Format['THEME']);
       }, async () => {
@@ -290,7 +293,8 @@ export class DeckEditComponent implements OnInit {
       this.deck.name,
       items,
       this.deck.manualArchetype1 as Archetype,
-      this.deck.manualArchetype2 as Archetype
+      this.deck.manualArchetype2 as Archetype,
+      this.selectedArtworks
     ).pipe(
       finalize(() => { this.loading = false; }),
       untilDestroyed(this)

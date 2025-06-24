@@ -44,13 +44,21 @@ export class DeckService {
     });
   }
 
-  public saveDeck(deckId: number, name: string, cards: string[], manualArchetype1?: Archetype, manualArchetype2?: Archetype) {
+  public saveDeck(
+    deckId: number,
+    name: string,
+    cards: string[],
+    manualArchetype1?: Archetype,
+    manualArchetype2?: Archetype,
+    artworks?: { code: string; artworkId?: number }[]
+  ) {
     return this.api.post<DeckResponse>('/v1/decks/save', {
       id: deckId,
       name,
       cards,
       manualArchetype1,
-      manualArchetype2
+      manualArchetype2,
+      ...(artworks ? { artworks } : {})
     });
   }
 
