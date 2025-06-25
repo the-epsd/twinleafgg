@@ -14,6 +14,7 @@ import { Porygon2 } from './porygon2';
 import { Seadra } from './seadra';
 import { SuperEnergyRemoval2 } from './super-energy-removal-2';
 import { TownVolunteers } from './town-volunteers';
+import { WeaknessGuard } from './weakness-guard';
 import { Zapdos } from './zapdos';
 
 // Other prints
@@ -37,6 +38,7 @@ export const setAquapolis: Card[] = [
   new Seadra(),
   new SuperEnergyRemoval2(),
   new TownVolunteers(),
+  new WeaknessGuard(),
   new Zapdos(),
 
   // Other prints

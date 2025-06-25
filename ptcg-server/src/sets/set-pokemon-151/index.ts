@@ -48,6 +48,7 @@ import { Nidorino } from './nidorino';
 import { Oddish } from './oddish';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
+import { ProtectiveGoggles } from './protective-goggles';
 import { RigidBand } from './rigid-band';
 import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
@@ -113,6 +114,7 @@ export const setPokemon151: Card[] = [
   new Oddish(),
   new Pidgeotto(),
   new Pidgey(),
+  new ProtectiveGoggles(),
   new RigidBand(),
   new Sandshrew(),
   new Scyther(),

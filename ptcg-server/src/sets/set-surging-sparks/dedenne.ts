@@ -2,7 +2,7 @@ import { ChooseCardsPrompt, GameMessage, State, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dedenne extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,7 +47,6 @@ export class Dedenne extends PokemonCard {
         if (selected) {
           SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
           MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected });
-          SHUFFLE_DECK(store, state, player);
         }
       });
     }

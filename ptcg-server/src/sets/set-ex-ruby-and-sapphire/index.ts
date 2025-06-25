@@ -1,10 +1,18 @@
 import { Card } from '../../game';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
+import { Combusken } from './combusken';
 import { DarknessEnergySpecial } from './darkness-energy-special';
 import { Delcatty } from './delcatty';
+import { Gardevoir } from './gardevoir';
+import { Kirlia } from './kirlia';
+import { Marshtomp } from './marshtomp';
+import { Mudkip } from './mudkip';
 import { PokeNav } from './pokenav';
 import { Sceptile } from './sceptile';
 import { Skitty } from './skitty';
+import { Skitty2 } from './skitty2';
+import { Swampert } from './swampert';
+import { Torchic } from './torchic';
 import { Blaziken } from './blaziken';
 
 // Other Prints
@@ -12,11 +20,19 @@ import { MetalEnergySpecialRS } from './other-prints';
 import { RainbowEnergyRS } from './other-prints';
 
 export const setEXRubyAndSapphire: Card[] = [
+  new Combusken(),
   new DarknessEnergySpecial(),
   new Delcatty(),
+  new Gardevoir(),
+  new Kirlia(),
+  new Marshtomp(),
+  new Mudkip(),
   new PokeNav(),
   new Sceptile(),
   new Skitty(),
+  new Skitty2(),
+  new Swampert(),
+  new Torchic(),
   new Blaziken(),
 
   // Basic energies

@@ -48,33 +48,32 @@ export class Scyther extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
-      const hasBasicEnergy = player.active.cards.some(c => {
+      const hasBasicEnergy = player.discard.cards.some(c => {
         return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.GRASS);
       });
-  
+
       if (hasBench === false || hasBasicEnergy === false) {
         return state;
       }
-  
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
+        player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
+          player.discard.moveCardTo(transfer.card, target);
         }
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

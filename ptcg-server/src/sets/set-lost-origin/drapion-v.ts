@@ -27,7 +27,7 @@ export class DrapionV extends PokemonCard {
   public powers = [{
     name: 'Wild Style',
     powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks cost C less for each of your opponent\'s Single Strike, Rapid Strike, and Fusion Strike Pokémon in play.'
+    text: 'This Pokémon\'s attacks cost [C] less for each of your opponent\'s Single Strike, Rapid Strike, and Fusion Strike Pokémon in play.'
   }];
 
   public attacks = [
