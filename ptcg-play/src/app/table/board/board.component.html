@@ -64,10 +64,9 @@
       <!-- Top Deck -->
       <div class="ptcg-board-row ptcg-board-deck">
         <div class="deck-container">
-          <ng-container *ngFor="let i of createRange(topPlayer?.deck?.cards?.length || 0); let idx = index">
-            <ptcg-board-card (click)="onDeckClick($event, topPlayer?.deck)" [cardList]="topPlayer?.deck"
-              [owner]="topPlayer" class="deck-card"
-              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
+          <ng-container *ngFor="let card of topPlayer?.deck?.cards; let idx = index">
+            <ptcg-board-card [cardList]="{ cards: [card] }" [owner]="topPlayer" class="deck-card"
+              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'" [isFaceDown]="true">
             </ptcg-board-card>
           </ng-container>
           <div class="card-count">{{topPlayer?.deck?.cards?.length || 0}}</div>
@@ -163,10 +162,9 @@
       <!-- Bottom Deck -->
       <div class="ptcg-board-row ptcg-board-deck">
         <div class="deck-container">
-          <ng-container *ngFor="let i of createRange(bottomPlayer?.deck?.cards?.length || 0); let idx = index">
-            <ptcg-board-card (click)="onDeckClick($event, bottomPlayer?.deck)" [cardList]="bottomPlayer?.deck"
-              [owner]="bottomPlayer" class="deck-card"
-              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
+          <ng-container *ngFor="let card of bottomPlayer?.deck?.cards; let idx = index">
+            <ptcg-board-card [cardList]="{ cards: [card] }" [owner]="bottomPlayer" class="deck-card"
+              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'" [isFaceDown]="true">
             </ptcg-board-card>
           </ng-container>
           <div class="card-count">{{bottomPlayer?.deck?.cards?.length || 0}}</div>

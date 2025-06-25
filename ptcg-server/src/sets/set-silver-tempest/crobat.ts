@@ -46,7 +46,6 @@ export class Crobat extends PokemonCard {
       const player = effect.player;
 
       this.usedCriticalBite = true;
-      console.log('Just used Critical Bite: ' + this.usedCriticalBite);
 
       const max = Math.min(1);
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -67,7 +66,6 @@ export class Crobat extends PokemonCard {
     }
 
     if (effect instanceof KnockOutEffect) {
-      console.log('Checking if the target was KO\'d: ' + this.usedCriticalBite);
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
