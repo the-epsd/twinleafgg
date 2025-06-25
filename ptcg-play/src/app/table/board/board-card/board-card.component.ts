@@ -589,5 +589,18 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  public getRotationClass(): string {
+    if (this.specialConditions.includes(SpecialCondition.ASLEEP)) {
+      return 'asleep-position';
+    }
+    if (this.specialConditions.includes(SpecialCondition.CONFUSED)) {
+      return 'confused-position';
+    }
+    if (this.specialConditions.includes(SpecialCondition.PARALYZED)) {
+      return 'paralyzed-position';
+    }
+    return '';
+  }
 }
 
