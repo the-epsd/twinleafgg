@@ -10,6 +10,7 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { AttachPokemonToolEffect, PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType } from '../../game';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Jellicentex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,6 +45,22 @@ export class Jellicentex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      // Check attack cost
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
+      state = store.reduceEffect(state, checkCost);
+
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+
+      // Count total attached energy
+      const totalEnergy = checkEnergy.energyMap.length;
+      const attackCost = checkCost.cost.length;
+      const extraEnergy = totalEnergy - attackCost;
+      if (extraEnergy >= 2) {
+        effect.damage += 80;
+      }
     }
 
     if (effect instanceof PlayItemEffect) {

@@ -85,8 +85,8 @@ export class Dragonite extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { allowCancel: true, min: 1, max: 1 }
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+        { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

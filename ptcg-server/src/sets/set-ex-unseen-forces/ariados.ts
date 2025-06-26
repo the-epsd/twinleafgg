@@ -1,7 +1,7 @@
 import { Attack, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
-import { CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -31,6 +31,8 @@ export class Ariados extends PokemonCard {
   public name: string = 'Ariados';
   public fullName: string = 'Ariados UF';
 
+  public usedSpiderTrap: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -44,18 +46,28 @@ export class Ariados extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
+      this.usedSpiderTrap = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedSpiderTrap) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const bench = opponent.bench.filter(bench => bench.cards.length > 0);
 
       if (bench.length === 0) {
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+        ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        this.usedSpiderTrap = false;
         return state;
       }
 
       CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result) {
+        if (!result) {
+          ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          this.usedSpiderTrap = false;
+          return state;
+        } else {
           store.prompt(state, new ChoosePokemonPrompt(
             player.id,
             GameMessage.CHOOSE_POKEMON_TO_SWITCH,
@@ -65,8 +77,9 @@ export class Ariados extends PokemonCard {
           ), result => {
             const cardList = result[0];
             opponent.switchPokemon(cardList);
-            YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
-            YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+            ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+            ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
+            this.usedSpiderTrap = false;
           });
         }
       }, GameMessage.WANT_TO_SWITCH_POKEMON);
