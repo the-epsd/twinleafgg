@@ -1,4 +1,4 @@
-import { Attack, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
@@ -16,15 +16,8 @@ export class WeaknessGuard extends TrainerCard {
   public name: string = 'Weakness Guard';
   public fullName: string = 'Weakness Guard AQ';
 
-  public attacks: Attack[] = [{
-    name: 'Stone Generator',
-    cost: [C],
-    damage: 0,
-    text: 'If your opponent has any Evolved Pokémon in play, remove the highest Stage Evolution card from each of them and put those cards back into his or her hand.'
-  }];
-
   public text: string =
-    'Attach this card to 1 of your Evolved Pokémon (excluding Pokémon-ex and Pokémon that has an owner in its name) in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Ancient Technical Machine [Rock].';
+    'Attach this card to 1 of your Pokémon. Discard it at the end of your opponent\'s next turn.\n\nAs long as this card is attached, this Pokémon has no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

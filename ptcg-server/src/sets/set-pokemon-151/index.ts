@@ -46,6 +46,7 @@ import { NidoranMale } from './nidoran-male';
 import { Nidorina } from './nidorina';
 import { Nidorino } from './nidorino';
 import { Oddish } from './oddish';
+import { Onix } from './onix';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { ProtectiveGoggles } from './protective-goggles';
@@ -112,6 +113,7 @@ export const setPokemon151: Card[] = [
   new Nidorina(),
   new Nidoqueen(),
   new Oddish(),
+  new Onix(),
   new Pidgeotto(),
   new Pidgey(),
   new ProtectiveGoggles(),

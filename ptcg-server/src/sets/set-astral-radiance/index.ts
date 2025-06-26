@@ -19,6 +19,8 @@ import { GutsyPickaxe } from './gutsy-pickaxe';
 import { HisuianArcanine } from './hisuian-arcanine';
 import { HisuianBasculegion } from './hisuian-basculegion';
 import { HisuianBasculin } from './hisuian-basculin';
+import { HisuianDecidueyeV } from './hisuian-decidueye-v';
+import { HisuianDecidueyeVSTAR } from './hisuian-decidueye-vstar';
 import { HisuianGrowlithe } from './hisuian-growllithe';
 import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianOverqwil } from './hisuian-overqwil';
@@ -91,6 +93,8 @@ export const setAstralRadiance: Card[] = [
   new HisuianArcanine(),
   new HisuianBasculegion(),
   new HisuianBasculin(),
+  new HisuianDecidueyeV(),
+  new HisuianDecidueyeVSTAR(),
   new HisuianGrowlithe(),
   new HisuianHeavyBall(),
   new HisuianOverqwil(),

@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { BillsMaintenance } from './bills-maintenance';
 import { Blastoiseex } from './blastoise-ex';
 import { CeliosNetwork } from './celios-network';
 import { Diglett } from './diglett';
@@ -21,10 +22,12 @@ import { Voltorb } from './voltorb';
 import { Wartortle } from './wartortle';
 
 // Other prints
+import { PokemonReversalRG } from './other-prints';
 import { SwitchRG } from './other-prints';
 import { VsSeekerFL } from './other-prints';
 
 export const setEXFireRedLeafGreen: Card[] = [
+  new BillsMaintenance(),
   new Blastoiseex(),
   new CeliosNetwork(),
   new Diglett(),
@@ -47,6 +50,7 @@ export const setEXFireRedLeafGreen: Card[] = [
   new Wartortle(),
 
   // Other prints
+  new PokemonReversalRG(),
   new SwitchRG(),
   new VsSeekerFL(),
 ];

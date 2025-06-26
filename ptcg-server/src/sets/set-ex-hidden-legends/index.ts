@@ -13,6 +13,8 @@ import { Milotic } from './milotic';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
 import { Regirockex } from './regirock-ex';
+import { Rhyhorn } from './rhyhorn';
+import { Rhydon } from './rhydon';
 import { Vulpix } from './vulpix';
 
 export const setEXHiddenLegends: Card[] = [
@@ -30,5 +32,7 @@ export const setEXHiddenLegends: Card[] = [
   new Ninetales(),
   new Oddish(),
   new Regirockex(),
+  new Rhyhorn(),
+  new Rhydon(),
   new Vulpix(),
 ];

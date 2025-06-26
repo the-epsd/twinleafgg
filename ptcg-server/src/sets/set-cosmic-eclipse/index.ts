@@ -36,6 +36,7 @@ import { Rosa } from './rosa';
 import { Roxie } from './roxie';
 import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
+import { Steelix } from './steelix';
 import { Stoutland } from './stoutland';
 import { Sunkern } from './sunkern';
 import { Swirlix } from './swirlix';
@@ -110,6 +111,7 @@ export const setCosmicEclipse: Card[] = [
   new Roxie(),
   new Sawsbuck(),
   new Slugma(),
+  new Steelix(),
   new SolgaleoLunalaGX(),
   new Stoutland(),
   new Sunkern(),

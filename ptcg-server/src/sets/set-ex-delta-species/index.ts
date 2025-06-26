@@ -36,6 +36,8 @@ import { Rayquaza } from './rayquaza';
 import { Salamence } from './salamence';
 import { Shelgon } from './shelgon';
 import { Shelgon2 } from './shelgon2';
+import { Vaporeonex } from './vaporeon-ex';
+
 import { SuperScoopUpDS } from './other-prints';
 
 export const setEXDeltaSpecies: Card[] = [
@@ -76,5 +78,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Salamence(),
   new Shelgon(),
   new Shelgon2(),
+  new Vaporeonex(),
+
   new SuperScoopUpDS(),
 ];

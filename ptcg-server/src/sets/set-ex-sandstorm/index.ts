@@ -3,6 +3,7 @@ import { Dunsparce } from './dunsparce';
 import { Gardevoirex } from './gardevoir-ex';
 import { LanettesNetSearch } from './lanettes-net-search';
 import { Lombre } from './lombre';
+import { Lotad } from './lotad';
 import { MultiEnergy } from './multi-energy';
 import { Skitty } from './skitty';
 import { WallysTraining } from './wallys-training';
@@ -14,6 +15,7 @@ export const setEXSandstorm: Card[] = [
   new Gardevoirex(),
   new LanettesNetSearch(),
   new Lombre(),
+  new Lotad(),
   new MultiEnergy(),
   new Skitty(),
   new WallysTraining(),

@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, GameError, GameMessage, PowerType, PlayerType, StateUtils, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { IS_POKEPOWER_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { ABILITY_USED, ADD_MARKER, DRAW_CARDS, HAS_MARKER, IS_POKEPOWER_BLOCKED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Ludicolo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,10 +40,16 @@ export class Ludicolo extends PokemonCard {
   public name: string = 'Ludicolo';
   public fullName: string = 'Ludicolo DX';
 
+  public readonly SWING_DANCE_MARKER = 'SWING_DANCE_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Swing Dance Poké-Power
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+      if (HAS_MARKER(this.SWING_DANCE_MARKER, player, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
 
       if (!IS_POKEPOWER_BLOCKED) {
         // Check if Ludicolo is affected by a Special Condition
@@ -54,10 +60,15 @@ export class Ludicolo extends PokemonCard {
             }
           }
         });
+
+        ABILITY_USED(player, this);
+        ADD_MARKER(this.SWING_DANCE_MARKER, player, this);
         // Draw a card
-        player.deck.moveTo(player.hand, 1);
+        DRAW_CARDS(player, 1);
       }
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SWING_DANCE_MARKER, this);
 
     // Handle Water Healing Steps attack
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -74,20 +85,21 @@ export class Ludicolo extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         {},
-        { min: 0, max: player.hand.cards.length, allowCancel: true }
+        { min: 0, max: player.hand.cards.length, allowCancel: false }
       ), transfers => {
         if (!transfers || transfers.length === 0) {
           return state;
         }
 
-        // Remove damage counters equal to number of cards discarded
-        const damageToRemove = transfers.length * 10;
-        active.damage = Math.max(0, active.damage - damageToRemove);
-
         // Discard the cards
         for (const transfer of transfers) {
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: [transfer] });
         }
+
+        // Remove damage counters equal to number of cards discarded
+        const damageToRemove = transfers.length * 10;
+        const healEffect = new HealEffect(player, player.active, damageToRemove);
+        state = store.reduceEffect(state, healEffect);
 
         return state;
       });

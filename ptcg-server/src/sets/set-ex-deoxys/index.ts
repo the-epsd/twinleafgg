@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { Altaria } from './altaria';
 import { Camerupt } from './camerupt';
+import { CrystalShard } from './crystal-shard';
 import { Electrike } from './electrike';
 import { Electrike2 } from './electrike2';
 import { HealEnergy } from './heal-energy';
@@ -10,6 +11,7 @@ import { LatiasStar } from './latias-star';
 import { LatiosStar } from './latios-star';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
+import { Lotad2 } from './lotad2';
 import { Ludicolo } from './ludicolo';
 import { Ludicolo2 } from './ludicolo2';
 import { Lunatone } from './lunatone';
@@ -31,6 +33,7 @@ import { Weezing } from './weezing';
 export const setEXDeoxys: Card[] = [
   new Altaria(),
   new Camerupt(),
+  new CrystalShard(),
   new Electrike(),
   new Electrike2(),
   new HealEnergy(),
@@ -40,6 +43,7 @@ export const setEXDeoxys: Card[] = [
   new LatiosStar(),
   new Lombre(),
   new Lotad(),
+  new Lotad2(),
   new Ludicolo(),
   new Ludicolo2(),
   new Lunatone(),
