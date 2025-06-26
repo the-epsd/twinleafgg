@@ -14,7 +14,7 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { ShowCardsPrompt, StateUtils } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  self: TownVolunteers, effect: TrainerEffect): IterableIterator<State> {
+  self: PalmersContribution, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -63,7 +63,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     {},
-    { min: 1, max: 5, allowCancel: false, blocked }
+    { min: 0, max: 5, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -89,16 +89,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class TownVolunteers extends TrainerCard {
+export class PalmersContribution extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'AQ';
+  public set: string = 'SV';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '136';
-  public name: string = 'Town Volunteers';
-  public fullName: string = 'Town Volunteers AQ';
+  public setNumber: string = '139';
+  public name: string = 'Palmer\'s Contribution';
+  public fullName: string = 'Palmer\'s Contribution SV';
 
   public text: string =
-    'Take 5 Baby Pokémon, Basic Pokémon, Evolution, and/or basic Energy cards from your discard pile and then show them to your opponent. Shuffle them into your deck.';
+    'Search your discard pile for up to 5 in any combination of Pokémon and basic Energy cards. Show them to your opponent and shuffle them into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
