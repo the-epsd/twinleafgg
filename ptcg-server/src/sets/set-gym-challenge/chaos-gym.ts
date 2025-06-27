@@ -45,7 +45,7 @@ export class ChaosGym extends TrainerCard {
           store.reduceEffect(state, playTrainerEffect);
         } else {
           // Just can't use if put into play
-          if (effect.trainerCard.putIntoPlay) {
+          if (effect.trainerCard.putIntoPlay || effect.trainerCard.trainerType === TrainerType.TOOL) {
             MOVE_CARD_TO(state, effect.trainerCard, player.discard);
             return state;
           }

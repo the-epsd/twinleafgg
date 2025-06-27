@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, GameError, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { HealEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { HealEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { ADD_MARKER, COIN_FLIP_PROMPT, DRAW_CARDS, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -20,7 +20,7 @@ export class Cleffa extends PokemonCard {
   },
   {
     name: 'Evolves into Clefairy',
-    powerType: PowerType.BABY_RULE,
+    powerType: PowerType.TRAINER_ABILITY,
     useWhenInPlay: true,
     text: 'Put Clefairy on the Baby Pokémon'
   }];
@@ -46,6 +46,16 @@ export class Cleffa extends PokemonCard {
     if (effect instanceof UseAttackEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      try {
+        store.reduceEffect(state, new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.BABY_RULE,
+          text: ''
+        }, this));
+      } catch {
+        return state;
+      }
 
       // avoids recursion
       if (HAS_MARKER(this.BABY_MARKER, effect.player)) {

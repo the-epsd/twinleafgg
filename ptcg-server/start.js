@@ -31,6 +31,8 @@ cardManager.defineSet(sets.setNeoDiscovery);
 cardManager.defineSet(sets.setNeoRevelation);
 cardManager.defineSet(sets.setNeoDestiny);
 
+cardManager.defineSet(sets.setSouthernIslands);
+
 //E-Card Era
 cardManager.defineSet(sets.setExpedition);
 cardManager.defineSet(sets.setAquapolis);

@@ -17,6 +17,8 @@ export * from './set-neo-discovery';
 export * from './set-neo-revelation';
 export * from './set-neo-destiny';
 
+export * from './set-southern-islands';
+
 //E-Card Era
 export * from './set-expedition';
 export * from './set-aquapolis';

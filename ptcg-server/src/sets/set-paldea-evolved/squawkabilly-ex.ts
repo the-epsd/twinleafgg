@@ -109,7 +109,7 @@ export class Squawkabillyex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 2, sameTarget: true }
+        { allowCancel: false, min: 0, max: 2, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

@@ -8,6 +8,7 @@ import { DarkVileplume } from './dark-vileplume';
 import { Drowzee } from './drowzee';
 import { FullHealEnergy } from './full-heal-energy';
 import { GoopGasAttack } from './goop-gas-attack';
+import { HereComesTeamRocket } from './here-comes-team-rocket';
 import { ImposterOaksRevenge } from './imposter-oaks-revenge';
 import { Machop } from './machop';
 import { NightlyGarbageRun } from './nightly-garbage-run';
@@ -33,6 +34,7 @@ export const setTeamRocket: Card[] = [
   new Drowzee(),
   new FullHealEnergy(),
   new GoopGasAttack(),
+  new HereComesTeamRocket(),
   new ImposterOaksRevenge(),
   new Machop(),
   new NightlyGarbageRun(),

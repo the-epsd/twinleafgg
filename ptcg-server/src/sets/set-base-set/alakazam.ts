@@ -1,17 +1,65 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
-import { CoinFlipPrompt, GameError, PokemonCardList } from '../..';
+import { CoinFlipPrompt } from '../..';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+
+function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  const maxAllowedDamage: DamageMap[] = [];
+  player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+    const checkHpEffect = new CheckHpEffect(player, cardList);
+    store.reduceEffect(state, checkHpEffect);
+    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+  });
+
+  return store.prompt(state, new MoveDamagePrompt(
+    effect.player.id,
+    GameMessage.MOVE_DAMAGE,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    maxAllowedDamage,
+    { allowCancel: true }
+  ), transfers => {
+    if (transfers === null) {
+      return;
+    }
+
+    for (const transfer of transfers) {
+      const source = StateUtils.getTarget(state, player, transfer.from);
+      const target = StateUtils.getTarget(state, player, transfer.to);
+
+      // Check if ability can target the transfer source
+      const canApplyAbilityToSource = new EffectOfAbilityEffect(player, effect.power, effect.card, source);
+      store.reduceEffect(state, canApplyAbilityToSource);
+
+      // Remove damage if we can target the transfer source
+      if (canApplyAbilityToSource.target && source.damage >= 10) {
+        source.damage -= 10;
+
+        // Check if ability can target the transfer target
+        const canApplyAbilityToTarget = new EffectOfAbilityEffect(player, effect.power, effect.card, target);
+        store.reduceEffect(state, canApplyAbilityToTarget);
+
+        // Add damage if we can target the transfer target
+        if (canApplyAbilityToTarget.target) {
+          target.damage += 10;
+        }
+      }
+    }
+  });
+}
 
 export class Alakazam extends PokemonCard {
 
@@ -42,77 +90,12 @@ export class Alakazam extends PokemonCard {
   public name: string = 'Alakazam';
   public fullName: string = 'Alakazam BS';
 
-  public readonly DAMAGE_SWAP_MARKER = 'DAMAGE_SWAP_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-
-      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
-        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
-        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
-        return state;
-      }
-
-      const damagedPokemon = [
-        ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
-        ...(opponent.active.damage > 0 ? [opponent.active] : [])
-      ];
-
-      if (player.marker.hasMarker(this.DAMAGE_SWAP_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
-      if (damagedPokemon.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      const maxAllowedDamage: DamageMap[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(player, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-      });
-
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 1, allowCancel: false, singleDestinationTarget: true }
-      ), transfers => {
-
-        player.marker.addMarker(this.DAMAGE_SWAP_MARKER, this);
-
-        if (transfers === null) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage == 10) {
-            source.damage -= 10;
-            target.damage += 10;
-          }
-          if (source.damage >= 10) {
-            source.damage -= 10;
-            target.damage += 10;
-          }
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            }
-          });
-
-          return state;
-        }
-      });
+    if (WAS_POWER_USED(effect, 0, this)) {
+      BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(effect.player, this);
+      const generator = useDamageSwap(() => generator.next(), store, state, effect);
+      return generator.next().value;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -21,7 +21,7 @@ export class Pichu extends PokemonCard {
   },
   {
     name: 'Evolves into Pikachu',
-    powerType: PowerType.BABY_RULE,
+    powerType: PowerType.TRAINER_ABILITY,
     useWhenInPlay: true,
     text: 'Put Pikachu on the Baby Pokémon'
   }];
@@ -47,6 +47,16 @@ export class Pichu extends PokemonCard {
     if (effect instanceof UseAttackEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      try {
+        store.reduceEffect(state, new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.BABY_RULE,
+          text: ''
+        }, this));
+      } catch {
+        return state;
+      }
 
       // avoids recursion
       if (HAS_MARKER(this.BABY_MARKER, effect.player)) {
