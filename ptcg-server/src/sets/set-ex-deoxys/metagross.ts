@@ -66,7 +66,7 @@ export class Metagross extends PokemonCard {
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
