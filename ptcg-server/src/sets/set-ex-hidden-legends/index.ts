@@ -2,8 +2,10 @@ import { Card } from '../../game/store/card/card';
 import { AncientTechnicalMachineRock } from './ancient-technical-machine-rock';
 import { AncientTomb } from './ancient-tomb';
 import { Bellossom } from './bellossom';
+import { Clamperl } from './clamperl';
 import { DesertRuins } from './desert-ruins';
 import { Feebas } from './feebas';
+import { Gorebyss } from './gorebyss';
 import { IslandCave } from './island-cave';
 import { Jirachi } from './jirachi';
 import { Kyogreex } from './kyogre-ex';
@@ -21,8 +23,10 @@ export const setEXHiddenLegends: Card[] = [
   new AncientTechnicalMachineRock(),
   new AncientTomb(),
   new Bellossom(),
+  new Clamperl(),
   new DesertRuins(),
   new Feebas(),
+  new Gorebyss(),
   new IslandCave(),
   new Jirachi(),
   new Kyogreex(),

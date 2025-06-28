@@ -1,45 +1,36 @@
 import { ConfirmPrompt, GameMessage, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
-export class Hitmonchan extends PokemonCard {
-
-  public name = 'Hitmonchan';
-
-  public set = 'TEU';
-
-  public fullName = 'Hitmonchan TEU';
-
+export class Yanma extends PokemonCard {
   public stage = Stage.BASIC;
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '74';
-
-  public hp = 90;
-
-  public cardType = CardType.FIGHTING;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS];
+  public hp = 80;
+  public cardType = G;
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public attacks = [
     {
-      name: 'Hit and Run',
-      cost: [CardType.FIGHTING],
-      damage: 30,
+      name: 'U-turn',
+      cost: [C],
+      damage: 10,
       text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
     },
     {
-      name: 'Magnum Punch',
-      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 70,
+      name: 'Cutting Wind',
+      cost: [C, C, C],
+      damage: 60,
       text: ''
     }
   ];
+
+  public set = 'VIV';
+  public name = 'Yanma';
+  public fullName = 'Yanma VIV';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '6';
 
   public usedHitAndRun: boolean = false;
 

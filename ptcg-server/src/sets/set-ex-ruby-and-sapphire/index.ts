@@ -8,6 +8,7 @@ import { Kirlia } from './kirlia';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { PokeNav } from './pokenav';
+import { Ralts } from './ralts';
 import { Sceptile } from './sceptile';
 import { Skitty } from './skitty';
 import { Skitty2 } from './skitty2';
@@ -28,6 +29,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new Marshtomp(),
   new Mudkip(),
   new PokeNav(),
+  new Ralts(),
   new Sceptile(),
   new Skitty(),
   new Skitty2(),

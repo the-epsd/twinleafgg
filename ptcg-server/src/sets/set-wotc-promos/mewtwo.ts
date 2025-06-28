@@ -1,8 +1,8 @@
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, State, StateUtils } from '../../game';
+import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils } from '../../game';
 import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Mewtwo extends PokemonCard {
@@ -49,12 +49,10 @@ export class Mewtwo extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.PSYCHIC);
+        return c instanceof EnergyCard;
       });
       if (!hasEnergyInDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        return state;
       }
 
       state = store.prompt(state, new AttachEnergyPrompt(

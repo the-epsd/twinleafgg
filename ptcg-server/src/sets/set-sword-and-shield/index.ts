@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AirBalloon } from './air-balloon';
 import { AuroraEnergy } from './aurora-energy';
 import { Baltoy } from './baltoy';
+import { Bede } from './bede';
 import { BigCharm } from './big-charm';
 import { Centiskorch } from './centiskorch';
 import { Cinccino } from './cinccino';
@@ -16,6 +17,7 @@ import { GalarianZigzagoon } from './galarian-zigzagoon';
 import { GalarianPerrserker } from './galarian_perrserker';
 import { GiantHearth } from './giant-hearth';
 import { Gossifleur } from './gossifleur';
+import { Hop } from './hop';
 import { Inteleon } from './inteleon';
 import { Maractus } from './maractus';
 import { Marnie } from './marnie';
@@ -31,13 +33,33 @@ import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { StonjournerV } from './stonjourner-v';
 import { StonjournerVMAX } from './stonjourner-vmax';
+import { Sudowoodo } from './sudowoodo';
+import { Switch } from './switch';
 import { Toxicroak } from './toxicroak';
 import { Welder } from './welder';
 import { ZacianV } from './zacian-v';
 
+// Other prints
+import {
+  GreatBallSSH,
+  ProfessorsResearchSSH
+} from './other-prints';
+
+import {
+  GrassEnergy,
+  FireEnergy,
+  WaterEnergy,
+  LightningEnergy,
+  PsychicEnergy,
+  FightingEnergy,
+  DarknessEnergy,
+  MetalEnergy
+} from './basic-energies';
+
 export const setSwordAndShield: Card[] = [
   new AirBalloon(),
   new AuroraEnergy(),
+  new Bede(),
   new Centiskorch(),
   new Cinccino(),
   new Cinderace(),
@@ -50,6 +72,8 @@ export const setSwordAndShield: Card[] = [
   new GalarianPerrserker(),
   new GalarianZigzagoon(),
   new GiantHearth(),
+  new Gossifleur(),
+  new Hop(),
   new Inteleon(),
   new Maractus(),
   new Marnie(),
@@ -65,10 +89,25 @@ export const setSwordAndShield: Card[] = [
   new Rookidee(),
   new StonjournerV(),
   new StonjournerVMAX(),
+  new Sudowoodo(),
+  new Switch(),
   new Toxicroak(),
   new Welder(),
   new ZacianV(),
   new Baltoy(),
-  new Gossifleur(),
   new BigCharm(),
+
+  // Other prints
+  new GreatBallSSH(),
+  new ProfessorsResearchSSH(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
 ];

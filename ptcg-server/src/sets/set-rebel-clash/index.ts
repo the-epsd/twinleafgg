@@ -10,6 +10,7 @@ import { CaptureEnergy } from './capture-energy';
 import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { CursedShovel } from './cursed-shovel';
+import { Dan } from './dan';
 import { Dragapult } from './dragapult';
 import { DragapultV } from './dragapult-v';
 import { DragapultVMAX } from './dragapult-vmax';
@@ -43,6 +44,8 @@ export const setRebelClash: Card[] = [
   new CaptureEnergy(),
   new Caterpie(),
   new Coalossal(),
+  new CursedShovel(),
+  new Dan(),
   new Dragapult(),
   new DragapultV(),
   new DragapultVMAX(),
@@ -64,5 +67,4 @@ export const setRebelClash: Card[] = [
   new TrainingCourt(),
   new TwinEnergy(),
   new Vulpix(),
-  new CursedShovel(),
 ];

@@ -25,4 +25,13 @@ export const THEME_DECKS = [
     manualArchetype1: Archetype.CHARIZARD,
     manualArchetype2: Archetype.NIDOQUEEN,
   },
+  {
+    id: -3,
+    name: 'Charizard',
+    cards: [],
+    format: [Format.THEME],
+    isValid: true,
+    cardTypes: '[]',
+    manualArchetype1: Archetype.CHARIZARD,
+  }
 ]; 

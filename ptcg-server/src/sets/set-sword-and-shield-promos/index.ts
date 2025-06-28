@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { ChampionsFestival } from './champions-festival';
+import { CharizardSWSH } from './other-prints';
 import { Charmander } from './charmander';
 import { DeoxysV } from './deoxys-v';
 import { DeoxysVSTAR } from './deoxys-vstar';
@@ -38,6 +39,7 @@ import { ZacianVUNIONTopRight } from './zacian-v-union-tr';
 export const setSwordAndShieldPromos: Card[] = [
 
   new ChampionsFestival(),
+  new CharizardSWSH(),
   new Charmander(),
   new DeoxysV(),
   new DeoxysVSTAR(),

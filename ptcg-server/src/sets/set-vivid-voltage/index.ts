@@ -19,6 +19,7 @@ import { Jirachi } from './jirachi';
 import { Leon } from './leon';
 import { Loudred } from './loudred';
 import { Magearna } from './magearna';
+import { Magcargo } from './magcargo';
 import { Nessa } from './nessa';
 import { Phanpy } from './phanpy';
 import { Raikou } from './raikou';
@@ -33,6 +34,8 @@ import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
 import { Weedle } from './weedle';
+import { Yanma } from './yanma';
+import { Yanmega } from './yanmega';
 import { Zekrom } from './zekrom';
 
 export const setVividVoltage: Card[] = [
@@ -54,6 +57,7 @@ export const setVividVoltage: Card[] = [
   new Jirachi(),
   new Leon(),
   new Loudred(),
+  new Magcargo(),
   new Magearna(),
   new Nessa(),
   new Phanpy(),
@@ -69,6 +73,8 @@ export const setVividVoltage: Card[] = [
   new Wailord(),
   new WashWaterEnergy(),
   new Weedle(),
+  new Yanma(),
+  new Yanmega(),
   new Zekrom(),
 
   // Full art
