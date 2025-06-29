@@ -10,6 +10,8 @@ import { KartanaGX } from './kartana-gx';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
 import { Regigigas } from './regigigas';
+import { Salandit } from './salandit';
+import { Salazzle } from './salazzle';
 import { Weedle } from './weedle';
 import { Xerneas } from './xerneas';
 
@@ -26,5 +28,7 @@ export const setCrimsonInvasion: Card[] = [
   new Weedle(),
   new Xerneas(),
   new Regigigas(),
+  new Salandit(),
+  new Salazzle(),
   new Haunter(),
 ];

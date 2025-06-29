@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
-import { EnergyRetrievalSUM, ExpShareSUM, NestBallSUM, RareCandySUM, RotomDexSR } from './other-prints';
+import { EnergyRetrievalSUM, ExpShareSUM, HauSUM, NestBallSUM, RareCandySUM, RotomDexSR } from './other-prints';
 import { Charjabug } from './charjabug';
 import { DecidueyeGX } from './decidueye-gx';
 import { Dragonair } from './dragonair';
@@ -57,6 +57,7 @@ export const setSunAndMoon: Card[] = [
   // Reprints
   new NestBallSUM(),
   new RareCandySUM(),
+  new HauSUM(),
   new EnergyRetrievalSUM(),
   new ExpShareSUM(),
 

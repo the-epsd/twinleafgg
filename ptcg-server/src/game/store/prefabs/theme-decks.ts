@@ -33,5 +33,15 @@ export const THEME_DECKS = [
     isValid: true,
     cardTypes: '[]',
     manualArchetype1: Archetype.CHARIZARD,
+  },
+  {
+    id: -4,
+    name: 'Twilight Rogue',
+    cards: [],
+    format: [Format.THEME],
+    isValid: true,
+    cardTypes: '[]',
+    manualArchetype1: Archetype.LYCANROC,
+    manualArchetype2: Archetype.DUSKNOIR,
   }
 ]; 
