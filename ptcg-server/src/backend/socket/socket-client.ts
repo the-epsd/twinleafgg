@@ -18,7 +18,7 @@ export class SocketClient implements Client {
   public user: User;
   public games: Game[] = [];
   public core: Core;
-  private socket: SocketWrapper;
+  public socket: SocketWrapper;
   private cache: SocketCache = new SocketCache();
   private coreSocket: CoreSocket;
   private gameSocket: GameSocket;

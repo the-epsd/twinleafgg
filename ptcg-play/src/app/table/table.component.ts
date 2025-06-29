@@ -14,6 +14,7 @@ import { SessionService } from '../shared/session/session.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../shared/services/board-interaction.service';
 import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +37,7 @@ export class TableComponent implements OnInit, OnDestroy {
   private gameId: number;
   public showGameOver = false;
   public gameOverPrompt: GameOverPrompt;
+  public canUndoBackend = false;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
@@ -60,7 +62,8 @@ export class TableComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private translate: TranslateService,
     private cardsBaseService: CardsBaseService,
-    private boardInteractionService: BoardInteractionService
+    private boardInteractionService: BoardInteractionService,
+    private snackBar: MatSnackBar
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
@@ -93,6 +96,7 @@ export class TableComponent implements OnInit, OnDestroy {
         this.gameId = parseInt(paramMap.get('gameId'), 10);
         this.gameState = gameStates.find(state => state.localId === this.gameId);
         this.updatePlayers(this.gameState, clientId);
+        this.updateCanUndo();
       });
 
     this.gameStates$
@@ -103,7 +107,19 @@ export class TableComponent implements OnInit, OnDestroy {
       .subscribe(([gameStates, clientId]) => {
         this.gameState = gameStates.find(state => state.localId === this.gameId);
         this.updatePlayers(this.gameState, clientId);
+        this.updateCanUndo();
       });
+
+    // Listen for undoing event
+    if (this.gameId) {
+      const eventName = `game[${this.gameId}]:undoing`;
+      this.gameService.socketService.on(eventName, (data: { playerName: string }) => {
+        const myName = this.bottomPlayer?.name || this.topPlayer?.name;
+        if (data.playerName && data.playerName !== myName) {
+          this.snackBar.open(`${data.playerName} is rewinding their board state`, 'OK', { duration: 3000 });
+        }
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -211,9 +227,20 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  private updateCanUndo() {
+    if (this.gameId) {
+      this.gameService.canUndo(this.gameId).subscribe(canUndo => {
+        console.log('canUndo from backend:', canUndo);
+        this.canUndoBackend = canUndo;
+      });
+    } else {
+      this.canUndoBackend = false;
+    }
+  }
+
   private updateGameState(state: LocalGameState) {
     this.gameState = state;
-
+    this.updateCanUndo();
     // Show game over screen when the game is finished
     if (state && state.state && state.state.phase === GamePhase.FINISHED && !state.gameOver) {
       this.showGameOver = true;
@@ -222,8 +249,15 @@ export class TableComponent implements OnInit, OnDestroy {
       this.showGameOver = false;
       this.gameOverPrompt = undefined;
     }
-
     // Update player information
     this.updatePlayers(state, this.clientId);
+  }
+
+  public undo() {
+    if (this.gameId) {
+      this.gameService.undo(this.gameId);
+      // Optionally, optimistically set canUndoBackend to false until next state update
+      this.canUndoBackend = false;
+    }
   }
 }

@@ -236,6 +236,42 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    // Subscribe to evolution animation events
+    this.subscriptions.push(
+      this.boardInteractionService.evolutionAnimation$.subscribe(event => {
+        const slotMatch = String(this.cardTarget.slot) === String(event.slot);
+        if (
+          this.cardTarget &&
+          event &&
+          this.cardTarget.player === event.playerId &&
+          slotMatch &&
+          this.cardTarget.index === event.index &&
+          this.mainCard &&
+          this.mainCard.id === event.cardId
+        ) {
+          this.showTestAnimation = true;
+        }
+      })
+    );
+
+    // Subscribe to attack animation events
+    this.subscriptions.push(
+      this.boardInteractionService.attackAnimation$.subscribe(event => {
+        const slotMatch = String(this.cardTarget.slot) === String(event.slot);
+        if (
+          this.cardTarget &&
+          event &&
+          this.cardTarget.player === event.playerId &&
+          slotMatch &&
+          this.cardTarget.index === event.index &&
+          this.mainCard &&
+          this.mainCard.id === event.cardId
+        ) {
+          this.showAttackAnimation = true;
+        }
+      })
+    );
   }
 
   ngOnDestroy() {

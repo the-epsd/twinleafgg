@@ -11,6 +11,7 @@ import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-action';
 import { Format } from '../store/card/card-types';
+import { deepClone } from '../../utils/utils';
 
 export class Game implements StoreHandler {
 
@@ -26,6 +27,8 @@ export class Game implements StoreHandler {
   private lastActivity: number = Date.now();
   public format: Format = Format.STANDARD;
   private periodicSyncRef: NodeJS.Timeout | undefined;
+  private stateHistory: State[] = [];
+  private turnStartHistoryIndex: number = 0;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
@@ -117,15 +120,21 @@ export class Game implements StoreHandler {
   public dispatch(client: Client, action: Action): State {
     let state = this.store.state;
     try {
+      this.stateHistory.push(deepClone(state));
+      if (this.isStartOfTurnAction(action, state)) {
+        this.turnStartHistoryIndex = this.stateHistory.length - 1;
+      }
       state = this.store.dispatch(action);
       state = this.updateInvalidMoves(state, client.id, false);
-
     } catch (error) {
       state = this.updateInvalidMoves(state, client.id, true);
       throw error;
     }
-
     return state;
+  }
+
+  private isStartOfTurnAction(action: Action, state: State): boolean {
+    return action.constructor.name === 'PassTurnAction';
   }
 
   public handleClientLeave(client: Client): void {
@@ -263,5 +272,26 @@ export class Game implements StoreHandler {
       clearInterval(this.periodicSyncRef);
       this.periodicSyncRef = undefined;
     }
+  }
+
+  public canUndo(clientId?: number): boolean {
+    if (clientId !== undefined) {
+      const state = this.store.state;
+      const activePlayer = state.players[state.activePlayer];
+      if (!activePlayer || activePlayer.id !== clientId) {
+        return false;
+      }
+    }
+    return this.stateHistory.length - 1 >= this.turnStartHistoryIndex - 1;
+  }
+
+  public undo(clientId?: number): boolean {
+    if (!this.canUndo(clientId)) return false;
+    if (this.stateHistory.length - 1 < this.turnStartHistoryIndex - 1) return false;
+    const prevState = this.stateHistory.pop();
+    if (!prevState) return false;
+    this.store.state = deepClone(prevState);
+    this.onStateChange(this.store.state);
+    return true;
   }
 }

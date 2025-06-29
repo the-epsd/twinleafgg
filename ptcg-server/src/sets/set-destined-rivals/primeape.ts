@@ -1,6 +1,8 @@
-import { PokemonCard, Stage, CardType, State, StoreLike, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { PokemonCard, Stage, CardType, State, StoreLike, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Primeape extends PokemonCard {
@@ -27,10 +29,16 @@ export class Primeape extends PokemonCard {
   public name: string = 'Primeape';
   public fullName: string = 'Primeape DRI';
 
+  public usedDragOff: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
+      this.usedDragOff = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedDragOff) {
       const player = effect.player;
-      const opponent = effect.opponent;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
@@ -48,7 +56,7 @@ export class Primeape extends PokemonCard {
         const cardList = result[0];
         opponent.switchPokemon(cardList);
 
-        const afterDamage = new DealDamageEffect(effect, 30);
+        const afterDamage = new DealDamageEffect(effect as AttackEffect, 30);
         afterDamage.target = opponent.active;
         store.reduceEffect(state, afterDamage);
       });

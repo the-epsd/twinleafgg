@@ -29,6 +29,10 @@
       <ptcg-hand [clientId]="clientId" [gameState]="gameState" [player]="bottomPlayer" [isAdmin]="isAdmin"
         [isTO]="isTO"></ptcg-hand>
 
+      <!-- <button mat-raised-button color="primary" (click)="undo()" [disabled]="!canUndoBackend"
+        style="position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1000;">
+        Undo
+      </button> -->
 
       <!-- Player prompt -->
       <ptcg-prompt [gameState]="gameState" [clientId]="clientId">

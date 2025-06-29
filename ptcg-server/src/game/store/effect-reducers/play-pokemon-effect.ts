@@ -24,6 +24,20 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
       effect.target.pokemonPlayedTurn = state.turn;
       effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+      // Emit websocket event for basic entrance animation
+      const game = (store as any).handler;
+      if (game && game.core && typeof game.core.emit === 'function') {
+        game.core.emit((c: any) => {
+          if (typeof c.socket !== 'undefined') {
+            c.socket.emit(`game[${game.id}]:basicEntrance`, {
+              playerId: effect.player.id,
+              cardId: effect.pokemonCard.id,
+              slot: effect.slot,
+              index: effect.index
+            });
+          }
+        });
+      }
       return state;
     }
     const player = effect.player;
@@ -66,6 +80,20 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       }
       if (effect.target.boardEffect.includes(BoardEffect.ABILITY_USED)) {
         effect.target.removeBoardEffect(BoardEffect.ABILITY_USED);
+      }
+      // Emit websocket event for evolution animation
+      const game = (store as any).handler;
+      if (game && game.core && typeof game.core.emit === 'function') {
+        game.core.emit((c: any) => {
+          if (typeof c.socket !== 'undefined') {
+            c.socket.emit(`game[${game.id}]:evolution`, {
+              playerId: effect.player.id,
+              cardId: effect.pokemonCard.id,
+              slot: effect.slot,
+              index: effect.index
+            });
+          }
+        });
       }
       return state;
     }

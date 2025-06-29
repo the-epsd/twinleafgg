@@ -29,7 +29,7 @@ export class LegacyEnergy extends EnergyCard {
 
   public text: string = `As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.
 
-  If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card. This effect of your Legacy Energy can't be applied more than once per game.`;
+If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card. This effect of your Legacy Energy can't be applied more than once per game.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -41,7 +41,7 @@ export class LegacyEnergy extends EnergyCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] == opponent) {
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] != opponent) {
         return state;
       }
 

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -12,19 +12,11 @@ import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-promp
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantGreninja extends PokemonCard {
-
   public tags = [CardTag.RADIANT];
-
-  public regulationMark = 'F';
-
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = CardType.WATER;
-
   public hp: number = 130;
-
   public weakness = [{ type: CardType.LIGHTNING }];
-
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
@@ -36,25 +28,20 @@ export class RadiantGreninja extends PokemonCard {
       '2 cards.'
   }];
 
-  public attacks = [
-    {
-      name: 'Moonlight Shuriken',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
-      damage: 0,
-      text: 'Discard 2 energy from this Pokémon. This attack does ' +
-        '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
-        'Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Moonlight Shuriken',
+    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+    damage: 0,
+    text: 'Discard 2 energy from this Pokémon. This attack does ' +
+      '90 damage to 2 of your opponent\'s Pokémon. (Don\'t apply ' +
+      'Weakness and Resistance for Benched Pokémon.)'
+  }];
 
+  public regulationMark = 'F';
   public set: string = 'ASR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '46';
-
   public name: string = 'Radiant Greninja';
-
   public fullName: string = 'Radiant Greninja ASR';
 
   public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
@@ -114,6 +101,11 @@ export class RadiantGreninja extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      // Count all Pokémon in play (active + bench with cards)
+      const opponentTargets = [opponent.active, ...opponent.bench].filter(p => p.cards.length > 0);
+      const numTargets = opponentTargets.length;
+      const minMax = numTargets >= 2 ? 2 : 1;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -130,13 +122,13 @@ export class RadiantGreninja extends PokemonCard {
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
       });
-      const max = Math.min(2);
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: max, allowCancel: false }
+        { min: minMax, max: minMax, allowCancel: false }
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {

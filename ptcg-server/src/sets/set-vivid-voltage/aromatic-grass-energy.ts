@@ -22,7 +22,9 @@ export class AromaticGrassEnergy extends EnergyCard {
 
   public name = 'Aromatic Grass Energy';
 
-  public fullName = 'Aromatic Energy VIV';
+  public fullName = 'Aromatic Grass Energy VIV';
+
+  public legacyFullName = 'Aromatic Energy VIV';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides[G] Energy.
