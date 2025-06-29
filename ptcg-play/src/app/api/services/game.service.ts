@@ -28,7 +28,7 @@ export class GameService {
     private api: ApiService,
     private alertService: AlertService,
     private sessionService: SessionService,
-    private socketService: SocketService,
+    public socketService: SocketService,
     private translate: TranslateService,
     private boardInteractionService: BoardInteractionService
   ) { }
@@ -201,6 +201,24 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
+  public undo(gameId: number) {
+    this.socketService.emit('game:action:undo', { gameId })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
+  public canUndo(gameId: number): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.socketService.emit('game:canUndo', { gameId })
+        .subscribe((result: { canUndo: boolean }) => {
+          observer.next(result.canUndo);
+          observer.complete();
+        }, (error: ApiError) => {
+          observer.next(false);
+          observer.complete();
+        });
+    });
+  }
+
   private startListening(id: number) {
     this.socketService.on(`game[${id}]:join`, (clientId: number) => this.onJoin(id, clientId));
     this.socketService.on(`game[${id}]:leave`, (clientId: number) => this.onLeave(id, clientId));
@@ -208,6 +226,12 @@ export class GameService {
       this.onStateChange(id, data.stateData, data.playerStats));
     this.socketService.on(`game[${id}]:timerUpdate`, (data: { playerStats: PlayerStats[] }) =>
       this.onTimerUpdate(id, data.playerStats));
+    this.socketService.on(`game[${id}]:evolution`, (data: { playerId: number, cardId: number | string, slot: string, index?: number }) => {
+      this.boardInteractionService.triggerEvolutionAnimation(data);
+    });
+    this.socketService.on(`game[${id}]:attack`, (data: { playerId: number, cardId: number | string, slot: string, index?: number }) => {
+      this.boardInteractionService.triggerAttackAnimation(data);
+    });
   }
 
   private stopListening(id: number) {

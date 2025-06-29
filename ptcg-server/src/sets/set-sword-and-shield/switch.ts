@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: true }
   ), results => {
     targets = results || [];
@@ -53,6 +53,8 @@ export class Switch extends TrainerCard {
   public name: string = 'Switch';
 
   public fullName: string = 'Switch SSH';
+
+  public setNumber: string = '183';
 
   public text: string =
     'Switch your Active Pokemon with 1 of your Benched Pokemon.';

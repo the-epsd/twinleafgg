@@ -1,5 +1,6 @@
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { Hau } from '../set-celestial-storm/hau';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { RotomDex } from './rotom-dex';
@@ -13,6 +14,12 @@ export class EnergyRetrievalSUM extends EnergyRetrieval {
 export class ExpShareSUM extends ExpShare {
   public setNumber = '118';
   public fullName: string = 'Exp. Share SUM';
+  public set = 'SUM';
+}
+
+export class HauSUM extends Hau {
+  public setNumber = '120';
+  public fullName: string = 'Hau SUM';
   public set = 'SUM';
 }
 

@@ -24,6 +24,7 @@ import { LanasFishingRod } from './lanas-fishing-rod';
 import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
+import { Magneton } from './magneton';
 import { MallowAndLana } from './mallow-and-lana';
 import { Natu } from './natu';
 import { Onix } from './onix';
@@ -35,6 +36,7 @@ import { Rosa } from './rosa';
 import { Roxie } from './roxie';
 import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
+import { Steelix } from './steelix';
 import { Stoutland } from './stoutland';
 import { Sunkern } from './sunkern';
 import { Swirlix } from './swirlix';
@@ -92,6 +94,7 @@ export const setCosmicEclipse: Card[] = [
   new LilliesFullForce(),
   new LilliesPokeDoll(),
   new Lillipup(),
+  new Magneton(),
   new MallowAndLana(),
   new MegaLopunnyJigglypuffGX(),
   new Mimikyu(),
@@ -108,6 +111,7 @@ export const setCosmicEclipse: Card[] = [
   new Roxie(),
   new Sawsbuck(),
   new Slugma(),
+  new Steelix(),
   new SolgaleoLunalaGX(),
   new Stoutland(),
   new Sunkern(),

@@ -23,6 +23,7 @@ import { GlassTrumpet } from './glass-trumpet';
 import { SparklingCrystal } from './sparkling-crystal';
 import { GravityGemstone } from './gravity-gemstone';
 import { GreatTree } from './great-tree';
+import { Gulpin } from './gulpin';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
 import { IronBoulder } from './iron-boulder';
@@ -45,6 +46,7 @@ import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
 import { Slowking } from './slowking';
 import { Slowpoke } from './slowpoke';
+import { Swalot } from './swalot';
 import { Terapagosex } from './terapagos-ex';
 import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
@@ -76,6 +78,7 @@ export const setStellarCrown: Card[] = [
   new SparklingCrystal(),
   new GravityGemstone(),
   new GreatTree(),
+  new Gulpin(),
   new Hoothoot(),
   new Hydrappleex(),
   new IronBoulder(),
@@ -97,6 +100,7 @@ export const setStellarCrown: Card[] = [
   new Scorbunny(),
   new Slowking(),
   new Slowpoke(),
+  new Swalot(),
   new Terapagosex(),
   new Veluza(),
   new Zeraora(),

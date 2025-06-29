@@ -6,6 +6,7 @@ import { Beautifly } from './beautifly';
 import { Binacle } from './binacle';
 import { Bouffalant } from './bouffalant';
 import { BoxOfDisaster } from './box-of-disaster';
+import { Carbink } from './carbink';
 import { ColresssExperiment } from './colress\'s-experiment';
 import { Comfey } from './comfey';
 import { Cramorant } from './cramorant';
@@ -70,6 +71,7 @@ export const setLostOrigin: Card[] = [
   new Beautifly(),
   new Binacle(),
   new Bouffalant(),
+  new Carbink(),
   new ColresssExperiment(),
   new Comfey(),
   new Cramorant(),

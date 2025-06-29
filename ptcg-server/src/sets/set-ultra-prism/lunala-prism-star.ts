@@ -11,28 +11,29 @@ export class LunalaPrismStar extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
 
   public hp: number = 160;
 
-  public weakness = [{ type: CardType.DARK }];
+  public weakness = [{ type: D }];
 
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
+  public resistance = [{ type: F, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Full Moon Star',
-      cost: [CardType.PSYCHIC],
+      cost: [P],
       damage: 0,
       text: 'For each of your opponent\'s Pokémon in play, attach a [P] Energy card from your discard pile to your Pokémon in any way you like.'
     },
 
     {
       name: 'Psystorm',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
+      cost: [P, P, P, P],
       damage: 20,
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the amount of Energy attached to all Pokémon.'
     },
   ];

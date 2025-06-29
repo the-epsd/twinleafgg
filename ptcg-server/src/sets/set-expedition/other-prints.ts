@@ -1,6 +1,7 @@
 
 import { Copycat } from "../set-ex-dragon-frontiers/copycat";
 import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
+import { PokemonReversal } from "../set-ex-unseen-forces/pokemon-reversal";
 import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
 import { ProfessorOaksResearch } from "../set-ex-dragon-frontiers/professor-oaks-research";
 import { Switch } from "../set-scarlet-and-violet/switch";
@@ -17,6 +18,13 @@ export class EnergySearchEX extends EnergySearch {
   public set = 'EX';
   public setNumber = '153';
   public text = 'Search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
+}
+
+export class PokemonReversalEX extends PokemonReversal {
+  public fullName = 'Pokémon Reversal EX';
+  public set = 'EX';
+  public setNumber = '146';
+  public text = 'Choose 1 of your opponent\'s Benched Pokémon. Flip a coin. If heads, switch that Pokémon with the Defending Pokémon.';
 }
 
 export class ProfessorElmsTrainingMethodEX extends ProfessorElmsTrainingMethod {

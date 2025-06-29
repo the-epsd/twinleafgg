@@ -69,7 +69,7 @@ export class Genesectex extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.POKEMON },
-        { min: 0, max: 1, allowCancel: false, blocked }
+        { min: 0, max: 2, allowCancel: false, blocked }
       ), cards => {
         if (cards.length > 0) {
           MOVE_CARDS_TO_HAND(store, state, player, cards);

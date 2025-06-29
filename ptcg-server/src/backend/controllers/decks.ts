@@ -65,6 +65,14 @@ export class Decks extends Controller {
       return;
     }
 
+    // Try to parse artworks from entity if present (future-proofing)
+    let artworks: { code: string; artworkId?: number }[] | undefined = undefined;
+    if (entity.artworks) {
+      try {
+        artworks = JSON.parse(entity.artworks);
+      } catch { }
+    }
+
     const deck = {
       id: entity.id,
       name: entity.name,
@@ -72,7 +80,8 @@ export class Decks extends Controller {
       cardTypes: JSON.parse(entity.cardTypes),
       cards: JSON.parse(entity.cards),
       manualArchetype1: entity.manualArchetype1,
-      manualArchetype2: entity.manualArchetype2
+      manualArchetype2: entity.manualArchetype2,
+      ...(artworks ? { artworks } : {})
     };
 
     res.send({ ok: true, deck });
@@ -101,6 +110,13 @@ export class Decks extends Controller {
       return;
     }
 
+    // Resolve legacy names to their new fullNames
+    const cardManager = CardManager.getInstance();
+    const resolvedCards = body.cards.map(cardName => {
+      const card = cardManager.getCardByName(cardName);
+      return card ? card.fullName : cardName; // Fallback to original if not found
+    });
+
     const userId: number = req.body.userId;
     const user = await User.findOne(userId);
 
@@ -120,14 +136,17 @@ export class Decks extends Controller {
       return;
     }
 
-    const deckUtils = new DeckAnalyser(body.cards);
+    const deckUtils = new DeckAnalyser(resolvedCards);
     deck.name = body.name.trim();
-    deck.cards = JSON.stringify(body.cards);
+    deck.cards = JSON.stringify(resolvedCards);
     deck.isValid = deckUtils.isValid();
     deck.cardTypes = JSON.stringify(deckUtils.getDeckType());
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
-
+    // Save artworks if present
+    if ('artworks' in body && body.artworks) {
+      deck.artworks = JSON.stringify(body.artworks);
+    }
     try {
       deck = await deck.save();
     } catch (error) {
@@ -140,9 +159,10 @@ export class Decks extends Controller {
       ok: true, deck: {
         id: deck.id,
         name: deck.name,
-        cards: body.cards,
+        cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
-        manualArchetype2: deck.manualArchetype2
+        manualArchetype2: deck.manualArchetype2,
+        ...(body.artworks ? { artworks: body.artworks } : {})
       }
     });
   }
@@ -261,14 +281,20 @@ export class Decks extends Controller {
     return res.json({ ok: true, formats });
   }
 
-  private validateCards(deck: string[]) {
-    if (!(deck instanceof Array)) {
-      return false;
-    }
-
+  private validateCards(deck: string[]): boolean {
     const cardManager = CardManager.getInstance();
-    for (let i = 0; i < deck.length; i++) {
-      if (typeof deck[i] !== 'string' || !cardManager.isCardDefined(deck[i])) {
+    const validNames = new Set<string>();
+
+    cardManager.getAllCards().forEach(c => {
+      validNames.add(c.fullName);
+      const p = c as any;
+      if (p.legacyFullName) {
+        validNames.add(p.legacyFullName);
+      }
+    });
+
+    for (const cardName of deck) {
+      if (!validNames.has(cardName)) {
         return false;
       }
     }
@@ -639,11 +665,9 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       case Format.UNLIMITED:
         return true;
       case Format.STANDARD: {
-        var setDate = SetReleaseDates[card.set];
-        if (card.regulationMark === 'J') {
-          return false;
-        }
-        return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+        return card.regulationMark === 'G' ||
+          card.regulationMark === 'H' ||
+          card.regulationMark === 'I';
       }
       case Format.STANDARD_NIGHTLY:
         return card.regulationMark === 'G' ||

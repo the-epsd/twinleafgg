@@ -3,6 +3,7 @@ import { BalloonBerry } from './balloon-berry';
 import { Latiasex } from './latias-ex';
 import { LowPressureSystem } from './low-pressure-system';
 import { Magnemite } from './magnemite';
+import { Magnemite2 } from './magnemite2';
 import { Magneton } from './magneton';
 import { Mareep } from './mareep';
 import { Meditite } from './meditite';
@@ -18,6 +19,7 @@ export const setEXDragon: Card[] = [
   new Latiasex(),
   new LowPressureSystem(),
   new Magnemite(),
+  new Magnemite2(),
   new Magneton(),
   new Mareep(),
   new Meditite(),

@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, PowerType, SelectOptionPrompt, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
 
 export class Mankey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -53,9 +53,11 @@ export class Mankey extends PokemonCard {
         return state;
       }
 
-      if (player.marker.hasMarker(this.PEEK_MARKER)) {
+      if (player.marker.hasMarker(this.PEEK_MARKER, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      ABILITY_USED(player, this);
 
       const options: { message: GameMessage, action: () => void }[] = [
         {
@@ -72,8 +74,7 @@ export class Mankey extends PokemonCard {
             );
 
             deckTop.moveToTopOfDestination(player.deck);
-
-            player.marker.addMarker(this.PEEK_MARKER, this);
+            ADD_MARKER(this.PEEK_MARKER, player, this);
 
             return state;
           }
@@ -92,9 +93,7 @@ export class Mankey extends PokemonCard {
             );
 
             deckTop.moveToTopOfDestination(opponent.deck);
-
-            player.marker.addMarker(this.PEEK_MARKER, this);
-
+            ADD_MARKER(this.PEEK_MARKER, player, this);
 
             return state;
           }
@@ -106,26 +105,13 @@ export class Mankey extends PokemonCard {
               throw new GameError(GameMessage.CANNOT_USE_POWER);
             }
 
-            let cards: Card[] = [];
-            state = store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.REVEAL_RANDOM_CARD_IN_OPPONENT_HAND,
-              opponent.hand,
-              {},
-              { min: 1, max: 1, allowCancel: false, isSecret: true }
-            ), selected => {
-              cards = selected || [];
+            if (opponent.hand.cards.length > 0) {
+              const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+              const randomCard = opponent.hand.cards[randomIndex];
+              SHOW_CARDS_TO_PLAYER(store, state, player, [randomCard]);
+            }
 
-              if (cards.length > 0) {
-                state = store.prompt(state, new ShowCardsPrompt(
-                  player.id,
-                  GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                  cards
-                ), () => state);
-              }
-            });
-
-            player.marker.addMarker(this.PEEK_MARKER, this);
+            ADD_MARKER(this.PEEK_MARKER, player, this);
 
             return state;
           }
@@ -163,7 +149,7 @@ export class Mankey extends PokemonCard {
               }
             });
 
-            player.marker.addMarker(this.PEEK_MARKER, this);
+            ADD_MARKER(this.PEEK_MARKER, player, this);
 
             return state;
           }
@@ -201,14 +187,14 @@ export class Mankey extends PokemonCard {
               }
             });
 
-            player.marker.addMarker(this.PEEK_MARKER, this);
+            ADD_MARKER(this.PEEK_MARKER, player, this);
 
             return state;
           }
         }
       ];
 
-      return store.prompt(state, new SelectPrompt(
+      return store.prompt(state, new SelectOptionPrompt(
         player.id,
         GameMessage.CHOOSE_OPTION,
         options.map(opt => opt.message),
@@ -219,9 +205,7 @@ export class Mankey extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PEEK_MARKER, this)) {
-      effect.player.marker.removeMarker(this.PEEK_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.PEEK_MARKER, this);
 
     return state;
   }

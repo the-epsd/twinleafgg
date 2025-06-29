@@ -5,6 +5,9 @@ import { Bruxish } from './bruxish';
 import { Cutiefly } from './cutiefly';
 import { DarkraiGX } from './darkrai-gx';
 import { Diancie } from './diancie';
+import { Dusclops } from './dusclops';
+import { Dusknoir } from './dusknoir';
+import { Duskull } from './duskull';
 import { GardevoirGX } from './gardevoir-gx';
 import { Gloom } from './gloom';
 import { Guzma } from './guzma';
@@ -20,12 +23,19 @@ import { Raichu } from './raichu';
 import { Ralts } from './ralts';
 import { Riolu } from './riolu';
 import { SalazzleGX } from './salazzle-gx';
+import { Solrock } from './solrock';
 import { Sophocles } from './sophocles';
 import { TapuBuluGX } from './tapu-bulu-gx';
 import { TapuFiniGX } from './tapu-fini-gx';
 import { Vileplume } from './vileplume';
 import { Weavile } from './weavile';
 import { WishfulBaton } from './wishful-baton';
+
+// Other prints
+import {
+  EscapeRopeBUS,
+  WeaknessPolicyBUS,
+} from './other-prints';
 
 export const setBurningShadows: Card[] = [
   new Acerola(),
@@ -34,6 +44,9 @@ export const setBurningShadows: Card[] = [
   new Cutiefly(),
   new DarkraiGX(),
   new Diancie(),
+  new Dusclops(),
+  new Dusknoir(),
+  new Duskull(),
   new GardevoirGX(),
   new Gloom(),
   new Guzma(),
@@ -47,6 +60,7 @@ export const setBurningShadows: Card[] = [
   new Ralts(),
   new Riolu(),
   new SalazzleGX(),
+  new Solrock(),
   new Sophocles(),
   new TapuBuluGX(),
   new WishfulBaton(),
@@ -54,5 +68,9 @@ export const setBurningShadows: Card[] = [
   new Noibat(),
   new NoivernGX(),
   new Vileplume(),
-  new Weavile()
+  new Weavile(),
+
+  // Other prints
+  new EscapeRopeBUS(),
+  new WeaknessPolicyBUS(),
 ];

@@ -2,7 +2,7 @@ import { CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { IS_SPECIAL_ENERGY_BLOCKED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
+import { GET_PLAYER_BENCH_SLOTS, IS_SPECIAL_ENERGY_BLOCKED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -37,7 +37,11 @@ When you attach this card from your hand to a Pokémon, search your deck for a B
         return state;
       }
 
-      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1 });
+      if (GET_PLAYER_BENCH_SLOTS(player).length === 0) {
+        return state;
+      }
+
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1 });
     }
     return state;
   }

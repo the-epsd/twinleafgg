@@ -19,6 +19,7 @@ import { ResolvePromptAction } from '../../game/store/actions/resolve-prompt-act
 import { SocketCache } from './socket-cache';
 import { SocketWrapper, Response } from './socket-wrapper';
 import { StateSanitizer } from './state-sanitizer';
+import { SocketClient } from './socket-client';
 
 export class GameSocket {
 
@@ -27,6 +28,7 @@ export class GameSocket {
   private socket: SocketWrapper;
   private core: Core;
   private stateSanitizer: StateSanitizer;
+  private lastActivePlayerId: number | null = null; // Track last active player
 
   constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache) {
     this.cache = cache;
@@ -66,6 +68,16 @@ export class GameSocket {
   public onStateChange(game: Game, state: State): void {
     if (this.core.games.indexOf(game) !== -1) {
       state = this.stateSanitizer.sanitize(game.state, game.id);
+
+      // Emit turn start if active player changed
+      const activePlayer = state.players[state.activePlayer];
+      if (activePlayer && this.lastActivePlayerId !== activePlayer.id) {
+        this.lastActivePlayerId = activePlayer.id;
+        this.socket.emit(`game[${game.id}]:turnStart`, {
+          activePlayerId: activePlayer.id,
+          activePlayerName: activePlayer.name
+        });
+      }
 
       const serializer = new StateSerializer();
       const serializedState = serializer.serialize(state);
@@ -238,6 +250,24 @@ export class GameSocket {
     this.socket.removeListener('game:action:passTurn');
     this.socket.removeListener('game:action:appendLog');
     this.socket.removeListener('game:action:changeAvatar');
+  }
+
+  public onUndoing(game: Game, playerName: string): void {
+    this.core.emit(c => {
+      (c as SocketClient).socket.emit(`game[${game.id}]:undoing`, { playerName });
+    });
+  }
+
+  public canUndo(params: { gameId: number }, response: Response<{ canUndo: boolean }>) {
+    const game = this.core.games.find(g => g.id === params.gameId);
+    if (game === undefined) {
+      response('error', ApiErrorEnum.GAME_INVALID_ID);
+      return;
+    }
+    const clientId = this.client.id;
+    const result = game.canUndo(clientId);
+    console.log(`[canUndo] clientId=${clientId}, result=${result}`);
+    response('ok', { canUndo: result });
   }
 
 }

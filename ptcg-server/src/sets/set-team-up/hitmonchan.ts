@@ -53,13 +53,13 @@ export class Hitmonchan extends PokemonCard {
       const player = effect.player;
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
+        GameMessage.WANT_TO_SWITCH_POKEMON,
       ), wantToUse => {
         if (wantToUse) {
           SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
         }
       });
-      
+
       this.usedHitAndRun = false;
     }
     return state;

@@ -27,7 +27,11 @@ cardManager.defineSet(sets.setGymChallenge);
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 cardManager.defineSet(sets.setNeoGenesis);
-cardManager.defineSet(sets.setNeoDiscovery)
+cardManager.defineSet(sets.setNeoDiscovery);
+cardManager.defineSet(sets.setNeoRevelation);
+cardManager.defineSet(sets.setNeoDestiny);
+
+cardManager.defineSet(sets.setSouthernIslands);
 
 //E-Card Era
 cardManager.defineSet(sets.setExpedition);

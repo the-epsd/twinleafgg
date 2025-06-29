@@ -28,7 +28,7 @@ export class Lugiaex extends PokemonCard {
     name: 'Elemental Blast',
     cost: [R, W, L],
     damage: 200,
-    text: 'AttaDiscard a [R] Energy, [W] Energy, and [L] Energy attached to Lugia ex.'
+    text: 'Discard a [R] Energy, [W] Energy, and [L] Energy attached to Lugia ex.'
   }];
 
   public set: string = 'UF';
@@ -41,6 +41,7 @@ export class Lugiaex extends PokemonCard {
 
     if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
@@ -54,12 +55,21 @@ export class Lugiaex extends PokemonCard {
       if (state.phase === GamePhase.ATTACK) {
         COIN_FLIP_PROMPT(store, state, targetPlayer, result => {
           if (result) {
+            const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
+            store.reduceEffect(state, opponentProvidedEnergy);
+            const opponentEnergyCount = opponentProvidedEnergy.energyMap
+              .reduce((left, p) => left + p.provides.length, 0);
+
+            if (opponentEnergyCount === 0) {
+              return state;
+            }
+
             store.prompt(state, new ChooseCardsPrompt(
               targetPlayer,
               GameMessage.CHOOSE_ENERGIES_TO_HAND,
               player.active,
               { superType: SuperType.ENERGY },
-              { min: 1, max: 1, allowCancel: false }
+              { min: 0, max: 1, allowCancel: false }
             ), selected => {
               player.active.moveCardsTo(selected, player.hand);
             });

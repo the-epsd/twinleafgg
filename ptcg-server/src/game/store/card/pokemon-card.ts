@@ -8,7 +8,7 @@ export abstract class PokemonCard extends Card {
 
   public superType: SuperType = SuperType.POKEMON;
 
-  public cardType: CardType = CardType.NONE;
+  public cardType: CardType = CardType.COLORLESS;
 
   public additionalCardTypes?: CardType[];
 
@@ -17,6 +17,8 @@ export abstract class PokemonCard extends Card {
   public pokemonType: PokemonType = PokemonType.NORMAL;
 
   public evolvesFrom: string = '';
+
+  public legacyFullName?: string;
 
   public stage: Stage = Stage.BASIC;
 

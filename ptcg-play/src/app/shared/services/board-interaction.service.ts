@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType, StateLog } from 'ptcg-server';
+
+export interface BasicEntranceAnimationEvent {
+  playerId: number;
+  cardId: number | string;
+  slot: string;
+  index?: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +52,12 @@ export class BoardInteractionService {
 
   // Track if we're in replay mode
   private isReplayModeActive = false;
+
+  private evolutionAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
+  public evolutionAnimation$ = this.evolutionAnimationSubject.asObservable();
+
+  private attackAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
+  public attackAnimation$ = this.attackAnimationSubject.asObservable();
 
   constructor() { }
 
@@ -207,5 +220,13 @@ export class BoardInteractionService {
     const maxSelections = this.maxSelectionsSubject.value;
 
     return currentTargets >= minSelections && currentTargets <= maxSelections;
+  }
+
+  public triggerEvolutionAnimation(event: BasicEntranceAnimationEvent) {
+    this.evolutionAnimationSubject.next(event);
+  }
+
+  public triggerAttackAnimation(event: BasicEntranceAnimationEvent) {
+    this.attackAnimationSubject.next(event);
   }
 } 

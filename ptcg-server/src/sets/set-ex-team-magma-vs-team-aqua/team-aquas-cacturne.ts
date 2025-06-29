@@ -43,7 +43,7 @@ export class TeamAquasCacturne extends PokemonCard {
           DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.DARK);
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      })
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

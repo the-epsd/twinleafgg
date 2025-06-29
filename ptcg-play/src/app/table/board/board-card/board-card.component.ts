@@ -236,6 +236,42 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    // Subscribe to evolution animation events
+    this.subscriptions.push(
+      this.boardInteractionService.evolutionAnimation$.subscribe(event => {
+        const slotMatch = String(this.cardTarget.slot) === String(event.slot);
+        if (
+          this.cardTarget &&
+          event &&
+          this.cardTarget.player === event.playerId &&
+          slotMatch &&
+          this.cardTarget.index === event.index &&
+          this.mainCard &&
+          this.mainCard.id === event.cardId
+        ) {
+          this.showTestAnimation = true;
+        }
+      })
+    );
+
+    // Subscribe to attack animation events
+    this.subscriptions.push(
+      this.boardInteractionService.attackAnimation$.subscribe(event => {
+        const slotMatch = String(this.cardTarget.slot) === String(event.slot);
+        if (
+          this.cardTarget &&
+          event &&
+          this.cardTarget.player === event.playerId &&
+          slotMatch &&
+          this.cardTarget.index === event.index &&
+          this.mainCard &&
+          this.mainCard.id === event.cardId
+        ) {
+          this.showAttackAnimation = true;
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -588,6 +624,19 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         this._cardList.showBasicAnimation = false;
       }
     }
+  }
+
+  public getRotationClass(): string {
+    if (this.specialConditions.includes(SpecialCondition.ASLEEP)) {
+      return 'asleep-position';
+    }
+    if (this.specialConditions.includes(SpecialCondition.CONFUSED)) {
+      return 'confused-position';
+    }
+    if (this.specialConditions.includes(SpecialCondition.PARALYZED)) {
+      return 'paralyzed-position';
+    }
+    return '';
   }
 }
 

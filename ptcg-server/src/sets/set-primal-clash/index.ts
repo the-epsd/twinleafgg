@@ -4,15 +4,15 @@ import { ArchiesAceInTheHole } from './archies-ace-in-the hole';
 import { Bunnelby } from './bunnelby';
 import { DiveBall } from './dive-ball';
 import { Electrike } from './electrike';
-import {GardevoirEx} from './gardevoir-ex';
-import {GardevoirSpiritLink} from './gardevoir-spirit-link';
-import {GroudonEx} from './groudon-ex';
-import {GroudonSpiritLink} from './groudon-spirit-link';
+import { GardevoirEx } from './gardevoir-ex';
+import { GardevoirSpiritLink } from './gardevoir-spirit-link';
+import { GroudonEx } from './groudon-ex';
+import { GroudonSpiritLink } from './groudon-spirit-link';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
 import { Medicham } from './medicham';
-import {MGardevoirEx} from './mega-gardevoir-ex';
+import { MGardevoirEx } from './mega-gardevoir-ex';
 import { Milotic } from './milotic';
-import {PrimalGroudonEx} from './primal-groudon-ex';
+import { PrimalGroudonEx } from './primal-groudon-ex';
 import { RoughSeas } from './rough-seas';
 import { Sceptile } from './sceptile';
 import { ScorchedEarth } from './scorched-earth';
@@ -22,6 +22,7 @@ import { Slugma } from './slugma';
 import { Teammates } from './teammates';
 import { Torchic } from './torchic';
 import { WailordEx } from './wailord-ex';
+import { WeaknessPolicy } from './weakness-policy';
 import { WonderEnergy } from './wonder-energy';
 
 export const setPrimalClash: Card[] = [
@@ -43,6 +44,7 @@ export const setPrimalClash: Card[] = [
   new Torchic(),
   new WailordEx(),
   new WonderEnergy(),
+  new WeaknessPolicy(),
   new GroudonEx(),
   new PrimalGroudonEx(),
   new GroudonSpiritLink(),

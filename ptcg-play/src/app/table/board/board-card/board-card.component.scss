@@ -140,8 +140,12 @@ $ptcg-energy-card-offset: 13%;
     transform: rotate(-90deg);
   }
 
-  .confused-position {
-    transform: rotate(180);
+  &.confused-position {
+    transform: rotate(180deg);
+
+    :host-context(.upside-down) & {
+      transform: rotate(180deg);
+    }
   }
 
   .paralyzed-position {

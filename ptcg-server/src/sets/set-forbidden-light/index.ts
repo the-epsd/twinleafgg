@@ -13,12 +13,14 @@ import { FossilExcavationMap } from './fossil-excavation-map';
 import { Froakie } from './froakie';
 import { FroakieFrubbles } from './froakie-2';
 import { Frogadier } from './frogadier';
+import { Furfrou } from './furfrou';
 import { Goodra } from './goodra';
 import { Goomy } from './goomy';
 import { Goomy2 } from './goomy-2';
 import { GreninjaGX } from './greninja-gx';
 import { Inkay } from './inkay';
 import { Klefki } from './klefki';
+import { Lycanroc } from './lycanroc';
 import { LysandreLabs } from './lysandre-labs';
 import { LysandrePrismStar } from './lysandre-prism-star';
 import { Magnezone } from './magnezone';
@@ -36,6 +38,9 @@ import { VolcanionPrismStar } from './volcanion-prism-star';
 import { XerneasGX } from './xerneas-gx';
 import { YveltalGX } from './yveltal-gx';
 
+// Other prints
+import { LadyFLI } from './other-prints';
+
 export const setForbiddenLight: Card[] = [
   new AlolanExeggutor(),
   new BeastEnergy(),
@@ -50,12 +55,14 @@ export const setForbiddenLight: Card[] = [
   new FroakieFrubbles(),
   new Frogadier(),
   new FossilExcavationMap(),
+  new Furfrou(),
   new Goodra(),
   new Goomy(),
   new Goomy2(),
   new GreninjaGX(),
   new Inkay(),
   new Klefki(),
+  new Lycanroc(),
   new LysandreLabs(),
   new Magnezone(),
   new Malamar(),
@@ -73,4 +80,7 @@ export const setForbiddenLight: Card[] = [
   new DialgaGX(),
   new LysandrePrismStar(),
   new XerneasGX(),
+
+  // Other prints
+  new LadyFLI(),
 ];

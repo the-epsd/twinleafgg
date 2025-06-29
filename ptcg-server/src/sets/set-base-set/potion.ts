@@ -1,4 +1,4 @@
-import { DamageMap, GameError, GameMessage, PlayerType, PutDamagePrompt, SlotType, StateUtils } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -7,40 +7,49 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-function* usePotion(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
-  const maxAllowedHealing: DamageMap[] = [];
-
-  const healingLeft = 0;
+  const blocked: CardTarget[] = [];
+  let hasPokemonWithDamage: boolean = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    maxAllowedHealing.push({ target, damage: cardList.damage });
+    if (cardList.damage === 0) {
+      blocked.push(target);
+    } else {
+      hasPokemonWithDamage = true;
+    }
   });
 
-  const healing = Math.min(20, healingLeft);
-
-  if (maxAllowedHealing.filter(m => m.damage > 0).length === 0) {
+  if (hasPokemonWithDamage === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.TOP_PLAYER,
+  // Do not discard the card yet
+  effect.preventDefault = true;
+
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_HEAL,
+    PlayerType.BOTTOM_PLAYER,
     [SlotType.ACTIVE, SlotType.BENCH],
-    healing,
-    maxAllowedHealing,
-    { allowCancel: false }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const healEffect = new HealEffect(effect.player, target, result.damage);
-      healEffect.target = target;
-      store.reduceEffect(state, healEffect);
-    }
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    { allowCancel: false, blocked }
+  ), results => {
+    targets = results || [];
+    next();
   });
+
+  if (targets.length === 0) {
+    return state;
+  }
+
+  targets.forEach(target => {
+    // Heal Pokemon
+    const healEffect = new HealEffect(player, target, 20);
+    store.reduceEffect(state, healEffect);
+  });
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  return state;
 }
 
 export class Potion extends TrainerCard {
@@ -60,7 +69,7 @@ export class Potion extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = usePotion(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 

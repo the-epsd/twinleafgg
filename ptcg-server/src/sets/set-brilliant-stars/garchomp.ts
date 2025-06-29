@@ -1,7 +1,7 @@
-import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { ConfirmPrompt, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -48,8 +48,8 @@ export class Garchomp extends PokemonCard {
 
   public fullName: string = 'Garchomp BRS';
 
-  public readonly SONIC_SLIP_MARKER: string = 'SONIC_SLIP_MARKER';
-  public readonly CLEAR_SONIC_SLIP_MARKER: string = 'CLEAR_SONIC_SLIP_MARKER';
+  public readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
+  public readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -63,6 +63,7 @@ export class Garchomp extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
@@ -80,31 +81,29 @@ export class Garchomp extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-          const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-          cardList.marker.addMarker(this.SONIC_SLIP_MARKER, this);
+          player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+          opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
         }
       });
 
       return state;
     }
 
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.marker.hasMarker(this.SONIC_SLIP_MARKER, this)) {
+    // Prevent all effects of attacks, including damage, if Agility marker is present
+    if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect || effect instanceof AddSpecialConditionsEffect || effect instanceof AbstractAttackEffect)
+      && effect.target.cards.includes(this)
+      && effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
       effect.preventDefault = true;
       return state;
     }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      const owner = StateUtils.findOwner(state, cardList);
-
-      if (owner !== player) {
-        cardList.marker?.removeMarker(this.SONIC_SLIP_MARKER, this);
-      }
+    // Remove marker at end of opponent's turn
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+      });
     }
-
     return state;
   }
-
-}
+} 

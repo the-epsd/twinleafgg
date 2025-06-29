@@ -1,10 +1,11 @@
-import {VenusaurSnivyGX} from '../set-cosmic-eclipse/venusaur-and-snivy-gx';
-import {CelebiVenusaurGX} from '../set-team-up/celebi-and-venusaur-gx';
+import { VenusaurSnivyGX } from '../set-cosmic-eclipse/venusaur-and-snivy-gx';
+import { CelebiVenusaurGX } from '../set-team-up/celebi-and-venusaur-gx';
 import { EeveeSnorlaxGX } from '../set-team-up/eevee-and-snorlax-gx';
 import { MagikarpWailordGX } from '../set-team-up/magikarp-and-wailord-gx';
 import { LucarioMelmetalGX } from '../set-unbroken-bonds/lucario-and-melmetal-gx';
-import {ReshiramCharizardGX} from '../set-unbroken-bonds/reshiram-and-charizard-gx';
-import {EspeonDeoxysGX} from '../set-unified-minds/espeon-and-deoxys-gx';
+import { Lycanroc } from '../set-forbidden-light/lycanroc';
+import { ReshiramCharizardGX } from '../set-unbroken-bonds/reshiram-and-charizard-gx';
+import { EspeonDeoxysGX } from '../set-unified-minds/espeon-and-deoxys-gx';
 import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
 
 export class UmbreonDarkraiGXSMP extends UmbreonDarkraiGX {
@@ -17,6 +18,12 @@ export class LucarioMelmetalGXSMP extends LucarioMelmetalGX {
   public fullName = 'Lucario & Melmetal-GX SMP';
   public set = 'SMP';
   public setNumber = '192';
+}
+
+export class LycanrocSMP extends Lycanroc {
+  public fullName = 'Lycanroc SMP';
+  public set = 'SMP';
+  public setNumber = '118';
 }
 
 export class EeveeSnorlaxGXSMP extends EeveeSnorlaxGX {

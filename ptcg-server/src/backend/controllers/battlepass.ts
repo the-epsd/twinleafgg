@@ -192,14 +192,20 @@ export class BattlePass extends Controller {
 
       // Grant the items to the user
       for (const reward of rewards) {
-        if (reward.type === 'avatar') {
-          const unlockedItem = new UserUnlockedItem();
-          unlockedItem.userId = userId;
-          unlockedItem.itemId = reward.item;
-          unlockedItem.itemType = reward.type;
-          await unlockedItem.save();
+        switch (reward.type) {
+          case 'avatar':
+          case 'card_back':
+          case 'playmat':
+          case 'marker':
+          case 'card_artwork': {
+            const unlockedItem = new UserUnlockedItem();
+            unlockedItem.userId = userId;
+            unlockedItem.itemId = reward.item;
+            unlockedItem.itemType = reward.type;
+            await unlockedItem.save();
+            break;
+          }
         }
-        // TODO: Handle other reward types like 'booster', 'playmat', etc.
       }
 
       await progress.save();

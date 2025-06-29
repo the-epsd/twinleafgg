@@ -4,6 +4,7 @@ export interface DeckSaveRequest {
   cards: string[];
   manualArchetype1?: string;
   manualArchetype2?: string;
+  artworks?: { code: string; artworkId?: number }[];
 }
 
 export interface Deck {

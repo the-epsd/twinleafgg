@@ -144,6 +144,7 @@ export class FormatValidator {
       'Energy Retrieval',
       'Tool Scrapper',
       'Cheren',
+      'Rainbow Energy',
     ];
 
     const formats = [Format.UNLIMITED];

@@ -74,7 +74,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           throw new GameError(GameMessage.INVALID_TARGET);
         }
 
-        const effect = new PlayPokemonEffect(player, handCard, target);
+        const effect = new PlayPokemonEffect(player, handCard, target, action.target.slot, action.target.index);
         return store.reduceEffect(state, effect);
       }
 

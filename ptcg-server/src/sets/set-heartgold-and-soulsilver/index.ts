@@ -3,6 +3,8 @@ import { Cleffa } from './cleffa';
 import { Cyndaquil } from './cyndaquil';
 import { Drowzee } from './drowzee';
 import { GrassEnergy } from './grass-energy';
+import { Hoppip } from './hoppip';
+import { Jumpluff } from './jumpluff';
 import { FireEnergy } from './fire-energy';
 import { WaterEnergy } from './water-energy';
 import { LightningEnergy } from './lightning-energy';
@@ -22,7 +24,13 @@ import { Unown } from './unown';
 import { Vulpix } from './vulpix';
 
 // Other prints
-import { PokemonReversalHS } from './other-prints';
+import {
+  DoubleColorlessEnergyHS,
+  Pokegear30HS,
+  PokemonCommunicationHS,
+  PokemonReversalHS,
+  SwitchHS,
+} from './other-prints';
 
 export const setHeartGoldAndSoulSilver: Card[] = [
   new Cleffa(),
@@ -32,7 +40,9 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new FightingEnergy(),
   new FireEnergy(),
   new GrassEnergy(),
+  new Hoppip(),
   new Hypno(),
+  new Jumpluff(),
   new LightningEnergy(),
   new MetalEnergy(),
   new Ninetales(),
@@ -48,5 +58,9 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new WaterEnergy(),
 
   // Other prints
+  new DoubleColorlessEnergyHS(),
+  new Pokegear30HS(),
+  new PokemonCommunicationHS(),
   new PokemonReversalHS(),
+  new SwitchHS(),
 ];

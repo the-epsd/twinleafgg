@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { BrokenTimeSpace } from './broken-time-space';
 import { BronzongG } from './bronzong-g';
 import { CrobatG } from './crobat-g';
 import { Delcatty } from './delcatty';
@@ -16,7 +17,11 @@ import { DialgaG } from './dialgs-g';
 import { DialgaGLVX } from './dialga-g-lv-x';
 import { Vulpix } from './vulpix';
 
+// Other prints
+import { RainbowEnergyPL } from './other-prints';
+
 export const setPlatinum: Card[] = [
+  new BrokenTimeSpace(),
   new SkuntankG(),
   new BronzongG(),
   new CrobatG(),
@@ -33,4 +38,7 @@ export const setPlatinum: Card[] = [
   new DialgaG(),
   new DialgaGLVX(),
   new Vulpix(),
+
+  // Other prints
+  new RainbowEnergyPL()
 ];

@@ -68,7 +68,7 @@ export class Dialga extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Time Control',
+      name: 'Time Manipulation',
       cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for 2 cards. Shuffle the rest of your deck and place those two cards on top of your deck in any order.'
