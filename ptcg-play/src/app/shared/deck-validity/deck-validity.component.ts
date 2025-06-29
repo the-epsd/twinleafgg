@@ -29,6 +29,8 @@ export class DeckValidityComponent {
 
   @Input() validOnly = false;
 
+  @Input() validFormats: number[] | null = null;
+
   @Input()
   set deck(cards: DeckItem[]) {
     this._deck.next(cards);
@@ -39,15 +41,16 @@ export class DeckValidityComponent {
 
   validFormats$ = this.deck$.pipe(
     map(cards => {
+      if (this.validFormats) {
+        return this.validFormats;
+      }
       const cardList = [];
-      cards.forEach(card => {
+      cards?.forEach(card => {
         for (let i = 0; i < card.count; i++) {
           cardList.push(card.card);
         }
       });
-
-      return cardList;
-    }),
-    map(cards => FormatValidator.getValidFormatsForCardList(cards)),
+      return FormatValidator.getValidFormatsForCardList(cardList);
+    })
   );
 }

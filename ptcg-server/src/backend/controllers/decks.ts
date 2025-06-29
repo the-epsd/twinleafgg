@@ -665,11 +665,9 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       case Format.UNLIMITED:
         return true;
       case Format.STANDARD: {
-        var setDate = SetReleaseDates[card.set];
-        if (card.regulationMark === 'J') {
-          return false;
-        }
-        return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+        return card.regulationMark === 'G' ||
+          card.regulationMark === 'H' ||
+          card.regulationMark === 'I';
       }
       case Format.STANDARD_NIGHTLY:
         return card.regulationMark === 'G' ||
