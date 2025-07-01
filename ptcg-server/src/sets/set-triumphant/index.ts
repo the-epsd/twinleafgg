@@ -3,7 +3,13 @@ import { AlphLithograph } from './alph-lithograph';
 import { BlackBelt } from './black-belt';
 import { Celebi } from './celebi';
 import { Ditto } from './ditto';
+import { Gastly } from './gastly';
+import { Gengar } from './gengar-prime';
+import { Haunter } from './haunter';
 import { JunkArm } from './junk-arm';
+import { Machamp } from './machamp-prime';
+import { Machoke } from './machoke';
+import { Machop } from './machop';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Magnezone } from './magnezone-prime';
@@ -13,14 +19,23 @@ import { Porygon2 } from './porygon2';
 import { PorygonZ } from './porygon-z';
 import { RescueEnergy } from './rescue-energy';
 import { Seeker } from './seeker';
+import { Spiritomb } from './spiritomb';
 import { Twins } from './twins';
+import { Yanma } from './yanma';
+import { Yanmega } from './yanmega-prime';
 
 export const setTriumphant: Card[] = [
   new AlphLithograph(),
   new BlackBelt(),
   new Celebi(),
   new Ditto(),
+  new Gastly(),
+  new Gengar(),
+  new Haunter(),
   new JunkArm(),
+  new Machamp(),
+  new Machoke(),
+  new Machop(),
   new Magnemite(),
   new Magneton(),
   new Magnezone(),
@@ -30,7 +45,10 @@ export const setTriumphant: Card[] = [
   new PorygonZ(),
   new RescueEnergy(),
   new Seeker(),
+  new Spiritomb(),
   new Twins(),
+  new Yanma(),
+  new Yanmega(),
 
   // new PalkiaDialgaLEGEND(),
 ];

@@ -5,8 +5,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { ADD_MARKER, HAS_MARKER, PUT_DAMAGE, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
 import { GameError, GameMessage, StateUtils } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Leon extends TrainerCard {
 
@@ -36,7 +37,7 @@ export class Leon extends TrainerCard {
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
-    if (PUT_DAMAGE(effect) && HAS_MARKER(this.LEON_MARKER, effect.player, this) && effect.damage > 0) {
+    if (effect instanceof DealDamageEffect && HAS_MARKER(this.LEON_MARKER, effect.player, this) && effect.damage > 0) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

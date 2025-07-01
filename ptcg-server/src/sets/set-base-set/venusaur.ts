@@ -1,55 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack, Power, PowerType } from '../../game/store/card/pokemon-types';
-import { MoveEnergyPrompt, CardTransfer } from '../../game/store/prompts/move-energy-prompt';
+import { MoveEnergyPrompt } from '../../game/store/prompts/move-energy-prompt';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../..';
-
-function* moveEnergy(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
-  const player = effect.player;
-
-  let hasBasicEnergy = false;
-  let pokemonCount = 0;
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-    pokemonCount += 1;
-    const basicEnergyAttached = cardList.cards.some(c => {
-      return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
-    });
-    hasBasicEnergy = hasBasicEnergy || basicEnergyAttached;
-  });
-
-  if (!hasBasicEnergy || pokemonCount <= 1) {
-    throw new GameError(GameMessage.CANNOT_USE_POWER);
-  }
-
-  let transfers: CardTransfer[] = [];
-  yield store.prompt(state, new MoveEnergyPrompt(
-    player.id,
-    GameMessage.MOVE_ENERGY_CARDS,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { cardType: CardType.GRASS },
-    { min: 1, max: 1, allowCancel: false }
-  ), result => {
-    transfers = result || [];
-    next();
-  });
-
-  if (transfers.length === 0) {
-    return state;
-  }
-
-  transfers.forEach(transfer => {
-    const source = StateUtils.getTarget(state, player, transfer.from);
-    const target = StateUtils.getTarget(state, player, transfer.to);
-    source.moveCardTo(transfer.card, target);
-  });
-
-  return state;
-}
+import { CardTarget, Card, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../..';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, IS_POKEPOWER_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Venusaur extends PokemonCard {
 
@@ -82,17 +40,75 @@ export class Venusaur extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+    if (WAS_POWER_USED(effect, 0, this)) {
+      const player = effect.player;
 
-      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
-        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
-        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
-        return state;
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      const generator = moveEnergy(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
+
+      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkProvidedEnergy);
+
+        const blockedCards: Card[] = [];
+        checkProvidedEnergy.energyMap.forEach(em => {
+          if (!em.provides.includes(CardType.GRASS) && !em.provides.includes(CardType.ANY)) {
+            blockedCards.push(em.card);
+          }
+        });
+
+        cardList.cards.forEach(em => {
+          if (cardList.getPokemons().includes(em as PokemonCard)) {
+            blockedCards.push(em);
+          }
+        });
+
+        const blocked: number[] = [];
+        blockedCards.forEach(bc => {
+          const index = cardList.cards.indexOf(bc);
+          if (index !== -1 && !blocked.includes(index)) {
+            blocked.push(index);
+          }
+        });
+
+        if (blocked.length !== 0) {
+          blockedMap.push({ source: target, blocked });
+        }
+      });
+
+      store.prompt(state, new MoveEnergyPrompt(
+        effect.player.id,
+        GameMessage.MOVE_ENERGY_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        {},
+        { allowCancel: true, blockedMap }
+      ), transfers => {
+        if (transfers === null) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          source.moveCardTo(transfer.card, target);
+
+          if (transfer.card instanceof PokemonCard) {
+            // Remove it from the source
+            source.removePokemonAsEnergy(transfer.card);
+
+            // Reposition it to be with energy cards (at the beginning of the card list)
+            target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
+
+            // Register this card as energy in the PokemonCardList
+            target.addPokemonAsEnergy(transfer.card);
+          }
+        }
+      });
     }
 
     return state;

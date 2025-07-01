@@ -27,6 +27,7 @@ export class Porygon extends PokemonCard {
   public set: string = 'LOR';
   public name: string = 'Porygon';
   public fullName: string = 'Porygon LOR';
+  public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '140';
 

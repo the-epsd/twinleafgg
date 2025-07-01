@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, SuperType } from '../../game';
 import { PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dusknoir extends PokemonCard {
@@ -83,7 +84,11 @@ export class Dusknoir extends PokemonCard {
         cards.forEach((card, index) => {
           opponent.hand.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
-          slots[index].damage += 30;
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, slots[index]);
+          store.reduceEffect(state, damageEffect);
+          if (damageEffect.target) {
+            damageEffect.target.damage += 30;
+          }
         });
       });
     }

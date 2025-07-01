@@ -4,6 +4,7 @@ import { BuddyBuddyRescue } from './buddy-buddy-rescue';
 import { Florges } from './florges';
 import { Gengar } from './gengar';
 import { Haunter } from './haunter';
+import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { MrMime } from './mr-mime';
 import { Octillery } from './octillery';
@@ -19,6 +20,7 @@ export const setBreakthrough: Card[] = [
   new Florges(),
   new Gengar(),
   new Haunter(),
+  new Magnemite(),
   new MrMime(),
   new TownMap(),
   new Octillery(),

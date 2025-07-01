@@ -1,5 +1,7 @@
 import { Card } from '../../game/store/card/card';
+import { Bellossom } from './bellossom';
 import { DarknessEnergySpecial } from './darkness-energy-special';
+import { Eevee } from './eevee';
 import { FlowerShopLady } from './flower-shop-lady';
 import { Gloom } from './gloom';
 import { KyogreAndGroudonLegendBottom } from './kyogre-and-groudon-legend-bottom';
@@ -15,7 +17,9 @@ import { Sneasel } from './sneasel';
 import { Vileplume } from './vileplume';
 
 export const setUndaunted: Card[] = [
+  new Bellossom(),
   new DarknessEnergySpecial(),
+  new Eevee(),
   new FlowerShopLady(),
   new Gloom(),
   new KyogreAndGroudonLegendBottom(),

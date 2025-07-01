@@ -1,10 +1,11 @@
-import { GameError, GameMessage, StateUtils } from '../../game';
+import { GameError, GameMessage, PowerType, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { ADD_MARKER, HAS_MARKER, MOVE_CARD_TO, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -29,8 +30,7 @@ export class HexManiac extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -38,24 +38,27 @@ export class HexManiac extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      ADD_MARKER(this.HEX_MANIAC_MARKER, player, this);
+      ADD_MARKER(this.HEX_MANIAC_MARKER, opponent, this);
 
-      player.supporterTurn = 1;
-
-      player.marker.addMarker(this.HEX_MANIAC_MARKER, this);
-      opponent.marker.addMarker(this.HEX_MANIAC_MARKER, this);
-
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
 
-    if (effect instanceof PowerEffect && (
-      effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this) || 
-        StateUtils.getOpponent(state, effect.player).marker.hasMarker(this.HEX_MANIAC_MARKER, this))) {
-      throw new GameError(GameMessage.ABILITY_BLOCKED);
+    if (effect instanceof PowerEffect && HAS_MARKER(this.HEX_MANIAC_MARKER, effect.player, this)
+      && (effect.power.powerType === PowerType.ABILITY)) {
+
+      throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER)) {
-      effect.player.marker.removeMarker(this.HEX_MANIAC_MARKER, this);
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+
+      if (player !== owner) {
+        REMOVE_MARKER(this.HEX_MANIAC_MARKER, player, this);
+        REMOVE_MARKER(this.HEX_MANIAC_MARKER, opponent, this);
+      }
     }
 
     return state;

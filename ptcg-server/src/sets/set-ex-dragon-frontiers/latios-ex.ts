@@ -25,7 +25,7 @@ export class Latiosex extends PokemonCard {
     name: 'Ice Barrier',
     cost: [W, C],
     damage: 30,
-    text: 'Prevent all effects of attack, including damage, done to Latios ex by your opponent\'s Pokémon- ex during your opponent\'s next turn.'
+    text: 'Prevent all effects of an attack, including damage, done to Latios ex by your opponent\'s Pokémon-ex during your opponent\'s next turn.'
   },
   {
     name: 'Hydro Splash',
