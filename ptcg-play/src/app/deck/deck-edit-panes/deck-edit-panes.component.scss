@@ -46,6 +46,13 @@
   background-color: #2D3748;
   position: relative;
   margin-left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ptcg-deck-edit-pane-secondary>.deck-content {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 ptcg-deck-card {
@@ -74,7 +81,7 @@ ptcg-deck-card.placeholder {
 }
 
 .deck-validity-container {
-  position: absolute;
+  position: sticky;
   left: 0;
   right: 0;
   bottom: 0;
@@ -83,6 +90,7 @@ ptcg-deck-card.placeholder {
   z-index: 10;
   display: flex;
   justify-content: center;
+  margin-top: auto;
 }
 
 // .deck-pane-container {
