@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon TCG Game Effects Documentation</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; margin: 0; background-color: #f4f4f4; color: #333; }
+        header { background-color: #e3350d; color: #fff; padding: 1em 0; text-align: center; border-bottom: 5px solid #c02d0a; }
+        header h1 { margin: 0; font-size: 2.5em; text-shadow: 2px 2px 4px #000000a0; }
+        .container { max-width: 900px; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 15px rgba(0,0,0,0.15); border-radius: 8px; }
+        section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
+        section:last-child { border-bottom: none; }
+        h2 { color: #3a6ea5; border-bottom: 2px solid #3a6ea5; padding-bottom: 10px; font-size: 2em; }
+        h3 { color: #17a2b8; font-size: 1.5em; margin-top: 25px; }
+        h4 { color: #28a745; font-size: 1.2em; margin-top:20px; }
+        pre { background-color: #2d2d2d; color: #f0f0f0; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #444; box-shadow: inset 0 0 5px rgba(0,0,0,0.5); }
+        code { font-family: 'Consolas', 'Monaco', 'Courier New', Courier, monospace; }
+        .effect-summary p { margin: 8px 0; }
+        strong { color: #d9534f; } /* Highlight color for keywords */
+        ul { list-style-type: square; margin-left: 25px; padding-left: 0;}
+        li { margin-bottom: 8px; }
+        footer { text-align: center; margin-top: 40px; padding: 20px; background-color: #333; color: #fff; border-top: 5px solid #555;}
+        .code-block { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pokémon TCG Game Effects</h1>
+    </header>
+
+    <div class="container">
+        <section id="introduction">
+            <h2>Introduction to Special Conditions</h2>
+            <p>Special Conditions are temporary states that can affect an Active Pokémon, hindering its ability to battle. They are a core mechanic in the Pokémon Trading Card Game (TCG).</p>
+            <ul>
+                <li><strong>Target:</strong> Only Active Pokémon can be affected by Special Conditions.</li>
+                <li><strong>Removal:</strong> Generally, Special Conditions are removed if the Pokémon:
+                    <ul>
+                        <li>Moves to the Bench (retreats or is switched out).</li>
+                        <li>Evolves or devolves.</li>
+                        <li>Is affected by a specific card effect (e.g., a Trainer card like "Full Heal" or an Ability).</li>
+                    </ul>
+                </li>
+                <li><strong>Stacking:</strong>
+                    <ul>
+                        <li>Asleep, Paralyzed, and Confused are mutually exclusive. Applying one of these will remove any existing one from this group.</li>
+                        <li>Poisoned and Burned can coexist with each other and with Asleep, Paralyzed, or Confused.</li>
+                    </ul>
+                </li>
+                <li><strong>Pokémon Checkup:</strong> This is a phase between turns where effects of certain Special Conditions (Poisoned, Burned, Asleep/Paralyzed recovery check) are resolved. The order is typically: Poisoned, Burned, then Asleep/Paralyzed checks.</li>
+            </ul>
+        </section>
+
+        <section id="standard-conditions">
+            <h2>I. Standard Special Conditions</h2>
+            <p>These are the five primary Special Conditions you'll encounter most frequently.</p>
+
+            <article id="asleep">
+                <h3>1. Asleep</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> An Asleep Pokémon cannot attack or retreat.</p>
+                    <p><strong>Mechanism:</strong> Indicated by turning the Pokémon card counter-clockwise. Between each player's turn (during Pokémon Checkup), the owner of the Asleep Pokémon flips a coin.</p>
+                    <ul>
+                        <li><strong>Heads:</strong> The Pokémon wakes up and is no longer Asleep.</li>
+                        <li><strong>Tails:</strong> The Pokémon remains Asleep.</li>
+                    </ul>
+                    <p><strong>Infliction:</strong> Typically caused by attack effects (e.g., an attack stating "The Defending Pokémon is now Asleep") or certain Abilities.</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Flipping heads during Pokémon Checkup.</li>
+                        <li>Moving the Pokémon to the Bench.</li>
+                        <li>Evolving or devolving the Pokémon.</li>
+                        <li>Using specific Trainer cards or Abilities that remove Special Conditions.</li>
+                    </ul>
+                    <p><strong>Interaction:</strong> Mutually exclusive with Paralyzed and Confused. Can coexist with Burned and Poisoned.</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name):
+        self.name = name
+        self.is_asleep = False
+        # ... other conditions like is_paralyzed, is_confused
+
+    def attempt_attack(self, target):
+        if self.is_asleep:
+            print(f"{self.name} is Asleep and cannot attack!")
+            return False
+        # ... attack logic
+        print(f"{self.name} attacks {target.name}!")
+        return True
+
+    def attempt_retreat(self):
+        if self.is_asleep:
+            print(f"{self.name} is Asleep and cannot retreat!")
+            return False
+        # ... retreat logic
+        self.is_asleep = False # Assuming retreat removes conditions
+        print(f"{self.name} retreats.")
+        return True
+
+    def pokemon_checkup(self):
+        if self.is_asleep:
+            print(f"Checking if {self.name} wakes up...")
+            if flip_coin() == "heads":
+                print(f"{self.name} woke up!")
+                self.is_asleep = False
+            else:
+                print(f"{self.name} is still Asleep.")
+
+    def set_asleep(self):
+        print(f"{self.name} is now Asleep!")
+        self.is_asleep = True
+        self.is_paralyzed = False # Mutually exclusive
+        self.is_confused = False # Mutually exclusive
+
+def flip_coin():
+    import random
+    return random.choice(["heads", "tails"])
+
+# charizard = Pokemon("Charizard")
+# charizard.set_asleep()
+# charizard.attempt_attack(None) # Will fail
+# charizard.pokemon_checkup() # Coin flip to wake up
+                </code></pre>
+                </div>
+            </article>
+
+            <article id="burned">
+                <h3>2. Burned</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> A Burned Pokémon takes damage between turns.</p>
+                    <p><strong>Mechanism:</strong> Indicated by placing a "Burn marker" on the Pokémon. During Pokémon Checkup (after each player's turn):</p>
+                    <ol>
+                        <li>Place 2 damage counters (20 damage) on the Burned Pokémon. (Some card effects can modify this damage).</li>
+                        <li>The owner of the Burned Pokémon then flips a coin.
+                            <ul>
+                                <li><strong>Heads:</strong> The Pokémon is no longer Burned (remove the Burn marker).</li>
+                                <li><strong>Tails:</strong> The Pokémon remains Burned.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><em>Historical Note:</em> Prior to the Sun & Moon series, on a heads flip, the Pokémon would <em>not</em> take damage but would remain Burned. The current rule is damage first, then flip to cure.</p>
+                    <p><strong>Infliction:</strong> Caused by attacks (e.g., "The Defending Pokémon is now Burned") or Abilities.</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Flipping heads during Pokémon Checkup (after taking burn damage).</li>
+                        <li>Moving the Pokémon to the Bench.</li>
+                        <li>Evolving or devolving the Pokémon.</li>
+                        <li>Using specific Trainer cards or Abilities.</li>
+                    </ul>
+                    <p><strong>Interaction:</strong> Can coexist with any other Special Condition.</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name):
+        self.name = name
+        self.hp = 100
+        self.damage_counters = 0
+        self.is_burned = False
+        self.burn_damage_per_turn = 20 # Standard burn damage
+
+    def receive_damage(self, amount):
+        self.damage_counters += amount // 10
+        print(f"{self.name} took {amount} damage. Total damage: {self.damage_counters * 10}")
+        if self.damage_counters * 10 >= self.hp:
+            print(f"{self.name} is Knocked Out!")
+
+    def pokemon_checkup(self):
+        if self.is_burned:
+            print(f"{self.name} is Burned!")
+            self.receive_damage(self.burn_damage_per_turn)
+            if (self.damage_counters * 10) < self.hp: # Only flip if not Knocked Out
+                print(f"Checking if {self.name} recovers from Burn...")
+                if flip_coin() == "heads":
+                    print(f"{self.name} recovered from the Burn!")
+                    self.is_burned = False
+                else:
+                    print(f"{self.name} is still Burned.")
+
+    def set_burned(self, damage_amount=20):
+        print(f"{self.name} is now Burned!")
+        self.is_burned = True
+        self.burn_damage_per_turn = damage_amount
+
+# moltres = Pokemon("Moltres")
+# moltres.set_burned()
+# moltres.pokemon_checkup() # Takes 20 damage, then flips
+                </code></pre>
+                </div>
+            </article>
+
+            <article id="confused">
+                <h3>3. Confused</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> A Confused Pokémon may hurt itself when trying to attack.</p>
+                    <p><strong>Mechanism:</strong> Indicated by turning the Pokémon card upside down (180 degrees). When the Confused Pokémon tries to attack, its owner must flip a coin:</p>
+                    <ul>
+                        <li><strong>Heads:</strong> The attack works as normal.</li>
+                        <li><strong>Tails:</strong> The attack fails, and the Pokémon does 30 damage (3 damage counters) to itself.</li>
+                    </ul>
+                    <p><strong>Infliction:</strong> Caused by attack effects or Abilities.</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Moving the Pokémon to the Bench. (Unlike Asleep/Paralyzed, there's no automatic recovery attempt between turns for Confusion).</li>
+                        <li>Evolving or devolving the Pokémon.</li>
+                        <li>Using specific Trainer cards or Abilities.</li>
+                    </ul>
+                    <p><strong>Interaction:</strong> Mutually exclusive with Asleep and Paralyzed. Can coexist with Burned and Poisoned. Retreating while Confused is normal; no coin flip is required for the retreat itself.</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name):
+        self.name = name
+        self.hp = 100
+        self.damage_counters = 0
+        self.is_confused = False
+
+    def receive_damage(self, amount):
+        self.damage_counters += amount // 10
+        print(f"{self.name} took {amount} damage. Total damage: {self.damage_counters * 10}")
+        if self.damage_counters * 10 >= self.hp:
+            print(f"{self.name} is Knocked Out!")
+
+    def attempt_attack(self, target):
+        if self.is_confused:
+            print(f"{self.name} is Confused. Flipping a coin to attack...")
+            if flip_coin() == "tails":
+                print(f"{self.name} hurt itself in its confusion!")
+                self.receive_damage(30)
+                return False # Attack fails
+            else:
+                print(f"{self.name} attacks successfully through confusion!")
+        # ... proceed with attack logic
+        print(f"{self.name} attacks {target.name}!")
+        return True
+
+    def set_confused(self):
+        print(f"{self.name} is now Confused!")
+        self.is_confused = True
+        self.is_asleep = False # Mutually exclusive
+        self.is_paralyzed = False # Mutually exclusive
+
+# psyduck = Pokemon("Psyduck")
+# psyduck.set_confused()
+# psyduck.attempt_attack(None) # Flips for confusion
+                </code></pre>
+                </div>
+            </article>
+
+            <article id="paralyzed">
+                <h3>4. Paralyzed</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> A Paralyzed Pokémon cannot attack or retreat.</p>
+                    <p><strong>Mechanism:</strong> Indicated by turning the Pokémon card clockwise. Paralysis lasts for only one turn. At the end of the player's next turn (during Pokémon Checkup), the Pokémon recovers from Paralysis automatically.</p>
+                    <p><strong>Infliction:</strong> Caused by attack effects or Abilities.</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Automatically at the end of the affected player's next turn (during their Pokémon Checkup phase).</li>
+                        <li>Moving the Pokémon to the Bench.</li>
+                        <li>Evolving or devolving the Pokémon.</li>
+                        <li>Using specific Trainer cards or Abilities.</li>
+                    </ul>
+                    <p><strong>Interaction:</strong> Mutually exclusive with Asleep and Confused. Can coexist with Burned and Poisoned.</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name):
+        self.name = name
+        self.is_paralyzed = False
+
+    def attempt_attack(self, target):
+        if self.is_paralyzed:
+            print(f"{self.name} is Paralyzed and cannot attack!")
+            return False
+        # ... attack logic
+        print(f"{self.name} attacks {target.name}!")
+        return True
+
+    def attempt_retreat(self):
+        if self.is_paralyzed:
+            print(f"{self.name} is Paralyzed and cannot retreat!")
+            return False
+        # ... retreat logic
+        print(f"{self.name} retreats.")
+        return True
+
+    def pokemon_checkup(self): # Called at the end of the owner's turn
+        if self.is_paralyzed:
+            print(f"{self.name} recovered from Paralysis!")
+            self.is_paralyzed = False
+
+    def set_paralyzed(self):
+        print(f"{self.name} is now Paralyzed!")
+        self.is_paralyzed = True
+        self.is_asleep = False # Mutually exclusive
+        self.is_confused = False # Mutually exclusive
+
+# stunfisk = Pokemon("Stunfisk")
+# stunfisk.set_paralyzed()
+# stunfisk.attempt_attack(None) # Will fail
+# # At the end of Stunfisk's owner's next turn:
+# # stunfisk.pokemon_checkup() # Recovers
+                </code></pre>
+                </div>
+            </article>
+
+            <article id="poisoned">
+                <h3>5. Poisoned</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> A Poisoned Pokémon takes damage between turns.</p>
+                    <p><strong>Mechanism:</strong> Indicated by placing a "Poison marker" on the Pokémon. During Pokémon Checkup (after each player's turn), place 1 damage counter (10 damage) on the Poisoned Pokémon. Some card effects can increase the amount of damage taken from Poison.</p>
+                    <p><strong>Infliction:</strong> Caused by attack effects or Abilities (e.g., "The Defending Pokémon is now Poisoned").</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Moving the Pokémon to the Bench.</li>
+                        <li>Evolving or devolving the Pokémon.</li>
+                        <li>Using specific Trainer cards or Abilities.</li>
+                        <li>(Unlike Burned, there is no coin flip to recover from Poison; it persists until actively removed).</li>
+                    </ul>
+                    <p><strong>Interaction:</strong> Can coexist with any other Special Condition.</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name):
+        self.name = name
+        self.hp = 100
+        self.damage_counters = 0
+        self.is_poisoned = False
+        self.poison_damage_counters = 1 # Standard is 1 damage counter (10 damage)
+
+    def receive_damage_counters(self, num_counters):
+        self.damage_counters += num_counters
+        print(f"{self.name} took {num_counters * 10} damage. Total damage: {self.damage_counters * 10}")
+        if self.damage_counters * 10 >= self.hp:
+            print(f"{self.name} is Knocked Out!")
+
+    def pokemon_checkup(self):
+        if self.is_poisoned:
+            print(f"{self.name} is Poisoned! It takes {self.poison_damage_counters * 10} damage.")
+            self.receive_damage_counters(self.poison_damage_counters)
+
+    def set_poisoned(self, num_counters=1):
+        print(f"{self.name} is now Poisoned!")
+        self.is_poisoned = True
+        self.poison_damage_counters = num_counters
+
+# arbok = Pokemon("Arbok")
+# arbok.set_poisoned(num_counters=2) # Example of stronger poison
+# arbok.pokemon_checkup() # Takes 20 damage
+                </code></pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="other-conditions">
+            <h2>II. Other Conditions</h2>
+            <p>These conditions are less common and have specific mechanics, often tied to particular Pokémon cards.</p>
+
+            <article id="imprisoned">
+                <h3>1. Imprisoned</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> An Imprisoned Pokémon cannot use its Poké-Powers or Poké-Bodies (older mechanics similar to Abilities).</p>
+                    <p><strong>Mechanism:</strong> Indicated by an "Imprisoned marker." This condition is very rare.</p>
+                    <p><strong>Infliction:</strong> Caused by the effect of a specific Pokémon's attack or Ability.</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Evolving the Imprisoned Pokémon.</li>
+                        <li>Using a card effect that removes <em>any</em> condition.</li>
+                        <li>The Pokémon leaving play.</li>
+                        <li><strong>Notably, retreating or switching out does NOT remove the Imprisoned condition.</strong></li>
+                    </ul>
+                    <p><strong>Interaction:</strong> Traditionally affected older power types (Poké-Powers/Bodies).</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name, has_poke_power=False, has_poke_body=False):
+        self.name = name
+        self.is_imprisoned = False
+        self.has_poke_power = has_poke_power
+        self.has_poke_body = has_poke_body
+
+    def use_poke_power(self):
+        if self.is_imprisoned:
+            print(f"{self.name} is Imprisoned and cannot use its Poké-Power!")
+            return False
+        if not self.has_poke_power:
+            print(f"{self.name} does not have a Poké-Power.")
+            return False
+        print(f"{self.name} uses its Poké-Power!")
+        return True
+
+    def check_poke_body_active(self):
+        if self.is_imprisoned and self.has_poke_body:
+            print(f"{self.name}'s Poké-Body is negated by Imprisonment!")
+            return False
+        if self.has_poke_body:
+            print(f"{self.name}'s Poké-Body is active.")
+            return True
+        return False
+
+    def set_imprisoned(self):
+        print(f"{self.name} is now Imprisoned!")
+        self.is_imprisoned = True
+
+    def evolve(self):
+        # ... evolution logic
+        self.is_imprisoned = False # Imprisoned removed on evolution
+        print(f"{self.name} evolved and is no longer Imprisoned.")
+
+# gardevoir_ex_delta = Pokemon("Gardevoir ex delta", has_poke_power=True)
+# target_pokemon = Pokemon("Some Target")
+#
+# # Gardevoir uses an attack that Imprisons the target
+# target_pokemon.set_imprisoned()
+# target_pokemon.use_poke_power() # Fails
+                </code></pre>
+                </div>
+            </article>
+
+            <article id="shock-wave">
+                <h3>2. Shock-wave</h3>
+                <div class="effect-summary">
+                    <p><strong>Description:</strong> By itself, the Shock-wave condition does nothing. However, specific attacks may have powerful effects against Pokémon with this condition.</p>
+                    <p><strong>Mechanism:</strong> Indicated by a "Shock-wave marker." This is another very rare condition.</p>
+                    <p><strong>Infliction:</strong> Caused by the effect of a specific Pokémon's attack.</p>
+                    <p><strong>Removal:</strong></p>
+                    <ul>
+                        <li>Evolving the affected Pokémon.</li>
+                        <li>The Pokémon leaving play.</li>
+                        <li>Using a card effect that removes <em>any</em> condition.</li>
+                        <li><strong>Notably, retreating or switching out does NOT remove the Shock-wave condition.</strong></li>
+                    </ul>
+                    <p><strong>Interaction:</strong> This condition is a passive marker whose sole purpose is to be recognized by other card effects.</p>
+                </div>
+                <h4>Code Example (Conceptual):</h4>
+                <div class="code-block">
+                <pre><code>
+class Pokemon:
+    def __init__(self, name):
+        self.name = name
+        self.has_shock_wave_marker = False
+        self.hp = 100
+        self.damage_counters = 0
+
+
+    def set_shock_wave_marker(self):
+        print(f"{self.name} now has a Shock-wave marker.")
+        self.has_shock_wave_marker = True
+
+    def remove_shock_wave_marker(self):
+        self.has_shock_wave_marker = False
+        print(f"{self.name} no longer has a Shock-wave marker.")
+
+    def evolve(self):
+        # ... evolution logic
+        self.remove_shock_wave_marker() # Shock-wave removed on evolution
+        print(f"{self.name} evolved and lost its Shock-wave marker.")
+
+class AttackerPokemon(Pokemon):
+    def special_attack(self, target_pokemon):
+        if target_pokemon.has_shock_wave_marker:
+            print(f"{self.name}'s special attack instantly Knocks Out {target_pokemon.name} due to Shock-wave marker!")
+            # Simulate Knock Out
+            target_pokemon.damage_counters = target_pokemon.hp // 10
+            print(f"{target_pokemon.name} is Knocked Out!")
+        else:
+            print(f"{self.name}'s special attack has no extra effect on {target_pokemon.name}.")
+
+# tyranitar_ex_delta = AttackerPokemon("Tyranitar ex delta")
+# enemy_pokemon = Pokemon("Enemy Pokemon")
+#
+# # An attack from Tyranitar places a Shock-wave marker
+# enemy_pokemon.set_shock_wave_marker()
+#
+# # Later, Tyranitar uses its special attack
+# tyranitar_ex_delta.special_attack(enemy_pokemon)
+                </code></pre>
+                </div>
+            </article>
+        </section>
+        <footer>
+            <p>Pokémon TCG Effects Documentation - Generated by Jules</p>
+        </footer>
+    </div>
+</body>
+</html>
