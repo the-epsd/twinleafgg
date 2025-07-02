@@ -51,7 +51,7 @@ export class Eevee extends PokemonCard {
 
     if (effect instanceof PutDamageEffect && state.phase === GamePhase.ATTACK) {
       if (effect.source.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this)) {
-        effect.damage -= 30;
+        effect.damage -= 20;
         return state;
       }
     }

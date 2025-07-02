@@ -1,5 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { LevelBallNXD } from './other-prints';
 import { Gardevoir } from './gardevoir';
 import { HeavyBall } from './heavy-ball';
 import { MewtwoEx } from './mewtwo-ex';
@@ -12,10 +11,15 @@ import { SkyarrowBridge } from './skyarrow-bridge';
 import { Sneasel } from './sneasel';
 import { ZekromEx } from './zekrom-ex';
 
+// Other Prints
+import {
+  DoubleColorlessEnergyNXD,
+  LevelBallNXD
+} from './other-prints';
+
 export const setNextDestinies: Card[] = [
   new Gardevoir(),
   new HeavyBall(),
-  new LevelBallNXD(),
   new MewtwoEx(),
   new Musharna(),
   new PokemonCenter(),
@@ -26,4 +30,7 @@ export const setNextDestinies: Card[] = [
   new Sneasel(),
   new ZekromEx(),
 
+  // Other Prints
+  new DoubleColorlessEnergyNXD(),
+  new LevelBallNXD(),
 ];

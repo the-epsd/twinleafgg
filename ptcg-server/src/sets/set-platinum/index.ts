@@ -4,6 +4,7 @@ import { BronzongG } from './bronzong-g';
 import { CrobatG } from './crobat-g';
 import { Delcatty } from './delcatty';
 import { Dialga } from './dialga';
+import { GalacticHQ } from './galactic-hq';
 import { PokeTurn } from './poke-turn';
 import { PokemonRescue } from './pokemon-rescue';
 import { Skitty } from './skitty';
@@ -11,6 +12,7 @@ import { SkuntankG } from './skuntank-g';
 import { Ralts } from './ralts';
 import { Giratina } from './giratina';
 import { GiratinaLVX } from './giratina-lv-x';
+import { Kirlia } from './kirlia';
 import { PalkiaG } from './palkia-g';
 import { PalkiaGLVX } from './palkia-g-lv-x';
 import { DialgaG } from './dialgs-g';
@@ -22,17 +24,19 @@ import { RainbowEnergyPL } from './other-prints';
 
 export const setPlatinum: Card[] = [
   new BrokenTimeSpace(),
-  new SkuntankG(),
   new BronzongG(),
   new CrobatG(),
   new Delcatty(),
   new Dialga(),
+  new GalacticHQ(),
   new PokeTurn(),
   new PokemonRescue(),
   new Ralts(),
   new Skitty(),
+  new SkuntankG(),
   new Giratina(),
   new GiratinaLVX(),
+  new Kirlia(),
   new PalkiaG(),
   new PalkiaGLVX(),
   new DialgaG(),
