@@ -26,7 +26,7 @@ export class Leafeonex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Leaf Typhoon',
+      name: 'Verdant Storm',
       cost: [G, C],
       damage: 60,
       text: 'This attack foes 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
@@ -72,10 +72,10 @@ export class Leafeonex extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (cardList === player.active){
+        if (cardList === player.active) {
           return;
         }
-        
+
         const healTargetEffect = new HealTargetEffect(effect, 100);
         healTargetEffect.target = cardList;
         state = store.reduceEffect(state, healTargetEffect);

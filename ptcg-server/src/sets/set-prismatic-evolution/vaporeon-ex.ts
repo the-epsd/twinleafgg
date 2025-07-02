@@ -26,7 +26,7 @@ export class Vaporeonex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Heavy Squall',
+      name: 'Severe Squall',
       cost: [W, C],
       damage: 0,
       text: 'This attack does 60 damage to each of your opponent\'s Pokémon ex. Don\'t apply Weakness and Resistance for this damage.'
