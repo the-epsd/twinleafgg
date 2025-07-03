@@ -42,7 +42,6 @@ export class CustomAvatarComponent implements OnChanges {
       return '';
     }
     const path = `${this.basePath}${part}/${value}.svg`;
-    console.log(`[DEBUG] CustomAvatarComponent is trying to load image: ${path}`);
     return this.sanitizer.bypassSecurityTrustResourceUrl(path);
   }
 } 

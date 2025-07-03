@@ -48,7 +48,6 @@ export class CardInfoDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: CardInfoDialogData,
     private dialogRef: MatDialogRef<CardInfoDialogComponent>
   ) {
-    console.log('Dialog Data:', data);
   }
 
   onAction(action: any) {

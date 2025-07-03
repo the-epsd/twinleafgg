@@ -64,7 +64,7 @@ export class Zamazenta extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

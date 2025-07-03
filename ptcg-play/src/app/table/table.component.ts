@@ -230,7 +230,6 @@ export class TableComponent implements OnInit, OnDestroy {
   private updateCanUndo() {
     if (this.gameId) {
       this.gameService.canUndo(this.gameId).subscribe(canUndo => {
-        console.log('canUndo from backend:', canUndo);
         this.canUndoBackend = canUndo;
       });
     } else {

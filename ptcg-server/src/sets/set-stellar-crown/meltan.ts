@@ -11,7 +11,7 @@ export class Meltan extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
-  public retreat = [C, C, C];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Knickknack Carrying',

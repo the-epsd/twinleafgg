@@ -14,8 +14,6 @@ export class UserInfoPaneComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.user && changes.user.currentValue) {
-      console.log('[DEBUG] UserInfoPane received user data:', changes.user.currentValue);
-      console.log('[DEBUG] UserInfoPane custom avatar data:', changes.user.currentValue.customAvatar);
     }
   }
 

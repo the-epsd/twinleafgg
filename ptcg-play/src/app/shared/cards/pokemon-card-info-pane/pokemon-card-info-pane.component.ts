@@ -174,8 +174,6 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
     if (this.isSelectionMode) {
       return;
     }
-
-    console.log('Action clicked:', action);
     // Emit the action with the cardList
     this.action.emit({
       ...action,
@@ -184,13 +182,6 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    console.log('PokemonCardInfoPane received:', {
-      cardList: this.cardList,
-      mainCard: this.getMainCard(),
-      powers: this.getDisplayPowers(),
-      attacks: this.getDisplayAttacks()
-    });
-
     if (this.options.enableAbility) {
       this.enabledAbilities = this.buildEnabledAbilities();
     }
@@ -240,8 +231,6 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
     if (this.cardList.energyCards && this.cardList.energyCards.length > 0) {
       this.availableEnergy[CardType.COLORLESS] = (this.availableEnergy[CardType.COLORLESS] || 0) + this.cardList.energyCards.length;
     }
-
-    console.log('Available energy:', this.availableEnergy);
   }
 
   // Check if an attack cost is met
