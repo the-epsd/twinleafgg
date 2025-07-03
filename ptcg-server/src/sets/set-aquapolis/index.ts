@@ -2,8 +2,10 @@ import { Card } from '../../game/store/card/card';
 import { Blissey } from './blissey';
 import { BoostEnergy } from './boost-energy';
 import { Chansey } from './chansey';
+import { Chinchou } from './chinchou';
 import { Eevee } from './eevee';
 import { Espeon } from './espeon';
+import { Gloom } from './gloom';
 import { Horsea } from './horsea';
 import { Kingdra } from './kingdra';
 import { Lugia } from './lugia';
@@ -26,8 +28,10 @@ export const setAquapolis: Card[] = [
   new Blissey(),
   new BoostEnergy(),
   new Chansey(),
+  new Chinchou(),
   new Eevee(),
   new Espeon(),
+  new Gloom(),
   new Horsea(),
   new Kingdra(),
   new Lugia(),

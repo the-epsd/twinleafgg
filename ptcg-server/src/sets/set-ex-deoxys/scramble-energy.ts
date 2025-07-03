@@ -36,11 +36,12 @@ export class ScrambleEnergy extends EnergyCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
-        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY, CardType.ANY] });
-      } else {
-        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
-      }
+      const provides = player.getPrizeLeft() > opponent.getPrizeLeft()
+        ? [CardType.ANY, CardType.ANY, CardType.ANY]
+        : [CardType.COLORLESS];
+
+      effect.energyMap.push({ card: this, provides });
+      return state;
     }
 
     // Discard card when not attached to Evolved Pokemon or pokemon-ex

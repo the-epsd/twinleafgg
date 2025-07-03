@@ -9,6 +9,7 @@ import { Magneton } from './magneton';
 import { MrMime } from './mr-mime';
 import { Octillery } from './octillery';
 import { ParallelCity } from './parallel-city';
+import { Raikou } from './raikou';
 import { TownMap } from './town-map';
 import { BurningEnergy } from './burning-energy';
 
@@ -22,7 +23,8 @@ export const setBreakthrough: Card[] = [
   new Haunter(),
   new Magnemite(),
   new MrMime(),
-  new TownMap(),
   new Octillery(),
-  new ParallelCity()
+  new ParallelCity(),
+  new Raikou(),
+  new TownMap(),
 ];

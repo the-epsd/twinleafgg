@@ -38,6 +38,7 @@ import { Sandslash } from './sandslash';
 import { Seadra } from './seadra';
 import { Shellder } from './shellder';
 import { Slowpoke } from './slowpoke';
+import { Tentacool } from './tentacool';
 import { Tentacruel } from './tentacruel';
 import { Weezing } from './weezing';
 import { Zapdos } from './zapdos';
@@ -84,6 +85,7 @@ export const setFossil: Card[] = [
   new Seadra(),
   new Shellder(),
   new Slowpoke(),
+  new Tentacool(),
   new Tentacruel(),
   new Weezing(),
   new Zapdos(),

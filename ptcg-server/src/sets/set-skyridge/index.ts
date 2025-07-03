@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { BuriedFossil } from './buried-fossil';
 import { DesertShaman } from './desert-shaman';
 import { Ditto } from './ditto';
+import { FastBall } from './fast-ball';
 import { Flareon } from './flareon';
 import { FriendBall } from './friend-ball';
 import { Haunter } from './haunter';
@@ -19,6 +20,7 @@ export const setSkyridge: Card[] = [
   new BuriedFossil(),
   new DesertShaman(),
   new Ditto(),
+  new FastBall(),
   new Flareon(),
   new FriendBall(),
   new Haunter(),

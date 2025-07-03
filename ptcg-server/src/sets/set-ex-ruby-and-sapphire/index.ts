@@ -7,6 +7,7 @@ import { Gardevoir } from './gardevoir';
 import { Kirlia } from './kirlia';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
+import { OranBerry } from './oran-berry';
 import { PokeNav } from './pokenav';
 import { Ralts } from './ralts';
 import { Sceptile } from './sceptile';
@@ -17,8 +18,11 @@ import { Torchic } from './torchic';
 import { Blaziken } from './blaziken';
 
 // Other Prints
-import { MetalEnergySpecialRS } from './other-prints';
-import { RainbowEnergyRS } from './other-prints';
+import {
+  EnergySwitchRS,
+  MetalEnergySpecialRS,
+  RainbowEnergyRS
+} from './other-prints';
 
 export const setEXRubyAndSapphire: Card[] = [
   new Combusken(),
@@ -28,6 +32,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new Kirlia(),
   new Marshtomp(),
   new Mudkip(),
+  new OranBerry(),
   new PokeNav(),
   new Ralts(),
   new Sceptile(),
@@ -46,6 +51,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new FightingEnergy(),
 
   // Other Prints
+  new EnergySwitchRS(),
   new MetalEnergySpecialRS(),
   new RainbowEnergyRS(),
 ]; 

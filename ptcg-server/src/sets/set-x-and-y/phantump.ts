@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { MOVE_CARD_TO, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARD_TO, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Phantump extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,6 +42,7 @@ export class Phantump extends PokemonCard {
       if (opponent.hand.cards.length > 0) {
         const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
         const randomCard = opponent.hand.cards[randomIndex];
+        SHOW_CARDS_TO_PLAYER(store, state, player, [randomCard]);
         MOVE_CARD_TO(state, randomCard, opponent.deck);
         SHUFFLE_DECK(store, state, opponent);
       }

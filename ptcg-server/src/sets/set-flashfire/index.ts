@@ -1,11 +1,14 @@
 import { Card } from '../../game/store/card/card';
 import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
+import { Duskull } from './duskull';
 import { FieryTorch } from './fiery-torch';
+import { KangaskhanEX } from './kangaskhan-ex';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';
-import {MagneticStorm} from './magnetic-storm';
+import { MKangaskhanEX } from './m-kangaskhan-ex';
+import { MagneticStorm } from './magnetic-storm';
 import { Milotic } from './milotic';
 import { Miltank } from './miltank';
 import { Pidgey } from './pidgey';
@@ -23,10 +26,13 @@ import { TrickShovel } from './trick-shovel';
 export const setFlashfire: Card[] = [
   new Blacksmith(),
   new Dragalge(),
+  new Duskull(),
   new FieryTorch(),
+  new KangaskhanEX(),
   new Litleo(),
   new Lysandre(),
   new MCharizardEX(),
+  new MKangaskhanEX(),
   new Milotic(),
   new Miltank(),
   new Pidgey(),

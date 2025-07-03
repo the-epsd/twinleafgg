@@ -5,14 +5,15 @@ import { Bronzong } from './bronzong';
 import { Bronzor } from './bronzor';
 import { Crobat } from './crobat';
 import { DimensionValley } from './dimension-valley';
-import {GengarEx} from './gengar-ex';
-import {GengarSpiritLink} from './gengar-spirit-link';
+import { GengarEx } from './gengar-ex';
+import { GengarSpiritLink } from './gengar-spirit-link';
 import { Golbat } from './golbat';
+import { Hydreigon } from './hydreigon';
 import { Joltik } from './joltik';
 import { Lampent } from './lampent';
 import { Litwick } from './litwick';
 import { LysandresTrumpCard } from './lysandres-trump-card';
-import {MGengarEx} from './mega-gengar-ex';
+import { MGengarEx } from './mega-gengar-ex';
 import { MysteryEnergy } from './mystery-energy';
 import { Pumpkaboo } from './pumpkaboo';
 import { Pyroar } from './pyroar';
@@ -24,6 +25,7 @@ import { Swirlix } from './swirlix';
 import { TargetWhistle } from './target-whistle';
 import { VsSeeker } from './vs-seeker';
 import { Wobbuffet } from './wobbuffet';
+import { Xerosic } from './xerosic';
 
 export const setPhantomForces: Card[] = [
   new AZ(),
@@ -33,6 +35,7 @@ export const setPhantomForces: Card[] = [
   new Crobat(),
   new DimensionValley(),
   new Golbat(),
+  new Hydreigon(),
   new Joltik(),
   new Lampent(),
   new Litwick(),
@@ -51,4 +54,5 @@ export const setPhantomForces: Card[] = [
   new GengarEx(),
   new MGengarEx(),
   new GengarSpiritLink(),
+  new Xerosic(),
 ];

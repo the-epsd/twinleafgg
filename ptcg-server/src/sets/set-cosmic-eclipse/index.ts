@@ -21,6 +21,7 @@ import { Golett } from './golett';
 import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
+import { Koffing } from './koffing';
 import { LanasFishingRod } from './lanas-fishing-rod';
 import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
@@ -43,6 +44,7 @@ import { Sunkern } from './sunkern';
 import { Swirlix } from './swirlix';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
+import { Weezing } from './weezing';
 import { Wishiwashi } from './wishiwashi';
 import { BlastoisePiplupGX } from './blastoise-piplup-gx';
 import { CharizardBraixenGX } from './charizard-braixen-gx';
@@ -91,6 +93,7 @@ export const setCosmicEclipse: Card[] = [
   new GreatCatcher(),
   new GuzmaAndHala(),
   new Guzzlord(),
+  new Koffing(),
   new LanasFishingRod(),
   new Lanturn(),
   new LilliesFullForce(),
@@ -123,6 +126,7 @@ export const setCosmicEclipse: Card[] = [
   new TogepiCleffaIgglybuffGX(),
   new UltraNecrozma(),
   new VileplumeGX(),
+  new Weezing(),
   new Wishiwashi(),
   new Woobat(),
   new VenusaurSnivyGX(),

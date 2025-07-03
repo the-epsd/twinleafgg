@@ -49,10 +49,10 @@ export class Exeggutor extends PokemonCard {
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
-      // Count only energies that provide [W]
+      // Count total energy provided by all attached energy cards
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount++;
+        energyCount += em.provides.length;
       });
 
       effect.damage = 0;

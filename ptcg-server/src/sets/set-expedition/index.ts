@@ -9,6 +9,7 @@ import { Clefairy } from './clefairy';
 import { Dragonair } from './dragonair';
 import { Dragonite } from './dragonite';
 import { Dratini } from './dratini';
+import { FullHeal } from './full-heal';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar';
 import { Ivysaur } from './ivysaur';
@@ -17,12 +18,16 @@ import { PokemonNurse } from './pokemon-nurse';
 import { Venusaur } from './venusaur';
 
 // Other prints
-import { CopycatEX } from './other-prints';
-import { EnergySearchEX } from './other-prints';
-import { PokemonReversalEX } from './other-prints';
-import { ProfessorElmsTrainingMethodEX } from './other-prints';
-import { ProfessorOaksResearchEX } from './other-prints';
-import { SwitchEX } from './other-prints';
+import {
+  CopycatEX,
+  DualBallEX,
+  EnergySearchEX,
+  PokemonReversalEX,
+  ProfessorElmsTrainingMethodEX,
+  ProfessorOaksResearchEX,
+  StrengthCharmEX,
+  SwitchEX,
+} from './other-prints';
 
 export const setExpedition: Card[] = [
   new Bulbasaur(),
@@ -34,6 +39,7 @@ export const setExpedition: Card[] = [
   new Dragonair(),
   new Dragonite(),
   new Dratini(),
+  new FullHeal(),
   new Gastly(),
   new Gengar(),
   new Ivysaur(),
@@ -43,10 +49,12 @@ export const setExpedition: Card[] = [
 
   // Other prints
   new CopycatEX(),
+  new DualBallEX(),
   new EnergySearchEX(),
   new PokemonReversalEX(),
   new ProfessorElmsTrainingMethodEX(),
   new ProfessorOaksResearchEX(),
+  new StrengthCharmEX(),
   new SwitchEX(),
 
   // Basic energies

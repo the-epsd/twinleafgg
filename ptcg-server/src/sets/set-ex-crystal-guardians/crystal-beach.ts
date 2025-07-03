@@ -16,20 +16,18 @@ export class CrystalBeach extends TrainerCard {
   public text = 'Each Special Energy card that provides 2 or more Energy (both yours and your opponent\'s) now provides only 1 [C] Energy. This isn\'t affected by any Poké-Powers or Poké-Bodies.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (StateUtils.getStadiumCard(state) === this) {
 
-      if (effect instanceof UseStadiumEffect) {
-        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
-      }
+    // Energies that provide 2 or more provide [C]
+    if (effect instanceof CheckProvidedEnergyEffect && StateUtils.getStadiumCard(state) === this) {
+      effect.energyMap.forEach((value) => {
+        if (value.provides.length >= 2) {
+          value.provides = [CardType.COLORLESS];
+        }
+      });
+    }
 
-      // Energies that provide 2 or more provide [C]
-      if (effect instanceof CheckProvidedEnergyEffect) {
-        effect.energyMap.forEach((value) => {
-          if (value.provides.length >= 2) {
-            value.provides = [CardType.COLORLESS];
-          }
-        });
-      }
+    if (effect instanceof UseStadiumEffect && effect.stadium === this) {
+      throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
     return state;

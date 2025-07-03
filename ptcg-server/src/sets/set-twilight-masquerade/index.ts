@@ -85,6 +85,7 @@ import { SecretBox } from './secret-box';
 import { Sinistcha } from './sinistcha';
 import { Sinistchaex } from './sinistcha-ex';
 import { Slugma } from './slugma';
+import { Snorunt } from './snorunt';
 import { Sunkern } from './sunkern';
 import { SurvivalCast } from './survival-cast';
 import { Tatsugiri } from './tatsugiri';
@@ -183,6 +184,7 @@ export const setTwilightMasquerade: Card[] = [
   new Sinistcha(),
   new Sinistchaex(),
   new Slugma(),
+  new Snorunt(),
   new Magcargoex(),
   new Abra(),
   new Kadabra(),
