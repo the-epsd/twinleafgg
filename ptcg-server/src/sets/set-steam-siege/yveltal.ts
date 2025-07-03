@@ -2,57 +2,43 @@ import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, Stat
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-export class Duraludon extends PokemonCard {
-
+export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = D;
   public hp: number = 130;
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.FIRE }];
+  public attacks = [{
+    name: 'Oblivion Wing',
+    cost: [D],
+    damage: 30,
+    text: 'Attach a [D] Energy card from your discard pile to 1 of your Benched Pokémon.'
+  },
+  {
+    name: 'Darkness Blade',
+    cost: [D, D, C],
+    damage: 100,
+    text: 'Flip a coin. If tails, this Pokémon can\'t attack during your next turn.'
+  }];
 
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Metal Sharpener',
-      cost: [CardType.COLORLESS],
-      damage: 30,
-      text: 'Attach a [M] Energy card from your discard pile to 1 of your Pokémon.'
-    },
-    {
-      name: 'Power Beam',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      damage: 110,
-      text: ''
-    }
-  ];
-
-  public set: string = 'RCL';
-
+  public set: string = 'STS';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '138';
-
-  public regulationMark = 'D';
-
-  public name: string = 'Duraludon';
-
-  public fullName: string = 'Duraludon RCL';
+  public setNumber: string = '65';
+  public name: string = 'Yveltal';
+  public fullName: string = 'Yveltal STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-          && c.provides.includes(CardType.METAL);
+          && c.provides.includes(CardType.DARK);
       });
 
       if (!hasEnergyInDiscard) {
@@ -64,8 +50,8 @@ export class Duraludon extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, name: 'Metal Energy' },
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, name: 'Darkness Energy' },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];

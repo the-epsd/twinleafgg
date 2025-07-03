@@ -11,7 +11,7 @@ export class ScrambleEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
-  
+
   public set: string = 'DX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
@@ -35,9 +35,8 @@ export class ScrambleEnergy extends EnergyCard {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const attachedTo = effect.source;
 
-      if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft()) {
+      if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
         effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY, CardType.ANY] });
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });

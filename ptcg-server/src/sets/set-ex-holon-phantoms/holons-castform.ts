@@ -25,7 +25,7 @@ export class HolonsCastform extends PokemonCard {
     name: 'Delta Draw',
     cost: [C],
     damage: 0,
-    text: 'Count the number of Pokémon you have in play that has δ on its card. Draw up to that many cards.'
+    text: 'Count the number of Pokémon you have in play that has delta on its card. Draw up to that many cards.'
   }];
 
   public set: string = 'HP';

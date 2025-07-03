@@ -24,7 +24,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
     const blocked: number[] = [];
     player.deck.cards.forEach((card, index) => {
-      if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_EX) || card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_ex)) {
+      if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_EX) || card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.PRISM_STAR)) {
         blocked.push(index);
       }
     });

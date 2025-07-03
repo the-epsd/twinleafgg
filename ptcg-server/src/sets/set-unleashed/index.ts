@@ -1,9 +1,12 @@
 import { Card } from '../../game/store/card/card';
+import { Crobat } from './crobat-prime';
 import { DualBall } from './dual-ball';
+import { Golbat } from './golbat';
 import { Horsea } from './horsea';
 import { Kingdra } from './kingdra';
 import { Seadra } from './seadra';
 import { Shaymin } from './shaymin';
+import { Zubat } from './zubat';
 
 // Other prints
 import {
@@ -13,11 +16,14 @@ import {
 } from './other-prints';
 
 export const setUnleashed: Card[] = [
+  new Crobat(),
   new DualBall(),
+  new Golbat(),
   new Horsea(),
   new Kingdra(),
   new Seadra(),
   new Shaymin(),
+  new Zubat(),
 
   // Other prints
   new JudgeUL(),

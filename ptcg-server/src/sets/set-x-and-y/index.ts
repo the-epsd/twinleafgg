@@ -8,6 +8,7 @@ import { Evosoda } from './evosoda';
 import { Fennekin } from './fennekin';
 import { Greninja } from './greninja';
 import { MuscleBand } from './muscle-band';
+import { Phantump } from './phantump';
 import { Pikachu } from './pikachu';
 import { ProfessorsLetter } from './professors-letter';
 import { Raichu } from './raichu';
@@ -26,6 +27,7 @@ export const setXY: Card[] = [
   new Evosoda(),
   new Greninja(),
   new MuscleBand(),
+  new Phantump(),
   new Pikachu(),
   new ProfessorsLetter(),
   new Raichu(),

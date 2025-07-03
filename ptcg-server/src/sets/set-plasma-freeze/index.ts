@@ -5,12 +5,15 @@ import { DeoxysEX } from './deoxys-ex';
 import { Electrode } from './electrode';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
+import { Eevee } from './eevee';
+import { Eevee2 } from './eevee2';
 import { Flareon } from './flareon';
 import { FloatStone } from './float-stone';
 import { FrozenCity } from './frozen-city';
 import { Ghetsis } from './ghetsis';
 import { Kyurem } from './kyurem';
 import { LatiasEX } from './latias-ex';
+import { Leafeon } from './leafeon';
 import { LifeDew } from './life-dew';
 import { MrMime } from './mr-mime';
 import { RockGuard } from './rock-guard';
@@ -27,12 +30,15 @@ export const setPlasmaFreeze: Card[] = [
   new Electrode(),
   new Exeggcute(),
   new Exeggutor(),
+  new Eevee(),
+  new Eevee2(),
   new Flareon(),
   new FloatStone(),
   new FrozenCity(),
   new Ghetsis(),
   new Kyurem(),
   new LatiasEX(),
+  new Leafeon(),
   new LifeDew(),
   new MrMime(),
   new RockGuard(),
