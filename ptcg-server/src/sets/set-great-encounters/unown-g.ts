@@ -4,11 +4,12 @@ import {
   PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
   PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
 } from '../../game';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-function* usePower(next: Function, store: StoreLike, state: State, self: UnownE, effect: PowerEffect): IterableIterator<State> {
+function* usePower(next: Function, store: StoreLike, state: State, self: UnownG, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
   const cardList = StateUtils.findCardList(state, self);
 
@@ -57,7 +58,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownE,
   });
 }
 
-export class UnownE extends PokemonCard {
+export class UnownG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 50;
@@ -65,43 +66,76 @@ export class UnownE extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'EQUIP',
+    name: 'GUARD',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), if Unown E is on your Bench, you may discard all cards attached to Unown E and attach Unown E to 1 of your Pokémon as a Pokémon Tool card. As long as Unown E is attached to a Pokémon, that Pokémon gets +10 HP.'
+    text: 'Once during your turn (before your attack), if Unown G is on your Bench, you may discard all cards attached to Unown G and attach Unown G to 1 of your Pokémon as a Pokémon Tool card. As long as Unown G is attached to a Pokémon, prevent all effects of attacks, excluding damage, done to that Pokémon.'
   }];
 
   public attacks = [{
     name: 'Hidden Power',
-    cost: [C, C],
-    damage: 0,
-    text: '**THIS ATTACK DOES NOT WORK LIL BRO**\n\nDuring your opponent\'s next turn, whenever your opponent flips a coin, treat it as tails.'
+    cost: [P, C],
+    damage: 50,
+    text: 'If Unown G has any damage counters on it, this attack\'s base damage is 10.'
   }];
 
-  public set: string = 'MT';
-  public name: string = 'Unown [E]';
-  public fullName: string = 'Unown [E] MT';
+  public set: string = 'GE';
+  public name: string = 'Unown [G]';
+  public fullName: string = 'Unown [G] GE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '65';
+  public setNumber: string = '57';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = usePower(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() !== this) {
-      const card = effect.target.getPokemonCard();
+    if (effect instanceof AttackEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() !== this) {
+      const pokemonCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
 
-      if (card === undefined) {
+      if (pokemonCard !== this) {
         return state;
       }
 
-      if (card.stage === Stage.BASIC) {
-        effect.hp += 10;
-        effect.target.hpBonus = (effect.target.hpBonus || 0) + 10;
+      if (sourceCard) {
+        // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const player = StateUtils.findOwner(state, effect.target);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
+        // Allow damage
+        if (effect instanceof PutDamageEffect) {
+          return state;
+        }
+        // Allow damage
+        if (effect instanceof DealDamageEffect) {
+          return state;
+        }
+
+        effect.preventDefault = true;
       }
-      return state;
+    }
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      if (effect.player.active.damage > 0) {
+        effect.damage = 10;
+      }
     }
 
     return state;

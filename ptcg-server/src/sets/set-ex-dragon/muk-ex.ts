@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_POISON_TO_PLAYER_ACTIVE, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -10,6 +10,7 @@ import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 export class Mukex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 100;
   public weakness = [{ type: P }];

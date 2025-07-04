@@ -13,6 +13,9 @@ import { SpeedStadium } from './speed-stadium';
 import { SuperScoopUp } from './super-scoop-up';
 import { Wynaut } from './wynaut';
 
+// Other prints
+import { SwitchDP } from './other-prints';
+
 export const setDiamondAndPearl: Card[] = [
   new Chimchar(),
   new Cleffa(),
@@ -26,6 +29,9 @@ export const setDiamondAndPearl: Card[] = [
   new SpeedStadium(),
   new SuperScoopUp(),
   new Wynaut(),
+
+  // Other prints
+  new SwitchDP(),
 
   // Basic energies
   new GrassEnergy(),

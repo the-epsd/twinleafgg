@@ -20,6 +20,12 @@ export class Haunter extends PokemonCard {
     cost: [P],
     damage: 0,
     text: 'Put 2 damage counter on 1 of your opponent\'s Pokémon.'
+  },
+  {
+    name: 'Sleep Poison',
+    cost: [C, C],
+    damage: 0,
+    text: 'The Defending Pokémon is now Asleep and Poisoned.'
   }];
 
   public set: string = 'TM';

@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
 import { Accelgor } from './accelgor';
-import { DarkPatchDEX, EnhancedHammerDEX } from './other-prints';
 import { DarkClaw } from './dark-claw';
 import { DarkraiEx } from './darkrai-ex';
 import { Empoleon } from './empoleon';
@@ -19,13 +18,17 @@ import { Tynamo } from './tynamo';
 import { Yamask } from './yamask';
 import { Zorua } from './zorua';
 
+import {
+  DarkPatchDEX,
+  EnhancedHammerDEX,
+  RareCandyDEX,
+} from './other-prints';
+
 export const setDarkExplorers: Card[] = [
   new Accelgor(),
   new DarkClaw(),
-  new DarkPatchDEX(),
   new DarkraiEx(),
   new Empoleon(),
-  new EnhancedHammerDEX(),
   new Gardevoir(),
   new Ivysaur(),
   new Minun(),
@@ -40,4 +43,9 @@ export const setDarkExplorers: Card[] = [
   new Tynamo(),
   new Yamask(),
   new Zorua(),
+
+  // Other Prints
+  new DarkPatchDEX(),
+  new EnhancedHammerDEX(),
+  new RareCandyDEX(),
 ];

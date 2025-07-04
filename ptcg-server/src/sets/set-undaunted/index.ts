@@ -7,7 +7,10 @@ import { Gloom } from './gloom';
 import { KyogreAndGroudonLegendBottom } from './kyogre-and-groudon-legend-bottom';
 import { KyogreAndGroudonLegendTop } from './kyogre-and-groudon-legend-top';
 import { MetalEnergySpecial } from './metal-energy-special';
+import { Misdreavus } from './misdreavus';
 import { Oddish } from './oddish';
+import { RayquazaAndDeoxysLegendBottom } from './rayquaza-and-deoxys-legend-bottom';
+import { RayquazaAndDeoxysLegendTop } from './rayquaza-and-deoxys-legend-top';
 import { Rotom } from './rotom';
 import { Scizor } from './scizor-prime';
 import { Scyther } from './scyther';
@@ -25,7 +28,10 @@ export const setUndaunted: Card[] = [
   new KyogreAndGroudonLegendBottom(),
   new KyogreAndGroudonLegendTop(),
   new MetalEnergySpecial(),
+  new Misdreavus(),
   new Oddish(),
+  new RayquazaAndDeoxysLegendBottom(),
+  new RayquazaAndDeoxysLegendTop(),
   new Rotom(),
   new Scizor(),
   new Scyther(),

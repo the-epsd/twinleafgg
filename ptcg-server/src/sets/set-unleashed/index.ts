@@ -4,6 +4,7 @@ import { DualBall } from './dual-ball';
 import { Golbat } from './golbat';
 import { Horsea } from './horsea';
 import { Kingdra } from './kingdra';
+import { PokemonCirculator } from './pokemon-circulator';
 import { Seadra } from './seadra';
 import { Shaymin } from './shaymin';
 import { Zubat } from './zubat';
@@ -21,6 +22,7 @@ export const setUnleashed: Card[] = [
   new Golbat(),
   new Horsea(),
   new Kingdra(),
+  new PokemonCirculator(),
   new Seadra(),
   new Shaymin(),
   new Zubat(),

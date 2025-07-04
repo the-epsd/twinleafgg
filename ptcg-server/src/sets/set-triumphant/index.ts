@@ -21,6 +21,7 @@ import { RescueEnergy } from './rescue-energy';
 import { Seeker } from './seeker';
 import { Spiritomb } from './spiritomb';
 import { Twins } from './twins';
+import { Unown } from './unown';
 import { Yanma } from './yanma';
 import { Yanmega } from './yanmega-prime';
 
@@ -47,6 +48,7 @@ export const setTriumphant: Card[] = [
   new Seeker(),
   new Spiritomb(),
   new Twins(),
+  new Unown(),
   new Yanma(),
   new Yanmega(),
 

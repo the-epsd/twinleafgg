@@ -15,7 +15,10 @@ import { Skitty } from './skitty';
 import { StevensAdvice } from './stevens-advice';
 
 // Other prints
-import { EnergySwitchPK } from './other-prints';
+import {
+  DelcattyPK,
+  EnergySwitchPK
+} from './other-prints';
 
 export const setEXPowerKeepers: Card[] = [
   new Absolex(),
@@ -33,6 +36,7 @@ export const setEXPowerKeepers: Card[] = [
   new StevensAdvice(),
 
   // Other prints
+  new DelcattyPK(),
   new EnergySwitchPK(),
 
   // Basic energies
