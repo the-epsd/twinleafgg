@@ -1,5 +1,6 @@
 import { Copycat } from "../set-ex-dragon-frontiers/copycat";
 import { DualBall } from "../set-unleashed/dual-ball";
+import { EnergyRemoval2 } from "../set-ex-power-keepers/energy-removal-2";
 import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
 import { PokemonReversal } from "../set-ex-unseen-forces/pokemon-reversal";
 import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
@@ -19,6 +20,13 @@ export class DualBallEX extends DualBall {
   public set = 'EX';
   public setNumber = '139';
   public text = 'Flip 2 coins. For each heads, search your deck for a Basic Pokémon, show it to your opponent, and put it into your hand. If you do, shuffle your deck afterward.';
+}
+
+export class EnergyRemoval2EX extends EnergyRemoval2 {
+  public fullName = 'Energy Removal 2 EX';
+  public set = 'EX';
+  public setNumber = '140';
+  public text = 'Flip a coin. If heads, choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';
 }
 
 export class EnergySearchEX extends EnergySearch {

@@ -4,6 +4,7 @@ import { Feebas } from './feebas';
 import { LumBerry } from './lum-berry';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
+import { ProfessorBirch } from './professor-birch';
 import { Scott } from './scott';
 
 export const setEXEmerald: Card[] = [
@@ -11,6 +12,7 @@ export const setEXEmerald: Card[] = [
   new LumBerry(),
   new Medichamex(),
   new Meditite(),
+  new ProfessorBirch(),
   new Scott(),
 
   // Basic energies

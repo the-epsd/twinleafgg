@@ -21,6 +21,7 @@ import { Venusaur } from './venusaur';
 import {
   CopycatEX,
   DualBallEX,
+  EnergyRemoval2EX,
   EnergySearchEX,
   PokemonReversalEX,
   ProfessorElmsTrainingMethodEX,
@@ -51,6 +52,7 @@ export const setExpedition: Card[] = [
   new CopycatEX(),
   new DualBallEX(),
   new EnergySearchEX(),
+  new EnergyRemoval2EX(),
   new PokemonReversalEX(),
   new ProfessorElmsTrainingMethodEX(),
   new ProfessorOaksResearchEX(),
