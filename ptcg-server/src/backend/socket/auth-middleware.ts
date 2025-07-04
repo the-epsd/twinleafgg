@@ -58,11 +58,16 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
         if (needsValidationUpdate) {
           deck.isValid = newIsValid;
         }
+        console.log(`[Migration] Saving changes for deck "${deck.name}" (User: ${user.name}) to database.`);
         await deck.save();
       }
     }
+
+    if (hasChanges) {
+      console.log(`[Migration] Finished updating decks for user ${user.name} (ID: ${userId}).`);
+    }
   } catch (error) {
-    console.error(`Error updating decks for user ${userId}:`, error);
+    console.error(`[Migration] Error updating decks for user ${userId}:`, error);
   }
   // --- End Deck Migration Logic ---
 
