@@ -23,6 +23,9 @@ import { StartlingMegaphone } from './startling-megaphone';
 import { ToxicroakEx } from './toxicroak-ex';
 import { TrickShovel } from './trick-shovel';
 
+// Other Prints
+import { PokemonFanClubFLF } from './other-prints';
+
 export const setFlashfire: Card[] = [
   new Blacksmith(),
   new Dragalge(),
@@ -47,4 +50,7 @@ export const setFlashfire: Card[] = [
   new ToxicroakEx(),
   new TrickShovel(),
   new MagneticStorm(),
+
+  // Other Prints
+  new PokemonFanClubFLF(),
 ];
