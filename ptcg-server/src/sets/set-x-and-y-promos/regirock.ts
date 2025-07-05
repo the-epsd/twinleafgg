@@ -15,7 +15,7 @@ export class Regirock extends PokemonCard {
   public retreat = [C, C, C];
 
   public powers = [{
-    name: 'Omega Barrier',
+    name: 'Ω Barrier',
     powerType: PowerType.ANCIENT_TRAIT,
     text: 'Whenever your opponent plays a Trainer card (excluding Pokémon Tools and Stadium cards), prevent all effects of that card done to this Pokémon.'
   }];

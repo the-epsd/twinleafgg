@@ -9,6 +9,10 @@ import { Haunter } from './haunter';
 import { Kabuto } from './kabuto';
 import { Lapras } from './lapras';
 import { Moltres } from './moltres';
+import { MysteryPlateAlpha } from './mystery-plate-alpha';
+import { MysteryPlateBeta } from './mystery-plate-beta';
+import { MysteryPlateDelta } from './mystery-plate-delta';
+import { MysteryPlateGamma } from './mystery-plate-gamma';
 import { Oracle } from './oracle';
 import { RelicHunter } from './relic-hunter';
 import { UndergroundExpedition } from './underground-expedition';
@@ -27,6 +31,10 @@ export const setSkyridge: Card[] = [
   new Kabuto(),
   new Lapras(),
   new Moltres(),
+  new MysteryPlateAlpha(),
+  new MysteryPlateBeta(),
+  new MysteryPlateDelta(),
+  new MysteryPlateGamma(),
   new Oracle(),
   new RelicHunter(),
   new UndergroundExpedition(),
