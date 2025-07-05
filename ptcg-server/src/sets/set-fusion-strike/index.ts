@@ -50,6 +50,10 @@ import { Trubbish } from './trubbish';
 import { TsareenaV } from './tsareena-v';
 import { Yveltal } from './yveltal';
 
+// Other prints
+import {
+  QuickBallFST,
+} from './other-prints';
 
 export const setFusionStrike: Card[] = [
 
@@ -103,4 +107,7 @@ export const setFusionStrike: Card[] = [
   new Swampert(),
   new Totodile(),
   new Trubbish(),
+
+  // Other prints
+  new QuickBallFST(),
 ];

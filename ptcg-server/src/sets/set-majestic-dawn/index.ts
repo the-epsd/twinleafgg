@@ -4,6 +4,7 @@ import { Bronzor } from './bronzor';
 import { CallEnergy } from './call-energy';
 import { Chatot } from './chatot';
 import { Croagunk } from './croagunk';
+import { Darkrai } from './darkrai';
 import { Empoleon } from './empoleon';
 import { Prinplup } from './prinplup';
 import { QuickBall } from './quick-ball';
@@ -22,6 +23,7 @@ export const setMajesticDawn: Card[] = [
   new CallEnergy(),
   new Chatot(),
   new Croagunk(),
+  new Darkrai(),
   new Empoleon(),
   new Prinplup(),
   new QuickBall(),
