@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Brigette } from './brigette';
 import { BuddyBuddyRescue } from './buddy-buddy-rescue';
 import { Florges } from './florges';
+import { Gallade } from './gallade';
 import { Gengar } from './gengar';
 import { Haunter } from './haunter';
 import { Magnemite } from './magnemite';
@@ -17,6 +18,7 @@ export const setBreakthrough: Card[] = [
   new Brigette(),
   new BurningEnergy(),
   new BuddyBuddyRescue(),
+  new Gallade(),
   new Magneton(),
   new Florges(),
   new Gengar(),
