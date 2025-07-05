@@ -9,7 +9,7 @@ export class Base64 {
   public decode(s: string): string {
     // Decode base64 to bytes, then interpret as UTF-8 string
     const binary = atob(s);
-    const bytes = Uint8Array.from(binary, (b) => b.codePointAt(0))
+    const bytes = Uint8Array.from(binary, (b) => b.charCodeAt(0));
     return new TextDecoder().decode(bytes);
   }
 }
