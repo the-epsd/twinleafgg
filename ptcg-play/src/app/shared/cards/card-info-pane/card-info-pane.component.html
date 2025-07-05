@@ -16,7 +16,7 @@
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-hp">
         <span class="subtitle-hp-unit" translate>CARDS_HP</span>
-        <span class="subtitle-hp-value">{{card.hp}}</span>
+        <span class="subtitle-hp-value">{{getCurrentHp()}}/{{getComputedHp()}}</span>
       </div>
       <div class="subtitle-card-type">
         <ptcg-energy [type]="card.cardType" style="transform: translateY(12px);"></ptcg-energy>
@@ -119,6 +119,9 @@
       </ptcg-hover-highlight>
     </div>
 
+    <!-- <div *ngIf="card.superType === SuperType.POKEMON">
+      <span>Current HP: {{ getCurrentHp() }}/{{ getComputedHp() }}</span>
+    </div> -->
 
     <div class="power" *ngIf="card.text">
       <div class="power-header">

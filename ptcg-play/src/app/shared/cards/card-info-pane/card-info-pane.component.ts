@@ -23,6 +23,14 @@ export interface CardInfoPaneAction {
   cardList?: PokemonCardList;
 }
 
+// Helper type guards for computedHp and hp
+function hasComputedHp(obj: any): obj is { computedHp: number } {
+  return obj && typeof obj.computedHp === 'number';
+}
+function hasHp(obj: any): obj is { hp: number | string } {
+  return obj && (typeof obj.hp === 'number' || typeof obj.hp === 'string');
+}
+
 @Component({
   selector: 'ptcg-card-info-pane',
   templateUrl: './card-info-pane.component.html',
@@ -84,6 +92,10 @@ export class CardInfoPaneComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    console.log('cardList in card-info-pane:', this.cardList);
+    if (this.cardList && (this.cardList as any).computedHp !== undefined) {
+      console.log('computedHp:', (this.cardList as any).computedHp);
+    }
     // Build map of enabled powers
     if (this.options.enableAbility) {
       this.enabledAbilities = this.buildEnabledAbilities();
@@ -228,6 +240,24 @@ export class CardInfoPaneComponent implements OnChanges {
     }
     // For Trainer and Energy, just return the card's own attacks
     return (this.card as any).attacks || [];
+  }
+
+  public getComputedHp(): number | null {
+    if (!this.card || this.card.superType !== SuperType.POKEMON) return null;
+    // Prefer computedHp from cardList, fallback to card.hp
+    if (this.cardList && hasComputedHp(this.cardList)) {
+      return this.cardList.computedHp;
+    }
+    if (hasHp(this.card)) {
+      return Number(this.card.hp) || 0;
+    }
+    return 0;
+  }
+
+  public getCurrentHp(): number | null {
+    const computedHp = this.getComputedHp();
+    const damage = (this.cardList && typeof this.cardList.damage === 'number') ? this.cardList.damage : 0;
+    return computedHp !== null ? Math.max(0, computedHp - damage) : null;
   }
 
 }
