@@ -10,6 +10,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { MOVE_CARD_TO, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Electrodeex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -48,6 +49,14 @@ export class Electrodeex extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.damage += 999;
+          const checkHpEffect = new CheckHpEffect(player, cardList);
+          store.reduceEffect(state, checkHpEffect);
+        }
+      });
+
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (card.tags.includes(CardTag.POKEMON_ex)) {
@@ -66,23 +75,10 @@ export class Electrodeex extends PokemonCard {
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
-        if (transfers.length === 0) {
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.damage += 999;
-              return state;
-            }
-          });
-        }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARD_TO(state, transfer.card, target);
         }
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.damage += 999;
-          }
-        });
       });
     }
 

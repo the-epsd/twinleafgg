@@ -7,6 +7,7 @@ import { PlayerType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Leafeonex extends PokemonCard {
 
@@ -26,7 +27,7 @@ export class Leafeonex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Leaf Typhoon',
+      name: 'Verdant Storm',
       cost: [G, C],
       damage: 60,
       text: 'This attack foes 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
@@ -48,16 +49,13 @@ export class Leafeonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Leaf Typhoon
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
-
       let energies = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
+        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
         checkProvidedEnergyEffect.energyMap.forEach(energy => {
           energies++;
@@ -72,10 +70,10 @@ export class Leafeonex extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (cardList === player.active){
+        if (cardList === player.active) {
           return;
         }
-        
+
         const healTargetEffect = new HealTargetEffect(effect, 100);
         healTargetEffect.target = cardList;
         state = store.reduceEffect(state, healTargetEffect);

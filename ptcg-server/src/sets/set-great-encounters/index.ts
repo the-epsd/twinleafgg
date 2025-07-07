@@ -7,8 +7,11 @@ import { FelicitysDrawing } from './felicitys-drawing';
 import { Floatzel } from './floatzel';
 import { Illumise } from './illumise';
 import { MoonlightStadium } from './moonlight-stadium';
+import { Porygon } from './porygon';
 import { PremierBall } from './premier-ball';
+import { UnownG } from './unown-g';
 import { Volbeat } from './volbeat';
+import { Weedle } from './weedle';
 
 // Other prints
 import { RareCandyGE } from './other-prints';
@@ -22,8 +25,11 @@ export const setGreatEncounters: Card[] = [
   new FelicitysDrawing(),
   new Illumise(),
   new MoonlightStadium(),
+  new Porygon(),
   new PremierBall(),
+  new UnownG(),
   new Volbeat(),
+  new Weedle(),
 
   // Other prints
   new RareCandyGE()

@@ -43,6 +43,10 @@ export class Game implements StoreHandler {
     return this.store.state;
   }
 
+  public getStore(): Store {
+    return this.store;
+  }
+
   public updateLastActivity(): void {
     this.lastActivity = Date.now();
   }

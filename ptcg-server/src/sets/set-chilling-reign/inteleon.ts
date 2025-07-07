@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, GameError, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
@@ -67,15 +67,9 @@ export class Inteleon extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.marker.hasMarker(this.QUICK_SHOOTING_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
       }
 
       return store.prompt(state, new ChoosePokemonPrompt(

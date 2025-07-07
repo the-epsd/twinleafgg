@@ -27,7 +27,7 @@ export class Jolteonex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Flash Spear',
+      name: 'Flashing Spear',
       cost: [L, C],
       damage: 60,
       damageCalculation: '+',

@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { DRAW_UP_TO_X_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
@@ -154,7 +154,7 @@ export class HolonsCastform extends PokemonCard {
         }
       });
 
-      DRAW_CARDS(player, deltasInPlay);
+      DRAW_UP_TO_X_CARDS(store, state, player, deltasInPlay);
     }
 
     return state;

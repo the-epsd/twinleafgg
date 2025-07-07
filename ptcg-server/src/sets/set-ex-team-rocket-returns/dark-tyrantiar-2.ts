@@ -54,7 +54,12 @@ export class DarkTyranitar2 extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergy);
 
       const damagePerEnergy = 10;
-      effect.damage += checkProvidedEnergy.energyMap.length * damagePerEnergy;
+      let energyCount = 0;
+      checkProvidedEnergy.energyMap.forEach(em => {
+        energyCount += em.provides.length;
+      });
+
+      effect.damage += energyCount * damagePerEnergy;
     }
 
     // Spinning Tail

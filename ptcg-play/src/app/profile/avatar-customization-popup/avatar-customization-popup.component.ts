@@ -68,7 +68,6 @@ export class AvatarCustomizationPopupComponent implements OnInit {
     this.loading = true;
     this.profileService.updateAvatar(this.avatar).subscribe({
       next: response => {
-        console.log('[DEBUG] Server response after save:', response);
         this.loading = false;
         this.dialogRef.close();
 

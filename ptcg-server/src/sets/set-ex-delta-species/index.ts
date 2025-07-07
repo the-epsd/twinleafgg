@@ -11,6 +11,7 @@ import { Eevee2 } from './eevee2';
 import { Flareonex } from './flareon-ex';
 import { Gardevoir } from './gardevoir';
 import { HolonEnergyFF } from './holon-energy-ff';
+import { HolonFarmer } from './holon-farmer';
 import { HolonLass } from './holon-lass';
 import { HolonMentor } from './holon-mentor';
 import { HolonRuins } from './holon-ruins';
@@ -53,6 +54,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Flareonex(),
   new Gardevoir(),
   new HolonEnergyFF(),
+  new HolonFarmer(),
   new HolonLass(),
   new HolonMentor(),
   new HolonRuins(),

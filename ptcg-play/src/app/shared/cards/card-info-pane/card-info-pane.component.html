@@ -16,7 +16,7 @@
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-hp">
         <span class="subtitle-hp-unit" translate>CARDS_HP</span>
-        <span class="subtitle-hp-value">{{card.hp}}</span>
+        <span class="subtitle-hp-value">{{getCurrentHp()}}/{{getComputedHp()}}</span>
       </div>
       <div class="subtitle-card-type">
         <ptcg-energy [type]="card.cardType" style="transform: translateY(12px);"></ptcg-energy>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <ptcg-hover-highlight *ngFor="let power of card.powers"
+    <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
       (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
       [enabled]="enabledAbilities[power.name]">
       <div class="power">
@@ -60,7 +60,7 @@
       </div>
     </ptcg-hover-highlight>
 
-    <ptcg-hover-highlight *ngFor="let attack of card.attacks"
+    <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()"
       (click)="options.enableAttack && clickAction({attack: attack.name})" [enabled]="options.enableAttack">
       <div class="attack">
         <div class="attack-header">
@@ -119,6 +119,9 @@
       </ptcg-hover-highlight>
     </div>
 
+    <!-- <div *ngIf="card.superType === SuperType.POKEMON">
+      <span>Current HP: {{ getCurrentHp() }}/{{ getComputedHp() }}</span>
+    </div> -->
 
     <div class="power" *ngIf="card.text">
       <div class="power-header">
@@ -155,7 +158,7 @@
       <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
     </div>
 
-    <ptcg-hover-highlight *ngFor="let power of card.powers"
+    <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
       (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
       [enabled]="enabledAbilities[power.name]">
       <div class="power">
@@ -191,7 +194,7 @@
       </div>
     </div>
 
-    <ptcg-hover-highlight *ngFor="let power of card.powers"
+    <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
       (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
       [enabled]="enabledAbilities[power.name]">
       <div class="power">
@@ -208,7 +211,7 @@
       </div>
     </ptcg-hover-highlight>
 
-    <ptcg-hover-highlight *ngFor="let attack of card.attacks"
+    <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()"
       (click)="options.enableAttack && clickAction({attack: attack.name})" [enabled]="options.enableAttack">
       <div class="attack">
         <div class="attack-header">

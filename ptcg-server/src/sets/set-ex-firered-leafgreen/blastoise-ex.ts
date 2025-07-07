@@ -101,7 +101,7 @@ export class Blastoiseex extends PokemonCard {
             return s;
           }
           return store.prompt(s, new ChooseCardsPrompt(
-            opponent,
+            player,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
             active,
             { superType: SuperType.ENERGY },

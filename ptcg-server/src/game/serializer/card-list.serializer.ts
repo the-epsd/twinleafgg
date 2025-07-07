@@ -21,6 +21,9 @@ export class CardListSerializer implements Serializer<CardList> {
       if (cardList.tool !== undefined) {
         data.tool = cardList.tool.id;
       }
+      if (cardList.showAllStageAbilities !== undefined) {
+        data.showAllStageAbilities = cardList.showAllStageAbilities;
+      }
     }
 
     return {
@@ -49,6 +52,10 @@ export class CardListSerializer implements Serializer<CardList> {
       instance.showBasicAnimation = data.showBasicAnimation || false;
       instance.triggerAnimation = data.triggerAnimation || false;
       instance.triggerAttackAnimation = data.triggerAttackAnimation || false;
+      // Copy computedHp if present
+      if (typeof data.computedHp === 'number') {
+        (instance as any).computedHp = data.computedHp;
+      }
     }
 
     return Object.assign(instance, data);

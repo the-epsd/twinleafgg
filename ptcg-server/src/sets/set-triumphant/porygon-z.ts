@@ -2,7 +2,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, CardList, ChooseCardsPrompt, GameMessage, Card, TrainerCard, OrderCardsPrompt, GameError } from '../../game';
-import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, HAS_MARKER, MOVE_CARD_TO, SHOW_CARDS_TO_PLAYER, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, HAS_MARKER, MOVE_CARD_TO, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class PorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -94,6 +94,8 @@ export class PorygonZ extends PokemonCard {
       ABILITY_USED(player, this);
       ADD_MARKER(this.DIMENASIONAL_TRANSFER_MARKER, player, this);
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.DIMENASIONAL_TRANSFER_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

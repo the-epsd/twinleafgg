@@ -48,6 +48,7 @@ import { MissFortuneSisters } from './miss-fortune-sisters';
 import { MrMime } from './mr-mime';
 import { PanicMask } from './panic-mask';
 import { PidgeotV } from './pidgeot-v';
+import { Pikachu } from './pikachu';
 import { Porygon } from './porygon';
 import { RadiantGardevoir } from './radiant-gardevoir';
 import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
@@ -104,6 +105,7 @@ export const setLostOrigin: Card[] = [
   new Mawile(),
   new MirageGate(),
   new PidgeotV(),
+  new Pikachu(),
   new Porygon(),
   new RadiantHisuianSneasler(),
   new RadiantGardevoir(),

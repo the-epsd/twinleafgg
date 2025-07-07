@@ -425,6 +425,30 @@ export function DRAW_CARDS(player: Player, count: number) {
 }
 
 /**
+ * Draws up to `count` cards, letting the player choose to draw fewer than the maximum.
+ * 
+ * TODO: this should also allow the player to draw them 1 by 1 if they want
+ */
+export function DRAW_UP_TO_X_CARDS(store: StoreLike, state: State, player: Player, count: number) {
+  if (count > 0) {
+    const options: { message: string, value: number }[] = [];
+    for (let i = count; i >= 0; i--) {
+      options.push({ message: `Draw ${i} card(s)`, value: i });
+    }
+
+    store.prompt(state, new SelectPrompt(
+      player.id,
+      GameMessage.WANT_TO_DRAW_CARDS,
+      options.map(c => c.message),
+      { allowCancel: false }
+    ), choice => {
+      const numCardsToDraw = options[choice].value;
+      DRAW_CARDS(player, numCardsToDraw);
+    });
+  }
+}
+
+/**
  * Draws cards until you have `count` cards in hand.
  */
 export function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: number) {

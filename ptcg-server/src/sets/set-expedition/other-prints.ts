@@ -1,9 +1,11 @@
-
 import { Copycat } from "../set-ex-dragon-frontiers/copycat";
+import { DualBall } from "../set-unleashed/dual-ball";
+import { EnergyRemoval2 } from "../set-ex-power-keepers/energy-removal-2";
 import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
 import { PokemonReversal } from "../set-ex-unseen-forces/pokemon-reversal";
 import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
 import { ProfessorOaksResearch } from "../set-ex-dragon-frontiers/professor-oaks-research";
+import { StrengthCharm } from "../set-ex-dragon-frontiers/strength-charm";
 import { Switch } from "../set-scarlet-and-violet/switch";
 
 export class CopycatEX extends Copycat {
@@ -11,6 +13,20 @@ export class CopycatEX extends Copycat {
   public set = 'EX';
   public setNumber = '138';
   public text = 'Shuffle your hand into your deck. Then, count the number of cards in your opponent\'s hand and draw that many cards.';
+}
+
+export class DualBallEX extends DualBall {
+  public fullName = 'Dual Ball EX';
+  public set = 'EX';
+  public setNumber = '139';
+  public text = 'Flip 2 coins. For each heads, search your deck for a Basic Pokémon, show it to your opponent, and put it into your hand. If you do, shuffle your deck afterward.';
+}
+
+export class EnergyRemoval2EX extends EnergyRemoval2 {
+  public fullName = 'Energy Removal 2 EX';
+  public set = 'EX';
+  public setNumber = '140';
+  public text = 'Flip a coin. If heads, choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';
 }
 
 export class EnergySearchEX extends EnergySearch {
@@ -39,6 +55,13 @@ export class ProfessorOaksResearchEX extends ProfessorOaksResearch {
   public set = 'EX';
   public setNumber = '149';
   public text = 'Shuffle your hand into your deck, then draw 5 cards.'
+}
+
+export class StrengthCharmEX extends StrengthCharm {
+  public fullName = 'Strength Charm EX';
+  public set = 'EX';
+  public setNumber = '150';
+  public text = 'Whenever an attack from the Pokémon that Strength Charm is attached to does damage (after applying Weakness and Resistance), the attack does 10 more damage. At the end of your turn in which this happens, discard Strength Charm.';
 }
 
 export class SwitchEX extends Switch {

@@ -13,6 +13,7 @@ import { Volcanion } from './volcanion';
 import { VolcanionEX } from './volcanion-ex';
 import { Xerneas } from './xerneas';
 import { XerneasBREAK } from './xerneas-break';
+import { Yveltal } from './yveltal';
 
 export const setSteamSiege: Card[] = [
   new CaptivatingPokePuff(),
@@ -29,4 +30,5 @@ export const setSteamSiege: Card[] = [
   new MGardevoirEx(),
   new Xerneas(),
   new XerneasBREAK(),
+  new Yveltal(),
 ];

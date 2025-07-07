@@ -10,6 +10,9 @@ import { SeismitoadEx } from './seismitoad-ex';
 import { StrongEnergy } from './strong-energy';
 import { TrainingCenter } from './training-center';
 
+// Other Prints
+import { SuperScoopUpFFI } from './other-prints';
+
 export const setFuriousFists: Card[] = [
   new Dedenne(),
   new FightingStadium(),
@@ -21,4 +24,7 @@ export const setFuriousFists: Card[] = [
   new SeismitoadEx(),
   new StrongEnergy(),
   new TrainingCenter(),
+
+  // Other Prints
+  new SuperScoopUpFFI(),
 ];

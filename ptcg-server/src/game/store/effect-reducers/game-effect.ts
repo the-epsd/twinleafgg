@@ -29,7 +29,7 @@ import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { MOVE_CARDS, IS_ABILITY_BLOCKED } from '../prefabs/prefabs';
+import { MOVE_CARDS } from '../prefabs/prefabs';
 import { CardList } from '../state/card-list';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { checkState } from './check-effect';
@@ -101,7 +101,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   let hasBarragePower = false;
   if (attackingPokemonCard) {
     hasBarragePower = attackingPokemonCard.powers.some(
-      power => power.barrage && !IS_ABILITY_BLOCKED(store, state, player, attackingPokemonCard)
+      power => power.barrage
     );
   }
 

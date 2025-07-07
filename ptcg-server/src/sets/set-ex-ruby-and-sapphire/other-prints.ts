@@ -1,5 +1,14 @@
+import { EnergySwitch } from "../set-scarlet-and-violet/energy-switch";
 import { MetalEnergySpecial } from "../set-undaunted/metal-energy-special";
 import { RainbowEnergy } from "../set-sun-and-moon/rainbow-energy";
+
+export class EnergySwitchRS extends EnergySwitch {
+  public set = 'RS';
+  public regulationMark = '';
+  public setNumber = '82';
+  public fullName = 'Energy Switch RS';
+  public text = 'Move a basic Energy from 1 of your Pokémon to another of your Pokémon.';
+}
 
 export class MetalEnergySpecialRS extends MetalEnergySpecial {
   public set = 'RS';

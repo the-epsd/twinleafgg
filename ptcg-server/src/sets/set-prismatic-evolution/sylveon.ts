@@ -22,7 +22,12 @@ export class Sylveon extends PokemonCard {
     text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon ex.'
   }];
 
-  public attacks = [{ name: 'Magical Shot', cost: [P, C, C], damage: 100, text: '' }];
+  public attacks = [{
+    name: 'Magical Shot',
+    cost: [P, C, C],
+    damage: 100,
+    text: ''
+  }];
 
   public set: string = 'PRE';
   public regulationMark = 'H';

@@ -66,14 +66,13 @@ export class HisuianBraviary extends PokemonCard {
         damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });
-
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-        opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
-      }
-
       return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
     }
     return state;
   }

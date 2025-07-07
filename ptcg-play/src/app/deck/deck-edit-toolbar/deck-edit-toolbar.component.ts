@@ -192,7 +192,6 @@ export class DeckEditToolbarComponent implements OnDestroy {
   });
 
   formValue$ = this.form.valueChanges.pipe(
-    tap(console.log),
     startWith(this.initialFormValue),
     shareReplay(1)
   );

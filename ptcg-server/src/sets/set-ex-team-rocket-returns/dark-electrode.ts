@@ -1,10 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PowerType, EnergyCard, Card, ChooseCardsPrompt, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PowerType, EnergyCard, Card, ChooseCardsPrompt, PlayerType, SlotType, StateUtils, CardTarget, MoveEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 
 export class DarkElectrode extends PokemonCard {
   public tags = [CardTag.DARK];
@@ -37,6 +39,7 @@ export class DarkElectrode extends PokemonCard {
   public fullName: string = 'Dark Electrode TRR';
 
   public readonly DARKNESS_NAVIGATION_MARKER = 'DARKNESS_NAVIGATION_MARKER';
+  public usedEnergyBomb = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -104,6 +107,10 @@ export class DarkElectrode extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
+      this.usedEnergyBomb = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedEnergyBomb === true) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
@@ -113,19 +120,56 @@ export class DarkElectrode extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
-          // Get attached energy cards
-          const attachedEnergies = player.active.cards.filter(card => {
-            return card instanceof EnergyCard;
+
+          let blockedCards: Card[] = [];
+          const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+            store.reduceEffect(state, checkProvidedEnergy);
+
+            checkProvidedEnergy.energyMap.forEach(em => {
+              if (em.provides.length === 0) {
+                blockedCards.push(em.card);
+              }
+            });
+
+            cardList.cards.forEach(em => {
+              if (cardList.getPokemons().includes(em as PokemonCard)) {
+                blockedCards.push(em);
+              }
+            });
+
+            const blocked: number[] = [];
+            blockedCards.forEach(bc => {
+              const index = cardList.cards.indexOf(bc);
+              if (index !== -1 && !blocked.includes(index)) {
+                blocked.push(index);
+              }
+            });
+
+            if (blocked.length !== 0) {
+              blockedMap.push({ source: target, blocked });
+            }
           });
 
-          store.prompt(state, new AttachEnergyPrompt(
+          const attachedEnergies = player.active.cards.filter(card => !blockedCards.includes(card));
+
+          // Energy is coming from active to bench
+          const blockedFrom: CardTarget[] = [];
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            if (cardList !== player.active) {
+              blockedFrom.push(target);
+              return;
+            }
+          });
+
+          store.prompt(state, new MoveEnergyPrompt(
             player.id,
-            GameMessage.ATTACH_ENERGY_TO_BENCH,
-            player.active,
+            GameMessage.MOVE_ENERGY_CARDS,
             PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH],
-            { superType: SuperType.ENERGY },
-            { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length }
+            [SlotType.ACTIVE, SlotType.BENCH],
+            {},
+            { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length, blockedMap, blockedFrom }
           ), transfers => {
             transfers = transfers || [];
             for (const transfer of transfers) {
@@ -135,6 +179,10 @@ export class DarkElectrode extends PokemonCard {
           });
         }
       }, GameMessage.MOVE_ENERGY_TO_BENCH);
+    }
+
+    if (effect instanceof EndTurnEffect && this.usedEnergyBomb) {
+      this.usedEnergyBomb = false;
     }
 
     return state;

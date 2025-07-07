@@ -1,7 +1,7 @@
 import { GameError, GameMessage, PlayerType } from '../../game';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
@@ -29,7 +29,7 @@ export class SolidRage extends TrainerCard {
       }
     }
 
-    if (effect instanceof PutDamageEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.player.active.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 

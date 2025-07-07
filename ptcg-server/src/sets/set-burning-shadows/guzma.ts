@@ -55,8 +55,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       store.reduceEffect(state, targetCard);
       if (targetCard.target) {
         opponent.switchPokemon(targetCard.target);
+      } else {
+        // If no target, effect ends
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
       }
-      
+
       store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: targets[0].getPokemonCard()!.name });
 
       next();

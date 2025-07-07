@@ -1,9 +1,8 @@
-import { Stage, CardType, PowerType, State, StoreLike, PokemonCardList, StateUtils } from '../../game';
+import { Stage, CardType, PowerType, State, StoreLike, StateUtils, TrainerType } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { SupporterEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 
 export class Ribombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -34,44 +33,23 @@ export class Ribombee extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof SupporterEffect) {
+    if (effect instanceof TrainerTargetEffect && effect.target && effect.trainerCard?.trainerType === TrainerType.SUPPORTER) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const target = effect.target;
 
       let isRibombeeInPlay = false;
-      let targetIsFairyPokemon = false;
-
       opponent.bench.forEach(benchPokemon => {
         if (benchPokemon.getPokemonCard() === this) {
           isRibombeeInPlay = true;
         }
       });
 
-      if (!!target && target instanceof PokemonCardList) {
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(target as PokemonCardList);
-        store.reduceEffect(state, checkPokemonTypeEffect);
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
+      store.reduceEffect(state, checkPokemonType);
 
-        targetIsFairyPokemon = checkPokemonTypeEffect.cardTypes.includes(Y);
+      if (isRibombeeInPlay && checkPokemonType.cardTypes.includes(CardType.FAIRY)) {
+        effect.target = undefined;
       }
-
-      if (!isRibombeeInPlay || !targetIsFairyPokemon) {
-        return state;
-      }
-
-      // Try reducing ability for opponent
-      try {
-        const stub = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      effect.preventDefault = true;
     }
 
     return state;

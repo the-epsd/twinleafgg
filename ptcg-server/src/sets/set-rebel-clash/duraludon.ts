@@ -1,5 +1,5 @@
 import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
-import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -13,7 +13,7 @@ export class Duraludon extends PokemonCard {
   public hp: number = 130;
 
   public weakness = [{ type: CardType.FIRE }];
-  
+
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -52,21 +52,20 @@ export class Duraludon extends PokemonCard {
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.METAL);
       });
-      
+
       if (!hasEnergyInDiscard) {
         return state;
       }
-      
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
+        { superType: SuperType.ENERGY, name: 'Metal Energy' },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
@@ -83,7 +82,7 @@ export class Duraludon extends PokemonCard {
 
       return state;
     }
-    
+
     return state;
   }
 }

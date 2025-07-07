@@ -2,18 +2,18 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {PlayPokemonEffect, TrainerTargetEffect} from '../../game/store/effects/play-card-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class PrimalGroudonEx extends PokemonCard {
-  public tags = [ CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL ];
+  public tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Groudon EX';
   public cardType: CardType = F;
   public hp: number = 240;
   public weakness = [{ type: G }];
-  public retreat = [ C, C, C, C ];
+  public retreat = [C, C, C, C];
 
   public powers = [
     {
@@ -31,7 +31,7 @@ export class PrimalGroudonEx extends PokemonCard {
   public attacks = [
     {
       name: 'Gaia Volcano',
-      cost: [ F, F, F, C ],
+      cost: [F, F, F, C],
       damage: 100,
       damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.'
@@ -46,8 +46,8 @@ export class PrimalGroudonEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // wow i hate the rules
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tool && effect.target.tool.name === 'Groudon Spirit Link'){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target.tool && effect.target.tool.name === 'Groudon Spirit Link') {
         return state;
       }
 
@@ -56,23 +56,23 @@ export class PrimalGroudonEx extends PokemonCard {
     }
 
     // Ω Barrier
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)){
+    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       // finding if the owner of the card is playing the trainer or if the opponent is
       let isGroudonOnOpposingSide = false;
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this){ isGroudonOnOpposingSide = true; }
+        if (cardList.getPokemonCard() === this) { isGroudonOnOpposingSide = true; }
       });
-      if (!isGroudonOnOpposingSide){ return state; }
-      
+      if (!isGroudonOnOpposingSide) { return state; }
+
       effect.preventDefault = true;
     }
 
     // Gaia Volcano
-    if (WAS_ATTACK_USED(effect, 0, this)){
-      if (StateUtils.getStadiumCard(state) === undefined){ return state; }
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      if (StateUtils.getStadiumCard(state) === undefined) { return state; }
       effect.damage += 100;
       DISCARD_A_STADIUM_CARD_IN_PLAY(state);
     }

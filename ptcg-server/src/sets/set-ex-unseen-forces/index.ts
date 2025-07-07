@@ -3,6 +3,7 @@ import { Aipom } from './aipom';
 import { Ariados } from './ariados';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
+import { Corsola } from './corsola';
 import { Espeonex } from './espeon-ex';
 import { FluffyBerry } from './fluffy-berry';
 import { Forretress } from './forretress';
@@ -47,6 +48,7 @@ export const setEXUnseenForces: Card[] = [
   new Ariados(),
   new Bayleef(),
   new Chikorita(),
+  new Corsola(),
   new Espeonex(),
   new FluffyBerry(),
   new Forretress(),

@@ -29,7 +29,7 @@ export class Eeveeex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Quartz Shine',
+      name: 'Coruscating Quartz',
       cost: [CardType.FIRE, CardType.WATER, CardType.LIGHTNING],
       damage: 200,
       text: ''

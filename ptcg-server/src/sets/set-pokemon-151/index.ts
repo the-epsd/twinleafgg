@@ -37,6 +37,7 @@ import { Leftovers } from './leftovers';
 import { Machoke } from './machoke';
 import { Machop } from './machop';
 import { Magmar } from './magmar';
+import { Magneton } from './magneton';
 import { Mewex } from './mew-ex';
 import { Moltres } from './moltres';
 import { Nidoking } from './nidoking';
@@ -104,6 +105,7 @@ export const setPokemon151: Card[] = [
   new Machop(),
   new Machoke(),
   new Magmar(),
+  new Magneton(),
   new Mewex(),
   new Moltres(),
   new NidoranMale(),

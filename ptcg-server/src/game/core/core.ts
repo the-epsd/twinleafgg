@@ -125,11 +125,19 @@ export class Core {
     }
 
     console.log(`[Matchmaking] Match created between ${client.name} and ${client2.name} (Format: ${gameSettings.format})`);
-
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = false;
     }
-
+    if (gameSettings.format === Format.RSPK) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = false;
+    }
+    if (gameSettings.format === Format.BW) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = true;
+      gameSettings.rules.firstTurnUseSupporter = true;
+    }
     const game = new Game(this, generateId(this.games), gameSettings);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
     game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2));

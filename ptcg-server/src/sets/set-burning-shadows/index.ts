@@ -19,6 +19,7 @@ import { NecrozmaGX } from './necrozma-gx';
 import { Noibat } from './noibat';
 import { NoivernGX } from './noivern-gx';
 import { Plumeria } from './plumeria';
+import { PoTown } from './po-town';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
 import { Riolu } from './riolu';
@@ -56,6 +57,7 @@ export const setBurningShadows: Card[] = [
   new MarshadowGX(),
   new NecrozmaGX(),
   new Plumeria(),
+  new PoTown(),
   new Raichu(),
   new Ralts(),
   new Riolu(),

@@ -12,8 +12,10 @@ import { TeamAquaBall } from './team-aqua-ball';
 import { TeamAquaHideout } from './team-aqua-hideout';
 import { TeamAquasCacnea } from './team-aquas-cacnea';
 import { TeamAquasCacturne } from './team-aquas-cacturne';
+import { TeamAquasChinchou } from './team-aquas-chinchou';
 import { TeamAquasElectrike } from './team-aquas-electrike';
 import { TeamAquasKyogre } from './team-aquas-kyogre';
+import { TeamAquasLanturn } from './team-aquas-lanturn';
 import { TeamAquasManectric } from './team-aquas-manectric';
 import { TeamAquaTechnicalMachine01 } from './team-aqua-technical-machine-01';
 import { TeamMagmaBall } from './team-magma-ball';
@@ -43,8 +45,10 @@ export const setEXTeamMagmaVsTeamAqua: Card[] = [
   new TeamAquaHideout(),
   new TeamAquasCacnea(),
   new TeamAquasCacturne(),
+  new TeamAquasChinchou(),
   new TeamAquasElectrike(),
   new TeamAquasKyogre(),
+  new TeamAquasLanturn(),
   new TeamAquasManectric(),
   new TeamAquaTechnicalMachine01(),
   new TeamMagmaBall(),

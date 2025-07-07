@@ -23,6 +23,14 @@ export interface CardInfoPaneAction {
   cardList?: PokemonCardList;
 }
 
+// Helper type guards for computedHp and hp
+function hasComputedHp(obj: any): obj is { computedHp: number } {
+  return obj && typeof obj.computedHp === 'number';
+}
+function hasHp(obj: any): obj is { hp: number | string } {
+  return obj && (typeof obj.hp === 'number' || typeof obj.hp === 'string');
+}
+
 @Component({
   selector: 'ptcg-card-info-pane',
   templateUrl: './card-info-pane.component.html',
@@ -84,6 +92,10 @@ export class CardInfoPaneComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    console.log('cardList in card-info-pane:', this.cardList);
+    if (this.cardList && (this.cardList as any).computedHp !== undefined) {
+      console.log('computedHp:', (this.cardList as any).computedHp);
+    }
     // Build map of enabled powers
     if (this.options.enableAbility) {
       this.enabledAbilities = this.buildEnabledAbilities();
@@ -104,28 +116,33 @@ export class CardInfoPaneComponent implements OnChanges {
 
   private buildEnabledAbilities(): { [name: string]: boolean } {
     const enabledAbilities: { [name: string]: boolean } = {};
-    if (this.card && (this.card.superType === SuperType.POKEMON || this.card.superType === SuperType.TRAINER || this.card.superType === SuperType.ENERGY)) {
-      const pokemonCard = this.card as PokemonCard;
-      pokemonCard.powers.forEach(power => {
-        if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
-          || (this.options.enableAbility.useFromDiscard && power.useFromDiscard)
-          || (this.options.enableAbility.useFromHand && power.useFromHand)) {
+    // For Pokemon, use all aggregated powers (including tools, evolutions)
+    if (this.card && this.card.superType === SuperType.POKEMON) {
+      const powers = this.getDisplayPowers();
+      powers.forEach(power => {
+        if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
+          || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
+          || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
           enabledAbilities[power.name] = true;
         }
       });
+      return enabledAbilities;
+    }
+    // For Trainer and Energy, keep existing logic
+    if (this.card && (this.card.superType === SuperType.TRAINER || this.card.superType === SuperType.ENERGY)) {
       const trainerCard = this.card as TrainerCard;
       trainerCard.powers.forEach(power => {
-        if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
-          || (this.options.enableAbility.useFromDiscard && power.useFromDiscard)
-          || (this.options.enableAbility.useFromHand && power.useFromHand)) {
+        if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
+          || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
+          || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
           enabledAbilities[power.name] = true;
         }
       });
       const energyCard = this.card as EnergyCard;
       energyCard.powers.forEach(power => {
-        if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
-          || (this.options.enableAbility.useFromDiscard && power.useFromDiscard)
-          || (this.options.enableAbility.useFromHand && power.useFromHand)) {
+        if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
+          || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
+          || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
           enabledAbilities[power.name] = true;
         }
       });
@@ -161,6 +178,86 @@ export class CardInfoPaneComponent implements OnChanges {
 
     return dialog.afterClosed().toPromise()
       .catch(() => false);
+  }
+
+  // Returns all relevant powers for display (main card, evolutions, tools)
+  public getDisplayPowers(): any[] {
+    if (!this.card) {
+      return [];
+    }
+    if (this.card.superType === SuperType.POKEMON) {
+      if (this.cardList && this.cardList.cards && this.cardList.cards.length > 0) {
+        // Find the main card (top evolution, last Pokemon in the stack)
+        const mainCard = this.cardList.cards.filter(c => c.superType === SuperType.POKEMON).slice(-1)[0] || this.card;
+        let powers = [...(mainCard.powers || [])];
+        // Only show all evolutions' powers if showAllStageAbilities is true
+        if ((this.cardList as any).showAllStageAbilities) {
+          for (const card of this.cardList.cards) {
+            if (card.superType === SuperType.POKEMON && card !== mainCard) {
+              powers = [...powers, ...(card.powers || [])];
+            }
+          }
+        }
+        // Add powers from attached trainers/tools
+        for (const card of this.cardList.cards) {
+          if (card.superType === SuperType.TRAINER) {
+            powers = [...powers, ...(card.powers || [])];
+          }
+        }
+        return powers;
+      }
+      // Fallback: just use the card's own powers
+      return (this.card as any).powers || [];
+    }
+    // For Trainer and Energy, just return the card's own powers
+    return (this.card as any).powers || [];
+  }
+
+  // Returns all relevant attacks for display (main card, evolutions, tools)
+  public getDisplayAttacks(): any[] {
+    if (!this.card) {
+      return [];
+    }
+    if (this.card.superType === SuperType.POKEMON) {
+      if (this.cardList && this.cardList.cards && this.cardList.cards.length > 0) {
+        const mainCard = this.cardList.cards.filter(c => c.superType === SuperType.POKEMON).slice(-1)[0] || this.card;
+        let attacks = [...(mainCard.attacks || [])];
+        if ((this.cardList as any).showAllStageAbilities) {
+          for (const card of this.cardList.cards) {
+            if (card.superType === SuperType.POKEMON && card !== mainCard) {
+              attacks = [...attacks, ...(card.attacks || [])];
+            }
+          }
+        }
+        for (const card of this.cardList.cards) {
+          if (card.superType === SuperType.TRAINER) {
+            attacks = [...attacks, ...(card.attacks || [])];
+          }
+        }
+        return attacks;
+      }
+      return (this.card as any).attacks || [];
+    }
+    // For Trainer and Energy, just return the card's own attacks
+    return (this.card as any).attacks || [];
+  }
+
+  public getComputedHp(): number | null {
+    if (!this.card || this.card.superType !== SuperType.POKEMON) return null;
+    // Prefer computedHp from cardList, fallback to card.hp
+    if (this.cardList && hasComputedHp(this.cardList)) {
+      return this.cardList.computedHp;
+    }
+    if (hasHp(this.card)) {
+      return Number(this.card.hp) || 0;
+    }
+    return 0;
+  }
+
+  public getCurrentHp(): number | null {
+    const computedHp = this.getComputedHp();
+    const damage = (this.cardList && typeof this.cardList.damage === 'number') ? this.cardList.damage : 0;
+    return computedHp !== null ? Math.max(0, computedHp - damage) : null;
   }
 
 }

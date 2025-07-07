@@ -39,7 +39,10 @@ import { XerneasGX } from './xerneas-gx';
 import { YveltalGX } from './yveltal-gx';
 
 // Other prints
-import { LadyFLI } from './other-prints';
+import {
+  LadyFLI,
+  MysteriousTreasureFLI,
+} from './other-prints';
 
 export const setForbiddenLight: Card[] = [
   new AlolanExeggutor(),
@@ -83,4 +86,5 @@ export const setForbiddenLight: Card[] = [
 
   // Other prints
   new LadyFLI(),
+  new MysteriousTreasureFLI(),
 ];
