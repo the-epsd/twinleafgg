@@ -47,9 +47,8 @@ export class Farfetchd extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const activePokemon = opponent.active;
       let toolDiscarded = false;
-      if (activePokemon.tool) {
-        activePokemon.moveCardTo(activePokemon.tool, opponent.discard);
-        activePokemon.tool = undefined;
+      if (activePokemon.tools.length > 0) {
+        activePokemon.moveCardsTo([...activePokemon.tools], opponent.discard);
         toolDiscarded = true;
       }
       if (toolDiscarded) {

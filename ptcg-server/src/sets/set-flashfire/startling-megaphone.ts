@@ -32,7 +32,7 @@ export class StartlingMegaphone extends TrainerCard {
 
       const pokemonsWithTool: PokemonCardList[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool.push(cardList);
         }
       });
@@ -42,9 +42,10 @@ export class StartlingMegaphone extends TrainerCard {
       }
 
       pokemonsWithTool.forEach(target => {
-        if (target.tool !== undefined) {
-          target.moveCardTo(target.tool, opponent.discard);
-          target.tool = undefined;
+        if (target.tools.length > 0) {
+          for (const tool of [...target.tools]) {
+            target.moveCardTo(tool, opponent.discard);
+          }
         }
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });

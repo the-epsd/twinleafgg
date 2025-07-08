@@ -29,7 +29,7 @@ export class PanicMask extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.tool === this) {
+    if (effect instanceof DealDamageEffect && effect.target.tools.includes(this)) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 

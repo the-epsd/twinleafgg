@@ -2,12 +2,12 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {MOVE_CARDS, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class MGardevoirEx extends PokemonCard {
-  public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
+  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gardevoir EX';
   public cardType: CardType = Y;
@@ -15,7 +15,7 @@ export class MGardevoirEx extends PokemonCard {
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [
     {
@@ -28,7 +28,7 @@ export class MGardevoirEx extends PokemonCard {
   public attacks = [
     {
       name: 'Despair Ray',
-      cost: [ Y, C ],
+      cost: [Y, C],
       damage: 110,
       damageCalculation: '+',
       text: 'Discard as many of your Benched Pokémon as you like. This attack does 10 more damage for each Benched Pokémon you discarded in this way.'
@@ -43,8 +43,8 @@ export class MGardevoirEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // screw the rules
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tool && effect.target.tool.name === 'Gardevoir Spirit Link'){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Gardevoir Spirit Link') {
         return state;
       }
 
@@ -53,9 +53,9 @@ export class MGardevoirEx extends PokemonCard {
     }
 
     // Despair Ray
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      
+
       // Player has more Pokemons than bench size, discard some
       const count = player.bench.length;
       store.prompt(state, new ChoosePokemonPrompt(
@@ -74,11 +74,22 @@ export class MGardevoirEx extends PokemonCard {
           if (results.includes(player.bench[i])) {
             const cardList = player.bench[i];
             const pokemons = cardList.getPokemons();
-            const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+            const otherCards = cardList.cards.filter(card =>
+              !(card instanceof PokemonCard) &&
+              (!cardList.tools || !cardList.tools.includes(card))
+            );
+            const tools = [...cardList.tools];
 
             // Move other cards (tools, energy, etc.) to discard
             if (otherCards.length > 0) {
               MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
+
+            // Move tools to discard
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, player.discard);
+              }
             }
 
             // Move Pokémon to discard and clear their effects

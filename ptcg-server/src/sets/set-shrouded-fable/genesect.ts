@@ -60,7 +60,7 @@ export class Genesect extends PokemonCard {
       //   }
       // });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length > 0) {
           isGenesectWithToolInPlay = true;
         }
       });
@@ -94,7 +94,7 @@ export class Genesect extends PokemonCard {
       //   }
       // });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length > 0) {
           isGenesectWithToolInPlay = true;
         }
       });
@@ -129,7 +129,7 @@ export class Genesect extends PokemonCard {
       //   }
       // });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length > 0) {
           isGenesectWithToolInPlay = true;
         }
       });
@@ -164,7 +164,7 @@ export class Genesect extends PokemonCard {
       //   }
       // });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length > 0) {
           isGenesectWithToolInPlay = true;
         }
       });

@@ -21,7 +21,7 @@ export class StrengthCharm extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
@@ -36,9 +36,8 @@ export class StrengthCharm extends TrainerCard {
         effect.damage += 10;
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-          if (cardList.cards.includes(this)) {
+          if (cardList.tools && cardList.tools.includes(this)) {
             cardList.moveCardTo(this, player.discard);
-            cardList.tool = undefined;
           }
         });
       }

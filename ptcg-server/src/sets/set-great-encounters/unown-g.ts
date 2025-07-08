@@ -27,7 +27,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownG,
   let hasPokemonWithoutTool = false;
   const blocked: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tool === undefined && card !== self) {
+    if (cardList.tools.length === 0 && card !== self) {
       hasPokemonWithoutTool = true;
     } else {
       blocked.push(target);
@@ -49,7 +49,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownG,
     if (targets && targets.length > 0) {
       // Attach Unown Q as a Pokemon Tool
       player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tool = pokemonCard;
+      targets[0].tools.push(pokemonCard);
 
       // Discard other cards
       player.bench[benchIndex].moveTo(player.discard);

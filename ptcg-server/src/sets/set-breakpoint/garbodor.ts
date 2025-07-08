@@ -50,12 +50,12 @@ export class Garbodor extends PokemonCard {
       let playerHasGarbotoxin = false;
       let opponentHasGarbotoxin = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length > 0) {
           playerHasGarbotoxin = true;
         }
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length > 0) {
           opponentHasGarbotoxin = true;
         }
       });

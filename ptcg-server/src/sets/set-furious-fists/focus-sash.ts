@@ -30,7 +30,7 @@ export class FocusSash extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
@@ -48,9 +48,8 @@ export class FocusSash extends TrainerCard {
       if (this.canDiscard) {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-          if (cardList.cards.includes(this)) {
+          if (cardList.tools && cardList.tools.includes(this)) {
             cardList.moveCardTo(this, player.discard);
-            cardList.tool = undefined;
           }
         });
       }

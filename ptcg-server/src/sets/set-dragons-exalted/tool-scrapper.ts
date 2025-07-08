@@ -3,11 +3,13 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
-  PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
-  PokemonCardList
+  PlayerType, StateUtils, GameError, GameMessage,
+  PokemonCardList,
+  CardTarget,
+  ChoosePokemonPrompt,
+  SlotType
 } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -17,14 +19,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let pokemonsWithTool = 0;
   const blocked: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tool !== undefined) {
+    if (cardList.tools.length > 0) {
       pokemonsWithTool += 1;
     } else {
       blocked.push(target);
     }
   });
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.tool !== undefined) {
+    if (cardList.tools.length > 0) {
       pokemonsWithTool += 1;
     } else {
       blocked.push(target);
@@ -60,9 +62,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   targets.forEach(target => {
     const owner = StateUtils.findOwner(state, target);
-    if (target.tool !== undefined) {
-      target.moveCardTo(target.tool, owner.discard);
-      target.tool = undefined;
+    if (target.tools.length > 0) {
+      target.moveCardTo(target.tools[0], owner.discard);
     }
   });
 

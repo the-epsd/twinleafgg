@@ -20,6 +20,7 @@ export class AntiquePlumeFossil extends TrainerCard {
   public retreat = [];
   public resistance = [];
   public attacks = [];
+  public maxTools: number = 1;
 
   public powers: Power[] = [{
     name: 'Antique Plume Fossil',

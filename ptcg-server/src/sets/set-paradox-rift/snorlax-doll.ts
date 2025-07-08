@@ -34,7 +34,7 @@ export class SnorlaxDoll extends TrainerCard {
   public name: string = 'Snorlax Doll';
   public fullName: string = 'Snorlax Doll SIT';
   public regulationMark = 'G';
-
+  public maxTools: number = 1;
   public powers: Power[] = [
     {
       name: 'Snorlax Doll',

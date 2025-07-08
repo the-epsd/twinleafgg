@@ -136,12 +136,21 @@ export class LumineonV extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedAquaReturn) {
       const player = effect.player;
       const pokemons = player.active.getPokemons();
-      const otherCards = player.active.cards.filter(card => !(card instanceof PokemonCard));
+      const otherCards = player.active.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!player.active.tools || !player.active.tools.includes(card))
+      );
+      const tools = [...player.active.tools];
       player.active.clearEffects();
 
       // Move other cards to discard
       if (otherCards.length > 0) {
         MOVE_CARDS(store, state, player.active, player.discard, { cards: otherCards });
+      }
+
+      // Move tools to discard explicitly
+      for (const tool of tools) {
+        player.active.moveCardTo(tool, player.discard);
       }
 
       // Move Pokémon to deck

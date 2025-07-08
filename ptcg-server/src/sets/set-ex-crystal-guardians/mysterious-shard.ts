@@ -22,7 +22,7 @@ export class MysteriousShard extends TrainerCard {
   public text: string = 'Attach Mysterious Shard to 1 of your Pokémon (excluding Pokémon-ex) that doesn\'t already have a Pokémon Tool attached to it. If the Pokémon Mysterious Shard is attached to is a Pokémon-ex, discard this card. \n\nPrevent all effects of attacks, including damage, done to the Pokémon that Mysterious Shard is attached to by your opponent\'s Pokémon-ex .Discard this card at the end of your opponent\'s next turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
 
       // Card is not active, or damage source is unknown
@@ -84,7 +84,6 @@ export class MysteriousShard extends TrainerCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
             cardList.moveCardTo(this, player.discard);
-            cardList.tool = undefined;
           }
         });
       });

@@ -76,7 +76,6 @@ export class PromptInvitePlayerComponent implements OnInit {
   }
 
   private loadDecks() {
-    console.log('[InvitePlayer] gameState.format:', this.gameState.format);
     this.loading = true;
     this.deckService.getListByFormat(this.gameState.format)
       .pipe(
@@ -85,19 +84,14 @@ export class PromptInvitePlayerComponent implements OnInit {
       ).
       subscribe({
         next: decks => {
-          console.log('[InvitePlayer] Raw response from deckService.getListByFormat:', decks);
-          console.log('[InvitePlayer] Decks received from backend:', decks);
           this.decks = decks
             .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => ({ value: deckEntry.id, viewValue: deckEntry.name }));
-          console.log('[InvitePlayer] Final decks shown to user:', this.decks);
           if (this.decks.length > 0) {
             this.deckId = this.decks[0].value;
-            console.log('[InvitePlayer] Default selected deckId:', this.deckId);
           }
         },
         error: (error: ApiError) => {
-          console.error('[InvitePlayer] Error loading decks:', error);
           this.alertService.toast(error.message);
           this.decks = [];
         }

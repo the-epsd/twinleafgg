@@ -62,7 +62,11 @@ export class Dudunsparce extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
           const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(c => !(c instanceof PokemonCard));
+          const otherCards = cardList.cards.filter(card =>
+            !(card instanceof PokemonCard) &&
+            (!cardList.tools || !cardList.tools.includes(card))
+          );
+          const tools = [...cardList.tools];
           cardList.clearEffects();
           // Move Pokémon cards to the deck
           if (pokemons.length > 0) {
@@ -72,6 +76,13 @@ export class Dudunsparce extends PokemonCard {
           // Move other cards (tools, energies, etc.) to the deck
           if (otherCards.length > 0) {
             MOVE_CARDS(store, state, cardList, player.deck, { cards: otherCards });
+          }
+
+          // Move tools to the deck
+          if (tools.length > 0) {
+            for (const tool of tools) {
+              cardList.moveCardTo(tool, player.deck);
+            }
           }
           cardList.clearEffects();
 

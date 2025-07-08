@@ -51,12 +51,12 @@ export class VengefulPunch extends TrainerCard {
     }*/
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-      effect.target.tool === this) {
+      effect.target.tools.includes(this)) {
       const player = StateUtils.getOpponent(state, effect.player);
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
-      if (player.active.tool === this) {
+      if (player.active.tools.includes(this)) {
         this.damageDealt = true;
       }
     }

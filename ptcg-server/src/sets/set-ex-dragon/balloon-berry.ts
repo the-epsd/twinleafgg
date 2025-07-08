@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { IS_TOOL_BLOCKED, MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PlayerType } from '../../game';
 
 export class BalloonBerry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -19,7 +20,7 @@ export class BalloonBerry extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this && state.phase !== GamePhase.ATTACK) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this) && state.phase !== GamePhase.ATTACK) {
       const player = effect.player;
       const index = effect.cost.indexOf(CardType.COLORLESS);
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
@@ -29,8 +30,11 @@ export class BalloonBerry extends TrainerCard {
         effect.cost.splice(index, 99);
       }
 
-      MOVE_CARD_TO(state, effect.player.active.tool, player.discard);
-      player.active.tool = undefined;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+        if (cardList.tools && cardList.tools.includes(this)) {
+          cardList.moveCardTo(this, player.discard);
+        }
+      });
     }
 
     return state;

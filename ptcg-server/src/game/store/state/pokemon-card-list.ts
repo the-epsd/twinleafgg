@@ -19,7 +19,7 @@ export class PokemonCardList extends CardList {
   public sleepFlips = 1;
   public boardEffect: BoardEffect[] = [];
   public hpBonus: number = 0;
-  public tool: Card | undefined;
+  public tools: Card[] = [];
   public energyCards: Card[] = [];
   public stadium: Card | undefined;
   public isActivatingCard: boolean = false;
@@ -63,7 +63,7 @@ export class PokemonCardList extends CardList {
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {
-      if (card.superType === SuperType.POKEMON && card !== this.tool && !this.energyCards.includes(card)) {
+      if (card.superType === SuperType.POKEMON && !this.tools.includes(card) && !this.energyCards.includes(card)) {
         result.push(card as PokemonCard);
       } else if (card.name === 'Lillie\'s Poké Doll') {
         result.push(card as PokemonCard);
@@ -293,11 +293,11 @@ export class PokemonCardList extends CardList {
   }
 
   getToolEffect(): Power | Attack | undefined {
-    if (!this.tool) {
+    if (this.tools.length === 0) {
       return;
     }
 
-    const toolCard = this.tool.cards;
+    const toolCard = this.tools[0];
 
     if (toolCard instanceof PokemonCard) {
       return toolCard.powers[0] || toolCard.attacks[0];
@@ -340,5 +340,29 @@ export class PokemonCardList extends CardList {
     }
 
     super.moveTo(destination, count);
+  }
+
+  public moveCardsTo(cards: Card[], destination: CardList): void {
+    for (let i = 0; i < cards.length; i++) {
+      let index = this.cards.indexOf(cards[i]);
+      if (index !== -1) {
+        const card = this.cards.splice(index, 1);
+        // If this is a PokemonCardList with the energyCards property, remove the card from energyCards
+        if ('energyCards' in this) {
+          const pokemonList = this as any;
+          if (typeof pokemonList.removePokemonAsEnergy === 'function') {
+            pokemonList.removePokemonAsEnergy(card[0]);
+          }
+        }
+        destination.cards.push(card[0]);
+      } else {
+        // If not found in cards, check tools
+        index = this.tools.indexOf(cards[i]);
+        if (index !== -1) {
+          const card = this.tools.splice(index, 1);
+          destination.cards.push(card[0]);
+        }
+      }
+    }
   }
 }

@@ -90,7 +90,7 @@ export class Farfetchd extends PokemonCard {
 
         if (cards[0] instanceof TrainerCard) {
           player.deck.moveCardTo(cards[0], player.bench[benchSlot]);
-          player.bench[benchSlot].tool = cards[0];
+          player.bench[benchSlot].tools.push(cards[0]);
           // state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[benchSlot]));
         }
 

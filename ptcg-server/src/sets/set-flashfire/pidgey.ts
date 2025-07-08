@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pidgey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,9 +34,11 @@ export class Pidgey extends PokemonCard {
 
       // Discard active Pokemon's tool first
       const activePokemon = opponent.active;
-      if (activePokemon.tool) {
-        MOVE_CARD_TO(state, activePokemon.tool, opponent.discard);
-        activePokemon.tool = undefined;
+      if (activePokemon.tools.length > 0) {
+        // Discard all tools attached to the opponent's active Pokémon
+        for (const tool of [...activePokemon.tools]) {
+          activePokemon.moveCardTo(tool, opponent.discard);
+        }
       }
     }
     return state;

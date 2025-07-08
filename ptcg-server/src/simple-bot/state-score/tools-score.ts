@@ -9,7 +9,7 @@ export class ToolsScore extends SimpleScore {
 
     let score = 0;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      if (cardList.tool === undefined) {
+      if (cardList.tools.length === 0) {
         return;
       }
       const activeScore = cardList === player.active ? scores.active : 0;

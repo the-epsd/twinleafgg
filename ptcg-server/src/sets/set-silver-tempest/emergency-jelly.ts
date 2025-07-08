@@ -30,9 +30,9 @@ export class EmergencyJelly extends TrainerCard {
     'At the end of each turn, if the Pokémon this card is attached to has 30 HP or less remaining and has any damage counters on it, heal 120 damage from it. If you healed any damage in this way, discard this card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
+    if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
 
-      if (effect instanceof EndTurnEffect && effect.target.tool === this) {
+      if (effect instanceof EndTurnEffect && effect.target.tools.includes(this)) {
         const targetPokemon = effect.target.getPokemonCard();
 
         // Try to reduce ToolEffect, to check if something is blocking the tool from working

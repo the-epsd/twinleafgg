@@ -233,7 +233,7 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         }
       }
     }
-    
+
     if (action instanceof UseStadiumAction) {
       const player = state.players[state.activePlayer];
 

@@ -25,6 +25,7 @@ export class AntiqueCoverFossil extends TrainerCard {
   public attacksThisTurn: number = 0;
   public maxAttacksThisTurn: number = 1;
   public allowSubsequentAttackChoice: boolean = false;
+  public maxTools: number = 1;
 
   public powers: Power[] = [{
     name: 'Antique Cover Fossil',

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CardTarget, PlayerType, GameMessage, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, CardTarget, PlayerType, GameMessage, PokemonCardList, ChoosePokemonPrompt, SlotType, SuperType, TrainerType, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -11,14 +11,14 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State, effect: 
   let pokemonsWithTool = 0;
   const blocked: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tool !== undefined) {
+    if (cardList.tools.length > 0) {
       pokemonsWithTool += 1;
     } else {
       blocked.push(target);
     }
   });
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.tool !== undefined) {
+    if (cardList.tools.length > 0) {
       pokemonsWithTool += 1;
     } else {
       blocked.push(target);
@@ -46,9 +46,22 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State, effect: 
 
   targets.forEach(target => {
     const owner = StateUtils.findOwner(state, target);
-    if (target.tool !== undefined) {
-      target.moveCardTo(target.tool, owner.discard);
-      target.tool = undefined;
+    if (target.tools.length > 0) {
+      if (target.tools.length > 1) {
+        store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          target,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          if (selected && selected.length > 0) {
+            target.moveCardTo(selected[0], owner.discard);
+          }
+        });
+      } else {
+        target.moveCardTo(target.tools[0], owner.discard);
+      }
     }
   });
 

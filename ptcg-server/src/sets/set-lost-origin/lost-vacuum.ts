@@ -24,12 +24,9 @@ export class LostVacuum extends TrainerCard {
 
   public fullName: string = 'Lost Vacuum LOR';
 
-  public text: string =
-    'You can use this card only if you put another card from your hand in the Lost Zone.' +
-    '' +
-    'Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put it in the Lost Zone.';
+  public text: string = `You can use this card only if you put another card from your hand in the Lost Zone.
 
-  // Add the need to select 1 card to lost zone from hand, then send to lost zone
+Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put it in the Lost Zone.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -39,14 +36,14 @@ export class LostVacuum extends TrainerCard {
       let pokemonsWithTool = 0;
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
         }
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
@@ -114,11 +111,28 @@ export class LostVacuum extends TrainerCard {
 
                 targets.forEach(target => {
                   const owner = StateUtils.findOwner(state, target);
-                  if (target.tool !== undefined) {
-                    target.moveCardTo(target.tool, owner.lostzone);
-                    target.tool = undefined;
+                  if (target.tools.length === 1) {
+                    // Only one tool, move it directly
+                    target.moveCardTo(target.tools[0], owner.lostzone);
+                  } else if (target.tools.length > 1) {
+                    // Multiple tools, prompt to choose one
+                    const toolList = new CardList();
+                    toolList.cards = [...target.tools];
+                    return store.prompt(state, new ChooseCardsPrompt(
+                      player,
+                      GameMessage.CHOOSE_CARD_TO_DISCARD,
+                      toolList,
+                      { trainerType: TrainerType.TOOL },
+                      { min: 1, max: 1, allowCancel: false }
+                    ), selectedTools => {
+                      if (selectedTools && selectedTools.length === 1) {
+                        const tool = selectedTools[0];
+                        target.moveCardTo(tool, owner.lostzone);
+                      }
+                      player.supporter.moveCardTo(this, player.discard);
+                      return state;
+                    });
                   }
-
                   player.supporter.moveCardTo(this, player.discard);
                   return state;
                 });
@@ -200,12 +214,28 @@ export class LostVacuum extends TrainerCard {
 
           targets.forEach(target => {
             const owner = StateUtils.findOwner(state, target);
-            if (target.tool !== undefined) {
-              target.moveCardTo(target.tool, owner.lostzone);
-              target.tool = undefined;
-              player.supporter.moveCardTo(this, player.discard);
+            if (target.tools.length === 1) {
+              // Only one tool, move it directly
+              target.moveCardTo(target.tools[0], owner.lostzone);
+            } else if (target.tools.length > 1) {
+              // Multiple tools, prompt to choose one
+              const toolList = new CardList();
+              toolList.cards = [...target.tools];
+              return store.prompt(state, new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_DISCARD,
+                toolList,
+                { trainerType: TrainerType.TOOL },
+                { min: 1, max: 1, allowCancel: false }
+              ), selectedTools => {
+                if (selectedTools && selectedTools.length === 1) {
+                  const tool = selectedTools[0];
+                  target.moveCardTo(tool, owner.lostzone);
+                }
+                player.supporter.moveCardTo(this, player.discard);
+                return state;
+              });
             }
-
             player.supporter.moveCardTo(this, player.discard);
             return state;
           });

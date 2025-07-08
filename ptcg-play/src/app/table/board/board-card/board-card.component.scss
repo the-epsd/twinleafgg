@@ -152,13 +152,6 @@ $ptcg-energy-card-offset: 13%;
     transform: rotate(90deg);
   }
 
-  .ptcg-trainer-card {
-    width: 100%;
-    left: 35%;
-    position: absolute;
-    transform: rotate(90deg);
-  }
-
   .ptcg-break-card {
     width: 100%;
     left: 50%;
@@ -644,4 +637,28 @@ $ptcg-energy-card-offset: 13%;
       z-index: 1;
     }
   }
+
+  .ptcg-tool-cards {
+    position: absolute;
+    left: -5px;
+    top: 20%;
+    z-index: 2;
+    width: 33px;
+    height: auto;
+  }
+
+  .ptcg-tool-cards .tool-overlap {
+    position: absolute;
+    left: 0;
+    width: 33px;
+    height: auto;
+    margin: 0;
+    box-shadow: none;
+    background: none;
+    padding: 0;
+    clip-path: inset(14.26% 8.02% 47.75% 8.42%);
+    -webkit-clip-path: inset(14.26% 8.02% 47.75% 8.42%);
+    cursor: default !important;
+  }
+
 }

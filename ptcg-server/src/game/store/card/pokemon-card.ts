@@ -42,6 +42,8 @@ export abstract class PokemonCard extends Card {
 
   public tools: TrainerCard[] = [];
 
+  public maxTools: number = 1;
+
   public archetype: CardType[] = [];
 
   public canAttackTwice?: boolean;

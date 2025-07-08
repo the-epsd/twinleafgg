@@ -38,7 +38,7 @@ export class Zeraora extends PokemonCard {
 
       let exPokemonOnOppBench = false;
 
-      player.forEachPokemon(PlayerType.TOP_PLAYER, (list, card) => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card) => {
         if (card.tags.includes(CardTag.POKEMON_ex)) {
           exPokemonOnOppBench = true;
         }

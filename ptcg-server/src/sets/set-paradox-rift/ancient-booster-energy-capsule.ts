@@ -31,7 +31,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
       const card = effect.target.getPokemonCard();
 
       if (card === undefined) {
@@ -62,7 +62,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      if (cardList instanceof PokemonCardList && cardList.tool === this) {
+      if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
         const card = cardList.getPokemonCard();
         if (card && card.tags.includes(CardTag.ANCIENT)) {
           const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);

@@ -18,8 +18,8 @@ export class CardListSerializer implements Serializer<CardList> {
 
     if (cardList instanceof PokemonCardList) {
       constructorName = 'PokemonCardList';
-      if (cardList.tool !== undefined) {
-        data.tool = cardList.tool.id;
+      if (cardList.tools.length > 0) {
+        data.tool = cardList.tools[0].id;
       }
       if (cardList.showAllStageAbilities !== undefined) {
         data.showAllStageAbilities = cardList.showAllStageAbilities;
@@ -40,15 +40,16 @@ export class CardListSerializer implements Serializer<CardList> {
 
     delete (data as any)._type;
 
-    if (data.tool !== undefined) {
-      data.tool = this.fromIndex(data.tool, context);
-    }
-
     const indexes: number[] = data.cards;
     data.cards = indexes.map(index => this.fromIndex(index, context));
 
     // Explicitly handle PokemonCardList properties
     if (instance instanceof PokemonCardList) {
+      // If a tool is present, add it only to tools, not to cards
+      if (data.tool !== undefined) {
+        const toolCard = this.fromIndex(data.tool, context);
+        instance.tools.push(toolCard);
+      }
       instance.showBasicAnimation = data.showBasicAnimation || false;
       instance.triggerAnimation = data.triggerAnimation || false;
       instance.triggerAttackAnimation = data.triggerAttackAnimation || false;

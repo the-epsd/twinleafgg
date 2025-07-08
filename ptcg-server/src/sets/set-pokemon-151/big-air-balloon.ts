@@ -29,7 +29,7 @@ export class BigAirBalloon extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const card = effect.player.active.getPokemonCard();
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working

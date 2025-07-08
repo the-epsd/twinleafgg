@@ -42,9 +42,11 @@ export class Melmetal extends PokemonCard {
 
       // Discard active Pokemon's tool first
       const activePokemon = opponent.active;
-      if (activePokemon.tool) {
-        MOVE_CARD_TO(state, activePokemon.tool, opponent.discard);
-        activePokemon.tool = undefined;
+      if (activePokemon.tools.length > 0) {
+        MOVE_CARD_TO(state, activePokemon.tools[0], opponent.discard);
+        if (activePokemon.tools.length > 1) {
+          activePokemon.moveCardsTo(activePokemon.tools.slice(1), opponent.discard);
+        }
         effect.damage = 250; // Set damage to 250 if a tool was discarded
       }
     }

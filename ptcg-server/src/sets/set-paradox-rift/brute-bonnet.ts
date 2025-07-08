@@ -89,7 +89,7 @@ export class BruteBonnet extends PokemonCard {
       let isBruteBonnetWithAncientBooster = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool && cardList.tool.name === 'Ancient Booster Energy Capsule') {
+        if (card === this && cardList.tools.length > 0 && cardList.tools[0].name === 'Ancient Booster Energy Capsule') {
           isBruteBonnetWithAncientBooster = true;
         }
       });

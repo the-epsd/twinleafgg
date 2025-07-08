@@ -35,14 +35,14 @@ export class Xerosic extends TrainerCard {
       let pokemonsWithTool = 0;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
         }
       });
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
@@ -100,11 +100,25 @@ export class Xerosic extends TrainerCard {
 
             targets.forEach(target => {
               const owner = StateUtils.findOwner(state, target);
-              if (target.tool !== undefined) {
-                target.moveCardTo(target.tool, owner.discard);
-                target.tool = undefined;
+              if (target.tools.length > 0) {
+                if (target.tools.length > 1) {
+                  return store.prompt(state, new ChooseCardsPrompt(
+                    player,
+                    GameMessage.CHOOSE_CARD_TO_DISCARD,
+                    target,
+                    { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+                    { min: 1, max: 1, allowCancel: false }
+                  ), selected => {
+                    if (selected && selected.length > 0) {
+                      target.moveCardTo(selected[0], owner.discard);
+                    }
+                    player.supporter.moveCardTo(this, player.discard);
+                    return state;
+                  });
+                } else {
+                  target.moveCardTo(target.tools[0], owner.discard);
+                }
               }
-
               player.supporter.moveCardTo(this, player.discard);
               return state;
             });

@@ -8,7 +8,9 @@ export class Revavroomex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
+
+  public evolvesFrom = 'Varoom';
 
   public cardType: CardType = CardType.METAL;
 
@@ -48,6 +50,7 @@ export class Revavroomex extends PokemonCard {
 
   public fullName: string = 'Revavroom ex OBF';
 
+  public maxTools: number = 4;
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 

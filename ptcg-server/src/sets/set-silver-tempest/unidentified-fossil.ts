@@ -43,6 +43,8 @@ export class UnidentifiedFossil extends TrainerCard {
 
   public regulationMark = 'F';
 
+  public maxTools: number = 1;
+
   public powers: Power[] = [
     {
       name: 'Unidentified Fossil',

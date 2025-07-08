@@ -80,7 +80,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);
     }
-    if (target.tool !== undefined) {
+    if (effect.target.tools.length >= pokemonCard.maxTools) {
       throw new GameError(GameMessage.POKEMON_TOOL_ALREADY_ATTACHED);
     }
     if (player.marker.hasMarker(effect.player.ATTACK_EFFECT_TOOL_LOCK)) {
@@ -93,7 +93,12 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       pokemon: pokemonCard.name
     });
     player.hand.moveCardTo(trainerCard, target);
-    target.tool = trainerCard;
+    // Remove from cards if present (should only be in tools)
+    const idx = target.cards.indexOf(trainerCard);
+    if (idx !== -1) {
+      target.cards.splice(idx, 1);
+    }
+    target.tools.push(effect.trainerCard);
 
     const playTrainer = new TrainerEffect(player, trainerCard, target);
     state = store.reduceEffect(state, playTrainer);

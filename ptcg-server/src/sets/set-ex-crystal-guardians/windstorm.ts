@@ -27,14 +27,14 @@ export class Windstorm extends TrainerCard {
       let pokemonsWithTool = 0;
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
         }
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
@@ -72,10 +72,9 @@ export class Windstorm extends TrainerCard {
                 targets = results || [];
                 targets.forEach(target => {
                   const owner = StateUtils.findOwner(state, target);
-                  if (target.tool !== undefined) {
-                    target.moveCardTo(target.tool, owner.discard);
-                    store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name, effectName: this.name });
-                    target.tool = undefined;
+                  if (target.tools.length > 0) {
+                    target.moveCardTo(target.tools[0], owner.discard);
+                    store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tools[0].name, effectName: this.name });
                   }
                 });
                 player.supporter.moveCardTo(this, player.discard);
@@ -98,10 +97,9 @@ export class Windstorm extends TrainerCard {
                 targets = results || [];
                 targets.forEach(target => {
                   const owner = StateUtils.findOwner(state, target);
-                  if (target.tool !== undefined) {
-                    target.moveCardTo(target.tool, owner.discard);
-                    store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
-                    target.tool = undefined;
+                  if (target.tools.length > 0) {
+                    target.moveCardTo(target.tools[0], owner.discard);
+                    store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tools[0].name });
                   }
                 });
                 player.supporter.moveCardTo(this, player.discard);
@@ -144,10 +142,9 @@ export class Windstorm extends TrainerCard {
           targets = results || [];
           targets.forEach(target => {
             const owner = StateUtils.findOwner(state, target);
-            if (target.tool !== undefined) {
-              target.moveCardTo(target.tool, owner.discard);
-              store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
-              target.tool = undefined;
+            if (target.tools.length > 0) {
+              target.moveCardTo(target.tools[0], owner.discard);
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tools[0].name });
             }
           });
           player.supporter.moveCardTo(this, player.discard);

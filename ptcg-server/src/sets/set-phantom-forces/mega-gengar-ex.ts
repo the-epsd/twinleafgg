@@ -93,7 +93,7 @@ export class MGengarEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // love me some funny evolution crap
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tool && effect.target.tool.name === 'Gengar Spirit Link'){
+      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Gengar Spirit Link'){
         return state;
       }
 

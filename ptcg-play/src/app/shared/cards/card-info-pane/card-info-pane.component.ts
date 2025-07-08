@@ -85,6 +85,7 @@ export class CardInfoPaneComponent implements OnChanges {
   ) { }
 
   public clickAction(action: CardInfoPaneAction) {
+    console.log('[CardInfoPane] clickAction:', action);
     action.card = this.card;
     if (action.trainer) {
     }
@@ -92,10 +93,6 @@ export class CardInfoPaneComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    console.log('cardList in card-info-pane:', this.cardList);
-    if (this.cardList && (this.cardList as any).computedHp !== undefined) {
-      console.log('computedHp:', (this.cardList as any).computedHp);
-    }
     // Build map of enabled powers
     if (this.options.enableAbility) {
       this.enabledAbilities = this.buildEnabledAbilities();

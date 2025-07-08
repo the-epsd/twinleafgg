@@ -31,7 +31,7 @@ export class HopsChoiceBand extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working

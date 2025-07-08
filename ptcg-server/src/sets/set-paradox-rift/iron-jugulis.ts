@@ -90,8 +90,8 @@ export class IronJugulis extends PokemonCard {
 
       let isAncientBoosterAttached = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
-          if (cardList.tool.name === 'Future Booster Energy Capsule') {
+        if (card === this && cardList.tools.length > 0) {
+          if (cardList.tools[0].name === 'Future Booster Energy Capsule') {
             isAncientBoosterAttached = true;
           }
         }

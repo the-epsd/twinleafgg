@@ -1,3 +1,4 @@
+import { PlayerType } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -34,8 +35,11 @@ export class LumBerry extends TrainerCard {
           player.active.removeSpecialCondition(condition);
         });
         // Discard Lum Berry after use
-        player.active.moveCardTo(this, player.discard);
-        player.active.tool = undefined;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+          if (cardList.tools && cardList.tools.includes(this)) {
+            cardList.moveCardTo(this, player.discard);
+          }
+        });
       }
 
       // Handle Lum Berry for opponent's Active Pokémon
@@ -44,8 +48,11 @@ export class LumBerry extends TrainerCard {
           opponent.active.removeSpecialCondition(condition);
         });
         // Discard Lum Berry after use
-        opponent.active.moveCardTo(this, player.discard);
-        opponent.active.tool = undefined;
+        opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+          if (cardList.tools && cardList.tools.includes(this)) {
+            cardList.moveCardTo(this, player.discard);
+          }
+        });
       }
     }
 

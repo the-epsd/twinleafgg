@@ -6,7 +6,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-import { PokemonCard as PokemonCardType } from '../../game/store/card/pokemon-card';
 
 export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -67,10 +66,20 @@ export class Wishiwashi extends PokemonCard {
             ], result => {
               if (result === false) {
                 const pokemons = cardList.getPokemons();
-                const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCardType));
+                const otherCards = cardList.cards.filter(card =>
+                  !(card instanceof PokemonCard) &&
+                  (!cardList.tools || !cardList.tools.includes(card))
+                );
+                const tools = [...cardList.tools];
 
                 if (otherCards.length > 0) {
                   MOVE_CARDS(store, state, cardList, opponent.deck, { cards: otherCards });
+                }
+
+                if (tools.length > 0) {
+                  for (const tool of tools) {
+                    cardList.moveCardTo(tool, opponent.deck);
+                  }
                 }
 
                 if (pokemons.length > 0) {
