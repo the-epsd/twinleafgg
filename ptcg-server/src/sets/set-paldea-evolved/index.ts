@@ -60,6 +60,7 @@ import { TingLuex } from './ting-lu-ex';
 import { Tinkatink } from './tinkatink';
 import { Tinkaton } from './tinkaton';
 import { Tinkatuff } from './tinkatuff';
+import { Voltorb } from './voltorb';
 import { Wattrel } from './wattrel';
 import { Wingull } from './wingull';
 import { WoChienex } from './wo-chien-ex';
@@ -79,12 +80,12 @@ import { BraveryCharm } from './bravery-charm';
 import { Girafarig } from './girafarig';
 import { CalamitousWasteland } from './calamitous-wasteland';
 import { CalamitousSnowyMountain } from './calamitous-snowy-mountain';
-import {Gothita} from './gothita';
-import {Gothorita} from './gothorita';
-import {Gothitelle} from './gothitelle';
-import {Larvitar} from './larvitar';
-import {Pupitar} from './pupitar';
-import {Tyranitar} from './tyranitar';
+import { Gothita } from './gothita';
+import { Gothorita } from './gothorita';
+import { Gothitelle } from './gothitelle';
+import { Larvitar } from './larvitar';
+import { Pupitar } from './pupitar';
+import { Tyranitar } from './tyranitar';
 
 export const setPaldeaEvolved: Card[] = [
 
@@ -151,6 +152,7 @@ export const setPaldeaEvolved: Card[] = [
   new Tinkatuff(),
   new Tinkatuff2(),
   new Tinkaton(),
+  new Voltorb(),
   new Wattrel(),
   new Wingull(),
   new WoChienex(),

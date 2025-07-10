@@ -33,11 +33,14 @@ import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
 import { ShoppingCenter } from './shopping-center';
+import { SingleStrikeScrollOfTheFangedDragon } from './single-strike-scroll-of-the-fanged-dragon';
 import { Skiploom } from './skiploom';
 import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';
 import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
+import { SylveonV } from './sylveon-v';
+import { SylveonVMAX } from './sylveon-vmax';
 import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
@@ -48,6 +51,7 @@ import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 import { BoostShake } from './boost-shake';
+import { Zygarde } from './zygarde';
 
 export const setEvolvingSkies: Card[] = [
   new BoostShake(),
@@ -83,9 +87,12 @@ export const setEvolvingSkies: Card[] = [
   new Regidrago(),
   new Regieleki(),
   new RescueCarrier(),
+  new SingleStrikeScrollOfTheFangedDragon(),
   new Skiploom(),
   new StormyMountains(),
   new SuicuneV(),
+  new SylveonV(),
+  new SylveonVMAX(),
   new UmbreonV(),
   new UmbreonVMAX(),
   new ZinniasResolve(),
@@ -98,6 +105,7 @@ export const setEvolvingSkies: Card[] = [
   new Vigoroth(),
   new VolcaronaV(),
   new ShoppingCenter(),
+  new Zygarde(),
 
   // Full  & Alternate 
   new RayquazaVAA(),

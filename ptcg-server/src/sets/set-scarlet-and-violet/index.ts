@@ -69,6 +69,7 @@ import { Scatterbug } from './scatterbug';
 import { Scovillain } from './scovillain';
 import { Shuppet } from './shuppet';
 import { Skwovet } from './skwovet';
+//import { Slowbro } from './slowbro';
 import { Smoliv } from './smoliv';
 import { Spewpa } from './spewpa';
 import { Spidopsex } from './spidops-ex';
@@ -161,6 +162,7 @@ export const setScarletAndViolet: Card[] = [
   new Spewpa(),
   new Skwovet(),
   new Slowpoke(),
+  //new Slowbro(),
   new Switch(),
   new TeamStarGrunt(),
   new Torkoal(),

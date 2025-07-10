@@ -42,6 +42,7 @@ import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
 import { Seismitoad } from './seismitoad';
+import { Tadbulb } from './tadbulb';
 import { Thundurus } from './thundurus';
 import { Toedscruelex } from './toedscruel-ex';
 import { Togekiss } from './togekiss';
@@ -93,6 +94,7 @@ export const setObsidianFlames: Card[] = [
   new Ryme(),
   new Scizor(),
   new Seismitoad(),
+  new Tadbulb(),
   new Thundurus(),
   new Toedscruelex(),
   new TownStore(),

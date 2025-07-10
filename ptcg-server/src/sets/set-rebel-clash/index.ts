@@ -16,6 +16,7 @@ import { DragapultV } from './dragapult-v';
 import { DragapultVMAX } from './dragapult-vmax';
 import { Duraludon } from './duraludon';
 import { Electivire } from './electivire';
+import { Flapple } from './flapple';
 import { GalarMine } from './galar-mine';
 import { GalarianMeowth } from './galarian-meowth';
 import { GalarianRunerigus } from './galarian-runerigus';
@@ -51,6 +52,7 @@ export const setRebelClash: Card[] = [
   new DragapultVMAX(),
   new Duraludon(),
   new Electivire(),
+  new Flapple(),
   new GalarMine(),
   new GalarianMeowth(),
   new GalarianRunerigus(),

@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Absol } from './absol';
 import { Cofagrigus } from './cofagrigus';
 import { DeoxysEX } from './deoxys-ex';
+import { Dragonite } from './dragonite';
 import { Electrode } from './electrode';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
@@ -27,6 +28,7 @@ export const setPlasmaFreeze: Card[] = [
   new Absol(),
   new Cofagrigus(),
   new DeoxysEX(),
+  new Dragonite(),
   new Electrode(),
   new Exeggcute(),
   new Exeggutor(),

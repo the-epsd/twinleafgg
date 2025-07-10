@@ -6,7 +6,7 @@ import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects'
 
 export class SylveonVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
 
   public stage: Stage = Stage.VMAX;
 
@@ -20,20 +20,21 @@ export class SylveonVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Precious Touch',
-        cost: [ CardType.PSYCHIC ],
+        cost: [CardType.PSYCHIC],
         damage: 0,
         text: 'Attach an Energy card from your hand to 1 of your Benched Pokémon. If you do, heal 120 damage from that Pokémon.'
       },
       {
         name: 'Max Harmony',
-        cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+        cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
         damage: 70,
+        damageCalculation: '+',
         text: 'This attack does 30 more damage for each different type of Pokémon on your Bench.'
       }
     ];
@@ -60,13 +61,13 @@ export class SylveonVMAX extends PokemonCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: 1, max: 1 },
       ), transfers => {
@@ -79,7 +80,7 @@ export class SylveonVMAX extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target); 
+          player.deck.moveCardTo(transfer.card, target);
 
           const healEffect = new HealEffect(player, target, 120);
           store.reduceEffect(state, healEffect);
