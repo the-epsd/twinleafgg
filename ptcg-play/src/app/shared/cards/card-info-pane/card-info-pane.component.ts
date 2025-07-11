@@ -231,6 +231,13 @@ export class CardInfoPaneComponent implements OnChanges {
             attacks = [...attacks, ...(card.attacks || [])];
           }
         }
+        // Add attacks from tool cards in the tools array, if present
+        const tools = (this.cardList as any).tools || [];
+        for (const tool of tools) {
+          if (tool.attacks && tool.attacks.length > 0) {
+            attacks = [...attacks, ...tool.attacks];
+          }
+        }
         return attacks;
       }
       return (this.card as any).attacks || [];

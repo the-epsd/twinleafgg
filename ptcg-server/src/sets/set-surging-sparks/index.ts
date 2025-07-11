@@ -116,6 +116,7 @@ import { Wochien } from './wo-chien';
 import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
 import { Exeggutor } from './exeggutor';
+import { Turtonator } from './turtonator';
 
 export const setSurgingSparks: Card[] = [
   new Dialga(),
@@ -157,6 +158,7 @@ export const setSurgingSparks: Card[] = [
   new Marill(),
   new TeraOrb(),
   new Trapinch(),
+  new Turtonator(),
   new Vibrava(),
   new Flygonex(),
   new HelperBell(),

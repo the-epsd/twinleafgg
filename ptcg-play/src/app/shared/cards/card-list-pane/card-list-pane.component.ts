@@ -19,4 +19,11 @@ export class CardListPaneComponent {
     this.cardClick.next(card);
   }
 
+  get allCards(): Card[] {
+    if (!this.cardList) return [];
+    // Check if cardList has a 'tools' property (for PokemonCardList), otherwise just return cards
+    const tools = (this.cardList as any).tools || [];
+    return [...this.cardList.cards, ...tools];
+  }
+
 }
