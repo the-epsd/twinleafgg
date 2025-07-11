@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Card, CardList } from 'ptcg-server';
+import { Card, CardList, SuperType } from 'ptcg-server';
 import { CardInfoPaneOptions, CardInfoPaneAction } from '../card-info-pane/card-info-pane.component';
 import { CardInfoPopupData, CardInfoPopupComponent } from '../card-info-popup/card-info-popup.component';
 
@@ -17,6 +17,8 @@ export class CardInfoListPopupComponent {
   public facedown: boolean;
   public allowReveal: boolean;
   public options: CardInfoPaneOptions;
+  public sortDiscards: boolean = false;
+  private originalDiscard: Card[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -28,6 +30,7 @@ export class CardInfoListPopupComponent {
     this.allowReveal = data.allowReveal;
     this.facedown = data.facedown;
     this.options = data.options;
+    this.originalDiscard = this.cardList.cards.slice(); // Clone discard pile
   }
 
   public async showCardInfo(card: Card): Promise<void> {
@@ -55,4 +58,28 @@ export class CardInfoListPopupComponent {
     this.dialogRef.close(result);
   }
 
+  private getSortedCards(): Card[] {
+    return this.cardList.cards.slice().sort((a, b) => {
+      const typeOrder = (card: Card): number => {
+        if (card.superType === SuperType.POKEMON) return 0;
+        if (card.superType === SuperType.TRAINER) return 1;
+        return 2;
+      };
+
+      const aType = typeOrder(a);
+      const bType = typeOrder(b);
+      if (aType !== bType) return aType - bType;
+      if (a.set !== b.set) return a.set.localeCompare(b.set);
+      return (parseInt(a.setNumber || '0', 10) - parseInt(b.setNumber || '0', 10));
+    });
+  }
+
+  public onSortDiscardsChange(): void {
+    if (this.sortDiscards) {
+      const sorted = this.getSortedCards();
+      this.cardList.cards = sorted;
+    } else {
+      this.cardList.cards = this.originalDiscard.slice(); // Restore discard order
+    }
+  }
 }
