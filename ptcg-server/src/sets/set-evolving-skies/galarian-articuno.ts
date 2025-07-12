@@ -56,8 +56,6 @@ export class GalarianArticuno extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if ((effect instanceof PlayPokemonEffect) && effect.pokemonCard === this) {
-
-
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -109,17 +107,17 @@ export class GalarianArticuno extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const cards = player.active.cards.filter(c =>
-        c instanceof EnergyCard &&
-        (c.provides.includes(CardType.PSYCHIC) || c.provides.includes(CardType.ANY))
-      );
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const discardEnergy = new DiscardCardsEffect(effect, cards);
-      discardEnergy.target = player.active;
-      store.reduceEffect(state, discardEnergy);
+      checkProvidedEnergy.energyMap.forEach(em => {
+        if (em.provides.includes(CardType.PSYCHIC) || em.provides.includes(CardType.ANY)) {
+          const discardEnergy = new DiscardCardsEffect(effect, [em.card]);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        }
+      });
 
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -136,6 +134,7 @@ export class GalarianArticuno extends PokemonCard {
         store.reduceEffect(state, damageEffect);
       });
     }
+
     return state;
   }
 }

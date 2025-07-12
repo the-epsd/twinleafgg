@@ -111,6 +111,7 @@ export enum Archetype {
   FERALIGATR = 'Feraligatr',
   BLISSEY = 'Blissey',
   MILOTIC = 'Milotic',
+  HISUIAN_ZOROARK = 'Hisuian Zoroark',
   ZOROARK = 'Zoroark',
   BELLIBOLT = 'Bellibolt',
   FLAREON = 'Flareon',

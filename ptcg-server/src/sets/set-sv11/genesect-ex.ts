@@ -3,7 +3,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { HAS_MARKER, ABILITY_USED, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, ADD_MARKER } from '../../game/store/prefabs/prefabs';
+import { HAS_MARKER, ABILITY_USED, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Genesectex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -82,6 +82,7 @@ export class Genesectex extends PokemonCard {
         });
       });
     }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.METAL_SIGNAL_MARKER, this);
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

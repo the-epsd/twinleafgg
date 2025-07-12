@@ -27,6 +27,7 @@ import { Joltik } from './joltik';
 import { JudgeWhistle } from './judge-whistle';
 import { Kakuna } from './kakuna';
 import { Lapras } from './lapras';
+import { LavenderTown } from './lavender-town';
 import { MagikarpWailordGX } from './magikarp-and-wailord-gx';
 import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
@@ -84,6 +85,7 @@ export const setTeamUp: Card[] = [
   new Joltik(),
   new Kakuna(),
   new Lapras(),
+  new LavenderTown(),
   new Mareep(),
   new MetalGoggles(),
   new Mimikyu(),
