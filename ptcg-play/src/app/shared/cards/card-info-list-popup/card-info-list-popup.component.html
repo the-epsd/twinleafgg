@@ -3,6 +3,13 @@
 </h2>
 
 <mat-dialog-content>
+  <div style="margin-bottom: 10px;">
+    <label>
+      <input type="checkbox" [(ngModel)]="sortDiscards" (change)="onSortDiscardsChange()" />
+      Sort Discard
+    </label>
+  </div>
+
   <ptcg-card-list-pane [selected]="card" [cardList]="cardList" [facedown]="facedown" (cardClick)="showCardInfo($event)">
   </ptcg-card-list-pane>
 </mat-dialog-content>
