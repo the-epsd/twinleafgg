@@ -3,6 +3,7 @@ import { AceTrainer } from './ace-trainer';
 import { Ariados } from './ariados';
 import { Baltoy } from './baltoy';
 import { Combee } from './combee';
+import { Cottonee } from './cottonee';
 import { EcoArm } from './eco-arm';
 import { Eevee } from './eevee';
 import { FadedTown } from './faded-town';
@@ -18,6 +19,7 @@ export const setAncientOrigins: Card[] = [
   new AceTrainer(),
   new Ariados(),
   new Baltoy(),
+  new Cottonee(),
   new EcoArm(),
   new Eevee(),
   new FadedTown(),

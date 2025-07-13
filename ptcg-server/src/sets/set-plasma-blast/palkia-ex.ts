@@ -34,17 +34,11 @@ export class PalkiaEX extends PokemonCard {
   public name: string = 'Palkia EX';
   public fullName: string = 'Palkia EX PLB';
 
-  public usedStrafe = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedStrafe = true;
-    }
 
-    if (AFTER_ATTACK(effect) && this.usedStrafe) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-      this.usedStrafe = false;
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
