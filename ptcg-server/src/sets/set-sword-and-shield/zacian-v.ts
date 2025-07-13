@@ -1,18 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, GameMessage, GameError, CardList, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType, CardTarget } from '../../game';
+import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, PowerType, GameMessage, GameError, CardList, EnergyCard, AttachEnergyPrompt, PlayerType, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class ZacianV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
   public cardType: CardType = M;
   public hp: number = 220;
   public weakness = [{ type: R }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
   public resistance = [{ type: G, value: -30 }];
 
   public powers = [{
@@ -41,55 +41,67 @@ export class ZacianV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intrepid Sword
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
       const topdecks = new CardList();
       player.deck.moveTo(topdecks, 3);
 
-      let metals = 0;
-      topdecks.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.name === 'Metal Energy'){
-          metals++;
+      // Find the slot for this Zacian V using the new system
+      const zacianSlot = StateUtils.findPokemonSlot(state, this);
+      if (!zacianSlot) {
+        // Should never happen, but safety check
+        return state;
+      }
+      // Find the CardTarget for this Zacian V slot
+      let zacianTarget: CardTarget | undefined;
+      const blockedTo: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (list === zacianSlot && card === this) {
+          zacianTarget = target;
+        } else {
+          blockedTo.push(target);
         }
       });
-
-      if (!metals){
-        topdecks.moveTo(player.hand);
+      if (!zacianTarget) {
+        // Should never happen, but safety check
+        return state;
       }
 
-      if (metals > 0){
-        const blocked: CardTarget[] = [];
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-          if (card !== this) {
-            blocked.push(target);
-          }
-        });
+      // Filter Metal Energy
+      const metalEnergies = topdecks.cards.filter(card => card instanceof EnergyCard && card.name === 'Metal Energy');
+      const metals = metalEnergies.length;
 
+      if (metals === 0) {
+        topdecks.moveTo(player.hand);
+      } else {
+        // Only allow attaching to this Zacian V
         state = store.prompt(state, new AttachEnergyPrompt(
           player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          GameMessage.ATTACH_ENERGY_CARDS,
           topdecks,
           PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
-          { allowCancel: false, min: 0, max: metals, blockedTo: blocked }
+          // Only this Zacian V's slot
+          [zacianTarget.slot],
+          { superType: SuperType.ENERGY, name: 'Metal Energy' },
+          { allowCancel: false, min: 0, max: metals, sameTarget: true, blockedTo }
         ), transfers => {
           transfers = transfers || [];
-          // cancelled by user
-          if (transfers.length === 0) {
-            return;
-          }
+          // Attach selected Metal Energies to this Zacian V
           for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            topdecks.moveCardTo(transfer.card, target);
+            // Only allow attaching to this Zacian V
+            if (
+              transfer.to.player === zacianTarget!.player &&
+              transfer.to.slot === zacianTarget!.slot &&
+              transfer.to.index === zacianTarget!.index
+            ) {
+              topdecks.moveCardTo(transfer.card, StateUtils.getTarget(state, player, transfer.to));
+            }
           }
-
+          // Move the rest to hand
           topdecks.moveTo(player.hand);
         });
       }
-
-      
 
       // end the turn
       const endTurnEffect = new EndTurnEffect(player);
@@ -106,7 +118,7 @@ export class ZacianV extends PokemonCard {
 
       player.marker.addMarker(this.BRAVE_BLADE_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BRAVE_BLADE_MARKER_2, this)) {
       effect.player.marker.removeMarker(this.BRAVE_BLADE_MARKER, this);
       effect.player.marker.removeMarker(this.BRAVE_BLADE_MARKER_2, this);

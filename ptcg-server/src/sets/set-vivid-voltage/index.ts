@@ -30,6 +30,7 @@ import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Taillow } from './taillow';
 import { TalonflameV } from './talonflame-v';
+import { TelescopicSight } from './telescopic-sight';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
@@ -69,6 +70,7 @@ export const setVividVoltage: Card[] = [
   new StoneFightingEnergy(),
   new Taillow(),
   new TalonflameV(),
+  new TelescopicSight(),
   new Wailmer(),
   new Wailord(),
   new WashWaterEnergy(),

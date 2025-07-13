@@ -1,8 +1,8 @@
 import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -36,7 +36,7 @@ export class Faba extends TrainerCard {
       let pokemonsWithTool = 0;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
           blocked.push(target);
@@ -78,28 +78,26 @@ export class Faba extends TrainerCard {
             }
 
             const cardList = targets[0];
-
-            if (cardList.isStage(Stage.BASIC)) {
-              try {
-                const supporterEffect = new SupporterEffect(player, effect.trainerCard);
-                store.reduceEffect(state, supporterEffect);
-              } catch {
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                return state;
+            const owner = StateUtils.findOwner(state, cardList);
+            if (cardList.tools.length > 0) {
+              if (cardList.tools.length > 1) {
+                return store.prompt(state, new ChooseCardsPrompt(
+                  player,
+                  GameMessage.CHOOSE_CARD_TO_DISCARD,
+                  cardList,
+                  { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+                  { min: 1, max: 1, allowCancel: false }
+                ), selected => {
+                  if (selected && selected.length > 0) {
+                    cardList.moveCardTo(selected[0], owner.lostzone);
+                  }
+                  player.supporter.moveCardTo(this, player.discard);
+                  return state;
+                });
+              } else {
+                cardList.moveCardTo(cardList.tools[0], owner.lostzone);
               }
             }
-
-            targets.forEach(target => {
-              const owner = StateUtils.findOwner(state, target);
-              if (target.tool !== undefined) {
-                target.moveCardTo(target.tool, owner.lostzone);
-                target.tool = undefined;
-              }
-
-              player.supporter.moveCardTo(this, player.discard);
-              return state;
-            });
-
             player.supporter.moveCardTo(this, player.discard);
             return state;
           });

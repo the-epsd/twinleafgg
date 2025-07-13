@@ -25,10 +25,6 @@
     </ptcg-badge>
   </div>
 
-  <div class="ptcg-trainer-card" *ngIf="trainerCard">
-    <ptcg-card [card]="trainerCard" (click)="onCardClick(trainerCard)"></ptcg-card>
-  </div>
-
   <div class="ptcg-break-card" *ngIf="breakCard">
     <ptcg-card [card]="breakCard" (click)="onCardClick(breakCard)"></ptcg-card>
   </div>
@@ -55,6 +51,13 @@
 
   <div class="ptcg-vunion-bottom-right-card" *ngIf="vunionBottomRightCard">
     <ptcg-card [card]="vunionBottomRightCard" (click)="onCardClick(vunionBottomRightCard)"></ptcg-card>
+  </div>
+
+  <!-- Tool cards, rendered like energy cards, with custom image and click handler -->
+  <div class="ptcg-tool-cards" *ngIf="cardListInternal instanceof PokemonCardList && cardListInternal.tools">
+    <ptcg-card *ngFor="let tool of cardListInternal.tools; let i = index" [card]="tool"
+      [customImageUrl]="getCustomToolImageUrl(tool)" (click)="onCardClick(tool)" [attr.data-name]="tool.name"
+      [ngStyle]="{ top: (i * 15) + 'px' }" class="tool-overlap"></ptcg-card>
   </div>
 
   <ptcg-card [card]="mainCard" *ngIf="mainCard" (click)="onCardClick(mainCard)">

@@ -42,7 +42,7 @@ export class MAudinoEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // screw the rules
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tool && effect.target.tool.name === 'Audino Spirit Link'){
+      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Audino Spirit Link'){
         return state;
       }
 

@@ -1,11 +1,13 @@
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
-import { HolonAdventurer } from './holon-adventurer';
+import { Armaldo } from './armaldo';
 import { Chimecho } from './chimecho';
 import { DeltaRainbowEnergy } from './delta-rainbow-energy';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
 import { Flygon } from './flygon';
+import { HolonAdventurer } from './holon-adventurer';
+import { HolonFossil } from './holon-fossil';
 import { HolonsCastform } from './holons-castform';
 import { Horsea } from './horsea';
 import { Latias } from './latias';
@@ -20,7 +22,7 @@ import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 
 export const setEXHolonPhantoms: Card[] = [
-  new HolonAdventurer(),
+  new Armaldo(),
   new Chimecho(),
   new DeltaRainbowEnergy(),
   new Exeggcute(),
@@ -35,6 +37,8 @@ export const setEXHolonPhantoms: Card[] = [
   new Pikachu(),
   new Raichu(),
   new RareCandy(),
+  new HolonAdventurer(),
+  new HolonFossil(),
   new HolonsCastform(),
   new Trapinch(),
   new Vibrava(),

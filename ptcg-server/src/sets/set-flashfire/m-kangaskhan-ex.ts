@@ -37,7 +37,7 @@ export class MKangaskhanEX extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool && cardList.tool.name === 'Kangaskhan Spirit Link') {
+        if (card === this && cardList.tools.length > 0 && cardList.tools[0].name === 'Kangaskhan Spirit Link') {
           return state;
         } else {
           const endTurnEffect = new EndTurnEffect(player);

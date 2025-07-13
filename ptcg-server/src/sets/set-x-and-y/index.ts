@@ -14,6 +14,7 @@ import { Phantump } from './phantump';
 import { Pikachu } from './pikachu';
 import { ProfessorsLetter } from './professors-letter';
 import { Raichu } from './raichu';
+import { RollerSkates } from './roller-skates';
 import { ShadowCircle } from './shadow-circle';
 import { Shauna } from './shauna';
 import { Spritzee } from './spritzee';
@@ -38,6 +39,7 @@ export const setXY: Card[] = [
   new Pikachu(),
   new ProfessorsLetter(),
   new Raichu(),
+  new RollerSkates(),
   new ShadowCircle(),
   new Shauna(),
   new Spritzee(),

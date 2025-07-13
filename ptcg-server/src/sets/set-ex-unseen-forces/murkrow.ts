@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType, TrainerType, TrainerCard } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-import { MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Murkrow extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -54,17 +54,18 @@ export class Murkrow extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      const opponent = effect.opponent;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Discard active Pokemon's tool first
       const activePokemon = opponent.active;
-      opponent.active.cards.forEach(card => {
-        if (card instanceof TrainerCard) {
-          MOVE_CARD_TO(state, card, opponent.discard);
-          if (card.trainerType === TrainerType.TOOL) {
-            activePokemon.tool = undefined;
-          }
+      if (activePokemon.tools.length > 0) {
+        // Discard all tools attached to the opponent's active Pokémon
+        for (const tool of [...activePokemon.tools]) {
+          activePokemon.moveCardTo(tool, opponent.discard);
         }
-      });
+      }
     }
 
     return state;

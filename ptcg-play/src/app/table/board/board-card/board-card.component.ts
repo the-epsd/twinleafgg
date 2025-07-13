@@ -423,7 +423,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.vunionBottomRightCard = undefined;
     }
 
-    this.trainerCard = cardList.tool;
+    this.trainerCard = cardList.tools[0];
 
     for (const card of cardList.cards) {
       // Add if it's a true energy card, or if it's attached as energy (in cardList.energyCards)
@@ -547,6 +547,22 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     return '';
   }
 
+  getCustomToolImageUrl(card: Card): string {
+    const customToolImageUrls = {
+      'Vitality Band': 'assets/tools/vitality-band.png',
+      'Bravery Charm': 'assets/tools/bravery-charm.png',
+      // Add more mappings as needed
+    };
+    if (
+      card &&
+      card.superType === SuperType.TRAINER &&
+      customToolImageUrls[card.name]
+    ) {
+      return customToolImageUrls[card.name];
+    }
+    return '';
+  }
+
   public onCardClick(card: Card) {
     // console.log('Card clicked:', {
     //   card,
@@ -636,6 +652,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       return 'paralyzed-position';
     }
     return '';
+  }
+
+  // Expose _cardList for template use (for tools display)
+  get cardListInternal(): CardList | PokemonCardList {
+    return this._cardList;
   }
 }
 

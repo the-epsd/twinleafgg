@@ -27,7 +27,7 @@ export class EscapeBoard extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
@@ -39,7 +39,7 @@ export class EscapeBoard extends TrainerCard {
 
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.tool === this) {
+    if (effect instanceof RetreatEffect && effect.player.active.tools.includes(this)) {
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 

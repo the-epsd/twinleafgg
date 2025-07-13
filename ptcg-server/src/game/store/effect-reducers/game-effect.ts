@@ -190,7 +190,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     state = store.reduceEffect(state, dealDamage);
   }
 
-  const afterAttackEffect = new AfterAttackEffect(effect.player);
+  const afterAttackEffect = new AfterAttackEffect(effect.player, attack);
   state = store.reduceEffect(state, afterAttackEffect);
 
   if (store.hasPrompts()) {
@@ -224,8 +224,8 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
         if (mainPokemon) {
           attackableCards.push(mainPokemon);
         }
-        if (attackingPokemon.tool && attackingPokemon.tool.attacks && attackingPokemon.tool.attacks.length > 0) {
-          attackableCards.push(attackingPokemon.tool);
+        if (attackingPokemon.tools.length > 0) {
+          attackableCards.push(attackingPokemon.tools[0]);
         }
         yield store.prompt(state, new ChooseAttackPrompt(
           player.id,
@@ -282,6 +282,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       if (effect.target.marker.hasMarker('LOST_CITY_MARKER') || card.tags.includes(CardTag.PRISM_STAR)) {
         const lostZoned = new CardList();
         const attachedCards = new CardList();
+        const tools = [...effect.target.tools];
         const pokemonIndices = effect.target.cards.map((card, index) => index);
 
         // Clear damage and effects first
@@ -309,6 +310,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           }
         }
 
+        // Move tools to discard
+        if (tools.length > 0) {
+          MOVE_CARDS(store, state, effect.target, effect.player.discard, { cards: tools });
+        }
+
         // Move attached cards to discard
         if (attachedCards.cards.length > 0) {
           state = MOVE_CARDS(store, state, attachedCards, effect.player.discard);
@@ -320,7 +326,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         }
       } else {
         // Default behavior - move to discard
+        const tools = [...effect.target.tools];
         effect.target.clearEffects();
+        // Move tools to discard
+        if (tools.length > 0) {
+          MOVE_CARDS(store, state, effect.target, effect.player.discard, { cards: tools });
+        }
         state = MOVE_CARDS(store, state, effect.target, effect.player.discard);
       }
     }
@@ -428,7 +439,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       source.damage = 0;
       source.specialConditions = [];
       source.marker.markers = [];
-      source.tool = undefined;
+      source.tools = [];
       source.removeBoardEffect(BoardEffect.ABILITY_USED);
     }
 

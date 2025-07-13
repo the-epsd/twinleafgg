@@ -68,11 +68,22 @@ export class Celebi extends PokemonCard {
 
         const cardList = effect.target;
         const pokemon = cardList.getPokemons();
-        const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+        const otherCards = cardList.cards.filter(card =>
+          !(card instanceof PokemonCard) &&
+          (!cardList.tools || !cardList.tools.includes(card))
+        );
+        const tools = [...cardList.tools];
 
         // Move other cards (tools, energy, etc.) to deck
         if (otherCards.length > 0) {
           MOVE_CARDS(store, state, cardList, player.deck, { cards: otherCards });
+        }
+
+        // Move tools to deck
+        if (tools.length > 0) {
+          for (const tool of tools) {
+            cardList.moveCardTo(tool, player.deck);
+          }
         }
 
         // Move Pokémon to deck and clear their effects

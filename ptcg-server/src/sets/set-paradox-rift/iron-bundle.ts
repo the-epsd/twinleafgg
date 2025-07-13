@@ -88,7 +88,11 @@ export class IronBundle extends PokemonCard {
           opponent.switchPokemon(targets[0]);
           const cardList = player.bench[benchIndex];
           const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+          const otherCards = cardList.cards.filter(card =>
+            !(card instanceof PokemonCard) &&
+            (!cardList.tools || !cardList.tools.includes(card))
+          );
+          const tools = [...cardList.tools];
           // Move Pokémon cards to the discard
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
@@ -96,6 +100,12 @@ export class IronBundle extends PokemonCard {
           // Move other cards (tools, energies, etc.) to the discard
           if (otherCards.length > 0) {
             MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          }
+          // Move tools to the discard
+          if (tools.length > 0) {
+            for (const tool of tools) {
+              cardList.moveCardTo(tool, player.discard);
+            }
           }
           return state;
         }

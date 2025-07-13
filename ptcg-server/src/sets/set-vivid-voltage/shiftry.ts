@@ -3,7 +3,7 @@ import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { AFTER_ATTACK, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Shiftry extends PokemonCard {
   public regulationMark: string = 'D';
@@ -28,21 +28,19 @@ export class Shiftry extends PokemonCard {
     useWhenInPlay: false,
     powerType: PowerType.ABILITY
   }];
-  
+
   public set: string = 'VIV';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Shiftry';
   public fullName: string = 'Shiftry VIV';
 
-  private usedFanTornado = false;
-  
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
 
       const cardList = StateUtils.findCardList(state, this);
-      
+
       // owner of shiftry
       const player = StateUtils.findOwner(state, cardList);
       const opponent = StateUtils.getOpponent(state, player);
@@ -51,30 +49,24 @@ export class Shiftry extends PokemonCard {
       if (player === effect.player) {
         return state;
       }
-      
+
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
-      
+
       if (player.active === cardList) {
         effect.preventDefault = true;
-                
+
         opponent.deck.moveTo(opponent.hand, 3);
       }
-      
+
       return state;
     }
-    
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedFanTornado = true;
-    }
 
-    if (AFTER_ATTACK(effect) && this.usedFanTornado) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
-      this.usedFanTornado = false;
-      
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_SWITCH_POKEMON,
@@ -92,7 +84,7 @@ export class Shiftry extends PokemonCard {
               opponent.switchPokemon(targets[0]);
               return state;
             }
-          }); 
+          });
         }
       });
     }

@@ -38,11 +38,11 @@ import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Pupitar } from './pupitar';
-// import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
 import { Seismitoad } from './seismitoad';
+import { Tadbulb } from './tadbulb';
 import { Thundurus } from './thundurus';
 import { Toedscruelex } from './toedscruel-ex';
 import { Togekiss } from './togekiss';
@@ -58,6 +58,7 @@ import { VengefulPunch } from './vengeful-punch';
 import { Vespiquenex } from './vespiquen-ex';
 import { Victiniex } from './victini-ex';
 import { Whiscash } from './whiscash';
+import { Revavroomex } from './revavroom-ex';
 
 
 export const setObsidianFlames: Card[] = [
@@ -93,6 +94,7 @@ export const setObsidianFlames: Card[] = [
   new Ryme(),
   new Scizor(),
   new Seismitoad(),
+  new Tadbulb(),
   new Thundurus(),
   new Toedscruelex(),
   new TownStore(),
@@ -119,8 +121,7 @@ export const setObsidianFlames: Card[] = [
   new Glimmoraex(),
   new Geeta(),
   new Vespiquenex(),
-
-  // new Revavroomex(),
+  new Revavroomex(),
 
   //Alt-s
 

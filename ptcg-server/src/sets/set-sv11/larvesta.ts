@@ -32,9 +32,8 @@ export class Larvesta extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const activePokemon = opponent.active;
-      if (activePokemon.tool) {
-        activePokemon.moveCardTo(activePokemon.tool, opponent.discard);
-        activePokemon.tool = undefined;
+      if (activePokemon.tools.length > 0) {
+        activePokemon.moveCardsTo([...activePokemon.tools], opponent.discard);
       }
       return state;
     }

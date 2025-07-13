@@ -6,6 +6,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Judge extends TrainerCard {
 
@@ -32,6 +33,8 @@ export class Judge extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const cards = player.hand.cards.filter(c => c !== this);
+
+      MOVE_CARDS(store, state, player.hand, player.deck, { sourceCard: this });
 
       player.hand.moveCardsTo(cards, player.deck);
       opponent.hand.moveTo(opponent.deck);

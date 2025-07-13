@@ -27,6 +27,7 @@ import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
 import { Golbat } from './golbat';
 import { Grabber } from './grabber';
+import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
@@ -68,6 +69,8 @@ import { Wartortle } from './wartortle';
 import { Weedle } from './weedle';
 import { Weezing } from './weezing';
 import { Zapdosex } from './zapdos-ex';
+import { Zubat } from './zubat';
+
 export const setPokemon151: Card[] = [
   new Abra(),
   // new AntiqueHelixFossil(),
@@ -96,6 +99,7 @@ export const setPokemon151: Card[] = [
   new Gloom(),
   new Golbat(),
   new Grabber(),
+  new Hitmonchan(),
   new Hitmonlee(),
   new Ivysaur(),
   new Jolteon(),
@@ -138,6 +142,7 @@ export const setPokemon151: Card[] = [
   new Zapdosex(),
   new BigAirBalloon(),
   new Jynxex(),
+  new Zubat(),
 
   //Full 
   new BulbasaurIR(),

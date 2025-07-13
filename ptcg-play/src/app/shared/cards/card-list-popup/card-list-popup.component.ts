@@ -34,4 +34,10 @@ export class CardListPopupComponent {
     this.dialogRef.close(result);
   }
 
+  get allCards(): Card[] {
+    if (!this.cardList) return [];
+    const tools = (this.cardList as any).tools || [];
+    return [...this.cardList.cards, ...tools];
+  }
+
 }

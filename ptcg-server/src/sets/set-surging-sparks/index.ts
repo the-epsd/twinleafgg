@@ -45,6 +45,7 @@ import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
+import { Gastrodon } from './gastrodon';
 import { ArchaludonexFA, ArchaludonexSIR, CounterGainUR, CyranoFA, FeebasIR, HydreigonexFA, HydreigonexSIR, JetEnergyUR, LarvestaIR, LatiasexFA, LatiasexSIR, LisiasAppealFA, LisiasAppealSIR, MiloticexFA, MiloticexSIR, NightStretcherUR, PikachuexFA, PikachuexSIR, PikachuexUR, SurferFA } from './full-art';
 import { Gimmighoul } from './gimmighoul';
 import { Gholdengo } from './gholdengo';
@@ -86,6 +87,7 @@ import { Rotom } from './rotom';
 import { Sandygast } from './sandygast';
 import { Scovillainex } from './scovillain-ex';
 import { Sealeo } from './sealeo';
+import { Shellos } from './shellos';
 import { Shroodle } from './shroodle';
 import { Sizzlipede } from './sizzlipede';
 import { Skeledirge } from './skeledirge';
@@ -114,6 +116,7 @@ import { Wochien } from './wo-chien';
 import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
 import { Exeggutor } from './exeggutor';
+import { Turtonator } from './turtonator';
 
 export const setSurgingSparks: Card[] = [
   new Dialga(),
@@ -128,6 +131,7 @@ export const setSurgingSparks: Card[] = [
   new Dedenne(),
   new MiraculousIntercom(),
   new Fuecoco(),
+  new Gastrodon(),
   new Crocalor(),
   new Skeledirge(),
   new Miloticex(),
@@ -154,6 +158,7 @@ export const setSurgingSparks: Card[] = [
   new Marill(),
   new TeraOrb(),
   new Trapinch(),
+  new Turtonator(),
   new Vibrava(),
   new Flygonex(),
   new HelperBell(),
@@ -216,6 +221,7 @@ export const setSurgingSparks: Card[] = [
   new Centiskorch(),
   new Cyclizarex(),
   new Sealeo(),
+  new Shellos(),
   new Spheal(),
   new Walrein(),
   new Blitzle(),

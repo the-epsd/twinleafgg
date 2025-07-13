@@ -1,6 +1,7 @@
 import { Effect } from './effect';
 import { Player } from '../state/player';
 import { Card } from '../card/card';
+import { Attack } from '../card/pokemon-types';
 
 export enum GamePhaseEffects {
   BEGIN_TURN_EFFECT = 'BEGIN_TURN_EFFECT',
@@ -49,9 +50,11 @@ export class AfterAttackEffect implements Effect {
   readonly type: string = GamePhaseEffects.AFTER_ATTACK_EFFECT;
   public preventDefault = false;
   public player: Player;
+  public attack: Attack;
 
-  constructor(player: Player) {
+  constructor(player: Player, attack: Attack) {
     this.player = player;
+    this.attack = attack;
   }
 }
 

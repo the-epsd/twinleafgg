@@ -32,7 +32,7 @@ export class CessationCrystal extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       let isActive = false;
 
-      if (player.active.tool === this && !IS_TOOL_BLOCKED(store, state, player, this)) {
+      if (player.active.tools.includes(this) && !IS_TOOL_BLOCKED(store, state, player, this)) {
         if (player.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
           player.active.moveCardTo(this, player.discard);
         }
@@ -41,7 +41,7 @@ export class CessationCrystal extends TrainerCard {
         }
       }
 
-      if (opponent.active.tool === this && !IS_TOOL_BLOCKED(store, state, opponent, this)) {
+      if (opponent.active.tools.includes(this) && !IS_TOOL_BLOCKED(store, state, opponent, this)) {
         if (opponent.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
           opponent.active.moveCardTo(this, opponent.discard);
         }

@@ -34,9 +34,8 @@ export class NsJoltik extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.tool && opponent.active.tool !== undefined) {
-        opponent.active.moveCardTo(opponent.active.tool, opponent.discard);
-
+      if (opponent.active.tools.length > 0) {
+        opponent.active.moveCardsTo([...opponent.active.tools], opponent.discard);
         const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
         return store.reduceEffect(state, specialCondition);
       }

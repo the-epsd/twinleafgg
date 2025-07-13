@@ -35,8 +35,8 @@ export function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard)
   return effect instanceof PowerEffect && effect.power === user.powers[index];
 }
 
-export const AFTER_ATTACK = (effect: Effect): effect is AfterAttackEffect => {
-  return effect instanceof AfterAttackEffect;
+export const AFTER_ATTACK = (effect: Effect, index: number, user: PokemonCard): effect is AfterAttackEffect => {
+  return effect instanceof AfterAttackEffect && effect.attack === user.attacks[index];
 };
 
 

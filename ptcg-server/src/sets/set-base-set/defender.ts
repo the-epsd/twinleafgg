@@ -51,7 +51,7 @@ export class Defender extends TrainerCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.getPokemonCard()?.tools.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       effect.damage -= 20;
     }
 

@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Armaldo } from './armaldo';
 import { Dunsparce } from './dunsparce';
 import { Gardevoirex } from './gardevoir-ex';
 import { LanettesNetSearch } from './lanettes-net-search';
@@ -13,6 +14,7 @@ import { Wobbuffet } from './wobbuffet';
 import { Zangoose } from './zangoose';
 
 export const setEXSandstorm: Card[] = [
+  new Armaldo(),
   new Dunsparce(),
   new Gardevoirex(),
   new LanettesNetSearch(),

@@ -49,7 +49,7 @@ export class UTurnBoard extends TrainerCard {
       player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 

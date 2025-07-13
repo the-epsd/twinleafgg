@@ -28,7 +28,7 @@ export class Leftovers extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.tool === this) {
+    if (effect instanceof EndTurnEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working

@@ -103,11 +103,22 @@ export class GreninjaGX extends PokemonCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+          const otherCards = cardList.cards.filter(card =>
+            !(card instanceof PokemonCard) &&
+            (!cardList.tools || !cardList.tools.includes(card))
+          );
+          const tools = [...cardList.tools];
 
           // Move other cards to hand
           if (otherCards.length > 0) {
             MOVE_CARDS(store, state, cardList, opponent.hand, { cards: otherCards });
+          }
+
+          // Move tools to hand
+          if (tools.length > 0) {
+            for (const tool of tools) {
+              cardList.moveCardTo(tool, opponent.hand);
+            }
           }
 
           // Move Pokémon to hand

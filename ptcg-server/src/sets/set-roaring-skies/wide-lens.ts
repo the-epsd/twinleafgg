@@ -20,7 +20,7 @@ export class WideLens extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.player.active.tool === this) {
+    if (effect instanceof PutDamageEffect && effect.player.active.tools.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }

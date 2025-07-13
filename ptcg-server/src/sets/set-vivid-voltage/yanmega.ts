@@ -2,7 +2,7 @@ import { ConfirmPrompt, GameMessage, State, StoreLike } from '../../game';
 import { Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
+import { SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Yanmega extends PokemonCard {
   public stage = Stage.STAGE_1;
@@ -33,15 +33,9 @@ export class Yanmega extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
 
-  public usedHitAndRun: boolean = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedHitAndRun = true;
-    }
-
-    if (AFTER_ATTACK(effect) && this.usedHitAndRun) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
@@ -51,8 +45,6 @@ export class Yanmega extends PokemonCard {
           SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
         }
       });
-
-      this.usedHitAndRun = false;
     }
     return state;
   }

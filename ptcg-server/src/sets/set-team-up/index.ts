@@ -4,13 +4,16 @@ import { Articuno } from './articuno';
 import { Beedrill } from './beedrill';
 import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
+import { BlackMarketPrismStar } from './black-market-prism-star';
 import { Bronzor } from './bronzor';
 import { CelebiVenusaurGX } from './celebi-and-venusaur-gx';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { CobalionGX } from './cobalion-gx';
+import { DangerousDrill } from './dangerous-drill';
 import { Dragonite } from './dragonite';
+import { Dratini } from './dratini';
 import { EeveeSnorlaxGX } from './eevee-and-snorlax-gx';
 import { Ferrothorn } from './ferrothorn';
 import { Galvantula } from './glavantula';
@@ -24,6 +27,7 @@ import { Joltik } from './joltik';
 import { JudgeWhistle } from './judge-whistle';
 import { Kakuna } from './kakuna';
 import { Lapras } from './lapras';
+import { LavenderTown } from './lavender-town';
 import { MagikarpWailordGX } from './magikarp-and-wailord-gx';
 import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
@@ -40,6 +44,7 @@ import { TapuKokoPrismStar } from './tapu-koko-prism-star';
 import { ViridianForest } from './viridian-forest';
 import { Weedle } from './weedle';
 import { Weedle2 } from './weedle-2';
+import { WondrousLabyrinthPrismStar } from './wondrous-labyrinth-prism-star';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
 import { Pidgey } from './pidgey';
@@ -59,13 +64,16 @@ export const setTeamUp: Card[] = [
   new Beedrill(),
   new BillsAnalysis(),
   new Bisharp(),
+  new BlackMarketPrismStar(),
   new Bronzor(),
   new Charizard(),
   new Charmander(),
   new Charmander2(),
   new Charmeleon(),
   new CobalionGX(),
+  new DangerousDrill(),
   new Dragonite(),
+  new Dratini(),
   new Ferrothorn(),
   new Galvantula(),
   new GengarMimikyuGX(),
@@ -77,6 +85,7 @@ export const setTeamUp: Card[] = [
   new Joltik(),
   new Kakuna(),
   new Lapras(),
+  new LavenderTown(),
   new Mareep(),
   new MetalGoggles(),
   new Mimikyu(),
@@ -95,6 +104,7 @@ export const setTeamUp: Card[] = [
   new ViridianForest(),
   new Weedle(),
   new Weedle2(),
+  new WondrousLabyrinthPrismStar(),
   new Yveltal(),
   new Zapdos(),
   new JudgeWhistle(),

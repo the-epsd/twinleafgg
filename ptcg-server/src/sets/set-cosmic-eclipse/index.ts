@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Aipom } from './aipom';
+import { AlolanPersianGX } from './alolan-persian-gx';
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
@@ -13,6 +14,7 @@ import { Drampa } from './drampa';
 import { DrawEnergy } from './draw-energy';
 import { Dusclops } from './dusclops';
 import { Duskull } from './duskull';
+import { Entei } from './entei';
 import { Excadrill } from './excadrill';
 import { Flabebe } from './flabebe';
 import { Flabebe2 } from './flabebe2';
@@ -67,6 +69,7 @@ import { SolgaleoLunalaGX } from './solgaleo-and-lunala-gx';
 
 export const setCosmicEclipse: Card[] = [
   new Aipom(),
+  new AlolanPersianGX(),
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
@@ -84,6 +87,7 @@ export const setCosmicEclipse: Card[] = [
   new DrawEnergy(),
   new Dusclops(),
   new Duskull(),
+  new Entei(),
   new Excadrill(),
   new Flabebe(),
   new Flabebe2(),

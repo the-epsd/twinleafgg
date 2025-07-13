@@ -29,7 +29,7 @@ export class SparklingCrystal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
       const pokemonCard = effect.player.active.getPokemonCard();
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working

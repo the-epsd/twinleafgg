@@ -52,14 +52,44 @@ export class Ruffian extends TrainerCard {
         const target = targets[0];
 
         // removing the tool
-        if (target.tool !== undefined) {
-          target.cards.forEach(card => {
-            if (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL) {
-              target.moveCardTo(card, opponent.discard);
-              target.tool = undefined;
-              return;
-            }
-          });
+        if (target.tools.length > 0) {
+          let toolToDiscard = target.tools[0];
+          if (target.tools.length > 1) {
+            return store.prompt(state, new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              target,
+              { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+              { min: 1, max: 1, allowCancel: false }
+            ), selected => {
+              if (selected && selected.length > 0) {
+                target.moveCardTo(selected[0], opponent.discard);
+              }
+              // continue to energy discard
+              // removing special energies
+              let specialEnergies = 0;
+              target.cards.forEach(card => {
+                if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
+              });
+
+              if (specialEnergies > 0) {
+                store.prompt(state, new ChooseCardsPrompt(
+                  player,
+                  GameMessage.CHOOSE_CARD_TO_DISCARD,
+                  target,
+                  { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+                  { min: 1, max: 1, allowCancel: false }
+                ), selected => {
+                  target.moveCardsTo(selected, opponent.discard);
+                  player.supporter.moveTo(player.discard);
+                });
+              } else {
+                player.supporter.moveTo(player.discard);
+              }
+            });
+          } else {
+            target.moveCardTo(toolToDiscard, opponent.discard);
+          }
         }
 
         // removing special energies

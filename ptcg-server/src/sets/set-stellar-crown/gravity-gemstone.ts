@@ -33,7 +33,7 @@ export class GravityGemstone extends TrainerCard {
 
       if (IS_TOOL_BLOCKED(store, state, player, this)) { return state; }
 
-      if (player.active.tool === this || opponent.active.tool === this) {
+      if (player.active.tools.includes(this) || opponent.active.tools.includes(this)) {
         effect.cost.push(CardType.COLORLESS);
       }
     }

@@ -32,6 +32,7 @@ import { ImpactEnergy } from './impact-energy';
 import { Inkay } from './inkay';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
+import { Kakuna } from './kakuna';
 import { KarensConviction } from './karens-conviction';
 import { Kecleon } from './kecleon';
 import { Kirlia } from './kirlia';
@@ -88,6 +89,7 @@ export const setChillingReign: Card[] = [
   new Inkay(),
   new Inteleon(),
   new JustifiedGloves(),
+  new Kakuna(),
   new KarensConviction(),
   new Kirlia(),
   new Klara(),

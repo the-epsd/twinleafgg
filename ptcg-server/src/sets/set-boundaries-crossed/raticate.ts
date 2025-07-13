@@ -1,10 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { TrainerType } from '../../game/store/card/card-types';
+import { CardList } from '../../game/store/state/card-list';
 
 export class Raticate extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,9 +41,24 @@ export class Raticate extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.active.tool !== undefined) {
-        MOVE_CARD_TO(state, opponent.active.tool, opponent.discard);
-        opponent.active.tool = undefined;
+      if (opponent.active.tools.length === 1) {
+        opponent.active.moveCardTo(opponent.active.tools[0], opponent.discard);
+      } else if (opponent.active.tools.length > 1) {
+        const toolList = new CardList();
+        toolList.cards = [...opponent.active.tools];
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          toolList,
+          { trainerType: TrainerType.TOOL },
+          { min: 1, max: 1, allowCancel: false }
+        ), selectedTools => {
+          if (selectedTools && selectedTools.length === 1) {
+            const tool = selectedTools[0];
+            opponent.active.moveCardTo(tool, opponent.discard);
+          }
+          return state;
+        });
       }
     }
 

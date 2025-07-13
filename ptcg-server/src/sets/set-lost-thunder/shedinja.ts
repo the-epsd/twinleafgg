@@ -26,7 +26,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
   let hasPokemonWithoutTool = false;
   const blocked: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tool === undefined && card !== self) {
+    if (cardList.tools.length === 0 && card !== self) {
       hasPokemonWithoutTool = true;
     } else {
       blocked.push(target);
@@ -48,7 +48,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
     if (targets && targets.length > 0) {
       // Attach Shedinja as a Pokemon Tool
       player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tool = pokemonCard;
+      targets[0].tools.push(pokemonCard);
 
       // Discard other cards
       player.bench[benchIndex].moveTo(player.discard);
@@ -101,7 +101,7 @@ export class Shedinja extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.active.tool === this) {
+    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.active.tools.includes(this)) {
       effect.prizeCount -= 1;
     }
 

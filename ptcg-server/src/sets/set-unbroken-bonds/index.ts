@@ -38,6 +38,7 @@ import { Poliwag } from './poliwag';
 import { Porygon } from './porygon';
 import { PorygonZ } from './porygon-z';
 import { Porygon2 } from './porygon2';
+import { PowerPlant } from './power-plant';
 import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 import { Salazzle } from './salazzle';
 import { Seel } from './seel';
@@ -45,6 +46,7 @@ import { Slowbro } from './slowbro';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Tyrogue } from './tyrogue';
+import { Venomoth } from './venomoth';
 import { Venonat } from './venonat';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
@@ -88,6 +90,7 @@ export const setUnbrokenBonds: Card[] = [
   new Porygon(),
   new Porygon2(),
   new PorygonZ(),
+  new PowerPlant(),
   new ReshiramCharizardGX(),
   new Salazzle(),
   new Seel(),
@@ -95,6 +98,7 @@ export const setUnbrokenBonds: Card[] = [
   new Spiritomb(),
   new TripleAccelerationEnergy(),
   new Tyrogue(),
+  new Venomoth(),
   new Venonat(),
   new Volcanion(),
   new Zeraora(),

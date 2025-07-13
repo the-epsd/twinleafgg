@@ -41,9 +41,8 @@ export class MetalCoreBarrier extends TrainerCard {
       }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (cardList.cards.includes(this)) {
+        if (cardList.tools && cardList.tools.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-          cardList.tool = undefined;
         }
       });
 

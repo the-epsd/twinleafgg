@@ -44,12 +44,11 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
 
-      if (IS_TOOL_BLOCKED(store, state, player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, player, this)) { return state; }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (cardList.cards.includes(this)) {
+        if (cardList.tools && cardList.tools.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-          cardList.tool = undefined;
         }
       });
 
@@ -78,7 +77,7 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
 
       const player = effect.player;
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,

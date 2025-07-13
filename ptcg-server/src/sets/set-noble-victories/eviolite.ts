@@ -27,12 +27,12 @@ export class Eviolite extends TrainerCard {
     '(after applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.target.tool === this) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
-      if (effect.target.tool === this && effect.target.isStage(Stage.BASIC)) {
+      if (effect.target.tools.includes(this) && effect.target.isStage(Stage.BASIC)) {
         effect.damage -= 20;
       }
     }

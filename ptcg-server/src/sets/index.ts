@@ -47,6 +47,7 @@ export * from './set-ex-legend-maker';
 export * from './set-nintendo-promos';
 
 //POP Series
+export * from './set-pop-series-2';
 export * from './set-pop-series-4';
 export * from './set-pop-series-5';
 

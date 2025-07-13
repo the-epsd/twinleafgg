@@ -54,7 +54,7 @@ export class MRayquazaEx extends PokemonCard {
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tool && effect.target.tool.name === 'Rayquaza Spirit Link'){
+      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Rayquaza Spirit Link'){
         return state;
       }
 

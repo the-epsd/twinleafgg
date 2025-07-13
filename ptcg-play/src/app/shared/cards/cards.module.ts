@@ -20,10 +20,12 @@ import { MaterialModule } from '../material.module';
 import { TrainerTypeComponent } from './trainer-type/trainer-type.component';
 import { HoverHighlightComponent } from './hover-highlight/hover-highlight.component';
 import { ArchetypeComponent } from './archetype/archetype.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ImageCacheModule,
     MaterialModule,
     DndMultiBackendModule,

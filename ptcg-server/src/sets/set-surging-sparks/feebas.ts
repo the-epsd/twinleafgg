@@ -1,6 +1,6 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class Feebas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -23,16 +23,11 @@ export class Feebas extends PokemonCard {
   public name: string = 'Feebas';
   public fullName: string = 'Feebas SSP';
 
-  public usedLeapOut = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this))
-      this.usedLeapOut = true;
 
-    if (AFTER_ATTACK(effect) && this.usedLeapOut) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-      this.usedLeapOut = false;
     }
 
     return state;

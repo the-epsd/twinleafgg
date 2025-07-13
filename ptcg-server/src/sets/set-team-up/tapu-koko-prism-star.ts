@@ -97,7 +97,11 @@ export class TapuKokoPrismStar extends PokemonCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             const pokemons = cardList.getPokemons();
-            const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+            const otherCards = cardList.cards.filter(card =>
+              !(card instanceof PokemonCard) &&
+              (!cardList.tools || !cardList.tools.includes(card))
+            );
+            const tools = [...cardList.tools];
             cardList.clearEffects();
             // Move Pokémon cards to the Lost Zone
             if (pokemons.length > 0) {
@@ -107,6 +111,13 @@ export class TapuKokoPrismStar extends PokemonCard {
             // Move other cards (tools, energies, etc.) to the discard
             if (otherCards.length > 0) {
               MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
+
+            // Move tools to the discard
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, player.discard);
+              }
             }
           }
         });

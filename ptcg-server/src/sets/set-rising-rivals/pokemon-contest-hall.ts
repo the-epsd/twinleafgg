@@ -65,7 +65,7 @@ export class PokemonContestHall extends TrainerCard {
                       if (selectedCards.length > 0) {
                         selectedCards.forEach(card => {
                           MOVE_CARD_TO(state, card, slots[index]);
-                          slots[index].tool = card;
+                          slots[index].tools.push(card);
                         });
                       }
                       SHUFFLE_DECK(store, state, player);

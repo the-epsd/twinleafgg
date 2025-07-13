@@ -34,14 +34,14 @@ export class BellelbaAndBrycenMan extends TrainerCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
-      
+
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
-      if (player.deck.cards.length === 0 || opponent.deck.cards.length === 0) {
+
+      if (player.deck.cards.length === 0 && opponent.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -53,34 +53,34 @@ export class BellelbaAndBrycenMan extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       // discard player cards
       const cardsToDiscard = Math.min(player.deck.cards.length, 3);
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, cardsToDiscard);
-      
+
       deckTop.cards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: this.name });
       });
-      
+
       deckTop.moveTo(player.discard, deckTop.cards.length);
 
       // discard opponent cards
       const opponentCardsToDiscard = Math.min(opponent.deck.cards.length, 3);
       const opponentDeckTop = new CardList();
       opponent.deck.moveTo(opponentDeckTop, opponentCardsToDiscard);
-      
+
       opponentDeckTop.cards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name, effectName: this.name });
       });
-      
+
       opponentDeckTop.moveTo(opponent.discard, opponentDeckTop.cards.length);
-      
+
       if (cannotDiscardFromHand) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       }
-      
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_DISCARD_CARDS,
@@ -100,10 +100,10 @@ export class BellelbaAndBrycenMan extends TrainerCard {
             cards.forEach((card, index) => {
               store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name, effectName: this.name });
             });
-            
+
             const oppoonentBenchDifference = opponentsBenchedPokemon - 3;
             const benchDifference = benchedPokemon - 3;
-            
+
             if (oppoonentBenchDifference > 0) {
               store.prompt(state, new ChoosePokemonPrompt(
                 opponent.id,
@@ -119,7 +119,7 @@ export class BellelbaAndBrycenMan extends TrainerCard {
                 selected.forEach(card => {
                   card.moveTo(opponent.discard);
                 });
-              
+
                 if (benchDifference > 0) {
                   store.prompt(state, new ChoosePokemonPrompt(
                     player.id,
@@ -135,11 +135,11 @@ export class BellelbaAndBrycenMan extends TrainerCard {
                     selected.forEach(card => {
                       card.moveTo(player.discard);
                     });
-                    
+
                     return state;
-                  });              
+                  });
                 }
-                
+
                 return state;
               });
             } else if (benchDifference > 0) {
@@ -157,18 +157,18 @@ export class BellelbaAndBrycenMan extends TrainerCard {
                 selected.forEach(card => {
                   card.moveTo(player.discard);
                 });
-                
+
                 return state;
-              });              
+              });
             }
-            
+
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            
+
             return state;
           });
         }
-      });      
-      
+      });
+
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }

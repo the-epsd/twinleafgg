@@ -32,9 +32,10 @@ export class SnorlaxDoll extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '175';
   public name: string = 'Snorlax Doll';
-  public fullName: string = 'Snorlax Doll SIT';
+  public fullName: string = 'Snorlax Doll PAR';
+  public legacyFullName: string = 'Snorlax Doll SIT';
   public regulationMark = 'G';
-
+  public maxTools: number = 1;
   public powers: Power[] = [
     {
       name: 'Snorlax Doll',
@@ -58,7 +59,7 @@ This card can't be affected by any Special Conditions and can't retreat. If this
       cardList.moveCardTo(this, player.discard);
     }
 
-    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this){
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
       effect.preventDefault = true;
     }
 
@@ -66,7 +67,7 @@ This card can't be affected by any Special Conditions and can't retreat. If this
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this){
+    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
       effect.prizeCount = 0;
       return state;
     }

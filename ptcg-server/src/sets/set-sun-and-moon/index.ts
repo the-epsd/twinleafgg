@@ -20,6 +20,7 @@ import { RainbowEnergy } from './rainbow-energy';
 import { Repel } from './repel';
 import { RotomDex } from './rotom-dex';
 import { Rowlet } from './rowlet';
+import { Snubbull } from './snubbull';
 import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
 import { TaurosGX } from './tauros-gx';
@@ -49,6 +50,7 @@ export const setSunAndMoon: Card[] = [
   new RotomDex(),
   new Rowlet(),
   new Repel(),
+  new Snubbull(),
   new TeamSkullGrunt(),
   new TimerBall(),
   new TaurosGX(),
