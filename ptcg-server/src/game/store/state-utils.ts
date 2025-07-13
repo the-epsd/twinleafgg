@@ -218,6 +218,22 @@ export class StateUtils {
     return cardList;
   }
 
+  public static findPokemonSlot(state: State, card: Card): PokemonCardList | undefined {
+    const cardLists: { pokemonSlot: PokemonCardList, cardList: CardList | Card[] }[] = [];
+    for (const player of state.players) {
+      cardLists.push({ pokemonSlot: player.active, cardList: player.active.cards });
+      cardLists.push({ pokemonSlot: player.active, cardList: player.active.energyCards });
+      cardLists.push({ pokemonSlot: player.active, cardList: player.active.tools });
+      player.bench.forEach(item => cardLists.push(
+        { pokemonSlot: item, cardList: item.cards },
+        { pokemonSlot: item, cardList: item.energyCards },
+        { pokemonSlot: item, cardList: item.tools }
+      ));
+    }
+    const cardList = cardLists.find(c => Array.isArray(c.cardList) ? c.cardList.includes(card) : c.cardList.cards.includes(card));
+    return cardList ? cardList.pokemonSlot : undefined;
+  }
+
   public static findOwner(state: State, cardList: CardList): Player {
     for (const player of state.players) {
       const cardLists: CardList[] = [];
