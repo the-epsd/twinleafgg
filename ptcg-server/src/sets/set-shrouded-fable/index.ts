@@ -27,6 +27,7 @@ import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
 import { IronMoth } from './iron-moth';
 import { JaninesSecretTechnique } from './janines-secret-technique';
+import { Joltik } from './joltik';
 import { Kingdraex } from './kingdra-ex';
 import { Kyurem } from './kyurem';
 import { Munkidoriex } from './munkidori-ex';
@@ -78,6 +79,7 @@ export const setShroudedFable: Card[] = [
   new Houndour(),
   new IronMoth(),
   new JaninesSecretTechnique(),
+  new Joltik(),
   new Kingdraex(),
   new Kyurem(),
   new Munkidoriex(),

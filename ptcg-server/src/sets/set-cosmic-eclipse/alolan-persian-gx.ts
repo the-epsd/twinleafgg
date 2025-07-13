@@ -26,7 +26,7 @@ export class AlolanPersianGX extends PokemonCard {
     name: 'Claw Slash',
     cost: [D, C, C],
     damage: 120,
-    text: 'Prevent all effects of an attack, including damage, done to Latios ex by your opponent\'s Pokémon-ex during your opponent\'s next turn.'
+    text: ''
   },
   {
     name: 'Stalking Claws GX',

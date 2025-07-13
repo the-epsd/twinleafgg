@@ -25,7 +25,7 @@ export class MaxiesHiddenBallTrick extends TrainerCard {
 
   public text: string =
     'You can play this card only when it is the last card in your hand. ' +
-    'Put a F Pokemon from your discard pile onto your Bench. ' +
+    'Put a [F] Pokemon from your discard pile onto your Bench. ' +
     'Then, draw 5 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
