@@ -7,6 +7,7 @@ import { Corsola } from './corsola';
 import { DesertRuins } from './desert-ruins';
 import { Feebas } from './feebas';
 import { Gorebyss } from './gorebyss';
+import { Groudonex } from './groudon-ex';
 import { IslandCave } from './island-cave';
 import { Jirachi } from './jirachi';
 import { Kyogreex } from './kyogre-ex';
@@ -31,6 +32,7 @@ export const setEXHiddenLegends: Card[] = [
   new DesertRuins(),
   new Feebas(),
   new Gorebyss(),
+  new Groudonex(),
   new IslandCave(),
   new Jirachi(),
   new Kyogreex(),

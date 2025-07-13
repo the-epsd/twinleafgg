@@ -5,6 +5,7 @@ import { CrobatG } from './crobat-g';
 import { Delcatty } from './delcatty';
 import { Dialga } from './dialga';
 import { GalacticHQ } from './galactic-hq';
+import { LookersInvestigation } from './lookers-investigation';
 import { PokeTurn } from './poke-turn';
 import { PokemonRescue } from './pokemon-rescue';
 import { Skitty } from './skitty';
@@ -29,6 +30,7 @@ export const setPlatinum: Card[] = [
   new Delcatty(),
   new Dialga(),
   new GalacticHQ(),
+  new LookersInvestigation(),
   new PokeTurn(),
   new PokemonRescue(),
   new Ralts(),

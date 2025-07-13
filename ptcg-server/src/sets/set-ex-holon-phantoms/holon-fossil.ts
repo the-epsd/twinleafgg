@@ -58,6 +58,7 @@ export class HolonFossil extends TrainerCard {
           player.supporter.moveCardTo(this, player.discard);
         } else if (!flipResult) {
           if (player.hand.cards.length === 0 || player.hand.cards.length === blockedHand.length) {
+            player.supporter.moveCardTo(this, player.discard);
             return state;
           }
 

@@ -10,6 +10,7 @@ import { Machamp } from './machamp';
 import { MachampLVX } from './machamp-lv-x';
 import { Machop } from './machop';
 import { Magikarp } from './magikarp';
+import { MarleysRequest } from './marleys-request';
 import { PokeBlower } from './poke-blower';
 import { PokeDrawer } from './poke-drawer';
 import { Sableye } from './sableye';
@@ -31,6 +32,7 @@ export const setStormfront: Card[] = [
   new MachampLVX(),
   new Machop(),
   new Magikarp(),
+  new MarleysRequest(),
   new PokeBlower(),
   new PokeDrawer(),
   new Sableye(),
