@@ -641,6 +641,11 @@ function getValidFormats(card: any): number[] {
     'Energy Retrieval',
     'Tool Scrapper',
     'Cheren',
+    'Rainbow Energy',
+    'N',
+    'Tropical Beach',
+    'Professor Juniper',
+    'Professor Sycamore',
   ];
   const formats = [Format.UNLIMITED];
   [
@@ -649,7 +654,11 @@ function getValidFormats(card: any): number[] {
     Format.STANDARD,
     Format.STANDARD_NIGHTLY,
     Format.RSPK,
-    Format.RETRO
+    Format.RETRO,
+    Format.BW,
+    Format.SWSH,
+    Format.XY,
+    Format.SM
   ].forEach((format: number) => {
     isValid(card, format, anyPrintingAllowed) ? formats.push(format) : null;
   });
@@ -680,15 +689,9 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
           !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       }
       case Format.GLC: {
-        var setDate = SetReleaseDates[card.set];
-        const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
-        const isForceLegal = forceLegalSets.includes(card.set);
-        return (
-          (
-            (setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date())
-            || isForceLegal
-          ) &&
-          !(card.tags && card.tags.some((t: any) => [
+        // For anyPrintingAllowed, do NOT check set date, only tags
+        return !(
+          card.tags && card.tags.some((t: any) => [
             CardTag.ACE_SPEC.toString(),
             CardTag.POKEMON_EX.toString(),
             CardTag.POKEMON_ex.toString(),
@@ -700,9 +703,19 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
             CardTag.PRISM_STAR.toString(),
             CardTag.POKEMON_VUNION.toString()
           ].includes(t))
-          ));
+        );
       }
       case Format.RETRO:
+        return true;
+      case Format.BW:
+        return true;
+      case Format.SWSH:
+        return true;
+      case Format.XY:
+        return true;
+      case Format.SM:
+        return true;
+      case Format.RSPK:
         return true;
     }
   }
@@ -862,7 +875,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.set === 'PLS' ||
         card.set === 'PLF' ||
         card.set === 'PLB' ||
-        card.set === 'LTR';
+        card.set === 'LTR' ||
+        card.set === 'BWP';
   }
   return false;
 }

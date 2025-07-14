@@ -30,6 +30,9 @@
         (click)="selectFormat('standard_nightly')">
         {{ 'FORMAT_STANDARD_NIGHTLY' | translate }}
       </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'glc'" (click)="selectFormat('glc')">
+        {{ 'FORMAT_GLC' | translate }}
+      </button>
       <button mat-button class="format-tab" [class.active]="selectedFormat === 'expanded'"
         (click)="selectFormat('expanded')">
         {{ 'FORMAT_EXPANDED' | translate }}
@@ -38,14 +41,23 @@
         (click)="selectFormat('unlimited')">
         {{ 'FORMAT_UNLIMITED' | translate }}
       </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'swsh'" (click)="selectFormat('swsh')">
+        {{ 'FORMAT_SWSH' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'sm'" (click)="selectFormat('sm')">
+        {{ 'FORMAT_SM' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'xy'" (click)="selectFormat('xy')">
+        {{ 'FORMAT_XY' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'bw'" (click)="selectFormat('bw')">
+        {{ 'FORMAT_BW' | translate }}
+      </button>
       <button mat-button class="format-tab" [class.active]="selectedFormat === 'RSPK'" (click)="selectFormat('RSPK')">
         {{ 'FORMAT_RSPK' | translate }}
       </button>
       <button mat-button class="format-tab" [class.active]="selectedFormat === 'retro'" (click)="selectFormat('retro')">
         {{ 'FORMAT_RETRO' | translate }}
-      </button>
-      <button mat-button class="format-tab" [class.active]="selectedFormat === 'glc'" (click)="selectFormat('glc')">
-        {{ 'FORMAT_GLC' | translate }}
       </button>
       <button mat-button class="format-tab" [class.active]="selectedFormat === 'theme'" (click)="selectFormat('theme')">
         {{ 'FORMAT_THEME' | translate }}
@@ -77,7 +89,11 @@
             <!-- Deck name and actions row -->
             <div class="deck-name-row">
               <div class="deck-formats" (click)="$event.stopPropagation()">
-                <ptcg-deck-validity [deck]="deck.deckItems" [validOnly]="true"></ptcg-deck-validity>
+                <mat-chip-list *ngIf="deck.format && deck.format.length">
+                  <mat-chip class="bg-chip" *ngFor="let format of deck.format">
+                    {{ getFormatDisplayName(formatNameMap[format] || format) }}
+                  </mat-chip>
+                </mat-chip-list>
               </div>
               <div class="deck-name">{{ deck.name }}</div>
               <button mat-icon-button class="action-button-small" [matMenuTriggerFor]="menu"
