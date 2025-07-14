@@ -44,9 +44,9 @@ export class State {
 
   public skipOpponentTurn = false;
 
-  public lastAttack: Attack | import('../effects/game-effects').UseAttackEffect | null = null;
+  public lastAttack: Attack | null = null;
 
-  public playerLastAttack: { [playerId: number]: Attack | import('../effects/game-effects').UseAttackEffect } = {};
+  public playerLastAttack: { [playerId: number]: Attack } = {};
 
   public isSuddenDeath?: boolean;
 
