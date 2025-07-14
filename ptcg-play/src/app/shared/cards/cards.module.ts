@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ImageCacheModule,
+    FormsModule,
     MaterialModule,
     DndMultiBackendModule,
     DndModule,
