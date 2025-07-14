@@ -84,12 +84,13 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       const useAttackEffect = new UseAttackEffect(player, attack);
       state = store.reduceEffect(state, useAttackEffect);
 
-      state.lastAttack = attack;
+      // Store the full effect instead of just the attack
+      state.lastAttack = useAttackEffect;
 
       if (!state.playerLastAttack) {
         state.playerLastAttack = {};
       }
-      state.playerLastAttack[player.id] = attack;
+      state.playerLastAttack[player.id] = useAttackEffect;
 
       return state;
     }

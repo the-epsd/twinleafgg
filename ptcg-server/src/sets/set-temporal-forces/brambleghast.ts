@@ -57,7 +57,6 @@ export class Brambleghast extends PokemonCard {
 
       if (effect.target.getPokemonCard() === this) {
         effect.hp += prizesTaken * hpBoostPerPrize;
-        console.log('hp boost' + (effect.hp));
       }
     }
 
@@ -81,9 +80,7 @@ export class Brambleghast extends PokemonCard {
           }
         });
       }
-
       effect.damage -= 80;
-      console.log('damage ' + effect.damage);
     }
 
     return state;

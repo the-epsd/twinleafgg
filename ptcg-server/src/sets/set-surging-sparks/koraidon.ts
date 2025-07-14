@@ -75,7 +75,10 @@ export class Koraidon extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const playerLastAttack = state.playerLastAttack?.[player.id];
-      const originalCard = playerLastAttack ? this.findOriginalCard(state, playerLastAttack) : null;
+      const lastAttack = playerLastAttack && (typeof (playerLastAttack as any).attack === 'object')
+        ? (playerLastAttack as any).attack
+        : playerLastAttack;
+      const originalCard = lastAttack ? this.findOriginalCard(state, lastAttack) : null;
 
       if (originalCard && originalCard.tags.includes(CardTag.ANCIENT) && !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)) {
         effect.damage += 150;
@@ -86,12 +89,15 @@ export class Koraidon extends PokemonCard {
     return state;
   }
 
-  private findOriginalCard(state: State, playerLastAttack: Attack): PokemonCard | null {
+  private findOriginalCard(state: State, playerLastAttack: Attack | { attack?: Attack }): PokemonCard | null {
+    const attack = (playerLastAttack && typeof (playerLastAttack as any).attack === 'object')
+      ? (playerLastAttack as any).attack
+      : playerLastAttack;
     let originalCard: PokemonCard | null = null;
 
     state.players.forEach(player => {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.attacks.some(attack => attack === playerLastAttack)) {
+        if (card.attacks.some(a => a === attack)) {
           originalCard = card;
         }
       });
@@ -99,7 +105,7 @@ export class Koraidon extends PokemonCard {
       // Check deck, discard, hand, and lost zone
       [player.deck, player.discard, player.hand, player.lostzone].forEach(cardList => {
         cardList.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.attacks.some(attack => attack === playerLastAttack)) {
+          if (card instanceof PokemonCard && card.attacks.some(a => a === attack)) {
             originalCard = card;
           }
         });
