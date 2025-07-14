@@ -31,6 +31,22 @@ export class DeckComponent implements OnInit {
   public filteredDecks: DeckListEntry[] = [];
   public showThemeDecksInAllTab = false;
 
+  // Map Format enum values to their string keys for display
+  public formatNameMap: { [key: number]: string } = {
+    [Format.STANDARD]: 'standard',
+    [Format.STANDARD_NIGHTLY]: 'standard_nightly',
+    [Format.EXPANDED]: 'expanded',
+    [Format.UNLIMITED]: 'unlimited',
+    [Format.RSPK]: 'RSPK',
+    [Format.RETRO]: 'retro',
+    [Format.GLC]: 'glc',
+    [Format.THEME]: 'theme',
+    [Format.SWSH]: 'swsh',
+    [Format.SM]: 'sm',
+    [Format.XY]: 'xy',
+    [Format.BW]: 'bw',
+  };
+
   constructor(
     private alertService: AlertService,
     private deckService: DeckService,
@@ -288,6 +304,10 @@ export class DeckComponent implements OnInit {
       'retro': this.translate.instant('FORMAT_RETRO'),
       'glc': this.translate.instant('FORMAT_GLC'),
       'theme': this.translate.instant('FORMAT_THEME'),
+      'swsh': this.translate.instant('FORMAT_SWSH'),
+      'sm': this.translate.instant('FORMAT_SM'),
+      'xy': this.translate.instant('FORMAT_XY'),
+      'bw': this.translate.instant('FORMAT_BW'),
     };
     return formatDisplayNames[format] || format;
   }
