@@ -89,11 +89,11 @@
             <!-- Deck name and actions row -->
             <div class="deck-name-row">
               <div class="deck-formats" (click)="$event.stopPropagation()">
-                <mat-chip-list *ngIf="deck.format && deck.format.length">
+                <!-- <mat-chip-list *ngIf="deck.format && deck.format.length">
                   <mat-chip class="bg-chip" *ngFor="let format of deck.format">
                     {{ getFormatDisplayName(formatNameMap[format] || format) }}
                   </mat-chip>
-                </mat-chip-list>
+                </mat-chip-list> -->
               </div>
               <div class="deck-name">{{ deck.name }}</div>
               <button mat-icon-button class="action-button-small" [matMenuTriggerFor]="menu"
