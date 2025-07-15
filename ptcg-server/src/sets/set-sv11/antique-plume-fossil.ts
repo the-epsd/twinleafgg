@@ -29,6 +29,7 @@ export class AntiquePlumeFossil extends TrainerCard {
 At any time during your turn, you may discard this card from play.`,
     useWhenInPlay: true,
     exemptFromAbilityLock: true,
+    isFossil: true,
     powerType: PowerType.TRAINER_ABILITY
   }];
 

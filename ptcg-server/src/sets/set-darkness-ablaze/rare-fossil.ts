@@ -46,7 +46,8 @@ export class RareFossil extends TrainerCard {
 This card can't be affected by any Special Conditions, and it can't retreat.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.TRAINER_ABILITY
+      powerType: PowerType.TRAINER_ABILITY,
+      isFossil: true,
     }
   ];
 

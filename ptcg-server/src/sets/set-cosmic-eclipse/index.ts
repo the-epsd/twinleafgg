@@ -45,6 +45,8 @@ import { Stoutland } from './stoutland';
 import { Sunkern } from './sunkern';
 import { Swirlix } from './swirlix';
 import { TagCall } from './tag-call';
+import { Tangela } from './tangela';
+import { Tangrowth } from './tangrowth';
 import { UltraNecrozma } from './ultra-necrozma';
 import { Weezing } from './weezing';
 import { Wishiwashi } from './wishiwashi';
@@ -127,6 +129,8 @@ export const setCosmicEclipse: Card[] = [
   new Swirlix(),
   new Swoobat(),
   new TagCall(),
+  new Tangela(),
+  new Tangrowth(),
   new TogepiCleffaIgglybuffGX(),
   new UltraNecrozma(),
   new VileplumeGX(),

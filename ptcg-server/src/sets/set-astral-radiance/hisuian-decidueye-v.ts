@@ -37,7 +37,7 @@ export class HisuianDecidueyeV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, 0, 2);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, {}, { min: 0, max: 2 });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

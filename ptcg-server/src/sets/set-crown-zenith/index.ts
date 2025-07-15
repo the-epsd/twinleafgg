@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Absol } from './absol';
+import { Aron } from './aron';
 import { Bidoof } from './bidoof';
 import { Hoopa } from './hoopa';
 import { Kyogre } from './kyogre';
@@ -27,8 +28,8 @@ import { ZeraoraVSTAR } from './zeraora-vstar';
 import { LostVacuumCRZ } from './other-prints';
 
 export const setCrownZenith: Card[] = [
-
   new Absol(),
+  new Aron(),
   new Bidoof(),
   new Hoopa(),
   new Kyogre(),

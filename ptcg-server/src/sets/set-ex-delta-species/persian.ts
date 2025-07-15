@@ -41,7 +41,7 @@ export class Persian extends PokemonCard {
       if (CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
           const player = effect.player;
-          SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, 0, 1);
+          SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, {}, { min: 1, max: 1 });
         }
       }))
         return state;

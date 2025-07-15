@@ -22,6 +22,7 @@ import { Plumeria } from './plumeria';
 import { PoTown } from './po-town';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
+import { Ribombee } from './ribombee';
 import { Riolu } from './riolu';
 import { SalazzleGX } from './salazzle-gx';
 import { Solrock } from './solrock';
@@ -60,6 +61,7 @@ export const setBurningShadows: Card[] = [
   new PoTown(),
   new Raichu(),
   new Ralts(),
+  new Ribombee(),
   new Riolu(),
   new SalazzleGX(),
   new Solrock(),

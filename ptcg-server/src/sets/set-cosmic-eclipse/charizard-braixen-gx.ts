@@ -38,7 +38,7 @@ export class CharizardBraixenGX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Brilliant Flare
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0])
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, 0, 3);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, {}, { min: 0, max: 3 });
 
     // Crimson Flame Pillar-GX
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

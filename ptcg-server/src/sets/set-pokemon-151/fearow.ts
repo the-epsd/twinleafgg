@@ -33,7 +33,7 @@ export class Fearow extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this))
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, 0, 3);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, {}, { min: 0, max: 3 });
 
     return state;
   }

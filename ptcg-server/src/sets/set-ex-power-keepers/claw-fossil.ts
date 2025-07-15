@@ -49,7 +49,8 @@ export class ClawFossil extends TrainerCard {
   {
     name: 'Jagged Stone',
     text: 'If Claw Fossil is your Active Pokémon and is damaged by an opponent\'s attack (even if Claw Fossil is Knocked Out), put 1 damage counter on the Attacking Pokémon.',
-    powerType: PowerType.POKEBODY
+    powerType: PowerType.POKEBODY,
+    isFossil: true,
   }];
 
   // public text =

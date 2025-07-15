@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanRaichu } from './alolan-raichu';
 import { Archen } from './archen';
+import { Audino } from './audino';
 import { Beheeyem } from './beheeyem';
 import { CherishBall } from './cherish-ball';
 import { Cottonee } from './cottonee';
@@ -23,6 +24,7 @@ import { Jynx } from './jynx';
 import { KarateBelt } from './karate-belt';
 import { KeldeoGX } from './keldeo-gx';
 import { Lickilicky } from './lickilicky';
+import { Meditite } from './meditite';
 import { MewtwoMewGX } from './mewtwo-and-mew-gx';
 import { Munchlax } from './munchlax';
 import { Necrozma } from './necrozma';
@@ -60,6 +62,7 @@ export const setUnifiedMinds: Card[] = [
   new AlolanGrimer(),
   new AlolanRaichu(),
   new Archen(),
+  new Audino(),
   new Beheeyem(),
   new BugCatcher(),
   new CherishBall(),
@@ -87,6 +90,7 @@ export const setUnifiedMinds: Card[] = [
   new KeldeoGX(),
   new Magnemite(),
   new Lickilicky(),
+  new Meditite(),
   new MegaSableyeTyranitarGX(),
   new MewtwoMewGX(),
   new Munchlax(),

@@ -476,22 +476,37 @@ export function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number) {
   player.prizes.forEach(p => p.isSecret = true);
 }
 
-export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min: number = 0, max: number = 1) {
+export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}) {
   if (player.deck.cards.length === 0)
     return;
-  let cards: Card[] = [];
-  store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: min, max: max, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    player.deck.moveCardsTo(cards, player.hand);
-  });
+  const opponent = StateUtils.getOpponent(state, player);
 
-  SHUFFLE_DECK(store, state, player);
+  store.prompt(state, new ChooseCardsPrompt(
+    player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options,
+  ), selected => {
+    const cards = selected || [];
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards });
+    SHUFFLE_DECK(store, state, player);
+  });
+}
+
+/**
+ * Search discard pile for card, show it to the opponent, put it into `player`'s hand.
+ * A `filter` can be provided for the prompt as well.
+ */
+export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}) {
+  if (player.discard.cards.length === 0)
+    return;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  store.prompt(state, new ChooseCardsPrompt(
+    player, GameMessage.CHOOSE_CARD_TO_HAND, player.discard, filter, options,
+  ), selected => {
+    const cards = selected || [];
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards });
+  });
 }
 
 export function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount: number = 1): Card[] {
@@ -662,7 +677,7 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   if (!hasBenched)
     return state;
 
-  return store.prompt(state, new ChoosePokemonPrompt(
+  store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
     PlayerType.BOTTOM_PLAYER,

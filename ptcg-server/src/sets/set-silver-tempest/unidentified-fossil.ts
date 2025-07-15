@@ -53,6 +53,7 @@ export class UnidentifiedFossil extends TrainerCard {
 This card can't retreat.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
+      isFossil: true,
       powerType: PowerType.TRAINER_ABILITY
     }
   ];

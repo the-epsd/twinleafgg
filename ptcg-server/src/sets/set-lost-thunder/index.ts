@@ -22,6 +22,7 @@ import { Granbull } from './granbull';
 import { Grovyle } from './grovyle';
 import { HeatFactoryPrismStar } from './heat-factory-prism-star';
 import { Heracross } from './heracross';
+import { Hitmontop } from './hitmontop';
 import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
 import { Kirlia } from './kirlia';
@@ -41,6 +42,7 @@ import { Nincada } from './nincada';
 import { Onix } from './onix';
 import { Poipole } from './poipole';
 import { ProfessorElmLecture } from './professor-elms-lecture';
+import { Raikou } from './raikou';
 import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
 import { Shedinja } from './shedinja';
@@ -84,6 +86,7 @@ export const setLostThunder: Card[] = [
   new Grovyle(),
   new HeatFactoryPrismStar(),
   new Heracross(),
+  new Hitmontop(),
   new Hoppip(),
   new Jumpluff(),
   new Kirlia(),
@@ -103,6 +106,7 @@ export const setLostThunder: Card[] = [
   new Onix(),
   new Poipole(),
   new ProfessorElmLecture(),
+  new Raikou(),
   new Ralts(),
   new Ribombee(),
   new Shedinja(),
