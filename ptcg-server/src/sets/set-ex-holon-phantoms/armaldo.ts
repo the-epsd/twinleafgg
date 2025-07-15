@@ -8,7 +8,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from
 export class Armaldo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Anorith';
-  public cardTag = [CardTag.DELTA_SPECIES];
+  public tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = CardType.FIGHTING;
   public additionalCardTypes = [CardType.METAL];
   public hp: number = 110;

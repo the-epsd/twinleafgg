@@ -285,7 +285,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         const tools = [...effect.target.tools];
         const pokemonIndices = effect.target.cards.map((card, index) => index);
 
-        // Clear damage and effects first
+        // Move tools to discard BEFORE clearing effects (directly)
+        for (const tool of tools) {
+          effect.target.moveCardTo(tool, effect.player.discard);
+        }
+
+        // Clear damage and effects
         effect.target.damage = 0;
         effect.target.clearEffects();
 
@@ -310,11 +315,6 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           }
         }
 
-        // Move tools to discard
-        if (tools.length > 0) {
-          MOVE_CARDS(store, state, effect.target, effect.player.discard, { cards: tools });
-        }
-
         // Move attached cards to discard
         if (attachedCards.cards.length > 0) {
           state = MOVE_CARDS(store, state, attachedCards, effect.player.discard);
@@ -327,11 +327,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       } else {
         // Default behavior - move to discard
         const tools = [...effect.target.tools];
-        effect.target.clearEffects();
-        // Move tools to discard
-        if (tools.length > 0) {
-          MOVE_CARDS(store, state, effect.target, effect.player.discard, { cards: tools });
+        // Move tools to discard BEFORE clearing effects (directly)
+        for (const tool of tools) {
+          effect.target.moveCardTo(tool, effect.player.discard);
         }
+        effect.target.clearEffects();
         state = MOVE_CARDS(store, state, effect.target, effect.player.discard);
       }
     }

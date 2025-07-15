@@ -2,7 +2,7 @@ import { CardTag, Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -28,7 +28,7 @@ export class CapeOfToughness extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
       const card = effect.target.getPokemonCard();
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working

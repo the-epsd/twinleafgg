@@ -30,7 +30,7 @@ export class CrystalShard extends TrainerCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof AttackEffect && effect.source.tools.includes(this)) {
       ADD_MARKER(this.ATTACKED_MARKER, effect.player, this);
       console.log('Crystal Shard was used this turn, adding marker');
     }

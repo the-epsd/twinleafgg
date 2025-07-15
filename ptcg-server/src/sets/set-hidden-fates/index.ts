@@ -6,6 +6,9 @@ import { MoltresZapdosArticunoGX } from './moltres-zapdos-articuno-gx';
 import { Psyduck } from './psyduck';
 import { QuagsireSV, WooperSV } from './shiny-vault';
 
+// Other prints
+import { BrocksGritHIF } from './other-prints';
+
 export const setHiddenFates: Card[] = [
 
   new Charmander(),
@@ -16,5 +19,8 @@ export const setHiddenFates: Card[] = [
   // FA/Shiny Vault
   new AlolanVulpix(),
   new WooperSV(),
-  new QuagsireSV()
+  new QuagsireSV(),
+
+  // Other prints
+  new BrocksGritHIF(),
 ];

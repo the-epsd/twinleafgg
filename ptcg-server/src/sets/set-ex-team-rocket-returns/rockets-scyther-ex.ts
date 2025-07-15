@@ -2,9 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, AFTER_ATTACK, BLOCK_EFFECT_IF_MARKER, CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RocketsScytherex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,7 +39,6 @@ export class RocketsScytherex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
 
-  public usedKnockBack = false;
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
@@ -65,11 +63,6 @@ export class RocketsScytherex extends PokemonCard {
       });
     }
 
-    // Bounce
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedKnockBack = true;
-    }
-
     // Slashing Strike
     if (WAS_ATTACK_USED(effect, 1, this)) {
       BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
@@ -79,12 +72,12 @@ export class RocketsScytherex extends PokemonCard {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
     REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
 
-    if (effect instanceof AfterAttackEffect && this.usedKnockBack === true) {
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
-    }
-
-    if (effect instanceof EndTurnEffect && this.usedKnockBack) {
-      this.usedKnockBack = false;
+    if (AFTER_ATTACK(effect, 0, this)) {
+      CONFIRMATION_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
+        }
+      });
     }
 
     return state;

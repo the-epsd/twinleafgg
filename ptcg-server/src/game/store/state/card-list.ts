@@ -70,10 +70,9 @@ export class CardList {
 
   public moveCardsTo(cards: Card[], destination: CardList): void {
     for (let i = 0; i < cards.length; i++) {
-      const index = this.cards.indexOf(cards[i]);
+      let index = this.cards.indexOf(cards[i]);
       if (index !== -1) {
         const card = this.cards.splice(index, 1);
-
         // If this is a PokemonCardList with the energyCards property, remove the card from energyCards
         if ('energyCards' in this) {
           const pokemonList = this as any;
@@ -81,8 +80,14 @@ export class CardList {
             pokemonList.removePokemonAsEnergy(card[0]);
           }
         }
-
         destination.cards.push(card[0]);
+      } else if ((this as any).tools && Array.isArray((this as any).tools)) {
+        // If not found in cards, check tools (for robustness)
+        index = (this as any).tools.indexOf(cards[i]);
+        if (index !== -1) {
+          const card = (this as any).tools.splice(index, 1);
+          destination.cards.push(card[0]);
+        }
       }
     }
   }

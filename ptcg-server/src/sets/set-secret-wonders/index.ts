@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
 import { GardevoirLVX } from './gardevoir-lv-x';
 import { Hoppip } from './hoppip';
@@ -13,6 +14,7 @@ import { RoseannesResearch } from './roseannes-research';
 import { Skiploom } from './skiploom';
 
 export const setSecretWonders: Card[] = [
+  new Gallade(),
   new Mew(),
   new Minun(),
   new Pidgeotto(),

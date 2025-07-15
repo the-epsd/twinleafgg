@@ -77,7 +77,9 @@ cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
 cardManager.defineSet(sets.setPlatinum);
-cardManager.defineSet(sets.setRisingRivals)
+cardManager.defineSet(sets.setRisingRivals);
+
+cardManager.defineSet(sets.setDiamondAndPearlPromos);
 
 cardManager.defineSet(sets.setBattleRoadPromos);
 cardManager.defineSet(sets.setCallOfLegends);

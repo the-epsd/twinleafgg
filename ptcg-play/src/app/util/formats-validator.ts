@@ -53,8 +53,7 @@ export class FormatValidator {
     if (hasArceusRule) {
       const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
       const arceusCount = cards.filter(card => card.name === 'Arceus').length;
-
-      if (arceusCount !== arceusCount && arceusCount > 4) {
+      if (arceusCount !== arceusRuleCount && arceusCount > 4) {
         return formatList.filter(f =>
           f !== Format.GLC &&
           f !== Format.EXPANDED &&
@@ -69,15 +68,14 @@ export class FormatValidator {
     if (formatList.includes(Format.GLC)) {
       // check for singleton violation
       const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
-      const set = new Set(nonBasicEnergyCards.map(c => c.name));
-      if (set.size < nonBasicEnergyCards.length) {
+      const singletonSet = new Set(nonBasicEnergyCards.map(c => c.name));
+      if (singletonSet.size < nonBasicEnergyCards.length) {
         formatList = formatList.filter(f => f !== Format.GLC);
       }
-
       // check for different type violation
       const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
-      const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
-      if (pokemonSet.size > 1) {
+      const pokemonTypeSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
+      if (pokemonTypeSet.size > 1) {
         formatList = formatList.filter(f => f !== Format.GLC);
       }
     }
@@ -145,6 +143,10 @@ export class FormatValidator {
       'Tool Scrapper',
       'Cheren',
       'Rainbow Energy',
+      'N',
+      'Tropical Beach',
+      'Professor Juniper',
+      'Professor Sycamore',
     ];
 
     const formats = [Format.UNLIMITED];
@@ -154,7 +156,11 @@ export class FormatValidator {
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
       Format.RSPK,
-      Format.RETRO
+      Format.RETRO,
+      Format.BW,
+      Format.SWSH, // Added
+      Format.XY,   // Added
+      Format.SM    // Added
     ].forEach(format => {
       this.isValid(card, format, anyPrintingAllowed) ? formats.push(format) : null;
     });
@@ -166,42 +172,32 @@ export class FormatValidator {
     if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
     }
-
-    // If this card is in the anyPrintingAllowed list, ignore set restrictions
     if (anyPrintingAllowed && anyPrintingAllowed.includes(card.name)) {
       switch (format) {
         case Format.UNLIMITED:
           return true;
-        case Format.STANDARD:
-          var banList = BanLists[format];
+        case Format.STANDARD: {
           if (card.regulationMark === 'J') {
             return false;
           }
-          // Use SVI set date for Standard legality window
-          var setDate = SetReleaseDates['SVI'];
-          return setDate <= new Date();
+          return card.regulationMark === 'G' ||
+            card.regulationMark === 'H' ||
+            card.regulationMark === 'I';
+        }
         case Format.STANDARD_NIGHTLY:
           return card.regulationMark === 'G' ||
             card.regulationMark === 'H' ||
             card.regulationMark === 'I' ||
             card.regulationMark === 'J';
-        case Format.EXPANDED:
-          var banList = BanLists[format];
-          // Use earliest legal set date for Expanded
-          var setDate = SetReleaseDates['BWP'];
-          return setDate <= new Date() &&
-            !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
-        case Format.GLC:
-          var banList = BanLists[format];
-          // Use earliest legal set date for GLC
-          var setDate = SetReleaseDates['BWP'];
-          // Force SV11, SV11B, SV11W to be legal in GLC regardless of date
-          const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
-          const isForceLegal = forceLegalSets.includes(card.set);
-          return (
-            (setDate <= new Date() || isForceLegal) &&
-            !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
-            !card.tags.some(t => [
+        case Format.EXPANDED: {
+          var setDate = SetReleaseDates[card.set];
+          return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
+            !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
+        }
+        case Format.GLC: {
+          // For anyPrintingAllowed, do NOT check set date, only tags
+          return !(
+            card.tags && card.tags.some((t: any) => [
               CardTag.ACE_SPEC.toString(),
               CardTag.POKEMON_EX.toString(),
               CardTag.POKEMON_ex.toString(),
@@ -212,38 +208,45 @@ export class FormatValidator {
               CardTag.POKEMON_GX.toString(),
               CardTag.PRISM_STAR.toString(),
               CardTag.POKEMON_VUNION.toString()
-            ].includes(t)
-            ));
+            ].includes(t))
+          );
+        }
         case Format.RETRO:
-          return true; // Any set allowed for these cards in Retro
+          return true;
+        case Format.BW:
+          return true;
+        case Format.SWSH:
+          return true;
+        case Format.XY:
+          return true;
+        case Format.SM:
+          return true;
+        case Format.RSPK:
+          return true;
       }
     }
-
     switch (format) {
       case Format.UNLIMITED:
         return true;
-      case Format.STANDARD:
-        var banList = BanLists[format];
+      case Format.STANDARD: {
         var setDate = SetReleaseDates[card.set];
         if (card.regulationMark === 'J') {
           return false;
         }
         return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+      }
       case Format.STANDARD_NIGHTLY:
-        var banList = BanLists[format];
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
           card.regulationMark === 'I' ||
           card.regulationMark === 'J';
-      case Format.EXPANDED:
-        var banList = BanLists[format];
+      case Format.EXPANDED: {
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
-          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
-      case Format.GLC:
-        var banList = BanLists[format];
+          !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
+      }
+      case Format.GLC: {
         var setDate = SetReleaseDates[card.set];
-        // Force SV11, SV11B, SV11W to be legal in GLC regardless of date
         const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
         const isForceLegal = forceLegalSets.includes(card.set);
         return (
@@ -251,8 +254,7 @@ export class FormatValidator {
             (setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date())
             || isForceLegal
           ) &&
-          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
-          !card.tags.some(t => [
+          !(card.tags && card.tags.some((t: any) => [
             CardTag.ACE_SPEC.toString(),
             CardTag.POKEMON_EX.toString(),
             CardTag.POKEMON_ex.toString(),
@@ -263,8 +265,10 @@ export class FormatValidator {
             CardTag.POKEMON_GX.toString(),
             CardTag.PRISM_STAR.toString(),
             CardTag.POKEMON_VUNION.toString()
-          ].includes(t)
-          ));
+          ].includes(t))
+          )
+        );
+      }
       case Format.RETRO:
         return card.set === 'BS' ||
           card.set === 'JU' ||
@@ -383,10 +387,11 @@ export class FormatValidator {
           card.set === 'PLS' ||
           card.set === 'PLF' ||
           card.set === 'PLB' ||
-          card.set === 'LTR';
+          card.set === 'LTR' ||
+          card.set === 'BWP';
     }
 
-    if (banList && banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
+    if (BanLists[format] && BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`)) {
       return false;
     }
     return false;
@@ -399,8 +404,8 @@ export const BanLists: { [key: number]: string[] } = {
     'Miracle Diamond BRP 1',
     'Mysterious Pearl BRP 2',
     'Wonder Platinum DPt-P 33',
-    'Lysandre\'s Trump Card PHF 99',
-    'Lysandre\'s Trump Card PHF 118',
+    "Lysandre's Trump Card PHF 99",
+    "Lysandre's Trump Card PHF 118",
     'Oranguru UPR 114',
     'Forest of Giant Plants AOR 74',
     'Chip-Chip Ice Axe UNB 165',
@@ -436,10 +441,10 @@ export const BanLists: { [key: number]: string[] } = {
     'Island Challenge Amulet CEC 194',
     'Jesse & James HIF 58',
     'Jesse & James HIF 68',
-    'Lt. Surge\'s Strategy UNB 178',
-    'Lt. Surge\'s Strategy HIF 60',
-    'Lysandre\'s Trump Card PHF 99',
-    'Lysandre\'s Trump Card PHF 118',
+    "Lt. Surge's Strategy UNB 178",
+    "Lt. Surge's Strategy HIF 60",
+    "Lysandre's Trump Card PHF 99",
+    "Lysandre's Trump Card PHF 118",
     'Marshadow SHL 45',
     'Marshadow PR-SM SM85',
     'Milotic FLF 23',
@@ -468,7 +473,7 @@ export const BanLists: { [key: number]: string[] } = {
   [Format.XY]: [],
   [Format.SM]: [],
   [Format.SWSH]: [],
-}
+};
 
 export const SetReleaseDates: { [key: string]: Date } = {
   'BS': new Date('1999-01-09'),
@@ -477,18 +482,14 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'TR': new Date('2000-04-24'),
   'G1': new Date('2000-08-14'),
   'G2': new Date('2000-10-16'),
-  // NEO
   'N1': new Date('2000-12-16'),
   'N2': new Date('2001-06-01'),
   'N3': new Date('2001-09-21'),
   'N4': new Date('2002-02-28'),
-  // LEGENDARY COLLECTION
   'LC': new Date('2002-05-24'),
-  // E-CARD
   'EX': new Date('2002-09-15'),
   'AQ': new Date('2003-01-15'),
   'SK': new Date('2003-05-12'),
-  // EX 
   'RS': new Date('2003-07-18'),
   'SS': new Date('2003-09-18'),
   'DR': new Date('2003-11-24'),
@@ -505,7 +506,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'CG': new Date('2006-08-30'),
   'DF': new Date('2006-11-08'),
   'PK': new Date('2007-02-14'),
-  // DIAMOND & PEARL
   'DP': new Date('2007-05-23'),
   'MT': new Date('2007-08-22'),
   'SW': new Date('2007-11-07'),
@@ -513,19 +513,15 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'MD': new Date('2008-05-21'),
   'LA': new Date('2008-08-20'),
   'SF': new Date('2008-11-05'),
-  //PLATINUM
   'PL': new Date('2009-02-11'),
   'RR': new Date('2009-05-16'),
   'SV': new Date('2009-08-19'),
   'AR': new Date('2009-11-04'),
-  // HG & SS
   'HS': new Date('2010-02-10'),
   'UL': new Date('2010-05-12'),
   'UD': new Date('2010-08-18'),
   'TM': new Date('2010-11-03'),
-  // CALL OF LEGENDS
   'CL': new Date('2011-02-09'),
-  // BLACK & WHITE
   'BWP': new Date('2011-04-25'),
   'BLW': new Date('2011-04-25'),
   'EPO': new Date('2011-08-31'),
@@ -539,7 +535,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'PLF': new Date('2013-05-08'),
   'PLB': new Date('2013-08-14'),
   'LTR': new Date('2013-11-06'),
-  // X & Y
   'KSS': new Date('2013-11-08'),
   'XY': new Date('2014-02-05'),
   'FLF': new Date('2014-05-07'),
@@ -556,7 +551,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'STS': new Date('2016-08-03'),
   'EVO': new Date('2016-11-02'),
   'XYP': new Date('2016-03-19'),
-  // SUN & MOON
   'SUM': new Date('2017-02-03'),
   'SMP': new Date('2017-02-03'),
   'SM10a': new Date('2017-02-03'),
@@ -575,7 +569,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'UNM': new Date('2019-02-08'),
   'HIF': new Date('2019-08-23'),
   'CEC': new Date('2019-11-01'),
-  // SWORD & SHIELD
   'SWSH': new Date('2020-02-07'),
   'SSH': new Date('2020-02-07'),
   'RCL': new Date('2020-05-01'),
@@ -594,7 +587,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'LOR': new Date('2022-09-09'),
   'SIT': new Date('2022-11-11'),
   'CRZ': new Date('2023-01-20'),
-  // SCARLET & VIOLET
   'SVP': new Date('2023-03-31'),
   'SVI': new Date('2023-03-31'),
   'PAL': new Date('2023-06-09'),
@@ -613,4 +605,4 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SV11': new Date('2025-07-18'),
   'SV11B': new Date('2025-07-18'),
   'SV11W': new Date('2025-07-18'),
-}
+};

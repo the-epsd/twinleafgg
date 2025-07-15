@@ -43,6 +43,7 @@ export class ClawFossil extends TrainerCard {
     text: 'Play Claw Fossil as if it were a Basic Pokémon. While in play, Claw Fossil counts as a [C] Pokémon (instead of a Trainer card). Claw Fossil has no attacks of its own, can\'t retreat, and can\'t be affected by any Special Conditions. If Claw Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.) At any time during your turn before your attack, you may discard Claw Fossil from play.',
     useWhenInPlay: true,
     exemptFromAbilityLock: true,
+    isFossil: true,
     powerType: PowerType.TRAINER_ABILITY
   },
   {

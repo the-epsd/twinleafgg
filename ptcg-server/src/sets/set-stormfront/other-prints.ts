@@ -1,4 +1,5 @@
 import { CycloneEnergy } from "../set-ex-power-keepers/cyclone-energy";
+import { PremierBall } from "../set-great-encounters/premier-ball";
 import { WarpEnergy } from "../set-shining-legends/warp-energy";
 
 export class CycloneEnergySF extends CycloneEnergy {
@@ -7,6 +8,13 @@ export class CycloneEnergySF extends CycloneEnergy {
   public set = 'SF';
   public setNumber = '94';
   public text = 'Cyclone Energy provides [C] Energy. When you attach this card from your hand to your Active Pokémon, switch 1 of the Defending Pokémon with 1 of your opponent\'s Benched Pokémon. Your opponent chooses the Benched Pokémon to switch.';
+}
+
+export class PremierBallSF extends PremierBall {
+  public fullName = 'Premier Ball SF';
+  public name = 'Premier Ball';
+  public set = 'SF';
+  public setNumber = '91';
 }
 
 export class WarpEnergySF extends WarpEnergy {

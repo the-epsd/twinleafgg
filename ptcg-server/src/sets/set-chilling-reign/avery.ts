@@ -4,7 +4,8 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { Card, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
@@ -52,9 +53,6 @@ export class Avery extends TrainerCard {
 
       // Discard pokemon from opponent's bench until they have 3
       while (opponentBenched > 3) {
-        
-        // opponent.bench.pop();
-
         const benchDifference = opponentBenched - 3;
         return store.prompt(state, new ChoosePokemonPrompt(
           opponent.id,
@@ -66,18 +64,40 @@ export class Avery extends TrainerCard {
             min: benchDifference,
             max: benchDifference
           }
-        ), (selected: any[]) => {
-          selected.forEach(card => {
-            card.moveTo(opponent.discard);
+        ), (selected: any[]): State => {
+          selected.forEach((cardList: any) => {
+            // Separate pokemons, other cards, and tools
+            const pokemons = cardList.getPokemons();
+            const otherCards = cardList.cards.filter((card: Card) =>
+              !(card instanceof PokemonCard) &&
+              (!cardList.tools || !cardList.tools.includes(card))
+            );
+            const tools = [...cardList.tools];
+
+            // Move other cards to discard
+            if (otherCards.length > 0) {
+              cardList.moveCardsTo(otherCards, opponent.discard);
+            }
+
+            // Move tools to discard
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, opponent.discard);
+              }
+            }
+
+            // Move Pokémon to discard
+            if (pokemons.length > 0) {
+              cardList.moveCardsTo(pokemons, opponent.discard);
+            }
           });
-          
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
           return state;
         });
       }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
       return state;
     }
     return state;

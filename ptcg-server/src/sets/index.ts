@@ -68,6 +68,8 @@ export * from './set-op9';
 export * from './set-platinum';
 export * from './set-rising-rivals';
 
+export * from './set-diamond-and-pearl-promos';
+
 //HGSS Era
 
 export * from './set-battle-road-promos';

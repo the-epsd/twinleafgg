@@ -21,7 +21,6 @@ import { MorpekoVUNIONBottomRight } from './morpeko-v-union-br';
 import { MorpekoVUNIONTopLeft } from './morpeko-v-union-tl';
 import { MorpekoVUNIONTopRight } from './morpeko-v-union-tr';
 import { Oricorio } from './oricorio';
-import { ZeraoraVMAXSWSH, ZeraoraVSTARSWSH, ZeraoraVSWSH } from './other-prints';
 import { PikachuVUNIONBottomLeft } from './pikachu-v-union-bl';
 import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
 import { PikachuVUNIONTopLeft } from './pikachu-v-union-tl';
@@ -35,6 +34,15 @@ import { ZacianVUNIONBottomLeft } from './zacian-v-union-bl';
 import { ZacianVUNIONBottomRight } from './zacian-v-union-br';
 import { ZacianVUNIONTopLeft } from './zacian-v-union-tl';
 import { ZacianVUNIONTopRight } from './zacian-v-union-tr';
+
+// Other prints
+import {
+  MarnieSWSH,
+  MarnieSWSH2,
+  ZeraoraVMAXSWSH,
+  ZeraoraVSTARSWSH,
+  ZeraoraVSWSH
+} from './other-prints';
 
 export const setSwordAndShieldPromos: Card[] = [
 
@@ -80,6 +88,9 @@ export const setSwordAndShieldPromos: Card[] = [
   new MorpekoVUNIONBottomLeft(),
   new MorpekoVUNIONBottomRight(),
 
+  // Other prints
+  new MarnieSWSH(),
+  new MarnieSWSH2(),
   new ZeraoraVSWSH(),
   new ZeraoraVMAXSWSH(),
   new ZeraoraVSTARSWSH(),

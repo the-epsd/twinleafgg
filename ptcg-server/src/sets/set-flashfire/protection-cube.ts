@@ -1,7 +1,7 @@
 import { TrainerCard, TrainerType, StoreLike, State } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class ProtectionCube extends TrainerCard {
 
@@ -22,9 +22,9 @@ export class ProtectionCube extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.source == effect.player.active && effect.source.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.source == effect.player.active && effect.source.tools.includes(this)) {
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (effect.target == effect.source) {
         effect.preventDefault = true;

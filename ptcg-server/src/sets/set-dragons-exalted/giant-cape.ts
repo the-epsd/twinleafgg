@@ -18,8 +18,8 @@ export class GiantCape extends TrainerCard {
     'The Pokémon this card is attached to gets +20 HP.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)){
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       effect.hp += 20;
     }

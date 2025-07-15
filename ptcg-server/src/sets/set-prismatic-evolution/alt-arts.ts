@@ -314,7 +314,7 @@ export class BriarPRE extends Briar {
 export class BuddyBuddyPoffinPRE extends BuddyBuddyPoffin {
   public set = 'PRE';
   public setNumber = '101';
-  public fullName = 'Buddy Buddy Poffin PRE';
+  public fullName = 'Buddy-Buddy Poffin PRE';
 }
 
 export class BugCatchingSetPRE extends BugCatchingSet {

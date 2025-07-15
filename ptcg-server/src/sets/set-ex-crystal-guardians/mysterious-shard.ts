@@ -81,8 +81,8 @@ export class MysteriousShard extends TrainerCard {
     // Discard card at the end of opponent's turn
     if (effect instanceof EndTurnEffect) {
       state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-          if (cardList.cards.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (cardList.tools.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
             cardList.moveCardTo(this, player.discard);
           }
         });

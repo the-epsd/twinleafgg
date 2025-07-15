@@ -94,8 +94,8 @@ export class Cresselia extends PokemonCard {
                 return state;
               }
 
-              // prizeCard.isSecret = false;
-              // prizeCard.isPublic = true;
+              prizeCard.isSecret = false;
+              prizeCard.isPublic = true;
               prizeCard.faceUpPrize = true;
               effect.damage += 80;
             });

@@ -42,6 +42,8 @@ import { ZacianV } from './zacian-v';
 // Other prints
 import {
   GreatBallSSH,
+  MarnieSSH,
+  MarnieSSH2,
   ProfessorsResearchSSH
 } from './other-prints';
 
@@ -99,6 +101,8 @@ export const setSwordAndShield: Card[] = [
 
   // Other prints
   new GreatBallSSH(),
+  new MarnieSSH(),
+  new MarnieSSH2(),
   new ProfessorsResearchSSH(),
 
   // Basic energies

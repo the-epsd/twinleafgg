@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class ChoiceBand extends TrainerCard {
@@ -17,7 +17,7 @@ export class ChoiceBand extends TrainerCard {
   public text: string = 'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon-GX or Active Pokémon-EX (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const defending = opponent.active.getPokemonCard();
 
