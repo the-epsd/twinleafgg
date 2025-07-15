@@ -1,9 +1,11 @@
 import { Card } from '../../game/store/card/card';
 import { Bayleef } from './bayleef';
+import { BurstingBalloon } from './bursting-balloon';
 import { Delinquent } from './delinquent';
 import { Drowzee } from './drowzee';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
+import { Frogadier } from './frogadier';
 import { Garbodor } from './garbodor';
 import { Greninja } from './greninja';
 import { GreninjaBREAK } from './greninja-break';
@@ -23,10 +25,12 @@ import { Zoroark } from './zoroark';
 
 export const setBreakpoint: Card[] = [
   new Bayleef(),
+  new BurstingBalloon(),
   new Delinquent(),
   new Drowzee(),
   new FightingFuryBelt(),
   new Froakie(),
+  new Frogadier(),
   new Greninja(),
   new Hypno(),
   new Kricketot(),

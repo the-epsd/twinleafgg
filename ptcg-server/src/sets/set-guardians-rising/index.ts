@@ -3,7 +3,6 @@ import { AetherParadiseConvserationArea } from './aether-paradise-conservation-a
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
-import { AlolanVulpixGRI, EnhancedHammerGRI } from './other-prints';
 import { ChoiceBand } from './choice-band';
 import { DrampaGX } from './drampa-gx';
 import { FieldBlower } from './field-blower';
@@ -21,15 +20,20 @@ import { SylveonGX } from './sylveon-gx';
 import { TapuKokoGX } from './tapu-koko-gx';
 import { TapuLeleGX } from './tapu-lele-gx';
 
+// Other prints
+import {
+  AlolanVulpixGRI,
+  EnhancedHammerGRI,
+  MaxPotionGRI,
+} from './other-prints';
+
 export const setGuardiansRising: Card[] = [
   new AetherParadiseConvserationArea(),
   new AlolanNinetalesGX(),
-  new AlolanVulpixGRI(),
   new AquaPatch(),
   new BrookletHill(),
   new ChoiceBand(),
   new DrampaGX(),
-  new EnhancedHammerGRI(),
   new FieldBlower(),
   new Garbodor(),
   new LycanrocGX(),
@@ -44,4 +48,9 @@ export const setGuardiansRising: Card[] = [
   new SylveonGX(),
   new TapuLeleGX(),
   new TapuKokoGX(),
+
+  // Other prints
+  new AlolanVulpixGRI(),
+  new EnhancedHammerGRI(),
+  new MaxPotionGRI(),
 ];

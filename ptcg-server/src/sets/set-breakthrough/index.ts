@@ -14,6 +14,12 @@ import { Raikou } from './raikou';
 import { TownMap } from './town-map';
 import { BurningEnergy } from './burning-energy';
 
+// other prints
+import {
+  FishermanBKT,
+  FloatStoneBKT
+} from './other-prints';
+
 export const setBreakthrough: Card[] = [
   new Brigette(),
   new BurningEnergy(),
@@ -29,4 +35,8 @@ export const setBreakthrough: Card[] = [
   new ParallelCity(),
   new Raikou(),
   new TownMap(),
+
+  // other prints
+  new FishermanBKT(),
+  new FloatStoneBKT(),
 ];

@@ -23,6 +23,9 @@ import { ZeraoraV } from './zeraora-v';
 import { ZeraoraVMAX } from './zeraora-vmax';
 import { ZeraoraVSTAR } from './zeraora-vstar';
 
+// Other prints
+import { LostVacuumCRZ } from './other-prints';
+
 export const setCrownZenith: Card[] = [
 
   new Absol(),
@@ -48,4 +51,7 @@ export const setCrownZenith: Card[] = [
   new ZeraoraV(),
   new ZeraoraVSTAR(),
   new ZeraoraVMAX(),
+
+  // Other prints
+  new LostVacuumCRZ(),
 ];

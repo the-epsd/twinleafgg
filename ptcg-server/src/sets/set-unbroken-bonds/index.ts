@@ -55,6 +55,9 @@ import { MukAlolanMukGX } from './muk-and-alolan-muk-gx';
 import { MarshadowMachampGX } from './marshadow-and-machamp-gx';
 import { LucarioMelmetalGX } from './lucario-and-melmetal-gx';
 
+// other prints
+import { DedenneGXUNB } from './other-prints';
+
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
   new Aron(),
@@ -111,4 +114,7 @@ export const setUnbrokenBonds: Card[] = [
   new MukAlolanMukGX(),
   new MarshadowMachampGX(),
   new LucarioMelmetalGX(),
+
+  // other prints
+  new DedenneGXUNB(),
 ];

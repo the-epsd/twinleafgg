@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, Card, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, Card, ChooseCardsPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {DiscardCardsEffect} from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Lucario extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -45,7 +46,7 @@ export class Lucario extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.marker.hasMarker(this.ROARING_RESOLVE_MARKER, this)){
+        if (card === this && cardList.marker.hasMarker(this.ROARING_RESOLVE_MARKER, this)) {
           cardList.marker.removeMarker(this.ROARING_RESOLVE_MARKER, this);
         }
       });
@@ -56,7 +57,7 @@ export class Lucario extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this){
+        if (card === this) {
 
           if (cardList.marker.hasMarker(this.ROARING_RESOLVE_MARKER, this)) {
             throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -75,7 +76,7 @@ export class Lucario extends PokemonCard {
           ), selected => {
             cards = selected || [];
 
-        
+
             player.deck.moveCardsTo(cards, cardList);
           });
         }
@@ -87,16 +88,20 @@ export class Lucario extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const fightingEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.name === 'Fighting Energy'
-      );
-      
-      effect.damage += 60 * fightingEnergy.length;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const discardEnergy = new DiscardCardsEffect(effect, fightingEnergy);
-      discardEnergy.target = player.active;
-      store.reduceEffect(state, discardEnergy);
+      let fightingEnergy = 0;
+      checkProvidedEnergy.energyMap.forEach(em => {
+        if (em.provides.includes(CardType.FIGHTING) || em.provides.includes(CardType.ANY)) {
+          const discardEnergy = new DiscardCardsEffect(effect, [em.card]);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+          fightingEnergy++;
+        }
+      });
 
+      effect.damage += 60 * fightingEnergy;
     }
     return state;
   }

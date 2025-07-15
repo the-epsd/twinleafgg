@@ -16,7 +16,7 @@ export class RegisteelStar extends PokemonCard {
   public attacks = [{
     name: 'Barrier Attack',
     cost: [M],
-    damage: 30,
+    damage: 10,
     text: 'During your opponent\'s next turn, any damage done to Registeel Star by attacks is reduced by 10 (after applying Weakness and Resistance).'
   },
   {

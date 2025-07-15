@@ -4,7 +4,7 @@ import { StoreLike, State, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class LuxuriousCape extends TrainerCard {
@@ -30,9 +30,9 @@ export class LuxuriousCape extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (!effect.target.hasRuleBox()) {
 
@@ -40,9 +40,9 @@ export class LuxuriousCape extends TrainerCard {
       }
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (state.phase !== GamePhase.ATTACK) {
         return state;

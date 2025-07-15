@@ -18,6 +18,7 @@ import { Sableye } from './sableye';
 // Other prints
 import {
   CycloneEnergySF,
+  PremierBallSF,
   WarpEnergySF
 } from './other-prints';
 
@@ -40,5 +41,6 @@ export const setStormfront: Card[] = [
 
   // Other prints
   new CycloneEnergySF(),
+  new PremierBallSF(),
   new WarpEnergySF()
 ];

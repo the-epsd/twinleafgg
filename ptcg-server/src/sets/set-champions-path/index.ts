@@ -7,6 +7,9 @@ import { Sonia } from './sonia';
 import { TurffieldStadium } from './turffield-stadium';
 import { Weedle } from './weedle';
 
+// other prints
+import { MarnieCPA } from './other-prints';
+
 export const setChampionsPath: Card[] = [
   new EldegossV(),
   new GalarianObstagoon(),
@@ -15,4 +18,7 @@ export const setChampionsPath: Card[] = [
   new Sonia(),
   new TurffieldStadium(),
   new Weedle(),
+
+  // other prints
+  new MarnieCPA(),
 ];
