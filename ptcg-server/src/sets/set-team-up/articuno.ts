@@ -1,10 +1,10 @@
-import { AttachEnergyPrompt, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { SupporterEffect } from '../../game/store/effects/play-card-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Articuno extends PokemonCard {
 
@@ -53,6 +53,20 @@ export class Articuno extends PokemonCard {
         return state;
       }
 
+      // Count valid [W] Energy attached to Articuno
+      const validTypes = [CardType.WATER, CardType.ANY, CardType.WLFM, CardType.GRW];
+      const attachedEnergies = player.active.cards.filter(card => {
+        // Only consider EnergyCard instances
+        if (card.superType !== SuperType.ENERGY) return false;
+        // Check if card is an EnergyCard and provides a valid type
+        const energyCard = card as any;
+        return Array.isArray(energyCard.provides) && energyCard.provides.some((t: CardType) => validTypes.includes(t));
+      });
+      const numToMove = Math.min(2, attachedEnergies.length);
+      if (numToMove === 0) {
+        return state;
+      }
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -60,7 +74,7 @@ export class Articuno extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 2, max: 2, validCardTypes: [CardType.WATER, CardType.ANY, CardType.WLFM, CardType.GRW] }
+        { allowCancel: false, min: numToMove, max: numToMove, validCardTypes: validTypes }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
@@ -68,47 +82,28 @@ export class Articuno extends PokemonCard {
           player.active.moveCardTo(transfer.card, target);
         }
       });
-
     }
 
-    if (effect instanceof SupporterEffect) {
+    if (effect instanceof TrainerTargetEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const target = effect.target;
 
-      let isArticunoInPlay = false;
-      let targetIsWaterPokemon = false;
-
-      if (opponent.active.cards.includes(this)) {
-        isArticunoInPlay = true;
-      }
-
-      if (!!target && target instanceof PokemonCardList) {
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(target as PokemonCardList);
-        store.reduceEffect(state, checkPokemonTypeEffect);
-
-        targetIsWaterPokemon = checkPokemonTypeEffect.cardTypes.includes(W);
-      }
-
-      if (!isArticunoInPlay || !targetIsWaterPokemon) {
+      if (!opponent.active.cards.includes(this) || IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
-      // Try reducing ability for opponent
-      try {
-        const stub = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
+      if (effect.target) {
+        const pokemonCard = effect.target.getPokemonCard && effect.target.getPokemonCard();
+        if (pokemonCard) {
+          const isWater = Array.isArray(pokemonCard.cardType)
+            ? pokemonCard.cardType.includes(CardType.WATER)
+            : pokemonCard.cardType === CardType.WATER;
+          if (isWater && opponent.bench.some(b => b === effect.target)) {
+            effect.preventDefault = true;
+          }
+        }
       }
-
-      effect.preventDefault = true;
     }
-
     return state;
   }
 }
