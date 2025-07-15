@@ -198,7 +198,9 @@ export class CardInfoPaneComponent implements OnChanges {
         // Add powers from attached trainers/tools
         for (const card of this.cardList.cards) {
           if (card.superType === SuperType.TRAINER) {
-            powers = [...powers, ...(card.powers || [])];
+            // Only add powers that are not fossils
+            const nonFossilPowers = (card.powers || []).filter(power => !power.isFossil);
+            powers = [...powers, ...nonFossilPowers];
           }
         }
         return powers;

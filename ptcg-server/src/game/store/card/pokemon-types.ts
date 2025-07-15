@@ -59,4 +59,5 @@ export interface Power {
   exemptFromInitialize?: boolean;
   barrage?: boolean;
   knocksOutSelf?: boolean;
+  isFossil?: boolean;
 }
