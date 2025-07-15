@@ -274,17 +274,30 @@ export class DeckEditToolbarComponent implements OnDestroy {
     // Read clipboard text
     navigator.clipboard.readText()
       .then(text => {
-
-        // Parse text into card names  
-        const cardNames = text.split('\n')
+        // Parse text into card details: count name set setNumber
+        const cardDetails = text.split('\n')
           .map(line => line.trim())
-          .filter(line => !!line);
-
-        // Import card names
-        this.import.next(cardNames);
-
+          .filter(line => !!line)
+          .map(line => {
+            const parts = line.split(/\s+/);
+            if (parts.length < 4) return null;
+            const count = parseInt(parts[0], 10);
+            if (isNaN(count)) return null;
+            const setNumber = parts.pop();
+            const set = parts.pop();
+            const name = parts.slice(1).join(' ');
+            return { count, name, set, setNumber };
+          })
+          .filter(x => x !== null);
+        // Import card details as string[]
+        const cardLines = cardDetails.map(cd => `${cd.count} ${cd.name} ${cd.set} ${cd.setNumber}`);
+        this.import.next(cardLines);
       });
+  }
 
+  public exportToFile() {
+    if (this.disabled) return;
+    this.export.next();
   }
 
   onTypeSelected(type: CardType) {
@@ -318,11 +331,6 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
     // Update the form control
     this.form.patchValue({ superTypes: this.selectedSuperTypes });
-  }
-
-  public exportToFile() {
-    if (this.disabled) return;
-    this.export.next();
   }
 
   public archetypes = Object.values(Archetype)

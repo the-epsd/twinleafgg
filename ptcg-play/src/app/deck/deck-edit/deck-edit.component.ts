@@ -195,54 +195,42 @@ export class DeckEditComponent implements OnInit {
   importFromClipboard() {
     navigator.clipboard.readText()
       .then(text => {
-        const cardNames = text.split('\n')
+        // Expect lines like: '4 Pikachu BSS 58'
+        const cardDetails = text.split('\n')
           .filter(line => !!line)
           .flatMap(line => {
-            const parts = line.split(' ');
+            const parts = line.trim().split(/\s+/);
+            if (parts.length < 4) {
+              return [];
+            }
             const count = parseInt(parts[0], 10);
             if (isNaN(count)) {
               return [];
             }
-            const cardDetails = parts.slice(1);
-            const cardName = cardDetails.slice(0, -1).join(' ');
-            const setNumber = cardDetails.slice(-1)[0];
-            let fullCardName = `${cardName} ${setNumber}`;
-
-            // First apply set code replacements
-            for (const setReplacement of setCodeReplacements) {
-              if (fullCardName.includes(` ${setReplacement.from} `)) {
-                fullCardName = fullCardName.replace(setReplacement.from, setReplacement.to);
-              }
-            }
-
-            // Then apply specific card replacements
-            const replacement = cardReplacements.find(r => r.from === fullCardName);
-            const finalCardName = replacement ? replacement.to : fullCardName;
-
-            return new Array(count).fill({ cardName: finalCardName });
+            const setNumber = parts.pop();
+            const set = parts.pop();
+            const name = parts.slice(1).join(' ');
+            return new Array(count).fill({ name, set, setNumber });
           });
-
-        this.importDeck(cardNames);
+        this.importDeck(cardDetails);
       });
   }
 
-  public importDeck(cardDetails: { cardName: string }[]) {
+  public importDeck(cardDetails: { name: string, set: string, setNumber: string }[]) {
     const failedImports: string[] = [];
     const failedCardCounts = new Map<string, number>();
 
     const successfulCards = cardDetails.map(card => {
-      const parts = card.cardName.split(' ');
-      const cardName = parts.slice(0, -1).join(' ');
-
+      const { name, set, setNumber } = card;
       // Check if card exists in database
-      if (!this.cardsBaseService.getCardByName(cardName)) {
-        failedCardCounts.set(card.cardName, (failedCardCounts.get(card.cardName) || 0) + 1);
+      if (!this.cardsBaseService.getCardByNameSetNumber(name, set, setNumber)) {
+        const key = `${name} ${set} ${setNumber}`;
+        failedCardCounts.set(key, (failedCardCounts.get(key) || 0) + 1);
       }
+      return this.cardsBaseService.getCardByNameSetNumber(name, set, setNumber)?.fullName;
+    }).filter(name => !!name);
 
-      return cardName;
-    }).filter(name => this.cardsBaseService.getCardByName(name));
-
-    this.deckItems = this.loadDeckItems(successfulCards);
+    this.deckItems = this.loadDeckItems(successfulCards as string[]);
 
     if (failedCardCounts.size > 0) {
       const formattedFailures = Array.from(failedCardCounts.entries())
@@ -253,23 +241,15 @@ export class DeckEditComponent implements OnInit {
   }
 
   public async exportDeck() {
-    const cardNames = [];
+    const cardLines = [];
     for (const item of this.deckItems) {
-      let fullNameWithSetNumber = item.card.fullName + (item.card.setNumber ? ` ${item.card.setNumber}` : '');
-
-      // Apply export replacements
-      const replacement = exportReplacements.find(r => r.from === fullNameWithSetNumber);
-      if (replacement) {
-        fullNameWithSetNumber = replacement.to;
-      }
-
-      const fullCardName = `${item.count} ${fullNameWithSetNumber}`;
-
-      if (!cardNames.includes(fullCardName)) {
-        cardNames.push(fullCardName);
+      const card = item.card;
+      const line = `${item.count} ${card.name} ${card.set} ${card.setNumber}`;
+      if (!cardLines.includes(line)) {
+        cardLines.push(line);
       }
     }
-    const data = cardNames.join('\n') + '\n';
+    const data = cardLines.join('\n') + '\n';
 
     try {
       await navigator.clipboard.writeText(data);

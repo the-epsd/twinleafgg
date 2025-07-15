@@ -124,6 +124,10 @@ export class CardsBaseService {
     return this.cards.find(c => c.fullName === cardName);
   }
 
+  public getCardByNameSetNumber(name: string, set: string, setNumber: string): Card | undefined {
+    return this.cards.find(c => c.name === name && c.set === set && c.setNumber === setNumber);
+  }
+
   public showCardInfo(data: CardInfoPopupData = {}): Promise<CardInfoPaneAction> {
     const dialog = this.dialog.open(CardInfoPopupComponent, {
       maxWidth: '100%',
