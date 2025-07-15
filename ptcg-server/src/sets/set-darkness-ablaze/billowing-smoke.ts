@@ -29,7 +29,7 @@ export class BillowingSmoke extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof KnockOutEffect &&
-      effect.target.cards.includes(this) &&
+      effect.target.tools.includes(this) &&
       effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
     ) {
       const player = effect.player;

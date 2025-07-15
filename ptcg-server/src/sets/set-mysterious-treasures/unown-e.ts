@@ -90,7 +90,7 @@ export class UnownE extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() !== this) {
+    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this) && effect.target.getPokemonCard() !== this) {
       const card = effect.target.getPokemonCard();
 
       if (card === undefined) {

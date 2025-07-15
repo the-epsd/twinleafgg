@@ -18,7 +18,7 @@ export class TelescopicSight extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.source.tools.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const target = effect.target.getPokemonCard();
 

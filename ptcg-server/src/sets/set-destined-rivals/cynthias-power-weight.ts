@@ -22,7 +22,7 @@ export class CynthiasPowerWeight extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
       const card = effect.target.getPokemonCard();
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working
