@@ -1,12 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, PutDamagePrompt, SlotType, DamageMap, StateUtils } from '../../game';
+import { StoreLike, State, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { GameMessage } from '../../game/game-message';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE, THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 
 export class DragapultVMAX extends PokemonCard {
 
@@ -44,47 +41,12 @@ export class DragapultVMAX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 60);
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)){
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-  
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
-      }
-  
-      const maxAllowedDamage: DamageMap[] = [];
-      let damageLeft = 0;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(opponent, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        damageLeft += checkHpEffect.hp - cardList.damage;
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-      });
-  
-      const damage = Math.min(50, damageLeft);
-  
-      return store.prompt(state, new PutDamagePrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
-        damage,
-        maxAllowedDamage,
-        { allowCancel: false }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new PutCountersEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
-        }
-      });
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(5, store, state, effect, [SlotType.BENCH]);
     }
     return state;
   }

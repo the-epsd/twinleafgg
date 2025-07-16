@@ -1,7 +1,7 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
+import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
@@ -283,7 +283,7 @@ export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, ca
   slot.pokemonPlayedTurn = state.turn;
 }
 
-export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number) {
+export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number, applyWeaknessAndResistance: boolean = false, slots?: SlotType[]) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -296,13 +296,22 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
+    slots ?? [SlotType.BENCH],
     { min: min, max: max, allowCancel: false }
   ), selected => {
-    const target = selected[0];
-    const damageEffect = new PutDamageEffect(effect, damage);
-    damageEffect.target = target;
-    store.reduceEffect(state, damageEffect);
+    selected.forEach(target => {
+      const damageEffect = new PutDamageEffect(effect, damage);
+      damageEffect.target = target;
+
+      if (applyWeaknessAndResistance && damage > 0) {
+        const applyWeakness = new ApplyWeaknessEffect(effect, damage);
+        applyWeakness.target = target; // Fix: should be the current target, not effect.target
+        state = store.reduceEffect(state, applyWeakness);
+        damageEffect.damage = applyWeakness.damage; // Fix: update the damage for this damageEffect, not effect.damage
+      }
+
+      store.reduceEffect(state, damageEffect);
+    });
   });
 }
 

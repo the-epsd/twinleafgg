@@ -42,6 +42,7 @@ import { Grookey } from './grookey';
 import { Gurdurr } from './gurdurr';
 import { HandyFan } from './handy-fan';
 import { Hassel } from './hassel';
+import { Hawlucha } from './hawlucha';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { Heatran } from './heatran';
 import { HisuianArcanine } from './hisuian-arcanine';
@@ -122,6 +123,7 @@ export const setTwilightMasquerade: Card[] = [
   new Gurdurr(),
   new HandyFan(),
   new Hassel(),
+  new Hawlucha(),
   new HearthflameMaskOgerponex(),
   new Heatran(),
   new HisuianArcanine(),

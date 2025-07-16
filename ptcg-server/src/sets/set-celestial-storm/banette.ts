@@ -1,40 +1,41 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, Card, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, Card, ChooseCardsPrompt, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { JUST_EVOLVED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
-export class Duskull extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+export class Banette extends PokemonCard {
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Shuppet';
   public cardType: CardType = P;
-  public hp: number = 50;
+  public hp: number = 90;
   public weakness = [{ type: D }];
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
+  public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Revival',
-    cost: [C],
-    damage: 0,
-    text: 'Put a Basic Pokémon from your opponent\'s discard pile onto his or her Bench.'
-  },
-  {
-    name: 'Sneaky Placement',
-    cost: [P],
-    damage: 0,
-    text: 'Put 1 damage counter on your opponent\'s Active Pokémon.'
+  public powers = [{
+    name: 'Red Eyes',
+    powerType: PowerType.ABILITY,
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put a Basic Pokémon from your opponent\'s discard pile onto their Bench.'
   }];
 
-  public set = 'FLF';
+  public attacks = [{
+    name: 'Enemy Show',
+    cost: [P, C],
+    damage: 0,
+    text: 'For each of your opponent\'s Pokémon in play, put 1 damage counter on your opponent\'s Pokémon in any way you like.'
+  }];
+
+  public set = 'CES';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '38';
-  public name = 'Duskull';
-  public fullName = 'Duskull FLF';
+  public setNumber: string = '65';
+  public name = 'Banette';
+  public fullName = 'Banette CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (JUST_EVOLVED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -55,11 +56,9 @@ export class Duskull extends PokemonCard {
         GameMessage.CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH,
         opponent.discard,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: false }
+        { min: 0, max: 1, allowCancel: false }
       ), selected => {
-
         cards = selected || [];
-
         if (cards.length > 0) {
           const card = cards[0];
           const slot = openSlots[0];
@@ -69,8 +68,11 @@ export class Duskull extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(1, store, state, effect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const opponent = effect.opponent;
+      const opponentBench = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(opponentBench + 1, store, state, effect);
     }
 
     return state;

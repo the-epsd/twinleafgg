@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { ApricornMaker } from './apricorn-maker';
 import { ArticunoGX } from './articuno-gx';
+import { Banette } from './banette';
 import { BanetteGX } from './banette-gx';
 import { Chinchou } from './chinchou';
 import { Copycat } from './copycat';
@@ -40,6 +41,7 @@ import { Whismur } from './whismur';
 
 export const setCelestialStorm: Card[] = [
   new ApricornMaker(),
+  new Banette(),
   new BanetteGX(),
   new Chinchou(),
   new Copycat(),

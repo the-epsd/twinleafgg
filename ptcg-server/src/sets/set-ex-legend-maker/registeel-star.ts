@@ -1,7 +1,8 @@
-import { CardTag, CardType, DamageMap, GameMessage, GamePhase, PlayerType, PokemonCard, PutDamagePrompt, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
-import { AddMarkerEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CardTag, CardType, GamePhase, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { AddMarkerEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RegisteelStar extends PokemonCard {
@@ -62,35 +63,13 @@ export class RegisteelStar extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      let damage = 30;
-
+      let counters = 3;
       const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
       if (playerBench === 0 && opponent.getPrizeLeft() === 1) {
-        damage = 60;
+        counters = 6;
       }
 
-      const maxAllowedDamage: DamageMap[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + damage });
-      });
-
-      return store.prompt(state, new PutDamagePrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        damage,
-        maxAllowedDamage,
-        { allowCancel: false }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new PutCountersEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
-        }
-      });
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(counters, store, state, effect);
     }
 
     return state;
