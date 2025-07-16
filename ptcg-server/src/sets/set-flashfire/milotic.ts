@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -57,12 +57,20 @@ export class Milotic extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const blocked: number[] = [];
+      /*const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC) {
           // Allow basic energy cards to be selected
         } else {
           blocked.push(index);
+        }
+      });*/
+
+      //Blocks energy from being attached to Pokemon EX
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (card.tags.includes("CardTag.POKEMON_EX")) {
+          blocked2.push(target);
         }
       });
 
@@ -75,7 +83,7 @@ export class Milotic extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: attachAmount, max: attachAmount, blocked }
+        { allowCancel: false, min: attachAmount, max: attachAmount, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
