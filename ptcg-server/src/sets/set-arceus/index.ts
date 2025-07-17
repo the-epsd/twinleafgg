@@ -12,6 +12,7 @@ import { ArceusMetal } from './arceus-metal';
 import { ArceusPsychic } from './arceus-psychic';
 import { ArceusWater } from './arceus-water';
 import { ExpertBelt } from './expert-belt';
+import { Gengar } from './gengar';
 import { Spiritomb } from './spiritomb';
 
 export const setArceus: Card[] = [
@@ -28,5 +29,6 @@ export const setArceus: Card[] = [
   new ArceusLvX1(),
   new ArceusLvX2(),
   new ArceusLvX3(),
+  new Gengar(),
   new Spiritomb()
 ];

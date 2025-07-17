@@ -95,6 +95,7 @@ export class BetweenTurnsEffect implements Effect {
   public burnDamage: number;
   public burnFlipResult: boolean | undefined;
   public asleepFlipResult: boolean | undefined;
+  public maternalComfortUsed?: boolean;
 
   constructor(player: Player) {
     this.player = player;

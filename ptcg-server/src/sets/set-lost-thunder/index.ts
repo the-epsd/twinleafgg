@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
+import { Ampharos } from './ampharos';
 import { BlacephalonGX } from './blacephalon-gx';
 import { Blitzle } from './blitzle';
 import { Cascoon } from './cascoon';
@@ -67,6 +68,7 @@ export const setLostThunder: Card[] = [
   new AdventureBag(),
   new AlolanMeowth(),
   new AlolanNinetalesGX(),
+  new Ampharos(),
   new Blitzle(),
   new Cascoon(),
   new Chikorita(),

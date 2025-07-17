@@ -24,6 +24,7 @@ import { ExpShare } from './exp-share';
 import { Flittle } from './flittle';
 import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA, KirliaIR, PawmotIR, SlowpokeIR } from './full-art';
 import { Gardevoirex } from './gardevoir-ex';
+import { Greedent } from './greedent';
 import { Growlithe } from './growlithe';
 import { Gyaradosex } from './gyarados-ex';
 import { Hawlucha } from './hawlucha';
@@ -114,6 +115,7 @@ export const setScarletAndViolet: Card[] = [
   new ExpShare(),
   new Flittle(),
   new Gardevoirex(),
+  new Greedent(),
   new Growlithe(),
   new Gyaradosex(),
   new Hawlucha(),

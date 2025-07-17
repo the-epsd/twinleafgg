@@ -6,11 +6,11 @@ import { Camerupt } from './camerupt';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Ditto } from './ditto';
-import {Gyarados} from './gyarados';
+import { Gyarados } from './gyarados';
 import { Ivysaur } from './ivysaur';
 import { Lunatone } from './lunatone';
 import { LureModule } from './lure-module';
-import {Magikarp} from './magikarp';
+import { Magikarp } from './magikarp';
 import { Moltres } from './moltres';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -21,6 +21,9 @@ import { Snorlax } from './snorlax';
 import { Solrock } from './solrock';
 import { Wartortle } from './wartortle';
 import { Zapdos } from './zapdos';
+
+// Other Prints
+import { RadiantCharizardPGO } from './other-prints';
 
 export const setPokemonGO: Card[] = [
   new AlolanRaticate(),
@@ -45,4 +48,7 @@ export const setPokemonGO: Card[] = [
   new Wartortle(),
   new Magikarp(),
   new Gyarados(),
+
+  // Other Prints
+  new RadiantCharizardPGO(),
 ];

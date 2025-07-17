@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, PowerType } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType, PowerType, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_MARKER, AFTER_ATTACK, BLOCK_EFFECT_IF_MARKER, CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -77,7 +77,7 @@ export class RocketsScytherex extends PokemonCard {
         if (result) {
           SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
         }
-      });
+      }, GameMessage.WANT_TO_SWITCH_POKEMON);
     }
 
     return state;
