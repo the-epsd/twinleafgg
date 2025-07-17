@@ -1,4 +1,4 @@
-import { Card, CardTag, CardType, EnergyCard, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
+import { Card, CardTag, CardType, EnergyCard, EnergyType, Format, PokemonCard, SuperType, ANY_PRINTING_ALLOWED } from "ptcg-server";
 
 export class FormatValidator {
 
@@ -100,69 +100,21 @@ export class FormatValidator {
   }
 
   static getValidFormats(card: Card): Format[] {
-    // List of cards where any printing is legal in any format where the card is legal
-    const anyPrintingAllowed = [
-      'Pokémon Fan Club',
-      'Master Ball',
-      'Quick Ball',
-      'Crushing Hammer',
-      'Energy Search',
-      'Energy Switch',
-      'Exp. Share',
-      'Judge',
-      'Nest Ball',
-      'Pal Pad',
-      'Poké Ball',
-      'Pokégear 3.0',
-      'Pokémon Catcher',
-      'Potion',
-      "Professor's Research",
-      'Rare Candy',
-      'Rocky Helmet',
-      'Switch',
-      'Ultra Ball',
-      'Vitality Band',
-      "Boss's Orders",
-      'Choice Belt',
-      'Great Ball',
-      'Super Rod',
-      'Superior Energy Retrieval',
-      'Leftovers',
-      'Counter Catcher',
-      'Cook',
-      'Enhanced Hammer',
-      'Lucky Helmet',
-      'Counter Gain',
-      'Dusk Ball',
-      'Super Potion',
-      'Energy Recycler',
-      'Sacred Ash',
-      'Air Balloon',
-      'Prism Energy',
-      'Energy Retrieval',
-      'Tool Scrapper',
-      'Cheren',
-      'Rainbow Energy',
-      'N',
-      'Tropical Beach',
-      'Professor Juniper',
-      'Professor Sycamore',
-    ];
-
     const formats = [Format.UNLIMITED];
     [
-      Format.GLC,
-      Format.EXPANDED,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
+      Format.EXPANDED,
+      Format.GLC,
+      Format.SV,
+      Format.SWSH,
+      Format.SM,
+      Format.XY,
+      Format.BW,
       Format.RSPK,
       Format.RETRO,
-      Format.BW,
-      Format.SWSH, // Added
-      Format.XY,   // Added
-      Format.SM    // Added
     ].forEach(format => {
-      this.isValid(card, format, anyPrintingAllowed) ? formats.push(format) : null;
+      this.isValid(card, format, ANY_PRINTING_ALLOWED) ? formats.push(format) : null;
     });
 
     return formats;
@@ -190,9 +142,9 @@ export class FormatValidator {
             card.regulationMark === 'I' ||
             card.regulationMark === 'J';
         case Format.EXPANDED: {
-          var setDate = SetReleaseDates[card.set];
-          return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
-            !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
+          // For anyPrintingAllowed cards, they are known to be legal in Expanded format
+          // Just check if this specific printing is not banned
+          return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
         }
         case Format.GLC: {
           // For anyPrintingAllowed, do NOT check set date, only tags
