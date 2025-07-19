@@ -1,7 +1,11 @@
+// Dark Mode Gaming Interface
 .matchmaking-lobby {
   display: flex;
   justify-content: space-evenly;
   padding: 1rem;
+  margin-top: -100px; // Move up to overlap diagonal cut
+  position: relative;
+  z-index: 10;
 }
 
 .lobby-content {

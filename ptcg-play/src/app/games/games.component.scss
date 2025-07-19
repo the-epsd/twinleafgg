@@ -1,5 +1,238 @@
+// Dark Mode Video Game Interface
+.main-container {
+  // background: #000000;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle grid pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  // Vignette effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 0;
+  }
+}
+
+// Hero Artwork Section
+.slanted-artwork-section {
+  height: 50vh;
+  position: relative;
+  overflow: hidden;
+  // background: #000000;
+
+  // Pokemon artwork background
+  .pokemon-artwork-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/placeholder-banner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7) contrast(1.3) saturate(1.2);
+
+    // Proper diagonal cut
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 90%);
+  }
+
+  // Dark overlay for better contrast
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 90%);
+  }
+
+  // Diagonal cut overlay
+  .slanted-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 15vh;
+    // background: #000000;
+    transform: skewY(-2deg);
+    transform-origin: bottom left;
+    z-index: 2;
+  }
+}
+
+// Main Content Area
+.content-area {
+  position: relative;
+  z-index: 2;
+  padding: 0 40px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // background: #000000;
+}
+
+// Matchmaking Section
+.matchmaking-section {
+  margin-top: -80px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+
+  // // Gaming card backdrop
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   top: -20px;
+  //   left: -20px;
+  //   right: -20px;
+  //   bottom: -20px;
+  //   background: rgba(255, 255, 255, 0.02);
+  //   z-index: -1;
+  // }
+}
+
+// Action Button - Gaming Style
+.action-button-container {
+  margin-top: 40px;
+  position: relative;
+
+  .start-matchmaking-button {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+    border: 2px solid #444444;
+    padding: 20px 60px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+      0 4px 15px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+
+    // Button highlight effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      transition: left 0.6s ease;
+    }
+
+    // Inner border
+    &::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    &:hover:not([disabled]) {
+      transform: translateY(-2px);
+      border-color: #666666;
+      background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+      box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+
+      &::before {
+        left: 100%;
+      }
+
+      &::after {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    &.in-queue {
+      background: linear-gradient(135deg, #2a1a1a 0%, #3a2a2a 50%, #2a1a1a 100%);
+      border-color: #664444;
+      color: #ff6666;
+      box-shadow:
+        0 4px 15px rgba(255, 102, 102, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+
+      &:hover:not([disabled]) {
+        border-color: #886666;
+        background: linear-gradient(135deg, #3a2a2a 0%, #4a3a3a 50%, #3a2a2a 100%);
+        box-shadow:
+          0 6px 20px rgba(255, 102, 102, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    mat-spinner {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+// Legacy compatibility
 .bg {
-  background-color: #1A202C;
+  background-color: #000000;
 }
 
 .news-banner {
@@ -8,7 +241,7 @@
   .mat-toolbar {
     min-height: 36px;
     height: 36px;
-    font-size: calc(36px * 0.4); // Scales with toolbar height
+    font-size: calc(36px * 0.4);
 
     .mat-icon {
       height: calc(36px * 0.5);
@@ -23,8 +256,46 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
-.news-banner:hover {
-  opacity: 0.9;
+// Responsive design
+@media (max-width: 1200px) {
+  .content-area {
+    padding: 0 30px 60px;
+  }
+
+  .matchmaking-section {
+    margin-top: -60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slanted-artwork-section {
+    height: 50vh;
+  }
+
+  .matchmaking-section {
+    margin-top: -40px;
+  }
+
+  .action-button-container {
+    .start-matchmaking-button {
+      padding: 18px 50px;
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .action-button-container {
+    .start-matchmaking-button {
+      padding: 16px 40px;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+  }
 }

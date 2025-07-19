@@ -33,29 +33,44 @@
       </a>
     </mat-nav-list>
   </ptcg-sidebar>
-  <div class="bg">
-    <ptcg-content [loading]="loading">
 
-      <mat-toolbar-row>
-        <h1 translate>GAMES_TITLE</h1>
+  <div class="main-container">
+    <!-- Slanted Top Section with Artwork -->
+    <div class="slanted-artwork-section">
+      <div class="pokemon-artwork-bg"></div>
+      <div class="slanted-overlay"></div>
+    </div>
 
-        <span class="ptcg-u-spacer"></span>
-
-
-        <!-- <button mat-raised-button [disabled]="loading" (click)="createGame()">
-          {{ 'GAMES_CREATE_GAME_BUTTON' | translate }}
-        </button> -->
-      </mat-toolbar-row>
-
-      <ptcg-matchmaking-lobby></ptcg-matchmaking-lobby>
-
-      <div class="ptcg-active-games">
-        <ptcg-games-table></ptcg-games-table>
+    <!-- Main Content Area -->
+    <div class="content-area">
+      <!-- Matchmaking Interface (deck card will be positioned to overlap slanted area) -->
+      <div class="matchmaking-section">
+        <ptcg-matchmaking-lobby></ptcg-matchmaking-lobby>
       </div>
 
-      <div class="ptcg-recent-matches">
-        <ptcg-match-table></ptcg-match-table>
-      </div>
-    </ptcg-content>
+      <!-- Main Action Button -->
+      <!-- <div class="action-button-container">
+        <button class="start-matchmaking-button" [class.in-queue]="matchmakingLobby?.inQueue"
+          [disabled]="loading || (!matchmakingLobby?.deckId && !matchmakingLobby?.inQueue)"
+          (click)="onMainPlayButtonClick()">
+          <mat-spinner *ngIf="loading || matchmakingLobby?.loading" diameter="20"
+            style="display: inline-block; margin-right: 10px;"></mat-spinner>
+          <span class="button-text">
+            {{ matchmakingLobby?.inQueue ? 'STOP MATCHMAKING' : 'START MATCHMAKING' }}
+          </span>
+        </button>
+      </div> -->
+    </div>
+
+    <!-- Hidden sections - commented out for now -->
+    <!-- 
+    <div class="ptcg-active-games">
+      <ptcg-games-table></ptcg-games-table>
+    </div>
+
+    <div class="ptcg-recent-matches">
+      <ptcg-match-table></ptcg-match-table>
+    </div>
+    -->
   </div>
 </ptcg-sidebar-container>
