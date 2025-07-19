@@ -14,6 +14,7 @@
 @import '../app/table/_table-theme.scss';
 @import '../app/table/prompt/_prompt-theme.scss';
 @import '../app/battle-pass/_battle-pass.theme.scss';
+@import '../app/friends/_friends.theme.scss';
 
 @mixin ptcg-theme($theme) {
   @include ptcg-sidebar-theme($theme);

@@ -1,0 +1,144 @@
+<div class="friends-network">
+  <div *ngIf="friends.length === 0" class="empty-battlefield">
+    <div class="empty-visual">
+      <div class="hologram-container">
+        <svg class="hologram-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.47 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm2.78 1.58c-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57c0-.81-.48-1.53-1.22-1.85zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" />
+        </svg>
+      </div>
+    </div>
+    <div class="empty-content">
+      <h3 class="empty-title">Battle Network Offline</h3>
+      <p class="empty-description">No trainers connected to your network yet.</p>
+      <div class="empty-hint">
+        Send friend requests to expand your battle network and challenge other trainers!
+      </div>
+    </div>
+  </div>
+
+  <div class="trainer-roster" *ngIf="friends.length > 0">
+    <div *ngFor="let friend of friends; trackBy: trackByFriend" class="trainer-card"
+      [class.trainer-online]="getFriendUser(friend).connected" [class.trainer-blocked]="friend.status === 'blocked'">
+
+      <!-- Status indicator -->
+      <div class="connection-status">
+        <div class="status-indicator" [class.online]="getFriendUser(friend).connected"></div>
+      </div>
+
+      <!-- Avatar section -->
+      <div class="trainer-avatar">
+        <div class="avatar-frame">
+          <ptcg-avatar [avatarFile]="getFriendUser(friend).avatarFile" class="avatar-image"></ptcg-avatar>
+          <div class="avatar-glow" *ngIf="getFriendUser(friend).connected"></div>
+        </div>
+
+        <!-- Battle status badge -->
+        <div class="battle-status" [class]="getStatusBadgeClass(friend.status)">
+          {{ getStatusText(friend.status) }}
+        </div>
+      </div>
+
+      <!-- Trainer info -->
+      <div class="trainer-info">
+        <div class="trainer-header">
+          <div class="trainer-name">
+            {{ getFriendUser(friend).name }}
+            <svg *ngIf="getFriendUser(friend).connected" class="online-pulse" viewBox="0 0 8 8" fill="currentColor">
+              <circle cx="4" cy="4" r="3" />
+            </svg>
+          </div>
+
+          <div class="trainer-meta">
+            <div class="ranking-display">
+              <svg class="rank-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <span class="rank-value">{{ getFriendUser(friend).ranking || 'Unranked' }}</span>
+            </div>
+
+            <div class="connection-info">
+              <span class="connection-text" [class.online]="getFriendUser(friend).connected">
+                {{ getFriendUser(friend).connected ? 'ONLINE' : 'OFFLINE' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Battle stats preview -->
+        <div class="trainer-stats" *ngIf="friend.status === 'accepted'">
+          <div class="stat-item">
+            <span class="stat-label">Last Battle</span>
+            <span class="stat-value">2 days ago</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Win Rate</span>
+            <span class="stat-value">67%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="trainer-actions">
+        <div class="action-group" *ngIf="friend.status === 'accepted'">
+          <!-- Challenge button for online friends -->
+          <button *ngIf="getFriendUser(friend).connected" class="action-btn challenge-btn" title="Challenge to battle">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            <span>Challenge</span>
+          </button>
+
+          <!-- Message button -->
+          <button class="action-btn message-btn" title="Send message">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+            </svg>
+          </button>
+
+          <!-- More actions dropdown -->
+          <div class="dropdown">
+            <button class="action-btn more-btn" title="More actions">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+            </button>
+
+            <div class="dropdown-menu">
+              <button class="dropdown-item remove-btn" (click)="onRemoveFriend(friend)">
+                <svg class="item-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                </svg>
+                Remove Friend
+              </button>
+
+              <button class="dropdown-item block-btn" (click)="onBlockUser(getFriendUser(friend).userId)">
+                <svg class="item-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z" />
+                </svg>
+                Block User
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Unblock button for blocked users -->
+        <div class="action-group" *ngIf="friend.status === 'blocked'">
+          <button class="action-btn unblock-btn" (click)="onUnblockUser(getFriendUser(friend).userId)"
+            title="Unblock user">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z" />
+            </svg>
+            <span>Unblock</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

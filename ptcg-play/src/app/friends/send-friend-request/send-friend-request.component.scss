@@ -1,0 +1,448 @@
+@import '../friends.theme.scss';
+
+.connection-terminal {
+  background: linear-gradient(135deg, #1e2a3a 0%, #0d1421 100%);
+  border: 1px solid rgba(68, 144, 88, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #449058, #449058, transparent);
+    animation: scanLine 3s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(68, 144, 88, 0.1), transparent);
+    border-radius: 12px;
+    z-index: -1;
+  }
+}
+
+.terminal-header {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(68, 144, 88, 0.2);
+
+  .terminal-title {
+    margin: 0;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(68, 144, 88, 0.3);
+  }
+}
+
+.connection-form {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.input-container {
+  .input-group {
+    margin-bottom: var(--friends-spacing-lg);
+
+    .input-wrapper {
+      position: relative;
+
+      .data-input {
+        width: 100%;
+        padding: var(--friends-spacing-md) var(--friends-spacing-lg);
+        background: var(--friends-bg-primary);
+        border: 2px solid var(--friends-border);
+        border-radius: var(--friends-radius-md);
+        color: var(--friends-text-primary);
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        outline: none;
+
+        &::placeholder {
+          color: var(--friends-text-disabled);
+        }
+
+        &:focus {
+          border-color: var(--friends-green-primary);
+          box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+
+        &.input-valid {
+          border-color: var(--friends-green-primary);
+          background: rgba(74, 222, 128, 0.05);
+        }
+
+        &.input-invalid {
+          border-color: #ef4444;
+          background: rgba(239, 68, 68, 0.05);
+        }
+      }
+
+      .input-status {
+        position: absolute;
+        right: var(--friends-spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+
+        .status-icon {
+          width: 20px;
+          height: 20px;
+
+          &.valid {
+            color: var(--friends-green-primary);
+          }
+
+          &.invalid {
+            color: #ef4444;
+          }
+        }
+      }
+    }
+
+    .validation-panel {
+      margin-top: var(--friends-spacing-sm);
+
+      .error-message {
+        color: #ef4444;
+        font-size: 14px;
+        font-weight: 500;
+        padding: var(--friends-spacing-sm);
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: var(--friends-radius-sm);
+      }
+    }
+  }
+
+  .action-zone {
+    .transmission-btn {
+      width: 100%;
+      background: var(--friends-green-primary);
+      border: none;
+      border-radius: var(--friends-radius-md);
+      padding: var(--friends-spacing-md) var(--friends-spacing-lg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--friends-spacing-sm);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--friends-bg-primary);
+      position: relative;
+      overflow: hidden;
+
+      &:disabled {
+        background: var(--friends-border);
+        color: var(--friends-text-disabled);
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):hover {
+        background: var(--friends-green-secondary);
+        transform: translateY(-1px);
+        box-shadow: var(--friends-shadow-md);
+      }
+
+      &:not(:disabled):active {
+        transform: translateY(0);
+      }
+
+      .btn-content {
+        display: flex;
+        align-items: center;
+        gap: var(--friends-spacing-sm);
+      }
+
+      .btn-icon {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.2s ease;
+      }
+
+      .signal-spinner {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        .spinner-wave {
+          width: 4px;
+          height: 4px;
+          background: currentColor;
+          border-radius: 50%;
+          animation: wave 1.4s ease-in-out infinite;
+
+          &:nth-child(1) {
+            animation-delay: 0s;
+          }
+
+          &:nth-child(2) {
+            animation-delay: 0.2s;
+          }
+
+          &:nth-child(3) {
+            animation-delay: 0.4s;
+          }
+        }
+      }
+
+      .btn-text {
+        font-weight: 600;
+        letter-spacing: 0.3px;
+      }
+
+      &.transmitting {
+        .btn-icon {
+          transform: scale(0);
+        }
+      }
+    }
+  }
+}
+
+.status-messages {
+  margin-top: var(--friends-spacing-lg);
+
+  .alert-panel {
+    padding: var(--friends-spacing-md);
+    border-radius: var(--friends-radius-md);
+    border: 1px solid;
+    margin-bottom: var(--friends-spacing-md);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .alert-content {
+      .alert-message {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+
+    &.error-alert {
+      background: rgba(239, 68, 68, 0.05);
+      border-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    &.success-alert {
+      background: var(--friends-green-bg);
+      border-color: var(--friends-green-border);
+      color: var(--friends-green-primary);
+    }
+  }
+}
+
+// Animations
+@keyframes scanLine {
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes checkmarkPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes errorShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes waveSignal {
+
+  0%,
+  100% {
+    height: 6px;
+    opacity: 0.5;
+  }
+
+  50% {
+    height: 12px;
+    opacity: 1;
+  }
+}
+
+@keyframes transmitting {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 15px rgba(68, 144, 88, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 6px 20px rgba(68, 144, 88, 0.6);
+  }
+}
+
+@keyframes alertSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes transmit {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 15px rgba(68, 144, 88, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 6px 25px rgba(68, 144, 88, 0.5);
+  }
+}
+
+@keyframes waveLoad {
+
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.5);
+  }
+}
+
+@keyframes wave {
+
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  30% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .connection-terminal {
+    padding: 12px;
+
+    .terminal-header {
+      .terminal-title {
+        font-size: 16px;
+      }
+    }
+
+    .connection-form {
+      padding: 20px;
+
+      .input-container {
+        gap: 10px;
+      }
+
+      .action-zone .transmission-btn {
+        padding: 14px 24px;
+        min-width: 180px;
+
+        .btn-content .btn-text {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .alert-panel {
+    .alert-content {
+      .alert-message {
+        font-size: 12px;
+      }
+    }
+  }
+}

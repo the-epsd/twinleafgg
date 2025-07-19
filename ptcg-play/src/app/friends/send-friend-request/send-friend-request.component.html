@@ -1,0 +1,79 @@
+<form [formGroup]="friendRequestForm" (ngSubmit)="onSubmit()" class="connection-form">
+  <div class="input-container">
+    <div class="input-group">
+      <div class="input-wrapper">
+        <input type="text" id="receiverId" formControlName="receiverId" class="data-input"
+          placeholder="Enter trainer ID..." (input)="onInputChange()"
+          [class.input-invalid]="friendRequestForm.get('receiverId')?.invalid && friendRequestForm.get('receiverId')?.touched"
+          [class.input-valid]="friendRequestForm.get('receiverId')?.valid && friendRequestForm.get('receiverId')?.touched">
+
+        <div class="input-glow"></div>
+
+        <!-- Status indicator -->
+        <div class="input-status">
+          <svg *ngIf="friendRequestForm.get('receiverId')?.valid && friendRequestForm.get('receiverId')?.touched"
+            class="status-icon valid" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+          </svg>
+          <svg *ngIf="friendRequestForm.get('receiverId')?.invalid && friendRequestForm.get('receiverId')?.touched"
+            class="status-icon invalid" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Validation messages -->
+      <div class="validation-panel"
+        *ngIf="friendRequestForm.get('receiverId')?.invalid && friendRequestForm.get('receiverId')?.touched">
+        <div class="error-message" *ngIf="friendRequestForm.get('receiverId')?.errors?.['required']">
+          Trainer ID is required
+        </div>
+        <div class="error-message" *ngIf="friendRequestForm.get('receiverId')?.errors?.['pattern']">
+          Please enter a valid trainer ID (numbers only)
+        </div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-zone">
+      <button type="submit" class="transmission-btn" [disabled]="friendRequestForm.invalid || loading"
+        [class.transmitting]="loading">
+        <div class="btn-content">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" *ngIf="!loading">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+
+          <!-- Loading spinner -->
+          <div class="signal-spinner" *ngIf="loading">
+            <div class="spinner-wave"></div>
+            <div class="spinner-wave"></div>
+            <div class="spinner-wave"></div>
+          </div>
+
+          <span class="btn-text">
+            {{ loading ? 'Sending...' : 'Send Request' }}
+          </span>
+        </div>
+
+        <div class="btn-glow"></div>
+      </button>
+    </div>
+  </div>
+</form>
+
+<!-- Status messages -->
+<div class="status-messages">
+  <div *ngIf="errorMessage" class="alert-panel error-alert">
+    <div class="alert-content">
+      <div class="alert-message">{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="alert-panel success-alert">
+    <div class="alert-content">
+      <div class="alert-message">{{ successMessage }}</div>
+    </div>
+  </div>
+</div>

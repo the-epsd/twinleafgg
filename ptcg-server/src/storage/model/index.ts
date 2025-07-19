@@ -2,6 +2,8 @@ export * from './avatar';
 export * from './conversation';
 export * from './custom-avatar';
 export * from './deck';
+export * from './friend';
+export * from './friend-request';
 export * from './match';
 export * from './message';
 export * from './replay';

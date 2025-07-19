@@ -13,6 +13,7 @@ import {
   Cards,
   ControllerClass,
   Decks,
+  Friends,
   Game,
   Login,
   Messages,
@@ -80,6 +81,7 @@ export class App {
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
+    define('/v1/friends', Friends);
     define('/v1/game', Game);
     define('/v1/login', Login);
     define('/v1/messages', Messages);

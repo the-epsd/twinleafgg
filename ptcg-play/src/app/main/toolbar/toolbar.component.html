@@ -1,67 +1,72 @@
-<mat-toolbar [ngClass]="{'is-logged-in': loggedUser}">
-  <!-- <img src="/assets/tl-burger.png" width="1%" (click)="onLogoClick()">-->
-  &nbsp;&nbsp;&nbsp;<img src="/assets/tl-open-beta.webp" width="8%>">
-  <span class="epsd-spacer"></span>
-
-  <div class="horizontal-nav">
-    <a routerLink="/games" mat-button>{{ 'MAIN_GAMES' | translate }}</a>
-    <a routerLink="/deck" mat-button>{{ 'MAIN_DECKS' | translate }}</a>
-    <a routerLink="/ranking" mat-button>{{ 'MAIN_RANKING' | translate }}</a>
-    <a routerLink="/replays" mat-button>{{ 'MAIN_REPLAYS' | translate }}</a>
-    <!-- <a routerLink="/battle-pass" mat-button>{{ 'MAIN_BATTLE_PASS' | translate }}</a> -->
-    <a routerLink="/message" mat-button [matBadge]="unreadMessages$ | async" matBadgeOverlap="true"
-      [matBadgeHidden]="(unreadMessages$ | async) === 0">
-      <!-- <span [matBadge]="unreadMessages$ | async" matBadgeOverlap="false"
-        [matBadgeHidden]="(unreadMessages$ | async) === 0"> -->
-      {{ 'MAIN_MESSAGES' | translate }}
-      <!-- </span> -->
-    </a>
-    <a routerLink="/terms" mat-button>Terms and Conditions</a>
+<div class="gaming-toolbar">
+  <!-- Left Section - Logo -->
+  <div class="toolbar-left">
+    <div class="logo-section">
+      <img src="/assets/tl-open-beta.webp" alt="Twinleaf" class="twinleaf-logo">
+    </div>
   </div>
 
-  <!-- <span class="title-text" translate>MAIN_TABLES</span> -->
-  <div class="horizontal-nav">
-    <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="(gameStates$ | async)?.length > 0">
-      {{ 'MAIN_TABLES' | translate }}
-      <mat-icon>arrow_drop_down</mat-icon>
-      <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
-        [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
-    </button>
-    <mat-menu #gamesMenu="matMenu">
-      <a mat-menu-item *ngFor="let gameState of (gameStates$ | async)" [routerLink]="['/table', gameState.localId]">
-        <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
+  <!-- Center Section - Main Navigation -->
+  <div class="toolbar-center">
+    <nav class="main-navigation">
+      <a routerLink="/games" class="nav-item" routerLinkActive="active">
+        <span class="nav-text">{{ 'MAIN_GAMES' | translate }}</span>
       </a>
-    </mat-menu>
+      <a routerLink="/deck" class="nav-item" routerLinkActive="active">
+        <span class="nav-text">{{ 'MAIN_DECKS' | translate }}</span>
+      </a>
+      <a routerLink="/friends" class="nav-item" routerLinkActive="active">
+        <span class="nav-text">FRIENDS</span>
+      </a>
+      <a routerLink="/ranking" class="nav-item" routerLinkActive="active">
+        <span class="nav-text">{{ 'MAIN_RANKING' | translate }}</span>
+      </a>
+      <a routerLink="/message" class="nav-item" routerLinkActive="active">
+        <span class="nav-text">{{ 'MAIN_MESSAGES' | translate }}</span>
+      </a>
+      <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active">
+        <span class="nav-text">BATTLE PASS</span>
+      </a>
+
+
+      <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="(gameStates$ | async)?.length > 0">
+        {{ 'MAIN_TABLES' | translate }}
+        <mat-icon>arrow_drop_down</mat-icon>
+        <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
+          [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
+      </button>
+      <mat-menu #gamesMenu="matMenu">
+        <a mat-menu-item *ngFor="let gameState of (gameStates$ | async)" [routerLink]="['/table', gameState.localId]">
+          <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
+        </a>
+      </mat-menu>
+    </nav>
   </div>
 
+  <!-- Right Section - User Resources and Profile -->
+  <div class="toolbar-right">
+    <!-- Language select -->
+    <ptcg-language-select *ngIf="!loggedUser"></ptcg-language-select>
 
-
-  <span class="epsd-spacer"></span>
-
-
-  <!-- Language select -->
-  <ptcg-language-select *ngIf="!loggedUser"></ptcg-language-select>
-
-  <div class="ptcg-toolbar-user-info">
-    <button *ngIf="!loggedUser" mat-button (click)="login()">
-      {{ 'BUTTON_LOGIN' | translate }}
-    </button>
-
-    <ptcg-user-bar *ngIf="loggedUser" class="ptcg-logged-user" [openUserPopup]="false" [user]="loggedUser"
-      [matMenuTriggerFor]="menu">
-    </ptcg-user-bar>
-
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['/profile', loggedUser?.userId]">
-        {{ 'BUTTON_SHOW_PROFILE' | translate }}
+    <div class="ptcg-toolbar-user-info">
+      <button *ngIf="!loggedUser" mat-button (click)="login()">
+        {{ 'BUTTON_LOGIN' | translate }}
       </button>
-      <button mat-menu-item (click)="openSettingsDialog()">
-        {{ 'BUTTON_SETTINGS' | translate }}
-      </button>
-      <button mat-menu-item (click)="logout()">
-        {{ 'BUTTON_LOGOUT' | translate }}
-      </button>
-    </mat-menu>
+
+      <ptcg-user-bar *ngIf="loggedUser" class="ptcg-logged-user" [openUserPopup]="false" [user]="loggedUser"
+        [matMenuTriggerFor]="menu">
+      </ptcg-user-bar>
+
+      <mat-menu #menu="matMenu" class="user-menu">
+        <button mat-menu-item [routerLink]="['/profile', loggedUser?.userId]">
+          {{ 'BUTTON_SHOW_PROFILE' | translate }}
+        </button>
+        <button mat-menu-item (click)="openSettingsDialog()">
+          {{ 'BUTTON_SETTINGS' | translate }}
+        </button>
+        <button mat-menu-item (click)="logout()">
+          {{ 'BUTTON_LOGOUT' | translate }}
+        </button>
+      </mat-menu>
+    </div>
   </div>
-
-</mat-toolbar>

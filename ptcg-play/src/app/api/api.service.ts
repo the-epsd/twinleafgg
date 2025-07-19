@@ -57,4 +57,15 @@ export class ApiService {
     return this.http.post<T>(url, body, options).pipe(share());
   }
 
+  public delete<T>(uri: string, body?: any): Observable<T> {
+    const url = this.buildUrl(uri);
+    const options = this.buildHeaderOptions();
+
+    if (body) {
+      return this.http.request<T>('DELETE', url, { ...options, body }).pipe(share());
+    } else {
+      return this.http.delete<T>(url, options).pipe(share());
+    }
+  }
+
 }

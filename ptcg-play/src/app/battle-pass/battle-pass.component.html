@@ -1,61 +1,128 @@
-<div class="battle-pass-page" *ngIf="!loading">
+<div class="battle-pass-container" *ngIf="!loading">
 
-  <!-- Header and Progress Bar -->
-  <div class="header-container" *ngIf="season && progress">
-    <div class="header-content">
-      <h1>{{ season.name }}</h1>
-      <p>{{ season.description }}</p>
-    </div>
-    <div class="progress-container">
-      <div class="level-info">
-        <div class="level-display">Level {{ progress.level }}</div>
-        <div class="xp-details">{{ getCurrentLevelExp() }} / {{ getTotalLevelExp() }} XP</div>
+  <!-- Main Header with Pokemon Artwork -->
+  <div class="battle-pass-header">
+    <div class="header-background">
+      <div class="header-artwork">
+        <div class="artwork-left"></div>
+        <div class="artwork-right"></div>
       </div>
-      <div class="xp-bar-container">
-        <div class="xp-bar" [style.width.%]="getExpPercentage()"></div>
+      <div class="header-content">
+        <div class="battle-pass-logo">
+          <div class="logo-text">
+            <span class="scarlet-violet">TWINLEAF</span>
+            <!-- <div class="logo-main">
+              <span class="black-white">BLACK & WHITE</span> -->
+            <!-- <div class="logo-symbols">
+                <span class="bolt">BOLT</span>
+                <span class="flare">FLARE</span>
+              </div> -->
+            <!-- </div> -->
+          </div>
+        </div>
+
+        <!-- Level Progress Section -->
+        <div class="level-progress-section" *ngIf="season && progress">
+          <div class="level-display">
+            <div class="level-number">{{ progress.level }}</div>
+            <div class="level-badge">
+              <div class="badge-content">
+                <span class="current-xp">{{ getCurrentLevelExp() }}</span>
+                <span class="separator">/</span>
+                <span class="max-xp">{{ getTotalLevelExp() }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="xp-progress-bar">
+            <div class="progress-fill" [style.width.%]="getExpPercentage()"></div>
+          </div>
+        </div>
+
+        <!-- Battle Pass Status -->
+        <div class="battle-pass-status">
+          <div class="status-badge">
+            <span class="status-text">BATTLE PASS</span>
+          </div>
+          <div class="time-remaining">
+            <span class="time-label">ENDS IN:</span>
+            <span class="time-value">9W 6D</span>
+          </div>
+        </div>
       </div>
-      <button class="debug-button" (click)="addDebugExp()">+100 XP (Debug)</button>
     </div>
   </div>
 
-  <!-- Horizontal Rewards Track -->
-  <div class="rewards-track-container" #rewardsTrackContainer (wheel)="onWheelScroll($event)">
-    <div class="rewards-track">
-      <div class="reward-level" *ngFor="let level of levels"
-        [class.unlocked]="progress && progress.level >= level.level">
 
-        <div class="level-number">{{ level.level }}</div>
 
-        <!-- Free Reward -->
-        <div class="reward-item free">
-          <div class="reward-card" *ngIf="level.freeReward">
-            <div class="reward-type">{{ level.freeReward.type }}</div>
-            <div class="reward-name">{{ level.freeReward.name }}</div>
+  <!-- Rewards Track -->
+  <div class="rewards-track-section">
+    <div class="rewards-track-container" #rewardsTrackContainer (wheel)="onWheelScroll($event)">
+      <div class="rewards-track">
+        <div class="track-level" *ngFor="let level of levels"
+          [class.unlocked]="progress && progress.level >= level.level"
+          [class.current]="progress && progress.level === level.level">
+
+          <!-- Level Number -->
+          <div class="level-marker">
+            <div class="level-number">{{ level.level }}</div>
           </div>
-          <div class="reward-placeholder" *ngIf="!level.freeReward"></div>
-        </div>
 
-        <div class="claim-divider-container">
-          <div class="claim-divider"></div>
-        </div>
+          <!-- Rewards Container -->
+          <div class="rewards-container">
+            <!-- Standard Track Reward -->
+            <div class="standard-track">
+              <div class="reward-item" *ngIf="level.freeReward">
+                <div class="reward-container">
+                  <div class="reward-card">
+                    <div class="card-image">
+                      <!-- Card/Pack image would go here -->
+                      <div class="placeholder-image"></div>
+                    </div>
+                    <div class="completion-check"
+                      *ngIf="progress && progress.level >= level.level && progress.claimedRewards.includes(level.level)">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="reward-info">
+                    <span class="reward-name">{{ level.freeReward.name }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <!-- Premium Reward -->
-        <div class="reward-item premium" [class.locked]="!isPremium">
-          <div class="reward-card" *ngIf="level.premiumReward">
-            <div class="reward-type">{{ level.premiumReward.type }}</div>
-            <div class="reward-name">{{ level.premiumReward.name }}</div>
-            <div class="premium-tag">Premium</div>
+            <!-- Premium Track Reward -->
+            <div class="premium-track">
+              <div class="reward-item premium" *ngIf="level.premiumReward" [class.locked]="!isPremium">
+                <div class="reward-container">
+                  <div class="reward-card">
+                    <div class="card-image">
+                      <!-- Card/Pack image would go here -->
+                      <div class="placeholder-image premium"></div>
+                    </div>
+                    <div class="completion-check"
+                      *ngIf="progress && progress.level >= level.level && progress.claimedRewards.includes(level.level) && isPremium">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                      </svg>
+                    </div>
+                    <div class="premium-lock" *ngIf="!isPremium">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="reward-info">
+                    <span class="reward-name">{{ level.premiumReward.name }}</span>
+                    <span class="premium-badge">PREMIUM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="reward-placeholder" *ngIf="!level.premiumReward"></div>
         </div>
-
-        <!-- Claim Button -->
-        <div class="level-actions">
-          <button class="claim-button" (click)="claim(level.level)" [disabled]="!isClaimable(level.level)">
-            {{ (progress && progress.claimedRewards.includes(level.level)) ? 'Claimed' : 'Claim' }}
-          </button>
-        </div>
-
       </div>
     </div>
   </div>
@@ -64,9 +131,16 @@
 
 <!-- Loading Spinner -->
 <div class="loading-spinner" *ngIf="loading">
-  <mat-spinner></mat-spinner>
+  <div class="spinner">
+    <div class="spinner-ring"></div>
+    <div class="spinner-ring"></div>
+    <div class="spinner-ring"></div>
+  </div>
 </div>
 
 <div class="no-season-container" *ngIf="!loading && !season">
-  <p>There is no active Battle Pass season at the moment.</p>
+  <div class="no-season-content">
+    <h2>No Active Battle Pass</h2>
+    <p>There is no active Battle Pass season at the moment.</p>
+  </div>
 </div>
