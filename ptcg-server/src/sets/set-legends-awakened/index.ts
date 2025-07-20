@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Azelf } from './azelf';
+import { AzelfLVX } from './azelf-lv-x';
 import { CynthiasFeelings } from './cynthias-feelings';
 import { Mesprit } from './mesprit';
 import { Oddish } from './oddish';
@@ -12,6 +13,7 @@ import { UxieLVX } from './uxie-lv-x';
 
 export const setLegendsAwakened: Card[] = [
   new Azelf(),
+  new AzelfLVX(),
   new CynthiasFeelings(),
   new Mesprit(),
   new Oddish(),

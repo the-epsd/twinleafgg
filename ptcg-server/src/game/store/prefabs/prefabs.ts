@@ -1,5 +1,5 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
-import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -281,6 +281,33 @@ export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, ca
   const slot = GET_FIRST_PLAYER_BENCH_SLOT(player);
   player.hand.moveCardTo(card, slot);
   slot.pokemonPlayedTurn = state.turn;
+}
+
+export function DEVOLVE_POKEMON(store: StoreLike, state: State, target: PokemonCardList, destination: CardList) {
+  const pokemons = target.getPokemons();
+  const pokemonCard = target.getPokemonCard();
+
+  // Weird ass lv.x stuff (yes this is actually the way it works: https://www.pokebeach.com/forums/threads/devolving-lvl-x.34943/)
+  if (pokemonCard?.tags.includes(CardTag.POKEMON_LV_X)) {
+    // The lv.x is on a basic -> do nothing
+    if (pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
+      return state;
+    } else {
+      console.log(pokemonCard.name);
+      const cardsToDevolve = pokemons.filter(p => p.name === pokemonCard.name);
+      MOVE_CARDS(store, state, target, destination, { cards: cardsToDevolve });
+      target.clearEffects();
+      target.pokemonPlayedTurn = state.turn;
+    }
+    return state;
+  }
+
+  // Handle normal devolutions
+  if (pokemons.length > 1 && !pokemonCard?.tags.includes(CardTag.POKEMON_VUNION) && !pokemonCard?.tags.includes(CardTag.LEGEND)) {
+    MOVE_CARD_TO(state, pokemonCard as Card, destination);
+    target.clearEffects();
+    target.pokemonPlayedTurn = state.turn;
+  }
 }
 
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number, applyWeaknessAndResistance: boolean = false, slots?: SlotType[]) {

@@ -25,6 +25,8 @@ import {
   AlolanVulpixGRI,
   EnhancedHammerGRI,
   MaxPotionGRI,
+  MaxPotionGRI2,
+  MaxPotionGRI3,
 } from './other-prints';
 
 export const setGuardiansRising: Card[] = [
@@ -53,4 +55,6 @@ export const setGuardiansRising: Card[] = [
   new AlolanVulpixGRI(),
   new EnhancedHammerGRI(),
   new MaxPotionGRI(),
+  new MaxPotionGRI2(),
+  new MaxPotionGRI3(),
 ];

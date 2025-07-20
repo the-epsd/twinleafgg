@@ -5,6 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Mew extends PokemonCard {
 
@@ -85,11 +86,7 @@ export class Mew extends PokemonCard {
             ), result => {
               const cardList = result.length > 0 ? result[0] : null;
               if (cardList !== null) {
-                const pokemons = cardList.getPokemons();
-                const latestEvolution = pokemons.slice(-1)[0];
-
-                cardList.moveCardsTo([latestEvolution], opponent.hand);
-                cardList.clearEffects();
+                DEVOLVE_POKEMON(store, state, cardList, opponent.hand);
               }
             });
 
@@ -116,11 +113,7 @@ export class Mew extends PokemonCard {
             ), result => {
               const cardList = result.length > 0 ? result[0] : null;
               if (cardList !== null) {
-                const pokemons = cardList.getPokemons();
-                const latestEvolution = pokemons.slice(-1)[0];
-
-                cardList.moveCardsTo([latestEvolution], player.hand);
-                cardList.clearEffects();
+                DEVOLVE_POKEMON(store, state, cardList, player.hand);
               }
             });
           }

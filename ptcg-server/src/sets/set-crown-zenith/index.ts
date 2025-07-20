@@ -27,6 +27,7 @@ import { ZeraoraVSTAR } from './zeraora-vstar';
 
 // Other prints
 import { LostVacuumCRZ } from './other-prints';
+import { RescueCarrierCRZ } from './other-prints';
 
 export const setCrownZenith: Card[] = [
   new Absol(),
@@ -57,4 +58,5 @@ export const setCrownZenith: Card[] = [
 
   // Other prints
   new LostVacuumCRZ(),
+  new RescueCarrierCRZ(),
 ];

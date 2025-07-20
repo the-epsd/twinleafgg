@@ -42,6 +42,7 @@ import { Swablu } from './swablu';
 import { SwitchingCups } from './switching-cups';
 import { SylveonV } from './sylveon-v';
 import { SylveonVMAX } from './sylveon-vmax';
+import { Thievul } from './thievul';
 import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
@@ -101,6 +102,7 @@ export const setEvolvingSkies: Card[] = [
   new Zorua(),
   new Zoroark(),
   new Swablu(),
+  new Thievul(),
   new Tropius(),
   new Wishiwashi(),
   new SwitchingCups(),

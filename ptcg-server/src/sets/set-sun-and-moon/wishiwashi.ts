@@ -5,32 +5,32 @@ import { Effect } from '../../game/store/effects/effect';
 import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 
-export class Tentacool extends PokemonCard {
+export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 30;
-  public weakness = [{ type: L }];
-  public retreat = [];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Cowardice',
     useWhenInPlay: true,
-    powerType: PowerType.POKEMON_POWER,
-    text: 'At any time during your turn (before your attack), you may return Tentacool to your hand. (Discard all cards attached to Tentacool.) This power can\'t be used the turn you put Tentacool into play or if Tentacool is Asleep, Confused, or Paralyzed.'
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn (before your attack), you may discard all cards attached to this Pokémon and return it to your hand. You can\'t use this Ability during your first turn or on the turn this Pokémon was put into play.'
   }];
 
   public attacks = [{
-    name: 'Acid',
+    name: 'Water Gun',
     cost: [W],
     damage: 10,
     text: ''
   }];
 
-  public set: string = 'FO';
+  public set: string = 'SUM';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '56';
-  public name: string = 'Tentacool';
-  public fullName: string = 'Tentacool FO';
+  public setNumber: string = '44';
+  public name: string = 'Wishiwashi';
+  public fullName: string = 'Wishiwashi SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

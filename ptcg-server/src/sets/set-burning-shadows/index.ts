@@ -36,6 +36,8 @@ import { WishfulBaton } from './wishful-baton';
 // Other prints
 import {
   EscapeRopeBUS,
+  GuzmaBUS,
+  GuzmaBUS2,
   WeaknessPolicyBUS,
 } from './other-prints';
 
@@ -76,5 +78,7 @@ export const setBurningShadows: Card[] = [
 
   // Other prints
   new EscapeRopeBUS(),
+  new GuzmaBUS(),
+  new GuzmaBUS2(),
   new WeaknessPolicyBUS(),
 ];

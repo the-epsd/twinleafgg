@@ -2,6 +2,7 @@ import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, PlayerType, 
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CardTarget } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Archeops extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -75,17 +76,11 @@ export class Archeops extends PokemonCard {
         { allowCancel: false, blocked }
       ), targets => {
         player.marker.addMarker(this.PRIMAL_WINGS_MARKER, this);
+        ABILITY_USED(player, this);
         if (!targets || targets.length === 0) {
           return state;
         }
-        const target = targets[0];
-        const evolutions = target.cards.filter(
-          c => c instanceof PokemonCard && c.stage !== Stage.BASIC
-        );
-        if (evolutions.length > 0) {
-          const highestStage = evolutions[evolutions.length - 1];
-          target.moveCardTo(highestStage, opponent.hand);
-        }
+        DEVOLVE_POKEMON(store, state, targets[0], opponent.hand);
         return state;
       });
     }

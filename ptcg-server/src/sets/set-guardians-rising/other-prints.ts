@@ -20,3 +20,17 @@ export class MaxPotionGRI extends MaxPotion {
   public set = 'GRI';
   public text = 'Heal all damage from 1 of your Pokémon. If you do, discard all Energy from that Pokémon.';
 }
+
+export class MaxPotionGRI2 extends MaxPotion {
+  public fullName = 'Max Potion GRI 128a';
+  public setNumber = '128a';
+  public set = 'GRI';
+  public text = 'Heal all damage from 1 of your Pokémon. If you do, discard all Energy from that Pokémon.';
+}
+
+export class MaxPotionGRI3 extends MaxPotion {
+  public fullName = 'Max Potion GRI 164';
+  public setNumber = '164';
+  public set = 'GRI';
+  public text = 'Heal all damage from 1 of your Pokémon. If you do, discard all Energy from that Pokémon.';
+}
