@@ -1,71 +1,78 @@
-// Dark Mode Gaming Interface
 .matchmaking-lobby {
   display: flex;
-  justify-content: space-evenly;
-  padding: 1rem;
-  margin-top: -100px; // Move up to overlap diagonal cut
-  position: relative;
-  z-index: 10;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
 }
 
 .lobby-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
+  width: 100%;
+  max-width: 500px;
 }
 
 .deck-card {
-  background-color: #2a2f3a;
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 150, 136, 0.1), rgba(0, 121, 107, 0.05));
+  border: 2px solid rgba(0, 150, 136, 0.3);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 180px;
-  margin: 0 auto 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 150, 136, 0.1);
+  width: 220px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    box-shadow:
+      0 6px 25px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(0, 150, 136, 0.2);
+    border-color: rgba(0, 150, 136, 0.6);
   }
 }
 
 .deck-archetype {
-  height: 145px;
-  background-color: #101219;
-  padding: 24px;
+  height: 120px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 2px solid rgba(0, 150, 136, 0.2);
 
   ptcg-archetype {
-    transform: scale(3);
+    transform: scale(2.5);
     image-rendering: pixelated;
     transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(0, 150, 136, 0.3));
   }
 }
 
 .deck-info {
-  background-color: #384259;
-  padding: 8px 12px;
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.9));
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .deck-name {
-  color: white;
-  font-size: 12px;
+  color: #00bcd4;
+  font-size: 14px;
   font-family: 'Segoe UI', sans-serif;
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
 }
 
 .deck-status {
@@ -76,11 +83,12 @@
   color: rgba(255, 255, 255, 0.8);
 
   .default-star {
-    color: gold;
+    color: #00bcd4;
     font-size: 14px;
     height: 14px;
     width: 14px;
     margin-right: 4px;
+    filter: drop-shadow(0 0 5px rgba(0, 188, 212, 0.7));
   }
 
   span {
@@ -91,152 +99,215 @@
 }
 
 .format-selection {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  text-align: center;
 
   .format-button-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
+    max-width: 350px;
+    margin: 0 auto;
   }
 
   .format-button {
-    padding: 6px 16px;
+    padding: 4px 12px;
     border-radius: 16px;
-    color: rgba(255, 255, 255, 0.7);
-    background-color: rgba(42, 47, 58, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.2s ease;
     text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.5px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
     min-width: unset;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    height: 28px;
+    line-height: 1;
 
     &:hover:not([disabled]) {
-      color: white;
-      background-color: rgba(42, 47, 58, 0.8);
+      color: #00bcd4;
+      background: rgba(0, 188, 212, 0.1);
+      border-color: rgba(0, 188, 212, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 188, 212, 0.2);
+      transform: translateY(-1px);
     }
 
     &.active {
       color: white;
-      background-color: #384259;
-      font-weight: bold;
+      background: linear-gradient(135deg, #00bcd4, #009688);
+      border-color: #00bcd4;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+      transform: translateY(-1px);
     }
 
     &[disabled] {
-      opacity: 0.5;
+      opacity: 0.3;
+      cursor: not-allowed;
     }
   }
 }
 
+// Custom geometric matchmaking button
 .queue-button {
-  background-color: #449058;
+  background: linear-gradient(135deg, #00bcd4 0%, #009688 100%);
   color: white;
-  width: 200px;
-  padding: 8px 0;
-  font-weight: bold;
+  width: 240px;
+  height: 60px;
+  font-weight: 600;
   font-size: 14px;
-  border-radius: 24px;
-  margin: 0 auto;
-  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 15px rgba(0, 188, 212, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  clip-path: polygon(10% 0%, 100% 0%, 100% 70%, 90% 100%, 0% 100%, 0% 30%);
+
+  // Subtle inner glow
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    // clip-path: polygon(5% 0%, 100% 0%, 100% 95%, 95% 100%, 0% 100%, 0% 5%);
+    pointer-events: none;
+  }
+
+  &:hover:not([disabled]) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 6px 20px rgba(0, 188, 212, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #00acc1 0%, #00897b 100%);
+  }
+
+  &:active:not([disabled]) {
+    transform: translateY(0) scale(1);
+    box-shadow:
+      0 2px 8px rgba(0, 188, 212, 0.3),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+  }
 
   &.in-queue {
-    background-color: #d94e4e;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    box-shadow:
+      0 4px 15px rgba(255, 107, 107, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover:not([disabled]) {
+      box-shadow:
+        0 6px 20px rgba(255, 107, 107, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #ff5252 0%, #e53935 100%);
+    }
   }
 
   &[disabled] {
-    opacity: 0.7;
-  }
-}
+    opacity: 0.5;
+    transform: none;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%);
 
-.start-button {
-  background-color: #459058;
-  color: white;
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-  border-radius: 1rem;
-  border: none;
-  min-width: unset;
-  line-height: 24px;
-
-  &:hover:not(:disabled) {
-    background-color: #459058;
-  }
-}
-
-.leave-button {
-  background-color: #f44336;
-  color: white;
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-  border-radius: 1rem;
-  border: none;
-  min-width: unset;
-  line-height: 24px;
-
-  &:hover {
-    background-color: #d32f2f;
-  }
-}
-
-.queue-status {
-  color: white;
-  text-align: center;
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
-  background-color: #2a2f3a;
-  border-radius: 8px;
-  padding: 12px;
-  width: 200px;
-
-  .queue-time {
-    margin-bottom: 8px;
-    font-weight: 500;
+    &:hover {
+      transform: none;
+      box-shadow:
+        0 4px 15px rgba(158, 158, 158, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.1);
+    }
   }
 
-  .players-count {
-    font-size: 0.85rem;
-    opacity: 0.9;
+  mat-spinner {
+    margin-right: 8px;
   }
 }
 
 .connection-error {
-  color: #d94e4e;
+  color: #ff6b6b;
   font-size: 14px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  backdrop-filter: blur(10px);
 
   mat-icon {
-    margin-right: 6px;
+    margin-right: 8px;
+    font-size: 18px;
   }
 }
 
 .no-deck-warning {
-  background-color: #2a2f3a;
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+  border: 2px solid rgba(255, 107, 107, 0.3);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 140px;
-  margin: 0 auto 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  width: 220px;
+  margin: 0 auto;
 
   p {
-    height: 145px;
-    background-color: #101219;
-    padding: 24px;
+    height: 120px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 0;
     text-align: center;
+    border-bottom: 2px solid rgba(255, 107, 107, 0.2);
   }
 }
 
 .no-deck-icon {
   font-size: 48px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 107, 107, 0.7);
   font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .queue-button {
+    width: 200px;
+    height: 50px;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+  }
+
+  .format-selection .format-button-wrapper {
+    max-width: 280px;
+    gap: 4px;
+  }
+
+  .format-button {
+    padding: 3px 10px;
+    font-size: 10px;
+    height: 24px;
+  }
+
+  .deck-card {
+    width: 200px;
+  }
 }

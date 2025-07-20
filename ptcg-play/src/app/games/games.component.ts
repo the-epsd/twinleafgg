@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { GameInfo, ClientInfo } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, EMPTY, from } from 'rxjs';
+import { Observable, EMPTY, from, combineLatest, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { finalize, switchMap, map } from 'rxjs/operators';
+import { finalize, switchMap, map, catchError, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AlertService } from '../shared/alert/alert.service';
@@ -20,6 +20,8 @@ import { Deck, DeckListEntry } from '../api/interfaces/deck.interface';
 import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
 import { ProfileService } from '../api/services/profile.service';
 import { GameService } from '../api/services/game.service';
+import { FriendsService } from '../api/services/friends.service';
+import { FriendInfo } from '../api/interfaces/friends.interface';
 
 @UntilDestroy()
 @Component({
@@ -28,18 +30,22 @@ import { GameService } from '../api/services/game.service';
   styleUrls: ['./games.component.scss'],
   providers: []
 })
-export class GamesComponent implements OnInit {
+export class GamesComponent implements OnInit, OnDestroy {
   @ViewChild(MatchmakingLobbyComponent) matchmakingLobby: MatchmakingLobbyComponent;
   title = 'ptcg-play';
 
   displayedColumns: string[] = ['id', 'turn', 'player1', 'player2', 'actions'];
   public clients$: Observable<ClientInfo[]>;
   public games$: Observable<GameInfo[]>;
+  public friendsList$: Observable<any[]>;
+  public nonFriendClients$: Observable<ClientInfo[]>;
   public loading = false;
   public clientId: number;
   public loggedUserId: number;
   public lobbyComponent = MatchmakingLobbyComponent;
   public isAdmin$: Observable<boolean>;
+  public sidebarMenuOpen = false;
+  private menuCloseTimeout: any;
 
   constructor(
     private alertService: AlertService,
@@ -50,7 +56,8 @@ export class GamesComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private profileService: ProfileService,
-    private gameService: GameService
+    private gameService: GameService,
+    private friendsService: FriendsService
   ) {
     this.clients$ = this.sessionService.get(
       session => session.users,
@@ -65,12 +72,65 @@ export class GamesComponent implements OnInit {
       });
       return values;
     }));
+
     this.games$ = this.sessionService.get(session => session.games);
+
     this.isAdmin$ = this.sessionService.get(session => {
       const loggedUserId = session.loggedUserId;
       const loggedUser = loggedUserId && session.users[loggedUserId];
       return loggedUser && loggedUser.roleId === 4;
     });
+
+    // Initialize friends list with proper error handling
+    this.friendsList$ = this.friendsService.getFriendsList().pipe(
+      map(response => {
+        if (!response.friends) return [];
+
+        // Extract friend users - need to determine which user is the friend
+        return response.friends
+          .filter(friendInfo => friendInfo.status === 'accepted')
+          .map(friendInfo => {
+            // Determine which user is the friend (not the current user)
+            const currentUserId = this.sessionService.session.loggedUserId;
+            const friendUser = friendInfo.user.userId === currentUserId
+              ? friendInfo.friend
+              : friendInfo.user;
+
+            return {
+              userId: friendUser.userId,
+              name: friendUser.name,
+              ranking: friendUser.ranking,
+              roleId: friendUser.roleId,
+              avatarFile: friendUser.avatarFile
+            };
+          });
+      }),
+      catchError(error => {
+        console.error('Failed to load friends list:', error);
+        return of([]); // Return empty array on error
+      }),
+      startWith([]) // Start with empty array while loading
+    );
+
+    // Filter out friends from the clients list
+    this.nonFriendClients$ = combineLatest([
+      this.clients$,
+      this.friendsList$
+    ]).pipe(
+      map(([clients, friends]) => {
+        console.log('Clients:', clients); // Debug log
+        console.log('Friends:', friends); // Debug log
+
+        const friendUserIds = friends.map(friend => friend.userId);
+        const filtered = clients.filter((client: any) =>
+          !friendUserIds.includes(client.user?.userId)
+          // Removed the filter that excluded the current user
+        );
+
+        console.log('Filtered online players:', filtered); // Debug log
+        return filtered;
+      })
+    );
   }
 
   ngOnInit() {
@@ -85,6 +145,43 @@ export class GamesComponent implements OnInit {
       .subscribe(clientId => {
         this.clientId = clientId;
       });
+  }
+
+  ngOnDestroy() {
+    // Clean up any pending timeout
+    if (this.menuCloseTimeout) {
+      clearTimeout(this.menuCloseTimeout);
+    }
+  }
+
+  public isPlayerOnline(userId: number): boolean {
+    const session = this.sessionService.session;
+    if (!session.clients) return false;
+
+    return session.clients.some(client => client.userId === userId);
+  }
+
+  public onMenuOpened(): void {
+    console.log('Menu opened - keeping sidebar expanded'); // Debug log
+
+    // Clear any pending close timeout
+    if (this.menuCloseTimeout) {
+      clearTimeout(this.menuCloseTimeout);
+      this.menuCloseTimeout = null;
+    }
+
+    this.sidebarMenuOpen = true;
+  }
+
+  public onMenuClosed(): void {
+    console.log('Menu closed - scheduling sidebar collapse'); // Debug log
+
+    // Add a small delay before closing to prevent flickering
+    // and to handle rapid menu open/close cycles
+    this.menuCloseTimeout = setTimeout(() => {
+      this.sidebarMenuOpen = false;
+      console.log('Sidebar menu state set to false'); // Debug log
+    }, 200); // 200ms delay
   }
 
   private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[]): Promise<CreateGamePopupResult> {

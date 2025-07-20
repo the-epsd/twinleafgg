@@ -1,10 +1,18 @@
-// Dark Mode Video Game Interface
-.main-container {
-  // background: #000000;
-  position: relative;
+.tcg-games-container {
+  height: calc(100vh - 64px); // Account for app bar height
+  // margin-top: 64px; // Push below app bar
+  display: flex;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   overflow: hidden;
+}
 
-  // Subtle grid pattern
+.pokemon-artwork {
+  flex: 1.2;
+  position: relative;
+  background: url('/assets/sv10pt5-banner.png') center/cover no-repeat,
+    linear-gradient(45deg, #1a1a2e, #0f3460);
+  background-blend-mode: overlay;
+
   &::before {
     content: '';
     position: absolute;
@@ -12,290 +20,472 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.3;
-    z-index: 0;
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.03) 2px,
+        rgba(255, 255, 255, 0.03) 4px);
   }
 
-  // Vignette effect
-  &::after {
-    content: '';
+  .artwork-overlay {
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
-    // background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
-    z-index: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(22, 33, 62, 0.8));
   }
 }
 
-// Hero Artwork Section
-.slanted-artwork-section {
-  height: 50vh;
-  position: relative;
-  overflow: hidden;
-  // background: #000000;
-
-  // Pokemon artwork background
-  .pokemon-artwork-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('/assets/placeholder-banner.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.7) contrast(1.3) saturate(1.2);
-
-    // Proper diagonal cut
-    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 90%);
-  }
-
-  // Dark overlay for better contrast
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-        rgba(0, 0, 0, 0.2) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.6) 100%);
-    z-index: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 90%);
-  }
-
-  // Diagonal cut overlay
-  .slanted-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 15vh;
-    // background: #000000;
-    transform: skewY(-2deg);
-    transform-origin: bottom left;
-    z-index: 2;
-  }
-}
-
-// Main Content Area
-.content-area {
-  position: relative;
-  z-index: 2;
-  padding: 0 40px 40px;
+.game-interface {
+  flex: 1;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  // background: #000000;
-}
-
-// Matchmaking Section
-.matchmaking-section {
-  margin-top: -80px;
-  width: 100%;
-  max-width: 500px;
-  display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 3rem;
   position: relative;
-  z-index: 10;
 
-  // // Gaming card backdrop
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   top: -20px;
-  //   left: -20px;
-  //   right: -20px;
-  //   bottom: -20px;
-  //   background: rgba(255, 255, 255, 0.02);
-  //   z-index: -1;
-  // }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0, 123, 255, 0.05) 0%, transparent 50%),
+      repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.02) 60deg, transparent 120deg);
+    pointer-events: none;
+  }
 }
 
-// Action Button - Gaming Style
-.action-button-container {
-  margin-top: 40px;
-  position: relative;
+.play-section {
+  z-index: 1;
+  width: 100%;
 
-  .start-matchmaking-button {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-    border: 2px solid #444444;
-    padding: 20px 60px;
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    cursor: pointer;
+  .matchmaking-container {
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+.active-games-link {
+  z-index: 1;
+
+  .games-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: transparent;
     transition: all 0.3s ease;
+    font-weight: 500;
     text-transform: uppercase;
-    font-family: 'Arial', sans-serif;
-    position: relative;
-    overflow: hidden;
+    letter-spacing: 1px;
 
-    box-shadow:
-      0 4px 15px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-
-    // Button highlight effect
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg,
-          transparent,
-          rgba(255, 255, 255, 0.1),
-          transparent);
-      transition: left 0.6s ease;
-    }
-
-    // Inner border
-    &::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      right: 2px;
-      bottom: 2px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
-      pointer-events: none;
-    }
-
-    &:hover:not([disabled]) {
+    &:hover {
+      color: #ffd700;
+      border-color: rgba(255, 215, 0, 0.6);
+      background: rgba(255, 215, 0, 0.1);
       transform: translateY(-2px);
-      border-color: #666666;
-      background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
-      box-shadow:
-        0 6px 20px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-
-      &::before {
-        left: 100%;
-      }
-
-      &::after {
-        border-color: rgba(255, 255, 255, 0.1);
-      }
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
     }
 
-    &.in-queue {
-      background: linear-gradient(135deg, #2a1a1a 0%, #3a2a2a 50%, #2a1a1a 100%);
-      border-color: #664444;
-      color: #ff6666;
-      box-shadow:
-        0 4px 15px rgba(255, 102, 102, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-
-      &:hover:not([disabled]) {
-        border-color: #886666;
-        background: linear-gradient(135deg, #3a2a2a 0%, #4a3a3a 50%, #3a2a2a 100%);
-        box-shadow:
-          0 6px 20px rgba(255, 102, 102, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.15),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-      }
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .button-text {
-      position: relative;
-      z-index: 1;
-    }
-
-    mat-spinner {
-      position: relative;
-      z-index: 1;
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
     }
   }
 }
 
-// Legacy compatibility
-.bg {
-  background-color: #000000;
+// Sidebar Spacer - maintains layout space
+.sidebar-spacer {
+  width: 80px;
+  flex-shrink: 0;
+  // This maintains the 80px space in the layout while sidebar is positioned absolutely
 }
 
-.news-banner {
-  cursor: pointer;
+// Always-overlay Players Sidebar
+.players-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 215, 0, 0.2);
+  overflow: hidden;
+  z-index: 1000;
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
 
-  .mat-toolbar {
-    min-height: 36px;
-    height: 36px;
-    font-size: calc(36px * 0.4);
-
-    .mat-icon {
-      height: calc(36px * 0.5);
-      width: calc(36px * 0.5);
-      font-size: calc(36px * 0.5);
-    }
+  // When expanded, just change width - no positioning changes
+  &:hover,
+  &.menu-open {
+    width: 320px;
+    border-left-color: rgba(255, 215, 0, 0.4);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
   }
 
-  .latest-news {
-    margin-left: 12px;
+  .sidebar-content {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem 0;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 2px;
+    }
+  }
+}
+
+// Pulse animation for online indicators
+@keyframes pulse-online {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.3s ease 0.1s;
+
+  .players-sidebar:hover & {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .section-icon {
+    color: #ffd700;
+    font-size: 20px;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
+
+  .player-count {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+  margin: 1rem 0;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+
+  .players-sidebar:hover & {
+    opacity: 1;
+  }
+}
+
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 60px;
 
   &:hover {
-    opacity: 0.9;
+    background: rgba(255, 215, 0, 0.1);
+
+    .player-avatar {
+      transform: scale(1.1);
+    }
+  }
+
+  &.friend {
+    &:hover {
+      background: rgba(79, 172, 254, 0.1);
+    }
+
+    .player-avatar .avatar-image {
+      border-color: rgba(79, 172, 254, 0.6);
+    }
+  }
+
+  &.current-user {
+    background: rgba(255, 215, 0, 0.05);
+    border-left: 3px solid rgba(255, 215, 0, 0.6);
+
+    &:hover {
+      background: rgba(255, 215, 0, 0.15);
+    }
+
+    .player-avatar .avatar-image {
+      border-color: rgba(255, 215, 0, 0.8);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .you-indicator {
+      color: rgba(255, 215, 0, 0.9);
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .player-avatar {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    margin-right: 1rem;
+    transition: transform 0.3s ease;
+
+    .avatar-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 215, 0, 0.6);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      display: block;
+    }
+
+    .online-indicator {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(26, 26, 46, 0.95);
+      transition: all 0.3s ease;
+      z-index: 3;
+
+      &.online {
+        background: #4CAF50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+        animation: pulse-online 2s infinite;
+      }
+
+      &.offline {
+        background: #757575;
+        box-shadow: 0 0 5px rgba(117, 117, 117, 0.4);
+      }
+    }
+  }
+
+  .player-info {
+    flex: 1;
+    min-width: 0;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+
+    .players-sidebar:hover & {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .player-name {
+      display: block;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .player-status,
+    .player-rank {
+      display: block;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-status {
+      &:contains('Online') {
+        color: #4CAF50;
+      }
+    }
+  }
+
+  // Tooltip for collapsed state
+  &::before {
+    content: attr(data-player-name);
+    position: absolute;
+    left: 90px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1001;
+  }
+
+  &:hover::before {
+    .players-sidebar:not(:hover) & {
+      opacity: 1;
+    }
+  }
+}
+
+.view-all-link {
+  padding: 1rem;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.3s ease 0.3s;
+
+  .players-sidebar:hover & {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .view-all-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 0.75rem;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #ffd700;
+      border-color: rgba(255, 215, 0, 0.6);
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 
 // Responsive design
-@media (max-width: 1200px) {
-  .content-area {
-    padding: 0 30px 60px;
+@media (max-width: 1024px) {
+  .tcg-games-container {
+    flex-direction: column;
   }
 
-  .matchmaking-section {
-    margin-top: -60px;
-  }
-}
+  .pokemon-artwork {
+    flex: 0.4;
 
-@media (max-width: 768px) {
-  .slanted-artwork-section {
-    height: 50vh;
-  }
-
-  .matchmaking-section {
-    margin-top: -40px;
+    .artwork-overlay {
+      background: linear-gradient(to top, transparent, rgba(22, 33, 62, 0.8));
+      width: 100%;
+      height: 100px;
+      top: auto;
+      bottom: 0;
+    }
   }
 
-  .action-button-container {
-    .start-matchmaking-button {
-      padding: 18px 50px;
-      font-size: 16px;
+  .game-interface {
+    flex: 1;
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .sidebar-spacer {
+    display: none; // Hide spacer on mobile since sidebar becomes fixed
+  }
+
+  .players-sidebar {
+    position: fixed !important;
+    top: 64px;
+    width: 70px;
+    height: calc(100vh - 64px);
+
+    &:hover,
+    &.menu-open {
+      width: 280px;
     }
   }
 }
 
-@media (max-width: 480px) {
-  .action-button-container {
-    .start-matchmaking-button {
-      padding: 16px 40px;
-      font-size: 14px;
-      letter-spacing: 1px;
+@media (max-width: 768px) {
+  .game-interface {
+    gap: 1.5rem;
+  }
+
+  .active-games-link .games-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .players-sidebar {
+    width: 60px !important;
+
+    &:hover,
+    &.menu-open {
+      width: 250px;
     }
   }
 }

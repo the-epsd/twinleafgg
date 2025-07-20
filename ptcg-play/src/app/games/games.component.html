@@ -1,76 +1,132 @@
-<ptcg-sidebar-container>
-  <!-- <div class="news-banner" routerLink="/news">
-    <mat-toolbar color="accent">
-      <mat-icon>announcement</mat-icon>
-      <span class="latest-news">Latest News</span>
-      <span class="ptcg-u-spacer"></span>
-      <mat-icon>chevron_right</mat-icon>
-    </mat-toolbar>
-  </div> -->
-  <ptcg-sidebar>
-    <mat-nav-list>
-      <a mat-list-item *ngFor="let client of (clients$ | async)" class="ptcg-no-padding-list-item"
-        [matMenuTriggerFor]="menu">
-        <ptcg-user-bar [user]="client.user" [marked]="clientId === client.clientId" [openUserPopup]="false">
-        </ptcg-user-bar>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/profile', client.user.userId]">
-            {{ 'BUTTON_SHOW_PROFILE' | translate }}
-          </button>
-          <button mat-menu-item *ngIf="clientId !== client.clientId" [disabled]="loading"
-            (click)="createGame(client.clientId)">
-            {{ 'BUTTON_INVITE' | translate }}
-          </button>
-          <button mat-menu-item *ngIf="loggedUserId !== client.user.userId"
-            [routerLink]="['/message', client.user.userId]">
-            {{ 'BUTTON_SEND_MESSAGE' | translate }}
-          </button>
-          <button mat-menu-item *ngIf="(isAdmin$ | async) && (loggedUserId !== client.user.userId)"
-            [style.color]="client.user.roleId === 1 ? '' : '#FF0000'" (click)="banUser(client.user.userId)">
-            {{ client.user.roleId === 1 ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
-          </button>
-        </mat-menu>
-      </a>
-    </mat-nav-list>
-  </ptcg-sidebar>
+<div class="tcg-games-container">
+  <!-- Left side - Pokemon artwork -->
+  <div class="pokemon-artwork">
+    <div class="artwork-overlay"></div>
+  </div>
 
-  <div class="main-container">
-    <!-- Slanted Top Section with Artwork -->
-    <div class="slanted-artwork-section">
-      <div class="pokemon-artwork-bg"></div>
-      <div class="slanted-overlay"></div>
-    </div>
-
-    <!-- Main Content Area -->
-    <div class="content-area">
-      <!-- Matchmaking Interface (deck card will be positioned to overlap slanted area) -->
-      <div class="matchmaking-section">
+  <!-- Right side - Game interface -->
+  <div class="game-interface">
+    <!-- Main play button -->
+    <div class="play-section">
+      <div class="matchmaking-container">
         <ptcg-matchmaking-lobby></ptcg-matchmaking-lobby>
       </div>
-
-      <!-- Main Action Button -->
-      <!-- <div class="action-button-container">
-        <button class="start-matchmaking-button" [class.in-queue]="matchmakingLobby?.inQueue"
-          [disabled]="loading || (!matchmakingLobby?.deckId && !matchmakingLobby?.inQueue)"
-          (click)="onMainPlayButtonClick()">
-          <mat-spinner *ngIf="loading || matchmakingLobby?.loading" diameter="20"
-            style="display: inline-block; margin-right: 10px;"></mat-spinner>
-          <span class="button-text">
-            {{ matchmakingLobby?.inQueue ? 'STOP MATCHMAKING' : 'START MATCHMAKING' }}
-          </span>
-        </button>
-      </div> -->
     </div>
 
-    <!-- Hidden sections - commented out for now -->
-    <!-- 
-    <div class="ptcg-active-games">
-      <ptcg-games-table></ptcg-games-table>
-    </div>
-
-    <div class="ptcg-recent-matches">
-      <ptcg-match-table></ptcg-match-table>
-    </div>
-    -->
+    <!-- Active games link -->
+    <!-- <div class="active-games-link">
+      <button mat-stroked-button routerLink="/games/active" class="games-button">
+        <mat-icon>sports_esports</mat-icon>
+        <span translate>GAMES_VIEW_ACTIVE</span>
+      </button>
+    </div> -->
   </div>
-</ptcg-sidebar-container>
+
+  <!-- Sidebar Spacer - maintains layout space -->
+  <div class="sidebar-spacer"></div>
+
+  <!-- Expandable Players Sidebar -->
+  <div class="players-sidebar" [class.menu-open]="sidebarMenuOpen">
+    <div class="sidebar-content">
+      <!-- Friends Section -->
+      <div class="friends-section" *ngIf="(friendsList$ | async)?.length > 0">
+        <div class="section-header">
+          <mat-icon class="section-icon">people</mat-icon>
+          <span class="section-title">Friends</span>
+        </div>
+        <div class="players-list">
+          <div class="player-item friend" *ngFor="let friend of (friendsList$ | async)" [matMenuTriggerFor]="friendMenu"
+            [attr.data-player-name]="friend.name">
+            <div class="player-avatar">
+              <ptcg-avatar [avatarFile]="friend.avatarFile || ''" class="avatar-image"></ptcg-avatar>
+              <div class="online-indicator" [class.online]="isPlayerOnline(friend.userId)"
+                [class.offline]="!isPlayerOnline(friend.userId)"></div>
+            </div>
+            <div class="player-info">
+              <span class="player-name">{{ friend.name }}</span>
+              <span class="player-status">
+                {{ isPlayerOnline(friend.userId) ? 'Online' : 'Offline' }}
+              </span>
+            </div>
+            <mat-menu #friendMenu="matMenu" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
+              <button mat-menu-item [routerLink]="['/profile', friend.userId]">
+                {{ 'BUTTON_SHOW_PROFILE' | translate }}
+              </button>
+              <button mat-menu-item *ngIf="isPlayerOnline(friend.userId)" [disabled]="loading"
+                (click)="createGame(friend.userId)">
+                {{ 'BUTTON_INVITE' | translate }}
+              </button>
+              <button mat-menu-item [routerLink]="['/message', friend.userId]">
+                {{ 'BUTTON_SEND_MESSAGE' | translate }}
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="section-divider" *ngIf="(friendsList$ | async)?.length > 0"></div>
+
+      <!-- Online Players Section -->
+      <div class="online-players-section">
+        <div class="section-header">
+          <mat-icon class="section-icon">public</mat-icon>
+          <span class="section-title">Online Players</span>
+          <span class="player-count">({{ (nonFriendClients$ | async)?.length || 0 }})</span>
+        </div>
+        <div class="players-list">
+          <!-- Debug: Show if we have any clients at all -->
+          <div class="debug-info" *ngIf="(clients$ | async)?.length === 0"
+            style="color: #ffd700; padding: 1rem; font-size: 12px;">
+            No clients connected
+          </div>
+          <div class="debug-info" *ngIf="(clients$ | async)?.length > 0 && (nonFriendClients$ | async)?.length === 0"
+            style="color: #ffd700; padding: 1rem; font-size: 12px;">
+            All {{ (clients$ | async)?.length }} players are friends
+          </div>
+
+          <div class="player-item" *ngFor="let client of (nonFriendClients$ | async)?.slice(0, 20)"
+            [class.current-user]="client.user?.userId === loggedUserId" [matMenuTriggerFor]="playerMenu"
+            [attr.data-player-name]="client.user?.name || 'Unknown'">
+            <div class="player-avatar">
+              <ptcg-avatar [avatarFile]="client.user?.avatarFile || ''" class="avatar-image"></ptcg-avatar>
+              <div class="online-indicator online"></div>
+            </div>
+            <div class="player-info">
+              <span class="player-name">
+                {{ client.user?.name || 'Unknown Player' }}
+                <span class="you-indicator" *ngIf="client.user?.userId === loggedUserId">(You)</span>
+              </span>
+              <span class="player-rank">Rank {{ client.user?.ranking || 0 }}</span>
+            </div>
+            <mat-menu #playerMenu="matMenu" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
+              <button mat-menu-item [routerLink]="['/profile', client.user?.userId]">
+                {{ 'BUTTON_SHOW_PROFILE' | translate }}
+              </button>
+              <button mat-menu-item *ngIf="clientId !== client.clientId" [disabled]="loading"
+                (click)="createGame(client.clientId)">
+                {{ 'BUTTON_INVITE' | translate }}
+              </button>
+              <button mat-menu-item *ngIf="loggedUserId !== client.user?.userId"
+                [routerLink]="['/message', client.user?.userId]">
+                {{ 'BUTTON_SEND_MESSAGE' | translate }}
+              </button>
+              <button mat-menu-item *ngIf="(isAdmin$ | async) && (loggedUserId !== client.user?.userId)"
+                [style.color]="client.user?.roleId === 1 ? '' : '#FF0000'" (click)="banUser(client.user?.userId)">
+                {{ client.user?.roleId === 1 ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+      <!-- View All Players Link -->
+      <div class="view-all-link" *ngIf="(clients$ | async)?.length > 20">
+        <button mat-text-button routerLink="/games/players" class="view-all-button">
+          <span>View All ({{ (clients$ | async)?.length }})</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
