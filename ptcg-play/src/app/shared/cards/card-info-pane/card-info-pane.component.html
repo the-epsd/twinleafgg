@@ -61,7 +61,7 @@
     </ptcg-hover-highlight>
 
     <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()"
-      (click)="options.enableAttack && clickAction({attack: attack.name})" [enabled]="options.enableAttack">
+      (click)="shouldEnableAttacks() && clickAction({attack: attack.name})" [enabled]="shouldEnableAttacks()">
       <div class="attack">
         <div class="attack-header">
           <div class="attack-cost">
@@ -212,7 +212,7 @@
     </ptcg-hover-highlight>
 
     <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()"
-      (click)="options.enableAttack && clickAction({attack: attack.name})" [enabled]="options.enableAttack">
+      (click)="shouldEnableAttacks() && clickAction({attack: attack.name})" [enabled]="shouldEnableAttacks()">
       <div class="attack">
         <div class="attack-header">
           <div class="attack-cost">
