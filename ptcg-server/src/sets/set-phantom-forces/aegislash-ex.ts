@@ -10,35 +10,34 @@ import { EnergyCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-export class Scizor extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1;
-  public tags = [CardTag.PRIME];
-  public evolvesFrom = 'Scyther';
+export class AegislashEX extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.POKEMON_EX];
   public cardType: CardType = M;
-  public hp: number = 100;
+  public hp: number = 170;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
-  public retreat = [C, C];
+  public retreat = [C, C, C];
 
   public powers = [{
-    name: 'Skyscraper',
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all damage done to Scizor by attacks from your opponent\'s Pokémon that have any Special Energy cards attached to them.'
+    name: 'Mighty Shield',
+    powerType: PowerType.ABILITY,
+    text: 'Prevent all damage done to this Pokémon by attacks from each of your opponent\'s Pokémon that has Special Energy attached to it.'
   }];
 
   public attacks = [{
-    name: 'Metal Scizors',
-    cost: [M, C],
-    damage: 30,
+    name: 'Slash Blast',
+    cost: [C, C, C],
+    damage: 40,
     damageCalculation: '+',
-    text: 'Does 30 damage plus 20 more damage for each [M] Energy attached to Scizor.'
+    text: 'This attack does 20 more damage for each [M] Energy attached to this Pokémon.'
   }];
 
-  public set: string = 'UD';
+  public set: string = 'PHF';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '84';
-  public name: string = 'Scizor';
-  public fullName: string = 'Scizor UD';
+  public setNumber: string = '65';
+  public name: string = 'Aegislash-EX';
+  public fullName: string = 'Aegislash-EX PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

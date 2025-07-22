@@ -12,6 +12,7 @@ import { SpecialCharge } from './special-charge';
 import { Talonflame } from './talonflame';
 import { Volcanion } from './volcanion';
 import { VolcanionEX } from './volcanion-ex';
+import { Weavile } from './weavile';
 import { Xerneas } from './xerneas';
 import { XerneasBREAK } from './xerneas-break';
 import { Yveltal } from './yveltal';
@@ -30,6 +31,7 @@ export const setSteamSiege: Card[] = [
   new VolcanionEX(),
   new GardevoirEx(),
   new MGardevoirEx(),
+  new Weavile(),
   new Xerneas(),
   new XerneasBREAK(),
   new Yveltal(),

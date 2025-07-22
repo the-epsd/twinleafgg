@@ -1,5 +1,6 @@
 import { VenusaurSnivyGX } from '../set-cosmic-eclipse/venusaur-and-snivy-gx';
 import { CelebiVenusaurGX } from '../set-team-up/celebi-and-venusaur-gx';
+import { Dhelmise } from '../set-guardians-rising/dhelmise';
 import { EeveeSnorlaxGX } from '../set-team-up/eevee-and-snorlax-gx';
 import { MagikarpWailordGX } from '../set-team-up/magikarp-and-wailord-gx';
 import { LucarioMelmetalGX } from '../set-unbroken-bonds/lucario-and-melmetal-gx';
@@ -42,6 +43,12 @@ export class CelebiVenusaurGXSMP extends CelebiVenusaurGX {
   public fullName = 'Celebi & Venusaur-GX SMP';
   public set = 'SMP';
   public setNumber = '167';
+}
+
+export class DhelmiseSMP extends Dhelmise {
+  public fullName = 'Dhelmise SMP';
+  public set = 'SMP';
+  public setNumber = '53';
 }
 
 export class EspeonDeoxysGXSMP extends EspeonDeoxysGX {

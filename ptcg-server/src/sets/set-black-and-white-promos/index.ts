@@ -4,7 +4,10 @@ import { Litwick } from './litwick';
 import { TropicalBeach } from './tropical-beach';
 
 // Other Prints
-import { TropicalBeach2 } from './other-prints';
+import {
+  KeldeoExBWP,
+  TropicalBeach2
+} from './other-prints';
 
 export const setBlackAndWhitePromos: Card[] = [
   new Kyurem(),
@@ -12,5 +15,6 @@ export const setBlackAndWhitePromos: Card[] = [
   new TropicalBeach(),
 
   // Other Prints
+  new KeldeoExBWP(),
   new TropicalBeach2(),
 ];

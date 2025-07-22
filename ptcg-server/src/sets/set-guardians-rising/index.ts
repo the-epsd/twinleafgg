@@ -4,6 +4,7 @@ import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
 import { ChoiceBand } from './choice-band';
+import { Dhelmise } from './dhelmise';
 import { DrampaGX } from './drampa-gx';
 import { FieldBlower } from './field-blower';
 import { Garbodor } from './garbodor';
@@ -35,6 +36,7 @@ export const setGuardiansRising: Card[] = [
   new AquaPatch(),
   new BrookletHill(),
   new ChoiceBand(),
+  new Dhelmise(),
   new DrampaGX(),
   new FieldBlower(),
   new Garbodor(),

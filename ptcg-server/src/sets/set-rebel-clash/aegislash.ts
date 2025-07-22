@@ -42,7 +42,7 @@ export class Aegislash extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '132';
+  public setNumber: string = '135';
 
   public name: string = 'Aegislash';
 

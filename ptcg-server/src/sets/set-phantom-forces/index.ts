@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { AegislashEX } from './aegislash-ex';
 import { AZ } from './az';
 import { BattleCompressor } from './battle-compressor';
 import { Bronzong } from './bronzong';
@@ -27,7 +28,11 @@ import { VsSeeker } from './vs-seeker';
 import { Wobbuffet } from './wobbuffet';
 import { Xerosic } from './xerosic';
 
+// Other prints
+import { AegislashEXPHF } from './other-prints';
+
 export const setPhantomForces: Card[] = [
+  new AegislashEX(),
   new AZ(),
   new BattleCompressor(),
   new Bronzong(),
@@ -55,4 +60,7 @@ export const setPhantomForces: Card[] = [
   new MGengarEx(),
   new GengarSpiritLink(),
   new Xerosic(),
+
+  // Other prints
+  new AegislashEXPHF(),
 ];
