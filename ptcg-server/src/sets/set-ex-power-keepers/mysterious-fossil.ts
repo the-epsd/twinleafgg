@@ -19,9 +19,9 @@ export class MysteriousFossil extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 50;
   public weakness = [];
   public retreat = [];

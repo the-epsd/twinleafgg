@@ -20,9 +20,9 @@ export class SnorlaxDoll extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [CardTag.PLAY_DURING_SETUP];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 120;
   public weakness = [];
   public retreat = [];

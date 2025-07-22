@@ -20,9 +20,9 @@ export class ClawFossil extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 40;
   public weakness = [];
   public retreat = [];

@@ -18,31 +18,20 @@ export class UnidentifiedFossil extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 60;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
-
   public set: string = 'SIT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '165';
-
   public name: string = 'Unidentified Fossil';
-
   public fullName: string = 'Unidentified Fossil SIT';
-
   public regulationMark = 'F';
-
   public maxTools: number = 1;
 
   public powers: Power[] = [

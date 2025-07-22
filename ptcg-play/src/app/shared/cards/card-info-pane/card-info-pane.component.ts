@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard, PokemonCardList, EnergyCard } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard, PokemonCardList, EnergyCard, CardTag } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
@@ -50,6 +50,7 @@ export class CardInfoPaneComponent implements OnChanges {
   public PowerType = PowerType;
   public EnergyType = EnergyType;
   public TrainerType = TrainerType;
+  public CardTag = CardTag;
   public heavilyPlayedUrl: SafeUrl;
 
   private characterNames = [
@@ -123,6 +124,22 @@ export class CardInfoPaneComponent implements OnChanges {
       // If this is a Pokémon tool, disable all abilities
       if (isToolCard) {
         return enabledAbilities; // Return empty object - no abilities enabled
+      }
+
+      // Check if we're viewing a specific card from the evolution chain
+      const isViewingSpecificCard = this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
+
+      if (isViewingSpecificCard) {
+        // If viewing a specific card in the evolution chain, only enable its own abilities
+        const powers = (this.card as any).powers || [];
+        powers.forEach(power => {
+          if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
+            || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
+            || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
+            enabledAbilities[power.name] = true;
+          }
+        });
+        return enabledAbilities;
       }
 
       const powers = this.getDisplayPowers();
@@ -203,6 +220,14 @@ export class CardInfoPaneComponent implements OnChanges {
       }
 
       if (this.cardList && this.cardList.cards && this.cardList.cards.length > 0) {
+        // Check if we're viewing a specific card from the evolution chain
+        const isViewingSpecificCard = this.cardList.cards.includes(this.card);
+
+        if (isViewingSpecificCard) {
+          // If viewing a specific card in the evolution chain, only show its own powers
+          return (this.card as any).powers || [];
+        }
+
         // Find the main card (top evolution, last Pokemon in the stack)
         // Exclude cards that are in the tools array to avoid treating attached Pokémon tools as main cards
         const mainCard = this.cardList.cards.filter(c =>
@@ -261,6 +286,14 @@ export class CardInfoPaneComponent implements OnChanges {
       }
 
       if (this.cardList && this.cardList.cards && this.cardList.cards.length > 0) {
+        // Check if we're viewing a specific card from the evolution chain
+        const isViewingSpecificCard = this.cardList.cards.includes(this.card);
+
+        if (isViewingSpecificCard) {
+          // If viewing a specific card in the evolution chain, only show its own attacks
+          return (this.card as any).attacks || [];
+        }
+
         // Exclude cards that are in the tools array to avoid treating attached Pokémon tools as main cards
         const mainCard = this.cardList.cards.filter(c =>
           c.superType === SuperType.POKEMON && !tools.includes(c)
@@ -321,6 +354,15 @@ export class CardInfoPaneComponent implements OnChanges {
     // If this is a Pokémon tool, disable attacks
     if (this.card && this.card.superType === SuperType.POKEMON && isToolCard) {
       return false;
+    }
+
+    // Check if we're viewing a specific card from the evolution chain
+    const isViewingSpecificCard = this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
+
+    if (isViewingSpecificCard) {
+      // If viewing a specific card in the evolution chain, only enable attacks if the card has attacks
+      const attacks = (this.card as any).attacks || [];
+      return this.options.enableAttack && attacks.length > 0;
     }
 
     return this.options.enableAttack || false;
