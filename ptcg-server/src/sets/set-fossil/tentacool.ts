@@ -46,20 +46,34 @@ export class Tentacool extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Get all Pokémon cards from the cardList
-      const allPokemonCards = cardList.cards.filter(card => card instanceof PokemonCard) as PokemonCard[];
-
-      // Get non-Pokémon cards
-      const nonPokemonCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
-
-      // Then, move non-Pokémon cards to discard
-      if (nonPokemonCards.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.discard, { cards: nonPokemonCards });
+      const pokemonCardList = cardList as PokemonCardList;
+      const tentacoolCard = pokemonCardList.getPokemonCard();
+      if (!tentacoolCard) {
+        return state;
       }
 
-      // Finally, move basic Pokémon to hand
-      if (allPokemonCards.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.hand, { cards: allPokemonCards });
+      const pokemons = pokemonCardList.getPokemons();
+      const otherCards = cardList.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!pokemonCardList.tools || !pokemonCardList.tools.includes(card))
+      );
+      const tools = [...pokemonCardList.tools];
+
+      // Move tools to discard first
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          pokemonCardList.moveCardTo(tool, player.discard);
+        }
+      }
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+      }
+
+      // Move Pokémon to hand
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
       }
     }
 

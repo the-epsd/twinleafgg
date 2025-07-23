@@ -56,15 +56,35 @@ export class Aipom extends PokemonCard {
       }
 
       const aipomSlot = player.bench[benchIndex];
+      const aipomCard = aipomSlot.getPokemonCard();
 
-      aipomSlot.cards.forEach(card => {
-        if (card !== this) {
-          MOVE_CARDS(store, state, aipomSlot, player.discard);
+      if (!aipomCard) {
+        return state;
+      }
+
+      const pokemons = aipomSlot.getPokemons();
+      const otherCards = aipomSlot.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!aipomSlot.tools || !aipomSlot.tools.includes(card))
+      );
+      const tools = [...aipomSlot.tools];
+
+      // Move tools to discard first
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          aipomSlot.moveCardTo(tool, player.discard);
         }
-        if (card === this) {
-          MOVE_CARDS(store, state, aipomSlot, player.deck, { toBottom: true });
-        }
-      });
+      }
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, aipomSlot, player.discard, { cards: otherCards });
+      }
+
+      // Move Pokémon to bottom of deck
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, aipomSlot, player.deck, { cards: pokemons, toBottom: true });
+      }
 
       aipomSlot.clearEffects();
       DRAW_CARDS(player, 1);

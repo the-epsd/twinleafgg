@@ -76,7 +76,9 @@ export class Skeledirgeex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && HAS_MARKER(this.INCENDIARY_SONG_MARKER, effect.player, this)) {
-      effect.damage += 60;
+      if (effect.damage > 0) {
+        effect.damage += 60;
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
