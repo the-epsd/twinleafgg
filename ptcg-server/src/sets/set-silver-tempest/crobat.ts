@@ -4,6 +4,7 @@ import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotTyp
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -89,7 +90,10 @@ export class Crobat extends PokemonCard {
       }
       return state;
     }
+
+    if (effect instanceof EndTurnEffect && this.usedCriticalBite === true) {
+      this.usedCriticalBite = false;
+    }
     return state;
   }
-
 }

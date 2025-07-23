@@ -58,16 +58,16 @@ export class AZ extends TrainerCard {
           );
           const tools = [...cardList.tools];
 
-          // Move other cards to discard
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
-          }
-
-          // Move tools to discard
+          // Move tools to discard first
           if (tools.length > 0) {
             for (const tool of tools) {
               cardList.moveCardTo(tool, player.discard);
             }
+          }
+
+          // Move other cards to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
           }
 
           // Move Pokémon to hand

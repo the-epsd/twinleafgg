@@ -7,6 +7,7 @@ import {
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* usePower(next: Function, store: StoreLike, state: State, self: Shedinja, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -51,8 +52,32 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
       targets[0].tools.push(pokemonCard);
 
       // Discard other cards
-      player.bench[benchIndex].moveTo(player.discard);
-      player.bench[benchIndex].clearEffects();
+      const shedinjaSlot = player.bench[benchIndex];
+      const shedinjaCard = shedinjaSlot.getPokemonCard();
+
+      if (!shedinjaCard) {
+        return state;
+      }
+
+      const otherCards = shedinjaSlot.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!shedinjaSlot.tools || !shedinjaSlot.tools.includes(card))
+      );
+      const tools = [...shedinjaSlot.tools];
+
+      // Move tools to discard first
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          shedinjaSlot.moveCardTo(tool, player.discard);
+        }
+      }
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, shedinjaSlot, player.discard, { cards: otherCards });
+      }
+
+      shedinjaSlot.clearEffects();
     }
   });
 }

@@ -1,6 +1,6 @@
-import { Attack, CardList, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Attack, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { BLOCK_IF_DECK_EMPTY, GET_CARDS_ON_BOTTOM_OF_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DECK_EMPTY, GET_CARDS_ON_BOTTOM_OF_DECK, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class MistysPsyduck extends PokemonCard {
 
@@ -36,17 +36,41 @@ export class MistysPsyduck extends PokemonCard {
 
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       if (player.active.cards.includes(this) || opponent.active.cards.includes(this)) {
-        new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.deck.moveCardsTo(GET_CARDS_ON_BOTTOM_OF_DECK(player, 1), player.discard);
 
+      const psyduckCard = cardList.getPokemonCard();
+      if (!psyduckCard) {
+        return state;
+      }
+
+      // Get attached cards (energy, tools, etc.)
+      const otherCards = cardList.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!cardList.tools || !cardList.tools.includes(card))
+      );
+      const tools = [...cardList.tools];
+
+      // Move tools to discard
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          cardList.moveCardTo(tool, player.discard);
+        }
+      }
+
+      // Move other cards to discard first
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+      }
+
+      // Create temporary card list and move Psyduck to top of deck
       const deckTop = new CardList();
-      cardList.moveTo(deckTop);
-      cardList.cards.forEach((c) => {
-        c.cards.moveTo(player.discard);
-      });
-      deckTop.moveToTopOfDestination(player.deck);
+      MOVE_CARDS(store, state, cardList, deckTop, { cards: [psyduckCard] });
+      MOVE_CARDS(store, state, deckTop, player.deck, { toTop: true });
+
+      cardList.clearEffects();
     }
     return state;
   }
