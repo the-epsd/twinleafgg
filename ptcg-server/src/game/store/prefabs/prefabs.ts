@@ -1,4 +1,5 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
+import { TrainerEffect } from '../effects/play-card-effects';
 import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -1075,3 +1076,29 @@ export function MOVE_CARDS(
 //       }
 //     }
 //   });
+
+/**
+ * Validates if a supporter card can be played under current game conditions
+ * @param store The store instance
+ * @param state The current game state
+ * @param player The player attempting to play the card
+ * @param trainerCard The supporter card to validate
+ * @returns true if the card can be played, false otherwise
+ */
+export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: Player, trainerCard: TrainerCard): boolean {
+  try {
+    // Create a temporary TrainerEffect to test if the card can be played
+    const testEffect = new TrainerEffect(player, trainerCard);
+
+    // Try to reduce the effect to see if it throws an error
+    // We need to catch the error to prevent the game from crashing
+    try {
+      store.reduceEffect(state, testEffect);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+}
