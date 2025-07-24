@@ -1,4 +1,11 @@
+import { Korrina } from "./korrina";
 import { SuperScoopUp } from "../set-diamond-and-pearl/super-scoop-up";
+
+export class KorrinaFFI extends Korrina {
+  public set: string = 'FFI';
+  public setNumber: string = '111';
+  public fullName: string = 'Korrina FFI 111';
+}
 
 export class SuperScoopUpFFI extends SuperScoopUp {
   public set: string = 'FFI';

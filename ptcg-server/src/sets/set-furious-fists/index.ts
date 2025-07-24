@@ -11,6 +11,7 @@ import { StrongEnergy } from './strong-energy';
 import { TrainingCenter } from './training-center';
 
 // Other Prints
+import { KorrinaFFI } from './other-prints';
 import { SuperScoopUpFFI } from './other-prints';
 
 export const setFuriousFists: Card[] = [
@@ -26,5 +27,6 @@ export const setFuriousFists: Card[] = [
   new TrainingCenter(),
 
   // Other Prints
+  new KorrinaFFI(),
   new SuperScoopUpFFI(),
 ];
