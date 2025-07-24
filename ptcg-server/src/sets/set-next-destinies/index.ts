@@ -14,7 +14,8 @@ import { ZekromEx } from './zekrom-ex';
 // Other Prints
 import {
   DoubleColorlessEnergyNXD,
-  LevelBallNXD
+  LevelBallNXD,
+  MewtwoEXNXD
 } from './other-prints';
 
 export const setNextDestinies: Card[] = [
@@ -33,4 +34,5 @@ export const setNextDestinies: Card[] = [
   // Other Prints
   new DoubleColorlessEnergyNXD(),
   new LevelBallNXD(),
+  new MewtwoEXNXD(),
 ];
