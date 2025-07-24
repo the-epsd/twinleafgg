@@ -74,8 +74,8 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
 
       const evolveEffect = new EvolveEffect(effect.player, effect.target, effect.pokemonCard);
       store.reduceEffect(state, evolveEffect);
-      // effect.pokemonCard.marker.markers = [];
-      // effect.player.removePokemonEffects(effect.target);
+      effect.pokemonCard.marker.markers = [];
+      effect.player.removePokemonEffects(effect.target);
       effect.target.specialConditions = [];
       effect.target.marker.markers = [];
       effect.target.showBasicAnimation = false;
