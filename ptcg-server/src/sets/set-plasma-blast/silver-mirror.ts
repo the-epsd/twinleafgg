@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class SilverMirror extends TrainerCard {
@@ -22,13 +22,13 @@ export class SilverMirror extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof AbstractAttackEffect && effect.target.tools.includes(this)) {
       const targetCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
-      
-      if ( targetCard && !targetCard.tags.includes(CardTag.POKEMON_EX) && sourceCard && sourceCard.tags.includes(CardTag.TEAM_PLASMA)) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
+      if (targetCard && !targetCard.tags.includes(CardTag.POKEMON_EX) && sourceCard && sourceCard.tags.includes(CardTag.TEAM_PLASMA)) {
         effect.preventDefault = true;
       }
     }

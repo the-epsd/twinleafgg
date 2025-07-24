@@ -7,7 +7,7 @@ import { StateUtils } from '../../game/store/state-utils';
 
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class BoxOfDisaster extends TrainerCard {
 
@@ -32,7 +32,7 @@ export class BoxOfDisaster extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
 
       const pokemonCard = effect.target.getPokemonCard();

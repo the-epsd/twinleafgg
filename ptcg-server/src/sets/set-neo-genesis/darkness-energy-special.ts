@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterWeaknessResistanceEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayerType, StateUtils } from '../../game';
@@ -20,9 +20,13 @@ export class DarknessEnergySpecial extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Increase damage output
-    if (effect instanceof PutDamageEffect) {
-      if (effect.source.cards.includes(this)) {
-        effect.damage += 10;
+    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
+      // must deal > 0 damage to active Pokémon
+      const target = effect.target;
+      if (effect.damage && effect.damage > 0 && (effect.target === effect.opponent.active || effect.target === effect.player.active)) {
+        const additionalDamageEffect = new AfterWeaknessResistanceEffect(effect.attackEffect, 10);
+        additionalDamageEffect.target = target;
+        store.reduceEffect(state, additionalDamageEffect);
       }
     }
 

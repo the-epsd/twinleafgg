@@ -7,7 +7,7 @@ import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt, GameLog, GameMessage, ShuffleDeckPrompt } from '../../game';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class AmuletofHope extends TrainerCard {
 
@@ -33,7 +33,7 @@ export class AmuletofHope extends TrainerCard {
   public readonly AMULET_OF_HOPE_MARKER = 'AMULET_OF_HOPE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this)) {
       const player = effect.player;
 
       if (state.phase !== GamePhase.ATTACK) {
