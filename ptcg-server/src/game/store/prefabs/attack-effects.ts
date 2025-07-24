@@ -1,7 +1,7 @@
 import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckHpEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { COIN_FLIP_PROMPT } from './prefabs';
@@ -249,7 +249,12 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(
     [SlotType.BENCH, SlotType.ACTIVE],
   ), selected => {
     const target = selected[0];
-    const damageEffect = new PutDamageEffect(effect, damage);
+    let damageEffect: DealDamageEffect | PutDamageEffect;
+    if (target === player.active) {
+      damageEffect = new DealDamageEffect(effect, damage);
+    } else {
+      damageEffect = new PutDamageEffect(effect, damage);
+    }
     damageEffect.target = target;
     store.reduceEffect(state, damageEffect);
   });
