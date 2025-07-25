@@ -29,7 +29,7 @@ export class MuscleBand extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
