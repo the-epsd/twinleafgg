@@ -10,7 +10,8 @@ import {
   PutCountersEffect, CardsToHandEffect,
   KnockOutOpponentEffect,
   KOEffect,
-  LostZoneCardsEffect
+  LostZoneCardsEffect,
+  AfterWeaknessAndResistanceEffect
 } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
@@ -73,6 +74,12 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       } catch (e) { /* ignore if cannot resolve target */ }
     }
     // --- End tracking ---
+  }
+
+  if (effect instanceof AfterWeaknessAndResistanceEffect) {
+    const target = effect.target;
+    const damage = Math.max(0, effect.damage);
+    target.damage += damage;
   }
 
   if (effect instanceof DealDamageEffect) {

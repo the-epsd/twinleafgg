@@ -155,10 +155,6 @@ export class Player {
     this.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
     this.marker.removeMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
     this.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
-
-    this.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER);
-    this.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER);
-
     target.clearEffects();
   }
 

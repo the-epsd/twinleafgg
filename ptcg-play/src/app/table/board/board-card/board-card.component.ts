@@ -145,6 +145,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public isUpsideDown = false;
   public boardEffect: BoardEffect[] = [];
   public BoardEffect = BoardEffect;
+  public hasImprisonMarker = false;
   private isSecret = false;
   private isPublic = false;
   private isOwner = false;
@@ -353,6 +354,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.damage = cardList.damage;
     this.specialConditions = cardList.specialConditions;
     this.boardEffect = cardList.boardEffect;
+    this.hasImprisonMarker = cardList.marker.hasMarker('IMPRISON_MARKER');
 
     // Get the Pokemon card and check if it's a BREAK card
     const pokemonCard = cardList.getPokemonCard();

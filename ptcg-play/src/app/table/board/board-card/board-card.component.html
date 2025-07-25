@@ -10,7 +10,8 @@
   'attack-raise-slam': showAttackAnimation,
   'asleep-position': specialConditions.includes(SpecialCondition.ASLEEP),
   'confused-position': specialConditions.includes(SpecialCondition.CONFUSED),
-  'paralyzed-position': specialConditions.includes(SpecialCondition.PARALYZED)
+  'paralyzed-position': specialConditions.includes(SpecialCondition.PARALYZED),
+  'poisoned': specialConditions.includes(SpecialCondition.POISONED)
   }">
 
   <div class="ptcg-energy-cards">
@@ -65,10 +66,10 @@
   </ptcg-card>
 
   <div class="ptcg-card-damage" *ngIf="damage > 0">
-    <ptcg-badge color="warn">{{ damage }}</ptcg-badge>
+    {{ damage }}
   </div>
 
-  <div class="ptcg-special-conditions" *ngIf="specialConditions.length > 0">
+  <!-- <div class="ptcg-special-conditions" *ngIf="specialConditions.length > 0">
     <div *ngFor="let condition of specialConditions" [ngSwitch]="condition" [ngClass]="upside-down">
       <div class="paralyzed">
         <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.PARALYZED">
@@ -85,12 +86,18 @@
           {{ 'LABEL_ASLEEP' | translate }}
         </ptcg-badge>
       </div>
-      <div class="poison-marker" *ngSwitchCase="SpecialCondition.POISONED"></div>
       <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.BURNED">
         {{ 'LABEL_BURNED' | translate }}
       </ptcg-badge>
     </div>
-  </div>
+  </div> -->
+
+  <div class="poison-marker" *ngIf="specialConditions.includes(SpecialCondition.POISONED)"></div>
+  <div class="paralyzed-marker" *ngIf="specialConditions.includes(SpecialCondition.PARALYZED)"></div>
+  <div class="confused-marker" *ngIf="specialConditions.includes(SpecialCondition.CONFUSED)"></div>
+  <div class="asleep-marker" *ngIf="specialConditions.includes(SpecialCondition.ASLEEP)"></div>
+  <div class="burned-marker" *ngIf="specialConditions.includes(SpecialCondition.BURNED)"></div>
+  <div class="imprison-marker" *ngIf="hasImprisonMarker"></div>
 
 
   <div class="ptcg-ability-used" style="pointer-events: none;" *ngIf="boardEffect.includes(BoardEffect.ABILITY_USED)">
