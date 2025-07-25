@@ -56,6 +56,9 @@ import { WeedleCRE } from './weedle';
 import { Zarude } from './zarude';
 import { Brawly } from './brawly';
 
+// Other Prints
+import { BronzongCRE } from './other-prints';
+
 export const setChillingReign: Card[] = [
 
   new Agatha(),
@@ -113,5 +116,8 @@ export const setChillingReign: Card[] = [
   new Zarude(),
   new Kecleon(),
   new Gengar(),
-  new Brawly()
+  new Brawly(),
+
+  // Other Prints
+  new BronzongCRE(),
 ];

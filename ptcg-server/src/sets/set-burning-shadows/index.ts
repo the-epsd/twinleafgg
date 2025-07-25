@@ -38,6 +38,7 @@ import {
   EscapeRopeBUS,
   GuzmaBUS,
   GuzmaBUS2,
+  RescueStretcherBUS,
   WeaknessPolicyBUS,
 } from './other-prints';
 
@@ -80,5 +81,6 @@ export const setBurningShadows: Card[] = [
   new EscapeRopeBUS(),
   new GuzmaBUS(),
   new GuzmaBUS2(),
+  new RescueStretcherBUS(),
   new WeaknessPolicyBUS(),
 ];

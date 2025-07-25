@@ -15,6 +15,10 @@ import { Vaporeon } from './vaporeon';
 import { Vespiquen } from './vespiquen';
 import { Vileplume } from './vileplume';
 
+// Other Prints
+import { LevelBallAOR } from './other-prints';
+import { TrainersMailAOR } from './other-prints';
+
 export const setAncientOrigins: Card[] = [
   new AceTrainer(),
   new Ariados(),
@@ -31,4 +35,8 @@ export const setAncientOrigins: Card[] = [
   new Vileplume(),
   new Combee(),
   new Vespiquen(),
+
+  // Other Prints
+  new LevelBallAOR(),
+  new TrainersMailAOR(),
 ];

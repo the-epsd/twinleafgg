@@ -3,6 +3,7 @@ import { Azelf } from './azelf';
 import { AzelfLVX } from './azelf-lv-x';
 import { CynthiasFeelings } from './cynthias-feelings';
 import { Mesprit } from './mesprit';
+import { MewtwoLVX } from './mewtwo-lv-x';
 import { Oddish } from './oddish';
 import { Regice } from './regice';
 import { Regirock } from './regirock';
@@ -16,6 +17,7 @@ export const setLegendsAwakened: Card[] = [
   new AzelfLVX(),
   new CynthiasFeelings(),
   new Mesprit(),
+  new MewtwoLVX(),
   new Oddish(),
   new Regice(),
   new Regirock(),

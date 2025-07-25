@@ -4,10 +4,10 @@ import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Dustox } from './dustox';
 import { MRayquazaEX } from './m-rayquaza-ex';
-import {MRayquazaEx} from './mega-rayquaza-ex';
+import { MRayquazaEx } from './mega-rayquaza-ex';
 import { Natu } from './natu';
-import {RayquazaEx} from './rayquaza-ex';
-import {RayquazaSpiritLink} from './rayquaza-spirit-link';
+import { RayquazaEx } from './rayquaza-ex';
+import { RayquazaSpiritLink } from './rayquaza-spirit-link';
 import { Reshiram } from './reshiram';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
@@ -20,6 +20,9 @@ import { Wally } from './wally';
 import { WideLens } from './wide-lens';
 import { Winona } from './winona';
 import { Wurmple } from './wurmple';
+
+// Other Prints
+import { TrainersMailROS } from './other-prints';
 
 export const setRoaringSkies: Card[] = [
   new Articuno(),
@@ -43,4 +46,7 @@ export const setRoaringSkies: Card[] = [
   new RayquazaEx(),
   new MRayquazaEx(),
   new RayquazaSpiritLink(),
+
+  // Other Prints
+  new TrainersMailROS(),
 ];

@@ -72,7 +72,7 @@ export class Victini extends PokemonCard {
       store.reduceEffect(state, checkPokemonTypeEffect);
 
       if (checkPokemonTypeEffect.cardTypes.includes(CardType.FIRE) && effect.target === opponent.active) {
-        if (effect.player.active.getPokemonCard()?.name !== 'Victini' && effect.player.active.getPokemonCard()?.stage === Stage.STAGE_1) {
+        if (effect.source.getPokemonCard()?.evolvesFrom !== '') {
           effect.damage += 10 * numberOfVictiniInPlay;
         }
       }

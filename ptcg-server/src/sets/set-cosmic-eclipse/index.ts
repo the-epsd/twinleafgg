@@ -68,6 +68,8 @@ import { VenusaurSnivyGX } from './venusaur-and-snivy-gx';
 import { LilliesFullForce } from './lillies-full-force';
 import { SolgaleoLunalaGX } from './solgaleo-and-lunala-gx';
 
+// Other Prints
+import { GuzmaAndHalaCEC } from './other-prints';
 
 export const setCosmicEclipse: Card[] = [
   new Aipom(),
@@ -138,4 +140,7 @@ export const setCosmicEclipse: Card[] = [
   new Wishiwashi(),
   new Woobat(),
   new VenusaurSnivyGX(),
+
+  // Other Prints
+  new GuzmaAndHalaCEC(),
 ];

@@ -1,8 +1,15 @@
+import { Bronzong } from '../set-battle-styles/bronzong';
 import { Charizard } from '../set-vivid-voltage/charizard';
 import { Marnie } from '../set-sword-and-shield/marnie';
 import { ZeraoraV } from '../set-crown-zenith/zeraora-v';
 import { ZeraoraVMAX } from '../set-crown-zenith/zeraora-vmax';
 import { ZeraoraVSTAR } from '../set-crown-zenith/zeraora-vstar';
+
+export class BronzongSWSH extends Bronzong {
+  public fullName = 'Bronzong SWSH 91';
+  public set = 'SWSH';
+  public setNumber = '91';
+}
 
 export class CharizardSWSH extends Charizard {
   public fullName = 'Charizard SWSH';

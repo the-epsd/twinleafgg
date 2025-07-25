@@ -12,6 +12,7 @@ import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
+import { Numel } from './numel';
 import { Scraggy } from './scraggy';
 import { ArbolivaSV, ArctibaxSV, ArmarougeSV, ArvenSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharizardexSVSIR, CharmanderSV, CharmeleonSV, ChienPaoexUR, ChiYuexUR, CleffaSV, CliveSV, CliveSV2, DittoSV, DodrioSV, DoduoSV, DollivSV, DrifloonSV, EnteiSV, EspathraexSV, FinizenSV, FlamigoSV, ForretressexSV, FrigibaxSV, GardevoirexSV, GardevoirexSVSIR, GloomSV, HawluchaSV, IonoSV, JudgeSV, KilowattrelSV, KirliaSV, KlefkiSV, KoraidonexUR, LucarioSV, LuxraySV, MewexSV, MewexSVSIR, MimeJrSV, MimikyuSV, MiraidonexUR, MurkrowSV, NatuSV, NemonaSV, NemonaSV2, NoibatSV, NoivernexSV, OddishSV, PalafinSV, PalafinSVFA, PaldeanStudentSV1, PaldeanStudentSV2, PawmiSV, PawmiSVFA, PawmoSV, PawmotSV, PelipperSV, PennySV, PidgeotexSV, PidgeottoSV, PidgeySV, PinecoSV, RaltsSV, RevavroomSV, RioluSV, ScizorSV, SkwovetSV, SlowpokeSV, SmolivSV, SnorlaxSV, SpiritombSV, SquawkabillyexSV, StarmieSV, StaryuSV, ThundurusSV, TingLuexUR, TinkatinkSV, TinkatonSV, TinkatuffSV, ToedscruelexSV, VileplumeSV, WattrelSV, WingullSV, WoChienexUR, WugtrioSVFA, XatuSV } from './shiny-vault';
 import { StudentsInPaldea } from './students-in-paldea';
@@ -35,6 +36,7 @@ export const setPaldeanFates: Card[] = [
   new TechnicalMachineCrisisPunch(),
   new GreatTuskex(),
   new Tropius(),
+  new Numel(),
 
   //Reprints
   new CharmanderPAF(),

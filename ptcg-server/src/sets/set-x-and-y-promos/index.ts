@@ -7,6 +7,8 @@ import { Karen } from './karen';
 import { Meloetta } from './meloetta';
 import { Regirock } from './regirock';
 
+// Other Prints
+import { BronzongXYP } from './other-prints';
 
 export const setXYPromos: Card[] = [
   new Azelf(),
@@ -16,4 +18,7 @@ export const setXYPromos: Card[] = [
   new Karen(),
   new Meloetta(),
   new Regirock(),
+
+  // Other Prints
+  new BronzongXYP(),
 ];

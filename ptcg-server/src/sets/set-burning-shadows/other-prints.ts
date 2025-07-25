@@ -1,5 +1,6 @@
 import { EscapeRope } from "../set-battle-styles/escape-rope";
 import { Guzma } from "./guzma";
+import { RescueStretcher } from "../set-guardians-rising/rescue-stretcher";
 import { WeaknessPolicy } from "../set-primal-clash/weakness-policy";
 
 export class EscapeRopeBUS extends EscapeRope {
@@ -20,6 +21,12 @@ export class GuzmaBUS2 extends Guzma {
   public fullName = 'Guzma BUS 143';
   public set = 'BUS';
   public setNumber = '143';
+}
+
+export class RescueStretcherBUS extends RescueStretcher {
+  public fullName = 'Rescue Stretcher BUS 165';
+  public set = 'BUS';
+  public setNumber = '165';
 }
 
 export class WeaknessPolicyBUS extends WeaknessPolicy {
