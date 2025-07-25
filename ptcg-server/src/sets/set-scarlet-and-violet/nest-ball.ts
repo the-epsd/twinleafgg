@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { GameError } from '../../game/game-error';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCardList } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -8,6 +8,7 @@ import { Stage, TrainerType, SuperType } from '../../game/store/card/card-types'
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
@@ -49,10 +50,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
+  // Use the new PlayPokemonFromDeckEffect for each selected card
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
-    store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
+    const playPokemonFromDeckEffect = new PlayPokemonFromDeckEffect(player, card as any, slots[index]);
+    store.reduceEffect(state, playPokemonFromDeckEffect);
   });
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
