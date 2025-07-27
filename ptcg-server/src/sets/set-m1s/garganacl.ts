@@ -4,7 +4,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Garganacl extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -36,32 +36,30 @@ export class Garganacl extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect instanceof DealDamageEffect) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof DealDamageEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-          return state;
-        }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
 
-        const hasGarganaclInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
-        let numberOfGarganaclInPlay = 0;
+      const hasGarganaclInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+      let numberOfGarganaclInPlay = 0;
 
-        if (hasGarganaclInPlay) {
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-            if (cardList.cards.includes(this)) {
-              numberOfGarganaclInPlay++;
-            }
-          });
-        }
+      if (hasGarganaclInPlay) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+          if (cardList.cards.includes(this)) {
+            numberOfGarganaclInPlay++;
+          }
+        });
+      }
 
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-        store.reduceEffect(state, checkPokemonTypeEffect);
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+      store.reduceEffect(state, checkPokemonTypeEffect);
 
-        if (checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING) && effect.target === opponent.active) {
-          effect.damage += 30 * numberOfGarganaclInPlay;
-        }
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING) && effect.target === opponent.active) {
+        effect.damage += 30 * numberOfGarganaclInPlay;
       }
     }
 

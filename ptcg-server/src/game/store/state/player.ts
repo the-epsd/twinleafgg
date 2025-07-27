@@ -93,6 +93,7 @@ export class Player {
   usedMinusCharge: any;
   usedPlusCharge: any;
   usedLunarCycle: any;
+  usedRunErrand: any;
   usedTributeDance: any;
   chainsOfControlUsed: any;
   usedDragonsWish = false;
