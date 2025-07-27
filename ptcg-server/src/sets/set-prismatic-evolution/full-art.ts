@@ -37,6 +37,7 @@ import { Jolteonex } from './jolteon-ex';
 import { Leafeonex } from './leafeon-ex';
 import { Umbreonex } from './umbreon-ex';
 import { Vaporeonex } from './vaporeon-ex';
+import { LarrysSkill } from './larrys-skill';
 
 export class AmarysFA extends Amarys {
   public set = 'PRE';
@@ -114,6 +115,12 @@ export class LeafeonexSAR extends Leafeonex {
   public set = 'PRE';
   public setNumber = '144';
   public fullName: string = 'Leafeon exSAR PRE';
+}
+
+export class LarrysSkillSAR extends LarrysSkill {
+  public set = 'PRE';
+  public setNumber = '139';
+  public fullName: string = 'Larry\'s Skill SAR PRE';
 }
 
 export class TealMaskOgerponexSAR extends TealMaskOgerponex {

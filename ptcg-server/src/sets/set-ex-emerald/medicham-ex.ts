@@ -9,8 +9,8 @@ import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { PutDamagePrompt, PlayerType, SlotType, DamageMap } from '../../game';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
 export class Medichamex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -92,32 +92,8 @@ export class Medichamex extends PokemonCard {
     }
 
     // Handle Pure Power attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const maxAllowedDamage: DamageMap[] = [];
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + 30 });
-      });
-
-      return store.prompt(state, new PutDamagePrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        30,
-        maxAllowedDamage,
-        { allowCancel: false }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new PutCountersEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
-        }
-      });
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(3, store, state, effect);
     }
 
     // Handle Sky Kick attack

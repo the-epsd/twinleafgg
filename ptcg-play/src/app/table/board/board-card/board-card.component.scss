@@ -227,9 +227,30 @@ $ptcg-energy-card-offset: 13%;
 
   .ptcg-card-damage {
     position: absolute;
-    top: -2%;
-    right: -2%;
+    top: -10%;
+    right: -10%;
     z-index: 2;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffeb3b 0%, #ff9800 50%, #ff5722 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #fff;
+
+    // Number styling
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px;
+    text-shadow: -0.5px -0.5px 0 #000,
+      0.5px -0.5px 0 #000,
+      -0.5px 0.5px 0 #000,
+      0.5px 0.5px 0 #000;
+    line-height: 1;
+    font-family: 'Arial Black',
+      sans-serif;
 
     :host-context(.upside-down) & {
       transform: rotate(180deg);
@@ -261,25 +282,6 @@ $ptcg-energy-card-offset: 13%;
 
     :host-context(.upside-down) & {
       transform: translateX(-100%) rotate(180deg);
-    }
-  }
-
-  .poison-marker {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(50%, 115%) rotate(15deg);
-    width: 200%;
-    height: 200%;
-    background-image: url('/assets/poison-marker.webp');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    pointer-events: none;
-    z-index: 10;
-
-    :host-context(.upside-down) & {
-      transform: translate(-185%, -150%) rotate(165deg);
     }
   }
 
@@ -324,6 +326,207 @@ $ptcg-energy-card-offset: 13%;
       transform: translateX(-100%) translateY(150%) rotate(180deg);
     }
   }
+
+  .poison-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/poison-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .paralyzed-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/paralyzed-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .confused-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/confused-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .asleep-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/asleep-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .burned-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/burned-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .imprison-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/imprison-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  // Overlapping markers - each additional marker is offset like energy cards
+  .poison-marker+.paralyzed-marker,
+  .poison-marker+.confused-marker,
+  .poison-marker+.asleep-marker,
+  .poison-marker+.burned-marker,
+  .poison-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker,
+  .paralyzed-marker+.asleep-marker,
+  .paralyzed-marker+.burned-marker,
+  .paralyzed-marker+.imprison-marker,
+  .confused-marker+.asleep-marker,
+  .confused-marker+.burned-marker,
+  .confused-marker+.imprison-marker,
+  .asleep-marker+.burned-marker,
+  .asleep-marker+.imprison-marker,
+  .burned-marker+.imprison-marker {
+    top: calc(20% + 15%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker,
+  .poison-marker+.paralyzed-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.asleep-marker,
+  .poison-marker+.confused-marker+.burned-marker,
+  .poison-marker+.confused-marker+.imprison-marker,
+  .poison-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker,
+  .paralyzed-marker+.confused-marker+.burned-marker,
+  .paralyzed-marker+.confused-marker+.imprison-marker,
+  .paralyzed-marker+.asleep-marker+.burned-marker,
+  .paralyzed-marker+.asleep-marker+.imprison-marker,
+  .paralyzed-marker+.burned-marker+.imprison-marker,
+  .confused-marker+.asleep-marker+.burned-marker,
+  .confused-marker+.asleep-marker+.imprison-marker,
+  .confused-marker+.burned-marker+.imprison-marker,
+  .asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 30%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.confused-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .confused-marker+.asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 45%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 60%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 75%);
+  }
+
+
 
   .holo {
     position: relative;

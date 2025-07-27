@@ -1,4 +1,4 @@
-import { Attack, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessage, PlayerType, SlotType } from '../../game';
+import { Attack, CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -6,7 +6,7 @@ import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/sto
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DEVOLVE_POKEMON, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -107,17 +107,7 @@ export class MysteryPlateGamma extends TrainerCard {
         ),
           (results) => {
             if (results && results.length > 0) {
-              const targetPokemon = results[0];
-              const pokemons = targetPokemon.getPokemons();
-
-              if (pokemons.length > 1) {
-                const highestStagePokemon = pokemons[pokemons.length - 1];
-                targetPokemon.moveCardsTo([highestStagePokemon], effect.opponent.deck);
-                targetPokemon.clearEffects();
-                targetPokemon.pokemonPlayedTurn = state.turn;
-              } else {
-                throw new GameError(GameStoreMessage.INVALID_GAME_STATE);
-              }
+              DEVOLVE_POKEMON(store, state, results[0], effect.opponent.deck);
             }
 
             return state;

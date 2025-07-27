@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Aron } from './aron';
 import { BuzzwoleGX } from './buzzwole-gx';
 import { Chimecho } from './chimecho';
 import { CounterEnergy } from './counter-energy';
@@ -16,6 +17,7 @@ import { Weedle } from './weedle';
 import { Xerneas } from './xerneas';
 
 export const setCrimsonInvasion: Card[] = [
+  new Aron(),
   new BuzzwoleGX(),
   new Chimecho(),
   new CounterEnergy(),

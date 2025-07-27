@@ -108,6 +108,7 @@ import { Trapinch } from './trapinch';
 import { Tyme } from './tyme';
 import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
+import { Victini } from './victini';
 import { Vigoroth } from './vigoroth';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
@@ -235,6 +236,7 @@ export const setSurgingSparks: Card[] = [
   new Cetitan(),
   new Armarouge(),
   new Rotom(),
+  new Victini(),
 
   // Reprints
   new ScrambleSwitchSSP(),

@@ -3,52 +3,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
-import { GameMessage } from '../../game/game-message';
-import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { PutDamagePrompt } from '../..';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-
-
-function* usePhantomDive(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-  if (!hasBenched) {
-    return state;
-  }
-
-  const maxAllowedDamage: DamageMap[] = [];
-  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(player, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 60 });
-  });
-
-  const damage = 60;
-
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
-    damage,
-    maxAllowedDamage,
-    { allowCancel: false }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-    }
-  });
-}
+import { SlotType } from '../../game/store/actions/play-card-action';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
 export class Dragapultex extends PokemonCard {
 
@@ -93,9 +52,9 @@ export class Dragapultex extends PokemonCard {
   public fullName: string = 'Dragapult ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const generator = usePhantomDive(() => generator.next(), store, state, effect);
-      return generator.next().value;
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(6, store, state, effect, [SlotType.BENCH]);
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {

@@ -1,8 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 
@@ -47,35 +46,37 @@ export class Tentacool extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Get all Pokémon cards from the cardList
-      const allPokemonCards = cardList.cards.filter(card => card instanceof PokemonCard) as PokemonCard[];
-
-      // Get non-Pokémon cards
-      const nonPokemonCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
-
-      // Then, move non-Pokémon cards to discard
-      if (nonPokemonCards.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.discard, { cards: nonPokemonCards });
+      const pokemonCardList = cardList as PokemonCardList;
+      const tentacoolCard = pokemonCardList.getPokemonCard();
+      if (!tentacoolCard) {
+        return state;
       }
 
-      // Finally, move basic Pokémon to hand
-      if (allPokemonCards.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.hand, { cards: allPokemonCards });
+      const pokemons = pokemonCardList.getPokemons();
+      const otherCards = cardList.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!pokemonCardList.tools || !pokemonCardList.tools.includes(card))
+      );
+      const tools = [...pokemonCardList.tools];
+
+      // Move tools to discard first
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          pokemonCardList.moveCardTo(tool, player.discard);
+        }
+      }
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+      }
+
+      // Move Pokémon to hand
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
-        let heads: number = 0;
-        results.forEach(r => { heads += r ? 1 : 0; });
-        effect.damage = 40 * heads;
-      });
-      return state;
-    }
     return state;
   }
 }

@@ -4,7 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -27,10 +27,10 @@ export class MetalGoggles extends TrainerCard {
     'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance), and your opponent\'s attacks and Abilities can\'t put damage counters on it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const sourceCard = effect.target.getPokemonCard();
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
@@ -56,7 +56,7 @@ export class MetalGoggles extends TrainerCard {
       }
     }
 
-    if (effect instanceof PutCountersEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutCountersEffect && effect.target.tools.includes(this)) {
       const sourceCard = effect.target.getPokemonCard();
 
       const player = StateUtils.findOwner(state, effect.target);

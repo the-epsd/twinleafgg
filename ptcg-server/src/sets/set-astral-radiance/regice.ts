@@ -95,7 +95,7 @@ export class Regice extends PokemonCard {
     if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
-      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX) || pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VUNION)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }

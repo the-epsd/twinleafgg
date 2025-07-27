@@ -1,7 +1,8 @@
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { CheckHpEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { COIN_FLIP_PROMPT } from './prefabs';
 
@@ -76,9 +77,9 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
       { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min, max, allowCancel: false }
     )], selected => {
-    const cards = selected || [];
-    player.discard.moveCardsTo(cards, player.hand);
-  });
+      const cards = selected || [];
+      player.discard.moveCardsTo(cards, player.hand);
+    });
 }
 
 export function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(
@@ -115,6 +116,50 @@ export function PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(
   const putCounters = new PutCountersEffect(effect, 10 * x);
   putCounters.target = opponent.active;
   return store.reduceEffect(state, putCounters);
+}
+
+export function PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(
+  x: number,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  slotTypes: SlotType[] = [SlotType.ACTIVE, SlotType.BENCH]
+) {
+  const player = effect.player;
+  const opponent = effect.opponent;
+
+  const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+  if (!hasBenched && !slotTypes.includes(SlotType.ACTIVE)) {
+    return state;
+  }
+
+  const maxAllowedDamage: DamageMap[] = [];
+  let damageLeft = 0;
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+    const checkHpEffect = new CheckHpEffect(opponent, cardList);
+    store.reduceEffect(state, checkHpEffect);
+    damageLeft += checkHpEffect.hp - cardList.damage;
+    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+  });
+
+  const damage = Math.min(10 * x, damageLeft);
+  return store.prompt(state, new PutDamagePrompt(
+    effect.player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+    PlayerType.TOP_PLAYER,
+    slotTypes,
+    damage,
+    maxAllowedDamage,
+    { allowCancel: false }
+  ), targets => {
+    const results = targets || [];
+    for (const result of results) {
+      const target = StateUtils.getTarget(state, player, result.target);
+      const putCountersEffect = new PutCountersEffect(effect, result.damage);
+      putCountersEffect.target = target;
+      store.reduceEffect(state, putCountersEffect);
+    }
+  });
 }
 
 export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
@@ -204,7 +249,12 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(
     [SlotType.BENCH, SlotType.ACTIVE],
   ), selected => {
     const target = selected[0];
-    const damageEffect = new PutDamageEffect(effect, damage);
+    let damageEffect: DealDamageEffect | PutDamageEffect;
+    if (target === player.active) {
+      damageEffect = new DealDamageEffect(effect, damage);
+    } else {
+      damageEffect = new PutDamageEffect(effect, damage);
+    }
     damageEffect.target = target;
     store.reduceEffect(state, damageEffect);
   });

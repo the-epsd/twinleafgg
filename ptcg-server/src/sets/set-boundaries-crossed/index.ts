@@ -2,7 +2,6 @@ import { Card } from '../../game/store/card/card';
 import { AspertiaCityGym } from './aspertia-city-gym';
 import { BlackKyurem } from './black-kyurem';
 import { Blastoise } from './blastoise';
-import { RockyHelmetBCR } from './other-prints';
 import { ComputerSearch } from './computer-search';
 import { Ditto } from './ditto';
 import { Dusclops } from './dusclops';
@@ -25,6 +24,10 @@ import { Trapinch } from './trapinch';
 import { Wartortle } from './wartortle';
 import { Woobat } from './woobat';
 
+// Other prints
+import { KeldeoExBCR } from './other-prints';
+import { RockyHelmetBCR } from './other-prints';
+
 export const setBoundariesCrossed: Card[] = [
   new AspertiaCityGym(),
   new BlackKyurem(),
@@ -43,7 +46,6 @@ export const setBoundariesCrossed: Card[] = [
   new Potion(),
   new Raticate(),
   new Rattata(),
-  new RockyHelmetBCR(),
   new Skyla(),
   new Squirtle(),
   new Stoutland(),
@@ -51,4 +53,8 @@ export const setBoundariesCrossed: Card[] = [
   new Trapinch(),
   new Wartortle(),
   new Woobat(),
+
+  // Other prints
+  new KeldeoExBCR(),
+  new RockyHelmetBCR(),
 ];

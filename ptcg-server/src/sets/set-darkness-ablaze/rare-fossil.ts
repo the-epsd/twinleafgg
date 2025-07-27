@@ -19,9 +19,9 @@ export class RareFossil extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 70;
   public weakness = [];
   public retreat = [];
@@ -46,7 +46,8 @@ export class RareFossil extends TrainerCard {
 This card can't be affected by any Special Conditions, and it can't retreat.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.TRAINER_ABILITY
+      powerType: PowerType.TRAINER_ABILITY,
+      isFossil: true,
     }
   ];
 

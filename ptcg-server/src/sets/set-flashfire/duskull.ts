@@ -17,7 +17,7 @@ export class Duskull extends PokemonCard {
     name: 'Revival',
     cost: [C],
     damage: 0,
-    text: ''
+    text: 'Put a Basic Pokémon from your opponent\'s discard pile onto his or her Bench.'
   },
   {
     name: 'Sneaky Placement',
@@ -42,6 +42,10 @@ export class Duskull extends PokemonCard {
       const openSlots = opponent.bench.filter(b => b.cards.length === 0);
 
       if (openSlots.length === 0) {
+        return state;
+      }
+
+      if (!opponent.discard.cards.some(c => c instanceof PokemonCard && c.stage === Stage.BASIC)) {
         return state;
       }
 

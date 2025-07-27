@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, DamageMap, PlayerType, PutDamagePrompt, GameMessage, SlotType, EnergyCard, DiscardEnergyPrompt } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType, GameMessage, SlotType, EnergyCard, DiscardEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sinistcha extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -12,21 +12,21 @@ export class Sinistcha extends PokemonCard {
   public cardType: CardType = CardType.GRASS;
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
-    { 
-      name: 'Cursed Drop', 
-      cost: [ CardType.GRASS ], 
-      damage: 0, 
-      text: 'Put 4 damage counters on your opponent\'s Pokémon in any way you like.' 
+    {
+      name: 'Cursed Drop',
+      cost: [CardType.GRASS],
+      damage: 0,
+      text: 'Put 4 damage counters on your opponent\'s Pokémon in any way you like.'
     },
-    { 
-      name: 'Spill the Tea', 
-      cost: [ CardType.GRASS ], 
-      damage: 70, 
+    {
+      name: 'Spill the Tea',
+      cost: [CardType.GRASS],
+      damage: 70,
       damageCalculation: 'x',
-      text: 'Discard up to 3 [G] Energy cards from your Pokémon. This attack does 70 damage for each card you discarded in this way.' 
+      text: 'Discard up to 3 [G] Energy cards from your Pokémon. This attack does 70 damage for each card you discarded in this way.'
     },
   ];
 
@@ -39,45 +39,14 @@ export class Sinistcha extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cursed Drop
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const maxAllowedDamage: DamageMap[] = [];
-      let damageLeft = 0;
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(opponent, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        damageLeft += checkHpEffect.hp - cardList.damage;
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-      });
-
-      const damage = Math.min(40, damageLeft);
-
-      return store.prompt(state, new PutDamagePrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
-        damage,
-        maxAllowedDamage,
-        { allowCancel: false }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new PutCountersEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
-        }
-      });
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(4, store, state, effect);
     }
 
     // Spill the Tea
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       let totalGrassEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const grassCount = cardList.cards.filter(card =>
@@ -120,5 +89,5 @@ export class Sinistcha extends PokemonCard {
 
     return state;
   }
-  
+
 }

@@ -7,7 +7,10 @@ import { Psyduck } from './psyduck';
 import { QuagsireSV, WooperSV } from './shiny-vault';
 
 // Other prints
-import { BrocksGritHIF } from './other-prints';
+import {
+  BrocksGritHIF,
+  GuzmaHIF
+} from './other-prints';
 
 export const setHiddenFates: Card[] = [
 
@@ -23,4 +26,5 @@ export const setHiddenFates: Card[] = [
 
   // Other prints
   new BrocksGritHIF(),
+  new GuzmaHIF(),
 ];

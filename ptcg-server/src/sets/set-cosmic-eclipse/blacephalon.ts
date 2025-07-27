@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, DamageMap, PlayerType, PutDamagePrompt, GameMessage, SlotType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { GET_PLAYER_PRIZES, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
 export class Blacephalon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -28,63 +28,13 @@ export class Blacephalon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const maxAllowedDamage: DamageMap[] = [];
-      if (opponent.getPrizeLeft() != 3) {
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-          maxAllowedDamage.push({ target, damage: card.hp + 40 });
-        });
-
-        const damage = 40;
-
-        return store.prompt(state, new PutDamagePrompt(
-          effect.player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          damage,
-          maxAllowedDamage,
-          { allowCancel: false }
-        ), targets => {
-          const results = targets || [];
-          for (const result of results) {
-            const target = StateUtils.getTarget(state, player, result.target);
-            const putCountersEffect = new PutCountersEffect(effect, result.damage);
-            putCountersEffect.target = target;
-            store.reduceEffect(state, putCountersEffect);
-          }
-        });
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      let counters = 4;
+      const prizes = GET_PLAYER_PRIZES(effect.opponent).length;
+      if (prizes === 3) {
+        counters = 12;
       }
-
-      if (opponent.getPrizeLeft() === 3) {
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-          maxAllowedDamage.push({ target, damage: card.hp + 120 });
-        });
-
-        const damage = 120;
-
-        return store.prompt(state, new PutDamagePrompt(
-          effect.player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          damage,
-          maxAllowedDamage,
-          { allowCancel: false }
-        ), targets => {
-          const results = targets || [];
-          for (const result of results) {
-            const target = StateUtils.getTarget(state, player, result.target);
-            const putCountersEffect = new PutCountersEffect(effect, result.damage);
-            putCountersEffect.target = target;
-            store.reduceEffect(state, putCountersEffect);
-          }
-        });
-      }
-
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(counters, store, state, effect);
     }
 
     return state;

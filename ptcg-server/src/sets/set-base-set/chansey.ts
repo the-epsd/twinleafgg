@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
@@ -81,12 +81,6 @@ export class Chansey extends PokemonCard {
       const dealDamage = new DealDamageEffect(effect, 80);
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
-    }
-
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
-      effect.preventDefault = true;
-      return state;
     }
 
     if (effect instanceof PutDamageEffect

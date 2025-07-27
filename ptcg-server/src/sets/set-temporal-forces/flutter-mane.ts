@@ -3,45 +3,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { GameError, GameMessage, SlotType, StateUtils } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { DamageMap, GameError, GameMessage, PlayerType, PutDamagePrompt, SlotType, StateUtils } from '../../game';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-
-function* useHexHurl(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-  if (!hasBenched) {
-    return state;
-  }
-
-  const maxAllowedDamage: DamageMap[] = [];
-  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    maxAllowedDamage.push({ target, damage: card.hp + 20 });
-  });
-
-  const damage = 20;
-
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
-    damage,
-    maxAllowedDamage,
-    { allowCancel: false }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-    }
-  });
-}
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
 export class FlutterMane extends PokemonCard {
 
@@ -112,9 +78,8 @@ export class FlutterMane extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useHexHurl(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(2, store, state, effect, [SlotType.BENCH]);
     }
 
     return state;

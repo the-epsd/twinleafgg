@@ -42,7 +42,7 @@ export class SkySealStone extends TrainerCard {
 
     // Add ability to card if attached to a V
     if (effect instanceof CheckPokemonPowersEffect
-      && effect.target.cards.includes(this)
+      && effect.target.tools.includes(this)
       && !effect.powers.find(p => p.name === this.powers[0].name)) {
       const hasValidCard = effect.target.cards.some(card =>
         card.tags.some(tag =>

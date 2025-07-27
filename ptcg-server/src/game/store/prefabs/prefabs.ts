@@ -1,7 +1,8 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
-import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
+import { TrainerEffect } from '../effects/play-card-effects';
+import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
+import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
@@ -283,7 +284,34 @@ export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, ca
   slot.pokemonPlayedTurn = state.turn;
 }
 
-export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number) {
+export function DEVOLVE_POKEMON(store: StoreLike, state: State, target: PokemonCardList, destination: CardList) {
+  const pokemons = target.getPokemons();
+  const pokemonCard = target.getPokemonCard();
+
+  // Weird ass lv.x stuff (yes this is actually the way it works: https://www.pokebeach.com/forums/threads/devolving-lvl-x.34943/)
+  if (pokemonCard?.tags.includes(CardTag.POKEMON_LV_X)) {
+    // The lv.x is on a basic -> do nothing
+    if (pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
+      return state;
+    } else {
+      console.log(pokemonCard.name);
+      const cardsToDevolve = pokemons.filter(p => p.name === pokemonCard.name);
+      MOVE_CARDS(store, state, target, destination, { cards: cardsToDevolve });
+      target.clearEffects();
+      target.pokemonPlayedTurn = state.turn;
+    }
+    return state;
+  }
+
+  // Handle normal devolutions
+  if (pokemons.length > 1 && !pokemonCard?.tags.includes(CardTag.POKEMON_VUNION) && !pokemonCard?.tags.includes(CardTag.LEGEND)) {
+    MOVE_CARD_TO(state, pokemonCard as Card, destination);
+    target.clearEffects();
+    target.pokemonPlayedTurn = state.turn;
+  }
+}
+
+export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number, applyWeaknessAndResistance: boolean = false, slots?: SlotType[]) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -296,13 +324,22 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
+    slots ?? [SlotType.BENCH],
     { min: min, max: max, allowCancel: false }
   ), selected => {
-    const target = selected[0];
-    const damageEffect = new PutDamageEffect(effect, damage);
-    damageEffect.target = target;
-    store.reduceEffect(state, damageEffect);
+    selected.forEach(target => {
+      const damageEffect = new PutDamageEffect(effect, damage);
+      damageEffect.target = target;
+
+      if (applyWeaknessAndResistance && damage > 0) {
+        const applyWeakness = new ApplyWeaknessEffect(effect, damage);
+        applyWeakness.target = target; // Fix: should be the current target, not effect.target
+        state = store.reduceEffect(state, applyWeakness);
+        damageEffect.damage = applyWeakness.damage; // Fix: update the damage for this damageEffect, not effect.damage
+      }
+
+      store.reduceEffect(state, damageEffect);
+    });
   });
 }
 
@@ -476,22 +513,37 @@ export function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number) {
   player.prizes.forEach(p => p.isSecret = true);
 }
 
-export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min: number = 0, max: number = 1) {
+export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}) {
   if (player.deck.cards.length === 0)
     return;
-  let cards: Card[] = [];
-  store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: min, max: max, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    player.deck.moveCardsTo(cards, player.hand);
-  });
+  const opponent = StateUtils.getOpponent(state, player);
 
-  SHUFFLE_DECK(store, state, player);
+  store.prompt(state, new ChooseCardsPrompt(
+    player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options,
+  ), selected => {
+    const cards = selected || [];
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards });
+    SHUFFLE_DECK(store, state, player);
+  });
+}
+
+/**
+ * Search discard pile for card, show it to the opponent, put it into `player`'s hand.
+ * A `filter` can be provided for the prompt as well.
+ */
+export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}) {
+  if (player.discard.cards.length === 0)
+    return;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  store.prompt(state, new ChooseCardsPrompt(
+    player, GameMessage.CHOOSE_CARD_TO_HAND, player.discard, filter, options,
+  ), selected => {
+    const cards = selected || [];
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards });
+  });
 }
 
 export function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount: number = 1): Card[] {
@@ -662,7 +714,7 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   if (!hasBenched)
     return state;
 
-  return store.prompt(state, new ChoosePokemonPrompt(
+  store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
     PlayerType.BOTTOM_PLAYER,
@@ -1024,3 +1076,29 @@ export function MOVE_CARDS(
 //       }
 //     }
 //   });
+
+/**
+ * Validates if a supporter card can be played under current game conditions
+ * @param store The store instance
+ * @param state The current game state
+ * @param player The player attempting to play the card
+ * @param trainerCard The supporter card to validate
+ * @returns true if the card can be played, false otherwise
+ */
+export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: Player, trainerCard: TrainerCard): boolean {
+  try {
+    // Create a temporary TrainerEffect to test if the card can be played
+    const testEffect = new TrainerEffect(player, trainerCard);
+
+    // Try to reduce the effect to see if it throws an error
+    // We need to catch the error to prevent the game from crashing
+    try {
+      store.reduceEffect(state, testEffect);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+}

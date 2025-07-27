@@ -18,9 +18,9 @@ export class ClefairyDoll extends TrainerCard {
   public cardTag = [];
   public tools = [];
   public archetype = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public trainerType = TrainerType.ITEM;
-
   public hp = 10;
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;

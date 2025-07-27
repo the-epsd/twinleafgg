@@ -18,6 +18,7 @@ import { Deoxys } from './deoxys';
 import { Doublade } from './doublade';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
+import { Flamigo } from './flamigo';
 import { Flittle } from './flittle';
 import { Froslassex } from './froslass-ex';
 import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR, GarbodorIR, MantykeIR, MagbyIR } from './full-art';
@@ -66,7 +67,7 @@ import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
 import { Skeledirgeex } from './skeledirge-ex';
 import { SlitherWing } from './slither-wing';
-import {SnorlaxDoll} from './snorlax-doll';
+import { SnorlaxDoll } from './snorlax-doll';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
@@ -85,9 +86,9 @@ import { Toxtricityex } from './toxtricity-ex';
 import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
-import {Vanillish} from './vanillish';
-import {Vanillite} from './vanillite';
-import {Vanilluxe} from './vanilluxe';
+import { Vanillish } from './vanillish';
+import { Vanillite } from './vanillite';
+import { Vanilluxe } from './vanilluxe';
 import { Veluza } from './veluza';
 import { Wimpod } from './wimpod';
 import { Xatu } from './xatu';
@@ -111,6 +112,7 @@ export const setParadoxRift: Card[] = [
   new Doublade(),
   new EarthenVessel(),
   new Elekid(),
+  new Flamigo(),
   new Flittle(),
   new Froslassex(),
   new FutureBoosterEnergyCapsule(),

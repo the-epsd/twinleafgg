@@ -20,6 +20,7 @@ export enum AttackEffects {
   ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT',
   MOVED_TO_ACTIVE_BONUS_EFFECT = 'MOVED_TO_ACTIVE_BONUS_EFFECT',
   LOST_ZONED_CARDS_EFFECT = 'LOST_ZONED_CARDS_EFFECT',
+  AFTER_WEAKNESS_AND_RESISTANCE_EFFECT = 'AFTER_WEAKNESS_AND_RESISTANCE_EFFECT',
 }
 
 export abstract class AbstractAttackEffect {
@@ -73,6 +74,17 @@ export class PutDamageEffect extends AbstractAttackEffect implements Effect {
   public damageIncreased = true;
   public wasKnockedOutFromFullHP: boolean = false;
   public weaknessApplied: boolean = false;
+
+  constructor(base: AttackEffect, damage: number) {
+    super(base);
+    this.damage = damage;
+  }
+}
+
+export class AfterWeaknessAndResistanceEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.AFTER_WEAKNESS_AND_RESISTANCE_EFFECT;
+  public preventDefault = false;
+  public damage: number;
 
   constructor(base: AttackEffect, damage: number) {
     super(base);

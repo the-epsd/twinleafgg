@@ -2,7 +2,7 @@ import { ChoosePokemonPrompt, CoinFlipPrompt, GameMessage, PlayerType, PowerType
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Tyrogue extends PokemonCard {
@@ -53,9 +53,13 @@ export class Tyrogue extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             const targets = selected || [];
-            targets.forEach(target => {
-              target.damage += 30;
-            });
+            if (targets.length > 0) {
+              const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
+              store.reduceEffect(state, damageEffect);
+              if (damageEffect.target) {
+                damageEffect.target.damage += 30;
+              }
+            }
 
             const endTurnEffect = new EndTurnEffect(player);
             store.reduceEffect(state, endTurnEffect);

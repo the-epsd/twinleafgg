@@ -37,6 +37,7 @@ import { ZacianVUNIONTopRight } from './zacian-v-union-tr';
 
 // Other prints
 import {
+  BronzongSWSH,
   MarnieSWSH,
   MarnieSWSH2,
   ZeraoraVMAXSWSH,
@@ -89,6 +90,7 @@ export const setSwordAndShieldPromos: Card[] = [
   new MorpekoVUNIONBottomRight(),
 
   // Other prints
+  new BronzongSWSH(),
   new MarnieSWSH(),
   new MarnieSWSH2(),
   new ZeraoraVSWSH(),

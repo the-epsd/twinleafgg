@@ -4,6 +4,7 @@ import { Bagon } from './bagon';
 import { Banette } from './banette';
 import { Beldum } from './beldum';
 import { Blazikenex } from './blaziken-ex';
+import { Bombirdier } from './bombirdier';
 import { BrocksScouting } from './brocks-scouting';
 import { Combusken } from './combusken';
 import { Dudunsparceex } from './dudunsparce-ex';
@@ -89,6 +90,7 @@ export const setJourneyTogether: Card[] = [
   new Torchic(),
   new Combusken(),
   new Blazikenex(),
+  new Bombirdier(),
   new Butterfree(),
   new TapuKokoex(),
   new Swinub(),

@@ -3,6 +3,7 @@ import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, F
 import { Chimchar } from './chimchar';
 import { Cleffa } from './cleffa';
 import { Empoleon } from './empoleon';
+import { Haunter } from './haunter';
 import { Infernape } from './infernape';
 import { Meditite } from './meditite';
 import { Piplup } from './piplup';
@@ -20,6 +21,7 @@ export const setDiamondAndPearl: Card[] = [
   new Chimchar(),
   new Cleffa(),
   new Empoleon(),
+  new Haunter(),
   new Infernape(),
   new Meditite(),
   new Piplup(),

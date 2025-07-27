@@ -30,7 +30,7 @@ export class WarpEnergy extends EnergyCard {
         return state;
       }
 
-      return SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
     }
     return state;
   }

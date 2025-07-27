@@ -55,7 +55,7 @@ export class ExpertBelt extends TrainerCard {
       }
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this)) {
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 

@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, CardTag, GameMessage, State, StoreLike, ChooseCardsPrompt, ShuffleDeckPrompt, SuperType, TrainerType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class MagnezoneVSTAR extends PokemonCard {
 
@@ -73,7 +73,7 @@ export class MagnezoneVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
       player.usedVSTAR = true;
-      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(90, effect, store, state, 0, 2);
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(90, effect, store, state, 0, 2);
     }
     return state;
   }

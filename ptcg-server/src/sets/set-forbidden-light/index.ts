@@ -6,6 +6,7 @@ import { Buzzwole } from './buzzwole';
 import { DialgaGX } from './dialga-gx';
 import { DianciePrismStar } from './diancie-prism-star';
 import { Diantha } from './diantha';
+import { Espurr } from './espurr';
 import { Flabebe } from './flabebe';
 import { Floette } from './floette';
 import { Florges } from './florges';
@@ -51,6 +52,7 @@ export const setForbiddenLight: Card[] = [
   new Buzzwole(),
   new DianciePrismStar(),
   new Diantha(),
+  new Espurr(),
   new Flabebe(),
   new Floette(),
   new Florges(),

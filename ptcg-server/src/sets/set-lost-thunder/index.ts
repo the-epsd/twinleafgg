@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
+import { Ampharos } from './ampharos';
 import { BlacephalonGX } from './blacephalon-gx';
 import { Blitzle } from './blitzle';
 import { Cascoon } from './cascoon';
@@ -22,6 +23,7 @@ import { Granbull } from './granbull';
 import { Grovyle } from './grovyle';
 import { HeatFactoryPrismStar } from './heat-factory-prism-star';
 import { Heracross } from './heracross';
+import { Hitmontop } from './hitmontop';
 import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
 import { Kirlia } from './kirlia';
@@ -41,6 +43,7 @@ import { Nincada } from './nincada';
 import { Onix } from './onix';
 import { Poipole } from './poipole';
 import { ProfessorElmLecture } from './professor-elms-lecture';
+import { Raikou } from './raikou';
 import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
 import { Shedinja } from './shedinja';
@@ -65,6 +68,7 @@ export const setLostThunder: Card[] = [
   new AdventureBag(),
   new AlolanMeowth(),
   new AlolanNinetalesGX(),
+  new Ampharos(),
   new Blitzle(),
   new Cascoon(),
   new Chikorita(),
@@ -84,6 +88,7 @@ export const setLostThunder: Card[] = [
   new Grovyle(),
   new HeatFactoryPrismStar(),
   new Heracross(),
+  new Hitmontop(),
   new Hoppip(),
   new Jumpluff(),
   new Kirlia(),
@@ -103,6 +108,7 @@ export const setLostThunder: Card[] = [
   new Onix(),
   new Poipole(),
   new ProfessorElmLecture(),
+  new Raikou(),
   new Ralts(),
   new Ribombee(),
   new Shedinja(),

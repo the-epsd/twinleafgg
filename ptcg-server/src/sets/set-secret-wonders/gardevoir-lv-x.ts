@@ -1,18 +1,18 @@
 import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {CheckHpEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect} from '../../game/store/effects/check-effects';
+import { CheckHpEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {ABILITY_USED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED} from '../../game/store/prefabs/prefabs';
-import {KnockOutEffect} from '../../game/store/effects/game-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
+import { ABILITY_USED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class GardevoirLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Gardevoir';
   public cardType: CardType = P;
-  public tags = [ CardTag.POKEMON_LV_X ];
+  public tags = [CardTag.POKEMON_LV_X];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public retreat = [C, C];
@@ -25,7 +25,7 @@ export class GardevoirLVX extends PokemonCard {
     },
     {
       name: 'Teleportation',
-      powerType: PowerType.POKEBODY,
+      powerType: PowerType.POKEPOWER,
       useWhenInPlay: true,
       text: 'Once during your turn (before your attack), choose 1 of your Active Pokémon or 1 or your Benched Pokémon and switch Gardevoir with that Pokémon. This power can\'t be used if Gardevoir is affected by a Special Condition.'
     }
@@ -43,19 +43,19 @@ export class GardevoirLVX extends PokemonCard {
   public setNumber: string = '131';
   public name: string = 'Gardevoir';
   public fullName: string = 'Gardevoir LV.X SW';
-  
+
   public readonly TELEPORTATION_MARKER = 'TELEPORTATION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Teleportation
-    if (WAS_POWER_USED(effect, 1, this)){
+    if (WAS_POWER_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.TELEPORTATION_MARKER, this)){
+      if (player.marker.hasMarker(this.TELEPORTATION_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
-      if (player.active.getPokemonCard() === this){
+
+      if (player.active.getPokemonCard() === this) {
         player.marker.addMarker(this.TELEPORTATION_MARKER, this);
         ABILITY_USED(player, this);
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
@@ -74,38 +74,38 @@ export class GardevoirLVX extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TELEPORTATION_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TELEPORTATION_MARKER, this)) {
       effect.player.marker.removeMarker(this.TELEPORTATION_MARKER, this);
     }
 
     // Bring Down
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
       let leastHP = 9999999999999999;
 
       // figuring out which pokemon actually has the least hp
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card !== player.active){
+        if (card !== player.active) {
           const hpCheck = new CheckHpEffect(player, card);
-          if (hpCheck.hp < leastHP){ leastHP = hpCheck.hp; }
+          if (hpCheck.hp < leastHP) { leastHP = hpCheck.hp; }
         }
       });
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
         const hpCheck = new CheckHpEffect(opponent, card);
-        if (hpCheck.hp < leastHP){ leastHP = hpCheck.hp; }
+        if (hpCheck.hp < leastHP) { leastHP = hpCheck.hp; }
       });
 
       // making sure it gets put on the active pokemon
-      if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-        if (effect.target !== effect.player.active){ throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+      if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+        if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
       }
 
       // eliminating the pokemon that don't have the least hp from being chosen
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
         const hpCheck = new CheckHpEffect(player, list);
-        if (list === player.active){ blockedTo.push(target); }
+        if (list === player.active) { blockedTo.push(target); }
         else if (hpCheck.hp !== leastHP) {
           blockedTo.push(target);
         }
@@ -180,7 +180,7 @@ export class GardevoirLVX extends PokemonCard {
       }
     }
 
-    if (effect instanceof CheckPokemonPowersEffect){
+    if (effect instanceof CheckPokemonPowersEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);

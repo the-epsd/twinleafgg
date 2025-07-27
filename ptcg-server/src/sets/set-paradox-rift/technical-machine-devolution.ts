@@ -1,12 +1,12 @@
 import { Attack, CardManager, GameError, GameMessage, PlayerType, PokemonCard, StateUtils } from '../../game';
-import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { DEVOLVE_POKEMON, IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -97,32 +97,18 @@ export class TechnicalMachineDevolution extends TrainerCard {
       });
 
       if (opponent.active.getPokemonCard()) {
-        const activePokemon = opponent.active.cards.filter(card => card.superType === SuperType.POKEMON);
+        const activePokemon = opponent.active.getPokemons();
         if (activePokemon.length > 0) {
-          let lastPlayedPokemonIndex = activePokemon.length - 1;
-          while (lastPlayedPokemonIndex >= 0 && activePokemon[lastPlayedPokemonIndex] instanceof PokemonCard && (activePokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC) {
-            lastPlayedPokemonIndex--;
-          }
-          if (lastPlayedPokemonIndex >= 0) {
-            const lastPlayedPokemon = activePokemon[lastPlayedPokemonIndex];
-            opponent.active.moveCardTo(lastPlayedPokemon, opponent.hand);
-          }
+          DEVOLVE_POKEMON(store, state, opponent.active, opponent.hand);
         }
       }
 
 
       opponent.bench.forEach(benchSpot => {
         if (benchSpot.getPokemonCard()) {
-          const benchPokemon = benchSpot.cards.filter(card => card.superType === SuperType.POKEMON);
+          const benchPokemon = benchSpot.getPokemons();
           if (benchPokemon.length > 0) {
-            let lastPlayedPokemonIndex = benchPokemon.length - 1;
-            while (lastPlayedPokemonIndex >= 0 && benchPokemon[lastPlayedPokemonIndex] instanceof PokemonCard && (benchPokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC) {
-              lastPlayedPokemonIndex--;
-            }
-            if (lastPlayedPokemonIndex >= 0) {
-              const lastPlayedPokemon = benchPokemon[lastPlayedPokemonIndex];
-              benchSpot.moveCardTo(lastPlayedPokemon, opponent.hand);
-            }
+            DEVOLVE_POKEMON(store, state, benchSpot, opponent.hand);
           }
         }
       });

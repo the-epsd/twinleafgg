@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Combee } from './combee';
+import { Dusclops } from './dusclops';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar';
 import { Gyarados } from './gyarados';
@@ -24,6 +25,7 @@ import {
 
 export const setStormfront: Card[] = [
   new Combee(),
+  new Dusclops(),
   new Gengar(),
   new Gyarados(),
   new Haunter(),

@@ -34,7 +34,7 @@ export class Turtonator extends PokemonCard {
   public set: string = 'SSP';
   public regulationMark: string = 'H';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'XXX'; // Assign correct number if known
+  public setNumber: string = '137'; // Assign correct number if known
   public name: string = 'Turtonator';
   public fullName: string = 'Turtonator SSP';
 

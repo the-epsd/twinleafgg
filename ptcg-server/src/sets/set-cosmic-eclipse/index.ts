@@ -45,6 +45,8 @@ import { Stoutland } from './stoutland';
 import { Sunkern } from './sunkern';
 import { Swirlix } from './swirlix';
 import { TagCall } from './tag-call';
+import { Tangela } from './tangela';
+import { Tangrowth } from './tangrowth';
 import { UltraNecrozma } from './ultra-necrozma';
 import { Weezing } from './weezing';
 import { Wishiwashi } from './wishiwashi';
@@ -66,6 +68,8 @@ import { VenusaurSnivyGX } from './venusaur-and-snivy-gx';
 import { LilliesFullForce } from './lillies-full-force';
 import { SolgaleoLunalaGX } from './solgaleo-and-lunala-gx';
 
+// Other Prints
+import { GuzmaAndHalaCEC } from './other-prints';
 
 export const setCosmicEclipse: Card[] = [
   new Aipom(),
@@ -127,6 +131,8 @@ export const setCosmicEclipse: Card[] = [
   new Swirlix(),
   new Swoobat(),
   new TagCall(),
+  new Tangela(),
+  new Tangrowth(),
   new TogepiCleffaIgglybuffGX(),
   new UltraNecrozma(),
   new VileplumeGX(),
@@ -134,4 +140,7 @@ export const setCosmicEclipse: Card[] = [
   new Wishiwashi(),
   new Woobat(),
   new VenusaurSnivyGX(),
+
+  // Other Prints
+  new GuzmaAndHalaCEC(),
 ];

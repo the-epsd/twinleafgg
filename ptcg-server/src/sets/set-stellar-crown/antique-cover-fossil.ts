@@ -26,6 +26,8 @@ export class AntiqueCoverFossil extends TrainerCard {
   public maxAttacksThisTurn: number = 1;
   public allowSubsequentAttackChoice: boolean = false;
   public maxTools: number = 1;
+  public evolvesTo = [];
+  public evolvesToStage = [];
 
   public powers: Power[] = [{
     name: 'Antique Cover Fossil',
@@ -34,11 +36,13 @@ export class AntiqueCoverFossil extends TrainerCard {
 At any time during your turn, you may discard this card from play.`,
     useWhenInPlay: true,
     exemptFromAbilityLock: true,
+    isFossil: true,
     powerType: PowerType.TRAINER_ABILITY
   },
   {
     name: 'Protective Cover',
     powerType: PowerType.ABILITY,
+    isFossil: true,
     text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
   }];
 

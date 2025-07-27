@@ -25,6 +25,7 @@ import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
 import { TaurosGX } from './tauros-gx';
 import { Vikavolt } from './vikavolt';
+import { Wishiwashi } from './wishiwashi';
 import { Dartrix } from './dartrix';
 import { DarknessEnergy, FairyEnergy, FightingEnergy, FireEnergy, GrassEnergy, LightningEnergy, MetalEnergy, PsychicEnergy, WaterEnergy } from './basic-energies';
 
@@ -55,6 +56,7 @@ export const setSunAndMoon: Card[] = [
   new TimerBall(),
   new TaurosGX(),
   new Vikavolt(),
+  new Wishiwashi(),
 
   // Reprints
   new NestBallSUM(),

@@ -1,5 +1,5 @@
-import { Attack, CardType, PokemonCard, PokemonCardList, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Attack, CardType, GamePhase, PokemonCard, PokemonCardList, Stage, State, StateUtils, StoreLike } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -8,8 +8,8 @@ export class Magby extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 30;
-  public weakness: Weakness[] = [{ type: W }];
-  public retreat: CardType[] = [];
+  public weakness = [{ type: W }];
+  public retreat = [];
 
   public attacks: Attack[] = [{
     name: 'Scorching Heater',
@@ -38,8 +38,8 @@ export class Magby extends PokemonCard {
       ADD_MARKER(this.CLEAR_SCORCHING_HEATER_MARKER, opponent, this);
     }
 
-    if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect) && HAS_MARKER(this.SCORCHING_HEATER_MARKER, effect.target, this)) {
-      effect.source.damage += 30;
+    if ((effect instanceof PutDamageEffect) && HAS_MARKER(this.SCORCHING_HEATER_MARKER, effect.target, this) && state.phase === GamePhase.ATTACK) {
+      effect.source.damage += 60;
     }
 
     CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_SCORCHING_HEATER_MARKER, this.SCORCHING_HEATER_MARKER, this);

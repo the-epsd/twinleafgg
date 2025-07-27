@@ -19,9 +19,9 @@ export class MysteriousFossil extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 30;
   public weakness = [];
   public retreat = [];
@@ -43,6 +43,7 @@ export class MysteriousFossil extends TrainerCard {
       text: 'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.) At any time during your turn before your attack, you may discard Mysterious Fossil from play.',
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
+      isFossil: true,
       powerType: PowerType.TRAINER_ABILITY
     }
   ];

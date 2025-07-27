@@ -47,17 +47,28 @@ export class ScoopUp extends TrainerCard {
           const basicPokemonCards = allPokemonCards.filter(p => p.stage === Stage.BASIC);
           const evolutionPokemonCards = allPokemonCards.filter(p => p.stage !== Stage.BASIC);
 
-          // Get non-Pokémon cards
-          const nonPokemonCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+          // Get non-Pokémon cards (excluding tools)
+          const otherCards = cardList.cards.filter(card =>
+            !(card instanceof PokemonCard) &&
+            (!cardList.tools || !cardList.tools.includes(card))
+          );
+          const tools = [...cardList.tools];
 
-          // First, move evolution Pokémon to discard
+          // Move tools to discard first
+          if (tools.length > 0) {
+            for (const tool of tools) {
+              cardList.moveCardTo(tool, player.discard);
+            }
+          }
+
+          // Move evolution Pokémon to discard
           if (evolutionPokemonCards.length > 0) {
             MOVE_CARDS(store, state, cardList, player.discard, { cards: evolutionPokemonCards });
           }
 
-          // Then, move non-Pokémon cards to discard
-          if (nonPokemonCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: nonPokemonCards });
+          // Move other attached cards to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
           }
 
           // Finally, move basic Pokémon to hand

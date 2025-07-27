@@ -1,11 +1,12 @@
-import { DamageMap, GameLog, GameMessage, GamePhase, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { GameLog, GamePhase, Power, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
+import { SIMULATE_COIN_FLIP, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dragapult extends PokemonCard {
 
@@ -92,38 +93,8 @@ export class Dragapult extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const maxAllowedDamage: DamageMap[] = [];
-
-      const oppHasBenched = opponent.bench.some(b => b.cards.length > 0);
-
-      if (!oppHasBenched) {
-        return state;
-      }
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + 30 });
-      });
-
-      return store.prompt(state, new PutDamagePrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        30,
-        maxAllowedDamage,
-        { allowCancel: false }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new PutCountersEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
-        }
-      });
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(3, store, state, effect, [SlotType.BENCH]);
     }
 
     return state;

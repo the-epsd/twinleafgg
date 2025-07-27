@@ -58,7 +58,7 @@ export class SpellTag extends TrainerCard {
       }
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this)) {
 
       const player = effect.player;
 

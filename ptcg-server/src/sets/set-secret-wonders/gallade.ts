@@ -6,10 +6,10 @@ import { Effect } from '../../game/store/effects/effect';
 import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { Card, ChoosePrizePrompt, ConfirmPrompt, GameError, GameMessage } from '../../game';
+import { Card, ChoosePrizePrompt, GameError, GameMessage, SelectPrompt } from '../../game';
 
 export class Gallade extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
   public cardType: CardType = F;
   public hp: number = 130;
@@ -72,33 +72,39 @@ export class Gallade extends PokemonCard {
       prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
 
       if (prizes.length > 0) {
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
+        const options: { message: string, value: number }[] = [];
+        for (let i = cards.length; i >= 0; i--) {
+          options.push({ message: `Flip ${i} prize card(s)`, value: i });
+        }
 
-            state = store.prompt(state, new ChoosePrizePrompt(
-              player.id,
-              GameMessage.CHOOSE_POKEMON,
-              { count: 1, allowCancel: true },
-            ), chosenPrize => {
-              const prizeCard = chosenPrize[0];
+        store.prompt(state, new SelectPrompt(
+          player.id,
+          GameMessage.REVEAL_ONE_OF_YOUR_PRIZES,
+          options.map(c => c.message),
+          { allowCancel: false }
+        ), choice => {
+          const numCardsToFlip = options[choice].value;
 
-              if (prizeCard.faceUpPrize == true) {
-                throw new GameError(GameMessage.CANNOT_USE_POWER);
-              }
+          state = store.prompt(state, new ChoosePrizePrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON,
+            { count: numCardsToFlip, allowCancel: true },
+          ), chosenPrize => {
+            if (chosenPrize.some(p => p.faceUpPrize == true)) {
+              throw new GameError(GameMessage.CANNOT_USE_POWER);
+            }
 
-              if (chosenPrize === null || chosenPrize.length === 0) {
-                return state;
-              }
+            if (chosenPrize === null || chosenPrize.length === 0) {
+              return state;
+            }
 
+            chosenPrize.forEach(prizeCard => {
               prizeCard.faceUpPrize = true;
               prizeCard.isSecret = false;
               prizeCard.isPublic = true;
               effect.damage += 20;
             });
-          }
+          });
         });
       }
     }
