@@ -57,6 +57,16 @@ import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
 
+// Other Prints
+import { BulbasaurM1S } from './other-prints';
+import { InteleonM1S } from './other-prints';
+import { MegaGardevoirexM1S } from './other-prints';
+import { MegaKangaskhanexM1S } from './other-prints';
+import { MegaLucarioexM1S } from './other-prints';
+import { MegaVenusaurExM1S } from './other-prints';
+import { NightStretcherM1S } from './other-prints';
+import { RareCandyM1S } from './other-prints';
+
 export const setM1S: Card[] = [
   new Abra(),
   new Alakazam(),
@@ -115,4 +125,14 @@ export const setM1S: Card[] = [
   new WallysCompassion(),
   new Xerneas(),
   new Yungoos(),
+
+  // Other Prints
+  new BulbasaurM1S(),
+  new InteleonM1S(),
+  new MegaGardevoirexM1S(),
+  new MegaKangaskhanexM1S(),
+  new MegaLucarioexM1S(),
+  new MegaVenusaurExM1S(),
+  new NightStretcherM1S(),
+  new RareCandyM1S(),
 ];
