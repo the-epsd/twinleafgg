@@ -83,39 +83,38 @@ export class LugiaEx extends PokemonCard {
             player.active.moveCardsTo(cards, player.discard);
           });
       });
+    }
 
-      // Overflow
-      if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+    // Overflow
+    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        // Do not activate between turns, or when it's not opponents turn.
-        if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-          return state;
-        }
-
-        // Lugia wasn't attacking
-        const pokemonCard = opponent.active.getPokemonCard();
-        if (pokemonCard !== this) {
-          return state;
-        }
-
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-        if (effect.prizeCount > 0) {
-          effect.prizeCount += 1;
-          return state;
-        }
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
       }
-      return state;
+
+      // Lugia wasn't attacking
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard !== this) {
+        return state;
+      }
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      if (effect.prizeCount > 0) {
+        effect.prizeCount += 1;
+        return state;
+      }
     }
     return state;
   }
