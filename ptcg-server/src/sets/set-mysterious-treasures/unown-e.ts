@@ -47,11 +47,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownE,
     { allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
-      // Attach Unown Q as a Pokemon Tool
-      player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tools.push(pokemonCard);
-
-      // Discard other cards
+      // Get the slot and card before moving anything
       const unownESlot = player.bench[benchIndex];
       const unownECard = unownESlot.getPokemonCard();
 
@@ -59,6 +55,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownE,
         return state;
       }
 
+      // Move all attached cards to discard first
       const otherCards = unownESlot.cards.filter(card =>
         !(card instanceof PokemonCard) &&
         (!unownESlot.tools || !unownESlot.tools.includes(card))
@@ -76,6 +73,10 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownE,
       if (otherCards.length > 0) {
         MOVE_CARDS(store, state, unownESlot, player.discard, { cards: otherCards });
       }
+
+      // Now attach Unown E as a Pokemon Tool
+      unownESlot.moveCardTo(unownECard, targets[0]);
+      targets[0].tools.push(unownECard);
 
       unownESlot.clearEffects();
     }

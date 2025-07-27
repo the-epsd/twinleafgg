@@ -130,8 +130,8 @@ export class CardInfoPaneComponent implements OnChanges {
       const isViewingSpecificCard = this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
 
       if (isViewingSpecificCard) {
-        // If viewing a specific card in the evolution chain, only enable its own abilities
-        const powers = (this.card as any).powers || [];
+        // If viewing a specific card in the evolution chain, enable its own abilities plus tool abilities
+        const powers = this.getDisplayPowers();
         powers.forEach(power => {
           if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
             || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
@@ -224,8 +224,21 @@ export class CardInfoPaneComponent implements OnChanges {
         const isViewingSpecificCard = this.cardList.cards.includes(this.card);
 
         if (isViewingSpecificCard) {
-          // If viewing a specific card in the evolution chain, only show its own powers
-          return (this.card as any).powers || [];
+          // If viewing a specific card in the evolution chain, show its own powers plus any tool powers
+          let powers = [...(this.card.powers || [])];
+
+          // Add powers from tool cards in the tools array, if present
+          for (const tool of tools) {
+            if (tool.powers && tool.powers.length > 0) {
+              // Only add powers that are not fossils and not from Pokémon tools
+              const nonFossilPowers = tool.powers.filter(power => !power.isFossil);
+              // Exclude Pokémon cards from tools (like Unown Q, Shedinja, etc.)
+              if (tool.superType !== SuperType.POKEMON) {
+                powers = [...powers, ...nonFossilPowers];
+              }
+            }
+          }
+          return powers;
         }
 
         // Find the main card (top evolution, last Pokemon in the stack)
@@ -290,8 +303,19 @@ export class CardInfoPaneComponent implements OnChanges {
         const isViewingSpecificCard = this.cardList.cards.includes(this.card);
 
         if (isViewingSpecificCard) {
-          // If viewing a specific card in the evolution chain, only show its own attacks
-          return (this.card as any).attacks || [];
+          // If viewing a specific card in the evolution chain, show its own attacks plus any tool attacks
+          let attacks = [...(this.card.attacks || [])];
+
+          // Add attacks from tool cards in the tools array, if present
+          for (const tool of tools) {
+            if (tool.attacks && tool.attacks.length > 0) {
+              // Exclude Pokémon cards from tools (like Unown Q, Shedinja, etc.)
+              if (tool.superType !== SuperType.POKEMON) {
+                attacks = [...attacks, ...tool.attacks];
+              }
+            }
+          }
+          return attacks;
         }
 
         // Exclude cards that are in the tools array to avoid treating attached Pokémon tools as main cards
@@ -360,8 +384,8 @@ export class CardInfoPaneComponent implements OnChanges {
     const isViewingSpecificCard = this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
 
     if (isViewingSpecificCard) {
-      // If viewing a specific card in the evolution chain, only enable attacks if the card has attacks
-      const attacks = (this.card as any).attacks || [];
+      // If viewing a specific card in the evolution chain, enable attacks if the card or its tools have attacks
+      const attacks = this.getDisplayAttacks();
       return this.options.enableAttack && attacks.length > 0;
     }
 

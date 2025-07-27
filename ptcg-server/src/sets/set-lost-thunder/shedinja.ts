@@ -47,11 +47,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
     { allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
-      // Attach Shedinja as a Pokemon Tool
-      player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tools.push(pokemonCard);
-
-      // Discard other cards
+      // Get the slot and card before moving anything
       const shedinjaSlot = player.bench[benchIndex];
       const shedinjaCard = shedinjaSlot.getPokemonCard();
 
@@ -59,6 +55,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
         return state;
       }
 
+      // Move all attached cards to discard first
       const otherCards = shedinjaSlot.cards.filter(card =>
         !(card instanceof PokemonCard) &&
         (!shedinjaSlot.tools || !shedinjaSlot.tools.includes(card))
@@ -76,6 +73,10 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
       if (otherCards.length > 0) {
         MOVE_CARDS(store, state, shedinjaSlot, player.discard, { cards: otherCards });
       }
+
+      // Now attach Shedinja as a Pokemon Tool
+      shedinjaSlot.moveCardTo(shedinjaCard, targets[0]);
+      targets[0].tools.push(shedinjaCard);
 
       shedinjaSlot.clearEffects();
     }
