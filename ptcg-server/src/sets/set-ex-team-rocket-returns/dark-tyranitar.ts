@@ -52,9 +52,9 @@ export class DarkTyranitar extends PokemonCard {
         if (cardList === opponent.active) {
           return;
         }
-        const pokemon = cardList.getPokemonCard();
 
-        if (pokemon && pokemon.stage === Stage.BASIC) {
+        // ex era ruling is that this should mean unevolved
+        if (cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND)) {
           cardList.damage += (10);
         }
       });

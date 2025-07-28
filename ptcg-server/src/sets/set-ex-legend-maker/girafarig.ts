@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, EnergyCard, PlayerType } from '../../game';
+import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, EnergyCard, PlayerType, PokemonCardList } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -70,8 +70,14 @@ export class Girafarig extends PokemonCard {
         return state;
       }
 
-      if (effect.card.stage === Stage.BASIC
-        && !effect.card.tags.includes(CardTag.POKEMON_ex)) {
+      let effectCardList: PokemonCardList | undefined;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === effect.card) {
+          effectCardList = cardList;
+        }
+      });
+
+      if (effectCardList?.getPokemons().length === 1 || effect.card.tags.includes(CardTag.LEGEND) && !effect.card.tags.includes(CardTag.POKEMON_ex)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PlayerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DRAW_UP_TO_X_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -38,7 +38,8 @@ export class Corsola extends PokemonCard {
 
       let cardsToDraw = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (card.stage === Stage.BASIC) {
+        // ex era ruling is that this should mean unevolved
+        if (cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND)) {
           cardsToDraw++;
         }
       });
