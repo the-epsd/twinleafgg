@@ -86,7 +86,6 @@ export class CardInfoPaneComponent implements OnChanges {
   ) { }
 
   public clickAction(action: CardInfoPaneAction) {
-    console.log('[CardInfoPane] clickAction:', action);
     action.card = this.card;
     if (action.trainer) {
     }

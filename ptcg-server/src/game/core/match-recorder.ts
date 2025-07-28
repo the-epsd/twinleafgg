@@ -108,7 +108,6 @@ export class MatchRecorder {
   }
 
   public cleanup(): void {
-    console.log('[MatchRecorder] Cleaning up resources');
     this.finished = true;
     this.client1 = undefined;
     this.client2 = undefined;

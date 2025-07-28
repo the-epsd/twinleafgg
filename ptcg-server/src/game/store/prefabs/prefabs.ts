@@ -294,7 +294,6 @@ export function DEVOLVE_POKEMON(store: StoreLike, state: State, target: PokemonC
     if (pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
       return state;
     } else {
-      console.log(pokemonCard.name);
       const cardsToDevolve = pokemons.filter(p => p.name === pokemonCard.name);
       MOVE_CARDS(store, state, target, destination, { cards: cardsToDevolve });
       target.clearEffects();

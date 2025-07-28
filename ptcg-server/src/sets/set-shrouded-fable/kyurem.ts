@@ -49,7 +49,6 @@ export class Kyurem extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        console.log(effect.cost);
         return state;
       }
 

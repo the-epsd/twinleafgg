@@ -144,13 +144,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   private setupSocketListeners(): void {
     // Setup queue update listener
     this.socketService.on('matchmaking:queueUpdate', (data: { players: string[] }) => {
-      console.log('Queue update received:', data.players);
       this.queuedPlayers = data.players;
     });
 
     // Listen for game creation
     this.socketService.on('matchmaking:gameCreated', (data: { gameId: number }) => {
-      console.log('Game created, ID:', data.gameId);
       if (this.inQueue) {
         this.resetQueueState();
         this.router.navigate(['/table', data.gameId]);
@@ -247,7 +245,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
           this.inQueue = true;
           this.timeInQueue = 0;
           this.joinLeaveDebounce = false;
-          console.log('Joined matchmaking queue');
 
           // Start queue timer
           this.startQueueTimer();
@@ -300,13 +297,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
           // Start cooldown countdown
           this.startCooldown();
           this.joinLeaveDebounce = false;
-          console.log('Left matchmaking queue');
         },
         (error) => {
           this.loading = false;
           this.resetQueueState();
           this.joinLeaveDebounce = false;
-          console.error('Failed to leave queue:', error);
           // Even if the server failed to process the leave request,
           // we reset the client state
           this.showErrorMessage('Failed to leave matchmaking queue');

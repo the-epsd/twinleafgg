@@ -82,7 +82,6 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
           player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
           opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-          console.log('marker added');
         }
       }
     }
@@ -133,7 +132,6 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
       });
-      console.log('marker removed');
     }
 
     return state;

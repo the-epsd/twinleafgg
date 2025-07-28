@@ -61,12 +61,10 @@ export class Copperajah extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
     }
 
     if (effect instanceof PlayStadiumEffect) {
@@ -95,7 +93,6 @@ export class Copperajah extends PokemonCard {
 
       // Check marker
       if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
@@ -107,7 +104,6 @@ export class Copperajah extends PokemonCard {
 
           effect.damage += 100;
           effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-          console.log('marker added');
         }
       });
     }

@@ -77,7 +77,6 @@ export class Grant extends TrainerCard {
     if (effect instanceof TrainerPowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       // Check if card is in the discard
-      console.log('Used Grant from discard');
       let cards: Card[] = [];
 
       cards = player.hand.cards.filter(c => c !== this);

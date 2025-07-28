@@ -42,7 +42,6 @@ export class SlumberingForest extends TrainerCard {
         if (!player.active.specialConditions.includes(SpecialCondition.ASLEEP) && HAS_MARKER(this.SLUMBERING_MARKER, player, this)) {
           // heads on first coin flip, now flip again
           COIN_FLIP_PROMPT(store, state, player, (result: boolean) => {
-            console.log(result);
             if (!result) {
               player.active.addSpecialCondition(SpecialCondition.ASLEEP);
             }

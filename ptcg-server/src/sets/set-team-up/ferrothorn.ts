@@ -48,7 +48,6 @@ export class Ferrothorn extends PokemonCard {
 
       player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      console.log('marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -93,7 +92,6 @@ export class Ferrothorn extends PokemonCard {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
         effect.damage -= 20;
-        console.log('damage reduced');
         return state;
       }
     }
@@ -105,7 +103,6 @@ export class Ferrothorn extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
-      console.log('marker removed');
     }
 
     return state;

@@ -69,7 +69,6 @@ export class Azumarill extends PokemonCard {
           }, this);
           store.reduceEffect(state, stub);
         } catch {
-          console.log(effect.cost);
           return state;
         }
 
@@ -86,7 +85,6 @@ export class Azumarill extends PokemonCard {
           effect.cost.splice(psychicIndex, 3);
         }
       }
-      console.log(effect.cost);
       return state;
     }
 

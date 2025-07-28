@@ -62,18 +62,15 @@ export class Sylveonex extends PokemonCard {
       effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.active.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      console.log('marker removed');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_ANGELITE_MARKER, this)) {
       effect.player.marker.removeMarker(this.ANGELITE_MARKER, this);
       effect.player.marker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ANGELITE_MARKER, this)) {
       effect.player.marker.addMarker(this.CLEAR_ANGELITE_MARKER, this);
-      console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -99,11 +96,9 @@ export class Sylveonex extends PokemonCard {
       }
 
       if (effect.player.marker.hasMarker(this.ANGELITE_MARKER, this)) {
-        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
       effect.player.marker.addMarker(this.ANGELITE_MARKER, this);
-      console.log('marker added');
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
