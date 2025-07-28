@@ -39,33 +39,40 @@ export class Shaymin extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flower Curtain
     if (effect instanceof PutDamageEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      // Find the owner of the target (the defending player)
+      const defendingPlayer = StateUtils.findOwner(state, effect.target);
+      // Find the owner of the source (the attacking player)
+      const attackingPlayer = StateUtils.findOwner(state, effect.source);
 
-      if (effect.target === player.active || effect.target === opponent.active) {
+      // Only prevent if the effect is coming from the opponent
+      if (attackingPlayer === defendingPlayer) {
         return state;
       }
 
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      // Only prevent if the target is on the bench (not active)
+      if (effect.target === defendingPlayer.active) {
+        return state;
+      }
 
+      // Check if Shaymin is in play on the defending player's field
       let isShayminInPlay = false;
-      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
+      defendingPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (card instanceof Shaymin) {
           isShayminInPlay = true;
         }
       });
-
       if (!isShayminInPlay) {
         return state;
       }
 
+      // Check if the target has a rule box (Shaymin limitation)
       if (effect.target.hasRuleBox()) {
         return state;
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const stub = new PowerEffect(player, {
+        const stub = new PowerEffect(defendingPlayer, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
@@ -74,7 +81,6 @@ export class Shaymin extends PokemonCard {
       } catch {
         return state;
       }
-
       effect.preventDefault = true;
     }
     return state;

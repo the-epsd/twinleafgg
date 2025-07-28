@@ -47,43 +47,6 @@ export class Dugtrio extends PokemonCard {
   public fullName: string = 'Dugtrio CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Sand Veil
-    if (effect instanceof PutDamageEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      let isDugtrioInPlay = false;
-      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isDugtrioInPlay = true;
-        }
-      });
-
-      if (!isDugtrioInPlay) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      effect.preventDefault = true;
-    }
-
     // Dig Under
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(30, effect, store, state);
@@ -94,6 +57,47 @@ export class Dugtrio extends PokemonCard {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 10);
     }
 
+    // Sand Veil
+    if (effect instanceof PutDamageEffect) {
+      // Find the owner of the target (the defending player)
+      const defendingPlayer = StateUtils.findOwner(state, effect.target);
+      // Find the owner of the source (the attacking player)
+      const attackingPlayer = StateUtils.findOwner(state, effect.source);
+
+      // Only prevent if the effect is coming from the opponent
+      if (attackingPlayer === defendingPlayer) {
+        return state;
+      }
+
+      // Only prevent if the target is on the bench (not active)
+      if (effect.target === defendingPlayer.active) {
+        return state;
+      }
+
+      // Check if Manaphy is in play on the defending player's field
+      let isManaphyInPlay = false;
+      defendingPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (card instanceof Dugtrio) {
+          isManaphyInPlay = true;
+        }
+      });
+      if (!isManaphyInPlay) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(defendingPlayer, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      effect.preventDefault = true;
+    }
     return state;
   }
 }

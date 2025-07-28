@@ -35,42 +35,6 @@ export class MrMime extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      let isMrMimeInPlay = false;
-      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isMrMimeInPlay = true;
-        }
-      });
-
-      if (!isMrMimeInPlay) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      effect.preventDefault = true;
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       state = store.prompt(state, [
@@ -86,7 +50,46 @@ export class MrMime extends PokemonCard {
       return state;
     }
 
+    if (effect instanceof PutDamageEffect) {
+      // Find the owner of the target (the defending player)
+      const defendingPlayer = StateUtils.findOwner(state, effect.target);
+      // Find the owner of the source (the attacking player)
+      const attackingPlayer = StateUtils.findOwner(state, effect.source);
 
+      // Only prevent if the effect is coming from the opponent
+      if (attackingPlayer === defendingPlayer) {
+        return state;
+      }
+
+      // Only prevent if the target is on the bench (not active)
+      if (effect.target === defendingPlayer.active) {
+        return state;
+      }
+
+      // Check if Manaphy is in play on the defending player's field
+      let isManaphyInPlay = false;
+      defendingPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (card instanceof MrMime) {
+          isManaphyInPlay = true;
+        }
+      });
+      if (!isManaphyInPlay) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(defendingPlayer, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      effect.preventDefault = true;
+    }
     return state;
   }
 }
