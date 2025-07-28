@@ -14,8 +14,10 @@ import { Duraludon } from './duraludon';
 import { Duskull } from './duskull';
 import { Exploud } from './exploud';
 import { GalarianPerrserker } from './galarian-perrserker';
+import { Galvantula } from './galvantula';
 import { TalonflameVFA } from './full-art';
 import { Jirachi } from './jirachi';
+import { Joltik } from './joltik';
 import { Leon } from './leon';
 import { Loudred } from './loudred';
 import { Magearna } from './magearna';
@@ -55,7 +57,9 @@ export const setVividVoltage: Card[] = [
   new Duskull(),
   new Exploud(),
   new GalarianPerrserker(),
+  new Galvantula(),
   new Jirachi(),
+  new Joltik(),
   new Leon(),
   new Loudred(),
   new Magcargo(),
