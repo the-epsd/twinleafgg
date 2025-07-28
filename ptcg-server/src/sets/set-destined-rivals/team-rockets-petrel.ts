@@ -10,15 +10,23 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
+  const supporterTurn = player.supporterTurn;
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
+
+  player.rocketSupporter = true;
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -57,6 +65,10 @@ export class TeamRocketsPetrel extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.rocketSupporter) {
+      effect.player.rocketSupporter = false;
     }
 
     return state;

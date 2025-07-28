@@ -70,7 +70,6 @@ export class EnergySearch extends TrainerCard {
   public text: string =
     'Search your deck for a basic Energy card and put it into your hand. Shuffle your deck afterward.';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

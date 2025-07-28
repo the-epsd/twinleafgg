@@ -34,6 +34,8 @@ export class Player {
 
   ancientSupporter: boolean = false;
 
+  rocketSupporter: boolean = false;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;

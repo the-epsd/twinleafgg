@@ -70,9 +70,7 @@ export class EnergySearch extends TrainerCard {
   public fullName: string = 'Energy Search SVI';
 
   public text: string =
-    'Search your deck for up to 2 basic Energy cards, reveal them, ' +
-    'and put them into your hand. Shuffle your deck afterward.';
-
+    'Search your deck for a Basic Energy card, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
