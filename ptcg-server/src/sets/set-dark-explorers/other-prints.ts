@@ -1,10 +1,17 @@
 import { DarkPatch } from '../set-astral-radiance/dark-patch';
+import { DarkraiEx } from './darkrai-ex';
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 
 export class DarkPatchDEX extends DarkPatch {
   public setNumber = '93';
   public fullName: string = 'Dark Patch DEX';
+  public set = 'DEX';
+}
+
+export class DarkraiExDEX extends DarkraiEx {
+  public setNumber = '107';
+  public fullName: string = 'Darkrai EX DEX 107';
   public set = 'DEX';
 }
 

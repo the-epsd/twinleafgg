@@ -34,6 +34,9 @@ import { Ursaring } from './ursaring';
 import { VikavoltV } from './vikavolt-v';
 import { YellHorn } from './yell-horn';
 
+// Other prints
+import { CrobatVDAA } from './other-prints';
+
 export const setDarknessAblaze: Card[] = [
   new Arctozolt(),
   new BigParasol(),
@@ -69,4 +72,7 @@ export const setDarknessAblaze: Card[] = [
   new YellHorn(),
   new Hydreigon(),
   new VikavoltV(),
+
+  // Other prints
+  new CrobatVDAA(),
 ];

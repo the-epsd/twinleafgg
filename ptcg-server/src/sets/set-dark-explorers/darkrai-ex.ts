@@ -45,7 +45,7 @@ export class DarkraiEx extends PokemonCard {
 
   public set: string = 'DEX';
 
-  public name: string = 'Darkrai EX';
+  public name: string = 'Darkrai-EX';
 
   public fullName: string = 'Darkrai EX DEX';
 

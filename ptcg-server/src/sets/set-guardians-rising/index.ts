@@ -20,6 +20,7 @@ import { Sudowoodo } from './sudowoodo';
 import { SylveonGX } from './sylveon-gx';
 import { TapuKokoGX } from './tapu-koko-gx';
 import { TapuLeleGX } from './tapu-lele-gx';
+import { Trubbish } from './trubbish';
 
 // Other prints
 import {
@@ -55,6 +56,7 @@ export const setGuardiansRising: Card[] = [
   new SylveonGX(),
   new TapuLeleGX(),
   new TapuKokoGX(),
+  new Trubbish(),
 
   // Other prints
   new AlolanVulpixGRI(),
