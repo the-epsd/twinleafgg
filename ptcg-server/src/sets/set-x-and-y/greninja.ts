@@ -6,7 +6,7 @@ import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameErr
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 
 export class Greninja extends PokemonCard {
 
@@ -34,6 +34,7 @@ export class Greninja extends PokemonCard {
       name: 'Mist Slash',
       cost: [CardType.WATER],
       damage: 50,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pokémon. '
     }
   ];
@@ -103,13 +104,19 @@ export class Greninja extends PokemonCard {
     }
 
     // Mist Slash
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (effect.damage > 0) {
-        opponent.active.damage += effect.damage;
-        const afterDamage = new AfterDamageEffect(effect, effect.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 50);
+      store.reduceEffect(state, applyWeakness);
+      const damage = applyWeakness.damage;
+
+      effect.damage = 0;
+
+      if (damage > 0) {
+        opponent.active.damage += damage;
+        const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
       }
     }

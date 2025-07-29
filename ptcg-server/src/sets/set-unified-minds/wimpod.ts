@@ -1,19 +1,16 @@
-import { CoinFlipPrompt, GameMessage, PlayerType, PokemonCardList, State, StateUtils, StoreLike } from '../../game';
+import { State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, COIN_FLIP_PROMPT, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Wimpod extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = CardType.WATER;
-
   public hp: number = 70;
-
   public weakness = [{ type: CardType.GRASS }];
-  
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{
@@ -24,48 +21,48 @@ export class Wimpod extends PokemonCard {
   }];
 
   public set: string = 'UNM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '50';
-
   public name: string = 'Wimpod';
-
   public fullName: string = 'Wimpod UNM';
+
+  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
+  public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this);
-      opponent.marker.addMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this);
+      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
     }
 
-    if (effect instanceof AttackEffect && effect.target.marker.hasMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
-        if (!heads) {
-          effect.damage = 0;
+    if (effect instanceof UseAttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (HAS_MARKER(this.SMOKESCREEN_MARKER, opponent, this)) {
+        return state; // Avoids recursion
+      }
+
+      effect.preventDefault = true;
+      ADD_MARKER(this.SMOKESCREEN_MARKER, opponent, this); // Avoids recursion
+
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          const useAttackEffect = new UseAttackEffect(player, effect.attack);
+          store.reduceEffect(state, useAttackEffect);
+        } else {
+          const endTurnEffect = new EndTurnEffect(player);
+          store.reduceEffect(state, endTurnEffect);
         }
       });
     }
 
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
-        if (!heads) {
-          effect.preventDefault = true;
-        }
-      });
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SMOKESCREEN_MARKER, this);
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
-      effect.player.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        opponent.marker.addMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this);
-        cardList.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this);
-      });
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
     }
 
     return state;
