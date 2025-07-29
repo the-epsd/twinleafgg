@@ -10,6 +10,7 @@ import { RayquazaEx } from './rayquaza-ex';
 import { RayquazaSpiritLink } from './rayquaza-spirit-link';
 import { Reshiram } from './reshiram';
 import { ShayminEx } from './shaymin-ex';
+import { Shedinja } from './shedinja';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
 import { SkyField } from './sky-field';
@@ -33,6 +34,7 @@ export const setRoaringSkies: Card[] = [
   new Natu(),
   new Reshiram(),
   new ShayminEx(),
+  new Shedinja(),
   new Shuppet(),
   new Silcoon(),
   new SkyField(),

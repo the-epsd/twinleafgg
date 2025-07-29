@@ -8,6 +8,7 @@ import { Cinderace } from './cinderace';
 import { Clauncher } from './clauncher';
 import { Corphish } from './corphish';
 import { Crawdaunt } from './crawdaunt';
+import { DangerousRuins } from './dangerous-ruins';
 import { Drizzile } from './drizzile';
 import { Electrike } from './electrike';
 import { FightingGong } from './fighting-gong';
@@ -77,6 +78,7 @@ export const setM1S: Card[] = [
   new Clauncher(),
   new Corphish(),
   new Crawdaunt(),
+  new DangerousRuins(),
   new Drizzile(),
   new Electrike(),
   new FightingGong(),
