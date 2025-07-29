@@ -13,8 +13,9 @@ export class ImportReplayPopupService {
 
   public openDialog(): MatDialogRef<ImportReplayPopupComponent, ReplayImport | undefined> {
     const dialogRef = this.dialog.open(ImportReplayPopupComponent, {
-      maxWidth: '100%',
-      width: '350px',
+      maxWidth: '90vw',
+      width: '600px',
+      minWidth: '400px',
       data: { name }
     });
 

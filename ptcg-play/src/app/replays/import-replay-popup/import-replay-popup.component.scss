@@ -1,6 +1,254 @@
 @import '../../../theme/variables.scss';
 
+// Main dialog content
+mat-dialog-content {
+  padding: 24px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #fff;
+}
 
-.ptcg-replay-preview {
-  margin-bottom: map-get($padding, normal);
+// Progress bar
+mat-progress-bar {
+  margin-bottom: 16px;
+}
+
+// Two Column Layout
+.content-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+
+  .form-column {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .preview-column {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+// Drag and Drop Zone
+.drag-drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: #449058;
+    background-color: rgba(68, 144, 88, 0.1);
+  }
+
+  &.drag-over {
+    border-color: #449058;
+    background-color: rgba(68, 144, 88, 0.2);
+    transform: scale(1.02);
+  }
+}
+
+.drag-drop-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.drag-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+}
+
+.drag-over .drag-icon {
+  color: #449058;
+}
+
+.drag-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.drag-subtext {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+// File Input Section
+.file-input-section {
+  .full-width {
+    width: 100%;
+  }
+}
+
+// Replay Preview Card
+.replay-preview-card {
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  mat-card-header {
+    padding: 16px 16px 0 16px;
+
+    mat-card-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #fff;
+      margin: 0;
+    }
+  }
+
+  mat-card-content {
+    padding: 16px;
+  }
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.preview-label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+.preview-value {
+  color: #fff;
+  font-size: 14px;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+}
+
+.winner-badge {
+  background-color: #449058;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+// Name Section
+.name-section {
+  .full-width {
+    width: 100%;
+  }
+}
+
+// Form field styling to match dark theme
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #449058;
+  }
+
+  .mat-form-field-label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #449058;
+  }
+
+  .mat-input-element {
+    color: #fff;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .content-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-column,
+  .preview-column {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  mat-dialog-content {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .drag-drop-zone {
+    padding: 30px 16px;
+    min-height: 100px;
+  }
+
+  .drag-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .drag-text {
+    font-size: 14px;
+  }
+
+  .drag-subtext {
+    font-size: 12px;
+  }
+
+  .preview-grid {
+    gap: 8px;
+  }
+
+  .preview-item {
+    padding: 6px 0;
+  }
+
+  .preview-label,
+  .preview-value {
+    font-size: 13px;
+  }
 }
