@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShiningVolcanion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -45,13 +44,7 @@ export class ShiningVolcanion extends PokemonCard {
         { min: 1, max: 2, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 50);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
       });
     }
 

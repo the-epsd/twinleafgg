@@ -5,6 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Cinderaceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -75,10 +76,8 @@ export class Cinderaceex extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
       ), selected => {
-        const target = selected[0];
-        const damageEffect = new PutDamageEffect(effect, 180);
-        damageEffect.target = target;
-        store.reduceEffect(state, damageEffect);
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 180, targets);
       });
     }
 

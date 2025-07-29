@@ -348,6 +348,31 @@ export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: Stat
   return store.reduceEffect(state, dealDamage);
 }
 
+export function DAMAGE_OPPONENT_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  damage: number,
+  targets: PokemonCardList[]
+) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  targets.forEach(target => {
+    // Use DealDamageEffect if target is opponent's active Pokémon (applies Weakness/Resistance)
+    if (target === opponent.active) {
+      const damageEffect = new DealDamageEffect(effect, damage);
+      damageEffect.target = target;
+      store.reduceEffect(state, damageEffect);
+    } else {
+      // Use PutDamageEffect for benched Pokémon (doesn't apply Weakness/Resistance)
+      const damageEffect = new PutDamageEffect(effect, damage);
+      damageEffect.target = target;
+      store.reduceEffect(state, damageEffect);
+    }
+  });
+}
+
 export function ATTACH_ENERGY_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, sourceSlot: SlotType, destinationSlots: SlotType[], filter: Partial<EnergyCard> = {}, options: Partial<AttachEnergyOptions> = {}): State {
   filter.superType = SuperType.ENERGY;
   const source = player.getSlot(sourceSlot);

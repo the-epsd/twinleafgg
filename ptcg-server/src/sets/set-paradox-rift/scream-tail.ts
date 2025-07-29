@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class ScreamTail extends PokemonCard {
 
@@ -51,6 +51,9 @@ export class ScreamTail extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
+      const damageCounters = effect.player.active.damage;
+      const damageOutput = damageCounters * 2;
+
       const max = Math.min(1);
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -60,14 +63,7 @@ export class ScreamTail extends PokemonCard {
         { min: max, max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageCounters = effect.player.active.damage;
-          const damageOutput = damageCounters * 2;
-          const damageEffect = new PutDamageEffect(effect, damageOutput);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, damageOutput, targets);
       });
     }
     return state;

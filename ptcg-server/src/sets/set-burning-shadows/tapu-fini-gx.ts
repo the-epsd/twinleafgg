@@ -5,32 +5,32 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import {BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK} from '../../game/store/prefabs/prefabs';
-import {DiscardCardsEffect, PutDamageEffect} from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class TapuFiniGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 170;
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Aqua Ring',
-      cost: [ C ],
+      cost: [C],
       damage: 20,
       text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
     },
     {
       name: 'Hydro Shot',
-      cost: [ W, W, C ],
+      cost: [W, W, C],
       damage: 0,
       text: 'Discard 2 [W] Energy from this Pokémon. This attack does 120 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Tapu Storm-GX',
-      cost: [ W ],
+      cost: [W],
       damage: 0,
       gxAttack: true,
       text: 'Shuffle your opponent\'s Active Pokémon and all cards attached to it into their deck. If your opponent has no Benched Pokémon, this attack does nothing. (You can\'t use more than 1 GX attack in a game.)'
@@ -45,15 +45,15 @@ export class TapuFiniGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aqua Ring
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
-      
+
       if (hasBench === false) {
         return state;
       }
-    
+
       let targets: PokemonCardList[] = [];
       store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -63,7 +63,7 @@ export class TapuFiniGX extends PokemonCard {
         { allowCancel: false }
       ), results => {
         targets = results || [];
-          
+
         if (targets.length > 0) {
           player.active.clearEffects();
           player.switchPokemon(targets[0]);
@@ -72,7 +72,7 @@ export class TapuFiniGX extends PokemonCard {
     }
 
     // Hydro Shot
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -82,7 +82,7 @@ export class TapuFiniGX extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         checkProvidedEnergy.energyMap,
-        [ W, W],
+        [W, W],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -96,13 +96,9 @@ export class TapuFiniGX extends PokemonCard {
           PlayerType.TOP_PLAYER,
           [SlotType.ACTIVE, SlotType.BENCH],
           { allowCancel: false }
-        ), targets => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-          const damageEffect = new PutDamageEffect(effect, 120);
-          damageEffect.target = targets[0];
-          store.reduceEffect(state, damageEffect);
+        ), selected => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 120, targets);
         });
       });
     }

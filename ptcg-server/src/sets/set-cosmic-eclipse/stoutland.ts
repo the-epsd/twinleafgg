@@ -7,6 +7,7 @@ import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effe
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -141,13 +142,9 @@ export class Stoutland extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
         { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 30);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
       });
 
       return state;

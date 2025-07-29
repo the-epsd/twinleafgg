@@ -5,8 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { AttachEnergyPrompt, ChoosePokemonPrompt, EnergyCard, PlayerType, SlotType, StateUtils } from '../../game';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Camerupt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -82,12 +81,7 @@ export class Camerupt extends PokemonCard {
         { min: 1, max: 2, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 30);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
       });
     }
 

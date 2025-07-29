@@ -18,7 +18,7 @@ export class RotasBonsly extends PokemonCard {
     name: 'Feint Attack',
     cost: [F, C],
     damage: 0,
-    text: 'Does 20 damage to 1 of your opponent\'s Pokémon.This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on that Pokémon.'
+    text: 'Does 20 damage to 1 of your opponent\'s Pokémon. This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on that Pokémon.'
   }];
 
   public set: string = 'PCGP';

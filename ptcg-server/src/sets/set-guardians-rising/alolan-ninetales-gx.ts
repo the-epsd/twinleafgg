@@ -6,9 +6,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 // GRI Alolan Ninetales-GX 22 (https://limitlesstcg.com/cards/GRI/22)
 export class AlolanNinetalesGX extends PokemonCard {
@@ -59,13 +58,9 @@ export class AlolanNinetalesGX extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 50);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
       });
     }
 

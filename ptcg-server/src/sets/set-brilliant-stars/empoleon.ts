@@ -9,7 +9,7 @@ import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GameError } from '../../game/game-error';
 import { ChoosePokemonPrompt, PlayerType, PokemonCardList, SlotType } from '../..';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Empoleon extends PokemonCard {
 
@@ -105,12 +105,7 @@ export class Empoleon extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 60);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
       });
     }
     return state;

@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class EspeonV extends PokemonCard {
 
@@ -76,13 +76,9 @@ export class EspeonV extends PokemonCard {
           PlayerType.TOP_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
           { min: 1, max: 1, allowCancel: false, blocked: blocked }
-        ), target => {
-          if (!target || target.length === 0) {
-            return;
-          }
-          const damageEffect = new PutDamageEffect(effect, 60);
-          damageEffect.target = target[0];
-          store.reduceEffect(state, damageEffect);
+        ), selected => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
         });
       }
 

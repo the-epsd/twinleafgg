@@ -9,7 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Rotom extends PokemonCard {
 
@@ -109,9 +109,7 @@ export class Rotom extends PokemonCard {
             damage += 20 * c.provides.length;
           }
         });
-        const damageEffect = new PutDamageEffect(effect, damage);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, damage, targets);
       });
 
       return state;

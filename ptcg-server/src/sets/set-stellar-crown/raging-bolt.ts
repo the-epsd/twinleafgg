@@ -1,10 +1,10 @@
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class RagingBolt extends PokemonCard {
 
@@ -65,13 +65,8 @@ export class RagingBolt extends PokemonCard {
         const providedEnergy = checkProvidedEnergyEffect.energyMap.reduce((acc, curr) => acc + curr.provides.length, 0);
         const damage = providedEnergy * 30;
 
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, damage);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, damage, targets);
 
-        return state;
       });
     }
     return state;

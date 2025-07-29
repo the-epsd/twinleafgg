@@ -2,8 +2,7 @@ import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, Pokemo
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 
 export class GarchompGiratinaGX extends PokemonCard {
@@ -62,13 +61,9 @@ export class GarchompGiratinaGX extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 40);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 40, targets);
       });
     }
 

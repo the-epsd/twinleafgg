@@ -1,11 +1,12 @@
 import { ChoosePokemonPrompt, CoinFlipPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Seadra extends PokemonCard {
 
@@ -74,16 +75,7 @@ export class Seadra extends PokemonCard {
             cardType === CardType.WATER || cardType === CardType.ANY
           ).length;
         });
-
-        const damage = energyCount * 20;
-
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, damage);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, energyCount * 20, targets);
       });
     }
 

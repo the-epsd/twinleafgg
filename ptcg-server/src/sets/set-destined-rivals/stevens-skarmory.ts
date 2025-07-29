@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class StevensSkarmory extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -49,13 +48,7 @@ export class StevensSkarmory extends PokemonCard {
         { min: 1, max: max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 50);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
       });
     }
     return state;

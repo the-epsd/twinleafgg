@@ -6,7 +6,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
 
@@ -107,17 +107,9 @@ export class Greninja extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { min, max, allowCancel: false }
-      ), target => {
-        if (!target || target.length === 0) {
-          return;
-        }
-
-        const targets = target || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 50);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
       });
 
       return state;
