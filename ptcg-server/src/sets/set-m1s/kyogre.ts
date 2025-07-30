@@ -47,7 +47,7 @@ export class Kyogre extends PokemonCard {
 
       effect.damage = 20 * energiesInDiscard.length;
       // slapping those energies back into the deck
-      MOVE_CARDS(store, state, player.discard, player.deck, { cards: energiesInDiscard });
+      MOVE_CARDS(store, state, player.discard, player.deck, { cards: energiesInDiscard, sourceCard: this });
       SHUFFLE_DECK(store, state, player);
     }
 

@@ -1,16 +1,17 @@
+import { PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
-export class Wishiwashi extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
-  public hp: number = 30;
-  public weakness = [{ type: G }];
-  public retreat = [C];
+export class Jumpluff extends PokemonCard {
+  public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Skiploom';
+  public cardType: CardType = G;
+  public hp: number = 90;
+  public weakness = [{ type: R }];
+  public resistance = [{ type: W, value: -20 }];
+  public retreat = [];
 
   public powers = [{
     name: 'Cowardice',
@@ -20,17 +21,18 @@ export class Wishiwashi extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Water Gun',
-    cost: [W],
-    damage: 10,
-    text: ''
+    name: 'Acrobatics',
+    cost: [G],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
   }];
 
-  public set: string = 'SUM';
+  public set: string = 'DRX';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '44';
-  public name: string = 'Wishiwashi';
-  public fullName: string = 'Wishiwashi SUM';
+  public setNumber: string = '3';
+  public name: string = 'Jumpluff';
+  public fullName: string = 'Jumpluff DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -38,15 +40,9 @@ export class Wishiwashi extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
 
-      const playedTurnEffect = new CheckPokemonPlayedTurnEffect(player, cardList as PokemonCardList);
-      store.reduceEffect(state, playedTurnEffect);
-      if (playedTurnEffect.pokemonPlayedTurn === state.turn) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
       const pokemonCardList = cardList as PokemonCardList;
-      const wishiwashiCard = pokemonCardList.getPokemonCard();
-      if (!wishiwashiCard) {
+      const jumpluffCard = pokemonCardList.getPokemonCard();
+      if (!jumpluffCard) {
         return state;
       }
 
@@ -60,19 +56,30 @@ export class Wishiwashi extends PokemonCard {
       // Move tools to discard first
       if (tools.length > 0) {
         for (const tool of tools) {
-          pokemonCardList.moveCardTo(tool, player.discard);
+          pokemonCardList.moveCardTo(tool, player.hand);
         }
       }
 
-      // Move other cards to discard
+      // Move other cards to hand
       if (otherCards.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
       }
 
       // Move Pokémon to hand
       if (pokemons.length > 0) {
         MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
       }
+    }
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
+        let heads: number = 0;
+        results.forEach(r => {
+          if (r) heads++;
+        });
+        effect.damage += 30 * heads;
+      });
     }
 
     return state;

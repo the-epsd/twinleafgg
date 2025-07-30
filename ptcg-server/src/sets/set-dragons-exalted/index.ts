@@ -10,9 +10,10 @@ import { Drifloon } from './drifloon';
 import { Emolga } from './emolga';
 import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
-import {GiantCape} from './giant-cape';
+import { GiantCape } from './giant-cape';
 import { HoOhEx } from './ho-oh-ex';
 import { Hydreigon } from './hydreigon';
+import { Jumpluff } from './jumpluff';
 import { Ninetales } from './ninetales';
 import { RayquazaEx } from './rayquaza-ex';
 import { RescueScarf } from './rescue-scarf';
@@ -38,6 +39,7 @@ export const setDragonsExalted: Card[] = [
   new Garbodor(),
   new HoOhEx(),
   new Hydreigon(),
+  new Jumpluff(),
   new Ninetales(),
   new RayquazaEx(),
   new RescueScarf(),

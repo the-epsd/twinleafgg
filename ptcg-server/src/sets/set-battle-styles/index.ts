@@ -18,6 +18,7 @@ import { Falinks } from './falinks';
 import { FanOfWaves } from './fan-of-waves';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
+import { Frillish } from './frillish';
 import { Golbat } from './golbat';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
@@ -75,6 +76,7 @@ export const setBattleStyles: Card[] = [
   new FanOfWaves(),
   new FlappleV(),
   new FlappleVMAX(),
+  new Frillish(),
   new Golbat(),
   new Houndoom(),
   new Houndour(),
