@@ -1,11 +1,11 @@
-import { CardTag, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { GameError, GameMessage, PlayerType } from '../../game';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { PlayerType } from '../../game';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class RapidStrikeEnergy extends EnergyCard {
@@ -24,39 +24,29 @@ export class RapidStrikeEnergy extends EnergyCard {
 
 As long as this card is attached to a Pokémon, it provides 2 in any combination of [W] Energy and [F] Energy.`;
 
+  public blendedEnergies = [CardType.FIGHTING, CardType.WATER];
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Provide energy when attached to Rapid Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const pokemon = effect.source;
-
-      const pokemonCard = pokemon.getPokemonCard();
-      if (pokemonCard?.tags.includes(CardTag.RAPID_STRIKE)) {
-        const attackCosts = pokemonCard.attacks.map(attack => attack.cost);
-        const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
-
-        const existingWater = existingEnergy.filter(c => 'provides' in c && (c as EnergyCard).provides.includes(CardType.WATER)).length;
-        const existingFighting = existingEnergy.filter(c => 'provides' in c && (c as EnergyCard).provides.includes(CardType.FIGHTING)).length;
-        const needsWater = attackCosts.some(cost => cost.filter(c => c === CardType.WATER).length > existingWater);
-        const needsFighting = attackCosts.some(cost => cost.filter(c => c === CardType.FIGHTING).length > existingFighting);
-
-        if (needsWater && needsFighting) {
-          effect.energyMap.push({ card: this, provides: [CardType.WATER, CardType.FIGHTING] });
-        } else if (needsWater) {
-          effect.energyMap.push({ card: this, provides: [CardType.WATER, CardType.WATER] });
-        } else if (needsFighting) {
-          effect.energyMap.push({ card: this, provides: [CardType.FIGHTING, CardType.FIGHTING] });
-        } else {
-          effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
-        }
+      try {
+        const energyEffect = new EnergyEffect(effect.player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
       }
-      return state;
-    }
 
-    // Prevent attaching to non Rapid Strike Pokemon
-    if (effect instanceof AttachEnergyEffect) {
-      if (effect.energyCard === this && !effect.target.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      // Find the first energy type that's not already provided by other energies
+      const neededType = this.blendedEnergies.find(type =>
+        !effect.energyMap.some(energy => energy.provides.includes(type))
+      );
+
+      if (neededType) {
+        // Only provide the specific energy type that's needed
+        effect.energyMap.push({
+          card: this,
+          provides: [neededType]
+        });
       }
     }
 
