@@ -975,7 +975,8 @@ export function MOVE_CARDS(
     toTop?: boolean,
     toBottom?: boolean,
     skipCleanup?: boolean,
-    sourceCard?: Card
+    sourceCard?: Card,
+    sourceEffect?: any
   } = {}
 ): State {
   return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
