@@ -29,6 +29,7 @@ import { LushForest } from './lush-forest';
 import { Makuhita } from './makuhita';
 import { MegaAbomasnowEx } from './mega-abomasnow-ex';
 import { MegaAbsolex } from './mega-absol-ex';
+import { MegaCameruptEx } from './mega-camerupt-ex';
 import { MegaGardevoirex } from './mega-gardevoir-ex';
 import { MegaKangaskhanex } from './mega-kangaskhan-ex';
 import { MegaLatiasex } from './mega-latias-ex';
@@ -58,17 +59,7 @@ import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
 
-// Other Prints
-import { BulbasaurM1S } from './other-prints';
-import { InteleonM1S } from './other-prints';
-import { MegaGardevoirexM1S } from './other-prints';
-import { MegaKangaskhanexM1S } from './other-prints';
-import { MegaLucarioexM1S } from './other-prints';
-import { MegaVenusaurExM1S } from './other-prints';
-import { NightStretcherM1S } from './other-prints';
-import { RareCandyM1S } from './other-prints';
-
-export const setM1S: Card[] = [
+export const setMegaEvolution: Card[] = [
   new Abra(),
   new Alakazam(),
   new Bayleef(),
@@ -99,6 +90,7 @@ export const setM1S: Card[] = [
   new Makuhita(),
   new MegaAbomasnowEx(),
   new MegaAbsolex(),
+  new MegaCameruptEx(),
   new MegaGardevoirex(),
   new MegaKangaskhanex(),
   new MegaLatiasex(),
@@ -129,12 +121,12 @@ export const setM1S: Card[] = [
   new Yungoos(),
 
   // Other Prints
-  new BulbasaurM1S(),
-  new InteleonM1S(),
-  new MegaGardevoirexM1S(),
-  new MegaKangaskhanexM1S(),
-  new MegaLucarioexM1S(),
-  new MegaVenusaurExM1S(),
-  new NightStretcherM1S(),
-  new RareCandyM1S(),
+  // new BulbasaurM1S(),
+  // new InteleonM1S(),
+  // new MegaGardevoirexM1S(),
+  // new MegaKangaskhanexM1S(),
+  // new MegaLucarioexM1S(),
+  // new MegaVenusaurExM1S(),
+  // new NightStretcherM1S(),
+  // new RareCandyM1S(),
 ];
