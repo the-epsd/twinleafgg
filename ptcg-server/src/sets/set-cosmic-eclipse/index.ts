@@ -10,6 +10,7 @@ import { Clamperl } from './clamperl';
 import { Clay } from './clay';
 import { Clefairy } from './clefairy';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
+import { Decidueye } from './decidueye';
 import { Drampa } from './drampa';
 import { DrawEnergy } from './draw-energy';
 import { Dusclops } from './dusclops';
@@ -86,6 +87,7 @@ export const setCosmicEclipse: Card[] = [
   new Clay(),
   new Clefairy(),
   new CynthiaAndCaitlin(),
+  new Decidueye(),
   new DragoniumZDragonClaw(),
   new Drampa(),
   new DrawEnergy(),
