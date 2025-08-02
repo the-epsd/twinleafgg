@@ -58,7 +58,6 @@ export class Dolliv extends PokemonCard {
 
       player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      console.log('marker added');
     }
 
     if (effect instanceof PutDamageEffect || effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
@@ -75,7 +74,6 @@ export class Dolliv extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
-      console.log('marker removed');
     }
     return state;
   }

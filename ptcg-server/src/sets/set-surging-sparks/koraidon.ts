@@ -56,20 +56,16 @@ export class Koraidon extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
-      console.log('marker removed');
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
-      console.log('marker 2 removed');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this)) {
       effect.player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
-      console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -79,7 +75,6 @@ export class Koraidon extends PokemonCard {
 
       if (originalCard && originalCard.tags.includes(CardTag.ANCIENT) && !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)) {
         effect.damage += 150;
-        console.log('marker added');
       }
       player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
     }

@@ -117,18 +117,11 @@ export class Hydrappleex extends PokemonCard {
           energyCount += em.provides.filter(cardType => {
             return cardType === CardType.GRASS || cardType === CardType.ANY;
           }).length;
-
-          console.log('Num grass energies: ' + energyCount);
-
         });
-
       });
-
       effect.damage += energyCount * 30;
       return state;
     }
-
     return state;
   }
-
 }

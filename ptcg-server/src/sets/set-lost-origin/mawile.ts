@@ -4,7 +4,7 @@ import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AfterWeaknessAndResistanceEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Mawile extends PokemonCard {
 
@@ -77,10 +77,10 @@ export class Mawile extends PokemonCard {
     // Handle damage boost effect
     if (effect instanceof PutDamageEffect
       && effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this) && effect.damage > 0) {
-      const additionalDamageEffect = new AfterWeaknessAndResistanceEffect(effect.attackEffect, 90);
-      additionalDamageEffect.target = effect.target;
-      store.reduceEffect(state, additionalDamageEffect);
-      effect.target.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+      // const additionalDamageEffect = new AfterWeaknessAndResistanceEffect(effect.attackEffect, 90);
+      // additionalDamageEffect.target = effect.target;
+      // store.reduceEffect(state, additionalDamageEffect);
+      // effect.target.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
       return state;
     }
 

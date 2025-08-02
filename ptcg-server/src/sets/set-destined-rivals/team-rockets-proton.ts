@@ -8,6 +8,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, StateUtils } from '../../game';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class TeamRocketsProton extends TrainerCard {
   public regulationMark = 'I';
@@ -30,12 +31,18 @@ Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      const supporterTurn = player.supporterTurn;
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
+
+      player.rocketSupporter = true;
+      effect.preventDefault = true;
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       const blocked = player.deck.cards
         .filter(c => !c.tags.includes(CardTag.TEAM_ROCKET))
@@ -59,6 +66,10 @@ Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put 
         player.supporter.moveCardTo(this, player.discard);
         SHUFFLE_DECK(store, state, player);
       });
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.rocketSupporter) {
+      effect.player.rocketSupporter = false;
     }
 
     return state;

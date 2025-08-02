@@ -294,7 +294,6 @@ export function DEVOLVE_POKEMON(store: StoreLike, state: State, target: PokemonC
     if (pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
       return state;
     } else {
-      console.log(pokemonCard.name);
       const cardsToDevolve = pokemons.filter(p => p.name === pokemonCard.name);
       MOVE_CARDS(store, state, target, destination, { cards: cardsToDevolve });
       target.clearEffects();
@@ -347,6 +346,31 @@ export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: Stat
   const dealDamage = new DealDamageEffect(effect, amount);
   dealDamage.target = effect.source;
   return store.reduceEffect(state, dealDamage);
+}
+
+export function DAMAGE_OPPONENT_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  damage: number,
+  targets: PokemonCardList[]
+) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  targets.forEach(target => {
+    // Use DealDamageEffect if target is opponent's active Pokémon (applies Weakness/Resistance)
+    if (target === opponent.active) {
+      const damageEffect = new DealDamageEffect(effect, damage);
+      damageEffect.target = target;
+      store.reduceEffect(state, damageEffect);
+    } else {
+      // Use PutDamageEffect for benched Pokémon (doesn't apply Weakness/Resistance)
+      const damageEffect = new PutDamageEffect(effect, damage);
+      damageEffect.target = target;
+      store.reduceEffect(state, damageEffect);
+    }
+  });
 }
 
 export function ATTACH_ENERGY_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, sourceSlot: SlotType, destinationSlots: SlotType[], filter: Partial<EnergyCard> = {}, options: Partial<AttachEnergyOptions> = {}): State {
@@ -951,7 +975,8 @@ export function MOVE_CARDS(
     toTop?: boolean,
     toBottom?: boolean,
     skipCleanup?: boolean,
-    sourceCard?: Card
+    sourceCard?: Card,
+    sourceEffect?: any
   } = {}
 ): State {
   return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));

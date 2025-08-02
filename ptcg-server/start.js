@@ -181,7 +181,7 @@ cardManager.defineSet(sets.setPrismaticEvolution);
 cardManager.defineSet(sets.setJourneyTogether);
 cardManager.defineSet(sets.setDestinedRivals);
 cardManager.defineSet(sets.setSV11);
-cardManager.defineSet(sets.setM1S);
+cardManager.defineSet(sets.setMegaEvolution);
 
 cardManager.defineSet(sets.setTest);
 

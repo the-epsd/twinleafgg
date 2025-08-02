@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.hand,
     { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: false }
+    { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
     next();
@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: false }
+    { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
     next();
@@ -87,7 +87,7 @@ export class PokemonTrader extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public name: string = 'Pokemon Trader';
+  public name: string = 'Pokémon Trader';
 
   public fullName: string = 'Pokémon Trader BS';
 

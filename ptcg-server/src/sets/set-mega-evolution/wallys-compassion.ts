@@ -61,6 +61,8 @@ export class WallysCompassion extends TrainerCard {
 
   public set: string = 'M1S';
 
+  public setNumber: string = '60';
+
   public regulationMark = 'I';
 
   public name: string = 'Wally\'s Compassion';

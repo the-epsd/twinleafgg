@@ -20,6 +20,7 @@ import { Zorua } from './zorua';
 
 import {
   DarkPatchDEX,
+  DarkraiExDEX,
   EnhancedHammerDEX,
   RareCandyDEX,
 } from './other-prints';
@@ -46,6 +47,7 @@ export const setDarkExplorers: Card[] = [
 
   // Other Prints
   new DarkPatchDEX(),
+  new DarkraiExDEX(),
   new EnhancedHammerDEX(),
   new RareCandyDEX(),
 ];

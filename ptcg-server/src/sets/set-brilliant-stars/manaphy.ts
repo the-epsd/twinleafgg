@@ -87,7 +87,6 @@ export class Manaphy extends PokemonCard {
       } catch {
         return state;
       }
-
       effect.preventDefault = true;
     }
     return state;

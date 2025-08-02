@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt, Card, ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Garchompex extends PokemonCard {
 
@@ -102,12 +103,7 @@ export class Garchompex extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 120);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 120, targets);
       });
     }
 

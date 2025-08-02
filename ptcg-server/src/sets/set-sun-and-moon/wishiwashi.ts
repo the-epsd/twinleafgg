@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 
 export class Wishiwashi extends PokemonCard {
@@ -37,8 +37,6 @@ export class Wishiwashi extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
-
-      BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player, this);
 
       const playedTurnEffect = new CheckPokemonPlayedTurnEffect(player, cardList as PokemonCardList);
       store.reduceEffect(state, playedTurnEffect);

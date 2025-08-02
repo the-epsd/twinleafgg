@@ -4,7 +4,7 @@ import { GameMessage } from '../../game/game-message';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, Stage, CardTag } from '../../game/store/card/card-types';
+import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
@@ -25,11 +25,10 @@ export class SpaceCenter extends TrainerCard {
 
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;
-      const cardList = StateUtils.findCardList(state, pokemonCard);
+      const cardList = StateUtils.findCardList(state, pokemonCard) as PokemonCardList;
 
-      const isBasic = cardList instanceof PokemonCardList
-        ? cardList.isStage(Stage.BASIC)
-        : pokemonCard.stage === Stage.BASIC;
+      // ex era ruling is that this should mean unevolved
+      const isBasic = cardList.getPokemons().length === 1 || pokemonCard.tags.includes(CardTag.LEGEND);
 
       // Also should not block owner pokemon, but thats a future me problem
       if (!effect.power.exemptFromAbilityLock) {

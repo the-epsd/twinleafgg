@@ -3,10 +3,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, Card, State, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class GarchompV extends PokemonCard {
 
@@ -78,12 +79,7 @@ export class GarchompV extends PokemonCard {
         { min: 1, max: max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 220);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 220, targets);
       });
     }
     return state;

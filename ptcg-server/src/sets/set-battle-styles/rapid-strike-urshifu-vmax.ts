@@ -3,10 +3,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
@@ -83,12 +84,7 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
         { min: 1, max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 120);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 120, targets);
       });
     }
     return state;

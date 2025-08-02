@@ -6,9 +6,9 @@ import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameError, GameMessage, PlayerType } from '../../game';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { PlayerType } from '../../game';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class SingleStrikeEnergy extends EnergyCard {
   public tags: CardTag[] = [CardTag.SINGLE_STRIKE];
@@ -25,21 +25,29 @@ export class SingleStrikeEnergy extends EnergyCard {
 
 As long as this card is attached to a Pokémon, it provides [F] and [D] Energy but provides only 1 Energy at a time, and the attacks of the Pokémon this card is attached to do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).`;
 
+  public blendedEnergies = [CardType.FIGHTING, CardType.DARK];
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Provide energy when attached to Single Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const pokemon = effect.source;
-
-      if (pokemon.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
-        effect.energyMap.push({ card: this, provides: [CardType.FIGHTING || CardType.DARK] });
+      try {
+        const energyEffect = new EnergyEffect(effect.player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
       }
-    }
 
-    // Prevent attaching to non Single Strike Pokemon
-    if (effect instanceof AttachEnergyEffect) {
-      if (effect.energyCard === this && !effect.target.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      // Find the first energy type that's not already provided by other energies
+      const neededType = this.blendedEnergies.find(type =>
+        !effect.energyMap.some(energy => energy.provides.includes(type))
+      );
+
+      if (neededType) {
+        // Only provide the specific energy type that's needed
+        effect.energyMap.push({
+          card: this,
+          provides: [neededType]
+        });
       }
     }
 

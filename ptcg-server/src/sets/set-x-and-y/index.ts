@@ -24,6 +24,9 @@ import { Voltorb } from './voltorb';
 import { XerneasEX } from './xerneas-ex';
 import { YveltalEx } from './yveltal-ex';
 
+// Other Prints
+import { ProfessorSycamoreXY } from './other-prints';
+
 export const setXY: Card[] = [
   new Aromatisse(),
   new Braixen(),
@@ -48,6 +51,9 @@ export const setXY: Card[] = [
   new Voltorb(),
   new XerneasEX(),
   new YveltalEx(),
+
+  // Other Prints
+  new ProfessorSycamoreXY(),
 
   // Basic energies
   new GrassEnergy(),

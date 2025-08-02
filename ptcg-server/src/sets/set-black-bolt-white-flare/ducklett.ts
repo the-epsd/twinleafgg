@@ -1,9 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, EnergyCard, PlayerType, StateUtils } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, Card, ChooseEnergyPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Ducklett extends PokemonCard {
 
@@ -24,7 +26,7 @@ export class Ducklett extends PokemonCard {
       name: 'Firefighting',
       cost: [C],
       damage: 0,
-      text: 'Discard a [W] Energy from your opponent\'s Active Pokémon.'
+      text: 'Discard a [R] Energy from your opponent\'s Active Pokémon.'
     },
     {
       name: 'Wing Attack',
@@ -49,38 +51,27 @@ export class Ducklett extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = effect.opponent;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
+      state = store.reduceEffect(state, checkProvidedEnergy);
 
-      let hasPokemonWithEnergy = false;
-      const blocked: number[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && (c.provides.includes(CardType.FIRE) || c.provides.includes(CardType.ANY)))) {
-          hasPokemonWithEnergy = true;
-        } else {
-          blocked.push();
-        }
-      });
-
-      if (!hasPokemonWithEnergy) {
-        return state;
+      const energyList: CardType[] = [];
+      for (let i = 0; i < 1; i++) {
+        energyList.push(CardType.FIRE);
       }
-      const target = opponent.active;
-      let cards: Card[] = [];
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        target,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false, blocked: blocked }
-      ), selected => {
-        cards = selected || [];
-      });
 
-      if (cards.length > 0) {
-        // Discard selected special energy card
-        target.moveCardsTo(cards, opponent.discard);
-        return state;
-      }
+      state = store.prompt(state, new ChooseEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        checkProvidedEnergy.energyMap,
+        energyList,
+        { allowCancel: false }
+      ), energy => {
+        const cards: Card[] = (energy || []).map(e => e.card);
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        discardEnergy.target = opponent.active;
+        return store.reduceEffect(state, discardEnergy);
+      });
     }
     return state;
   }

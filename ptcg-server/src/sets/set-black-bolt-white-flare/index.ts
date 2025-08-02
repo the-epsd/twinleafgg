@@ -11,6 +11,7 @@ import { Cobalion } from './cobalion';
 import { Cottonee } from './cottonee';
 import { Dewott } from './dewott';
 import { Drillbur } from './drillbur';
+import { Ducklett } from './ducklett';
 import { Duosion } from './duosion';
 import { Eelektrik } from './eelektrik';
 import { Emboar } from './emboar';
@@ -103,6 +104,7 @@ export const setSV11: Card[] = [
   new Seismitoad(),
   new Tympole(),
   new Volcarona(),
+  new Ducklett(),
 
   new CherenSV11(),
   new ProfessorsResearchSV11(),

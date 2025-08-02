@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard, PokemonCardList, EnergyCard, CardTag } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
@@ -51,7 +51,15 @@ export class CardInfoPaneComponent implements OnChanges {
   public EnergyType = EnergyType;
   public TrainerType = TrainerType;
   public CardTag = CardTag;
-  public heavilyPlayedUrl: SafeUrl;
+
+  // Constants for better maintainability
+  private readonly SET_NUMBER_PADDING = {
+    SINGLE_DIGIT: '00',
+    DOUBLE_DIGIT: '0'
+  };
+
+  private readonly ENERGY_ICON_SIZE = '18px';
+  private readonly ENERGY_ICON_TRANSFORM = 'translateY(12px)';
 
   private characterNames = [
     "Marnie's",
@@ -62,7 +70,16 @@ export class CardInfoPaneComponent implements OnChanges {
     "Arven's",
     "N's",
     "Hop's",
-    "Team Rocket's"
+    "Team Rocket's",
+    // "Misty's",
+    // "Brock's",
+    // "Blaine's",
+    // "Erika's",
+    // "Giovanni's",
+    // "Lt. Surge's",
+    // "Rocket's",
+    // "Sabrina's",
+    // "Koga's"
   ];
 
   parseCardName(name: string): { prefix: string | null, rest: string } {
@@ -86,10 +103,7 @@ export class CardInfoPaneComponent implements OnChanges {
   ) { }
 
   public clickAction(action: CardInfoPaneAction) {
-    console.log('[CardInfoPane] clickAction:', action);
     action.card = this.card;
-    if (action.trainer) {
-    }
     this.action.next(action);
   }
 
@@ -102,13 +116,10 @@ export class CardInfoPaneComponent implements OnChanges {
     if (this.card) {
       let formattedSetNumber = this.card.setNumber;
       if (formattedSetNumber.length === 1) {
-        formattedSetNumber = '00' + formattedSetNumber;
+        formattedSetNumber = this.SET_NUMBER_PADDING.SINGLE_DIGIT + formattedSetNumber;
       } else if (formattedSetNumber.length === 2) {
-        formattedSetNumber = '0' + formattedSetNumber;
+        formattedSetNumber = this.SET_NUMBER_PADDING.DOUBLE_DIGIT + formattedSetNumber;
       }
-      const searchQuery = `${this.card.name} - ${formattedSetNumber}`;
-      const encodedQuery = encodeURIComponent(searchQuery);
-      this.heavilyPlayedUrl = this.sanitizer.bypassSecurityTrustUrl(`https://heavilyplayed.com/search/products?search=${encodedQuery}`);
     }
   }
 
@@ -190,7 +201,7 @@ export class CardInfoPaneComponent implements OnChanges {
 
   transformEnergyText(text: string): string {
     return text.replace(/\[([WFYRGLPMDCN])\]/g, (match, type) =>
-      `<img align="top" style="transform: translateY(12px)" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="18px">`
+      `<img align="top" style="transform: ${this.ENERGY_ICON_TRANSFORM}" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="${this.ENERGY_ICON_SIZE}">`
     );
   }
 
@@ -204,77 +215,93 @@ export class CardInfoPaneComponent implements OnChanges {
       .catch(() => false);
   }
 
+  // Helper methods to reduce code duplication
+  private isToolCard(): boolean {
+    const tools = (this.cardList as any)?.tools || [];
+    return tools.includes(this.card);
+  }
+
+  private isViewingSpecificCard(): boolean {
+    return this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
+  }
+
+  private getMainCard(): Card {
+    const tools = (this.cardList as any)?.tools || [];
+    return this.cardList.cards.filter(c =>
+      c.superType === SuperType.POKEMON && !tools.includes(c)
+    ).slice(-1)[0] || this.card;
+  }
+
+  private shouldShowAllStageAbilities(): boolean {
+    return (this.cardList as any)?.showAllStageAbilities || false;
+  }
+
+  private addToolPowers(powers: any[], excludePokemon: boolean = true): any[] {
+    const tools = (this.cardList as any)?.tools || [];
+    for (const tool of tools) {
+      if (tool.powers && tool.powers.length > 0) {
+        const nonFossilPowers = tool.powers.filter(power => !power.isFossil);
+        if (!excludePokemon || tool.superType !== SuperType.POKEMON) {
+          powers = [...powers, ...nonFossilPowers];
+        }
+      }
+    }
+    return powers;
+  }
+
+  private addToolAttacks(attacks: any[], excludePokemon: boolean = true): any[] {
+    const tools = (this.cardList as any)?.tools || [];
+    for (const tool of tools) {
+      if (tool.attacks && tool.attacks.length > 0) {
+        if (!excludePokemon || tool.superType !== SuperType.POKEMON) {
+          attacks = [...attacks, ...tool.attacks];
+        }
+      }
+    }
+    return attacks;
+  }
+
   // Returns all relevant powers for display (main card, evolutions, tools)
   public getDisplayPowers(): any[] {
     if (!this.card) {
       return [];
     }
     if (this.card.superType === SuperType.POKEMON) {
-      // Check if this card is a tool attached to a different Pokémon
-      const tools = (this.cardList as any)?.tools || [];
-      const isToolCard = tools.includes(this.card);
-
-      if (isToolCard) {
+      if (this.isToolCard()) {
         // If this card is a tool, just show its own powers
         return (this.card as any).powers || [];
       }
 
       if (this.cardList && this.cardList.cards && this.cardList.cards.length > 0) {
-        // Check if we're viewing a specific card from the evolution chain
-        const isViewingSpecificCard = this.cardList.cards.includes(this.card);
-
-        if (isViewingSpecificCard) {
+        if (this.isViewingSpecificCard()) {
           // If viewing a specific card in the evolution chain, show its own powers plus any tool powers
           let powers = [...(this.card.powers || [])];
-
-          // Add powers from tool cards in the tools array, if present
-          for (const tool of tools) {
-            if (tool.powers && tool.powers.length > 0) {
-              // Only add powers that are not fossils and not from Pokémon tools
-              const nonFossilPowers = tool.powers.filter(power => !power.isFossil);
-              // Exclude Pokémon cards from tools (like Unown Q, Shedinja, etc.)
-              if (tool.superType !== SuperType.POKEMON) {
-                powers = [...powers, ...nonFossilPowers];
-              }
-            }
-          }
-          return powers;
+          return this.addToolPowers(powers);
         }
 
         // Find the main card (top evolution, last Pokemon in the stack)
-        // Exclude cards that are in the tools array to avoid treating attached Pokémon tools as main cards
-        const mainCard = this.cardList.cards.filter(c =>
-          c.superType === SuperType.POKEMON && !tools.includes(c)
-        ).slice(-1)[0] || this.card;
+        const mainCard = this.getMainCard();
         let powers = [...(mainCard.powers || [])];
+
         // Only show all evolutions' powers if showAllStageAbilities is true
-        if ((this.cardList as any).showAllStageAbilities) {
+        if (this.shouldShowAllStageAbilities()) {
+          const tools = (this.cardList as any)?.tools || [];
           for (const card of this.cardList.cards) {
             if (card.superType === SuperType.POKEMON && card !== mainCard && !tools.includes(card)) {
               powers = [...powers, ...(card.powers || [])];
             }
           }
         }
+
         // Add powers from attached trainers/tools
         for (const card of this.cardList.cards) {
           if (card.superType === SuperType.TRAINER) {
-            // Only add powers that are not fossils
             const nonFossilPowers = (card.powers || []).filter(power => !power.isFossil);
             powers = [...powers, ...nonFossilPowers];
           }
         }
-        // Add powers from tool cards in the tools array, if present
-        for (const tool of tools) {
-          if (tool.powers && tool.powers.length > 0) {
-            // Only add powers that are not fossils and not from Pokémon tools
-            const nonFossilPowers = tool.powers.filter(power => !power.isFossil);
-            // Exclude Pokémon cards from tools (like Unown Q, Shedinja, etc.)
-            if (tool.superType !== SuperType.POKEMON) {
-              powers = [...powers, ...nonFossilPowers];
-            }
-          }
-        }
-        return powers;
+
+        return this.addToolPowers(powers);
       }
       // Fallback: just use the card's own powers
       return (this.card as any).powers || [];
@@ -289,62 +316,37 @@ export class CardInfoPaneComponent implements OnChanges {
       return [];
     }
     if (this.card.superType === SuperType.POKEMON) {
-      // Check if this card is a tool attached to a different Pokémon
-      const tools = (this.cardList as any)?.tools || [];
-      const isToolCard = tools.includes(this.card);
-
-      if (isToolCard) {
+      if (this.isToolCard()) {
         // If this card is a tool, just show its own attacks
         return (this.card as any).attacks || [];
       }
 
       if (this.cardList && this.cardList.cards && this.cardList.cards.length > 0) {
-        // Check if we're viewing a specific card from the evolution chain
-        const isViewingSpecificCard = this.cardList.cards.includes(this.card);
-
-        if (isViewingSpecificCard) {
+        if (this.isViewingSpecificCard()) {
           // If viewing a specific card in the evolution chain, show its own attacks plus any tool attacks
           let attacks = [...(this.card.attacks || [])];
-
-          // Add attacks from tool cards in the tools array, if present
-          for (const tool of tools) {
-            if (tool.attacks && tool.attacks.length > 0) {
-              // Exclude Pokémon cards from tools (like Unown Q, Shedinja, etc.)
-              if (tool.superType !== SuperType.POKEMON) {
-                attacks = [...attacks, ...tool.attacks];
-              }
-            }
-          }
-          return attacks;
+          return this.addToolAttacks(attacks);
         }
 
-        // Exclude cards that are in the tools array to avoid treating attached Pokémon tools as main cards
-        const mainCard = this.cardList.cards.filter(c =>
-          c.superType === SuperType.POKEMON && !tools.includes(c)
-        ).slice(-1)[0] || this.card;
+        const mainCard = this.getMainCard();
         let attacks = [...(mainCard.attacks || [])];
-        if ((this.cardList as any).showAllStageAbilities) {
+
+        if (this.shouldShowAllStageAbilities()) {
+          const tools = (this.cardList as any)?.tools || [];
           for (const card of this.cardList.cards) {
             if (card.superType === SuperType.POKEMON && card !== mainCard && !tools.includes(card)) {
               attacks = [...attacks, ...(card.attacks || [])];
             }
           }
         }
+
         for (const card of this.cardList.cards) {
           if (card.superType === SuperType.TRAINER) {
             attacks = [...attacks, ...(card.attacks || [])];
           }
         }
-        // Add attacks from tool cards in the tools array, if present
-        for (const tool of tools) {
-          if (tool.attacks && tool.attacks.length > 0) {
-            // Exclude Pokémon cards from tools (like Unown Q, Shedinja, etc.)
-            if (tool.superType !== SuperType.POKEMON) {
-              attacks = [...attacks, ...tool.attacks];
-            }
-          }
-        }
-        return attacks;
+
+        return this.addToolAttacks(attacks);
       }
       return (this.card as any).attacks || [];
     }
@@ -371,19 +373,12 @@ export class CardInfoPaneComponent implements OnChanges {
   }
 
   public shouldEnableAttacks(): boolean {
-    // Check if this card is a tool attached to a different Pokémon
-    const tools = (this.cardList as any)?.tools || [];
-    const isToolCard = tools.includes(this.card);
-
     // If this is a Pokémon tool, disable attacks
-    if (this.card && this.card.superType === SuperType.POKEMON && isToolCard) {
+    if (this.card && this.card.superType === SuperType.POKEMON && this.isToolCard()) {
       return false;
     }
 
-    // Check if we're viewing a specific card from the evolution chain
-    const isViewingSpecificCard = this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
-
-    if (isViewingSpecificCard) {
+    if (this.isViewingSpecificCard()) {
       // If viewing a specific card in the evolution chain, enable attacks if the card or its tools have attacks
       const attacks = this.getDisplayAttacks();
       return this.options.enableAttack && attacks.length > 0;

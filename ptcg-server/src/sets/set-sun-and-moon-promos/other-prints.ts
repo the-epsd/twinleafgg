@@ -7,6 +7,7 @@ import { Mew } from '../set-unbroken-bonds/mew';
 import { LucarioMelmetalGX } from '../set-unbroken-bonds/lucario-and-melmetal-gx';
 import { Lycanroc } from '../set-forbidden-light/lycanroc';
 import { ReshiramCharizardGX } from '../set-unbroken-bonds/reshiram-and-charizard-gx';
+import { TapuKoko } from './tapu-koko';
 import { EspeonDeoxysGX } from '../set-unified-minds/espeon-and-deoxys-gx';
 import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
 
@@ -68,6 +69,12 @@ export class ReshiramCharizardGXSMP extends ReshiramCharizardGX {
   public fullName = 'Reshiram & Charizard-GX SMP';
   public set = 'SMP';
   public setNumber = '201';
+}
+
+export class TapuKokoSMP extends TapuKoko {
+  public fullName = 'Tapu Koko SMP 30a';
+  public set = 'SMP';
+  public setNumber = '30a';
 }
 
 export class VenusaurSnivyGXSMP extends VenusaurSnivyGX {

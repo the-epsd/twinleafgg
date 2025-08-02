@@ -4,8 +4,8 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPromp
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipPrompt } from '../../game';
 import { StateUtils } from '../../game/store/state-utils';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 // CIN Dartrix 57 (https://limitlesstcg.com/cards/CIN/57)
 export class Dartrix extends PokemonCard {
@@ -25,7 +25,12 @@ export class Dartrix extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Sharp Blade Quill', cost: [CardType.COLORLESS], damage: 0, text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)' },
+    {
+      name: 'Sharp Blade Quill',
+      cost: [CardType.COLORLESS],
+      damage: 0,
+      text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    },
     { name: 'Leaf Blade', cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS], damage: 50, text: 'Flip a coin. If heads, this attack does 20 more damage.' },
   ];
 
@@ -56,13 +61,9 @@ export class Dartrix extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 20);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 20, targets);
       });
     }
 

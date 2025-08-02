@@ -6,24 +6,17 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameMessage, Card, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { GameMessage, ChooseCardsPrompt, EnergyCard } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class LugiaEx extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 180;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Overflow',
@@ -34,7 +27,7 @@ export class LugiaEx extends PokemonCard {
 
   public attacks = [{
     name: 'Plasma Gale',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C, C],
     damage: 120,
     text: 'Discard a Plasma Energy attached to this Pokémon. If you can\'t discard a Plasma Energy, this attack does nothing.'
   }];
@@ -52,36 +45,39 @@ export class LugiaEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      let cards: Card[] = [];
-
       const player = effect.player;
       const pokemon = player.active;
 
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
 
-      checkEnergy.energyMap.forEach(em => {
-        const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.name !== 'Plasma Energy') {
+      // Check if there's at least one Plasma Energy attached
+      const hasPlasmaEnergy = checkEnergy.energyMap.some(em =>
+        em.card instanceof EnergyCard && em.card.name === 'Plasma Energy'
+      );
+
+      // If no Plasma Energy is attached, the attack does nothing
+      if (!hasPlasmaEnergy) {
+        effect.damage = 0;
+        return state;
+      }
+
+      // Prompt to discard a Plasma Energy
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.active,
+        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy' },
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        const cards = selected || [];
+        if (cards.length === 0) {
+          // If no card was selected, the attack does nothing
           effect.damage = 0;
-          return state;
+          return;
         }
-
-        if (energyCard instanceof EnergyCard && energyCard.name == 'Plasma Energy')
-
-          return store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            player.active,
-            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy' },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            cards = selected || [];
-            if (cards.length === 0) {
-              return;
-            }
-            player.active.moveCardsTo(cards, player.discard);
-          });
+        // Move the selected Plasma Energy to discard
+        player.active.moveCardsTo(cards, player.discard);
       });
     }
 

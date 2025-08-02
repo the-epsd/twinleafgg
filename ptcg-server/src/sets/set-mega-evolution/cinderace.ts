@@ -6,6 +6,7 @@ import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs'
 
 export class Cinderace extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom: string = 'Raboot';
   public tags = [CardTag.PLAY_DURING_SETUP];
   public cardType: CardType = R;
   public hp: number = 160;

@@ -3,6 +3,7 @@ import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -39,6 +40,7 @@ export class TeamRocketsGiovanni extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
+      player.rocketSupporter = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
@@ -118,6 +120,10 @@ export class TeamRocketsGiovanni extends TrainerCard {
           return state;
         });
       });
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.rocketSupporter) {
+      effect.player.rocketSupporter = false;
     }
 
     return state;

@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, CardTarget } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class IronJugulis extends PokemonCard {
 
@@ -71,16 +71,9 @@ export class IronJugulis extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { min: 1, max: 3, allowCancel: false, blocked }
-      ), target => {
-        if (!target || target.length === 0) {
-          return;
-        }
-        const targets = target || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 50);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
       });
     }
 

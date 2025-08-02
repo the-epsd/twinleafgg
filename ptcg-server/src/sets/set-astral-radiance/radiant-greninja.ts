@@ -4,12 +4,13 @@ import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, Choose
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class RadiantGreninja extends PokemonCard {
   public tags = [CardTag.RADIANT];
@@ -131,12 +132,7 @@ export class RadiantGreninja extends PokemonCard {
         { min: minMax, max: minMax, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 90);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 90, targets);
       });
     }
     return state;

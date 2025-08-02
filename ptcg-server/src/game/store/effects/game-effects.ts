@@ -254,6 +254,7 @@ export class MoveCardsEffect implements Effect {
   public toBottom?: boolean;
   public skipCleanup?: boolean;
   public sourceCard?: Card;
+  public sourceEffect?: any;
 
   constructor(
     source: CardList | PokemonCardList,
@@ -264,7 +265,8 @@ export class MoveCardsEffect implements Effect {
       toTop?: boolean,
       toBottom?: boolean,
       skipCleanup?: boolean,
-      sourceCard?: Card
+      sourceCard?: Card,
+      sourceEffect?: any
     } = {}
   ) {
     this.source = source;
@@ -275,6 +277,7 @@ export class MoveCardsEffect implements Effect {
     this.toBottom = options.toBottom;
     this.skipCleanup = options.skipCleanup;
     this.sourceCard = options.sourceCard;
+    this.sourceEffect = options.sourceEffect;
   }
 }
 

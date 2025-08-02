@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, GameMessage, GameError, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -68,7 +68,14 @@ export class Ursaring extends PokemonCard {
         return state;
       }
 
-      if (effect.card.stage === Stage.BASIC && opponent.active.getPokemonCard() === this) {
+      let effectCardList: PokemonCardList | undefined;
+      player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        if (card === effect.card) {
+          effectCardList = cardList;
+        }
+      });
+
+      if ((effectCardList?.getPokemons().length === 1 || effect.card.tags.includes(CardTag.LEGEND)) && opponent.active.getPokemonCard() === this) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }

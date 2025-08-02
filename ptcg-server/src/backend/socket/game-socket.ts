@@ -266,7 +266,6 @@ export class GameSocket {
     }
     const clientId = this.client.id;
     const result = game.canUndo(clientId);
-    console.log(`[canUndo] clientId=${clientId}, result=${result}`);
     response('ok', { canUndo: result });
   }
 

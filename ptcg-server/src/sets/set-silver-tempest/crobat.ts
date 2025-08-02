@@ -3,8 +3,9 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GamePhase, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
-import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -45,7 +46,6 @@ export class Crobat extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-
       this.usedCriticalBite = true;
 
       const max = Math.min(1);
@@ -57,12 +57,7 @@ export class Crobat extends PokemonCard {
         { min: 1, max: max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 30);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-          return state;
-        });
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
       });
     }
 

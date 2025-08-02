@@ -34,6 +34,8 @@ export class Player {
 
   ancientSupporter: boolean = false;
 
+  rocketSupporter: boolean = false;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;
@@ -93,6 +95,7 @@ export class Player {
   usedMinusCharge: any;
   usedPlusCharge: any;
   usedLunarCycle: any;
+  usedRunErrand: any;
   usedTributeDance: any;
   chainsOfControlUsed: any;
   usedDragonsWish = false;
