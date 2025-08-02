@@ -6,7 +6,7 @@ import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/
 
 export class Electrike extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType = L;
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
