@@ -15,7 +15,7 @@ export class GraniteCave extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public regulationMark: string = 'I';
   public set: string = 'DRI';
-  public setNumber: string = '166`';
+  public setNumber: string = '166';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Granite Cave';
   public fullName: string = 'Granite Cave DRI';
