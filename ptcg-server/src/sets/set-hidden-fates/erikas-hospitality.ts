@@ -42,30 +42,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.moveTo(player.hand, cardsToDraw);
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   return state;
 }
 export class ErikasHospitality extends TrainerCard {
-
-  public regulationMark = 'H';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'HIF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '56';
-
   public name: string = 'Erika\'s Hospitality';
-
   public fullName: string = 'Erika\'s Hospitality HIF';
+  public text: string = `You can play this card only if you have 4 or fewer other cards in your hand.
 
-  public text: string =
-    'You can play this card only if you have 4 or fewer other cards in your hand.' +
-    '' +
-    'Draw a card for each of your opponent\'s Pokémon in play.';
+  Draw a card for each of your opponent's Pokémon in play.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
