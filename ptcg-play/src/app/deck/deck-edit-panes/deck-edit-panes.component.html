@@ -12,8 +12,9 @@
   ptcgDropHighlight [ptcgDropHighlightVisible]="libraryHighlight$ | async" [itemSize]="77" minBufferPx="900"
   maxBufferPx="1800">
   <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
-    #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
-    (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="card">
+    #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)"
+    (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="card"
+    [isLibraryCard]="true">
   </ptcg-deck-card>
 </cdk-virtual-scroll-viewport>
 
@@ -28,9 +29,9 @@
       <ng-template dndSortableTemplate let-context>
         <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
           [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
-          (infoClick)="showCardInfo(render.data)" (cardClick)="onDeckCardClick(render.data)"
-          (countClick)="setCardCount(render.data)" [showDetailButtons]="true"
-          (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="render.data">
+          (countClick)="setCardCount(render.data)"
+          (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)"
+          (addCard)="addCardToDeck(render.data)" (removeCard)="removeCardFromDeck(render.data)" [card]="render.data">
         </ptcg-deck-card>
       </ng-template>
     </dnd-sortable-list>

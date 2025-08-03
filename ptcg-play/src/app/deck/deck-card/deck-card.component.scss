@@ -2,6 +2,10 @@
 
 :host {
   display: inline-flex;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 $ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, small);
@@ -13,15 +17,13 @@ $ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, small);
   flex-wrap: wrap;
   margin: map-get($padding, small);
   width: $ptcg-deck-card-width;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-.inspect-button {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 10;
-  margin-right: -15px;
-}
+
 
 ptcg-card {
   display: block;
@@ -50,10 +52,67 @@ ptcg-card {
   border: 2px solid #2d3748;
   background-color: #0e1117;
   border-radius: 50%;
-  // color: rgb(29, 35, 54);
   font-weight: bold;
   font-size: 18px;
   cursor: pointer;
+}
+
+.ptcg-deck-card-remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 70px;
+  bottom: 12.5px;
+  width: 27px;
+  height: 27px;
+  border: 2px solid #2d3748;
+  background-color: #0e1117;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.library-card {
+    right: 65px;
+  }
+}
+
+.ptcg-deck-card-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 3px;
+  bottom: 12.5px;
+  width: 27px;
+  height: 27px;
+  border: 2px solid #2d3748;
+  background-color: #0e1117;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.library-card {
+    right: 8px;
+  }
 }
 
 .ptcg-deck-card-info {

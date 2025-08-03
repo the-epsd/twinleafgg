@@ -22,12 +22,13 @@ export class DeckCardComponent implements OnDestroy {
   @Input() source: DragSource<DeckItem, any>;
   @Input() card: DeckItem;
   @Input() showCardCount: boolean;
-  @Input() showDetailButtons = false;
+  @Input() isLibraryCard: boolean = false;
 
   @Output() cardSelected = new EventEmitter<{ card: Card, action: 'add' | 'replace' }>();
-  @Output() cardClick = new EventEmitter<void>();
   @Output() countClick = new EventEmitter<void>();
   @Output() infoClick = new EventEmitter<void>();
+  @Output() addCard = new EventEmitter<void>();
+  @Output() removeCard = new EventEmitter<void>();
 
   showCardDialog = new Subject();
   showCardDialog$ = this.showCardDialog.asObservable();
@@ -61,8 +62,14 @@ export class DeckCardComponent implements OnDestroy {
     this.countClick.next();
   }
 
-  onCardClick() {
-    this.cardClick.next();
+  onAddCard(event: MouseEvent) {
+    event.stopPropagation();
+    this.addCard.next();
+  }
+
+  onRemoveCard(event: MouseEvent) {
+    event.stopPropagation();
+    this.removeCard.next();
   }
 
   showCardInfo() {
