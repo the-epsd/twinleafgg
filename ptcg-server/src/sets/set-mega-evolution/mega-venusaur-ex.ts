@@ -8,7 +8,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { EnergyCard, GameError, GameMessage, StateUtils } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
-
 function* moveEnergy(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
 
@@ -19,7 +18,7 @@ function* moveEnergy(next: Function, store: StoreLike, state: State, effect: Pow
     }
   });
 
-  if (pokemonWithEnergy < 2) {
+  if (!pokemonWithEnergy) {
     throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
 
@@ -61,8 +60,8 @@ export class MegaVenusaurEx extends PokemonCard {
   public powers = [{
     name: 'Solar Trans',
     powerType: PowerType.ABILITY,
-    useWhileInPlay: true,
-    text: 'As many times as you like during your turn, you may move a Basic Grass Energy from one of your Pokémon to another one of your Pokémon.'
+    useWhenInPlay: true,
+    text: 'As many times as you like during your turn, you may move a Basic [G] Energy from one of your Pokémon to another one of your Pokémon.'
   }];
 
   public attacks = [{

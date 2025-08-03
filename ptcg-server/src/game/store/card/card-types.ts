@@ -661,6 +661,7 @@ export enum Archetype {
   MANTYKE = 'Mantyke',
   SNOVER = 'Snover',
   ABOMASNOW = 'Abomasnow',
+  MEGA_ABOMASNOW = 'Mega Abomasnow',
   WEAVILE = 'Weavile',
   MAGNEZONE = 'Magnezone',
   LICKILICKY = 'Lickilicky',
