@@ -56,6 +56,9 @@ export class BoardInteractionService {
   private evolutionAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
   public evolutionAnimation$ = this.evolutionAnimationSubject.asObservable();
 
+  private basicAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
+  public basicAnimation$ = this.basicAnimationSubject.asObservable();
+
   private attackAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
   public attackAnimation$ = this.attackAnimationSubject.asObservable();
 
@@ -224,6 +227,10 @@ export class BoardInteractionService {
 
   public triggerEvolutionAnimation(event: BasicEntranceAnimationEvent) {
     this.evolutionAnimationSubject.next(event);
+  }
+
+  public triggerBasicAnimation(event: BasicEntranceAnimationEvent) {
+    this.basicAnimationSubject.next(event);
   }
 
   public triggerAttackAnimation(event: BasicEntranceAnimationEvent) {

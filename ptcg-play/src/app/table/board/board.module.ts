@@ -6,7 +6,6 @@ import { BoardPrizesComponent } from './board-prizes/board-prizes.component';
 import { BoardDeckComponent } from './board-deck/board-deck.component';
 import { BoardCardComponent } from './board-card/board-card.component';
 import { SharedModule } from '../../shared/shared.module';
-import { CardInfoDialogComponent } from './board-card/board-card.component';
 import { CardsModule } from 'src/app/shared/cards/cards.module';
 import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-selection-overlay.component';
 
@@ -22,7 +21,6 @@ import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-
     BoardPrizesComponent,
     BoardDeckComponent,
     BoardCardComponent,
-    CardInfoDialogComponent,
     BoardSelectionOverlayComponent
   ],
   exports: [

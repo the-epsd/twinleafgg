@@ -225,7 +225,7 @@ export class EvolveEffect implements Effect {
     this.player = player;
     this.target = target;
     this.pokemonCard = pokemonCard;
-    this.target.triggerAnimation = true;
+    this.target.triggerEvolutionAnimation = true;
   }
 }
 
