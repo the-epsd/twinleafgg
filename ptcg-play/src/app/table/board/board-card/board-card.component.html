@@ -4,10 +4,9 @@
   'upside-down': isUpsideDown,
   'selectable': isSelectable,
   'selected': isSelected,
-  'test-entrance': showTestAnimation,
-  'basic-entrance': showBasicAnimation,
+  'play-basic-animation': showBasicAnimation,
+  'evolution-animation': showEvolutionAnimation,
   'attack-animation': showAttackAnimation,
-  'attack-raise-slam': showAttackAnimation,
   'asleep-position': specialConditions.includes(SpecialCondition.ASLEEP),
   'confused-position': specialConditions.includes(SpecialCondition.CONFUSED),
   'paralyzed-position': specialConditions.includes(SpecialCondition.PARALYZED),
@@ -15,7 +14,7 @@
   }">
 
   <div class="ptcg-energy-cards">
-    <ptcg-card [card]="energyCard" [customImageUrl]="getCustomImageUrl(energyCard, true)"
+    <ptcg-card [card]="energyCard" [customImageUrl]="getCustomEnergyIcon(energyCard, true)"
       [attr.data-name]="energyCard.name" *ngFor="let energyCard of energyCards"
       (click)="onCardClick(energyCard)"></ptcg-card>
   </div>
@@ -57,7 +56,7 @@
   <!-- Tool cards, rendered like energy cards, with custom image and click handler -->
   <div class="ptcg-tool-cards" *ngIf="cardListInternal instanceof PokemonCardList && cardListInternal.tools">
     <ptcg-card *ngFor="let tool of cardListInternal.tools; let i = index" [card]="tool"
-      [customImageUrl]="getCustomToolImageUrl(tool)" (click)="onCardClick(tool)" [attr.data-name]="tool.name"
+      [customImageUrl]="getCustomToolIcon(tool)" (click)="onCardClick(tool)" [attr.data-name]="tool.name"
       [ngStyle]="{ top: (i * 15) + 'px' }" class="tool-overlap"></ptcg-card>
   </div>
 

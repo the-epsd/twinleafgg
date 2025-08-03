@@ -51,7 +51,7 @@ export class CardListSerializer implements Serializer<CardList> {
         instance.tools.push(toolCard);
       }
       instance.showBasicAnimation = data.showBasicAnimation || false;
-      instance.triggerAnimation = data.triggerAnimation || false;
+      instance.triggerEvolutionAnimation = data.triggerEvolutionAnimation || false;
       instance.triggerAttackAnimation = data.triggerAttackAnimation || false;
       // Copy computedHp if present
       if (typeof data.computedHp === 'number') {

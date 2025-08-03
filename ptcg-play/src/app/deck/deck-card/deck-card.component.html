@@ -1,12 +1,16 @@
 <div class="ptcg-deck-card">
-  <ptcg-card [card]="card.card" [dragSource]="source" [noHTML5Preview]="true" (click)="onCardClick();"
+  <ptcg-card [card]="card.card" [dragSource]="source" [noHTML5Preview]="true" (click)="showCardInfo();"
     (mouseenter)="showButtons = true;" (mouseleave)="showButtons = false;">
     <div class="ptcg-deck-card-count" *ngIf="showCardCount && card.count > 0" (click)="onCountClick($event)">
       {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
     </div>
-    <button mat-mini-fab color="primary" *ngIf="showButtons && showDetailButtons" class="inspect-button"
-      (click)="showCardInfo(); $event.stopPropagation()">
-      <mat-icon>info_outline</mat-icon>
-    </button>
+    <div class="ptcg-deck-card-remove" [class.library-card]="isLibraryCard" *ngIf="showButtons && card.count > 0"
+      (click)="onRemoveCard($event)">
+      <mat-icon>remove</mat-icon>
+    </div>
+    <div class="ptcg-deck-card-add" [class.library-card]="isLibraryCard" *ngIf="showButtons"
+      (click)="onAddCard($event)">
+      <mat-icon>add</mat-icon>
+    </div>
   </ptcg-card>
 </div>
