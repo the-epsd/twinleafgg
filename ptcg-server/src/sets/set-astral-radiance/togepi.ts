@@ -28,7 +28,7 @@ export class Togepi extends PokemonCard {
     }
   ];
 
-  public regulationMark = 'H';
+  public regulationMark = 'F';
   public set: string = 'ASR';
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';

@@ -7,7 +7,6 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { Card } from '../../game/store/card/card';
 
-
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);

@@ -63,21 +63,19 @@ export class Zoroark extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mind Jack',
-      cost: [D],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'This attack does 30 damage for each of your opponent\'s Benched Pokémon.'
-    },
-    {
-      name: 'Foul Play',
-      cost: [C, C, C],
-      damage: 0,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mind Jack',
+    cost: [D],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'This attack does 30 damage for each of your opponent\'s Benched Pokémon.'
+  },
+  {
+    name: 'Foul Play',
+    cost: [C, C, C],
+    damage: 0,
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
+  }];
 
   public regulationMark = 'I';
   public set: string = 'WHT';

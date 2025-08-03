@@ -14,21 +14,19 @@ export class Palpitoad extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Round',
-      cost: [C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'This attack does 40 damage for each of your Pokémon in play that has the Round attack.'
-    },
-    {
-      name: 'Wave Splash',
-      cost: [W, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Round',
+    cost: [C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'This attack does 40 damage for each of your Pokémon in play that has the Round attack.'
+  },
+  {
+    name: 'Wave Splash',
+    cost: [W, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'BLK';

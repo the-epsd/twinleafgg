@@ -648,6 +648,7 @@ export enum Archetype {
   MUNCHLAX = 'Munchlax',
   RIOLU = 'Riolu',
   LUCARIO = 'Lucario',
+  MEGA_LUCARIO = 'Mega Lucario',
   HIPPOPOTAS = 'Hippopotas',
   HIPPOWDON = 'Hippowdon',
   SKORUPI = 'Skorupi',

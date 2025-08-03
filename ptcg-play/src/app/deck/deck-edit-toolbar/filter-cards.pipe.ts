@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { Card, CardType, SuperType, PokemonCard, EnergyCard, Format, TrainerCard } from 'ptcg-server';
 import { LibraryItem } from '../deck-card/deck-card.interface';
+import { FormatValidator } from '../../util/formats-validator';
 
 @Pipe({
   name: 'filterCards'
@@ -151,7 +152,7 @@ export class FilterCardsPipe implements PipeTransform {
   }
 
   private getFormats(card: PokemonCard | TrainerCard | Card): Format[] {
-    return (card as any).format ? (card as any).format : [];
+    return FormatValidator.getValidFormats(card);
   }
 
 

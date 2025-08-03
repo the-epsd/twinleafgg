@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import {DISCARD_X_ENERGY_FROM_THIS_POKEMON} from '../../game/store/prefabs/costs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Toxtricityex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -26,7 +26,7 @@ export class Toxtricityex extends PokemonCard {
   public set: string = 'SVP';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '215';
+  public setNumber: string = '243';
   public name: string = 'Toxtricity ex';
   public fullName: string = 'Toxtricity ex SVP';
 

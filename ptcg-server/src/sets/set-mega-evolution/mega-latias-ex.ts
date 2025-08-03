@@ -15,20 +15,18 @@ export class MegaLatiasex extends PokemonCard {
   public cardType: CardType = N;
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Strafe',
-      cost: [C],
-      damage: 40,
-      text: 'You may switch this Pokémon with one of your Benched Pokémon.'
-    },
-    {
-      name: 'Mirage Pulse',
-      cost: [R, P, C],
-      damage: 300,
-      text: 'Discard all Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Strafe',
+    cost: [C],
+    damage: 40,
+    text: 'You may switch this Pokémon with one of your Benched Pokémon.'
+  },
+  {
+    name: 'Mirage Pulse',
+    cost: [R, P, C],
+    damage: 300,
+    text: 'Discard all Energy from this Pokémon.'
+  }];
 
   public regulationMark = 'I';
   public set: string = 'M1S';

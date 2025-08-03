@@ -15,11 +15,8 @@ export class Eelektrik extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Tynamo';
   public cardType: CardType = L;
-
   public hp: number = 90;
-
   public weakness = [{ type: F }];
-
   public retreat = [C, C];
 
   public powers = [{
@@ -29,14 +26,12 @@ export class Eelektrik extends PokemonCard {
     text: 'Once during your turn, you may attach a [L] Energy card from your discard pile to 1 of your Benched Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Electric Ball',
-      cost: [L, L, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Electric Ball',
+    cost: [L, L, C],
+    damage: 50,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'BLK';

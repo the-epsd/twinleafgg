@@ -41,7 +41,7 @@ export class Gengar extends PokemonCard {
     text: 'Put 2 damage counters on your opponent\'s Active Pokémon for each of your opponent\'s Benched Pokémon.'
   }];
 
-  public regulationMark = 'G';
+  public regulationMark = 'F';
 
   public set: string = 'LOR';
 

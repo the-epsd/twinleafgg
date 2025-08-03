@@ -8,44 +8,31 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Ducklett extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = W;
-
   public hp: number = 70;
-
   public weakness = [{ type: L }];
-
   public resistance = [{ type: F, value: -30 }];
-
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Firefighting',
-      cost: [C],
-      damage: 0,
-      text: 'Discard a [R] Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Wing Attack',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Firefighting',
+    cost: [C],
+    damage: 0,
+    text: 'Discard a [R] Energy from your opponent\'s Active Pokémon.'
+  },
+  {
+    name: 'Wing Attack',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark = 'I';
-
   public set: string = 'WHT';
-
   public name: string = 'Ducklett';
-
   public fullName: string = 'Ducklett SV11W';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '25';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

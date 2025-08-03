@@ -15,7 +15,6 @@ export class Repel extends TrainerCard {
   public regulationMark: string = 'I';
   public name: string = 'Repel';
   public fullName: string = 'Repel M1L';
-
   public text: string = 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

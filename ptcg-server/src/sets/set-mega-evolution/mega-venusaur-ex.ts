@@ -65,14 +65,12 @@ export class MegaVenusaurEx extends PokemonCard {
     text: 'As many times as you like during your turn, you may move a Basic Grass Energy from one of your Pokémon to another one of your Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Jungle Dump',
-      cost: [G, G, G, G],
-      damage: 240,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Jungle Dump',
+    cost: [G, G, G, G],
+    damage: 240,
+    text: 'Heal 30 damage from this Pokémon.'
+  }];
 
   public regulationMark = 'I';
   public set: string = 'M1L';

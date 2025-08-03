@@ -13,7 +13,6 @@ export class LushForest extends TrainerCard {
   public name = 'Lush Forest';
   public fullName = 'Lush Forest M1S';
   public regulationMark = 'I';
-
   public text = 'Each player\'s [G] Pokémon can evolve into another [G] Pokémon during the turn they play those Pokémon. (Players can\'t evolve a Pokémon during their first turn.)';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
