@@ -16,9 +16,7 @@ export class PowerProtein extends TrainerCard {
   public regulationMark = 'I';
   public name: string = 'Power Protein';
   public fullName: string = 'Power Protein M1L';
-
-  public text: string =
-    'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+  public text: string = 'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public readonly POWER_PROTEIN_MARKER = 'POWER_PROTEIN_MARKER';
 

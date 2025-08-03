@@ -19,14 +19,12 @@ export class Latios extends PokemonCard {
     text: 'Once during your turn, when your Mega Latias ex moves from the Bench to the Active Spot, you may move any number of Energy from your Benched Pokémon to that Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Dragon Claw',
-      cost: [W, P, C],
-      damage: 130,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Claw',
+    cost: [W, P, C],
+    damage: 130,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'M1S';

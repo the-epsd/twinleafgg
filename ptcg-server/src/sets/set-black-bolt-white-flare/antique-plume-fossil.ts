@@ -35,6 +35,7 @@ At any time during your turn, you may discard this card from play.`,
     powerType: PowerType.TRAINER_ABILITY
   }];
 
+  public regulationMark = 'I';
   public set: string = 'WHT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';

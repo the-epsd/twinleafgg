@@ -80,23 +80,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class Hilda extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'I';
-
   public set: string = 'WHT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '84';
-
   public name: string = 'Hilda';
-
   public fullName: string = 'Hilda SV11W';
-
-  public text: string =
-    'Search your deck for 1 Evolution Pokemon and 1 Energy card, reveal them, and put them into your hand. Then shuffle your deck.';
+  public text: string = 'Search your deck for 1 Evolution Pokemon and 1 Energy card, reveal them, and put them into your hand. Then shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

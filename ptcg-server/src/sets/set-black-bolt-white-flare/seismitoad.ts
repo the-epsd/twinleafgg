@@ -14,21 +14,19 @@ export class Seismitoad extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Round',
-      cost: [C, C, C],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'This attack does 70 damage for each of your Pokémon in play that has the Round attack.'
-    },
-    {
-      name: 'Hyper Voice',
-      cost: [W, C, C, C],
-      damage: 160,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Round',
+    cost: [C, C, C],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'This attack does 70 damage for each of your Pokémon in play that has the Round attack.'
+  },
+  {
+    name: 'Hyper Voice',
+    cost: [W, C, C, C],
+    damage: 160,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'BLK';

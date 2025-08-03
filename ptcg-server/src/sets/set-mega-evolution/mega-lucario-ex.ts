@@ -12,20 +12,18 @@ export class MegaLucarioex extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Aura Jab',
-      cost: [ F ],
-      damage: 130,
-      text: 'Attach up to 3 Basic [F] Energy cards from your discard pile to your Benched Pokemon in any way you like.',
-    },
-    {
-      name: 'Mega Brave',
-      cost: [ F, F],
-      damage: 270,
-      text: 'During your next turn, this Pokemon can\'t use Mega Brave.',
-    }
-  ];
+  public attacks = [{
+    name: 'Aura Jab',
+    cost: [F],
+    damage: 130,
+    text: 'Attach up to 3 Basic [F] Energy cards from your discard pile to your Benched Pokemon in any way you like.',
+  },
+  {
+    name: 'Mega Brave',
+    cost: [F, F],
+    damage: 270,
+    text: 'During your next turn, this Pokemon can\'t use Mega Brave.',
+  }];
 
   public regulationMark: string = 'I';
   public set: string = 'M1L';
@@ -39,7 +37,7 @@ export class MegaLucarioex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aura Jab
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       state = store.prompt(state, new AttachEnergyPrompt(
@@ -47,7 +45,7 @@ export class MegaLucarioex extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
         { allowCancel: false, min: 0, max: 3 },
       ), transfers => {
@@ -61,12 +59,12 @@ export class MegaLucarioex extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
         }
       });
-    }  
+    }
 
     // Mega Brave
-    if (WAS_ATTACK_USED(effect, 1, this)){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
-      if (HAS_MARKER(this.MEGA_BRAVE_MARKER, effect.player, this)){
+      if (HAS_MARKER(this.MEGA_BRAVE_MARKER, effect.player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
@@ -74,10 +72,10 @@ export class MegaLucarioex extends PokemonCard {
       effect.player.marker.addMarker(this.MEGA_BRAVE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MEGA_BRAVE_MARKER, this)){
-      if (!effect.player.marker.hasMarker(this.CLEAR_MEGA_BRAVE_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MEGA_BRAVE_MARKER, this)) {
+      if (!effect.player.marker.hasMarker(this.CLEAR_MEGA_BRAVE_MARKER, this)) {
         effect.player.marker.addMarker(this.CLEAR_MEGA_BRAVE_MARKER, this);
-      } else if (effect.player.marker.hasMarker(this.CLEAR_MEGA_BRAVE_MARKER, this)){
+      } else if (effect.player.marker.hasMarker(this.CLEAR_MEGA_BRAVE_MARKER, this)) {
         effect.player.marker.removeMarker(this.MEGA_BRAVE_MARKER, this);
         effect.player.marker.removeMarker(this.CLEAR_MEGA_BRAVE_MARKER, this);
       }

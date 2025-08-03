@@ -13,21 +13,19 @@ export class Zweilous extends PokemonCard {
   public resistance = [];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Hit',
-      cost: [C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    },
-    {
-      name: 'Pitch-Black Fangs',
-      cost: [D, D, C, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Hit',
+    cost: [C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  },
+  {
+    name: 'Pitch-Black Fangs',
+    cost: [D, D, C, C],
+    damage: 100,
+    text: ''
+  }];
 
   public set: string = 'WHT';
   public regulationMark: string = 'I';

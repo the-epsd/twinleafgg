@@ -74,9 +74,7 @@ export class FightingGong extends TrainerCard {
   public regulationMark = 'I';
   public name: string = 'Fighting Gong';
   public fullName: string = 'Fighting Gong M1L';
-
-  public text: string =
-    'Search your deck for a Basic [F] Pokémon or a Basic [F] Energy card, reveal it, and put it into your hand. Then, shuffle your deck.';
+  public text: string = 'Search your deck for a Basic [F] Pokémon or a Basic [F] Energy card, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

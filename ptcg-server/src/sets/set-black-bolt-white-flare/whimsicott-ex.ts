@@ -49,20 +49,18 @@ export class Whimsicottex extends PokemonCard {
   public resistance = [];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Energy Gift',
-      cost: [G],
-      damage: 0,
-      text: 'Search your deck for up to 3 Basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
-    },
-    {
-      name: 'Wonder Cotton',
-      cost: [G],
-      damage: 0,
-      text: 'Your opponent reveals their hand. This attack does 50 damage for each Trainer card you find there.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Gift',
+    cost: [G],
+    damage: 0,
+    text: 'Search your deck for up to 3 Basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
+  },
+  {
+    name: 'Wonder Cotton',
+    cost: [G],
+    damage: 0,
+    text: 'Your opponent reveals their hand. This attack does 50 damage for each Trainer card you find there.'
+  }];
 
   public set: string = 'WHT';
   public regulationMark: string = 'I';

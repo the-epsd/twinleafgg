@@ -112,21 +112,19 @@ export class Reuniclus extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Cellular Awakening',
-      cost: [C],
-      damage: 0,
-      text: 'For each of your Benched Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.'
-    },
-    {
-      name: 'Evo Lariat',
-      cost: [C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'This attack does 40 more damage for each of your Evolution Pokémon in play.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cellular Awakening',
+    cost: [C],
+    damage: 0,
+    text: 'For each of your Benched Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.'
+  },
+  {
+    name: 'Evo Lariat',
+    cost: [C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'This attack does 40 more damage for each of your Evolution Pokémon in play.'
+  }];
 
   public regulationMark = 'I';
   public set: string = 'BLK';

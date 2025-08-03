@@ -7,36 +7,24 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 
 export class Frillish extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = P;
-
   public hp: number = 80;
-
   public weakness = [{ type: D }];
-
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Sea Shadows',
-      cost: [P],
-      damage: 20,
-      text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
-    }
-  ];
+  public attacks = [{
+    name: 'Sea Shadows',
+    cost: [P],
+    damage: 20,
+    text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
+  }];
 
   public regulationMark = 'I';
-
   public set: string = 'WHT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '44';
-
   public name: string = 'Frillish';
-
   public fullName: string = 'Frillish SV11W';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';

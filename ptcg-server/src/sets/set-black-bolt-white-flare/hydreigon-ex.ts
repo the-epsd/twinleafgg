@@ -18,22 +18,18 @@ export class Hydreigonex extends PokemonCard {
   public resistance = [];
   public retreat = [C, C, C];
 
-  public powers = [
-    {
-      name: 'Greedy Eater',
-      powerType: PowerType.ABILITY,
-      text: "If your opponent's Basic Pokémon is Knocked Out by damage from an attack this Pokémon uses, take 1 more Prize card."
-    }
-  ];
+  public powers = [{
+    name: 'Greedy Eater',
+    powerType: PowerType.ABILITY,
+    text: "If your opponent's Basic Pokémon is Knocked Out by damage from an attack this Pokémon uses, take 1 more Prize card."
+  }];
 
-  public attacks = [
-    {
-      name: 'Dark Bite',
-      cost: [D, D, D, C, C],
-      damage: 200,
-      text: "During your opponent's next turn, that Pokémon can't retreat."
-    }
-  ];
+  public attacks = [{
+    name: 'Dark Bite',
+    cost: [D, D, D, C, C],
+    damage: 200,
+    text: "During your opponent's next turn, that Pokémon can't retreat."
+  }];
 
   public set: string = 'WHT';
   public regulationMark: string = 'I';

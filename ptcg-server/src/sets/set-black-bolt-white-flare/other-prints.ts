@@ -1,3 +1,4 @@
+import { ToolScrapper } from '../set-dragons-exalted/tool-scrapper';
 import { Cheren } from '../set-emerging-powers/cheren';
 import { PrismEnergy } from '../set-next-destinies/prism-energy';
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
@@ -88,6 +89,13 @@ export class EnergyRetrievalSV11 extends EnergyRetrieval {
   public regulationMark = 'I';
   public setNumber = '82';
   public fullName: string = 'Energy Retrieval SV11W';
+  public set = 'WHT';
+}
+
+export class ToolScrapperSV11 extends ToolScrapper {
+  public regulationMark = 'I';
+  public setNumber = '85';
+  public fullName: string = 'Tool Scrapper SV11W';
   public set = 'WHT';
 }
 
