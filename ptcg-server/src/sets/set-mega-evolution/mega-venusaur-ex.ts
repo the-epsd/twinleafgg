@@ -29,7 +29,7 @@ function* moveEnergy(next: Function, store: StoreLike, state: State, effect: Pow
     PlayerType.BOTTOM_PLAYER,
     [SlotType.ACTIVE, SlotType.BENCH],
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-    { allowCancel: true }
+    { min: 0, allowCancel: false }
   ), result => {
     transfers = result || [];
     next();
