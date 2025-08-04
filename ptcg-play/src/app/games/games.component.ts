@@ -22,6 +22,7 @@ import { ProfileService } from '../api/services/profile.service';
 import { GameService } from '../api/services/game.service';
 import { FriendsService } from '../api/services/friends.service';
 import { FriendInfo } from '../api/interfaces/friends.interface';
+import { Format } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
@@ -45,6 +46,7 @@ export class GamesComponent implements OnInit, OnDestroy {
   public lobbyComponent = MatchmakingLobbyComponent;
   public isAdmin$: Observable<boolean>;
   public sidebarMenuOpen = false;
+  public selectedFormat: Format | null = null;
   private menuCloseTimeout: any;
 
   constructor(
@@ -174,14 +176,16 @@ export class GamesComponent implements OnInit, OnDestroy {
   }
 
   public onMenuClosed(): void {
-    console.log('Menu closed - scheduling sidebar collapse'); // Debug log
-
-    // Add a small delay before closing to prevent flickering
-    // and to handle rapid menu open/close cycles
+    if (this.menuCloseTimeout) {
+      clearTimeout(this.menuCloseTimeout);
+    }
     this.menuCloseTimeout = setTimeout(() => {
       this.sidebarMenuOpen = false;
-      console.log('Sidebar menu state set to false'); // Debug log
-    }, 200); // 200ms delay
+    }, 100);
+  }
+
+  public toggleSidebar(): void {
+    this.sidebarMenuOpen = !this.sidebarMenuOpen;
   }
 
   private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[]): Promise<CreateGamePopupResult> {
@@ -256,5 +260,12 @@ export class GamesComponent implements OnInit, OnDestroy {
         await this.alertService.error(this.translate.instant(errorMessage));
       }
     });
+  }
+
+
+
+  // Handle format selection from matchmaking lobby
+  onFormatSelected(format: Format): void {
+    this.selectedFormat = format;
   }
 }

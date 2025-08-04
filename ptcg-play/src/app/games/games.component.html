@@ -1,29 +1,10 @@
-<div class="tcg-games-container">
-  <!-- Left side - Pokemon artwork -->
-  <div class="pokemon-artwork">
-    <div class="artwork-overlay"></div>
-  </div>
-
-  <!-- Right side - Game interface -->
-  <div class="game-interface">
-    <!-- Main play button -->
-    <div class="play-section">
-      <div class="matchmaking-container">
-        <ptcg-matchmaking-lobby></ptcg-matchmaking-lobby>
-      </div>
+<div class="tcg-games-container" [class.format-selected]="selectedFormat">
+  <!-- Main content area - Full screen for matchmaking -->
+  <div class="main-content">
+    <div class="matchmaking-container">
+      <ptcg-matchmaking-lobby (formatSelected)="onFormatSelected($event)"></ptcg-matchmaking-lobby>
     </div>
-
-    <!-- Active games link -->
-    <!-- <div class="active-games-link">
-      <button mat-stroked-button routerLink="/games/active" class="games-button">
-        <mat-icon>sports_esports</mat-icon>
-        <span translate>GAMES_VIEW_ACTIVE</span>
-      </button>
-    </div> -->
   </div>
-
-  <!-- Sidebar Spacer - maintains layout space -->
-  <div class="sidebar-spacer"></div>
 
   <!-- Expandable Players Sidebar -->
   <div class="players-sidebar" [class.menu-open]="sidebarMenuOpen">

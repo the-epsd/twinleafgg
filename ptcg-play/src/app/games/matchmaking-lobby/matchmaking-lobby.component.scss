@@ -1,8 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+
 .matchmaking-lobby {
   display: flex;
   justify-content: center;
-  padding: 0;
+  align-items: center;
+  padding: 2rem;
   width: 100%;
+  height: 100vh;
+  position: relative;
+  transition: background 0.5s ease;
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      linear-gradient(45deg, rgba(26, 26, 46, 0.8) 0%, rgba(22, 33, 62, 0.8) 100%);
+    z-index: -1;
+  }
+
+  &.format-selected::before {
+    opacity: 0.3;
+  }
+
+  &.format-hovered::before {
+    opacity: 0.3;
+  }
 }
 
 .lobby-content {
@@ -10,150 +51,239 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 1200px;
+  padding: 2rem;
+  height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-.deck-card {
-  background: linear-gradient(135deg, rgba(0, 150, 136, 0.1), rgba(0, 121, 107, 0.05));
-  border: 2px solid rgba(0, 150, 136, 0.3);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 150, 136, 0.1);
-  width: 220px;
+.format-navigation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow:
-      0 6px 25px rgba(0, 0, 0, 0.4),
-      0 0 30px rgba(0, 150, 136, 0.2);
-    border-color: rgba(0, 150, 136, 0.6);
-  }
+  position: relative;
 }
 
-.deck-archetype {
-  height: 120px;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  padding: 20px;
+.format-selection-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid rgba(0, 150, 136, 0.2);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
 
-  ptcg-archetype {
-    transform: scale(2.5);
-    image-rendering: pixelated;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 0 10px rgba(0, 150, 136, 0.3));
+.nav-button {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+    border-color: rgba(255, 215, 0, 0.6);
+    color: #ffd700;
+    transform: scale(1.1);
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
   }
 }
 
-.deck-info {
-  background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.9));
-  padding: 12px 16px;
+.format-box {
+  width: 280px;
+  height: 400px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  opacity: 0.8;
+  transform: scale(1);
+
+  &:hover:not(.disabled) {
+    border-color: rgba(255, 215, 0, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    box-shadow:
+      0 12px 35px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px) scale(1.05);
+    opacity: 1;
+
+    .format-name {
+      color: #4CAF50;
+      text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .deck-name {
+      color: rgba(76, 175, 80, 0.8);
+    }
+  }
+
+  &.selected {
+    border-color: rgba(255, 215, 0, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    box-shadow:
+      0 12px 35px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px) scale(1.05);
+    opacity: 1;
+
+    .format-name {
+      color: #4CAF50;
+      text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .deck-name {
+      color: rgba(76, 175, 80, 0.8);
+    }
+  }
+
+  &.selected.fade-on-hover {
+    opacity: 0.4;
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+
+    &:hover {
+      transform: none;
+      border-color: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      box-shadow: none;
+    }
+
+    &.selected {
+      opacity: 1;
+      transform: translateY(-5px) scale(1.05);
+      border-color: rgba(255, 215, 0, 0.8);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 255, 255, 0.1);
+
+      .format-name {
+        color: #4CAF50;
+        text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+      }
+
+      .deck-name {
+        color: rgba(76, 175, 80, 0.8);
+      }
+    }
+  }
 }
 
-.deck-name {
-  color: #00bcd4;
-  font-size: 14px;
-  font-family: 'Segoe UI', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
-}
-
-.deck-status {
+.format-artwork {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
 
-  .default-star {
-    color: #00bcd4;
-    font-size: 14px;
-    height: 14px;
-    width: 14px;
-    margin-right: 4px;
-    filter: drop-shadow(0 0 5px rgba(0, 188, 212, 0.7));
-  }
-
-  span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.format-selection {
-  margin-bottom: 1.5rem;
-  text-align: center;
-
-  .format-button-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-    max-width: 350px;
-    margin: 0 auto;
-  }
-
-  .format-button {
-    padding: 4px 12px;
-    border-radius: 16px;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    min-width: unset;
-    cursor: pointer;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
-    height: 28px;
-    line-height: 1;
+    z-index: 1;
+  }
 
-    &:hover:not([disabled]) {
-      color: #00bcd4;
-      background: rgba(0, 188, 212, 0.1);
-      border-color: rgba(0, 188, 212, 0.3);
-      box-shadow: 0 2px 8px rgba(0, 188, 212, 0.2);
-      transform: translateY(-1px);
-    }
-
-    &.active {
-      color: white;
-      background: linear-gradient(135deg, #00bcd4, #009688);
-      border-color: #00bcd4;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
-      transform: translateY(-1px);
-    }
-
-    &[disabled] {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+  .deck-archetype {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
-// Custom geometric matchmaking button
-.queue-button {
+.format-info {
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  .format-name {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Urbanist', sans-serif;
+  }
+
+  .deck-name {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+  }
+}
+
+.page-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+
+  .page-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.play-button {
   background: linear-gradient(135deg, #00bcd4 0%, #009688 100%);
   color: white;
   width: 240px;
@@ -185,7 +315,6 @@
     right: 2px;
     bottom: 2px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
-    // clip-path: polygon(5% 0%, 100% 0%, 100% 95%, 95% 100%, 0% 100%, 0% 5%);
     pointer-events: none;
   }
 
@@ -239,75 +368,159 @@
 
 .connection-error {
   color: #ff6b6b;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   background: rgba(255, 107, 107, 0.1);
   border: 1px solid rgba(255, 107, 107, 0.2);
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 10px;
+  padding: 16px 20px;
   backdrop-filter: blur(10px);
 
   mat-icon {
-    margin-right: 8px;
-    font-size: 18px;
+    margin-right: 10px;
+    font-size: 20px;
   }
-}
-
-.no-deck-warning {
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
-  border: 2px solid rgba(255, 107, 107, 0.3);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  width: 220px;
-  margin: 0 auto;
-
-  p {
-    height: 120px;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 0;
-    text-align: center;
-    border-bottom: 2px solid rgba(255, 107, 107, 0.2);
-  }
-}
-
-.no-deck-icon {
-  font-size: 48px;
-  color: rgba(255, 107, 107, 0.7);
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .queue-button {
-    width: 200px;
+  .lobby-content {
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .format-selection-container {
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 600px;
+  }
+
+  .format-box {
+    width: 160px;
+    height: 240px;
+
+    .format-artwork {
+      padding: 1rem;
+
+      ptcg-archetype {
+        transform: scale(2);
+      }
+    }
+
+    .format-info {
+      padding: 0.75rem;
+
+      .format-name {
+        font-size: 0.8rem;
+      }
+
+      .deck-name {
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  .format-navigation {
+    gap: 1rem;
+
+    .nav-button {
+      width: 40px;
+      height: 40px;
+
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .page-info {
+      min-width: 100px;
+
+      .page-text {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .play-button {
+    width: 180px;
+    height: 55px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .matchmaking-lobby {
+    padding: 1rem;
+  }
+
+  .lobby-content {
+    gap: 1.5rem;
+  }
+
+  .format-selection-container {
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 300px;
+  }
+
+  .format-box {
+    width: 140px;
+    height: 200px;
+
+    .format-artwork {
+      padding: 0.75rem;
+
+      ptcg-archetype {
+        transform: scale(1.8);
+      }
+    }
+
+    .format-info {
+      padding: 0.5rem;
+
+      .format-name {
+        font-size: 0.75rem;
+      }
+
+      .deck-name {
+        font-size: 0.65rem;
+      }
+    }
+  }
+
+  .format-navigation {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .nav-button {
+      width: 36px;
+      height: 36px;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .page-info {
+      min-width: 80px;
+
+      .page-text {
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  .play-button {
+    width: 160px;
     height: 50px;
-    font-size: 13px;
-    letter-spacing: 0.8px;
-  }
-
-  .format-selection .format-button-wrapper {
-    max-width: 280px;
-    gap: 4px;
-  }
-
-  .format-button {
-    padding: 3px 10px;
-    font-size: 10px;
-    height: 24px;
-  }
-
-  .deck-card {
-    width: 200px;
+    font-size: 0.9rem;
   }
 }

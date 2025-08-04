@@ -9,27 +9,26 @@
   <!-- Center Section - Main Navigation -->
   <div class="toolbar-center">
     <nav class="main-navigation">
-      <a routerLink="/games" class="nav-item" routerLinkActive="active">
+      <a routerLink="/games" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_GAMES' | translate }}</span>
       </a>
-      <a routerLink="/deck" class="nav-item" routerLinkActive="active">
+      <a routerLink="/deck" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_DECKS' | translate }}</span>
       </a>
-      <a routerLink="/friends" class="nav-item" routerLinkActive="active">
+      <a routerLink="/friends" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">FRIENDS</span>
       </a>
-      <a routerLink="/ranking" class="nav-item" routerLinkActive="active">
+      <a routerLink="/ranking" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_RANKING' | translate }}</span>
       </a>
-      <a routerLink="/message" class="nav-item" routerLinkActive="active">
+      <a routerLink="/message" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_MESSAGES' | translate }}</span>
       </a>
-      <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active">
+      <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">BATTLE PASS</span>
       </a>
 
-
-      <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="(gameStates$ | async)?.length > 0">
+      <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
         {{ 'MAIN_TABLES' | translate }}
         <mat-icon>arrow_drop_down</mat-icon>
         <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
@@ -45,14 +44,10 @@
 
   <!-- Right Section - User Resources and Profile -->
   <div class="toolbar-right">
-    <!-- Language select -->
+    <!-- Language select - shown when not logged in -->
     <ptcg-language-select *ngIf="!loggedUser"></ptcg-language-select>
 
     <div class="ptcg-toolbar-user-info">
-      <button *ngIf="!loggedUser" mat-button (click)="login()">
-        {{ 'BUTTON_LOGIN' | translate }}
-      </button>
-
       <ptcg-user-bar *ngIf="loggedUser" class="ptcg-logged-user" [openUserPopup]="false" [user]="loggedUser"
         [matMenuTriggerFor]="menu">
       </ptcg-user-bar>
@@ -70,3 +65,4 @@
       </mat-menu>
     </div>
   </div>
+</div>

@@ -1,161 +1,104 @@
 .tcg-games-container {
   height: calc(100vh - 64px); // Account for app bar height
-  // margin-top: 64px; // Push below app bar
   display: flex;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   overflow: hidden;
-}
-
-.pokemon-artwork {
-  flex: 1.2;
   position: relative;
-  background: url('/assets/sv10pt5-banner.png') center/cover no-repeat,
-    linear-gradient(45deg, #1a1a2e, #0f3460);
-  background-blend-mode: overlay;
+  transition: background 0.5s ease;
 
   &::before {
     content: '';
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 64px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: repeating-linear-gradient(0deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.03) 2px,
-        rgba(255, 255, 255, 0.03) 4px);
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1;
   }
 
-  .artwork-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100%;
-    background: linear-gradient(to right, transparent, rgba(22, 33, 62, 0.8));
+  &.format-selected::before {
+    opacity: 0.3;
   }
 }
 
-.game-interface {
+.main-content {
   flex: 1;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(0, 123, 255, 0.05) 0%, transparent 50%),
-      repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.02) 60deg, transparent 120deg);
-    pointer-events: none;
-  }
+  padding: 0;
+  z-index: 1;
 }
 
-.play-section {
+.matchmaking-container {
   z-index: 1;
   width: 100%;
-
-  .matchmaking-container {
-    background: transparent;
-    backdrop-filter: none;
-    border-radius: 0;
-    border: none;
-    padding: 0;
-    box-shadow: none;
-  }
-}
-
-.active-games-link {
-  z-index: 1;
-
-  .games-button {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    background: transparent;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-
-    &:hover {
-      color: #ffd700;
-      border-color: rgba(255, 215, 0, 0.6);
-      background: rgba(255, 215, 0, 0.1);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
-    }
-
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-    }
-  }
-}
-
-// Sidebar Spacer - maintains layout space
-.sidebar-spacer {
-  width: 80px;
-  flex-shrink: 0;
-  // This maintains the 80px space in the layout while sidebar is positioned absolutely
-}
-
-// Always-overlay Players Sidebar
-.players-sidebar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
   height: 100%;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
-  backdrop-filter: blur(20px);
-  border-left: 1px solid rgba(255, 215, 0, 0.2);
-  overflow: hidden;
-  z-index: 1000;
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
 
-  // When expanded, just change width - no positioning changes
+.players-sidebar {
+  position: fixed;
+  top: 64px;
+  right: 0;
+  width: 85px;
+  height: calc(100vh - 64px);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 215, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: visible;
+  z-index: 1000;
+
   &:hover,
   &.menu-open {
-    width: 320px;
-    border-left-color: rgba(255, 215, 0, 0.4);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+    width: 230px;
+    overflow: hidden;
   }
 
   .sidebar-content {
+    width: 230px;
     height: 100%;
+    padding: 1.5rem;
+    padding-left: calc(1.5rem - 30px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
 
     &::-webkit-scrollbar {
-      width: 4px;
+      width: 6px;
     }
 
     &::-webkit-scrollbar-track {
-      background: rgba(255, 215, 0, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
     }
 
     &::-webkit-scrollbar-thumb {
       background: rgba(255, 215, 0, 0.3);
-      border-radius: 2px;
+      border-radius: 3px;
+
+      &:hover {
+        background: rgba(255, 215, 0, 0.5);
+      }
     }
   }
 }
@@ -433,24 +376,6 @@
 @media (max-width: 1024px) {
   .tcg-games-container {
     flex-direction: column;
-  }
-
-  .pokemon-artwork {
-    flex: 0.4;
-
-    .artwork-overlay {
-      background: linear-gradient(to top, transparent, rgba(22, 33, 62, 0.8));
-      width: 100%;
-      height: 100px;
-      top: auto;
-      bottom: 0;
-    }
-  }
-
-  .game-interface {
-    flex: 1;
-    padding: 1rem;
-    gap: 2rem;
   }
 
   .sidebar-spacer {
