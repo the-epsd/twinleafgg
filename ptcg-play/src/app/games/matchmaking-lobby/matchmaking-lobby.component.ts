@@ -221,6 +221,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     return undefined;
   }
 
+  // Helper method to check if a format has valid decks
+  hasValidDeckForFormat(format: Format): boolean {
+    return this.getDeckForFormat(format) !== undefined;
+  }
+
   // Helper method to load decks for a specific format
   private loadDecksForFormat(format: Format): void {
     this.deckService.getListByFormat(format).subscribe(

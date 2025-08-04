@@ -16,9 +16,10 @@
         <!-- First Format -->
         <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(0)?.value"
           [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(0)?.value"
-          [class.disabled]="inQueue" (click)="!inQueue && onFormatSelected(getFormatAtIndex(0)?.value)"
-          (mouseenter)="onFormatHover(getFormatAtIndex(0)?.value)" (mouseleave)="onFormatHover(null)"
-          *ngIf="getFormatAtIndex(0)">
+          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(0)?.value)"
+          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(0)?.value) && onFormatSelected(getFormatAtIndex(0)?.value)"
+          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(0)?.value) && onFormatHover(getFormatAtIndex(0)?.value)"
+          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(0)">
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(0)?.value))"
@@ -35,9 +36,10 @@
         <!-- Second Format -->
         <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(1)?.value"
           [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(1)?.value"
-          [class.disabled]="inQueue" (click)="!inQueue && onFormatSelected(getFormatAtIndex(1)?.value)"
-          (mouseenter)="onFormatHover(getFormatAtIndex(1)?.value)" (mouseleave)="onFormatHover(null)"
-          *ngIf="getFormatAtIndex(1)">
+          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(1)?.value)"
+          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(1)?.value) && onFormatSelected(getFormatAtIndex(1)?.value)"
+          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(1)?.value) && onFormatHover(getFormatAtIndex(1)?.value)"
+          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(1)">
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(1)?.value))"
@@ -54,9 +56,10 @@
         <!-- Third Format -->
         <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(2)?.value"
           [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(2)?.value"
-          [class.disabled]="inQueue" (click)="!inQueue && onFormatSelected(getFormatAtIndex(2)?.value)"
-          (mouseenter)="onFormatHover(getFormatAtIndex(2)?.value)" (mouseleave)="onFormatHover(null)"
-          *ngIf="getFormatAtIndex(2)">
+          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(2)?.value)"
+          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatSelected(getFormatAtIndex(2)?.value)"
+          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatHover(getFormatAtIndex(2)?.value)"
+          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(2)">
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(2)?.value))"
@@ -73,9 +76,10 @@
         <!-- Fourth Format -->
         <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(3)?.value"
           [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(3)?.value"
-          [class.disabled]="inQueue" (click)="!inQueue && onFormatSelected(getFormatAtIndex(3)?.value)"
-          (mouseenter)="onFormatHover(getFormatAtIndex(3)?.value)" (mouseleave)="onFormatHover(null)"
-          *ngIf="getFormatAtIndex(3)">
+          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(3)?.value)"
+          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatSelected(getFormatAtIndex(3)?.value)"
+          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatHover(getFormatAtIndex(3)?.value)"
+          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(3)">
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(3)?.value))"
