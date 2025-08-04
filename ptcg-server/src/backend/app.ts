@@ -99,7 +99,6 @@ export class App {
         (err.code === 'ECONNRESET') ||
         (err.status === 400 && err.message === 'request aborted')
       )) {
-        console.log(`[HTTP] Request aborted by client: ${req.method} ${req.url}`);
         return;
       }
 

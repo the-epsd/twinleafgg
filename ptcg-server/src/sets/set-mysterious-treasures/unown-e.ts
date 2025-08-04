@@ -7,6 +7,7 @@ import {
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* usePower(next: Function, store: StoreLike, state: State, self: UnownE, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -46,13 +47,38 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownE,
     { allowCancel: true, blocked }
   ), targets => {
     if (targets && targets.length > 0) {
-      // Attach Unown Q as a Pokemon Tool
-      player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tools.push(pokemonCard);
+      // Get the slot and card before moving anything
+      const unownESlot = player.bench[benchIndex];
+      const unownECard = unownESlot.getPokemonCard();
 
-      // Discard other cards
-      player.bench[benchIndex].moveTo(player.discard);
-      player.bench[benchIndex].clearEffects();
+      if (!unownECard) {
+        return state;
+      }
+
+      // Move all attached cards to discard first
+      const otherCards = unownESlot.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!unownESlot.tools || !unownESlot.tools.includes(card))
+      );
+      const tools = [...unownESlot.tools];
+
+      // Move tools to discard first
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          unownESlot.moveCardTo(tool, player.discard);
+        }
+      }
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, unownESlot, player.discard, { cards: otherCards });
+      }
+
+      // Now attach Unown E as a Pokemon Tool
+      unownESlot.moveCardTo(unownECard, targets[0]);
+      targets[0].tools.push(unownECard);
+
+      unownESlot.clearEffects();
     }
   });
 }

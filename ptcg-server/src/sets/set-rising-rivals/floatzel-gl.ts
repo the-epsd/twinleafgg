@@ -82,12 +82,10 @@ export class FloatzelGL extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_GIANT_WAVE_MARKER, this)) {
       effect.player.marker.removeMarker(this.GIANT_WAVE_MARKER, this);
       effect.player.marker.removeMarker(this.CLEAR_GIANT_WAVE_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.GIANT_WAVE_MARKER, this)) {
       effect.player.marker.addMarker(this.CLEAR_GIANT_WAVE_MARKER, this);
-      console.log('second marker added');
     }
 
     return state;

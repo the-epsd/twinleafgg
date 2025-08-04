@@ -61,7 +61,6 @@ export class Torterraex extends PokemonCard {
       playerBench.forEach(c => {
         if (c.getPokemonCard() instanceof PokemonCard) {
           if (c.getPokemonCard()?.cardType == CardType.GRASS) {
-            console.log(c.getPokemonCard()?.stage);
             grassPokemon++;
           }
         }

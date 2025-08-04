@@ -23,7 +23,6 @@ import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
 import { TermsModule } from './terms/terms.module';
-import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 
 @NgModule({
@@ -56,10 +55,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
     }),
     BrowserAnimationsModule,
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    CardInfoDialogComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(languageService: LanguageService) {

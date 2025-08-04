@@ -18,6 +18,7 @@ import { Falinks } from './falinks';
 import { FanOfWaves } from './fan-of-waves';
 import { FlappleV } from './flapple-v';
 import { FlappleVMAX } from './flapple-vmax';
+import { Frillish } from './frillish';
 import { Golbat } from './golbat';
 import { Houndoom } from './houndoom';
 import { Houndour } from './houndour';
@@ -36,6 +37,7 @@ import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
 import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
 import { Rolycoly } from './rolycoly';
+import { Salandit } from './salandit';
 import { SingleStrikeEnergy } from './single-strike-energy';
 import { SingleStrikeStyleMustard } from './single-strike-style-mustard';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
@@ -74,6 +76,7 @@ export const setBattleStyles: Card[] = [
   new FanOfWaves(),
   new FlappleV(),
   new FlappleVMAX(),
+  new Frillish(),
   new Golbat(),
   new Houndoom(),
   new Houndour(),
@@ -92,6 +95,7 @@ export const setBattleStyles: Card[] = [
   new RapidStrikeUrshifuVMAX(),
   new Remoraid(),
   new Rolycoly(),
+  new Salandit(),
   new SingleStrikeEnergy(),
   new SingleStrikeStyleMustard(),
   new SingleStrikeUrshifuV(),

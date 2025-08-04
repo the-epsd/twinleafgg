@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { StoreLike, State, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType, GameError, GameStoreMessage, CardTarget } from '../../game';
+import { COIN_FLIP_PROMPT, DEVOLVE_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { StoreLike, State, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -76,17 +76,7 @@ export class Mew extends PokemonCard {
           ),
             (results) => {
               if (results && results.length > 0) {
-                const targetPokemon = results[0];
-                const pokemons = targetPokemon.getPokemons();
-
-                if (pokemons.length > 1) {
-                  const highestStagePokemon = pokemons[pokemons.length - 1];
-                  targetPokemon.moveCardsTo([highestStagePokemon], effect.player.hand);
-                  targetPokemon.clearEffects();
-                  targetPokemon.pokemonPlayedTurn = state.turn;
-                } else {
-                  throw new GameError(GameStoreMessage.INVALID_GAME_STATE);
-                }
+                DEVOLVE_POKEMON(store, state, results[0], effect.opponent.hand);
               }
 
               return state;

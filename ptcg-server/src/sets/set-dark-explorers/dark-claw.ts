@@ -24,14 +24,16 @@ export class DarkClaw extends TrainerCard {
   public setNumber: string = '92';
 
   public text: string =
-    'If this card is attached to a D Pokemon, each of the attacks ' +
+    'If this card is attached to a [D] Pokemon, each of the attacks ' +
     'of that Pokemon does 20 more damage to the Active Pokemon ' +
     '(before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
-      const opponent = StateUtils.findOwner(state, effect.target);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const sourcePokemon = effect.source;
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
         return state;
@@ -42,10 +44,10 @@ export class DarkClaw extends TrainerCard {
         return state;
       }
 
-      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.source);
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(sourcePokemon);
       store.reduceEffect(state, checkPokemonTypeEffect);
 
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.DARK)) {
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.DARK) && effect.damage > 0) {
         effect.damage += 20;
       }
     }

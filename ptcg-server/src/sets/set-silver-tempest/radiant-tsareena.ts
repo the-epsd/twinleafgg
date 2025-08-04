@@ -8,7 +8,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError, GameMessage, PokemonCardList } from '../../game';
 import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class RadiantTsareena extends PokemonCard {
@@ -70,6 +70,8 @@ export class RadiantTsareena extends PokemonCard {
         return state;
       });
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ELEGANT_HEAL_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

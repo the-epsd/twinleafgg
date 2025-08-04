@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, BoardEffect, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ChoosePokemonPrompt, SlotType } from '../../game';
 import { AttackEffect, Effect, EffectOfAbilityEffect, MoveCardsEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -9,8 +9,8 @@ export class TestPokemon extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
-  public hp: number = 100;
-  public weakness = [{ type: C }];
+  public hp: number = 1000;
+  public weakness = [{ type: D }];
   public retreat = [];
 
   public powers = [
@@ -37,6 +37,12 @@ export class TestPokemon extends PokemonCard {
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'Draw 1 card from the bottom of your deck.'
+    },
+    {
+      name: 'Status Chaos',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Your opponent\'s Active Pokémon is now Poisoned, Asleep, Paralyzed, and Confused.'
     }
   ];
 
@@ -123,6 +129,29 @@ export class TestPokemon extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[3]) {
       const player = effect.player;
       player.deck.moveCardTo(player.deck.cards[player.deck.cards.length - 1], player.hand);
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[4]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentActive = opponent.active.getPokemonCard();
+
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === opponentActive) {
+          // Apply all four status conditions
+          cardList.specialConditions = [
+            ...cardList.specialConditions,
+            SpecialCondition.POISONED,
+            SpecialCondition.ASLEEP,
+            SpecialCondition.PARALYZED,
+            SpecialCondition.CONFUSED,
+            SpecialCondition.BURNED
+          ];
+
+          // Remove duplicates
+          cardList.specialConditions = [...new Set(cardList.specialConditions)];
+        }
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

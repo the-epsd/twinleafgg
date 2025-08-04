@@ -24,6 +24,9 @@ import { TeamPlasmaBall } from './team-plasma-ball';
 import { ThundurusEX } from './thundurus-ex';
 import { Weavile } from './weavile';
 
+// Other Prints
+import { MaxPotionPLF } from './other-prints';
+
 export const setPlasmaFreeze: Card[] = [
   new Absol(),
   new Cofagrigus(),
@@ -49,4 +52,7 @@ export const setPlasmaFreeze: Card[] = [
   new TeamPlasmaBall(),
   new ThundurusEX(),
   new Weavile(),
+
+  // Other Prints
+  new MaxPotionPLF(),
 ];

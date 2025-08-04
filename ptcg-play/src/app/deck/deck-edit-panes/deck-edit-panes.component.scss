@@ -8,6 +8,10 @@
   position: relative;
   width: 100%;
   height: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .ptcg-deck-edit-container {
@@ -16,6 +20,10 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .ptcg-deck-edit-panes-wrapper {
@@ -24,6 +32,10 @@
   flex-direction: row;
   overflow: auto;
   min-width: 250px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .ptcg-deck-edit-pane,

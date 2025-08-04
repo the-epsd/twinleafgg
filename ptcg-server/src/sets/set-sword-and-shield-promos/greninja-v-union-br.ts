@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, Power, PowerType, State, StoreLike } from '../../game';
+import { GameError, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import {GreninjaVUNIONTopLeft} from './greninja-v-union-tl';
-import {GreninjaVUNIONTopRight} from './greninja-v-union-tr';
-import {GreninjaVUNIONBottomLeft} from './greninja-v-union-bl';
+import { GreninjaVUNIONTopLeft } from './greninja-v-union-tl';
+import { GreninjaVUNIONTopRight } from './greninja-v-union-tr';
+import { GreninjaVUNIONBottomLeft } from './greninja-v-union-bl';
 
 export class GreninjaVUNIONBottomRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -15,13 +15,23 @@ export class GreninjaVUNIONBottomRight extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public powers: Power[] = [
+  public powers = [
     {
       name: 'Greninja V-UNION Assembly',
       text: 'Once per game during your turn, combine 4 different Greninja V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
       powerType: PowerType.VUNION_ASSEMBLY,
+    },
+    {
+      name: 'Ninja Body',
+      text: 'Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.',
+      powerType: PowerType.ABILITY
+    },
+    {
+      name: 'Antidote Jutsu',
+      text: 'This Pokémon can\'t be Poisoned.',
+      powerType: PowerType.ABILITY
     },
     {
       name: 'Feel the Way',
@@ -32,6 +42,24 @@ export class GreninjaVUNIONBottomRight extends PokemonCard {
   ];
 
   public attacks = [
+    {
+      name: 'Union Gain',
+      cost: [C],
+      damage: 0,
+      text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.'
+    },
+    {
+      name: 'Aqua Edge',
+      cost: [W],
+      damage: 130,
+      text: ''
+    },
+    {
+      name: 'Twister Shuriken',
+      cost: [W, W, C],
+      damage: 0,
+      text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    },
     {
       name: 'Waterfall Bind',
       cost: [W, W, C],

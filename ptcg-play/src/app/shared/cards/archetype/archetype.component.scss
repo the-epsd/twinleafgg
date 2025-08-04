@@ -2900,6 +2900,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/lucario.png);
   }
 
+  &[archetype="mega-lucario"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/lucario-mega.png);
+  }
+
   &[archetype="hippopotas"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/hippopotas.png);
@@ -2958,6 +2963,11 @@
   &[archetype="abomasnow"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/abomasnow.png);
+  }
+
+  &[archetype="mega-abomasnow"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/abomasnow-mega.png);
   }
 
   &[archetype="weavile"] {

@@ -5,8 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../game/store/prefabs/attack-effects';
 
 export class MoltresZapdosArticunoGX extends PokemonCard {
@@ -61,18 +60,14 @@ export class MoltresZapdosArticunoGX extends PokemonCard {
           { min: 1, max: 3, allowCancel: false }
         ), selected => {
           const targets = selected || [];
-          targets.forEach(target => {
-            const damageEffect = new PutDamageEffect(effect, 110);
-            damageEffect.target = target;
-            state = store.reduceEffect(state, damageEffect);
-          });
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 110, targets);
           SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
           return state;
         });
       } else {
         SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
       }
-      
+
     }
     return state;
   }

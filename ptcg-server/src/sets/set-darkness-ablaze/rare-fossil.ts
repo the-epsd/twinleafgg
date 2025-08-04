@@ -19,9 +19,9 @@ export class RareFossil extends TrainerCard {
   public evolvesFrom = '';
   public cardTag = [];
   public tools = [];
-
+  public evolvesTo = [];
+  public evolvesToStage = [];
   public archetype = [];
-
   public hp: number = 70;
   public weakness = [];
   public retreat = [];

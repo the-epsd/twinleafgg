@@ -54,6 +54,7 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      player.rocketSupporter = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
@@ -103,6 +104,10 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
     // Reset marker at end of turn
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ARCHER_MARKER, this)) {
       effect.player.marker.removeMarker(this.ARCHER_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.rocketSupporter) {
+      effect.player.rocketSupporter = false;
     }
 
     return state;

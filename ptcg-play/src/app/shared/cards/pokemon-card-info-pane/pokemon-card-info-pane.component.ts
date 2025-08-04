@@ -37,7 +37,6 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
   public Stage = Stage;
   public PowerType = PowerType;
   public EnergyType = EnergyType;
-  public heavilyPlayedUrl: SafeUrl;
   public isSelectionMode = false;
 
   // Track available energy types to determine if attack costs are met
@@ -197,11 +196,6 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
       } else if (formattedSetNumber.length === 2) {
         formattedSetNumber = '0' + formattedSetNumber;
       }
-      const searchQuery = `${mainCard.name} - ${formattedSetNumber}`;
-      const encodedQuery = encodeURIComponent(searchQuery);
-      this.heavilyPlayedUrl = this.sanitizer.bypassSecurityTrustUrl(
-        `https://heavilyplayed.com/search/products?search=${encodedQuery}`
-      );
     }
   }
 

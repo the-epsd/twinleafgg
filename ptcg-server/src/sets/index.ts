@@ -172,8 +172,8 @@ export * from './set-surging-sparks';
 export * from './set-prismatic-evolution';
 export * from './set-journey-together';
 export * from './set-destined-rivals';
-export * from './set-sv11';
-export * from './set-m1s';
+export * from './set-black-bolt-white-flare';
+export * from './set-mega-evolution';
 
 //TEST
 export * from './set-test';

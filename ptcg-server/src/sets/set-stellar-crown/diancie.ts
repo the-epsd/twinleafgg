@@ -49,7 +49,6 @@ export class Diancie extends PokemonCard {
         }
       });
       effect.damage = 40 * specialEnergyCount;
-      console.log(effect.damage);
     }
     return state;
   }

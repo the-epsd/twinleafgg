@@ -76,10 +76,8 @@ export class Terapagosex extends PokemonCard {
     }
 
     if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponent.active.isStage(Stage.BASIC) && opponentActive?.cardType !== CardType.COLORLESS) {
+      const sourceCard = effect.source.getPokemonCard();
+      if (sourceCard && sourceCard.stage === Stage.BASIC && sourceCard.cardType !== CardType.COLORLESS) {
         effect.preventDefault = true;
         return state;
       }

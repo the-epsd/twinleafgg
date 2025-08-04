@@ -36,11 +36,13 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
     for (const deck of userDecks) {
       const cardNames: string[] = JSON.parse(deck.cards);
       let needsNameUpdate = false;
+      const changedCards: string[] = [];
 
       const resolvedCards = cardNames.map(name => {
         const card = cardManager.getCardByName(name);
         if (card && card.fullName !== name) {
           needsNameUpdate = true;
+          changedCards.push(`${name} → ${card.fullName}`);
           return card.fullName;
         }
         return name;
@@ -58,16 +60,25 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
         if (needsValidationUpdate) {
           deck.isValid = newIsValid;
         }
-        console.log(`[Migration] Saving changes for deck "${deck.name}" (User: ${user.name}) to database.`);
         await deck.save();
+
+        // Log specific changes for this deck
+        const changes = [];
+        if (needsNameUpdate && changedCards.length > 0) {
+          changes.push(`Card names: ${changedCards.join(', ')}`);
+        }
+        if (needsValidationUpdate) {
+          changes.push(`Validation: ${deck.isValid ? 'valid' : 'invalid'}`);
+        }
+        console.log(`Deck ${deck.id} updated for user ${userId}: ${changes.join(', ')}`);
       }
     }
 
     if (hasChanges) {
-      console.log(`[Migration] Finished updating decks for user ${user.name} (ID: ${userId}).`);
+      console.log(`Deck migration completed for user ${userId}: Updated card names and validation status`);
     }
   } catch (error) {
-    console.error(`[Migration] Error updating decks for user ${userId}:`, error);
+    console.error(`Error during deck migration for user ${userId}:`, error);
   }
   // --- End Deck Migration Logic ---
 

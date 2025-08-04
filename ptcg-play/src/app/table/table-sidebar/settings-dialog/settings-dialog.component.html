@@ -8,9 +8,6 @@
       <label>
         <input type="checkbox" [(ngModel)]="showCardName"> Show Card Names
       </label>
-      <label>
-        <input type="checkbox" [(ngModel)]="testAnimation"> Enable Test Animation
-      </label>
       <div class="slider-container">
         <label>Card Size</label>
         <input type="range" [(ngModel)]="cardSize" min="50" max="200" step="10" (change)="onCardSizeChange($event)">

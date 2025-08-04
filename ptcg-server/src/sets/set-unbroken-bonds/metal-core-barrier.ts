@@ -49,7 +49,7 @@ export class MetalCoreBarrier extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 

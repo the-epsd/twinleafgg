@@ -94,12 +94,10 @@ export class GarchompCLVX extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGON_RUSH_MARKER_2, this)) {
       effect.player.marker.removeMarker(this.DRAGON_RUSH_MARKER, this);
       effect.player.marker.removeMarker(this.DRAGON_RUSH_MARKER_2, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGON_RUSH_MARKER, this)) {
       effect.player.marker.addMarker(this.DRAGON_RUSH_MARKER_2, this);
-      console.log('second marker added');
     }
 
     // making sure it gets put on the active pokemon

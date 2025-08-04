@@ -784,6 +784,7 @@ export class NsZoruaSVP extends NsZorua {
 
 export class MarniesMorpekoIR extends MarniesMorpeko {
   public fullName = 'Marnie\'s MorpekoIR SVP';
+  public set = 'SVP';
   public setNumber = '206';
 }
 

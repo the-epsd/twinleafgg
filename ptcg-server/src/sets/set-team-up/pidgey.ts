@@ -5,7 +5,6 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Pidgey extends PokemonCard {
-  public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 50;

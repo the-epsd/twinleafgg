@@ -5,10 +5,10 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import {
-  DiscardCardsEffect, AddSpecialConditionsEffect,
-  PutDamageEffect
+  DiscardCardsEffect, AddSpecialConditionsEffect
 } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 
 export class RaikouEx extends PokemonCard {
@@ -56,7 +56,6 @@ export class RaikouEx extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const opponent = effect.opponent;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -80,15 +79,7 @@ export class RaikouEx extends PokemonCard {
         { allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        if (targets.includes(opponent.active)) {
-          effect.damage = 100;
-          return;
-        }
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 100);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
       });
     }
 

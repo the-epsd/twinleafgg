@@ -8,6 +8,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayerType } from '../../game/store/actions/play-card-action';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class TeamRocketsAriana extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -38,6 +39,7 @@ export class TeamRocketsAriana extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
+      player.rocketSupporter = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
@@ -80,6 +82,10 @@ export class TeamRocketsAriana extends TrainerCard {
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
       return state;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.rocketSupporter) {
+      effect.player.rocketSupporter = false;
     }
 
     return state;

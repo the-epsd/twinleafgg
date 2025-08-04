@@ -72,32 +72,35 @@ export class Wishiwashi extends PokemonCard {
                 );
                 const tools = [...cardList.tools];
 
-                if (otherCards.length > 0) {
-                  MOVE_CARDS(store, state, cardList, opponent.deck, { cards: otherCards });
-                }
-
                 if (tools.length > 0) {
                   for (const tool of tools) {
                     cardList.moveCardTo(tool, opponent.deck);
                   }
                 }
 
+                if (otherCards.length > 0) {
+                  MOVE_CARDS(store, state, cardList, opponent.deck, { cards: otherCards });
+                }
+
                 if (pokemons.length > 0) {
                   MOVE_CARDS(store, state, cardList, opponent.deck, { cards: pokemons });
                 }
+
+                return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+                  opponent.deck.applyOrder(order);
+                  opponent.marker.removeMarker(this.SCATTER_MARKER, this);
+                  return state;
+                });
               }
+              opponent.marker.removeMarker(this.SCATTER_MARKER, this);
+              return state;
             });
           }
         }
       });
-      return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-        opponent.deck.applyOrder(order);
-        opponent.marker.removeMarker(this.SCATTER_MARKER, this);
-        return state;
-      });
-
+      opponent.marker.removeMarker(this.SCATTER_MARKER, this);
+      return state;
     }
-
     return state;
   }
 }

@@ -75,11 +75,24 @@ export class Phione extends PokemonCard {
           opponent.active.clearEffects();
           opponent.switchPokemon(targets[0]);
 
-          // Move all attached cards (energy, tools) to discard
-          MOVE_CARDS(store, state, phioneList, player.discard, {
-            cards: phioneList.cards.filter(c => c !== phioneCard),
-            skipCleanup: false
-          });
+          // Get attached cards (energy, tools, etc.)
+          const otherCards = phioneList.cards.filter(card =>
+            !(card instanceof PokemonCard) &&
+            (!phioneList.tools || !phioneList.tools.includes(card))
+          );
+          const tools = [...phioneList.tools];
+
+          // Move tools to discard first
+          if (tools.length > 0) {
+            for (const tool of tools) {
+              phioneList.moveCardTo(tool, player.discard);
+            }
+          }
+
+          // Move other attached cards to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, phioneList, player.discard, { cards: otherCards });
+          }
 
           // Move Phione to bottom of deck
           MOVE_CARDS(store, state, phioneList, deckBottom, {
@@ -87,7 +100,7 @@ export class Phione extends PokemonCard {
             skipCleanup: false
           });
           MOVE_CARDS(store, state, deckBottom, player.deck, {
-            toBottom: false
+            toBottom: true
           });
 
           phioneList.clearEffects();

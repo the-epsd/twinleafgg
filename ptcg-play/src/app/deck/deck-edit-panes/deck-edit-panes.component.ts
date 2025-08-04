@@ -97,8 +97,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
 
     for (let i = 0; i < firstTrainerIndex; i++) {
-      if ((<PokemonCard>cards[i].card).evolvesFrom) {
-        const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
+      const pokemonCard = cards[i].card as PokemonCard;
+      if (pokemonCard.evolvesFrom) {
+        const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === pokemonCard.evolvesFrom);
 
         if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
           continue;
@@ -111,6 +112,24 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
           { ...currentPokemon },
           ...cards.slice(indexOfPrevolution + 1),
         ];
+      }
+      // Also handle evolvesTo relationships
+      else if (pokemonCard.evolvesTo && pokemonCard.evolvesTo.length > 0) {
+        // Find the first evolution that exists in the deck
+        for (const evolutionName of pokemonCard.evolvesTo) {
+          const indexOfEvolution = this.findLastIndex(cards, c => c.card.name === evolutionName);
+
+          if (indexOfEvolution !== -1 && cards[indexOfEvolution]?.card.superType === SuperType.POKEMON) {
+            const currentPokemon = { ...cards.splice(i, 1)[0] };
+
+            cards = [
+              ...cards.slice(0, indexOfEvolution),
+              { ...currentPokemon },
+              ...cards.slice(indexOfEvolution),
+            ];
+            break;
+          }
+        }
       }
     }
 
@@ -352,6 +371,13 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         // Also add the evolved form to evolutionCards
         evolutionCards.add(pokemonCard.evolvesFrom);
       }
+      // Also check evolvesTo relationships
+      if (pokemonCard.evolvesTo && pokemonCard.evolvesTo.length > 0) {
+        pokemonCard.evolvesTo.forEach(evolutionName => {
+          evolutionCards.add(evolutionName);
+          evolutionCards.add(pokemonCard.name);
+        });
+      }
     });
 
     // Second pass: build evolution chains
@@ -376,6 +402,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         });
         if (basic) {
           chainKey = basic.card.name;
+        }
+        // Also check if this Pokemon can evolve into others (evolvesTo)
+        else if (pokemonCard.evolvesTo && pokemonCard.evolvesTo.length > 0) {
+          // Use this Pokemon as the chain key if it can evolve into others
+          chainKey = pokemonCard.name;
         }
       }
 
@@ -408,7 +439,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         const bIndex = stageOrder.indexOf(pokemonB.stage);
 
         // If they're in the same evolution chain, sort by stage
-        if (pokemonA.evolvesFrom === pokemonB.name || pokemonB.evolvesFrom === pokemonA.name) {
+        if (pokemonA.evolvesFrom === pokemonB.name || pokemonB.evolvesFrom === pokemonA.name ||
+          (pokemonA.evolvesTo && pokemonA.evolvesTo.includes(pokemonB.name)) ||
+          (pokemonB.evolvesTo && pokemonB.evolvesTo.includes(pokemonA.name))) {
           return aIndex - bIndex;
         }
 
@@ -586,9 +619,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckTarget.unsubscribe();
   }
 
-  onDeckCardClick(card: DeckItem) {
-    this.removeCardFromDeck(card);
-  }
+
 
   onLibraryCardClick(card: DeckItem) {
     this.addCardToDeck(card);

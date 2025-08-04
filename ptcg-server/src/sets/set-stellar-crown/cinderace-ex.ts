@@ -5,6 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Cinderaceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -45,22 +46,18 @@ export class Cinderaceex extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
       if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -79,10 +76,8 @@ export class Cinderaceex extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
       ), selected => {
-        const target = selected[0];
-        const damageEffect = new PutDamageEffect(effect, 180);
-        damageEffect.target = target;
-        store.reduceEffect(state, damageEffect);
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 180, targets);
       });
     }
 

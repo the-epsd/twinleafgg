@@ -5,7 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class DefianceVest extends TrainerCard {
@@ -30,7 +30,7 @@ export class DefianceVest extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Reduce damage by 40
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

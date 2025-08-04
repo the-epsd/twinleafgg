@@ -2,6 +2,8 @@ import { Card } from '../../game/store/card/card';
 import { BebesSearch } from './bebes-search';
 import { Chansey } from './chansey';
 import { Croconaw } from './croconaw';
+import { Gabite } from './gabite';
+import { Garchomp } from './garchomp';
 import { UnownE } from './unown-e';
 import { TeamGalacticsWager } from './team-galactics-wager';
 import { TimeSpaceDistortion } from './time-space-distortion';
@@ -17,6 +19,8 @@ export const setMysteriousTreasures: Card[] = [
   new BebesSearch(),
   new Chansey(),
   new Croconaw(),
+  new Gabite(),
+  new Garchomp(),
   new UnownE(),
   new TeamGalacticsWager(),
   new TimeSpaceDistortion(),

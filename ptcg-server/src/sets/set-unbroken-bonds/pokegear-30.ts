@@ -57,19 +57,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class Pokegear30 extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
-  public regulationMark = 'G';
-
   public set: string = 'UNB';
-
   public name: string = 'Pokegear 3.0';
-
   public fullName: string = 'Pokegear 3.0 UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '182';
 
   public text: string =
@@ -82,9 +74,8 @@ export class Pokegear30 extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  

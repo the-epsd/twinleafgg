@@ -113,7 +113,6 @@ export class BloodmoonUrsaluna extends PokemonCard {
         const damage = 100 + (opponent.active.damage * 3);
 
         effect.damage = damage;
-        console.log(damage);
       }
     }
     return state;

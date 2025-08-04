@@ -70,7 +70,6 @@ export class Toxicroak extends PokemonCard {
       const toxicroakOpponent = StateUtils.getOpponent(state, toxicroakOwner);
       if (effect.player === toxicroakOpponent && toxicroakOpponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
         effect.poisonDamage += 20;
-        console.log('toxicroak:', effect.poisonDamage);
       }
     }
 

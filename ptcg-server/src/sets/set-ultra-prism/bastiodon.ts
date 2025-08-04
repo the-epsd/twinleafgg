@@ -56,12 +56,8 @@ export class Bastiodon extends PokemonCard {
 
       const opponentHasSpecialEnergy = checkProvidedEnergyEffect.energyMap.some(e => e.card.energyType === EnergyType.SPECIAL);
 
-      console.log('Opponent has special energy: ' + opponentHasSpecialEnergy);
-
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(opponent.active);
       store.reduceEffect(state, checkPokemonTypeEffect);
-
-      console.log('Bastiodon owner has metal type in active: ' + checkPokemonTypeEffect.cardTypes.includes(CardType.METAL));
 
       if (opponentHasSpecialEnergy && checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
         effect.preventDefault = true;

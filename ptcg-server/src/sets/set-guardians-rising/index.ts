@@ -4,6 +4,7 @@ import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
 import { ChoiceBand } from './choice-band';
+import { Dhelmise } from './dhelmise';
 import { DrampaGX } from './drampa-gx';
 import { FieldBlower } from './field-blower';
 import { Garbodor } from './garbodor';
@@ -19,12 +20,18 @@ import { Sudowoodo } from './sudowoodo';
 import { SylveonGX } from './sylveon-gx';
 import { TapuKokoGX } from './tapu-koko-gx';
 import { TapuLeleGX } from './tapu-lele-gx';
+import { Trubbish } from './trubbish';
 
 // Other prints
 import {
   AlolanVulpixGRI,
   EnhancedHammerGRI,
+  FieldBlowerGRI,
+  FieldBlowerGRI2,
   MaxPotionGRI,
+  MaxPotionGRI2,
+  MaxPotionGRI3,
+  RescueStretcherGRI,
 } from './other-prints';
 
 export const setGuardiansRising: Card[] = [
@@ -33,6 +40,7 @@ export const setGuardiansRising: Card[] = [
   new AquaPatch(),
   new BrookletHill(),
   new ChoiceBand(),
+  new Dhelmise(),
   new DrampaGX(),
   new FieldBlower(),
   new Garbodor(),
@@ -48,9 +56,15 @@ export const setGuardiansRising: Card[] = [
   new SylveonGX(),
   new TapuLeleGX(),
   new TapuKokoGX(),
+  new Trubbish(),
 
   // Other prints
   new AlolanVulpixGRI(),
   new EnhancedHammerGRI(),
+  new FieldBlowerGRI(),
+  new FieldBlowerGRI2(),
   new MaxPotionGRI(),
+  new MaxPotionGRI2(),
+  new MaxPotionGRI3(),
+  new RescueStretcherGRI(),
 ];

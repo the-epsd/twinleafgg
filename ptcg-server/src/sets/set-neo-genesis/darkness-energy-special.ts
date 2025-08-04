@@ -20,10 +20,14 @@ export class DarknessEnergySpecial extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Increase damage output
-    if (effect instanceof PutDamageEffect) {
-      if (effect.source.cards.includes(this)) {
-        effect.damage += 10;
-      }
+    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
+      // must deal > 0 damage to active Pokémon
+      // const target = effect.target;
+      // if (effect.damage && effect.damage > 0 && (effect.target === effect.opponent.active || effect.target === effect.player.active)) {
+      //   const additionalDamageEffect = new AfterWeaknessAndResistanceEffect(effect.attackEffect, 10);
+      //   additionalDamageEffect.target = target;
+      //   store.reduceEffect(state, additionalDamageEffect);
+      // }
     }
 
     if (effect instanceof EndTurnEffect) {

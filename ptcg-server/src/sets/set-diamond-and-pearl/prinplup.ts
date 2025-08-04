@@ -1,9 +1,9 @@
 import { CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 
 export class Prinplup extends PokemonCard {
@@ -88,13 +88,9 @@ export class Prinplup extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false, blocked }
-      ), target => {
-        if (!target || target.length === 0) {
-          return;
-        }
-        const damageEffect = new DealDamageEffect(effect, 40);
-        damageEffect.target = target[0];
-        store.reduceEffect(state, damageEffect);
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 40, targets);
       });
     }
 

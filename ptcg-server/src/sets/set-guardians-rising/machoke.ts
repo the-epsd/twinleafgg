@@ -19,7 +19,7 @@ export class Machoke extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Daunting Pose',
@@ -29,7 +29,7 @@ export class Machoke extends PokemonCard {
 
   public attacks = [{
     name: 'Cross Chop',
-    cost: [ CardType.FIGHTING, CardType.FIGHTING ],
+    cost: [CardType.FIGHTING, CardType.FIGHTING],
     damage: 30,
     text: 'Flip a coin. If heads, this attack does 30 more damage.'
   }];
@@ -47,7 +47,7 @@ export class Machoke extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        
+
       const player = effect.player;
 
       return store.prompt(state, [
@@ -60,29 +60,35 @@ export class Machoke extends PokemonCard {
     }
 
     if (effect instanceof PutDamageEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      // Find the owner of the target (the defending player)
+      const defendingPlayer = StateUtils.findOwner(state, effect.target);
+      // Find the owner of the source (the attacking player)
+      const attackingPlayer = StateUtils.findOwner(state, effect.source);
 
-      if (effect.target === player.active || effect.target === opponent.active) {
+      // Only prevent if the effect is coming from the opponent
+      if (attackingPlayer === defendingPlayer) {
         return state;
       }
 
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      // Only prevent if the target is on the bench (not active)
+      if (effect.target === defendingPlayer.active) {
+        return state;
+      }
 
-      let isMachoke1InPlay = false;
-      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isMachoke1InPlay = true;
+      // Check if Manaphy is in play on the defending player's field
+      let isManaphyInPlay = false;
+      defendingPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (card instanceof Machoke) {
+          isManaphyInPlay = true;
         }
       });
-
-      if (!isMachoke1InPlay) {
+      if (!isManaphyInPlay) {
         return state;
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const stub = new PowerEffect(player, {
+        const stub = new PowerEffect(defendingPlayer, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
@@ -91,10 +97,9 @@ export class Machoke extends PokemonCard {
       } catch {
         return state;
       }
-
       effect.preventDefault = true;
     }
-    
+
     if (effect instanceof PutCountersEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

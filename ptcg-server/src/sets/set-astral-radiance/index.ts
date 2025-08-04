@@ -70,7 +70,8 @@ import { Ursaluna } from './ursaluna';
 import { WyrdeerV } from './wyrdeer-v';
 import { Yanma } from './yanma';
 
-
+// Other Prints
+import { BronzongASR } from './other-prints';
 
 export const setAstralRadiance: Card[] = [
 
@@ -144,4 +145,7 @@ export const setAstralRadiance: Card[] = [
   new WyrdeerV(),
   new Yanma(),
   new Absol(),
+
+  // Other Prints
+  new BronzongASR(),
 ];

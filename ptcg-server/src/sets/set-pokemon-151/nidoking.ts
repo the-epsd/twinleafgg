@@ -66,7 +66,6 @@ export class Nidoking extends PokemonCard {
           }, this);
           store.reduceEffect(state, stub);
         } catch {
-          console.log(effect.cost);
           return state;
         }
 
@@ -82,7 +81,6 @@ export class Nidoking extends PokemonCard {
               effect.cost.splice(index, 1);
             }
           }
-          console.log(effect.cost);
         }
       }
     }

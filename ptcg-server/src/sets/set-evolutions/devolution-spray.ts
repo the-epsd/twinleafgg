@@ -2,6 +2,7 @@ import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessa
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -44,20 +45,9 @@ export class DevolutionSpray extends TrainerCard {
         ),
         (results) => {
           if (results && results.length > 0) {
-            const targetPokemon = results[0];
-            const pokemons = targetPokemon.getPokemons();
-
-            if (pokemons.length > 1) {
-              const highestStagePokemon = pokemons[pokemons.length - 1];
-              targetPokemon.moveCardsTo([highestStagePokemon], effect.player.hand);
-              targetPokemon.clearEffects();
-              targetPokemon.pokemonPlayedTurn = state.turn;
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            } else {
-              throw new GameError(GameStoreMessage.INVALID_GAME_STATE);
-            }
+            DEVOLVE_POKEMON(store, state, results[0], effect.player.hand);
           }
-
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
           return state;
         }
       );

@@ -55,8 +55,6 @@ export class Sinistcha extends PokemonCard {
         totalGrassEnergy += grassCount;
       });
 
-      console.log('Total Grass Energy: ' + totalGrassEnergy);
-
       return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
@@ -82,7 +80,6 @@ export class Sinistcha extends PokemonCard {
           effect.damage = totalDiscarded * 70;
 
         }
-        console.log('Total Damage: ' + effect.damage);
         return state;
       });
     }

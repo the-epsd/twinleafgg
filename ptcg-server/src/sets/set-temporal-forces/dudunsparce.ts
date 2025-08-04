@@ -68,22 +68,24 @@ export class Dudunsparce extends PokemonCard {
           );
           const tools = [...cardList.tools];
           cardList.clearEffects();
-          // Move Pokémon cards to the deck
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.deck, { cards: pokemons });
-          }
 
-          // Move other cards (tools, energies, etc.) to the deck
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.deck, { cards: otherCards });
-          }
-
-          // Move tools to the deck
+          // Move tools to the deck first
           if (tools.length > 0) {
             for (const tool of tools) {
               cardList.moveCardTo(tool, player.deck);
             }
           }
+
+          // Move other cards (energies, etc.) to the deck second
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.deck, { cards: otherCards });
+          }
+
+          // Move Pokémon cards to the deck last
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.deck, { cards: pokemons });
+          }
+
           cardList.clearEffects();
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

@@ -6,7 +6,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Card, ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, StateUtils, TrainerCard } from '../../game';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 
 export class Kyurem extends PokemonCard {
@@ -49,7 +50,6 @@ export class Kyurem extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        console.log(effect.cost);
         return state;
       }
 
@@ -86,12 +86,7 @@ export class Kyurem extends PokemonCard {
         { min: 1, max: 3, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 110);
-          damageEffect.target = target;
-          state = store.reduceEffect(state, damageEffect);
-        });
-        return state;
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 110, targets);
       });
     }
     return state;

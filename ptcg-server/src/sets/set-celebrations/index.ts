@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Dialga } from './dialga';
 import { FlyingPikachuV } from './flying-pikachu-v';
 import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
+import { Groudon } from './groudon';
 import { Kyogre } from './kyogre';
 import { Lugia } from './lugia';
 import { Mew } from './mew';
@@ -14,6 +15,7 @@ export const setCelebrations: Card[] = [
   new Dialga(),
   new FlyingPikachuV(),
   new FlyingPikachuVMAX(),
+  new Groudon(),
   new Kyogre(),
   new Lugia(),
   new Mew(),

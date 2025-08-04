@@ -29,6 +29,7 @@ export class ImportReplayPopupComponent {
   public statesCount: number;
   public turnsCount: number;
   public replayWinner: string;
+  public isDragOver = false;
   private replayData: string;
 
   constructor(
@@ -38,6 +39,36 @@ export class ImportReplayPopupComponent {
     private sessionService: SessionService
   ) {
     this.maxFileSize = this.sessionService.session.config.avatarFileSize;
+  }
+
+  public onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = true;
+  }
+
+  public onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+  }
+
+  public onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+
+    if (this.loading) {
+      return;
+    }
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const fileInput = new FileInput([file]);
+      this.replayFile = fileInput;
+      this.updatePreview(fileInput);
+    }
   }
 
   public updatePreview(value: FileInput) {

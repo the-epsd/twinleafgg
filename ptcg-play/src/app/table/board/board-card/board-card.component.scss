@@ -1,44 +1,41 @@
 @import '../../../../theme/variables.scss';
 
+// ==================== VARIABLES ====================
 $ptcg-max-energy-cards: 8;
 $ptcg-energy-card-offset: 13%;
 
+// ==================== MAIN COMPONENT STYLES ====================
 .ptcg-board-card {
   max-width: map-get($ptcg-size, card);
   min-width: map-get($ptcg-size, board-card);
   position: relative;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 
-  &.test-entrance {
+  // ==================== ANIMATION CLASSES ====================
+  &.evolution-animation {
     transform-style: preserve-3d;
-    animation: testEntrance 1.5s cubic-bezier(0.4, 0, 0.1, 1);
+    animation: evolutionAnimation 1.5s cubic-bezier(0.4, 0, 0.1, 1);
     z-index: 1000;
     backface-visibility: visible;
     position: relative;
   }
 
-  &.basic-entrance {
+  &.play-basic-animation {
     transform-style: preserve-3d;
-    animation: basicEntrance 0.5s cubic-bezier(0.4, 0, 0.1, 1);
+    animation: playBasicAnimation 0.5s cubic-bezier(0.4, 0, 0.1, 1);
     z-index: 1000;
     backface-visibility: visible;
     position: relative;
   }
 
   &.attack-animation {
-    animation: attackAnimation 1s cubic-bezier(0.4, 0, 0.1, 1);
+    animation: attackAnimation 1.1s cubic-bezier(0.4, 0, 0.1, 1);
     z-index: 1000;
     backface-visibility: visible;
     position: relative;
   }
 
-  &.attack-raise-slam {
-    animation: attackRaiseSlam 1.1s cubic-bezier(0.4, 0, 0.1, 1);
-    z-index: 1000;
-    backface-visibility: visible;
-    position: relative;
-  }
-
+  // ==================== STATE CLASSES ====================
   &.empty:after {
     content: "";
     display: block;
@@ -59,7 +56,7 @@ $ptcg-energy-card-offset: 13%;
     padding-bottom: $card-aspect-ratio * 100%;
   }
 
-  // Styles for selectable cards during board selection
+  // ==================== SELECTION STATE STYLES ====================
   &.selectable {
     cursor: pointer;
     position: relative;
@@ -83,7 +80,6 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
-  // Styles for selected cards during board selection
   &.selected {
     transform: scale(1.08);
     transition: transform 0.2s ease;
@@ -105,6 +101,7 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
+  // ==================== ENERGY CARDS ====================
   .ptcg-energy-cards {
     ptcg-card {
       width: 30%;
@@ -132,6 +129,7 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
+  // ==================== ROTATION AND POSITIONING ====================
   .upside-down {
     transform: rotate(180deg);
   }
@@ -152,6 +150,7 @@ $ptcg-energy-card-offset: 13%;
     transform: rotate(90deg);
   }
 
+  // ==================== SPECIAL CARD TYPES ====================
   .ptcg-break-card {
     width: 100%;
     left: 50%;
@@ -213,6 +212,7 @@ $ptcg-energy-card-offset: 13%;
     z-index: 1;
   }
 
+  // ==================== CARD COUNTS AND DAMAGE ====================
   .ptcg-card-counts {
     bottom: 0;
     padding: $ptcg-board-tiny-padding 0;
@@ -227,15 +227,37 @@ $ptcg-energy-card-offset: 13%;
 
   .ptcg-card-damage {
     position: absolute;
-    top: -2%;
-    right: -2%;
+    top: -10%;
+    right: -10%;
     z-index: 2;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffeb3b 0%, #ff9800 50%, #ff5722 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #fff;
+
+    // Number styling
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px;
+    text-shadow: -0.5px -0.5px 0 #000,
+      0.5px -0.5px 0 #000,
+      -0.5px 0.5px 0 #000,
+      0.5px 0.5px 0 #000;
+    line-height: 1;
+    font-family: 'Arial Black',
+      sans-serif;
 
     :host-context(.upside-down) & {
       transform: rotate(180deg);
     }
   }
 
+  // ==================== ABILITY USED INDICATOR ====================
   .ptcg-ability-used {
     position: absolute;
     top: 50%;
@@ -247,6 +269,7 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
+  // ==================== CARD MARKERS ====================
   .ptcg-card-marker {
     z-index: 5;
     left: 0;
@@ -264,39 +287,7 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
-  .poison-marker {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(50%, 115%) rotate(15deg);
-    width: 200%;
-    height: 200%;
-    background-image: url('/assets/poison-marker.webp');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    pointer-events: none;
-    z-index: 10;
-
-    :host-context(.upside-down) & {
-      transform: translate(-185%, -150%) rotate(165deg);
-    }
-  }
-
-  .upside-down {
-    transform: rotate(180deg);
-  }
-
-  .ptcg-card-container {
-    &.rotate-180 {
-      transform: rotate(180deg);
-    }
-
-    &.rotate-90 {
-      transform: rotate(90deg);
-    }
-  }
-
+  // ==================== SPECIAL CONDITIONS ====================
   .ptcg-special-conditions {
     left: 0;
     padding: map-get($padding, small);
@@ -325,6 +316,208 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
+  // ==================== CONDITION MARKERS ====================
+  .poison-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/poison-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .paralyzed-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/paralyzed-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .confused-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/confused-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .asleep-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/asleep-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .burned-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/burned-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .imprison-marker {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 25%;
+    height: 25%;
+    background-image: url('/assets/imprison-marker.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10;
+
+    :host-context(.upside-down) & {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  // ==================== MARKER OVERLAP STYLES ====================
+  // Overlapping markers - each additional marker is offset like energy cards
+  .poison-marker+.paralyzed-marker,
+  .poison-marker+.confused-marker,
+  .poison-marker+.asleep-marker,
+  .poison-marker+.burned-marker,
+  .poison-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker,
+  .paralyzed-marker+.asleep-marker,
+  .paralyzed-marker+.burned-marker,
+  .paralyzed-marker+.imprison-marker,
+  .confused-marker+.asleep-marker,
+  .confused-marker+.burned-marker,
+  .confused-marker+.imprison-marker,
+  .asleep-marker+.burned-marker,
+  .asleep-marker+.imprison-marker,
+  .burned-marker+.imprison-marker {
+    top: calc(20% + 15%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker,
+  .poison-marker+.paralyzed-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.asleep-marker,
+  .poison-marker+.confused-marker+.burned-marker,
+  .poison-marker+.confused-marker+.imprison-marker,
+  .poison-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker,
+  .paralyzed-marker+.confused-marker+.burned-marker,
+  .paralyzed-marker+.confused-marker+.imprison-marker,
+  .paralyzed-marker+.asleep-marker+.burned-marker,
+  .paralyzed-marker+.asleep-marker+.imprison-marker,
+  .paralyzed-marker+.burned-marker+.imprison-marker,
+  .confused-marker+.asleep-marker+.burned-marker,
+  .confused-marker+.asleep-marker+.imprison-marker,
+  .confused-marker+.burned-marker+.imprison-marker,
+  .asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 30%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.confused-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .confused-marker+.asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 45%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.confused-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.paralyzed-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .poison-marker+.confused-marker+.asleep-marker+.burned-marker+.imprison-marker,
+  .paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 60%);
+  }
+
+  .poison-marker+.paralyzed-marker+.confused-marker+.asleep-marker+.burned-marker+.imprison-marker {
+    top: calc(20% + 75%);
+  }
+
+  // ==================== HOLOGRAPHIC EFFECTS ====================
   .holo {
     position: relative;
     max-width: map-get($ptcg-size, card);
@@ -348,7 +541,7 @@ $ptcg-energy-card-offset: 13%;
     border-radius: 4px;
     position: absolute;
     inset: 0;
-    animation: GradientScroll 2s linear infinite;
+    animation: holoScroll 2s linear infinite;
     background: linear-gradient(110deg,
         transparent 35%,
         rgba(146, 242, 242, 0.5),
@@ -388,7 +581,7 @@ $ptcg-energy-card-offset: 13%;
     border-radius: 4px;
     position: absolute;
     inset: 0;
-    animation: GradientScroll 2s linear infinite;
+    animation: holoScroll 2s linear infinite;
     background: linear-gradient(110deg,
         transparent 35%,
         rgba(146, 242, 242, 0.5),
@@ -420,18 +613,13 @@ $ptcg-energy-card-offset: 13%;
     will-change: transform;
     transform: translateZ(0);
 
-    // ptcg-card {
-    //   position: relative;
-    //   z-index: 1;
-    // }
-
     &::after {
       content: '';
       opacity: 4;
       border-radius: 4px;
       position: absolute;
       inset: 0;
-      animation: GradientScroll 2s linear infinite;
+      animation: holoScroll 2s linear infinite;
       background: linear-gradient(110deg,
           transparent 35%,
           rgba(146, 242, 242, 0.5),
@@ -449,195 +637,7 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
-  @keyframes GradientScroll {
-    from {
-      background-position: 100% 100%
-    }
-
-    to {
-      background-position: 0% 0%
-    }
-  }
-
-  @keyframes pulseBorder {
-    0% {
-      opacity: 0.4;
-    }
-
-    50% {
-      opacity: 0.8;
-    }
-
-    100% {
-      opacity: 0.4;
-    }
-  }
-
-  .power-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-    animation: pulse 2s infinite;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.8;
-    }
-
-    50% {
-      transform: translate(-50%, -50%) scale(1.1);
-      opacity: 0.5;
-    }
-
-    100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes testEntrance {
-    0% {
-      transform: translate(0, 0) rotateY(0deg) scale(1);
-      filter: brightness(1);
-    }
-
-    40% {
-      transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
-      filter: brightness(100) grayscale(1);
-    }
-
-    42% {
-      transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
-      filter: brightness(1);
-    }
-
-    55% {
-      transform: translate(0, 0) rotateY(1080deg) scale(1);
-      filter: brightness(1);
-    }
-
-    100% {
-      transform: translate(0, 0) rotateY(1080deg) scale(1);
-      filter: brightness(1);
-    }
-  }
-
-  @keyframes basicEntrance {
-    0% {
-      transform: translate(0, -30px) scale(1.3);
-    }
-
-    55% {
-      transform: translate(0, -30px) scale(1.3);
-    }
-
-    100% {
-      transform: translate(0, 0) scale(1);
-    }
-  }
-
-  @keyframes glowPulse {
-    0% {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-
-    40% {
-      transform: scale(1.2);
-      opacity: 0.3;
-    }
-
-    50% {
-      transform: scale(1);
-      opacity: 0;
-    }
-
-    100% {
-      transform: scale(1);
-      opacity: 0;
-    }
-  }
-
-  @keyframes attackAnimation {
-    0% {
-      transform: scale(1) rotate(0deg);
-      box-shadow: 0 0 0px #ff0000;
-      filter: brightness(1);
-    }
-
-    10% {
-      transform: scale(1.05) rotate(-2deg);
-      box-shadow: 0 0 20px #ff0000;
-      filter: brightness(1.2);
-    }
-
-    20% {
-      transform: scale(0.98) rotate(2deg);
-      box-shadow: 0 0 10px #ff0000;
-      filter: brightness(1.1);
-    }
-
-    30% {
-      transform: scale(1.04) rotate(-1deg);
-      box-shadow: 0 0 30px #ff0000;
-      filter: brightness(1.3);
-    }
-
-    40% {
-      transform: scale(0.97) rotate(1deg);
-      box-shadow: 0 0 10px #ff0000;
-      filter: brightness(1.1);
-    }
-
-    50% {
-      transform: scale(1.02) rotate(0deg);
-      box-shadow: 0 0 20px #ff0000;
-      filter: brightness(1.2);
-    }
-
-    100% {
-      transform: scale(1) rotate(0deg);
-      box-shadow: 0 0 0px #ff0000;
-      filter: brightness(1);
-    }
-  }
-
-  @keyframes attackRaiseSlam {
-    0% {
-      transform: translate(0, 0) scale(1);
-      z-index: 1000;
-    }
-
-    35% {
-      transform: translate(0, -30px) scale(1.3);
-    }
-
-    60% {
-      transform: translate(0, -30px) scale(1.3);
-    }
-
-    75% {
-      transform: translate(0, 0) scale(0.92);
-    }
-
-    85% {
-      transform: translate(0, 0) scale(1.12);
-    }
-
-    100% {
-      transform: translate(0, 0) scale(1);
-      z-index: 1;
-    }
-  }
-
+  // ==================== TOOL CARDS ====================
   .ptcg-tool-cards {
     position: absolute;
     left: -5px;
@@ -660,5 +660,84 @@ $ptcg-energy-card-offset: 13%;
     -webkit-clip-path: inset(14.26% 8.02% 47.75% 8.42%);
     cursor: default !important;
   }
+}
 
+// ==================== ANIMATION KEYFRAMES ====================
+@keyframes holoScroll {
+  from {
+    background-position: 100% 100%
+  }
+
+  to {
+    background-position: 0% 0%
+  }
+}
+
+@keyframes playBasicAnimation {
+  0% {
+    transform: translate(0, -30px) scale(1.3);
+  }
+
+  55% {
+    transform: translate(0, -30px) scale(1.3);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes evolutionAnimation {
+  0% {
+    transform: translate(0, 0) rotateY(0deg) scale(1);
+    filter: brightness(1);
+  }
+
+  40% {
+    transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
+    filter: brightness(100) grayscale(1);
+  }
+
+  42% {
+    transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
+    filter: brightness(1);
+  }
+
+  55% {
+    transform: translate(0, 0) rotateY(1080deg) scale(1);
+    filter: brightness(1);
+  }
+
+  100% {
+    transform: translate(0, 0) rotateY(1080deg) scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes attackAnimation {
+  0% {
+    transform: translate(0, 0) scale(1);
+    z-index: 1000;
+  }
+
+  35% {
+    transform: translate(0, -30px) scale(1.3);
+  }
+
+  60% {
+    transform: translate(0, -30px) scale(1.3);
+  }
+
+  75% {
+    transform: translate(0, 0) scale(0.92);
+  }
+
+  85% {
+    transform: translate(0, 0) scale(1.12);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+    z-index: 1;
+  }
 }

@@ -83,6 +83,7 @@ import { StevensClaydol } from './stevens-claydol';
 import { StevensMetagrossex } from './stevens-metagross-ex';
 import { StevensMetang } from './stevens-metang';
 import { StevensSkarmory } from './stevens-skarmory';
+import { Taillow } from './taillow';
 import { TeamRocketsEnergy } from './team-rockets-energy';
 import { TeamRocketsAmpharos } from './team-rockets-ampharos';
 import { TeamRocketsArbok } from './team-rockets-arbok';
@@ -134,7 +135,7 @@ import { Torchic } from './torchic';
 import { TMMachine } from './tm-machine';
 
 export const setDestinedRivals: Card[] = [
-
+  new Taillow(),
   new TealMaskOgerpon(),
   new HearthflameMaskOgerpon(),
   new WellspringMaskOgerpon(),

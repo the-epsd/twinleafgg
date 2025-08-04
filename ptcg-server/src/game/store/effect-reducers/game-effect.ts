@@ -148,24 +148,26 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.waitPrompt(state, () => next());
   }
 
-  // --- Attack Animation Trigger (moved here) ---
+  // --- Attack Animation Trigger ---
   // Set triggerAttackAnimation on the attacking Pokemon
   attackingPokemon.triggerAttackAnimation = true;
-  // Emit websocket event for attack animation
+
+  // Find slot and index for the attackingPokemon
+  let slot: string | undefined = undefined;
+  let index: number | undefined = undefined;
+  if (player.active === attackingPokemon) {
+    slot = 'active';
+    index = 0;
+  } else {
+    slot = 'bench';
+    index = player.bench.indexOf(attackingPokemon);
+  }
+  const card = attackingPokemon.getPokemonCard();
+  const cardId = card ? card.id : undefined;
+
+  // Emit attack animation event
   const game = (store as any).handler;
   if (game && game.core && typeof game.core.emit === 'function') {
-    // Find slot and index for the attackingPokemon
-    let slot: string | undefined = undefined;
-    let index: number | undefined = undefined;
-    if (player.active === attackingPokemon) {
-      slot = 'active';
-      index = 0;
-    } else {
-      slot = 'bench';
-      index = player.bench.indexOf(attackingPokemon);
-    }
-    const card = attackingPokemon.getPokemonCard();
-    const cardId = card ? card.id : undefined;
     game.core.emit((c: any) => {
       if (typeof c.socket !== 'undefined') {
         c.socket.emit(`game[${game.id}]:attack`, {
@@ -177,9 +179,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
       }
     });
   }
+
   // Yield a wait prompt for the animation (1 second)
   yield store.prompt(state, new WaitPrompt(player.id, 1000, 'Attack animation'), () => {
-    // After wait, clear the animation flag and targets
+    // After wait, clear the animation flag
     attackingPokemon.triggerAttackAnimation = false;
     next();
   });

@@ -70,7 +70,6 @@ export class Pecharunt extends PokemonCard {
       const pecharuntOpponent = StateUtils.getOpponent(state, pecharuntOwner);
       if (effect.player === pecharuntOpponent && pecharuntOpponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
         effect.poisonDamage += 50;
-        console.log('pecharunt:', effect.poisonDamage);
       }
     }
 

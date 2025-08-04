@@ -53,7 +53,7 @@ export class WeaknessGuard extends TrainerCard {
     }
 
     // Actual effect
-    if (effect instanceof CheckPokemonStatsEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckPokemonStatsEffect && effect.target.tools.includes(this)) {
       const target = effect.target.getPokemonCard();
       if (target) {
         effect.weakness = [];

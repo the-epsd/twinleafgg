@@ -69,19 +69,16 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.prompt && this.gameState) {
-      console.log('Initializing prompt:', this.prompt);
       this.initializePrompt();
 
       // Start a polling interval to check if the prompt is still active
       // This is a backup approach since we can't directly access socketService
       this.stateCheckSubscription = interval(1000).subscribe(() => {
         if (this.isConfirming) {
-          console.log('Checking if prompt is still active...');
           // Check if this prompt ID is still in the list of active prompts
           const isPromptStillActive = this.gameState.state.prompts.some(p => p.id === this.prompt.id);
 
           if (!isPromptStillActive) {
-            console.log('Prompt was resolved (detected by interval check)');
             this.isConfirming = false;
             this.statusMessage = 'Selection confirmed!';
             setTimeout(() => this.statusMessage = '', 2000);
@@ -113,17 +110,8 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     this.blockedFrom = this.prompt.options.blockedFrom || [];
     this.blockedMap = this.prompt.options.blockedMap || [];
 
-    console.log('Prompt config:', {
-      allowedCancel: this.allowedCancel,
-      minSelection: this.minSelection,
-      maxSelection: this.maxSelection,
-      blockedFrom: this.blockedFrom,
-      blockedMap: this.blockedMap
-    });
-
     // If minSelection is 0, empty selections are valid, so isInvalid should be false initially
     if (this.minSelection === 0) {
-      console.log('Setting initial validation to valid (minSelection is 0)');
       this.isInvalid = false;
     }
 
@@ -148,20 +136,10 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     this.pokemonItems = [...playerSlots, ...opponentSlots];
 
-    console.log('Built Pokemon items:', {
-      playerSlots: playerSlots.length,
-      opponentSlots: opponentSlots.length,
-      totalItems: this.pokemonItems.length
-    });
-
     // Segregate items for display purposes
     this.activeItems = this.pokemonItems.filter(item => item.slot === SlotType.ACTIVE);
     this.benchItems = this.pokemonItems.filter(item => item.slot === SlotType.BENCH);
 
-    console.log('Segregated Pokemon items:', {
-      activeItems: this.activeItems.length,
-      benchItems: this.benchItems.length
-    });
   }
 
   private getPokemonSlots(player: any, playerType: PlayerType): PokemonCardItem[] {
@@ -169,7 +147,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Check if the player type is included in the prompt
     if (this.prompt.playerType !== PlayerType.ANY && this.prompt.playerType !== playerType) {
-      console.log(`Skipping player type ${playerType} (not included in prompt player type ${this.prompt.playerType})`);
       return items;
     }
 
@@ -180,7 +157,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       // Skip if this target is in the blockedFrom list
       const isBlocked = this.isTargetBlocked(target);
       if (isBlocked) {
-        console.log(`Skipping blocked active Pokémon at ${playerType}-${SlotType.ACTIVE}-0`);
       } else {
         items.push(this.createPokemonItem(player.active, playerType, SlotType.ACTIVE, 0));
       }
@@ -194,7 +170,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
         // Skip if this target is in the blockedFrom list
         const isBlocked = this.isTargetBlocked(target);
         if (isBlocked) {
-          console.log(`Skipping blocked bench Pokémon at ${playerType}-${SlotType.BENCH}-${index}`);
         } else {
           items.push(this.createPokemonItem(bench, playerType, SlotType.BENCH, index));
         }
@@ -226,18 +201,8 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   public selectPokemon(pokemon: PokemonCardItem): void {
-    console.log('Selecting Pokemon:', {
-      playerType: pokemon.playerType,
-      slot: pokemon.slot,
-      index: pokemon.index,
-      cardCount: pokemon.cardList.cards.length,
-      energyCount: pokemon.cardList.cards.filter(c => c.superType === SuperType.ENERGY).length,
-      visibleEnergyCount: this.getVisibleEnergyCards(pokemon).length
-    });
-
     // Check if the Pokemon has any energy cards available
     if (this.getVisibleEnergyCards(pokemon).length === 0) {
-      console.log('Pokemon has no energy cards available');
       return;
     }
 
@@ -267,7 +232,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Get blocked indices for this Pokemon
     const blockedIndices = this.getBlockedIndices(this.selectedPokemon.target);
-    console.log('Blocked energy indices for this Pokémon:', blockedIndices);
 
     // Filter energy cards that:
     // 1. Are not blocked by blockedMap
@@ -294,11 +258,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       this.cardsBaseService.getScanUrl(card);
     }
 
-    console.log('Available energies updated:', {
-      total: allEnergyCards.length,
-      available: this.availableEnergies.length,
-      blocked: blockedIndices.length
-    });
   }
 
   private getBlockedIndices(target: CardTarget): number[] {
@@ -320,12 +279,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Store the card reference and its index in the Pokemon's card list
     const originalIndex = this.selectedPokemon.cardList.cards.indexOf(energy);
-    console.log('Toggle energy selection:', {
-      energyName: energy.name,
-      originalIndex,
-      cardListLength: this.selectedPokemon.cardList.cards.length
-    });
-
     if (originalIndex === -1) {
       console.error('Energy card not found in Pokemon card list!', {
         energyName: energy.name,
@@ -345,7 +298,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     if (existingIndex >= 0) {
       // Remove the selection
       this.selectedEnergies.splice(existingIndex, 1);
-      console.log(`Energy deselected. Current selection count: ${this.selectedEnergies.length}`);
     } else {
       // Check max selection limit before adding
       if (this.maxSelection !== undefined && this.selectedEnergies.length >= this.maxSelection) {
@@ -365,7 +317,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
         originalIndex,
         scanUrl
       });
-      console.log(`Energy selected. Current selection count: ${this.selectedEnergies.length}`);
     }
 
     // Update available energies and validate
@@ -374,7 +325,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     // Check if the currently selected Pokemon still has energy cards
     // If not, clear the selection to prevent a confusing UI state
     if (this.selectedPokemon && this.getVisibleEnergyCards(this.selectedPokemon).length === 0) {
-      console.log('Selected Pokemon has no more energy cards, clearing selection');
       this.selectedPokemon.selected = false;
       this.selectedPokemon = null;
     }
@@ -383,11 +333,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   public removeEnergySelection(selection: EnergySelection): void {
-    console.log('Removing energy selection:', {
-      energyName: selection.card.name,
-      pokemonTarget: selection.pokemon.target,
-      originalIndex: selection.originalIndex
-    });
 
     const index = this.selectedEnergies.indexOf(selection);
     if (index >= 0) {
@@ -408,23 +353,15 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   private validateSelection(): void {
-    console.log('Validating selection...', {
-      minSelection: this.minSelection,
-      maxSelection: this.maxSelection,
-      currentCount: this.selectedEnergies.length
-    });
 
     // Special case: If minSelection is 0 and no cards selected, this is valid
     if (this.minSelection === 0 && this.selectedEnergies.length === 0) {
-      console.log('Validation succeeded: No selection required (minSelection is 0)');
       this.isInvalid = false;
-      console.log('Final validation state:', { isInvalid: this.isInvalid });
       return;
     }
 
     // Check minimum selection count
     if (this.selectedEnergies.length < this.minSelection) {
-      console.log(`Validation failed: Minimum selection not met (${this.selectedEnergies.length}/${this.minSelection})`);
       this.isInvalid = true;
 
       // If there are selections but not enough, show status message
@@ -437,7 +374,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Check maximum selection count
     if (this.maxSelection !== undefined && this.selectedEnergies.length > this.maxSelection) {
-      console.log(`Validation failed: Maximum selection exceeded (${this.selectedEnergies.length}/${this.maxSelection})`);
       this.isInvalid = true;
       this.statusMessage = `Please select at most ${this.maxSelection} energy card(s).`;
       setTimeout(() => this.statusMessage = '', 3000);
@@ -450,7 +386,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
         ? `${this.selectedEnergies.length}/${this.maxSelection}`
         : this.selectedEnergies.length.toString();
 
-      console.log(`Selection count: ${countDisplay}`);
     }
 
     // Check for blocked energy cards
@@ -460,7 +395,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
       // Check if this target is blocked
       if (this.isTargetBlocked(target)) {
-        console.log(`Validation failed: Selection from blocked Pokémon: ${target.player}-${target.slot}-${target.index}`);
         this.isInvalid = true;
         return;
       }
@@ -468,7 +402,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       // Check if this energy card is blocked
       const blockedIndices = this.getBlockedIndices(target);
       if (blockedIndices.includes(index)) {
-        console.log(`Validation failed: Selection of blocked energy card at index ${index}`);
         this.isInvalid = true;
         return;
       }
@@ -483,8 +416,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       },
       card: e.card
     }));
-
-    console.log('Formatted selections for validation:', formattedSelections);
 
     // Log additional details for debugging
     if (formattedSelections.length === 0) {
@@ -501,17 +432,10 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     try {
       const isValid = this.prompt.validate(formattedSelections);
       this.isInvalid = !isValid;
-      console.log(`Validation ${isValid ? 'succeeded' : 'failed'}:`, {
-        isValid,
-        isInvalid: this.isInvalid,
-        selectionCount: formattedSelections.length,
-        minRequired: this.minSelection
-      });
 
       // If validation failed but min/max constraints are met, it might be due to other constraints
       if (!isValid && this.selectedEnergies.length >= this.minSelection &&
         (this.maxSelection === undefined || this.selectedEnergies.length <= this.maxSelection)) {
-        console.log('Validation failed despite meeting min/max constraints - might be other restrictions');
         this.statusMessage = 'This energy combination is not valid. Try different energy cards.';
         setTimeout(() => this.statusMessage = '', 3000);
       }
@@ -520,12 +444,10 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       this.isInvalid = true;
     }
 
-    console.log('Final validation state:', { isInvalid: this.isInvalid });
   }
 
   public resetSelection(): void {
     this.resetCount++;
-    console.log(`Resetting selection (reset count: ${this.resetCount})`);
 
     // Reset all UI state to initial values
     if (this.selectedPokemon) {
@@ -545,7 +467,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     this.confirmAttempts = 0;
     this.lastSelectionSent = null;
 
-    console.log('Selection reset complete');
   }
 
   public isEnergySelected(energy: Card): boolean {
@@ -560,11 +481,9 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   public confirm(): void {
-    console.log('Confirming selection...');
 
     // Check validation status
     if (this.isInvalid) {
-      console.warn('Cannot confirm: Selection is invalid');
       this.statusMessage = 'Selection is invalid. Please check your selections.';
       setTimeout(() => this.statusMessage = '', 3000);
       return;
@@ -572,7 +491,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Check if any energy is selected - only required when minSelection > 0
     if (this.minSelection > 0 && this.selectedEnergies.length === 0) {
-      console.warn('Cannot confirm: No energies selected but minimum required');
       this.statusMessage = `Please select at least ${this.minSelection} energy card(s).`;
       setTimeout(() => this.statusMessage = '', 3000);
       return;
@@ -597,7 +515,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     try {
       // Add a guard to prevent multiple confirms
       if (this.isConfirming) {
-        console.log('Already confirming, ignoring additional clicks');
         return;
       }
 
@@ -609,7 +526,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       const countDisplay = this.maxSelection !== undefined
         ? `${this.selectedEnergies.length}/${this.maxSelection}`
         : this.selectedEnergies.length.toString();
-      console.log(`Confirming energy selection: ${countDisplay}`);
 
       // Double-check that we're not trying to discard from blocked Pokémon
       for (const selection of this.selectedEnergies) {
@@ -664,7 +580,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       }
 
       const selectionJson = JSON.stringify(results);
-      console.log(`Sending selection to server (attempt ${this.confirmAttempts}):`, selectionJson);
 
       // Track if we're sending the same selection repeatedly
       const isDuplicateSelection = selectionJson === this.lastSelectionSent;
@@ -681,12 +596,9 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
           results
         );
 
-        console.log(`Selection sent to server - waiting for response (attempt ${this.confirmAttempts})`);
-
         // Reset confirming flag after a set time, so user can try again if needed
         setTimeout(() => {
           if (this.isConfirming) {
-            console.log(`No response from server after 5s (attempt ${this.confirmAttempts})`);
             this.isConfirming = false;
 
             if (this.confirmAttempts >= 3) {
@@ -717,7 +629,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   public cancel(): void {
-    console.log('Cancelling prompt');
     this.gameService.resolvePrompt(
       this.gameState.gameId,
       this.prompt.id,
@@ -726,7 +637,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   public minimize(): void {
-    console.log('Minimizing prompt');
     this.gameService.setPromptMinimized(this.gameState.localId, true);
   }
 
@@ -735,8 +645,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       // Already have 0 or 1 selected, nothing to simplify
       return;
     }
-
-    console.log('Retrying with only a single energy card');
 
     // Keep only the first energy card
     const firstSelection = this.selectedEnergies[0];

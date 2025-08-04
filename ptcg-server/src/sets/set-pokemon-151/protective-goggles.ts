@@ -19,7 +19,7 @@ export class ProtectiveGoggles extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonStatsEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckPokemonStatsEffect && effect.target.tools.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
       if (!IS_TOOL_BLOCKED(store, state, player, this)) {
         const target = effect.target.getPokemonCard();

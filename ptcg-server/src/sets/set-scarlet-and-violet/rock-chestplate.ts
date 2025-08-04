@@ -4,7 +4,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils, TrainerCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class RockChestplate extends TrainerCard {
@@ -28,7 +28,7 @@ export class RockChestplate extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reduce damage by 30
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {

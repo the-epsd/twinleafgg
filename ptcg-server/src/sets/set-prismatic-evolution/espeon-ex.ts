@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils, PlayerType, ShuffleDeckPrompt } from '../
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Espeonex extends PokemonCard {
 
@@ -64,12 +65,8 @@ export class Espeonex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.stage === Stage.STAGE_1 || card.stage === Stage.STAGE_2) {
-          const pokemons = cardList.getPokemons();
-          const latestEvolution = pokemons.slice(-1)[0];
-
-          cardList.moveCardsTo([latestEvolution], opponent.deck);
-          cardList.clearEffects();
+        if (cardList.getPokemons().length > 1) {
+          DEVOLVE_POKEMON(store, state, cardList, opponent.deck);
         }
       });
 

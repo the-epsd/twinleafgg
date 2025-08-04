@@ -75,6 +75,7 @@ import { SandyShocks } from './sandy-shocks';
 import { Scizorex } from './scizor-ex';
 import { Scovillainex } from './scovillain-ex';
 import { Scyther } from './scyther';
+import { Sizzlipede } from './sizzlipede';
 import { Skitty } from './skitty';
 import { Slugma } from './slugma';
 import { Solosis } from './solosis';
@@ -165,6 +166,7 @@ export const setTemporalForces: Card[] = [
   new Salvatore(),
   new SandyShocks(),
   new Scovillainex(),
+  new Sizzlipede(),
   new Skitty(),
   new Slugma(),
   new Solosis(),

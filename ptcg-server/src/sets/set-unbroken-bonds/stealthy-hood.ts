@@ -24,7 +24,7 @@ export class StealthyHood extends TrainerCard {
       }
 
       // Check for Stealthy Hood on the opposing side from the player using the ability
-      if (opponent.getPokemonInPlay().includes(effect.target) && effect.target.cards.includes(this)) {
+      if (opponent.getPokemonInPlay().includes(effect.target) && effect.target.tools.includes(this)) {
         effect.target = undefined;
       }
     }

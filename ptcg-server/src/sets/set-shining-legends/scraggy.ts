@@ -25,13 +25,12 @@ export class Scraggy extends PokemonCard {
     text: ''
   }];
 
-  public regulationMark = 'G';
   public set: string = 'SLG';
   public setNumber = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
   public fullName: string = 'Scraggy SLG';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCallForFamily(() => generator.next(), store, state, effect);

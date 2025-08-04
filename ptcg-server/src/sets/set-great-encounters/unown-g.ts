@@ -6,7 +6,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 function* usePower(next: Function, store: StoreLike, state: State, self: UnownG, effect: PowerEffect): IterableIterator<State> {
@@ -52,8 +52,32 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownG,
       targets[0].tools.push(pokemonCard);
 
       // Discard other cards
-      player.bench[benchIndex].moveTo(player.discard);
-      player.bench[benchIndex].clearEffects();
+      const unownGSlot = player.bench[benchIndex];
+      const unownGCard = unownGSlot.getPokemonCard();
+
+      if (!unownGCard) {
+        return state;
+      }
+
+      const otherCards = unownGSlot.cards.filter(card =>
+        !(card instanceof PokemonCard) &&
+        (!unownGSlot.tools || !unownGSlot.tools.includes(card))
+      );
+      const tools = [...unownGSlot.tools];
+
+      // Move tools to discard first
+      if (tools.length > 0) {
+        for (const tool of tools) {
+          unownGSlot.moveCardTo(tool, player.discard);
+        }
+      }
+
+      // Move other cards to discard
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, unownGSlot, player.discard, { cards: otherCards });
+      }
+
+      unownGSlot.clearEffects();
     }
   });
 }

@@ -49,4 +49,5 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Tropical Beach',
   'Professor Juniper',
   'Professor Sycamore',
+  'Tool Scrapper'
 ]; 

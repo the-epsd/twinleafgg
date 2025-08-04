@@ -25,7 +25,7 @@ export class Crobat extends PokemonCard {
     name: 'Skill Dive',
     cost: [P],
     damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon.This attack does 30 damage to that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 30 damage to that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public set: string = 'UL';

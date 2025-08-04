@@ -7,6 +7,7 @@ import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/at
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
+import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Greninjaex extends PokemonCard {
 
@@ -70,7 +71,6 @@ export class Greninjaex extends PokemonCard {
         GameMessage.SEARCH_DECK_FOR_CARD,
       ), wantToUse => {
         if (wantToUse) {
-
           return store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_HAND,
@@ -82,7 +82,6 @@ export class Greninjaex extends PokemonCard {
 
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
-
             });
           });
         }
@@ -112,17 +111,11 @@ export class Greninjaex extends PokemonCard {
           { min: 1, max: max, allowCancel: false }
         ), selected => {
           const targets = selected || [];
-          targets.forEach(target => {
-
-            const damageEffect = new PutDamageEffect(effect, 120);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 120, targets);
           const cards: Card[] = (energy || []).map(e => e.card);
           const discardEnergy = new DiscardCardsEffect(effect, cards);
           discardEnergy.target = player.active;
           store.reduceEffect(state, discardEnergy);
-
         });
       });
     }

@@ -77,8 +77,10 @@ export class Mawile extends PokemonCard {
     // Handle damage boost effect
     if (effect instanceof PutDamageEffect
       && effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this) && effect.damage > 0) {
-      effect.damage += 90;
-      effect.target.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
+      // const additionalDamageEffect = new AfterWeaknessAndResistanceEffect(effect.attackEffect, 90);
+      // additionalDamageEffect.target = effect.target;
+      // store.reduceEffect(state, additionalDamageEffect);
+      // effect.target.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
       return state;
     }
 

@@ -89,6 +89,7 @@ import { Slugma } from './slugma';
 import { Snorunt } from './snorunt';
 import { Sunkern } from './sunkern';
 import { SurvivalCast } from './survival-cast';
+import { Tangrowth } from './tangrowth';
 import { Tatsugiri } from './tatsugiri';
 import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { Thwackey } from './thwackey';
@@ -200,6 +201,7 @@ export const setTwilightMasquerade: Card[] = [
   new Feebas(),
   new Girafarig(),
   new Farigiraf(),
+  new Tangrowth(),
 
   // TWM Full Arts
   new DipplinIR(),

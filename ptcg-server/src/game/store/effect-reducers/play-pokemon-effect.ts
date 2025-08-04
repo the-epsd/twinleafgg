@@ -8,6 +8,27 @@ import { StoreLike } from '../store-like';
 import { CheckPokemonPlayedTurnEffect } from '../effects/check-effects';
 import { EvolveEffect } from '../effects/game-effects';
 
+/**
+ * Helper function to emit animation events
+ * @param store - The store instance
+ * @param eventName - The name of the animation event
+ * @param data - The data to send with the event
+ */
+function emitAnimationEvent(store: StoreLike, eventName: string, data: {
+  playerId: number;
+  cardId: number | string;
+  slot?: string;
+  index?: number;
+}): void {
+  const game = (store as any).handler;
+  if (game && game.core && typeof game.core.emit === 'function') {
+    game.core.emit((c: any) => {
+      if (typeof c.socket !== 'undefined') {
+        c.socket.emit(`game[${game.id}]:${eventName}`, data);
+      }
+    });
+  }
+}
 
 export function playPokemonReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -24,20 +45,15 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
       effect.target.pokemonPlayedTurn = state.turn;
       effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-      // Emit websocket event for basic entrance animation
-      const game = (store as any).handler;
-      if (game && game.core && typeof game.core.emit === 'function') {
-        game.core.emit((c: any) => {
-          if (typeof c.socket !== 'undefined') {
-            c.socket.emit(`game[${game.id}]:basicEntrance`, {
-              playerId: effect.player.id,
-              cardId: effect.pokemonCard.id,
-              slot: effect.slot,
-              index: effect.index
-            });
-          }
-        });
-      }
+
+      // Emit basic animation event
+      emitAnimationEvent(store, 'playBasicAnimation', {
+        playerId: effect.player.id,
+        cardId: effect.pokemonCard.id,
+        slot: effect.slot ? String(effect.slot) : undefined,
+        index: effect.index
+      });
+
       return state;
     }
     const player = effect.player;
@@ -48,7 +64,12 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       throw new GameError(GameMessage.INVALID_TARGET);
     }
 
-    if (isEvolved && pokemonCard.stage < stage && pokemonCard.name === evolvesFrom) {
+    // Check if evolution is valid using either evolvesFrom or evolvesTo
+    const isValidEvolution = (isEvolved && pokemonCard.stage < stage && pokemonCard.name === evolvesFrom) ||
+      (isEvolved && pokemonCard.evolvesTo.includes(effect.pokemonCard.name)) ||
+      (isEvolved && pokemonCard.evolvesToStage.includes(effect.pokemonCard.stage));
+
+    if (isValidEvolution) {
       const playedTurnEffect = new CheckPokemonPlayedTurnEffect(effect.player, effect.target);
       store.reduceEffect(state, playedTurnEffect);
 
@@ -69,11 +90,12 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
 
       const evolveEffect = new EvolveEffect(effect.player, effect.target, effect.pokemonCard);
       store.reduceEffect(state, evolveEffect);
-      // effect.pokemonCard.marker.markers = [];
-      // effect.player.removePokemonEffects(effect.target);
+      effect.pokemonCard.marker.markers = [];
+      effect.player.removePokemonEffects(effect.target);
       effect.target.specialConditions = [];
       effect.target.marker.markers = [];
       effect.target.showBasicAnimation = false;
+      effect.target.triggerEvolutionAnimation = true;
 
       if (effect.target.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
         effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
@@ -81,20 +103,15 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       if (effect.target.boardEffect.includes(BoardEffect.ABILITY_USED)) {
         effect.target.removeBoardEffect(BoardEffect.ABILITY_USED);
       }
-      // Emit websocket event for evolution animation
-      const game = (store as any).handler;
-      if (game && game.core && typeof game.core.emit === 'function') {
-        game.core.emit((c: any) => {
-          if (typeof c.socket !== 'undefined') {
-            c.socket.emit(`game[${game.id}]:evolution`, {
-              playerId: effect.player.id,
-              cardId: effect.pokemonCard.id,
-              slot: effect.slot,
-              index: effect.index
-            });
-          }
-        });
-      }
+
+      // Emit evolution animation event
+      emitAnimationEvent(store, 'evolution', {
+        playerId: effect.player.id,
+        cardId: effect.pokemonCard.id,
+        slot: effect.slot ? String(effect.slot) : undefined,
+        index: effect.index
+      });
+
       return state;
     }
 

@@ -4,12 +4,13 @@ import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Dustox } from './dustox';
 import { MRayquazaEX } from './m-rayquaza-ex';
-import {MRayquazaEx} from './mega-rayquaza-ex';
+import { MRayquazaEx } from './mega-rayquaza-ex';
 import { Natu } from './natu';
-import {RayquazaEx} from './rayquaza-ex';
-import {RayquazaSpiritLink} from './rayquaza-spirit-link';
+import { RayquazaEx } from './rayquaza-ex';
+import { RayquazaSpiritLink } from './rayquaza-spirit-link';
 import { Reshiram } from './reshiram';
 import { ShayminEx } from './shaymin-ex';
+import { Shedinja } from './shedinja';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
 import { SkyField } from './sky-field';
@@ -21,6 +22,9 @@ import { WideLens } from './wide-lens';
 import { Winona } from './winona';
 import { Wurmple } from './wurmple';
 
+// Other Prints
+import { TrainersMailROS } from './other-prints';
+
 export const setRoaringSkies: Card[] = [
   new Articuno(),
   new Beautifly(),
@@ -30,6 +34,7 @@ export const setRoaringSkies: Card[] = [
   new Natu(),
   new Reshiram(),
   new ShayminEx(),
+  new Shedinja(),
   new Shuppet(),
   new Silcoon(),
   new SkyField(),
@@ -43,4 +48,7 @@ export const setRoaringSkies: Card[] = [
   new RayquazaEx(),
   new MRayquazaEx(),
   new RayquazaSpiritLink(),
+
+  // Other Prints
+  new TrainersMailROS(),
 ];

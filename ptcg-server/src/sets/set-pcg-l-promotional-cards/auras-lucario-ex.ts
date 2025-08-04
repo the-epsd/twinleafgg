@@ -29,7 +29,7 @@ export class AurasLucarioex extends PokemonCard {
     cost: [M, C, C],
     damage: 50,
     damageCalculation: '+',
-    text: 'Does 50 damage plus 10 more damage for each Fighting Energy attached to Aura\'s Lucario ex.'
+    text: 'Does 50 damage plus 10 more damage for each [F] Energy attached to Aura\'s Lucario ex.'
   }];
 
   public set: string = 'PCGL';

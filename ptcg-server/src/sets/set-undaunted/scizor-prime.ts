@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
@@ -10,9 +10,7 @@ import { EnergyCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-
 export class Scizor extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public tags = [CardTag.PRIME];
   public evolvesFrom = 'Scyther';
@@ -59,7 +57,7 @@ export class Scizor extends PokemonCard {
       effect.damage += energyCount * 20;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && state.phase === GamePhase.ATTACK) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, effect.player);
       const opponentPokemon = opponent.active;

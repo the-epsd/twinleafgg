@@ -25,7 +25,7 @@ export class PokemonCardList extends CardList {
   public isActivatingCard: boolean = false;
   public attacksThisTurn?: number;
   public showAllStageAbilities: boolean = false;
-  public triggerAnimation: boolean = false;
+  public triggerEvolutionAnimation: boolean = false;
   public showBasicAnimation: boolean = false;
   public triggerAttackAnimation: boolean = false;
 
@@ -134,7 +134,7 @@ export class PokemonCardList extends CardList {
 
     this.marker.markers = [];
 
-    this.triggerAnimation = false;
+    this.triggerEvolutionAnimation = false;
     this.showBasicAnimation = false;
     this.triggerAttackAnimation = false;
 

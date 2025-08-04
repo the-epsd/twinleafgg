@@ -2,7 +2,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -28,10 +28,10 @@ export class PotHelmet extends TrainerCard {
     'If the Pokémon this card is attached to doesn\'t have a Rule Box, it takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const sourceCard = effect.target.getPokemonCard();
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {

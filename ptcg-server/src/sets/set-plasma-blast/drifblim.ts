@@ -73,7 +73,6 @@ export class Drifblim extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        console.log(effect.cost);
         return state;
       }
 
@@ -89,9 +88,6 @@ export class Drifblim extends PokemonCard {
           effect.cost.splice(index, 1);
         }
       }
-
-      console.log(effect.cost);
-
       return state;
     }
 
