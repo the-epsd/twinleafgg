@@ -33,8 +33,6 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     { min: 0, max: 1, allowCancel: false, blocked }
   ), selectedCards => {
     cards = selectedCards || [];
-    if (cards.length === 0)
-      return state;
 
     if (cards.length > 0) {
       store.prompt(state, new ShowCardsPrompt(
@@ -44,7 +42,10 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       ), () => next());
     }
 
-    cards.forEach((card, index) => { player.deck.moveCardTo(card, player.hand); });
+    cards.forEach((card, index) => {
+      player.deck.moveCardTo(card, player.hand);
+    });
+
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
       return state;
