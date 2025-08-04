@@ -7,9 +7,9 @@
   </div>
 
   <!-- Expandable Players Sidebar -->
-  <div class="players-sidebar" [class.menu-open]="sidebarMenuOpen">
+  <!-- <div class="players-sidebar" [class.menu-open]="sidebarMenuOpen">
     <div class="sidebar-content">
-      <!-- Friends Section -->
+
       <div class="friends-section" *ngIf="(friendsList$ | async)?.length > 0">
         <div class="section-header">
           <mat-icon class="section-icon">people</mat-icon>
@@ -45,10 +45,10 @@
         </div>
       </div>
 
-      <!-- Divider -->
+
       <div class="section-divider" *ngIf="(friendsList$ | async)?.length > 0"></div>
 
-      <!-- Online Players Section -->
+
       <div class="online-players-section">
         <div class="section-header">
           <mat-icon class="section-icon">public</mat-icon>
@@ -56,7 +56,7 @@
           <span class="player-count">({{ (nonFriendClients$ | async)?.length || 0 }})</span>
         </div>
         <div class="players-list">
-          <!-- Debug: Show if we have any clients at all -->
+
           <div class="debug-info" *ngIf="(clients$ | async)?.length === 0"
             style="color: #ffd700; padding: 1rem; font-size: 12px;">
             No clients connected
@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <!-- View All Players Link -->
+
       <div class="view-all-link" *ngIf="(clients$ | async)?.length > 20">
         <button mat-text-button routerLink="/games/players" class="view-all-button">
           <span>View All ({{ (clients$ | async)?.length }})</span>
@@ -109,5 +109,5 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
