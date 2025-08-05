@@ -31,6 +31,7 @@ import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
 import { Palafin } from './palafin';
 import { Palpitoad } from './palpitoad';
+import { PatrolCap } from './patrol-cap';
 import { Pawmotex } from './pawmot-ex';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
@@ -84,6 +85,7 @@ export const setObsidianFlames: Card[] = [
   new Oddish(),
   new Palafin(),
   new Palpitoad(),
+  new PatrolCap(),
   new Pawmotex(),
   new Pidgeotto(),
   new Pidgeotex(),

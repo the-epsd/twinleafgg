@@ -4,6 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -32,7 +33,7 @@ export class CursedShovel extends TrainerCard {
         return state;
       }
 
-      opponent.deck.moveTo(opponent.discard, 2);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 2, sourceCard: this, sourceEffect: this.attacks[0] });
 
     }
     return state;

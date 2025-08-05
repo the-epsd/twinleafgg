@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Scovillainex extends PokemonCard {
 
@@ -68,6 +69,8 @@ export class Scovillainex extends PokemonCard {
         const randomCard = opponent.hand.cards[randomIndex];
         opponent.hand.moveCardTo(randomCard, opponent.discard);
       }
+
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[1] });
     }
     return state;
   }

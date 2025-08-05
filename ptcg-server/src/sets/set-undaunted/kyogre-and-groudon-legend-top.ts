@@ -4,7 +4,7 @@ import { CardList, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardLi
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { KyogreAndGroudonLegendBottom } from './kyogre-and-groudon-legend-bottom';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class KyogreAndGroudonLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
@@ -101,7 +101,7 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       const attackDamage = energyCount.length * 30;
 
       // Move all cards to discard
-      deckTop.moveTo(opponent.discard, deckTop.cards.length);
+      MOVE_CARDS(store, state, deckTop, opponent.discard, { count: deckTop.cards.length, sourceCard: this, sourceEffect: this.attacks[0] });
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         if (cardList !== opponent.active) {

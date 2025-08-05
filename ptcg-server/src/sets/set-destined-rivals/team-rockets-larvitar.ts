@@ -30,7 +30,7 @@ export class TeamRocketsLarvitar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MOVE_CARDS(store, state, effect.opponent.deck, effect.opponent.discard, { count: 1 });
+      MOVE_CARDS(store, state, effect.opponent.deck, effect.opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     return state;

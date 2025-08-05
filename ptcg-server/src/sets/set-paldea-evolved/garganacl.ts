@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayerType, PowerType, StateUtils } from '../../game';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Garganacl extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -116,7 +117,7 @@ export class Garganacl extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.deck.moveTo(opponent.discard, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     return state;

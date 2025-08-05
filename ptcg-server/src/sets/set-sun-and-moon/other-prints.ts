@@ -4,6 +4,7 @@ import { Hau } from '../set-celestial-storm/hau';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { RotomDex } from './rotom-dex';
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 
 export class EnergyRetrievalSUM extends EnergyRetrieval {
   public setNumber = '116';
@@ -38,5 +39,11 @@ export class RareCandySUM extends RareCandy {
 export class RotomDexSR extends RotomDex {
   public setNumber = '159';
   public fullName: string = 'Rotom DexSR SUM';
+  public set = 'SUM';
+}
+
+export class UltraBallSUMSR extends UltraBall {
+  public setNumber = '161';
+  public fullName: string = 'Ultra Ball SUM SR';
   public set = 'SUM';
 }

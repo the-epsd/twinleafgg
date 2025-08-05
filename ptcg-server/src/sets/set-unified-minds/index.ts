@@ -34,6 +34,7 @@ import { RaichuAlolanRaichuGX } from './raichu-and-alolan-raichu-gx';
 import { RecycleEnergy } from './recycle-energy';
 import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
+import { Sewaddle } from './sewaddle';
 import { SlumberingForest } from './slumbering-forest';
 import { StadiumNav } from './stadium-nav';
 import { TagSwitch } from './tag_switch';
@@ -103,6 +104,7 @@ export const setUnifiedMinds: Card[] = [
   new ResetStamp(),
   new Riolu(),
   new RowletAlolanExeggutorGX(),
+  new Sewaddle(),
   new SlowpokePsyduckGX(),
   new SlumberingForest(),
   new Sneasel(),

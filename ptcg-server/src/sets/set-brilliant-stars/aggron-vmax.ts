@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class AggronVMAX extends PokemonCard {
 
@@ -56,7 +57,7 @@ export class AggronVMAX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Discard 1 card from opponent's deck 
-      opponent.deck.moveTo(opponent.discard, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
 
     }
 

@@ -15,6 +15,9 @@ import { Snom } from './snom';
 import { Thwackey } from './thwackey';
 import { Yveltal } from './yveltal';
 
+// other prints
+import { BirdKeeperSHF } from './other-prints';
+
 export const setShiningFates: Card[] = [
   new BallGuy(),
   new Buizel(),
@@ -34,4 +37,7 @@ export const setShiningFates: Card[] = [
   // Shiny Vault
   new ApplinSV(),
   new SnomSV(),
+
+  // other prints
+  new BirdKeeperSHF(),
 ];

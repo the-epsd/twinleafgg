@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { CoinFlipPrompt, GameMessage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {MOVE_CARDS, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,10 +36,10 @@ export class Gyarados extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wreak Havoc
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
-      
+
       const flipCoin = (heads: number = 0): State => {
         return store.prompt(state, [
           new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
@@ -47,7 +47,7 @@ export class Gyarados extends PokemonCard {
           if (result === true) {
             return flipCoin(heads + 1);
           }
-          MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: (heads * 2) });
+          MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: (heads * 2), sourceCard: this, sourceEffect: this.attacks[0] });
           return state;
         });
       };
@@ -55,9 +55,9 @@ export class Gyarados extends PokemonCard {
     }
 
     // Raging Fin
-    if (WAS_ATTACK_USED(effect, 1, this)){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      
+
       MOVE_CARDS(store, state, player.deck, player.discard, { count: 5 });
     }
 

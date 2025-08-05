@@ -1,6 +1,6 @@
 import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ATTACH_ENERGY_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CornerstoneMaskOgerpon extends PokemonCard {
 
@@ -46,7 +46,7 @@ export class CornerstoneMaskOgerpon extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.deck.moveTo(opponent.discard, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[1] });
     }
 
     return state;

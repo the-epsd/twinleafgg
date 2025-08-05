@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Lickilicky extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -46,7 +47,7 @@ export class Lickilicky extends PokemonCard {
       }
 
 
-      opponent.deck.moveTo(opponent.discard, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[1] });
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       state = store.reduceEffect(state, checkProvidedEnergy);

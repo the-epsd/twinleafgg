@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Durant extends PokemonCard {
 
@@ -16,19 +17,19 @@ export class Durant extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Devour',
-      cost: [ CardType.METAL ],
+      cost: [CardType.METAL],
       damage: 0,
       text: 'For each of your Durant in play, discard the top card of your ' +
         'opponent\'s deck.'
     },
     {
       name: 'Vice Grip',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: ''
     },
@@ -56,7 +57,7 @@ export class Durant extends PokemonCard {
         }
       });
 
-      opponent.deck.moveTo(opponent.discard, durantsInPlay);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: durantsInPlay, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     return state;
