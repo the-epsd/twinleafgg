@@ -64,7 +64,7 @@ export class Ferrothorn extends PokemonCard {
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       checkProvidedEnergy.energyMap.forEach(energy => {
-        if (energy.provides.includes(CardType.METAL)) {
+        if (energy.provides.includes(CardType.METAL) || energy.provides.includes(CardType.ANY)) {
           if (snipeDamage < 100) {
             snipeDamage += 20;
           }
