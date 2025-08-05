@@ -37,7 +37,8 @@ import { Vulpix } from './vulpix';
 // other prints
 import {
   EldegossVRCL,
-  EldegossVRCLFullArt
+  EldegossVRCLFullArt,
+  TurffieldStadiumRCL,
 } from './other-prints';
 
 export const setRebelClash: Card[] = [
@@ -79,4 +80,5 @@ export const setRebelClash: Card[] = [
   // other prints
   new EldegossVRCL(),
   new EldegossVRCLFullArt(),
+  new TurffieldStadiumRCL(),
 ];
