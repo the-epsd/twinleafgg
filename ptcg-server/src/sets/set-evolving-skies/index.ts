@@ -13,7 +13,7 @@ import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Flaaffy } from './flaaffy';
 import { Flapple } from './flapple';
-import { RayquazaVAA, RayquazaVMAXAA } from './full-art';
+import { RayquazaVAA, RayquazaVMAXAA, TurffieldStadiumEVSSR } from './full-art';
 import { FullFaceGuard } from './full-face-guard';
 import { GalarianArticuno } from './galarian-articuno';
 import { GalarianMoltres } from './galarian-moltres';
@@ -114,5 +114,5 @@ export const setEvolvingSkies: Card[] = [
   // Full  & Alternate 
   new RayquazaVAA(),
   new RayquazaVMAXAA(),
-
+  new TurffieldStadiumEVSSR(),
 ];

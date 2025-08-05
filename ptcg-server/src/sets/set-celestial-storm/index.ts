@@ -21,7 +21,6 @@ import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { Nuzleaf } from './nuzleaf';
 import { Oricorio } from './oricorio';
-import { SuperScoopUpCES, SwitchCES } from './other-prints';
 import { Phanpy } from './phanpy';
 import { RayquazaGX } from './rayquaza-gx';
 import { Registeel } from './registeel';
@@ -38,6 +37,15 @@ import { StevensResolve } from './stevens-resolve';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 import { Whismur } from './whismur';
+
+// Other Prints
+import {
+  AcroBikeCES,
+  AcroBikeCESAlt,
+  AcroBikeCESSR,
+  SuperScoopUpCES,
+  SwitchCES,
+} from './other-prints';
 
 export const setCelestialStorm: Card[] = [
   new ApricornMaker(),
@@ -74,10 +82,15 @@ export const setCelestialStorm: Card[] = [
   new Spinarak(),
   new StevensResolve(),
   new Swampert(),
-  new SuperScoopUpCES(),
   new TateAndLiza(),
   new Whismur(),
   new ArticunoGX(),
   new Dunsparce(),
+
+  // Other Prints
+  new AcroBikeCES(),
+  new AcroBikeCESAlt(),
+  new AcroBikeCESSR(),
+  new SuperScoopUpCES(),
   new SwitchCES(),
 ];

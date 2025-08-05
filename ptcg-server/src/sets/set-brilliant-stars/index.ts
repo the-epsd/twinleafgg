@@ -44,7 +44,6 @@ import { Milcery } from './milcery';
 import { Minccino } from './minccino';
 import { Moltres } from './moltres';
 import { Monferno } from './monferno';
-import { UltraBallHR } from './other-prints';
 import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
@@ -55,10 +54,17 @@ import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
 import { TeamYellsCheer } from './team-yells-cheer';
 import { Torterra } from './torterra';
+import { WhimsicottV } from './whimsicott-v';
+import { WhimsicottVSTAR } from './whimsicott-vstar';
 
+// Other Prints
+import {
+  UltraBallHR,
+  WhimsicottVFA,
+  WhimsicottVSTARRR
+} from './other-prints';
 
 export const setBrilliantStars: Card[] = [
-
   new AcerolasPremonition(),
   new AggronV(),
   new AggronVMAX(),
@@ -114,8 +120,11 @@ export const setBrilliantStars: Card[] = [
   new Torterra(),
   new Riolu(),
   new Lucario(),
+  new WhimsicottV(),
+  new WhimsicottVSTAR(),
 
-
-  //FA
+  // Other Prints
   new UltraBallHR(),
+  new WhimsicottVFA(),
+  new WhimsicottVSTARRR(),
 ];
