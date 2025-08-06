@@ -9,6 +9,7 @@ import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffe
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
+import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
 
 /**
  * 
@@ -1125,5 +1126,54 @@ export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: 
     }
   } catch (error) {
     return false;
+  }
+}
+
+/**
+ * Creates and reduces a prevent retreat effect for the given source card.
+ * This is commonly used in Pokemon card effects that prevent the defending Pokemon from retreating.
+ * @param store The store instance
+ * @param state The current game state
+ * @param effect The original attack effect that triggered this
+ * @param source The source card that created this effect
+ * @returns The updated game state
+ */
+export function BLOCK_RETREAT(store: StoreLike, state: State, effect: AttackEffect, source: Card): State {
+  const retreatEffect = preventRetreatEffect(effect, source);
+  return store.reduceEffect(state, retreatEffect);
+}
+
+/**
+ * Creates and reduces a prevent damage effect for the given source card.
+ * This is commonly used in Pokemon card effects that prevent damage during the opponent's next turn.
+ * @param store The store instance
+ * @param state The current game state
+ * @param effect The original attack effect that triggered this
+ * @param source The source card that created this effect
+ * @returns The updated game state
+ */
+export function PREVENT_DAMAGE(store: StoreLike, state: State, effect: AttackEffect, source: Card): State {
+  const damageEffect = preventDamageEffect(effect, source);
+  return store.reduceEffect(state, damageEffect);
+}
+
+/**
+ * Tera Rule: Prevents damage effects from being applied to non-active Pokémon.
+ * This is commonly used by Tera Pokémon to prevent damage to benched Pokémon.
+ * @param effect The effect being processed
+ * @param state The current game state
+ * @param source The source card that created this effect
+ */
+export function TERA_RULE(effect: Effect, state: State, source: Card): void {
+  if (effect instanceof PutDamageEffect && effect.target.cards.includes(source) && effect.target.getPokemonCard() === source) {
+    const player = effect.player;
+    const opponent = StateUtils.getOpponent(state, player);
+
+    // Target is not Active
+    if (effect.target === player.active || effect.target === opponent.active) {
+      return;
+    }
+
+    effect.preventDefault = true;
   }
 }

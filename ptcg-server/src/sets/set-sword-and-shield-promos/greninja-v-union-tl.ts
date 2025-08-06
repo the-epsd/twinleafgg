@@ -4,12 +4,13 @@ import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, Pla
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { GreninjaVUNIONTopRight } from './greninja-v-union-tr';
 import { GreninjaVUNIONBottomLeft } from './greninja-v-union-bl';
 import { GreninjaVUNIONBottomRight } from './greninja-v-union-br';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -136,7 +137,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
         return state;
       }*/
 
-      effect.preventDefault = true;
+      // effect.preventDefault = true;
     }
 
     // Antidote Jutsu
@@ -223,21 +224,12 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
 
     // Waterfall Bind
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[3]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.WATERFALL_BIND_MARKER, this);
-      opponent.marker.addMarker(this.WATERFALL_BIND_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 3, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.marker.hasMarker(this.WATERFALL_BIND_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WATERFALL_BIND_MARKER, this)) {
-      effect.player.marker.removeMarker(this.WATERFALL_BIND_MARKER, this);
-      effect.player.active.marker.removeMarker(this.WATERFALL_BIND_MARKER, this);
-    }
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FEEL_THE_WAY_MARKER, this)) {
       effect.player.marker.removeMarker(this.FEEL_THE_WAY_MARKER, this);

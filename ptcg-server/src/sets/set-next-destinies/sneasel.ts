@@ -1,4 +1,4 @@
-import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER } from '../../game/store/prefabs/prefabs';
@@ -7,11 +7,11 @@ export class Sneasel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 60;
-  public weakness: Weakness[] = [{ type: F }];
+  public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
-  public retreat: CardType[] = [C];
+  public retreat = [C];
 
-  public attacks: Attack[] = [{
+  public attacks = [{
     name: 'Corner',
     cost: [D],
     damage: 10,

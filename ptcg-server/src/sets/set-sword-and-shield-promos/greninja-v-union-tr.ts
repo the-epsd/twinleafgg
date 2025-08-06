@@ -40,8 +40,7 @@ export class GreninjaVUNIONTopRight extends PokemonCard {
     }
   ];
 
-  public attacks = [
-    {
+  public attacks = [{
       name: 'Union Gain',
       cost: [C],
       damage: 0,
@@ -64,8 +63,7 @@ export class GreninjaVUNIONTopRight extends PokemonCard {
       cost: [W, W, C],
       damage: 180,
       text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
-  ];
+    }];
 
   public set: string = 'SWSH';
   public regulationMark = 'E';

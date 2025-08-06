@@ -1,76 +1,47 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { StoreLike, State, PlayerType, StateUtils, } from '../../game';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { StoreLike, State, } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Victreebel extends PokemonCard {
-  public readonly TIME_CIRCLE_MARKER: string = 'TIME_CIRCLE_MARKER';
-  public readonly CLEAR_TIME_CIRCLE_MARKER: string = 'CLEAR_TIME_CIRCLE_MARKER';
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Weepinbell';
+  public cardType: CardType = G;
+  public hp: number = 150;
+  public weakness = [{ type: R }];
+  public resistance = [];
+  public retreat = [C];
+
+  public attacks = [{
+    name: 'Panic Vine',
+    cost: [G],
+    damage: 40,
+    text: 'Your opponent\'s Active Pokémon is now Confused. During your opponent\'s next turn, that Pokémon can\'t retreat.'
+  },
+  {
+    name: 'Solar Beam',
+    cost: [G, C, C],
+    damage: 120,
+    text: ''
+  }];
 
   public regulationMark = 'E';
-
-  public cardType: CardType = CardType.GRASS;
-
-  public hp: number = 150;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [];
-
-  public retreat = [CardType.COLORLESS];
-
-
-  public attacks = [
-    {
-      name: 'Panic Vine',
-      cost: [CardType.GRASS],
-      damage: 40,
-      text: 'Your opponent\'s Active Pokémon is now Confused. During' +
-        'your opponent\'s next turn, that Pokémon can\'t retreat.'
-    },
-    {
-      name: 'Solar Beam',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 120,
-      text: ''
-    }
-  ];
-
   public set: string = 'BST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '3';
-
   public name: string = 'Victreebel';
-
   public fullName: string = 'Victreebel BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.TIME_CIRCLE_MARKER, this);
-      opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
-      return state;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_TIME_CIRCLE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
-      });
-    }
-
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     return state;
   }
-
 }

@@ -16,6 +16,7 @@ import {
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
+import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -224,6 +225,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     effect.specialConditions.forEach(sp => {
       target.removeSpecialCondition(sp);
     });
+    return state;
+  }
+
+  if (effect instanceof EffectOfAttackEffect) {
+    effect.applyEffect();
     return state;
   }
 
