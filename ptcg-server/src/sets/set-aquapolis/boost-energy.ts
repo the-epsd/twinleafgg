@@ -1,4 +1,4 @@
-import { GameError, GameMessage, PlayerType } from '../../game';
+import { GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -49,7 +50,7 @@ export class BoostEnergy extends EnergyCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (cardList.cards.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, StateUtils.findCardList(state, this), player.discard, { cards: [this], sourceCard: this });
           effect.player.marker.removeMarker(this.BOOST_MARKER, this);
         }
       });
@@ -65,7 +66,7 @@ export class BoostEnergy extends EnergyCard {
           const attachedTo = cardList.getPokemonCard();
 
           if (!!attachedTo && cardList.getPokemons().length < 2) {
-            cardList.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, StateUtils.findCardList(state, this), player.discard, { cards: [this] });
           }
         });
       });

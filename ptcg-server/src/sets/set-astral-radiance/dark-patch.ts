@@ -11,6 +11,7 @@ import { GameMessage } from '../../game/game-message';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class DarkPatch extends TrainerCard {
 
@@ -90,10 +91,10 @@ export class DarkPatch extends TrainerCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
 
-        player.supporter.moveCardTo(this, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

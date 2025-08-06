@@ -1,19 +1,19 @@
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Card, ChooseEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckPokemonStatsEffect, CheckTableStateEffect} from '../../game/store/effects/check-effects';
+import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckPokemonStatsEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {IS_POKEBODY_BLOCKED, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
-import {DISCARD_X_ENERGY_FROM_THIS_POKEMON} from '../../game/store/prefabs/costs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class ArceusLvX1 extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Arceus';
   public cardType: CardType = C;
-  public tags = [ CardTag.POKEMON_LV_X, CardTag.ARCEUS ];
+  public tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
   public hp: number = 120;
-  public retreat = [ C ];
+  public retreat = [C];
 
   public powers = [
     {
@@ -51,26 +51,41 @@ export class ArceusLvX1 extends PokemonCard {
     if (effect instanceof CheckPokemonStatsEffect && effect.target.getPokemonCard() === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)){ return state; }
+      if (IS_POKEBODY_BLOCKED(store, state, player, this)) { return state; }
 
       effect.target.cards.forEach(card => {
-        if (card instanceof PokemonCard && card.name === 'Arceus' && card !== this){
+        if (card instanceof PokemonCard && card.name === 'Arceus' && card !== this) {
           effect.target.getPokemonCard()?.cardType === card.cardType;
         }
       });
     }
 
     // Psychic Bolt
-    if (WAS_ATTACK_USED(effect, 0, this)){
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.LIGHTNING);
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.PSYCHIC);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      state = store.prompt(state, new ChooseEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        checkProvidedEnergy.energyMap,
+        [CardType.PSYCHIC, CardType.LIGHTNING],
+        { allowCancel: false }
+      ), energy => {
+        const cards: Card[] = (energy || []).map(e => e.card);
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        discardEnergy.target = player.active;
+        store.reduceEffect(state, discardEnergy);
+      });
     }
 
     // making sure it gets put on the active pokemon
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target !== effect.player.active){ throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
     }
-    
+
     // Trying to get all of the previous stage's attacks and powers
     if (effect instanceof CheckTableStateEffect) {
       const player = effect.player;
@@ -122,7 +137,7 @@ export class ArceusLvX1 extends PokemonCard {
       }
     }
 
-    if (effect instanceof CheckPokemonPowersEffect){
+    if (effect instanceof CheckPokemonPowersEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);

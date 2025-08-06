@@ -36,7 +36,7 @@ export class Gabite extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (AFTER_ATTACK(effect, 0, this)) {
-      SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, effect.player, { superType: SuperType.ENERGY }, { min: 0, max: 2 });
+      SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, effect.player, this, { superType: SuperType.ENERGY }, { min: 0, max: 2 }, this.attacks[0]);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

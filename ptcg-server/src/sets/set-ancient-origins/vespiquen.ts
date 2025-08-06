@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {StoreLike,State} from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {CONFIRMATION_PROMPT, DRAW_CARDS, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { CONFIRMATION_PROMPT, DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vespiquen extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,28 +35,27 @@ export class Vespiquen extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intelligence Gathering
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      
-      if (player.hand.cards.length >= 6 || player.deck.cards.length === 0){
+
+      if (player.hand.cards.length >= 6 || player.deck.cards.length === 0) {
         return state;
       }
 
       CONFIRMATION_PROMPT(store, state, effect.player, result => {
-        if (result){
-          let cardsToDraw = 6 - player.hand.cards.length;
-          DRAW_CARDS(player, cardsToDraw);
+        if (result) {
+          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6)
         }
       });
     }
 
     // Bee Revenge
-    if (WAS_ATTACK_USED(effect, 1, this)){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       let pokemonInDiscard = 0;
 
       player.discard.cards.forEach(card => {
-        if (card instanceof PokemonCard){ pokemonInDiscard++; }
+        if (card instanceof PokemonCard) { pokemonInDiscard++; }
       });
 
       effect.damage += pokemonInDiscard * 10;

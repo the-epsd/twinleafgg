@@ -8,6 +8,7 @@ import {
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class OriginFormePalkiaVSTAR extends PokemonCard {
 
@@ -101,7 +102,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
           player.usedVSTAR = true;
         }
       });

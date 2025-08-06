@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage } from '../../game';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class AceTrainer extends TrainerCard {
 
@@ -28,15 +29,14 @@ export class AceTrainer extends TrainerCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       const cards = player.hand.cards.filter(c => c !== this);
-
-      player.hand.moveCardsTo(cards, player.deck);
-      opponent.hand.moveTo(opponent.deck);
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: this });
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
 
       store.prompt(state, [
         new ShuffleDeckPrompt(player.id),
@@ -45,8 +45,10 @@ export class AceTrainer extends TrainerCard {
         player.deck.applyOrder(deckOrder[0]);
         opponent.deck.applyOrder(deckOrder[1]);
 
-        player.deck.moveTo(player.hand, 6);
-        opponent.deck.moveTo(opponent.hand, 3);
+        DRAW_CARDS(player, 6);
+        DRAW_CARDS(opponent, 3);
+
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

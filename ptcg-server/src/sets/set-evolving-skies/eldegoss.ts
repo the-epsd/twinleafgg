@@ -53,7 +53,7 @@ export class Eldegoss extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, { superType: SuperType.ENERGY, energyType: EnergyType.BASIC }, { min: 0, max: 2 });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.ENERGY, energyType: EnergyType.BASIC }, { min: 0, max: 2 }, this.powers[0]);
       ADD_MARKER(this.COTTON_LIFT_MARKER, effect.player, this);
       ABILITY_USED(player, this);
     }

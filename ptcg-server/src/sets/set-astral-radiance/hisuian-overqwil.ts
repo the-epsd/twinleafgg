@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, AFTER_ATTACK, ADD_POISON_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
 
 export class HisuianOverqwil extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -19,7 +17,7 @@ export class HisuianOverqwil extends PokemonCard {
     name: 'Tormenting Poison',
     cost: [],
     damage: 0,
-    text: 'Your opponent\'s Active Pokémon is now Poisoned.During Pokémon Checkup, put 5 damage counters on that Pokémon instead of 1. '
+    text: 'Your opponent\'s Active Pokémon is now Poisoned. During Pokémon Checkup, put 5 damage counters on that Pokémon instead of 1. '
   },
   {
     name: 'Pinning',
@@ -37,10 +35,8 @@ export class HisuianOverqwil extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-      specialCondition.poisonDamage = 50;
-      store.reduceEffect(state, specialCondition);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this, 50);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

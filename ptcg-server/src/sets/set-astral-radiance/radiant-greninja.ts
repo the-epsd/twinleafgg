@@ -10,7 +10,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class RadiantGreninja extends PokemonCard {
   public tags = [CardTag.RADIANT];
@@ -94,8 +94,8 @@ export class RadiantGreninja extends PokemonCard {
           }
         });
 
-        player.hand.moveCardsTo(cards, player.discard);
-        player.deck.moveTo(player.hand, 2);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
+        DRAW_CARDS(player, 2);
       });
       return state;
     }

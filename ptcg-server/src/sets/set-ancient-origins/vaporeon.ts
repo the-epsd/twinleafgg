@@ -42,6 +42,17 @@ export class Vaporeon extends PokemonCard {
     if (effect instanceof CheckPokemonTypeEffect && effect.target.getPokemonCard()?.stage === Stage.STAGE_1 && !IS_ABILITY_BLOCKED(store, state, StateUtils.findOwner(state, effect.target), this)) {
       const player = StateUtils.findOwner(state, effect.target);
 
+      let isVaporeonInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isVaporeonInPlay = true;
+        }
+      });
+
+      if (!isVaporeonInPlay) {
+        return state;
+      }
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (cardList === effect.target) {
           if (!effect.cardTypes.includes(CardType.WATER)) {

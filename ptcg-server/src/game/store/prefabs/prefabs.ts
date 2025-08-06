@@ -538,7 +538,7 @@ export function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number) {
   player.prizes.forEach(p => p.isSecret = true);
 }
 
-export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}) {
+export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, sourceCard: Card, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}, sourceEffect?: any) {
   if (player.deck.cards.length === 0)
     return;
   const opponent = StateUtils.getOpponent(state, player);
@@ -547,17 +547,26 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
     player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options,
   ), selected => {
     const cards = selected || [];
-    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-    MOVE_CARDS(store, state, player.deck, player.hand, { cards });
+    if (Object.keys(filter).length > 0) {
+      cards.forEach(card => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+      });
+      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    }
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard, sourceEffect });
     SHUFFLE_DECK(store, state, player);
   });
+}
+
+export function CLEAN_UP_SUPPORTER(effect: TrainerEffect, player: Player) {
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }
 
 /**
  * Search discard pile for card, show it to the opponent, put it into `player`'s hand.
  * A `filter` can be provided for the prompt as well.
  */
-export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}) {
+export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, sourceCard: Card, filter: Partial<Card> = {}, options: Partial<ChooseCardsOptions> = {}, sourceEffect?: any,) {
   if (player.discard.cards.length === 0)
     return;
   const opponent = StateUtils.getOpponent(state, player);
@@ -566,8 +575,11 @@ export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: S
     player, GameMessage.CHOOSE_CARD_TO_HAND, player.discard, filter, options,
   ), selected => {
     const cards = selected || [];
+    cards.forEach(card => {
+      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+    });
     SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-    MOVE_CARDS(store, state, player.discard, player.hand, { cards });
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard, sourceEffect });
   });
 }
 

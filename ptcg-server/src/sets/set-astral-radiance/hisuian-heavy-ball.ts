@@ -1,6 +1,7 @@
 import { CardList, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class HisuianHeavyBall extends TrainerCard {
 
@@ -33,9 +34,9 @@ export class HisuianHeavyBall extends TrainerCard {
       // If there is no prizes originally face down, this card can't be played
       let faceDownCheck = 0;
       player.prizes.forEach(card => {
-        if (card.isSecret){ faceDownCheck++; }
+        if (card.isSecret) { faceDownCheck++; }
       });
-      if (!faceDownCheck){ throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+      if (!faceDownCheck) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
 
       // Make prizes no longer secret before displaying prompt
       prizes.forEach(p => { p.isSecret = false; });
@@ -66,7 +67,7 @@ export class HisuianHeavyBall extends TrainerCard {
               p.isSecret = true;
             }
           });
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
           this.shuffleFaceDownPrizeCards(player.prizes.filter((p, index) => originallyFaceDown[index]));
           return state;
         }

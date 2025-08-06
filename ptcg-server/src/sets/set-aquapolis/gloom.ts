@@ -5,9 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game';
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
-import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,8 +34,6 @@ export class Gloom extends PokemonCard {
   public setNumber: string = '49';
   public name: string = 'Gloom';
   public fullName: string = 'Gloom AQ';
-
-  public usedSleepSap = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -73,12 +70,7 @@ export class Gloom extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedSleepSap = true;
-    }
-
-    if (effect instanceof AfterAttackEffect && this.usedSleepSap) {
-      this.usedSleepSap = false;
+    if (AFTER_ATTACK(effect, 0, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.player, this);
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
