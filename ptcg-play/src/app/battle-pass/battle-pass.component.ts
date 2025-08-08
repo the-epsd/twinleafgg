@@ -7,7 +7,6 @@ import { forkJoin } from 'rxjs';
 interface BattlePassLevel {
   level: number;
   freeReward?: BattlePassReward;
-  premiumReward?: BattlePassReward;
 }
 
 @UntilDestroy()
@@ -23,7 +22,6 @@ export class BattlePassComponent implements OnInit {
   public season: BattlePassSeason | undefined;
   public progress: BattlePassProgress | undefined;
   public levels: BattlePassLevel[] = [];
-  public isPremium = false;
   public loading = true;
   public claimingLevel: number | null = null;
 
@@ -38,7 +36,6 @@ export class BattlePassComponent implements OnInit {
       .subscribe({
         next: ({ seasonData, progressData }) => {
           this.season = seasonData.season;
-          this.isPremium = progressData.progress.isPremium;
           this.progress = progressData.progress;
           this.levels = this.groupRewardsByLevel(seasonData.season.rewards);
           this.loading = false;
@@ -58,9 +55,7 @@ export class BattlePassComponent implements OnInit {
       }
 
       const level = levelMap.get(reward.level)!;
-      if (reward.isPremium) {
-        level.premiumReward = reward;
-      } else {
+      if (!reward.isPremium) {
         level.freeReward = reward;
       }
     }

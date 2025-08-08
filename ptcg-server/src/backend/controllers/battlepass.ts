@@ -35,11 +35,7 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // If user is authenticated, include their premium status
-      let user;
-      if (req.body.userId) {
-        user = await User.findOne(req.body.userId);
-      }
+      // Premium track removed; no user premium status needed
 
       res.send({
         ok: true,
@@ -51,8 +47,7 @@ export class BattlePass extends Controller {
           endDate: currentSeason.endDate,
           rewards: currentSeason.rewards,
           maxLevel: currentSeason.maxLevel
-        },
-        isPremium: [4, 5].includes(user?.roleId ?? 0)
+        }
       });
     } catch (error) {
       console.error('Error fetching current season:', error);
@@ -81,7 +76,7 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // Get user for premium status
+      // Get user
       const user = await User.findOne(userId);
       if (!user) {
         res.status(400).send({ error: ApiErrorEnum.PROFILE_INVALID });
@@ -106,9 +101,8 @@ export class BattlePass extends Controller {
         await progress.save();
       }
 
-      // Get available rewards for current level
-      const isPremium = [4, 5].includes(user.roleId);
-      const availableRewards = currentSeason.getRewardsForLevel(progress.level, isPremium);
+      // Get available rewards for current level (premium removed)
+      const availableRewards = currentSeason.getRewardsForLevel(progress.level, false);
 
       res.send({
         ok: true,
@@ -118,7 +112,6 @@ export class BattlePass extends Controller {
           claimedRewards: progress.claimedRewards,
           nextLevelXp: currentSeason.getXpForLevel(progress.level),
           totalXpForCurrentLevel: currentSeason.getTotalXpForLevel(progress.level),
-          isPremium,
           availableRewards
         }
       });
@@ -152,7 +145,7 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // Get user for premium status
+      // Get user
       const user = await User.findOne(userId);
       if (!user) {
         res.status(400).send({ error: ApiErrorEnum.PROFILE_INVALID });
@@ -179,9 +172,8 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // Get the rewards for this level
-      const isPremiumUser = [4, 5].includes(user.roleId);
-      const rewards = currentSeason.getRewardsForLevel(level, isPremiumUser);
+      // Get the rewards for this level (premium removed)
+      const rewards = currentSeason.getRewardsForLevel(level, false);
       if (rewards.length === 0) {
         res.status(400).send({ error: 'No available rewards' });
         return;
@@ -217,7 +209,7 @@ export class BattlePass extends Controller {
           exp: progress.exp,
           level: progress.level,
           claimedRewards: progress.claimedRewards,
-          isPremium: isPremiumUser
+
         }
       });
     } catch (error) {
@@ -310,7 +302,7 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // Get user for premium status
+      // Get user
       const user = await User.findOne(userId);
       if (!user) {
         res.status(400).send({ error: ApiErrorEnum.PROFILE_INVALID });
@@ -341,10 +333,9 @@ export class BattlePass extends Controller {
       // Check for level up
       const leveledUp = progress.level > oldLevel;
 
-      // Get available rewards if leveled up
-      const isPremiumUserOnLevelUp = [4, 5].includes(user.roleId);
+      // Get available rewards if leveled up (premium removed)
       const availableRewards = leveledUp ?
-        currentSeason.getRewardsForLevel(progress.level, isPremiumUserOnLevelUp) :
+        currentSeason.getRewardsForLevel(progress.level, false) :
         [];
 
       res.send({
@@ -356,7 +347,6 @@ export class BattlePass extends Controller {
           leveledUp,
           nextLevelXp: currentSeason.getXpForLevel(progress.level),
           totalXpForCurrentLevel: currentSeason.getTotalXpForLevel(progress.level),
-          isPremium: isPremiumUserOnLevelUp,
           availableRewards
         }
       });

@@ -65,13 +65,10 @@ export class BattlePassSeason extends BaseEntity {
   }
 
   /**
-   * Get rewards for a specific level, filtered by premium status
+   * Get rewards for a specific level (premium track removed: only non-premium rewards are available)
    */
-  public getRewardsForLevel(level: number, isPremium: boolean): BattlePassReward[] {
-    return this.rewards.filter(reward =>
-      reward.level === level &&
-      (isPremium || !reward.isPremium)
-    );
+  public getRewardsForLevel(level: number, _isPremium: boolean): BattlePassReward[] {
+    return this.rewards.filter(reward => reward.level === level && !reward.isPremium);
   }
 
   /**
