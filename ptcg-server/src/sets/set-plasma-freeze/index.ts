@@ -25,7 +25,10 @@ import { ThundurusEX } from './thundurus-ex';
 import { Weavile } from './weavile';
 
 // Other Prints
-import { MaxPotionPLF } from './other-prints';
+import {
+  MaxPotionPLF,
+  ProfessorJuniperPLF,
+} from './other-prints';
 
 export const setPlasmaFreeze: Card[] = [
   new Absol(),
@@ -55,4 +58,5 @@ export const setPlasmaFreeze: Card[] = [
 
   // Other Prints
   new MaxPotionPLF(),
+  new ProfessorJuniperPLF(),
 ];

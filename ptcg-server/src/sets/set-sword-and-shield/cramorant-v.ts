@@ -2,7 +2,7 @@ import { CardTag, Stage, State, StoreLike } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
-import { DISCARD_ALL_ENERGY_FROM_POKEMON, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DISCARD_ALL_ENERGY_FROM_POKEMON, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CramorantV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -36,8 +36,8 @@ export class CramorantV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Beak Catch
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, {}, { min: 0, max: 2 });
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, this, {}, { min: 0, max: 2 }, this.attacks[0]);
     }
 
     // Spit Shot

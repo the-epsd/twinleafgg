@@ -2,7 +2,7 @@ import { PowerType, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import {SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class ArceusLightning extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,8 +36,8 @@ export class ArceusLightning extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Mind Bend
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    // Lightning Turn
+    if (AFTER_ATTACK(effect, 0, this)) {
       SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
     }
 

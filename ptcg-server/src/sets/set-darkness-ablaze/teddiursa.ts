@@ -1,69 +1,45 @@
-import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Teddiursa extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
+  public cardType: CardType = C;
+  public hp: number = 70;
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
+
+  public attacks = [{
+    name: 'Baby-Doll Eyes',
+    cost: [C],
+    damage: 0,
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+  },
+  {
+    name: 'Dig Claws',
+    cost: [C, C],
+    damage: 90,
+    text: ''
+  }];
 
   public regulationMark = 'D';
-
-  public cardType: CardType = CardType.COLORLESS;
-
-  public hp: number = 70;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks =
-    [
-      {
-        name: 'Baby-Doll Eyes',
-        cost: [CardType.COLORLESS],
-        damage: 0,
-        text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-      },
-      {
-        name: 'Dig Claws',
-        cost: [CardType.COLORLESS, CardType.COLORLESS],
-        damage: 90,
-        text: ''
-      }
-    ];
-
   public set: string = 'DAA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '138';
-
   public name: string = 'Teddiursa';
-
   public fullName: string = 'Teddiursa DAA';
-
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
-
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     return state;
   }
 }

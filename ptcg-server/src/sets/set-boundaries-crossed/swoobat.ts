@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -47,7 +47,7 @@ export class Swoobat extends PokemonCard {
         return sum + energy.provides.filter(type => type === CardType.PSYCHIC || type === CardType.ANY).length;
       }, 0);
 
-      opponent.deck.moveTo(opponent.discard, totalPsychicEnergy);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: totalPsychicEnergy, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

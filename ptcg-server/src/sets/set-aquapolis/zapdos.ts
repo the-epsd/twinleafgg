@@ -65,7 +65,7 @@ export class Zapdos extends PokemonCard {
             ), cards => {
               cards = cards || [];
               if (cards.length > 0) {
-                MOVE_CARDS(store, state, player.discard, player.active, { cards });
+                MOVE_CARDS(store, state, player.discard, player.active, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
               }
             });
           }

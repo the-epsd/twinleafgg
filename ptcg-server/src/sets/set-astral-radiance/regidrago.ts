@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Regidrago extends PokemonCard {
 
@@ -82,14 +83,7 @@ export class Regidrago extends PokemonCard {
         }
       });
 
-      if (player.active.getPokemonCard() === this) {
-        while (player.hand.cards.length < 4) {
-          if (player.deck.cards.length === 0) {
-            break;
-          }
-          player.deck.moveTo(player.hand, 1);
-        }
-      }
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 4)
     }
 
     return state;

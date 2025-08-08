@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, PowerType } from '../../game';
-import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class HisuianDecidueyeVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
@@ -69,7 +69,7 @@ export class HisuianDecidueyeVSTAR extends PokemonCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
         energyDiscarded = cards.length;
       });
 

@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect, AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Machoke extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -34,7 +35,7 @@ export class Machoke extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (opponent.deck.cards.length > 0) {
-        opponent.deck.moveCardTo(opponent.deck.cards[0], opponent.discard);
+        MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
       }
     }
     return state;

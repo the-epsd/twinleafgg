@@ -3,61 +3,44 @@ import { Stage, CardType, SpecialCondition, CardTag } from '../../game/store/car
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { PlayerType } from '../../game/store/actions/play-card-action';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, PREVENT_DAMAGE, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 
 export class FlyingPikachuV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public tags = [ CardTag.POKEMON_V];
-
-  public regulationMark = 'E';
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public tags = [CardTag.POKEMON_V];
+  public cardType: CardType = L;
   public hp: number = 190;
-
-  public weakness = [{ type: CardType.LIGHTNING}];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [ ];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [];
 
   public attacks = [{
     name: 'Thunder Shock',
-    cost: [ CardType.LIGHTNING ],
+    cost: [L],
     damage: 20,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }, {
     name: 'Fly',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [C, C, C],
     damage: 120,
     text: 'Flip a coin. If tails, this attack does nothing. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
   }];
 
+  public regulationMark = 'E';
   public set: string = 'CEL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '6';
-
   public name: string = 'Flying Pikachu V';
-
   public fullName: string = 'Flying Pikachu V CEL';
 
-  public readonly CLEAR_FLY_MARKER = 'CLEAR_FLY_MARKER';
-
-  public readonly FLY_MARKER = 'FLY_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       state = store.prompt(state, new CoinFlipPrompt(
@@ -71,45 +54,26 @@ export class FlyingPikachuV extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
-
-        if (!flipResult) {
-          // if tails, do nothing
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
           effect.damage = 0;
-          return state;
-        }
-
-        if (flipResult) {
-          player.active.marker.addMarker(this.FLY_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_FLY_MARKER, this);
+        } else {
+          PREVENT_DAMAGE(store, state, effect, this);
         }
       });
-
-      if (effect instanceof AbstractAttackEffect || effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.FLY_MARKER)) {
-        effect.preventDefault = true;
-        return state;
-      }
-
-      if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_FLY_MARKER, this)) {
-
-        effect.player.marker.removeMarker(this.CLEAR_FLY_MARKER, this);
-
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.FLY_MARKER, this);
-        });
-        
-      }
-      return state;
     }
+
+    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      const sourceCard = effect.source.getPokemonCard();
+
+      if (sourceCard && opponent.active.marker.hasMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
+        effect.preventDefault = true;
+      }
+    }
+
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
 
     return state;
   }

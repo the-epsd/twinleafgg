@@ -1,6 +1,7 @@
 export const environment = {
   apiUrl: 'http://localhost:8080',
-  timeout: 30 * 1000,
+  // Increase API/socket observable timeouts to be more tolerant
+  timeout: 60 * 1000,
   production: true,
   apiVersion: 2,
   defaultPageSize: 50,

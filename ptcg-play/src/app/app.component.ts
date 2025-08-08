@@ -28,6 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
   public showToolbar = true;
+  private reconnectTimer: any;
+  private reconnectSnackRef: any;
 
   constructor(
     private alertService: AlertService,
@@ -67,17 +69,32 @@ export class AppComponent implements OnInit, OnDestroy {
       untilDestroyed(this)
     ).subscribe({
       next: connected => {
-        if (!connected && this.isLoggedIn) {
-          this.socketService.disable();
-          this.dialog.closeAll();
-          this.snackBar.open(
-            this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'),
-            undefined,
-            { duration: 5000 }
-          );
-          this.sessionService.clear();
-          this.router.navigate(['/login']);
+        if (!this.isLoggedIn) { return; }
+
+        if (!connected) {
+          // Show a reconnecting snackbar and give time for auto-reconnect
+          if (!this.reconnectSnackRef) {
+            this.reconnectSnackRef = this.snackBar.open(
+              this.translate.instant('RECONNECTING_TO_SERVER'),
+              undefined,
+              { duration: undefined, panelClass: 'disconnect-snackbar' }
+            );
+          }
+          if (!this.reconnectTimer) {
+            this.reconnectTimer = setTimeout(() => {
+              // Consider it a hard disconnect after grace period
+              this.dialog.closeAll();
+              if (this.reconnectSnackRef) { this.reconnectSnackRef.dismiss(); this.reconnectSnackRef = null; }
+              this.sessionService.clear();
+              this.router.navigate(['/login']);
+            }, 90 * 1000); // 90s grace period for reconnection
+          }
+          return;
         }
+
+        // Connected again: clear UI and timers
+        if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
+        if (this.reconnectSnackRef) { this.reconnectSnackRef.dismiss(); this.reconnectSnackRef = null; }
       }
     });
 
@@ -91,6 +108,10 @@ export class AppComponent implements OnInit, OnDestroy {
         if (this.loginRememberService.token) {
           this.loginRememberService.rememberToken(response.token);
         }
+        // Ensure future reconnects use the refreshed token
+        try {
+          (this.socketService.socket.io.opts.query as any).token = response.token;
+        } catch { /* noop */ }
       }
     });
   }

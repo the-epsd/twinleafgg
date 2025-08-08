@@ -1,12 +1,12 @@
-import { CardTag, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardTag, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Trapinch extends PokemonCard {
-  public cardType = G;
   public stage = Stage.BASIC;
-  public evolvesFrom = 'Trapinch';
   public tags = [CardTag.DELTA_SPECIES];
+  public cardType = G;
   public hp = 50;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -33,16 +33,12 @@ export class Trapinch extends PokemonCard {
   public readonly BIG_BITE_MARKER: string = 'BIG_BITE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.BIG_BITE_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.BIG_BITE_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.BIG_BITE_MARKER, this);
-
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     return state;
   }
 }

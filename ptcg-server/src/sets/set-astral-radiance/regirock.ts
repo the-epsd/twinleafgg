@@ -1,49 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt, GameError } from '../../game';
+import { StoreLike, State, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
 
-function* useRegiGate(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-  const max = Math.min(slots.length, 1);
-
-  // Check if bench has open slots
-  const openSlots = player.bench.filter(b => b.cards.length === 0);
-
-  if (openSlots.length === 0) {
-    // No open slots, throw error
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  if (cards.length > slots.length) {
-    cards.length = slots.length;
-  }
-
-  cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
-  });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
 export class Regirock extends PokemonCard {
 
   public cardType = CardType.FIGHTING;
@@ -109,9 +71,8 @@ export class Regirock extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useRegiGate(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { superType: SuperType.POKEMON, stage: Stage.BASIC }, { min: 0, max: 1, allowCancel: false });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

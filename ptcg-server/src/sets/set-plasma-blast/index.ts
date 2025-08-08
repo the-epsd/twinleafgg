@@ -2,7 +2,6 @@ import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Drifblim } from './drifblim';
 import { Drifloon } from './drifloon';
-import { MasterBallPLB, ScoopUpCyclonePLB, UltraBallPLB } from './other-prints';
 import { GBooster } from './g-booster';
 import { GScope } from './g-scope';
 import { GenesectEX } from './genesect-ex';
@@ -16,6 +15,14 @@ import { SilverMirror } from './silver-mirror';
 import { Suicune } from './suicune';
 import { VirizionEX } from './virizion-ex';
 import { Wartortle } from './wartortle';
+
+// Other Prints
+import {
+  MasterBallPLB,
+  ProfessorJuniperPLB,
+  ScoopUpCyclonePLB,
+  UltraBallPLB,
+} from './other-prints';
 
 export const setPlasmaBlast: Card[] = [
   new Archen(),
@@ -39,4 +46,5 @@ export const setPlasmaBlast: Card[] = [
   new ScoopUpCyclonePLB(),
   new UltraBallPLB(),
   new MasterBallPLB(),
+  new ProfessorJuniperPLB(),
 ];

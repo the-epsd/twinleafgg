@@ -1,7 +1,8 @@
 import { CardTag, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { ADD_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Umbreonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -69,20 +70,19 @@ export class Umbreonex extends PokemonCard {
 
     // Black Cry
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
+      const opponent = StateUtils.getOpponent(state, effect.player);
       ADD_MARKER(this.BLACK_CRY_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof PowerEffect && HAS_MARKER(this.BLACK_CRY_MARKER, effect.player.active, this)
-      && (effect.power.powerType === PowerType.POKEPOWER)) {
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BLACK_CRY_MARKER, this);
 
+    // Black Cry Power
+    if (effect instanceof PowerEffect && HAS_MARKER(this.BLACK_CRY_MARKER, effect.player.active, this) && effect.power.powerType === PowerType.POKEPOWER) {
       throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, this.BLACK_CRY_MARKER, this);
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BLACK_CRY_MARKER, this);
 
     return state;
   }

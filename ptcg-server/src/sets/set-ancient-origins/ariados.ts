@@ -4,9 +4,10 @@ import { PowerType, StoreLike, State, StateUtils, GameError } from '../../game';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../game/game-message';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,7 +38,6 @@ export class Ariados extends PokemonCard {
   public setNumber: string = '6';
 
   public readonly POISONOUS_NEST_MARKER = 'POISONOUS_NEST_MARKER';
-  public readonly IMPOUND_MARKER: string = 'IMPOUND_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     //Ability
@@ -76,13 +76,11 @@ export class Ariados extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.IMPOUND_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.IMPOUND_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.IMPOUND_MARKER, this);
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     //Marker remover
     if (effect instanceof EndTurnEffect) {

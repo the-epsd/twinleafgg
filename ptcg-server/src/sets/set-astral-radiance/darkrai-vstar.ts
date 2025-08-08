@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class DarkraiVSTAR extends PokemonCard {
 
@@ -101,7 +102,7 @@ export class DarkraiVSTAR extends PokemonCard {
         cards = selected || [];
 
         if (cards.length > 0) {
-          player.discard.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
         }
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 
 export class Eevee extends PokemonCard {
@@ -51,7 +51,7 @@ export class Eevee extends PokemonCard {
             // Attach energy if selected
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
-              player.deck.moveCardTo(transfer.card, target);
+              MOVE_CARDS(store, state, StateUtils.findCardList(state, transfer.card), target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
             }
 
             SHUFFLE_DECK(store, state, player);

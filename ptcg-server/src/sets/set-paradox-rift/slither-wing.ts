@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { DealDamageEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class SlitherWing extends PokemonCard {
 
@@ -55,7 +56,7 @@ export class SlitherWing extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Discard 2 cards from opponent's deck 
-      opponent.deck.moveTo(opponent.discard, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
 
     }
 

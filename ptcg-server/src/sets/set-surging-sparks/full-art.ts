@@ -23,7 +23,7 @@ export class FeebasIR extends Feebas {
 }
 
 export class MiloticexFA extends Miloticex {
-  public setNumber = '218';
+  public setNumber = '217';
   public fullName: string = 'Milotic exFA SSP';
 }
 

@@ -22,6 +22,7 @@ import {
   DarkPatchDEX,
   DarkraiExDEX,
   EnhancedHammerDEX,
+  ProfessorJuniperDEX,
   RareCandyDEX,
 } from './other-prints';
 
@@ -49,5 +50,6 @@ export const setDarkExplorers: Card[] = [
   new DarkPatchDEX(),
   new DarkraiExDEX(),
   new EnhancedHammerDEX(),
+  new ProfessorJuniperDEX(),
   new RareCandyDEX(),
 ];

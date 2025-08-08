@@ -5,6 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect, TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, GameError, GameMessage, CoinFlipPrompt, ChooseCardsPrompt, Card, CardList, OrderCardsPrompt, ShowCardsPrompt } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 export class Cyllene extends TrainerCard {
 
@@ -55,7 +57,7 @@ export class Cyllene extends TrainerCard {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
           return state;
         }
 
@@ -84,7 +86,17 @@ export class Cyllene extends TrainerCard {
 
           if (cardsToMove.length > 0) {
             cardsToMove.forEach(card => {
-              player.discard.moveCardTo(card, deckTop);
+
+              let canMoveCard = true;
+              try {
+                store.reduceEffect(state, new MoveCardsEffect(player.discard, player.deck, { cards: [card] }));
+              } catch {
+                canMoveCard = false;
+              }
+
+              if (canMoveCard) {
+                MOVE_CARDS(store, state, player.discard, deckTop, { cards: [card], sourceCard: this });
+              }
             });
 
             return store.prompt(state, new OrderCardsPrompt(

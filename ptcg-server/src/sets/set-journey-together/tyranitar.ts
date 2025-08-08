@@ -10,6 +10,7 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Tyranitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -45,7 +46,7 @@ export class Tyranitar extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.deck.moveTo(opponent.discard, 2);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 2, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     // beta vileplume gaming

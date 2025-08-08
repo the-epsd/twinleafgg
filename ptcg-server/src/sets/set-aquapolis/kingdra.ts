@@ -2,7 +2,7 @@ import { CardTarget, ChooseCardsPrompt, GameMessage, MoveEnergyPrompt, PlayerTyp
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -90,7 +90,7 @@ export class Kingdra extends PokemonCard {
             ), selected => {
               const card = selected[0];
 
-              opponent.active.moveCardTo(card, opponent.discard);
+              MOVE_CARDS(store, state, StateUtils.findCardList(state, card), opponent.discard, { cards: [card], sourceCard: this, sourceEffect: this.attacks[0] });
               return state;
             });
           }

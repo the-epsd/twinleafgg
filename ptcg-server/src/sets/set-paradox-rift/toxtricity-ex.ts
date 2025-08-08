@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
@@ -40,7 +40,7 @@ export class Toxtricityex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Knocking Hammer
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.opponent.deck.moveTo(effect.opponent.discard, 1);
+      MOVE_CARDS(store, state, effect.opponent.deck, effect.opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     // Gaia Punk

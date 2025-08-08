@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { Stage, CardType, CardTag, TrainerType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, GameError, Card } from '../../game';
+import { Stage, CardType, CardTag, TrainerType, SuperType } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, GameMessage, GameError, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class OranguruV extends PokemonCard {
 
@@ -35,6 +35,7 @@ export class OranguruV extends PokemonCard {
       name: 'Psychic',
       cost: [C, C, C],
       damage: 30,
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -60,7 +61,7 @@ export class OranguruV extends PokemonCard {
     }
 
     // Back Order
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.BACK_ORDER_MARKER)) {
@@ -75,19 +76,14 @@ export class OranguruV extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { trainerType: TrainerType.TOOL },
-        { min: 0, max: 2, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-
-        player.marker.addMarker(this.BACK_ORDER_MARKER, this);
-        player.deck.moveCardsTo(cards, player.hand);
+      const blocked: number[] = [];
+      player.deck.cards.forEach((c, index) => {
+        if (!(c instanceof TrainerCard && c.trainerType === TrainerType.TOOL)) {
+          blocked.push(index);
+        }
       });
+
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.TRAINER }, { min: 0, max: 2, allowCancel: false, blocked }, this.powers[0]);
     }
 
     // Psychic

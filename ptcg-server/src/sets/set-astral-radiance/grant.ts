@@ -9,6 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Card, CardList, ChooseCardsPrompt, GameError, GameLog, GameMessage, PowerType } from '../../game';
 import { TrainerPowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Grant extends TrainerCard {
 
@@ -58,7 +59,7 @@ export class Grant extends TrainerCard {
       effect.preventDefault = true;
 
       player.marker.addMarker(this.GRANT_MARKER, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     if (effect instanceof DealDamageEffect) {
@@ -116,10 +117,8 @@ export class Grant extends TrainerCard {
           return state;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
-
-        player.discard.moveCardTo(this, player.hand);
-
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: [this], sourceCard: this });
       });
 
       return state;

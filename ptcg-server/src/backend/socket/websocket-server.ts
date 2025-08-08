@@ -14,7 +14,13 @@ export class WebSocketServer {
   constructor(private core: Core) { }
 
   public async listen(httpServer: http.Server): Promise<void> {
-    const opts: Partial<ServerOptions> = {};
+    const opts: Partial<ServerOptions> = {
+      // Prefer stable websocket transport and avoid long-polling fallbacks
+      transports: ['websocket'],
+      // Make the server more tolerant to background tab throttling / flaky networks
+      pingInterval: 30000,   // default 25000
+      pingTimeout: 120000    // default 20000 → allow up to 2 minutes without pong
+    };
 
     if (config.backend.allowCors) {
       opts.cors = { origin: '*' };
@@ -32,7 +38,10 @@ export class WebSocketServer {
       this.core.connect(socketClient);
       socketClient.attachListeners();
 
-      socket.on('disconnect', () => {
+      socket.on('disconnect', (reason) => {
+        try {
+          console.log(`[Socket] Disconnected user=${user?.id ?? 'unknown'} reason=${String(reason)}`);
+        } catch { /* noop */ }
         this.core.disconnect(socketClient);
         socketClient.dispose();
         user.updateLastSeen();

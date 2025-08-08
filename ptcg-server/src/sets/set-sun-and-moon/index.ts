@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
-import { EnergyRetrievalSUM, ExpShareSUM, HauSUM, NestBallSUM, RareCandySUM, RotomDexSR } from './other-prints';
+import { DoubleColorlessEnergySUM, EnergyRetrievalSUM, ExpShareSUM, HauSUM, NestBallSUM, RareCandySUM, RotomDexSR, UltraBallSUMSR } from './other-prints';
 import { Charjabug } from './charjabug';
 import { DecidueyeGX } from './decidueye-gx';
 import { Dragonair } from './dragonair';
@@ -59,6 +59,7 @@ export const setSunAndMoon: Card[] = [
   new Wishiwashi(),
 
   // Reprints
+  new DoubleColorlessEnergySUM(),
   new NestBallSUM(),
   new RareCandySUM(),
   new HauSUM(),
@@ -67,6 +68,7 @@ export const setSunAndMoon: Card[] = [
 
   // Full Arts
   new RotomDexSR(),
+  new UltraBallSUMSR(),
 
   //Basic Energies
   new GrassEnergy(),

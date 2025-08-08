@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Whiscash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -47,7 +48,7 @@ export class Whiscash extends PokemonCard {
         return sum + energy.provides.filter(type => type === CardType.FIGHTING || type === CardType.ANY).length;
       }, 0);
 
-      opponent.deck.moveTo(opponent.discard, totalFightingnergy);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: totalFightingnergy, sourceCard: this, sourceEffect: this.attacks[0] });
 
     }
 

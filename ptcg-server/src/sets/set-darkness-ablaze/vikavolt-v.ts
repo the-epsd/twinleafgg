@@ -10,27 +10,24 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class VikavoltV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
   public cardType: CardType = L;
   public hp: number = 210;
   public weakness = [{ type: F }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Paralyzing Bolt',
-      cost: [ L, C ],
-      damage: 50,
-      text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
-    },
-    {
-      name: 'Super Zap Cannon',
-      cost: [ L, L, C ],
-      damage: 190,
-      text: 'Discard 2 Energy from this Pokémon.',
-    },
-    
-  ];
+  public attacks = [{
+    name: 'Paralyzing Bolt',
+    cost: [L, C],
+    damage: 50,
+    text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
+  },
+  {
+    name: 'Super Zap Cannon',
+    cost: [L, L, C],
+    damage: 190,
+    text: 'Discard 2 Energy from this Pokémon.',
+  }];
 
   public regulationMark = 'D';
   public set: string = 'DAA';
@@ -62,7 +59,7 @@ export class VikavoltV extends PokemonCard {
     }
 
     // Super Zap Cannon
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
       if (!player.active.cards.some(c => c instanceof EnergyCard)) {

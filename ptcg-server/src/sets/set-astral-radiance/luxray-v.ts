@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardTag, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, Card } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LuxrayV extends PokemonCard {
 
@@ -68,7 +67,7 @@ export class LuxrayV extends PokemonCard {
         if (cards.length === 0) {
           return state;
         }
-        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards });
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
       });
     }
 
@@ -88,14 +87,16 @@ export class LuxrayV extends PokemonCard {
       ), selected => {
         selected = selected || [];
 
-        player.active.moveCardsTo(selected, player.discard);
+        MOVE_CARDS(store, state, player.active, player.discard, { cards: selected, sourceCard: this, sourceEffect: this.attacks[1] });
       });
-
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-      store.reduceEffect(state, specialConditionEffect);
 
       return state;
     }
+
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
+    }
+
     return state;
   }
 }

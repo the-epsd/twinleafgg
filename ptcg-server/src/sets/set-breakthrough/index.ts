@@ -17,7 +17,8 @@ import { BurningEnergy } from './burning-energy';
 // other prints
 import {
   FishermanBKT,
-  FloatStoneBKT
+  FloatStoneBKT,
+  ProfessorsLetterBKT,
 } from './other-prints';
 
 export const setBreakthrough: Card[] = [
@@ -39,4 +40,5 @@ export const setBreakthrough: Card[] = [
   // other prints
   new FishermanBKT(),
   new FloatStoneBKT(),
+  new ProfessorsLetterBKT(),
 ];
