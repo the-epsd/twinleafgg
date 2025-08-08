@@ -10,7 +10,9 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
   const rateLimit = RateLimit.getInstance();
   const token: string = socket.handshake.query && socket.handshake.query.token as string;
   const userId = validateToken(token);
-  const ipAddress: string = socket.request.connection.remoteAddress || '0.0.0.0';
+  const ipAddress: string = (socket.handshake.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim()
+    || (socket.request.socket.remoteAddress || (socket.request.connection as any)?.remoteAddress)
+    || '0.0.0.0';
 
   if (rateLimit.isLimitExceeded(ipAddress)) {
     return next(new Error(ApiErrorEnum.REQUESTS_LIMIT_REACHED));

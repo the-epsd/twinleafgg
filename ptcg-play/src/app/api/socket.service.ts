@@ -37,10 +37,23 @@ export class SocketService {
     this.socket = io(apiUrl, {
       autoConnect: false,
       reconnection: true,
+      // More resilient reconnection/backoff settings for flaky networks
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 10000,
+      // Prefer websocket to avoid issues with long-polling being blocked by some environments
+      transports: ['websocket'],
+      // Allow more time for background tabs to respond to pings
+      timeout: 20000,
       query: {}
     });
 
     this.socket.on('connect', () => this.connectionSubject.next(true));
+    this.socket.on('reconnect', () => this.connectionSubject.next(true));
+    this.socket.on('reconnect_attempt', () => this.connectionSubject.next(false));
+    this.socket.on('reconnect_error', () => this.connectionSubject.next(false));
+    this.socket.on('reconnect_failed', () => this.connectionSubject.next(false));
+    this.socket.on('connect_error', () => this.connectionSubject.next(false));
     this.socket.on('disconnect', () => this.connectionSubject.next(false));
   }
 
