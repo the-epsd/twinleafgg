@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Draw cards
-  const cardsToDraw = player.prizes.length === 6 ? 8 : 6;
+  const cardsToDraw = player.getPrizeLeft() === 6 ? 8 : 6;
   player.deck.moveTo(player.hand, cardsToDraw);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
