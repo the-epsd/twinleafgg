@@ -1,26 +1,24 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage } from '../../game';
+import { StateUtils } from '../../game';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Dewgong extends PokemonCard {
 
   public name = 'Dewgong';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Dewgong BS';
 
   public cardType: CardType = CardType.WATER;
-  
+
   public stage = Stage.STAGE_1;
-  
+
   public evolvesFrom = 'Seel';
 
   public cardImage: string = 'assets/cardback.png';
@@ -41,7 +39,7 @@ export class Dewgong extends PokemonCard {
       text: ''
     },
     {
-      name: 'Ice Beam', 
+      name: 'Ice Beam',
       cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
@@ -49,11 +47,10 @@ export class Dewgong extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
-        if (heads) {
-          const condition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, condition);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
     }

@@ -2,7 +2,7 @@ import { PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessag
 import { PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dusknoir extends PokemonCard {
   public stage = Stage.STAGE_2;
@@ -82,7 +82,7 @@ export class Dusknoir extends PokemonCard {
         }
 
         cards.forEach((card, index) => {
-          opponent.hand.moveCardTo(card, slots[index]);
+          MOVE_CARDS(store, state, opponent.hand, slots[index], { cards: [card], sourceCard: this });
           slots[index].pokemonPlayedTurn = state.turn;
           const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, slots[index]);
           store.reduceEffect(state, damageEffect);

@@ -7,6 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../game/game-message';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Kricketot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,14 +33,14 @@ export class Kricketot extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       return store.prompt(state, new ChooseCardsPrompt(
-        player, 
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.POKEMON, cardType: CardType.GRASS },
         { min: 0, max: 3, allowCancel: true }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
-  
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });

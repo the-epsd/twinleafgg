@@ -7,9 +7,10 @@ import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, Card, PlayerType, SlotType, StateUtils } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, sourceCard: Card): IterableIterator<State> {
   const player = effect.player;
   let coin1Result = false;
   let coin2Result = false;
@@ -43,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
       for (const transfer of transfers) {
         const target = StateUtils.getTarget(state, player, transfer.to);
-        player.deck.moveCardTo(transfer.card, target);
+        MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: effect.trainerCard });
       }
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
@@ -66,7 +67,7 @@ export class EnergyCoin extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

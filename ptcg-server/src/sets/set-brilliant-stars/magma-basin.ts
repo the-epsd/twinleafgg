@@ -7,6 +7,7 @@ import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/c
 import { StateUtils } from '../../game/store/state-utils';
 import { AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError, CardTarget, PokemonCard } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MagmaBasin extends TrainerCard {
 
@@ -75,7 +76,7 @@ export class MagmaBasin extends TrainerCard {
           // if (pokemonCard.cardType !== CardType.FIRE) {
           //   throw new GameError(GameMessage.INVALID_TARGET);
           // }
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           target.damage += 20;
         }
 

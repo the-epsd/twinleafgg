@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StateUtils, ShowCardsPrompt, ShuffleDeckPrompt, GameError } from '../../game';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Lass extends TrainerCard {
 
@@ -43,7 +43,7 @@ export class Lass extends TrainerCard {
       const moveTrainersToDeck = (store: StoreLike, state: State, hand: any, deck: any) => {
         const trainers = hand.cards.filter((c: any) => c.superType === SuperType.TRAINER);
         if (trainers.length > 0) {
-          state = MOVE_CARDS(store, state, hand, deck, { cards: trainers });
+          state = MOVE_CARDS(store, state, hand, deck, { cards: trainers, sourceCard: this });
         }
         return state;
       };
@@ -65,7 +65,7 @@ export class Lass extends TrainerCard {
 
           // Discard Lass (if needed)
           if (player.hand.cards.includes(effect.trainerCard)) {
-            state = MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard] });
+            state = MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard], sourceCard: this });
           }
 
           // Shuffle both decks
@@ -73,6 +73,7 @@ export class Lass extends TrainerCard {
             player.deck.applyOrder(playerOrder);
             return store.prompt(state, new ShuffleDeckPrompt(opponent.id), opponentOrder => {
               opponent.deck.applyOrder(opponentOrder);
+              CLEAN_UP_SUPPORTER(effect, player);
               return state;
             });
           });

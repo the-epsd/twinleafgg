@@ -9,9 +9,10 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  effect: TrainerEffect): IterableIterator<State> {
+  effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -42,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         return;
       }
       const target = targets[0];
-      player.deck.moveCardsTo(cards, target);
+      MOVE_CARDS(store, state, player.deck, target, { cards, sourceCard: self });
       next();
     });
   }
@@ -75,7 +76,7 @@ export class Kiawe extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

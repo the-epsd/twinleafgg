@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game';
-import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class ImpostorProfessorOak extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -27,13 +27,13 @@ export class ImpostorProfessorOak extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      MOVE_CARDS(store, state, opponent.hand, opponent.deck);
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
       SHUFFLE_DECK(store, state, opponent);
       // Draw 7 cards for the opponent
       DRAW_CARDS(opponent, 7);
 
       // Discard the played Trainer card
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
 
       return state;
     }

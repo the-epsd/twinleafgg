@@ -12,6 +12,7 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { EnergyCard, GameError } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: RoseannesBackup, effect: TrainerEffect): IterableIterator<State> {
@@ -86,8 +87,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.discard.moveCardsTo(cards, player.deck);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
+  CLEAN_UP_SUPPORTER(effect, player);
 
 
   cards.forEach((card, index) => {

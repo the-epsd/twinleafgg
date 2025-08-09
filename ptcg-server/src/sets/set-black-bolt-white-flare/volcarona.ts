@@ -87,7 +87,7 @@ export class Volcarona extends PokemonCard {
           }
         });
 
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards });
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
         ADD_BURN_TO_PLAYER_ACTIVE(store, state, opponent, this);
       });
       return state;

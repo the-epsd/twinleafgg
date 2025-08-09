@@ -1,19 +1,16 @@
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import {
-  PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
+  PowerType, StoreLike, State,
   ShuffleDeckPrompt,
-  ConfirmPrompt,
-  ShowCardsPrompt,
-  StateUtils,
-  GameLog,
-  PlayerType
+  TrainerCard,
+  GameMessage
 } from '../../game';
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, CONFIRMATION_PROMPT, MOVE_CARDS, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class LumineonV extends PokemonCard {
 
@@ -65,7 +62,6 @@ export class LumineonV extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
         return state;
@@ -83,50 +79,19 @@ export class LumineonV extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: 'Luminous Sign' });
-            }
-          });
-
-          state = store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.deck,
-            { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-            { min: 0, max: 1, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-            if (cards.length > 0) {
-              store.prompt(state, [new ShowCardsPrompt(
-                opponent.id,
-                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                cards
-              )], () => {
-
-                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                  if (cardList.getPokemonCard() === this) {
-                    cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                  }
-                });
-
-                cards.forEach((card, index) => {
-                  store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-                });
-                player.deck.moveCardsTo(cards, player.hand);
-              });
-            }
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
-          });
+      const blocked: number[] = [];
+      player.deck.cards.forEach((card, index) => {
+        if (card instanceof TrainerCard && (card.trainerType !== TrainerType.SUPPORTER)) {
+          blocked.push(index);
         }
       });
+
+      CONFIRMATION_PROMPT(store, state, player, result => {
+        if (result) {
+          ABILITY_USED(player, this);
+          SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false, blocked }, this.powers[0]);
+        }
+      }, GameMessage.WANT_TO_USE_ABILITY);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

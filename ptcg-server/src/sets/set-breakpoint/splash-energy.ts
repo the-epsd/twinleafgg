@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_SPECIAL_ENERGY_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -71,7 +71,7 @@ export class SplashEnergy extends EnergyCard {
           const checkPokemonType = new CheckPokemonTypeEffect(cardList);
           store.reduceEffect(state, checkPokemonType);
           if (!checkPokemonType.cardTypes.includes(CardType.WATER)) {
-            cardList.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { sourceCard: this, sourceEffect: this });
           }
         });
       });
@@ -126,7 +126,7 @@ export class SplashEnergy extends EnergyCard {
           .map(m => m.source)
           .filter((card): card is Card => !!card);
 
-        player.discard.moveCardsTo(rescued, player.hand);
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: rescued, sourceCard: this, sourceEffect: this });
         player.marker.removeMarker(this.SPLASH_ENERGY_MARKER);
       });
     }
