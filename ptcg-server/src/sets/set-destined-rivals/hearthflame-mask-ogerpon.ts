@@ -1,7 +1,6 @@
-import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from '../../game';
+import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
-import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HearthflameMaskOgerpon extends PokemonCard {
 
@@ -44,8 +43,8 @@ export class HearthflameMaskOgerpon extends PokemonCard {
       );
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
 
     return state;

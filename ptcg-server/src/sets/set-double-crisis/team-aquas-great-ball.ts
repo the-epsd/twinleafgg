@@ -6,12 +6,13 @@ import { CardTag, EnergyType, Stage, TrainerType } from '../../game/store/card/c
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -51,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, player.hand);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: self });
   });
 
   cards.forEach((card, index) => {
@@ -66,7 +67,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     ), () => next());
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -93,7 +94,7 @@ export class TeamAquasGreatBall extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

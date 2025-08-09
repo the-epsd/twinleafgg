@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class StevensClaydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +35,7 @@ export class StevensClaydol extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
 

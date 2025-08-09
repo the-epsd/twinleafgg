@@ -12,6 +12,7 @@ import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -53,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -66,7 +67,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -80,7 +81,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

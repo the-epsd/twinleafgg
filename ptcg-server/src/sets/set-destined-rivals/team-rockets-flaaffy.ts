@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsFlaaffy extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -29,9 +29,9 @@ export class TeamRocketsFlaaffy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thunder Shock
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (result) { ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this); }
+        if (result) { ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this); }
       });
     }
 

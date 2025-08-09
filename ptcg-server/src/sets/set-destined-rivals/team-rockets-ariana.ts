@@ -9,6 +9,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsAriana extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -79,7 +80,7 @@ export class TeamRocketsAriana extends TrainerCard {
         player.deck.moveTo(player.hand, 1);
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
 
       return state;
     }

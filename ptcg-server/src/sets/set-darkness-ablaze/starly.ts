@@ -1,37 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PowerType } from '../../game';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage } from '../../game/game-message';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-
-function* useKeenEye(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
-
-  const player = effect.player;
-  if (player.deck.cards.length === 0) { return state; }
-
-  // Choose two cards from our deck
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: 1, max: 2, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  // Put them in our hand and shuffle our deck
-  player.deck.moveCardsTo(cards, player.hand);
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
+import { AFTER_ATTACK, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Starly extends PokemonCard {
 
@@ -110,9 +85,8 @@ export class Starly extends PokemonCard {
     }
 
     // Keen Eye
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useKeenEye(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, this, {}, { min: 0, max: 2, allowCancel: true }, this.attacks[0]);
     }
 
     return state;

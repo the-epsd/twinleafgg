@@ -4,6 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, EnergyCard, GameError, GameMessage, ChooseCardsPrompt, Card, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Feraligatr extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -58,7 +59,7 @@ export class Feraligatr extends PokemonCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
 
       });
       return state;

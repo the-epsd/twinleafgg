@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage, GameLog, ShuffleDeckPrompt, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Klang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +35,7 @@ export class Klang extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -51,7 +51,7 @@ export class Klang extends PokemonCard {
         cards = selected || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.attacks[0] });
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
 

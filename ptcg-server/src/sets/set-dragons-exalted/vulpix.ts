@@ -1,7 +1,6 @@
 import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Vulpix extends PokemonCard {
 
@@ -22,9 +21,9 @@ export class Vulpix extends PokemonCard {
   public fullName: string = 'Vulpix DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

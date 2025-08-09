@@ -1,6 +1,6 @@
 import { PokemonCard, Stage, PowerType, StoreLike, State, ChooseCardsPrompt, GameMessage, StateUtils, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, ADD_MARKER, ABILITY_USED, SHUFFLE_DECK, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, ADD_MARKER, ABILITY_USED, SHUFFLE_DECK, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class EthansQuilava extends PokemonCard {
 
@@ -68,7 +68,7 @@ export class EthansQuilava extends PokemonCard {
         }
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
         ADD_MARKER(this.ADVENTURE_BOUND_MARKER, player, this);
         ABILITY_USED(player, this);
         SHUFFLE_DECK(store, state, player);
