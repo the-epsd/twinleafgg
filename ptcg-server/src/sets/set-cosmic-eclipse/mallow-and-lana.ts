@@ -5,6 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -34,8 +35,8 @@ export class MallowAndLana extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 
       const player = effect.player;
-      const activeHasDamage = player.active.damage > 0;      
-      
+      const activeHasDamage = player.active.damage > 0;
+
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
@@ -65,7 +66,7 @@ export class MallowAndLana extends TrainerCard {
         player.switchPokemon(cardList);
 
         if (player.hand.cards.length < 2 || !activeHasDamage) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
           return state;
         }
 
@@ -83,7 +84,7 @@ export class MallowAndLana extends TrainerCard {
             ), cards => {
               cards = cards || [];
 
-              player.hand.moveCardsTo(cards, player.discard);
+              MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
 
               cards.forEach((card, index) => {
                 store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
@@ -96,7 +97,7 @@ export class MallowAndLana extends TrainerCard {
             });
           }
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
 
         });
       });

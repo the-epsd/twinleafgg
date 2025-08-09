@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Melony extends TrainerCard {
 
@@ -100,10 +101,12 @@ export class Melony extends TrainerCard {
           // Attach the energy
           const transfer = transfers[0];
           const targetList = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, targetList);
+          MOVE_CARDS(store, state, player.discard, targetList, { cards: [transfer.card], sourceCard: this, sourceEffect: effect });
 
           // Draw 3 cards
-          player.deck.moveTo(player.hand, 3);
+          DRAW_CARDS(player, 3);
+
+          CLEAN_UP_SUPPORTER(effect, player);
         });
       });
     }

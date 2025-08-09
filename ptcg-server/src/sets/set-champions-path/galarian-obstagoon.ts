@@ -15,6 +15,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class GalarianObstagoon extends PokemonCard {
@@ -118,7 +119,7 @@ export class GalarianObstagoon extends PokemonCard {
         {},
         { min: cardsToRemove, max: cardsToRemove, allowCancel: false }
       ), selected => {
-        opponent.hand.moveCardsTo(selected, opponent.discard);
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: selected, sourceCard: this, sourceEffect: this.powers[0] });
 
         selected.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name, effectName: this.powers[0].name });

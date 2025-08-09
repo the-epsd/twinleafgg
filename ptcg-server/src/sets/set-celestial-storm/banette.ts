@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, Card, ChooseCardsPrompt, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { JUST_EVOLVED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { JUST_EVOLVED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
 export class Banette extends PokemonCard {
@@ -62,7 +62,7 @@ export class Banette extends PokemonCard {
         if (cards.length > 0) {
           const card = cards[0];
           const slot = openSlots[0];
-          opponent.discard.moveCardTo(card, slot);
+          MOVE_CARDS(store, state, opponent.discard, slot, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
           slot.pokemonPlayedTurn = state.turn;
         }
       });

@@ -6,7 +6,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 
 export class KartanaGX extends PokemonCard {
 
@@ -119,7 +119,7 @@ export class KartanaGX extends PokemonCard {
               { min: 1, max: 1, allowCancel: false }
             ), selected => {
               cards = selected;
-              target.moveCardsTo(cards, opponent.discard);
+              MOVE_CARDS(store, state, target, opponent.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
             });
           });
         }

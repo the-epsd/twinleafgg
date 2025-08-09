@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class SagesTraining extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -55,7 +56,7 @@ export class SagesTraining extends TrainerCard {
         player.ancientSupporter = true;
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
 
       });
     }

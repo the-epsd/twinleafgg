@@ -9,7 +9,7 @@ import {
   PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
   PokemonCardList, ChooseCardsPrompt, Card, EnergyCard
 } from '../../game';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, trainerCard: TrainerCard): IterableIterator<State> {
   const player = effect.player;
@@ -65,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
     } catch {
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
   }
@@ -85,9 +85,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (cards.length > 0) {
     // Discard trainer only when user selected a Pokemon
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    CLEAN_UP_SUPPORTER(effect, player);
     // Discard selected special energy card
-    target.moveCardsTo(cards, opponent.discard);
+    MOVE_CARDS(store, state, target, opponent.discard, { cards, sourceCard: trainerCard });
   }
 
   if (stadiumCard !== undefined) {

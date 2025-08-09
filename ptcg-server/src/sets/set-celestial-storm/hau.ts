@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Hau extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -26,8 +27,8 @@ export class Hau extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(player.hand, 3);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      DRAW_CARDS(player, 3);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
     return state;

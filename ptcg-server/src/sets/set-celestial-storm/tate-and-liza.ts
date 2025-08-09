@@ -4,6 +4,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -22,8 +23,8 @@ export class TateAndLiza extends TrainerCard {
   public fullName: string = 'Tate & Liza CES';
 
   public text: string =
-    'Choose 1:'+
-    '• Shuffle your hand into your deck. Then, draw 5 cards.'+
+    'Choose 1:' +
+    '• Shuffle your hand into your deck. Then, draw 5 cards.' +
     '• Switch your Active Pokémon with 1 of your Benched Pokémon.';
 
 
@@ -55,8 +56,7 @@ export class TateAndLiza extends TrainerCard {
             ), result => {
               const cardList = result[0];
               player.switchPokemon(cardList);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              
+              CLEAN_UP_SUPPORTER(effect, player);
             });
           }
         },
@@ -65,16 +65,15 @@ export class TateAndLiza extends TrainerCard {
           action: () => {
 
             if (player.hand.cards.length > 0) {
-              player.hand.moveCardsTo(player.hand.cards.filter(c => c !== this), player.deck);
+              MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this), sourceCard: this });
             }
-            
+
             store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
             });
-          
-            player.deck.moveTo(player.hand, 5);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
-            
+
+            DRAW_CARDS(player, 5);
+            CLEAN_UP_SUPPORTER(effect, player);
           }
         }
       ];

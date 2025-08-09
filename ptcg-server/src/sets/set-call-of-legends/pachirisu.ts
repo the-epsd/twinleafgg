@@ -10,7 +10,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pachirisu extends PokemonCard {
 
@@ -88,7 +88,7 @@ export class Pachirisu extends PokemonCard {
           ), cards => {
             cards = cards || [];
             if (cards.length > 0) {
-              player.hand.moveCardsTo(cards, cardList);
+              MOVE_CARDS(store, state, player.hand, cardList, { cards, sourceCard: this, sourceEffect: this.powers[0] });
             }
           });
         }
@@ -100,13 +100,13 @@ export class Pachirisu extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       if (!(cardList instanceof PokemonCardList))
         throw new GameError(GameMessage.INVALID_TARGET);
-    
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-    
+
       const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
       cards.forEach(card => {
-        cardList.moveCardTo(card, player.lostzone);
+        MOVE_CARDS(store, state, cardList, player.lostzone, { cards: [card], sourceCard: this, sourceEffect: this.attacks[0] });
       });
     }
     return state;
