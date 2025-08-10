@@ -352,6 +352,26 @@
         color: #ffffff;
       }
     }
+
+    .claim-button {
+      margin-top: 10px;
+      width: 110px;
+      height: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #e2e8f0;
+      background: linear-gradient(135deg, #1f2937, #111827);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .claim-button[disabled] {
+      opacity: 0.6;
+      cursor: default;
+    }
   }
 
   .level-rail {

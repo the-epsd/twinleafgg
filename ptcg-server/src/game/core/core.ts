@@ -118,7 +118,9 @@ export class Core {
     deck: string[],
     gameSettings: GameSettings = new GameSettings(),
     client2: Client,
-    deck2: string[]
+    deck2: string[],
+    artworksMap1?: { [code: string]: { imageUrl: string; holoType?: string } },
+    artworksMap2?: { [code: string]: { imageUrl: string; holoType?: string } }
   ): Game {
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
@@ -139,8 +141,8 @@ export class Core {
       gameSettings.rules.firstTurnUseSupporter = true;
     }
     const game = new Game(this, generateId(this.games), gameSettings);
-    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
-    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2));
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, artworksMap1));
+    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2, artworksMap2));
     this.games.push(game);
     this.emit(c => c.onGameAdd(game));
     this.joinGame(client, game);

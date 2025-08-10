@@ -3,7 +3,7 @@ import { Connection, createConnection, EntityManager } from 'typeorm';
 import {
   Avatar, Conversation, Deck, Match, Message, Replay, User,
   BattlePassSeason, UserBattlePass, UserUnlockedItem, CustomAvatar,
-  Friend, FriendRequest
+  Friend, FriendRequest, CardArtwork
 } from './';
 
 export class Storage {
@@ -38,7 +38,8 @@ export class Storage {
         User,
         BattlePassSeason,
         UserBattlePass,
-        UserUnlockedItem
+        UserUnlockedItem,
+        CardArtwork
       ],
       synchronize: true,
       logging: false

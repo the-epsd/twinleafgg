@@ -60,7 +60,8 @@
       [ngStyle]="{ top: (i * 15) + 'px' }" class="tool-overlap"></ptcg-card>
   </div>
 
-  <ptcg-card [card]="mainCard" *ngIf="mainCard" (click)="onCardClick(mainCard)">
+  <ptcg-card [card]="mainCard" [customArtworkUrl]="resolveArtUrlFor(mainCard)" *ngIf="mainCard"
+    (click)="onCardClick(mainCard)">
     <ng-content></ng-content>
   </ptcg-card>
 

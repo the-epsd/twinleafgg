@@ -5,7 +5,7 @@
         <ng-template dndSortableTemplate let-context>
           <ptcg-card [style.margin]="calculateContainerMargin()" [dndSortableRender]="context"
             #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true" [card]="context.data.card"
-            (click)="onCardClick(context.data.card, context.index)"
+            [artworksContext]="player?.hand" (click)="onCardClick(context.data.card, context.index)"
             [class.draggable]="!gameState.deleted && player?.id === clientId" [ptcgCardPlaceholder]="render.isDragging$"
             [class.cardback]="isFaceDown">
           </ptcg-card>

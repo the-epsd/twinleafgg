@@ -306,6 +306,11 @@ export class BoardComponent implements OnDestroy {
       : player.bench[item.index];
 
     const pokemonCard = cardList.getPokemonCard();
+    // If the server has provided an artworks map on cardList, prefer that image
+    const artworksMap = (cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+    if (pokemonCard && artworksMap && artworksMap[pokemonCard.fullName]?.imageUrl) {
+      return artworksMap[pokemonCard.fullName].imageUrl;
+    }
     return pokemonCard ? this.cardsBaseService.getScanUrl(pokemonCard) : undefined;
   }
 

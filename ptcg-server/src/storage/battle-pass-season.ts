@@ -53,7 +53,11 @@ export class BattlePassSeason extends BaseEntity {
     try {
       if (fs.existsSync(rewardsPath)) {
         const rawData = fs.readFileSync(rewardsPath, 'utf-8');
-        this.rewards = JSON.parse(rawData);
+        const parsed = JSON.parse(rawData);
+        // Remove premium track completely at load time
+        this.rewards = Array.isArray(parsed)
+          ? parsed.filter((r: any) => !r?.isPremium)
+          : [];
       } else {
         console.error(`[BattlePass] Rewards file not found at: ${rewardsPath}`);
         this.rewards = [];

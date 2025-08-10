@@ -101,7 +101,7 @@ export class BattlePass extends Controller {
         await progress.save();
       }
 
-      // Get available rewards for current level (premium removed)
+      // Get available rewards for current level (premium track removed globally)
       const availableRewards = currentSeason.getRewardsForLevel(progress.level, false);
 
       res.send({
@@ -172,7 +172,7 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // Get the rewards for this level (premium removed)
+      // Get the rewards for this level (premium track removed globally)
       const rewards = currentSeason.getRewardsForLevel(level, false);
       if (rewards.length === 0) {
         res.status(400).send({ error: 'No available rewards' });

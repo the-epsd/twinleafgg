@@ -7,25 +7,11 @@
     "isPremium": false
   },
   {
-    "level": 1,
-    "item": "card_back_premium_spring",
-    "type": "card_back",
-    "name": "Test Premium Item 1",
-    "isPremium": true
-  },
-  {
     "level": 2,
-    "item": "marker_flower",
-    "type": "marker",
-    "name": "Test Item 2",
+    "item": "1001",
+    "type": "card_artwork",
+    "name": "Gardevoir ex Alt Art",
     "isPremium": false
-  },
-  {
-    "level": 2,
-    "item": "playmat_spring_meadow",
-    "type": "playmat",
-    "name": "Test Premium Item 2",
-    "isPremium": true
   },
   {
     "level": 3,
@@ -35,25 +21,11 @@
     "isPremium": false
   },
   {
-    "level": 3,
-    "item": "avatar_cherry_blossom",
-    "type": "avatar",
-    "name": "Test Premium Item 3",
-    "isPremium": true
-  },
-  {
     "level": 4,
     "item": "marker_leaf",
     "type": "marker",
     "name": "Test Item 4",
     "isPremium": false
-  },
-  {
-    "level": 4,
-    "item": "marker_premium_butterfly",
-    "type": "marker",
-    "name": "Test Premium Item 4",
-    "isPremium": true
   },
   {
     "level": 5,
@@ -63,25 +35,11 @@
     "isPremium": false
   },
   {
-    "level": 5,
-    "item": "playmat_premium_sakura",
-    "type": "playmat",
-    "name": "Test Premium Item 5",
-    "isPremium": true
-  },
-  {
     "level": 6,
     "item": "booster_spring_2",
     "type": "booster",
     "name": "Test Item 6",
     "isPremium": false
-  },
-  {
-    "level": 6,
-    "item": "booster_premium_spring",
-    "type": "booster",
-    "name": "Test Premium Item 6",
-    "isPremium": true
   },
   {
     "level": 7,
@@ -91,25 +49,11 @@
     "isPremium": false
   },
   {
-    "level": 7,
-    "item": "avatar_premium_spring_professor",
-    "type": "avatar",
-    "name": "Test Premium Item 7",
-    "isPremium": true
-  },
-  {
     "level": 8,
     "item": "playmat_spring_garden",
     "type": "playmat",
     "name": "Test Item 8",
     "isPremium": false
-  },
-  {
-    "level": 8,
-    "item": "card_back_premium_spring_gold",
-    "type": "card_back",
-    "name": "Test Premium Item 8",
-    "isPremium": true
   },
   {
     "level": 9,
@@ -119,24 +63,10 @@
     "isPremium": false
   },
   {
-    "level": 9,
-    "item": "marker_premium_rainbow",
-    "type": "marker",
-    "name": "Test Premium Item 9",
-    "isPremium": true
-  },
-  {
     "level": 10,
     "item": "avatar_spring_champion",
     "type": "avatar",
     "name": "Test Item 10",
     "isPremium": false
-  },
-  {
-    "level": 10,
-    "item": "playmat_premium_spring_master",
-    "type": "playmat",
-    "name": "Test Premium Item 10",
-    "isPremium": true
   }
 ]

@@ -15,6 +15,10 @@ import { TypeIconsModule } from '../shared/type-icons/type-icons.module';
 import { DeckCardDialogComponent } from './deck-card-dialog/deck-card-dialog.component';
 import { DeckValidityModule } from '../shared/deck-validity/deck-validity.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ArtworksForPipe } from './artworks-for.pipe';
 
 @NgModule({
   imports: [
@@ -24,7 +28,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     DeckValidityModule,
     SharedModule,
     TypeIconsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   entryComponents: [
     ImportDeckPopupComponent
@@ -38,7 +45,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     DeckEditPanesComponent,
     DeckEditInfoComponent,
     ImportDeckPopupComponent,
-    DeckCardDialogComponent
+    DeckCardDialogComponent,
+    ArtworksForPipe
   ]
 })
 export class DeckModule { }

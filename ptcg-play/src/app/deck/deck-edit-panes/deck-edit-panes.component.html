@@ -27,12 +27,24 @@
   <div #deckPane>
     <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">
       <ng-template dndSortableTemplate let-context>
-        <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
-          [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
-          (countClick)="setCardCount(render.data)"
-          (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)"
-          (addCard)="addCardToDeck(render.data)" (removeCard)="removeCardFromDeck(render.data)" [card]="render.data">
-        </ptcg-deck-card>
+        <div class="deck-card-inline">
+          <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
+            [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
+            (countClick)="setCardCount(render.data)"
+            (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)"
+            (addCard)="addCardToDeck(render.data)" (removeCard)="removeCardFromDeck(render.data)" [card]="render.data"
+            [customArtworkUrl]="resolveArtworkUrlFor(render.data.card)" [artworksContext]="null">
+          </ptcg-deck-card>
+          <div class="artwork-inline" *ngIf="!disabled">
+            <select class="artwork-select-under-card" [value]="getSelectedArtworkIdString(render.data.card.fullName)"
+              (change)="onArtworkSelect(render.data.card.fullName, $event.target.value)">
+              <option value="" [selected]="getSelectedArtworkId(render.data.card.fullName) == null">Default</option>
+              <option *ngFor="let a of (unlockedArtworks | artworksFor:render.data.card)" [value]="a.id"
+                [selected]="getSelectedArtworkId(render.data.card.fullName) === a.id">{{ a.name }}
+              </option>
+            </select>
+          </div>
+        </div>
       </ng-template>
     </dnd-sortable-list>
   </div>

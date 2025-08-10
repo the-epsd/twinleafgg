@@ -57,8 +57,8 @@ export class SocketService {
     this.socket.on('disconnect', () => this.connectionSubject.next(false));
   }
 
-  public joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
-    return this.emit('matchmaking:join', { format, deck }).pipe(
+  public joinMatchmakingQueue(format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[]): Observable<any> {
+    return this.emit('matchmaking:join', { format, deck, artworks }).pipe(
       timeout(5000),
       retry(1),
       catchError((error) => {

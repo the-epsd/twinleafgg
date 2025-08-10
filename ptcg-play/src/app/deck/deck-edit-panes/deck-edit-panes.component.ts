@@ -42,6 +42,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   @Input() disabled: boolean = false;
   @Input() isThemeDeck: boolean = false;
+  @Input() unlockedArtworks: { id: number; name: string; cardName: string; setCode: string; code: string; imageUrl: string; holoType: string }[] = [];
+  @Input() selectedArtworks: { code: string; artworkId?: number }[] = [];
+  @Output() artworkChange = new EventEmitter<{ code: string; artworkId?: number | null }>();
 
   public deckTarget: DropTarget<DraggedItem<DeckItem>, any>;
   public deckHighlight$: Observable<boolean>;
@@ -91,6 +94,30 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         return ground.card.fullName === inFlight.data.card.fullName;
       }
     };
+  }
+
+  public getSelectedArtworkId(cardFullName: string): number | null {
+    const entry = this.selectedArtworks.find(a => a.code === cardFullName);
+    return entry && entry.artworkId != null ? entry.artworkId : null;
+  }
+
+  public getSelectedArtworkIdString(cardFullName: string): string {
+    const id = this.getSelectedArtworkId(cardFullName);
+    return id != null ? String(id) : '';
+  }
+
+  public onArtworkSelect(cardFullName: string, value: any) {
+    const valueStr = String(value);
+    const artworkId = valueStr === '' ? null : Number(valueStr);
+    this.artworkChange.emit({ code: cardFullName, artworkId });
+  }
+
+  public resolveArtworkUrlFor(card: Card): string | undefined {
+    if (!card) return undefined;
+    const entry = this.selectedArtworks?.find(a => a.code === card.fullName && a.artworkId);
+    if (!entry || !entry.artworkId) return undefined;
+    const art = this.unlockedArtworks?.find(a => a.id === entry.artworkId);
+    return art?.imageUrl || undefined;
   }
 
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {

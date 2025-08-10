@@ -1,4 +1,6 @@
 import { Format, GameSettings, Rules } from '../../game';
+import { CardArtwork } from '../../storage';
+import { In } from 'typeorm';
 import { Core } from '../../game/core/core';
 import { Client } from '../../game/client/client.interface';
 import { SocketWrapper } from '../socket/socket-wrapper';
@@ -8,6 +10,7 @@ interface QueuedPlayer {
   socketWrapper: SocketWrapper;
   format: Format;
   deck: string[];
+  artworks?: { code: string; artworkId?: number }[];
   joinedAt: number;
   lastValidated: number;
 }
@@ -33,7 +36,7 @@ export class MatchmakingService {
     return MatchmakingService.instance;
   }
 
-  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[]): void {
+  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[]): void {
     // Remove if already in queue
     this.removeFromQueue(client);
 
@@ -47,6 +50,7 @@ export class MatchmakingService {
       socketWrapper,
       format,
       deck,
+      artworks,
       joinedAt: Date.now(),
       lastValidated: Date.now()
     });
@@ -110,7 +114,7 @@ export class MatchmakingService {
     }
   }
 
-  private checkMatches(): void {
+  private async checkMatches(): Promise<void> {
     if (this.queue.length < 2) return;
 
     // Group players by format
@@ -122,7 +126,7 @@ export class MatchmakingService {
     });
 
     // Check each format group for potential matches
-    formatGroups.forEach(players => {
+    for (const players of formatGroups.values()) {
       if (players.length < 2) return;
 
       // Sort by time in queue
@@ -152,13 +156,19 @@ export class MatchmakingService {
         recordingEnabled: true
       };
 
-      // Use createGameWithDecks instead of createGame
+      // Build artwork maps for both players
+      const map1 = await this.buildArtworksMap(player1.artworks);
+      const map2 = await this.buildArtworksMap(player2.artworks);
+
+      // Use createGameWithDecks instead of createGame, and attach artwork maps
       const game = this.core.createGameWithDecks(
         player1.client,
         player1.deck,
         gameSettings,
         player2.client,
-        player2.deck
+        player2.deck,
+        map1,
+        map2
       );
 
       if (game) {
@@ -174,7 +184,24 @@ export class MatchmakingService {
         this.removeFromQueue(player1.client);
         this.removeFromQueue(player2.client);
       }
-    });
+    }
+  }
+
+  private async buildArtworksMap(artworks?: { code: string; artworkId?: number }[]): Promise<{ [code: string]: { imageUrl: string; holoType?: string } }> {
+    const map: { [code: string]: { imageUrl: string; holoType?: string } } = {};
+    if (!artworks || artworks.length === 0) return map;
+    const ids = artworks.map(a => a.artworkId).filter((v): v is number => typeof v === 'number');
+    if (ids.length === 0) return map;
+    const rows = await CardArtwork.find({ where: { id: In(ids) } });
+    const byId = new Map(rows.map(r => [r.id, r]));
+    for (const a of artworks) {
+      if (!a.artworkId) continue;
+      const row = byId.get(a.artworkId);
+      if (row) {
+        map[a.code] = { imageUrl: row.imageUrl, holoType: row.holoType };
+      }
+    }
+    return map;
   }
 
   public dispose(): void {

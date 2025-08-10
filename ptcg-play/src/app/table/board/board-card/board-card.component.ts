@@ -134,6 +134,14 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
   }
 
+  public resolveArtUrlFor(card: Card | undefined): string | undefined {
+    if (!card || !this._cardList) return undefined;
+    const map = (this._cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+    if (!map) return undefined;
+    const entry = map[card.fullName];
+    return entry?.imageUrl;
+  }
+
   // ==================== LIFECYCLE METHODS ====================
   ngOnInit() {
     this.setupSubscriptions();
