@@ -8,7 +8,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt, Card, PlayerType, SlotType, StateUtils } from '../../game';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, sourceCard: Card): IterableIterator<State> {
   const player = effect.player;
@@ -39,6 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       transfers = transfers || [];
 
       if (transfers.length === 0) {
+        SHUFFLE_DECK(store, state, player);
         return;
       }
 

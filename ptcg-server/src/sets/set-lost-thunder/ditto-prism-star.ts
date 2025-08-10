@@ -26,21 +26,39 @@ export class DittoPrismStar extends PokemonCard {
   public setNumber: string = '154';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof CheckTableStateEffect) {
+      // Ensure this card is actually in play (active or bench)
+      const slot = StateUtils.findPokemonSlot(state, this);
+      if (!slot) {
+        this.evolvesToStage = [];
+        return state;
+      }
 
-    if (effect instanceof CheckTableStateEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
-      const player = effect.player;
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+      // Resolve the owning player to validate if ability is blocked
+      let owner;
       try {
-        const stub = new PowerEffect(player, {
+        owner = StateUtils.findOwner(state, slot);
+      } catch {
+        owner = undefined;
+      }
+
+      if (!owner) {
+        this.evolvesToStage = [];
+        return state;
+      }
+
+      // Try to reduce PowerEffect to check if something blocks our ability
+      try {
+        const stub = new PowerEffect(owner, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
         }, this);
         store.reduceEffect(state, stub);
+        this.evolvesToStage = [Stage.STAGE_1];
       } catch {
-        return state;
+        this.evolvesToStage = [];
       }
-      this.evolvesToStage = [Stage.STAGE_1];
     }
     return state;
   }

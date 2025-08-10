@@ -54,6 +54,7 @@ export class Cinderace extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
         for (const transfer of transfers) {

@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, EnergyC
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class ElectrodeGX extends PokemonCard {
 
@@ -91,6 +91,7 @@ export class ElectrodeGX extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             if (cardList.getPokemonCard() === this) {
               cardList.damage += 999;

@@ -7,6 +7,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt, GameError, StateUtils } from '../../game';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class JaninesSecretTechnique extends TrainerCard {
 
@@ -84,6 +85,7 @@ export class JaninesSecretTechnique extends TrainerCard {
         transfers = transfers || [];
 
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
 
@@ -96,6 +98,7 @@ export class JaninesSecretTechnique extends TrainerCard {
           }
 
         }
+        SHUFFLE_DECK(store, state, player);
       });
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 

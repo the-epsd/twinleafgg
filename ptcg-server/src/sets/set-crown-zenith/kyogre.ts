@@ -5,7 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DAMAGE_OPPONENT_POKEMON, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 export class Kyogre extends PokemonCard {
@@ -103,11 +103,13 @@ export class Kyogre extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
       });

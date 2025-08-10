@@ -62,8 +62,6 @@ export class DefianceVest extends TrainerCard {
         effect.damage = Math.max(0, effect.damage - 40);
         effect.damageReduced = true;
       }
-
-      return state;
     }
     return state;
   }

@@ -6,7 +6,7 @@ import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yanmegaex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -102,12 +102,14 @@ export class Yanmegaex extends PokemonCard {
               transfers = transfers || [];
               // cancelled by user
               if (transfers.length === 0) {
+                SHUFFLE_DECK(store, state, player);
                 return state;
               }
 
               for (const transfer of transfers) {
                 const target = StateUtils.getTarget(state, player, transfer.to);
                 player.deck.moveCardTo(transfer.card, target);
+                SHUFFLE_DECK(store, state, player);
               }
             });
           }

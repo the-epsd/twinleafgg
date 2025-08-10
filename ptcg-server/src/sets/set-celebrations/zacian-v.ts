@@ -5,7 +5,7 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 export class ZacianV extends PokemonCard {
@@ -60,6 +60,7 @@ export class ZacianV extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
         for (const transfer of transfers) {
