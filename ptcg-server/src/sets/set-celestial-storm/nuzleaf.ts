@@ -6,12 +6,12 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Nuzleaf extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Seedot';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];
-  public evolvesFrom = 'Seedot';
 
   public attacks = [{
     name: 'Pound',
