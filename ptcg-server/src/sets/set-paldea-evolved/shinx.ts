@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, BoardEffect } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -36,16 +36,11 @@ function* useBigRoar(next: Function, store: StoreLike, state: State,
 }
 
 export class Shinx extends PokemonCard {
-
   public stage = Stage.BASIC;
-
-  public cardType = CardType.LIGHTNING;
-
+  public cardType = L;
   public hp = 40;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Big Roar',
@@ -56,21 +51,16 @@ export class Shinx extends PokemonCard {
 
   public attacks = [{
     name: 'Ram',
-    cost: [CardType.LIGHTNING],
+    cost: [L],
     damage: 10,
     text: ''
   }];
 
-  public set: string = 'PAL';
-
   public regulationMark = 'G';
-
+  public set: string = 'PAL';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '69';
-
+  public setNumber: string = '68';
   public name: string = 'Shinx';
-
   public fullName: string = 'Shinx PAL';
 
   public readonly BIG_ROAR_MARKER = 'BIG_ROAR_MARKER';
@@ -107,7 +97,6 @@ export class Shinx extends PokemonCard {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
-
       return generator.next().value;
     }
     return state;
