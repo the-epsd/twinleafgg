@@ -6,8 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Banette extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -70,9 +69,9 @@ export class Banette extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       if (effect.opponent.active.getPokemonCard()?.stage === Stage.BASIC) {
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+        ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
       }
     }
 

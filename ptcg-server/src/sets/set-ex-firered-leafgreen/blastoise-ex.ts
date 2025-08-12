@@ -9,7 +9,7 @@ import {
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Blastoiseex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -77,7 +77,7 @@ export class Blastoiseex extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;
@@ -109,7 +109,7 @@ export class Blastoiseex extends PokemonCard {
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
-              MOVE_CARDS(store, s, active, opponent.discard, { cards });
+              MOVE_CARDS(store, s, active, opponent.discard, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
             }
             return s;
           });

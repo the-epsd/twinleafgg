@@ -1,7 +1,7 @@
-import { CardTag, CardType, GameMessage, PokemonCard, Power, PowerType, SelectPrompt, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardTag, CardType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
-import { CONFIRMATION_PROMPT, DRAW_CARDS, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, DRAW_UP_TO_X_CARDS, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vaporeonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -53,23 +53,10 @@ export class Vaporeonex extends PokemonCard {
       CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
           // Shuffle hand into deck
-          MOVE_CARDS(store, state, opponent.hand, opponent.deck);
+          MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this, sourceEffect: this.powers[0] });
           SHUFFLE_DECK(store, state, opponent);
           // Draw up to 4 cards
-          const opponentOptions: { message: string, value: number }[] = [];
-          for (let i = 4; i >= 0; i--) {
-            opponentOptions.push({ message: `Draw ${i} card(s)`, value: i });
-          }
-
-          store.prompt(state, new SelectPrompt(
-            opponent.id,
-            GameMessage.WANT_TO_DRAW_CARDS,
-            opponentOptions.map(c => c.message),
-            { allowCancel: false }
-          ), opponentChoice => {
-            const opponentNumCardsToDraw = opponentOptions[opponentChoice].value;
-            DRAW_CARDS(opponent, opponentNumCardsToDraw);
-          });
+          DRAW_UP_TO_X_CARDS(store, state, opponent, 4);
         }
       });
     }

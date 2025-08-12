@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Vibrava extends PokemonCard {
   public tags = [CardTag.DELTA_SPECIES];
@@ -34,9 +33,9 @@ export class Vibrava extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       if (effect.opponent.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+        ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
       }
     }
 

@@ -4,10 +4,11 @@ import { StoreLike, State, GameMessage, PowerType, ShuffleDeckPrompt, ChooseCard
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class SylveonV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
 
   public stage: Stage = Stage.BASIC;
 
@@ -19,7 +20,7 @@ export class SylveonV extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [
     {
@@ -30,11 +31,11 @@ export class SylveonV extends PokemonCard {
     }
   ];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Magical Shot',
-        cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+        cost: [CardType.COLORLESS, CardType.COLORLESS],
         damage: 60,
         text: ''
       }
@@ -62,12 +63,12 @@ export class SylveonV extends PokemonCard {
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
-      
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
+
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
-          
+
         const endTurnEffect = new EndTurnEffect(player);
         store.reduceEffect(state, endTurnEffect);
         return state;
@@ -78,4 +79,3 @@ export class SylveonV extends PokemonCard {
   }
 }
 
-  

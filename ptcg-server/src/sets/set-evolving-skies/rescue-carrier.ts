@@ -11,8 +11,9 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { GameError } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -41,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.discard.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -51,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     ), () => next());
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 }
 
 export class RescueCarrier extends TrainerCard {
@@ -77,7 +78,7 @@ export class RescueCarrier extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

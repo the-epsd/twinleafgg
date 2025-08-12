@@ -8,6 +8,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../..';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -31,9 +32,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   cards.forEach(c => c.cards.moveToTopOfDestination(player.deck));
-  deckTop.moveTo(player.hand, 1);
+  DRAW_CARDS(player, 1);
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 }
 
 export class SwitchingCups extends TrainerCard {

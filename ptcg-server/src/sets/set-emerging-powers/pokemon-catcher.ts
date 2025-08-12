@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, StateUtils, GameError, GameMessage } from '../../game';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: PokemonCatcher, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -28,9 +29,9 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    CLEAN_UP_SUPPORTER(effect, player);
   });
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 }
 
 export class PokemonCatcher extends TrainerCard {

@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -77,7 +77,7 @@ export class Windstorm extends TrainerCard {
                     store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tools[0].name, effectName: this.name });
                   }
                 });
-                player.supporter.moveCardTo(this, player.discard);
+                CLEAN_UP_SUPPORTER(effect, player);
                 return state;
               });
             }
@@ -102,7 +102,7 @@ export class Windstorm extends TrainerCard {
                     store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tools[0].name });
                   }
                 });
-                player.supporter.moveCardTo(this, player.discard);
+                CLEAN_UP_SUPPORTER(effect, player);
                 return state;
               });
             }

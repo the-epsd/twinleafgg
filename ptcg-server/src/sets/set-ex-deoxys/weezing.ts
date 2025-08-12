@@ -5,9 +5,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Weezing extends PokemonCard {
@@ -71,10 +70,10 @@ export class Weezing extends PokemonCard {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 70);
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
       ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
     }
 

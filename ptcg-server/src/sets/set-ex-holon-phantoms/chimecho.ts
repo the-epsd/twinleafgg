@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameError, GameMessage, EnergyCard, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class Chimecho extends PokemonCard {
@@ -88,7 +88,7 @@ export class Chimecho extends PokemonCard {
         { min: 1, max: 1, allowCancel: false, blocked }
       ), cards => {
         cards = cards || [];
-        player.discard.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
       });
 
       ADD_MARKER(this.DELTA_SUPPORT_USED_MARKER, player, this);

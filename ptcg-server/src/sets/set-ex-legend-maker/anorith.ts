@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Anorith extends PokemonCard {
@@ -34,7 +34,7 @@ export class Anorith extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const blocked: number[] = [];
       effect.player.deck.cards.forEach((card, index) => {
         if (card instanceof PokemonCard && (card.name === 'Omanyte' || card.name === 'Kabuto' || card.name === 'Aerodactyl' || card.name === 'Lileep' || card.name === 'Anorith')) {

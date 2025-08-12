@@ -4,7 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, PlayerType, PokemonCardList } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Latias extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -86,7 +86,7 @@ export class Latias extends PokemonCard {
     }
 
     // Spearhead
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       DRAW_CARDS(effect.player, 1);
     }
 

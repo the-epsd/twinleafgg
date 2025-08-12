@@ -6,15 +6,16 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { StateUtils } from '../../game/store/state-utils';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ZinniasResolve, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
-  
+
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -35,19 +36,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
 
   const opponent = StateUtils.getOpponent(state, player);
   const cardsToDraw = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
-  player.deck.moveTo(player.hand, cardsToDraw);
+  DRAW_CARDS(player, cardsToDraw);
+  CLEAN_UP_SUPPORTER(effect, player);
   return state;
 }
 export class ZinniasResolve extends TrainerCard {

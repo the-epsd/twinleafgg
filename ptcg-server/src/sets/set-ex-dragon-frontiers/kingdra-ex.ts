@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, AFTER_ATTACK, HAS_MARKER, IS_POKEBODY_BLOCKED, MOVE_CARDS, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -66,7 +66,7 @@ export class Kingdraex extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
       if (!player.discard.cards.some(card => card.superType === SuperType.ENERGY)) {
@@ -90,7 +90,7 @@ export class Kingdraex extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
     }

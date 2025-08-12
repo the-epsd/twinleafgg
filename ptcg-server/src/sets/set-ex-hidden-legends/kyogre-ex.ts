@@ -74,7 +74,7 @@ export class Kyogreex extends PokemonCard {
       const player = effect.player;
       const energyCards = player.hand.cards.filter(card => card.superType === SuperType.ENERGY);
 
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards: energyCards });
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards: energyCards, sourceCard: this, sourceEffect: this.attacks[1] });
       SHUFFLE_DECK(store, state, player);
       this.usedSTW = false;
     }

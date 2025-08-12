@@ -2,8 +2,7 @@ import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType, 
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Roselia extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -57,7 +56,7 @@ export class Roselia extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -75,7 +74,7 @@ export class Roselia extends PokemonCard {
         const cardList = result[0];
 
         opponent.switchPokemon(cardList);
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+        ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
       });
     }
 

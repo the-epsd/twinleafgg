@@ -5,8 +5,7 @@ import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -56,10 +55,10 @@ export class Voltorb extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

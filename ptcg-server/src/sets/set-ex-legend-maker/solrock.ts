@@ -4,7 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, PlayerType, PokemonCardList, ChooseCardsPrompt } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class Solrock extends PokemonCard {
@@ -117,7 +117,7 @@ export class Solrock extends PokemonCard {
           ), selected => {
             const card = selected[0];
 
-            opponent.active.moveCardTo(card, opponent.discard);
+            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: [card], sourceCard: this, sourceEffect: this.attacks[1] });
             return state;
           });
         }

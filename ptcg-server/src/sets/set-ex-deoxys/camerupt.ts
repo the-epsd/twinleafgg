@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { AttachEnergyPrompt, ChoosePokemonPrompt, EnergyCard, PlayerType, SlotType, StateUtils } from '../../game';
-import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Camerupt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -65,7 +65,7 @@ export class Camerupt extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
     }

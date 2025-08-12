@@ -3,7 +3,7 @@ import { AttachEnergyPrompt, Card, CardTarget, ChooseCardsPrompt, PlayerType, Sl
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_POKEPOWER_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEPOWER_BLOCKED, JUST_EVOLVED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Flygonex extends PokemonCard {
@@ -79,7 +79,7 @@ export class Flygonex extends PokemonCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
         }
       });
     }

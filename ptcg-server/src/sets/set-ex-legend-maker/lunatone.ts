@@ -4,9 +4,8 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, PlayerType, PokemonCardList, ChooseCardsPrompt, Card, TrainerCard } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
 
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -117,15 +116,15 @@ export class Lunatone extends PokemonCard {
         if (selected.length === 0) { return state; }
 
         SHOW_CARDS_TO_PLAYER(store, state, effect.opponent, cards);
-        MOVE_CARDS_TO_HAND(store, state, player, selected);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: this, sourceEffect: this.attacks[0] });
         SHUFFLE_DECK(store, state, player);
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }
