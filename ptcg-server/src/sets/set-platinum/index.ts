@@ -16,7 +16,7 @@ import { GiratinaLVX } from './giratina-lv-x';
 import { Kirlia } from './kirlia';
 import { PalkiaG } from './palkia-g';
 import { PalkiaGLVX } from './palkia-g-lv-x';
-import { DialgaG } from './dialgs-g';
+import { DialgaG } from './dialga-g';
 import { DialgaGLVX } from './dialga-g-lv-x';
 import { Vulpix } from './vulpix';
 
