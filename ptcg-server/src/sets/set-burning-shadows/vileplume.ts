@@ -1,7 +1,7 @@
 import { Attack, CardType, GameError, GameMessage, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -56,7 +56,7 @@ export class Vileplume extends PokemonCard {
     }
 
     // Downer Shock
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         const opponent = StateUtils.getOpponent(state, effect.player);
         if (result) {

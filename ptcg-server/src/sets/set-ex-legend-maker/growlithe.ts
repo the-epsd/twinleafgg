@@ -1,9 +1,7 @@
 import { PokemonCard, Stage, CardType } from '../../game';
 import { StoreLike, State, GameMessage, CoinFlipPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { SpecialCondition } from '../../game/store/card/card-types';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Growlithe extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,29 +31,24 @@ export class Growlithe extends PokemonCard {
   public setNumber: string = '55';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect) {
-      if (effect.attack === this.attacks[0]) {
-        const player = effect.player;
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-            store.reduceEffect(state, specialConditionEffect);
-          }
-        });
-      }
+    if (AFTER_ATTACK(effect, 0, this)) {
+      const player = effect.player;
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
+        if (result) {
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
+        }
+      });
+    }
 
-      if (effect.attack === this.attacks[1]) {
-        const player = effect.player;
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            effect.damage += 20;
-          }
-        });
-      }
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      return store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], result => {
+        if (result === true) {
+          effect.damage += 20;
+        }
+      });
     }
     return state;
   }

@@ -1,10 +1,10 @@
-import { GameMessage, State, StateUtils, StoreLike } from '../../game';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Magneton extends PokemonCard {
 
@@ -47,16 +47,10 @@ export class Magneton extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, specialCondition);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
     }

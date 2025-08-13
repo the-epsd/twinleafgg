@@ -1,6 +1,6 @@
 import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Slugma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,7 +31,7 @@ export class Slugma extends PokemonCard {
   public fullName: string = 'Slugma DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       DRAW_CARDS(effect.player, 1);
     }
 

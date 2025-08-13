@@ -4,7 +4,7 @@ import { StoreLike, State, ChooseCardsPrompt, GameMessage, PowerType, StateUtils
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,7 +38,7 @@ export class Minun extends PokemonCard {
       const player = effect.player;
 
       BLOCK_IF_DISCARD_EMPTY(player);
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -46,7 +46,7 @@ export class Minun extends PokemonCard {
         {},
         { min: 1, max: 1, allowCancel: false }
       ), cards => {
-        player.discard.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.attacks[0] });
       });
     }
 

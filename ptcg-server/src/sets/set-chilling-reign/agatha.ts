@@ -8,6 +8,7 @@ import { GameMessage } from '../../game/game-message';
 import { TrainerCard, TrainerType } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -25,19 +26,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-      
+
     return store.prompt(state, new MoveDamagePrompt(
       effect.player.id,
       GameMessage.MOVE_DAMAGE,
       PlayerType.BOTTOM_PLAYER,
-      [ SlotType.ACTIVE ],
+      [SlotType.ACTIVE],
       maxAllowedDamage,
       { min: 1, max: 3, allowCancel: false }
     ), transfers => {
       if (transfers === null) {
         return;
       }
-      
+
       for (const transfer of transfers) {
         const source = StateUtils.getTarget(state, player, transfer.from);
         const target = StateUtils.getTarget(state, player, transfer.to);
@@ -45,7 +46,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
           source.damage -= 20;
           target.damage += 20;
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
       }
     });
   });
@@ -54,17 +55,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class Agatha extends TrainerCard {
 
   public regulationMark = 'E';
-  
+
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  
+
   public set: string = 'CRE';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '129';
-  
+
   public name: string = 'Agatha';
-  
+
   public fullName: string = 'Agatha CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -72,9 +73,8 @@ export class Agatha extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  

@@ -15,6 +15,7 @@ import { Lugiaex } from './lugia-ex';
 import { MarysRequest } from './marys-request';
 import { Meganiumex } from './meganium-ex';
 import { Murkrow } from './murkrow';
+import { Oddish } from './oddish';
 import { Onix } from './onix';
 import { Pineco } from './pineco';
 import { PokemonReversal } from './pokemon-reversal';
@@ -60,6 +61,7 @@ export const setEXUnseenForces: Card[] = [
   new MarysRequest(),
   new Meganiumex(),
   new Murkrow(),
+  new Oddish(),
   new Onix(),
   new Pineco(),
   new PokemonReversal(),

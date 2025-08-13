@@ -312,7 +312,11 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
 
       const deckAnalyser = new DeckAnalyser(action.deck);
       if (!deckAnalyser.isValid()) {
-        throw new GameError(GameMessage.INVALID_DECK);
+        // Safe exit for invalid deck: finish game before it starts
+        store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
+        state.phase = GamePhase.FINISHED;
+        state.winner = GameWinner.NONE;
+        return state;
       }
 
       const player = createPlayer(action.clientId, action.name);
@@ -358,7 +362,11 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         }
         const deckAnalyser = new DeckAnalyser(deck);
         if (!deckAnalyser.isValid()) {
-          throw new GameError(GameMessage.INVALID_DECK);
+          // Safe exit for invalid deck (invited player): end game with no winner
+          store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
+          const winner = GameWinner.NONE;
+          state = endGame(store, state, winner);
+          return;
         }
 
         player.deck = CardList.fromList(deck);

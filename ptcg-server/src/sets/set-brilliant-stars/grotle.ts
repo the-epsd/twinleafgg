@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Grotle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -76,7 +77,7 @@ export class Grotle extends PokemonCard {
         { superType: SuperType.POKEMON, cardType: CardType.GRASS },
         { min: 0, max: 1, allowCancel: true }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
 
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

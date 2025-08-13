@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Meditite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,18 +34,11 @@ export class Meditite extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Fake Out attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.FLIP_COIN
-      ), result => {
+    if (AFTER_ATTACK(effect, 1, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, specialConditionEffect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
-        return state;
       });
     }
 

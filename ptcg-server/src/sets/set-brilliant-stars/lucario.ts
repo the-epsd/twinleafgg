@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Lucario extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -76,8 +77,7 @@ export class Lucario extends PokemonCard {
           ), selected => {
             cards = selected || [];
 
-
-            player.deck.moveCardsTo(cards, cardList);
+            MOVE_CARDS(store, state, player.deck, cardList, { cards, sourceCard: this, sourceEffect: this.powers[0] });
           });
         }
       });

@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Mewtwo extends PokemonCard {
 
@@ -34,7 +35,7 @@ export class Mewtwo extends PokemonCard {
   public fullName: string = 'Mewtwo CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new AttachEnergyPrompt(
@@ -53,7 +54,7 @@ export class Mewtwo extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
         }
 
       });

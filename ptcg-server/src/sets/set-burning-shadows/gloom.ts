@@ -1,7 +1,6 @@
-import { PokemonCard, Stage, CardType, Resistance, StoreLike, State, SpecialCondition } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardType, Resistance, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,10 +37,8 @@ export class Gloom extends PokemonCard {
   public setNumber: string = '5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
-      store.reduceEffect(state, specialConditionEffect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
     return state;
   }

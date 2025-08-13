@@ -2,10 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 
 export class HolonsElectrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -146,8 +145,8 @@ export class HolonsElectrode extends PokemonCard {
     }
 
     // Dazzle Blast
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

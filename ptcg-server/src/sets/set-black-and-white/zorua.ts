@@ -3,9 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { GameMessage } from '../../game/game-message';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Zorua extends PokemonCard {
@@ -20,11 +18,11 @@ export class Zorua extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Lunge',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
@@ -40,19 +38,13 @@ export class Zorua extends PokemonCard {
   public setNumber: string = '70';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result === false) {
           effect.damage = 0;
         }
       });
     }
-
     return state;
   }
 

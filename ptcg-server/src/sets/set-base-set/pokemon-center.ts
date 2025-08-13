@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { EnergyCard, PlayerType } from '../..';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class PokemonCenter extends TrainerCard {
 
@@ -36,11 +37,11 @@ export class PokemonCenter extends TrainerCard {
           // Only discard energy if healing occurred
           if (healAmount > 0) {
             const cards = cardList.cards.filter(c => c instanceof EnergyCard);
-            cardList.moveCardsTo(cards, player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { cards, sourceCard: this });
           }
         }
       });
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
     return state;

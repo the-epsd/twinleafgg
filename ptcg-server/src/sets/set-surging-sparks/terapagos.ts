@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, GameError, StateUtils, AttachEnergyPrompt, CardTag, CardTarget, EnergyType, PlayerType, SlotType, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Terapagos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -76,6 +77,7 @@ export class Terapagos extends PokemonCard {
         transfers = transfers || [];
 
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
 

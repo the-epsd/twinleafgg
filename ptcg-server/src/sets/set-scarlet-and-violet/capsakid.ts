@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, Resistance, StoreLike, State, GameMessage, SuperType, EnergyType, StateUtils, AttachEnergyPrompt, PlayerType, ShuffleDeckPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Capsakid extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,6 +48,7 @@ export class Capsakid extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
         for (const transfer of transfers) {

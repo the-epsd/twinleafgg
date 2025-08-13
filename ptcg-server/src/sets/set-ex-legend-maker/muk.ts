@@ -6,8 +6,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError, GameMessage, StateUtils } from '../../game';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -66,14 +66,15 @@ export class Muk extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.POISON_RING_MARKER, opponent.active, this);
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.POISON_RING_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.POISON_RING_MARKER, this);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
+    }
+
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     return state;
   }

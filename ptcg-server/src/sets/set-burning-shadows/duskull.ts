@@ -3,9 +3,10 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* useKingsOrder(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+  effect: AttackEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
@@ -33,7 +34,7 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
   }
 
   cards.forEach((card, index) => {
-    player.discard.moveCardTo(card, slots[index]);
+    MOVE_CARDS(store, state, player.discard, slots[index], { cards: [card], sourceCard: self });
     slots[index].pokemonPlayedTurn = state.turn;
   });
 }
@@ -67,7 +68,7 @@ export class Duskull extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useKingsOrder(() => generator.next(), store, state, effect);
+      const generator = useKingsOrder(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

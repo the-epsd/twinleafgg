@@ -4,6 +4,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -46,7 +47,7 @@ export class TeamRocketsHandiwork extends TrainerCard {
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (result) => {
         const heads = result.filter(r => !!r).length;
-        opponent.deck.moveTo(opponent.discard, heads * 2);
+        MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: heads * 2, sourceCard: this });
 
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });

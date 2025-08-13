@@ -4,6 +4,7 @@ import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, GameLog, S
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Xerneas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -64,7 +65,7 @@ export class Xerneas extends PokemonCard {
             cards.forEach((card, index) => {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
             });
-            player.deck.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
           });
         }
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

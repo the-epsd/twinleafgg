@@ -3,7 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -49,7 +49,7 @@ export class Dipplin extends PokemonCard {
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
-        MOVE_CARDS_TO_HAND(store, state, player, cards);
+        MOVE_CARDS(store, state, player.active, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
       });
     }
 

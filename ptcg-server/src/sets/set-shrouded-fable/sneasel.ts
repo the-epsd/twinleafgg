@@ -1,69 +1,46 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Sneasel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 70;
-  public weakness = [{ type: CardType.METAL }];
+  public weakness = [{ type: M }];
   public resistance = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Cut',
-      cost: [CardType.WATER],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Draw Near',
-      cost: [CardType.WATER, CardType.WATER],
-      damage: 30,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cut',
+    cost: [W],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Draw Near',
+    cost: [W, W],
+    damage: 30,
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+  }];
 
   public regulationMark = 'H';
-
   public set: string = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '13';
-
   public name: string = 'Sneasel';
-
   public fullName: string = 'Sneasel SFA';
-
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
-
-    // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    //   if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-    //     const player = effect.player;
-    //     const opponent = state.players[1 - state.players.indexOf(player)];
-    //     opponent.active.marker.addMarkerToState(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
-    //   }
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     return state;
   }
 }

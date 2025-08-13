@@ -2,7 +2,7 @@ import { ChooseCardsPrompt, GameError, GameMessage } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -45,12 +45,12 @@ export class BillsMaintenance extends TrainerCard {
         if (cards.length === 0) {
           return;
         }
-        player.hand.moveCardsTo(cards, player.deck);
+        MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: this });
         SHUFFLE_DECK(store, state, player);
         DRAW_CARDS(player, 3);
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 

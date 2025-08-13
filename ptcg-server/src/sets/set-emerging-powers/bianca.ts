@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Bianca extends TrainerCard {
 
@@ -34,7 +35,7 @@ export class Bianca extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.deck.moveTo(player.hand, cardsToDraw);
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
     }
 
     return state;

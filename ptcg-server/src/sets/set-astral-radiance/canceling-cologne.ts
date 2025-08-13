@@ -7,6 +7,7 @@ import { StateUtils } from '../..';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class CancelingCologne extends TrainerCard {
 
@@ -50,7 +51,7 @@ export class CancelingCologne extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     if (effect instanceof PowerEffect && !effect.power.exemptFromAbilityLock) {

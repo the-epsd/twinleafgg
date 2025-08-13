@@ -1,11 +1,9 @@
-import { GameMessage } from '../../game';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -43,14 +41,15 @@ export class Vulpix extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
-        if (heads) {
-          const condition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
-          store.reduceEffect(state, condition);
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
+        if (result) {
+          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this)
         }
       });
     }
+
     return state;
   }
 

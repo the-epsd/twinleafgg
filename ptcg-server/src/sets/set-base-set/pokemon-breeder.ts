@@ -15,6 +15,7 @@ import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 function isMatchingStage2(stage1: PokemonCard[], basic: PokemonCard, stage2: PokemonCard): boolean {
   for (const card of stage1) {
@@ -115,7 +116,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       store.reduceEffect(state, evolveEffect);
 
       // Discard trainer only when user selected a Pokemon
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
     }
   });
 }

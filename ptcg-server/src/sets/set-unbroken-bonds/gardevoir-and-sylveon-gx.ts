@@ -2,7 +2,7 @@ import { AttachEnergyPrompt, CardTag, CardType, GameMessage, MoveEnergyPrompt, P
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 export class GardevoirSylveonGX extends PokemonCard {
@@ -60,12 +60,14 @@ export class GardevoirSylveonGX extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
+        SHUFFLE_DECK(store, state, player);
       });
     }
 

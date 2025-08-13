@@ -4,9 +4,10 @@ import { StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, Ca
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
-function* usePackCall(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* usePackCall(next: Function, store: StoreLike, state: State, effect: AttackEffect, self: Card): IterableIterator<State> {
   const turn = state.turn;
   let max = 1;
   if (turn == 2)
@@ -25,7 +26,7 @@ function* usePackCall(next: Function, store: StoreLike, state: State, effect: At
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self, sourceEffect: self.attacks[0] });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -69,8 +70,8 @@ export class Zarude extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = usePackCall(() => generator.next(), store, state, effect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const generator = usePackCall(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

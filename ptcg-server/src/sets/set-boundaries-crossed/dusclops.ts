@@ -10,10 +10,11 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameMessage } from '../../game/game-message';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 function* useAstonish(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+  effect: AttackEffect, sourceCard: Card): IterableIterator<State> {
 
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -43,7 +44,7 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  opponent.hand.moveCardsTo(cards, opponent.deck);
+  MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards, sourceCard, sourceEffect: sourceCard.attacks[0] });
 
   return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
     opponent.deck.applyOrder(order);
@@ -90,7 +91,7 @@ export class Dusclops extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useAstonish(() => generator.next(), store, state, effect);
+      const generator = useAstonish(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

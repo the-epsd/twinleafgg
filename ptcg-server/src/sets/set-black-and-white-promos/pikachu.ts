@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+import { StoreLike, State } from '../../game';
+import { COIN_FLIP_PROMPT, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Effect } from '../../game/store/effects/effect';
 
 export class Pikachu extends PokemonCard {
 
@@ -33,20 +33,14 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
 
-  public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-
-    if (effect.attack === this.attacks[0]) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
-        if (heads) {
-          effect.damage += 10;
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 10);
         }
       });
     }
-
-    if (effect.attack === this.attacks[1]) {
-      // No additional effects for Electro Ball
-    }
-
     return state;
   }
 }

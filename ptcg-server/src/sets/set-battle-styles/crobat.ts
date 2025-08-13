@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType, ConfirmPrompt, GameMessage } from '../../g
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -53,7 +54,7 @@ export class Crobat extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-          player.deck.moveTo(player.hand, 3);
+          DRAW_CARDS(player, 3);
         }
       });
       return state;

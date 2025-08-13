@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, GameLog } from '../../game';
+import { StoreLike, State, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Milcery extends PokemonCard {
   public regulationMark: string = 'E';
@@ -37,35 +37,19 @@ export class Milcery extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
         return state;
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 0, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          store.prompt(state, [new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          )], () => {
-
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-            });
-            player.deck.moveCardsTo(cards, player.hand);
-          });
+      const blocked: number[] = [];
+      player.deck.cards.forEach((card, index) => {
+        if (card instanceof TrainerCard && (card.trainerType !== TrainerType.SUPPORTER)) {
+          blocked.push(index);
         }
-        SHUFFLE_DECK(store, state, player);
       });
+
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false, blocked }, this.attacks[0]);
     }
 
     return state;

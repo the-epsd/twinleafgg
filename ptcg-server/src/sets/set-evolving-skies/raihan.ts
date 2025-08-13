@@ -9,6 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -80,9 +81,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
         next();
 
         player.hand.moveCardTo(self, player.supporter);
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

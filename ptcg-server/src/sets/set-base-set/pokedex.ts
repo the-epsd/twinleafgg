@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -27,12 +28,12 @@ export class Pokedex extends TrainerCard {
       const deck = player.deck;
 
       const deckTop = new CardList();
-      
-      
+
+
       // Get up to 5 cards from the top of the deck
       const cards = deck.cards.slice(0, 5);
       player.deck.moveCardsTo(cards, deckTop);
-      
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -46,11 +47,11 @@ export class Pokedex extends TrainerCard {
         if (rearrangedCards === null) {
           return state;
         }
-  
+
         deckTop.applyOrder(rearrangedCards);
         deckTop.moveTo(player.deck);
-  
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

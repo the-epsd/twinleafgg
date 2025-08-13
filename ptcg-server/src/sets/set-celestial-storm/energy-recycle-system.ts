@@ -6,7 +6,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class EnergyRecycleSystem extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -52,7 +52,7 @@ export class EnergyRecycleSystem extends TrainerCard {
           ), selected => {
             if (selected && selected.length > 0) {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
-              player.discard.moveCardsTo(selected, player.hand);
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this, sourceEffect: this.attacks[0] });
             }
           });
         } else if (choice === 1) {
@@ -70,7 +70,7 @@ export class EnergyRecycleSystem extends TrainerCard {
           ), selected => {
             if (selected && selected.length === 3) {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: selected.map(c => c.name).join(', ') });
-              player.discard.moveCardsTo(selected, player.deck);
+              MOVE_CARDS(store, state, player.discard, player.deck, { cards: selected, sourceCard: this, sourceEffect: this.attacks[1] });
               SHUFFLE_DECK(store, state, player);
             }
           });

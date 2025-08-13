@@ -13,6 +13,7 @@ import {
   PlayerType,
   TrainerCard
 } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class EldegossV extends PokemonCard {
 
@@ -115,7 +116,7 @@ export class EldegossV extends PokemonCard {
                 cards.forEach((card, index) => {
                   store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
                 });
-                player.discard.moveCardsTo(cards, player.hand);
+                MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
               });
             }
           });

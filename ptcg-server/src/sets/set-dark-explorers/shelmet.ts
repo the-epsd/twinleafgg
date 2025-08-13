@@ -1,12 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { GameMessage } from '../../game/game-message';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import { StateUtils } from '../../game/store/state-utils';
 
 
 export class Shelmet extends PokemonCard {
@@ -19,11 +17,11 @@ export class Shelmet extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Body Slam',
-    cost: [ CardType.GRASS, CardType.GRASS ],
+    cost: [CardType.GRASS, CardType.GRASS],
     damage: 20,
     text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
   }];
@@ -40,15 +38,10 @@ export class Shelmet extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, specialCondition);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
     }

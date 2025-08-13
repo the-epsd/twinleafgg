@@ -44,6 +44,7 @@ import { Serperiorex } from './serperior-ex';
 import { Servine } from './servine';
 import { Snivy } from './snivy';
 import { Solosis } from './solosis';
+import { Swadloon } from './swadloon';
 import { Tepig } from './tepig';
 import { Terrakion } from './terrakion';
 import { Tirtouga } from './tirtouga';
@@ -79,6 +80,7 @@ export const setSV11: Card[] = [
   new Zorua(),
   new Zoroark(),
   new Solosis(),
+  new Swadloon(),
   new Duosion(),
   new Reuniclus(),
 

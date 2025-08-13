@@ -6,6 +6,7 @@ import { ChooseCardsPrompt, GameMessage, PlayerType, PokemonCard, StateUtils } f
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Relicanth extends PokemonCard {
 
@@ -61,8 +62,8 @@ export class Relicanth extends PokemonCard {
         if (cards.length === 0) {
           return;
         }
-        player.hand.moveCardsTo(cards, player.lostzone);
-        player.deck.moveTo(player.hand, 3);
+        MOVE_CARDS(store, state, player.hand, player.lostzone, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
+        DRAW_CARDS(player, 3);
       });
 
       return state;

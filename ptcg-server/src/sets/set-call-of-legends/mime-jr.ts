@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MimeJr extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -48,7 +48,7 @@ export class MimeJr extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.deck.moveTo(opponent.lostzone, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.lostzone, { cards: [opponent.deck.cards[0]], sourceCard: this, sourceEffect: this.attacks[0] });
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {

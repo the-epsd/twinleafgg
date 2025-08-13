@@ -3,11 +3,12 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 import { PlayerType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class Sceptileex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -68,14 +69,12 @@ export class Sceptileex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
-      ADD_MARKER(this.POISON_RING_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.POISON_RING_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.POISON_RING_MARKER, this);
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 2, this)) {
       BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);

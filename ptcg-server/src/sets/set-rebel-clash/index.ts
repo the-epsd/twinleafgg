@@ -34,6 +34,13 @@ import { TrainingCourt } from './training-court';
 import { TwinEnergy } from './twin-energy';
 import { Vulpix } from './vulpix';
 
+// other prints
+import {
+  EldegossVRCL,
+  EldegossVRCLFullArt,
+  TurffieldStadiumRCL,
+} from './other-prints';
+
 export const setRebelClash: Card[] = [
   new Aegislash(),
   new Applin(),
@@ -69,4 +76,9 @@ export const setRebelClash: Card[] = [
   new TrainingCourt(),
   new TwinEnergy(),
   new Vulpix(),
+
+  // other prints
+  new EldegossVRCL(),
+  new EldegossVRCLFullArt(),
+  new TurffieldStadiumRCL(),
 ];

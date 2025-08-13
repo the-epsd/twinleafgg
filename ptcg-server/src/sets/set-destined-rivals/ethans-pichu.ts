@@ -1,6 +1,6 @@
 import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class EthansPichu extends PokemonCard {
 
@@ -37,7 +37,7 @@ export class EthansPichu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       DRAW_CARDS(player, 1);
     }

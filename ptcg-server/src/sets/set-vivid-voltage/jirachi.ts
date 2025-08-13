@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 function* useDreamyRevelation(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -105,6 +106,7 @@ export class Jirachi extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
         for (const transfer of transfers) {

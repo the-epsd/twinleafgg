@@ -5,6 +5,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -31,7 +32,7 @@ export class Peony extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
-      
+
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
@@ -43,7 +44,7 @@ export class Peony extends TrainerCard {
       }
 
       const cards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(cards, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -53,16 +54,16 @@ export class Peony extends TrainerCard {
         { min: 0, max: 2, allowCancel: false }
       ), cards => {
         cards = cards || [];
-        
+
         if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
 
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

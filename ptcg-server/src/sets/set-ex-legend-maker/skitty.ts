@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 import { ChooseCardsPrompt, GameMessage } from '../../game';
 
@@ -35,7 +35,7 @@ export class Skitty extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
       store.prompt(state, new ChooseCardsPrompt(
@@ -46,7 +46,7 @@ export class Skitty extends PokemonCard {
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
         if (cards.length > 0) {
-          MOVE_CARDS_TO_HAND(store, state, player, cards);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.attacks[0] });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         }
 

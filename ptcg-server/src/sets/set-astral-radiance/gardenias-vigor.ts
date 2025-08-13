@@ -10,6 +10,7 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class GardeniasVigor extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -48,7 +49,7 @@ export class GardeniasVigor extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(player.hand, 2);
+      DRAW_CARDS(player, 2);
 
       // const hasEnergyInHand = player.hand.cards.some(c => {
       //   return c instanceof EnergyCard
@@ -74,8 +75,7 @@ export class GardeniasVigor extends TrainerCard {
           const energyCard = transfer.card as EnergyCard;
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
           store.reduceEffect(state, attachEnergyEffect);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
+          CLEAN_UP_SUPPORTER(effect, player);
         }
       });
     }

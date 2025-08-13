@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 
 export class Luxray extends PokemonCard {
@@ -51,34 +51,8 @@ export class Luxray extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
-
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.TRAINER },
-        { min: 0, max: 2, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-
-        store.prompt(state, [new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards
-        )], () => {
-          player.deck.moveCardsTo(cards, player.hand);
-        });
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, this, { superType: SuperType.TRAINER }, { min: 0, max: 2 }, this.attacks[0]);
     }
     return state;
   }

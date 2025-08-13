@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GamePhase, GameLog, Card, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, GamePhase, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CONFIRMATION_PROMPT, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import {KnockOutEffect, PowerEffect} from '../../game/store/effects/game-effects';
+import { CONFIRMATION_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -12,7 +12,7 @@ export class Gengar extends PokemonCard {
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public powers = [{
     name: 'Last Gift',
@@ -22,7 +22,7 @@ export class Gengar extends PokemonCard {
 
   public attacks = [{
     name: 'Pain Burst',
-    cost: [ C, C, C ],
+    cost: [C, C, C],
     damage: 10,
     damageCalculation: '+',
     text: 'This attack does 40 more damage for each damage counter on your opponent\'s Active Pokémon.'
@@ -57,26 +57,15 @@ export class Gengar extends PokemonCard {
 
       store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, card: this.name });
 
-      CONFIRMATION_PROMPT(store, state, player, result =>{
+      CONFIRMATION_PROMPT(store, state, player, result => {
         if (!result) { return state; }
 
-        let cards: Card[] = [];
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { },
-          { min: 0, max: Math.min(2, player.deck.cards.length), allowCancel: false }
-        ), selected => {
-          cards = selected || [];
-          player.deck.moveCardsTo(cards, player.hand);
-          SHUFFLE_DECK(store, state, player);
-        });
+        SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 2, allowCancel: false }, this.powers[0]);
       });
     }
 
     // Pain Burst
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
       effect.damage += 4 * opponent.active.damage;
     }

@@ -1,10 +1,10 @@
-import {ChooseCardsPrompt, GameMessage} from '../../game';
+import { ChooseCardsPrompt, GameMessage } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_MARKER, DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, DRAW_CARDS, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -28,7 +28,7 @@ At the end of this turn, if you have 3 or more cards in your hand, shuffle cards
     }
 
     if (effect instanceof EndTurnEffect && HAS_MARKER(this.LILLIES_FORCE_MARKER, effect.player, this)) {
-      if (effect.player.hand.cards.length >= 3){
+      if (effect.player.hand.cards.length >= 3) {
         const discardAmount = effect.player.hand.cards.length - 3;
 
         return store.prompt(state, new ChooseCardsPrompt(
@@ -40,7 +40,7 @@ At the end of this turn, if you have 3 or more cards in your hand, shuffle cards
         ), selected => {
           const cards = selected || [];
 
-          effect.player.hand.moveCardsTo(cards, effect.player.deck);
+          MOVE_CARDS(store, state, effect.player.hand, effect.player.deck, { cards, sourceCard: this });
           SHUFFLE_DECK(store, state, effect.player);
         });
       }

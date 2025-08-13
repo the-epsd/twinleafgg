@@ -5,7 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 export class Kyogre extends PokemonCard {
@@ -25,7 +25,7 @@ export class Kyogre extends PokemonCard {
       name: 'Wave Summoning',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Search your deck for a W Energy card and attach it to this Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for a [W] Energy card and attach it to this Pokémon. Then, shuffle your deck.'
     }, {
       name: 'Dynamic Wave',
       cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
@@ -68,7 +68,7 @@ export class Kyogre extends PokemonCard {
           return;
         }
         for (const transfer of transfers) {
-          player.active.moveCardTo(transfer.card, player.hand);
+          MOVE_CARDS(store, state, player.active, player.hand, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[1] });
         }
 
         const min = Math.min(1);
@@ -103,11 +103,13 @@ export class Kyogre extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
       });

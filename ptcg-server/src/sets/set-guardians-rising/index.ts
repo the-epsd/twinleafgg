@@ -25,6 +25,7 @@ import { Trubbish } from './trubbish';
 // Other prints
 import {
   AlolanVulpixGRI,
+  DoubleColorlessEnergyGRISR,
   EnhancedHammerGRI,
   FieldBlowerGRI,
   FieldBlowerGRI2,
@@ -60,6 +61,7 @@ export const setGuardiansRising: Card[] = [
 
   // Other prints
   new AlolanVulpixGRI(),
+  new DoubleColorlessEnergyGRISR(),
   new EnhancedHammerGRI(),
   new FieldBlowerGRI(),
   new FieldBlowerGRI2(),

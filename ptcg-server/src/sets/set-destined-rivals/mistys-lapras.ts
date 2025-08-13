@@ -1,8 +1,8 @@
-import { ChooseCardsPrompt, GameMessage } from '../../game';
+import { ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -38,9 +38,9 @@ export class MistysLapras extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Swim Together
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
@@ -57,7 +57,7 @@ export class MistysLapras extends PokemonCard {
         { min: 0, max: 3, allowCancel: false, blocked }
       ), cards => {
         if (cards.length > 0) {
-          MOVE_CARDS_TO_HAND(store, state, player, cards);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         }
 

@@ -4,9 +4,12 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { PlayerType, SlotType, StateUtils, CardTarget,
-  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt } from '../../game';
+import {
+  PlayerType, SlotType, StateUtils, CardTarget,
+  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt
+} from '../../game';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class LostRemover extends TrainerCard {
 
@@ -65,9 +68,9 @@ export class LostRemover extends TrainerCard {
           { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
-          target.moveCardsTo(selected, opponent.lostzone);
+          MOVE_CARDS(store, state, target, opponent.lostzone, { cards: selected, sourceCard: this });
         });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
     return state;

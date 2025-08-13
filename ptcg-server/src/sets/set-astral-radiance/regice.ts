@@ -4,9 +4,10 @@ import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useRegiGate(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+  effect: AttackEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
@@ -28,7 +29,7 @@ function* useRegiGate(next: Function, store: StoreLike, state: State,
   }
 
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
+    MOVE_CARDS(store, state, player.deck, slots[index], { cards: [card], sourceCard: self, sourceEffect: self.attacks[0] });
     slots[index].pokemonPlayedTurn = state.turn;
   });
 
@@ -81,8 +82,8 @@ export class Regice extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useRegiGate(() => generator.next(), store, state, effect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const generator = useRegiGate(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

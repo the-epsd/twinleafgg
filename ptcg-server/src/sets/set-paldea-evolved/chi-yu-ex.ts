@@ -4,6 +4,7 @@ import { StoreLike, State, PlayerType, SlotType, AttachEnergyPrompt, StateUtils 
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class ChiYuex extends PokemonCard {
@@ -55,7 +56,7 @@ export class ChiYuex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Discard 1 card from opponent's deck 
-      opponent.deck.moveTo(opponent.discard, 2);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 2, sourceCard: this, sourceEffect: this.attacks[0] });
 
     }
 

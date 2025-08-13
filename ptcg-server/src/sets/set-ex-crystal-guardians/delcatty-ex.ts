@@ -72,7 +72,7 @@ export class Delcattyex extends PokemonCard {
           { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
         });
       }
 
@@ -92,7 +92,7 @@ export class Delcattyex extends PokemonCard {
           { min: discardAmount, max: discardAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-          opponent.hand.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
         });
       }
 
@@ -104,7 +104,7 @@ export class Delcattyex extends PokemonCard {
       const player = effect.player;
       const energyInDiscard = player.discard.cards.filter(c => c.superType === SuperType.ENERGY);
       effect.damage = energyInDiscard.length * 10;
-      MOVE_CARDS(store, state, player.discard, player.deck, { cards: energyInDiscard });
+      MOVE_CARDS(store, state, player.discard, player.deck, { cards: energyInDiscard, sourceCard: this, sourceEffect: this.attacks[0] });
       SHUFFLE_DECK(store, state, player);
     }
 

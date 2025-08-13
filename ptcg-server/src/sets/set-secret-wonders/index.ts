@@ -14,6 +14,9 @@ import { Ralts } from './ralts';
 import { RoseannesResearch } from './roseannes-research';
 import { Skiploom } from './skiploom';
 
+// Other Prints
+import { NightMaintenanceSW } from './other-prints';
+
 export const setSecretWonders: Card[] = [
   new Duskull(),
   new Gallade(),
@@ -29,4 +32,7 @@ export const setSecretWonders: Card[] = [
   new Hoppip(),
   new RoseannesResearch(),
   new Skiploom(),
+
+  // Other Prints
+  new NightMaintenanceSW(),
 ];

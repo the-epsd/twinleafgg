@@ -9,7 +9,7 @@ import {
 import { Effect } from '../../game/store/effects/effect';
 import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mewex extends PokemonCard {
 
@@ -94,7 +94,7 @@ export class Mewex extends PokemonCard {
         // Attach energy if selected
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.attacks[0] });
         }
 
         // Shuffle the deck after attaching energy

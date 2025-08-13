@@ -1,27 +1,21 @@
-import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, GameError, GameMessage, StateUtils, AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, EnergyCard, EnergyType, PlayerType, SlotType, SuperType } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, GameMessage, StateUtils, AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, EnergyCard, EnergyType, PlayerType, SlotType, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class BlazikenVMAX extends PokemonCard {
-
-  public stage: Stage = Stage.BASIC;
-
+  public stage: Stage = Stage.VMAX;
   public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
-
   public evolvesFrom = 'Blaziken V';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 320;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
 
   public attacks = [{
-    name: 'DEFENDING_POKEMON_CANNOT_RETREAT',
-    cost: [CardType.FIRE],
+    name: 'Clutch',
+    cost: [R],
     damage: 60,
     text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
   },
@@ -30,38 +24,23 @@ export class BlazikenVMAX extends PokemonCard {
     cost: [C, C],
     damage: 130,
     text: 'Choose up to 2 of your Benched Rapid Strike Pokémon and attach an Energy card from your discard pile to each of them.'
-  }
-  ];
+  }];
 
   public set: string = 'CRE';
-
   public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '21';
-
   public name: string = 'Blaziken VMAX';
-
   public fullName: string = 'Blaziken VMAX CRE';
-
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 

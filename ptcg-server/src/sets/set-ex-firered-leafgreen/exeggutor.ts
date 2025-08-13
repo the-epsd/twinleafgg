@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { COIN_FLIP_PROMPT, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT, DRAW_UP_TO_X_CARDS, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Exeggutor extends PokemonCard {
@@ -35,12 +35,12 @@ export class Exeggutor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this), sourceCard: this, sourceEffect: this.attacks[0] });
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 8);
+      DRAW_UP_TO_X_CARDS(store, state, player, 8);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

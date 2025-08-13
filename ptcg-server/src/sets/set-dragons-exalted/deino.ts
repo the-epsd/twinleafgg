@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, ChooseEnergyPrompt, Card, GameMessage } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, ChooseEnergyPrompt, Card, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DiscardCardsEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Deino extends PokemonCard {
 
@@ -16,18 +16,18 @@ export class Deino extends PokemonCard {
 
   public weakness = [{ type: CardType.DRAGON }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Deep Growl',
-      cost: [ CardType.DARK ],
+      cost: [CardType.DARK],
       damage: 0,
       text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
     },
     {
       name: 'Power Breath',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       text: 'Discard an Energy attached to this Pokemon.'
     }
@@ -44,22 +44,15 @@ export class Deino extends PokemonCard {
   public setNumber: string = '93';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result === true) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(
-            effect, [SpecialCondition.PARALYZED]
-          );
-          store.reduceEffect(state, specialConditionEffect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -69,7 +62,7 @@ export class Deino extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS ],
+        [CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

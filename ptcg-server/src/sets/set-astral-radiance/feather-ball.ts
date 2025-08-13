@@ -7,6 +7,7 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { StoreLike, State, StateUtils, PokemonCard, Card, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -49,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     ), () => next());
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

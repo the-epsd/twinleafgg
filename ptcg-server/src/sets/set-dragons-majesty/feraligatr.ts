@@ -3,7 +3,8 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, EnergyCard, GameError, GameMessage, ChooseCardsPrompt, Card, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Feraligatr extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -58,13 +59,13 @@ export class Feraligatr extends PokemonCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
 
       });
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let energyInDiscard: number = 0;
@@ -84,7 +85,7 @@ export class Feraligatr extends PokemonCard {
 
       player.discard.cards.forEach(cards => {
         if (cards instanceof EnergyCard && cards.energyType === EnergyType.BASIC && cards.name === 'Water Energy') {
-          player.discard.moveCardsTo(basicEnergyCards, player.deck);
+          MOVE_CARDS(store, state, player.discard, player.deck, { cards: basicEnergyCards, sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
 

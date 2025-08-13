@@ -3,8 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Porygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,12 +33,12 @@ export class Porygon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(effect.player, 4);
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

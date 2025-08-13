@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { AFTER_ATTACK, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dialga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,21 +35,12 @@ export class Dialga extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), cards => {
-        player.discard.moveCardsTo(cards, player.hand);
-        return state;
-      });
+      SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false }, this.attacks[0]);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);

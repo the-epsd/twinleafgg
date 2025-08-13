@@ -4,6 +4,7 @@ import { GameError, GameMessage, GamePhase, State, StateUtils, StoreLike } from 
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MegaSableyeTyranitarGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -62,7 +63,7 @@ export class MegaSableyeTyranitarGX extends PokemonCard {
 
       if (!meetsExtraEffectCost) { return state; }  // If we don't have the extra energy, we just deal damage.
       // activate the millworks
-      opponent.deck.moveTo(opponent.discard, 15);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 15, sourceCard: this, sourceEffect: this.attacks[1] });
     }
 
     // the prize taking effect

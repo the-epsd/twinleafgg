@@ -11,6 +11,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -58,7 +59,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -79,9 +80,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.discard.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
 
-  player.supporter.moveCardTo(self, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 }
 
 export class ItemFinder extends TrainerCard {

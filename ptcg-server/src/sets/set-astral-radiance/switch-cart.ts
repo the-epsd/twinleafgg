@@ -7,6 +7,7 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, GameError, GameMessage, PokemonCardList } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -49,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     store.reduceEffect(state, healEffect);
     player.active.clearEffects();
     player.switchPokemon(targets[0]);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
   return state;

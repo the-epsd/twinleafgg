@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsChingling extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,25 +30,20 @@ export class TeamRocketsChingling extends PokemonCard {
   public fullName: string = 'Team Rocket\'s Chingling DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.hand.cards.length === 0) {
         return state;
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1, isSecret: true }
-      ), cards => {
-        cards = cards || [];
-
-        opponent.hand.moveCardsTo(cards, opponent.discard);
-      });
+      if (opponent.hand.cards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+        const randomCard = opponent.hand.cards[randomIndex];
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: [randomCard], sourceCard: this, sourceEffect: this.attacks[0] });
+      }
     }
 
     return state;

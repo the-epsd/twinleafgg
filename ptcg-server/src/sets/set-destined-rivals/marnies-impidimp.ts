@@ -1,6 +1,6 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MarniesImpidimp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -23,9 +23,9 @@ export class MarniesImpidimp extends PokemonCard {
   public fullName: string = 'Marnie\'s Impidimp DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      player.deck.moveTo(player.hand, 1);
+      DRAW_CARDS(player, 1);
       return state;
     }
     return state;

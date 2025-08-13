@@ -1,7 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag, ChooseCardsPrompt, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage, ShuffleDeckPrompt } from '../../game';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, IS_ABILITY_BLOCKED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Serperiorex extends PokemonCard {
@@ -49,23 +48,9 @@ export class Serperiorex extends PokemonCard {
     }
 
     // Grass Order attack
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 0, max: 3, allowCancel: false }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          player.deck.moveCardsTo(selected, player.hand);
-        }
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 3, allowCancel: false }, this.attacks[0]);
     }
     return state;
   }

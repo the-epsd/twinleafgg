@@ -1,44 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage,
-  ChooseCardsPrompt,
-  Card,
-  PokemonCardList,
-  ShuffleDeckPrompt} from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-
-function* useMirageStep(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-  const max = Math.min(slots.length, 3);
-  
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.deck,
-    { superType: SuperType.POKEMON, name: 'Kirlia' },
-    { min: 0, max, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-  
-  if (cards.length > slots.length) {
-    cards.length = slots.length;
-  }
-  
-  cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
-  });
-  
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
+import { AFTER_ATTACK, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
 
 export class Kirlia extends PokemonCard {
 
@@ -54,12 +18,12 @@ export class Kirlia extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Mirage Step',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Search your deck for up to 3 Kirlia and put them onto your Bench. Then, shuffle your deck.'
     }
@@ -75,12 +39,10 @@ export class Kirlia extends PokemonCard {
 
   public fullName: string = 'Kirlia CRE';
 
-  public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useMirageStep(() => generator.next(), store, state, effect);
-      return generator.next().value;
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { superType: SuperType.POKEMON, name: 'Kirlia' }, { min: 0, max: 3, allowCancel: false });
     }
 
     return state;

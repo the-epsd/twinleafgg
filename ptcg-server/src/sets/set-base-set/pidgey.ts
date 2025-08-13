@@ -1,10 +1,9 @@
-import { GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { StateUtils } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -44,25 +43,10 @@ export class Pidgey extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.bench.some(b => b.cards.length > 0)) {
-        return store.prompt(state, new ChoosePokemonPrompt(
-          opponent.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), (results) => {
-          if (results && results.length > 0) {
-            const target = results[0];
-            opponent.active.clearEffects();
-            opponent.switchPokemon(target);
-          }
-        });
-      }
+    if (AFTER_ATTACK(effect, 0, this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
     }
 
     return state;

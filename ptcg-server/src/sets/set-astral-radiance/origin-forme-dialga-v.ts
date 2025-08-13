@@ -5,10 +5,11 @@ import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/stor
 import { StoreLike, State, GameError, GameMessage, EnergyCard, StateUtils, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class OriginFormeDialgaV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -22,18 +23,18 @@ export class OriginFormeDialgaV extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Metal Coating',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Attach up to 2 [M] Energy cards from your discard pile to this Pokémon.'
     },
     {
       name: 'Temporal Rupture',
-      cost: [ CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 180,
       text: ''
     }
@@ -57,18 +58,18 @@ export class OriginFormeDialgaV extends PokemonCard {
 
       const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC
-            && c.provides.includes(CardType.METAL);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.METAL);
       });
       if (!hasMetalEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       const cardList = StateUtils.findCardList(state, this);
       if (cardList === undefined) {
         return state;
       }
-        
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -78,7 +79,7 @@ export class OriginFormeDialgaV extends PokemonCard {
       ), cards => {
         cards = cards || [];
         if (cards.length > 0) {
-          player.discard.moveCardsTo(cards, cardList);
+          MOVE_CARDS(store, state, player.discard, cardList, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
     }

@@ -1,4 +1,3 @@
-import { GameError, GameMessage } from '../../game';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -6,29 +5,21 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class Orthwormex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public tags = [CardTag.POKEMON_ex];
-
-  public regulationMark = 'H';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 220;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Pummeling Payback',
@@ -38,39 +29,28 @@ export class Orthwormex extends PokemonCard {
 
   public attacks = [{
     name: 'Rock Tomb',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C, C],
     damage: 150,
-    text: 'During your opponent\'s next turn, the Defending Pokémon ' +
-      'can\'t retreat.'
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
   }];
 
+  public regulationMark = 'H';
   public set: string = 'SCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '110';
-
   public name: string = 'Orthworm ex';
-
   public fullName: string = 'Orthworm ex SCR';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
 
     if (effect instanceof PutDamageEffect || effect instanceof DealDamageEffect) {

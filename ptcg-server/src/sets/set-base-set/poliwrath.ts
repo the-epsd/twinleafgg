@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Card, ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Poliwrath extends PokemonCard {
 
@@ -36,7 +36,7 @@ export class Poliwrath extends PokemonCard {
       name: 'Water Gun',
       cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 30,
-      text: 'Does 30 damage plus 10 more damage for each {W} Energy attached to Poliwrath but not used to pay for this attack\'s Energy cost. Extra {W} Energy after the 2nd doesn\'t count.'
+      text: 'Does 30 damage plus 10 more damage for each [W] Energy attached to Poliwrath but not used to pay for this attack\'s Energy cost. Extra [W] Energy after the 2nd doesn\'t count.'
     },
     {
       name: 'Whirlpool',
@@ -68,8 +68,34 @@ export class Poliwrath extends PokemonCard {
       effect.damage += extraEnergies * 10;
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const activeCardList = opponent.active;
+      const activePokemonCard = activeCardList.getPokemonCard();
+
+      let hasPokemonWithEnergy = false;
+
+      if (activePokemonCard && activeCardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+        hasPokemonWithEnergy = true;
+      }
+
+      if (!hasPokemonWithEnergy) {
+        return state;
+      }
+
+      let cards: Card[] = [];
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        opponent.active,
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 1, allowCancel: false },
+      ), selected => {
+        cards = selected || [];
+      });
+      const discardEnergy = new DiscardCardsEffect(effect, cards);
+      return store.reduceEffect(state, discardEnergy);
     }
 
     return state;

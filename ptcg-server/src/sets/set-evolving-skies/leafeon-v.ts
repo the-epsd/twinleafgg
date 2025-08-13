@@ -2,6 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, Gam
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 export class LeafeonV extends PokemonCard {
@@ -14,7 +15,7 @@ export class LeafeonV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public tags = [CardTag.POKEMON_V];
 
@@ -47,19 +48,20 @@ export class LeafeonV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
         { allowCancel: true, min: 0, max: 1 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
         for (const transfer of transfers) {
@@ -70,7 +72,7 @@ export class LeafeonV extends PokemonCard {
           player.deck.applyOrder(order);
         });
       });
-        
+
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
       return state;
@@ -78,7 +80,7 @@ export class LeafeonV extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -87,9 +89,8 @@ export class LeafeonV extends PokemonCard {
         }
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

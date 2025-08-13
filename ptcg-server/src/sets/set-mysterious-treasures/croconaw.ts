@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, PowerType, CardList, EnergyCard, GameMessage, State, StoreLike, SuperType, ShuffleDeckPrompt, StateUtils, ChooseCardsPrompt, GameLog, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Croconaw extends PokemonCard {
@@ -32,15 +33,12 @@ export class Croconaw extends PokemonCard {
   public name: string = 'Croconaw';
   public fullName: string = 'Croconaw MT';
 
-  public readonly HOVER_OVER_MARKER: string = 'HOVER_OVER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (JUST_EVOLVED(effect, this) && !IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
       const player = (effect as EvolveEffect).player;
       const opponent = StateUtils.getOpponent(state, player);
       const temp = new CardList();
-
 
       player.deck.moveTo(temp, 5);
 
@@ -90,13 +88,11 @@ export class Croconaw extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.HOVER_OVER_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.HOVER_OVER_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.HOVER_OVER_MARKER, this);
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     return state;
   }

@@ -7,6 +7,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsPorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -92,10 +93,10 @@ export class TeamRocketsPorygonZ extends PokemonCard {
         });
 
         // Discard the selected cards
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
         // Draw a card
-        player.deck.moveTo(player.hand, 1);
+        DRAW_CARDS(player, 1);
       });
 
       return state;

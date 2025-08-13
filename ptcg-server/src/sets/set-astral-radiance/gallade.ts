@@ -19,6 +19,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Gallade extends PokemonCard {
 
@@ -133,7 +134,7 @@ export class Gallade extends PokemonCard {
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
 
         if (cards.length > 0) {
           state = store.prompt(state, new ShowCardsPrompt(

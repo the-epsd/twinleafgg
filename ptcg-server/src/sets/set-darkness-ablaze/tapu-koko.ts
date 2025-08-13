@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AFTER_ATTACK, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TapuKoko extends PokemonCard {
 
@@ -16,18 +16,18 @@ export class TapuKoko extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Allure',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Draw 2 cards.'
     },
     {
       name: 'Electric Ball',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 110,
       damageCalculation: '+',
       text: ''
@@ -46,9 +46,8 @@ export class TapuKoko extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      player.deck.moveTo(player.hand, 2);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      DRAW_CARDS(effect.player, 2);
     }
     return state;
   }

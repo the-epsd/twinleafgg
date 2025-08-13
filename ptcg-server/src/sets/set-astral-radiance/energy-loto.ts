@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils } from '../../game';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class EnergyLoto extends TrainerCard {
 
@@ -51,14 +52,14 @@ export class EnergyLoto extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
-          player.supporter.moveCardTo(this, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
         }
 
         if (chosenCards.length > 0) {
           // Move chosen Energy to hand
           const energyCard = chosenCards[0];
           temp.moveCardTo(energyCard, player.hand);
-          player.supporter.moveCardTo(this, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
           temp.moveTo(player.deck);
 
           chosenCards.forEach((card, index) => {
@@ -72,7 +73,7 @@ export class EnergyLoto extends TrainerCard {
               chosenCards), () => state);
           }
         }
-        player.supporter.moveCardTo(this, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

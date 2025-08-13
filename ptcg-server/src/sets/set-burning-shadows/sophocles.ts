@@ -8,9 +8,10 @@ import { Card } from '../../game';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  effect: TrainerEffect): IterableIterator<State> {
+  effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
   console.log('we in');
@@ -31,8 +32,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.hand.moveCardsTo(cards, player.discard);
-  player.deck.moveTo(player.hand, 4);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
+  DRAW_CARDS(player, 4);
 }
 
 export class Sophocles extends TrainerCard {
@@ -56,7 +57,7 @@ export class Sophocles extends TrainerCard {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       console.log('it did reach this');
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

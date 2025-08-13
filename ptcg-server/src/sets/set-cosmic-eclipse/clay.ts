@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { CardList } from '../../game/store/state/card-list';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -47,7 +48,7 @@ export class Clay extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
         return state;
       }
 
@@ -59,8 +60,8 @@ export class Clay extends TrainerCard {
       });
 
       // Move item cards to hand
-      player.discard.moveCardsTo(itemCards, player.hand);
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: itemCards, sourceCard: this });
+      CLEAN_UP_SUPPORTER(effect, player);
 
       return state;
     }

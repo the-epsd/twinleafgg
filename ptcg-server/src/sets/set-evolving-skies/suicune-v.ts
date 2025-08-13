@@ -5,6 +5,7 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class SuicuneV extends PokemonCard {
 
@@ -78,7 +79,7 @@ export class SuicuneV extends PokemonCard {
         return state; // Not active
       }
       // Draw a card
-      player.deck.moveTo(player.hand, 1);
+      DRAW_CARDS(player, 1);
       player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
     }
 

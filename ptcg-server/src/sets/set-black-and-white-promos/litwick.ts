@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, PokemonCardList, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Litwick extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,44 +31,15 @@ export class Litwick extends PokemonCard {
   public setNumber: string = '27';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-      }
-
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
+        state,
+        effect.player,
+        { stage: Stage.BASIC },
         { min: 1, max: 1, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
-        if (cards.length === 0) {
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        }
-
-        cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
-        });
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-
-      });
-
-
+      );
     }
-
     return state;
   }
 }

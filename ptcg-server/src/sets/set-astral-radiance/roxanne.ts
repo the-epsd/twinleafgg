@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage } from '../../game';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Roxanne, effect: TrainerEffect): IterableIterator<State> {
@@ -32,8 +33,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  player.hand.moveCardsTo(cards, player.deck);
-  opponent.hand.moveTo(opponent.deck);
+  MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: self });
+  MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: self });
 
   yield store.prompt(state, [
     new ShuffleDeckPrompt(player.id),
@@ -42,10 +43,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.deck.applyOrder(deckOrder[0]);
     opponent.deck.applyOrder(deckOrder[1]);
 
-    player.deck.moveTo(player.hand, 6);
-    opponent.deck.moveTo(opponent.hand, 2);
+    DRAW_CARDS(player, 6);
+    DRAW_CARDS(opponent, 2);
 
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    CLEAN_UP_SUPPORTER(effect, player);
 
   });
 }

@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, TrainerCard, ChooseCardsPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, TrainerCard, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Sableye extends PokemonCard {
 
@@ -14,20 +12,20 @@ export class Sableye extends PokemonCard {
 
   public hp: number = 70;
 
-  public weakness = [ ];
+  public weakness = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Confuse Ray',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: 'Flip a coin. If heads, the Defending Pokemon is now Confused.'
     },
     {
       name: 'Junk Hunt',
-      cost: [ CardType.DARK ],
+      cost: [CardType.DARK],
       damage: 0,
       text: 'Put 2 Item cards from your discard pile into your hand.'
     }
@@ -44,49 +42,25 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '62';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          const addSpecialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
-          store.reduceEffect(state, addSpecialCondition);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
-      const itemCount = player.discard.cards.filter(c => {
-        return c instanceof TrainerCard && c.trainerType === TrainerType.ITEM;
-      }).length;
-
-      if (itemCount === 0) {
-        return state;
-      }
-
-      const max = Math.min(2, itemCount);
-      const min = max;
-
-      return store.prompt(state, [
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-          { min, max, allowCancel: false }
-        )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-        
-        cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.hand);
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-        });
+      const blocked: number[] = [];
+      player.discard.cards.forEach((card, index) => {
+        if (card instanceof TrainerCard && (card.trainerType !== TrainerType.ITEM)) {
+          blocked.push(index);
+        }
       });
+
+      SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.TRAINER }, { min: 0, max: 2, allowCancel: false, blocked }, this.attacks[0]);
     }
 
     return state;

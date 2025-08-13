@@ -8,6 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Charizardex extends PokemonCard {
 
@@ -93,6 +94,7 @@ export class Charizardex extends PokemonCard {
             transfers = transfers || [];
             // cancelled by user
             if (transfers.length === 0) {
+              SHUFFLE_DECK(store, state, player);
               return state;
             }
             for (const transfer of transfers) {

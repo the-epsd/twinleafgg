@@ -1,4 +1,5 @@
 import { AlolanVulpix } from '../set-hidden-fates/alolan-vulpix';
+import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { FieldBlower } from './field-blower';
 import { MaxPotion } from '../set-emerging-powers/max-potion';
@@ -8,6 +9,13 @@ export class AlolanVulpixGRI extends AlolanVulpix {
   public fullName = 'Alolan Vulpix GRI';
   public setNumber = '21';
   public set = 'GRI';
+}
+
+export class DoubleColorlessEnergyGRISR extends DoubleColorlessEnergy {
+  public setNumber = '166';
+  public fullName: string = 'Double Colorless Energy GRI SR';
+  public set = 'GRI';
+  public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
 
 export class EnhancedHammerGRI extends EnhancedHammer {

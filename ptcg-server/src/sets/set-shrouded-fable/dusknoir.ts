@@ -1,27 +1,19 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError, StateUtils } from '../../game';
+import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, EffectOfAbilityEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Dusknoir extends PokemonCard {
-
-  public regulationMark = 'H';
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Dusclops';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 160;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Cursed Blast',
@@ -31,43 +23,22 @@ export class Dusknoir extends PokemonCard {
     text: 'Once during your turn, you may put 13 damage counters on 1 of your opponent\'s Pokémon. If you placed any damage counters in this way, this Pokémon is Knocked Out.'
   }];
 
-  public attacks = [
-    {
-      name: 'Shadow Bind',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
-      damage: 150,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shadow Bind',
+    cost: [P, P, C],
+    damage: 150,
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '20';
-
   public name: string = 'Dusknoir';
-
   public fullName: string = 'Dusknoir SFA';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
-
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
-
+    // Cursed Blast
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
@@ -95,6 +66,13 @@ export class Dusknoir extends PokemonCard {
         });
       });
     }
+    // Shadow Bind
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
+    }
+
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     return state;
   }
 }

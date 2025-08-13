@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -69,7 +69,7 @@ export class HolonScientist extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 

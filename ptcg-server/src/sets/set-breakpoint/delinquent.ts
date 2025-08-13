@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -59,7 +59,7 @@ export class Delinquent extends TrainerCard {
 
       const opponentCards = opponent.hand.cards.filter(c => c !== this);
       if (opponentCards.length <= 3) {
-        opponent.hand.moveTo(opponent.discard);
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { sourceCard: this });
       }
 
       if (opponentCards.length > 3) {
@@ -74,12 +74,11 @@ export class Delinquent extends TrainerCard {
           { min: 3, max: 3, allowCancel: false }
         ), selected => {
           cards = selected || [];
-
-          opponent.hand.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards, sourceCard: this });
         });
       }
 
-      player.supporter.moveCardTo(this, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
 
     }
     return state;

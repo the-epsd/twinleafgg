@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -77,8 +78,8 @@ export class Swampert extends PokemonCard {
           }
         });
 
-        player.hand.moveCardsTo(cards, player.discard);
-        player.deck.moveTo(player.hand, 3);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
+        DRAW_CARDS(player, 3);
       });
 
       return state;

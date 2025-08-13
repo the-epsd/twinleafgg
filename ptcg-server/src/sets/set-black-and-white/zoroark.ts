@@ -12,9 +12,10 @@ import { Card } from '../../game/store/card/card';
 import { ChooseAttackPrompt } from '../../game/store/prompts/choose-attack-prompt';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useNastyPlot(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+  effect: AttackEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -33,7 +34,7 @@ function* useNastyPlot(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  state = MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self, sourceEffect: self.attacks[0] });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -125,12 +126,12 @@ export class Zoroark extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useNastyPlot(() => generator.next(), store, state, effect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const generator = useNastyPlot(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useFoulPlay(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

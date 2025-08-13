@@ -5,6 +5,7 @@ import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -65,9 +66,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 
-  player.discard.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

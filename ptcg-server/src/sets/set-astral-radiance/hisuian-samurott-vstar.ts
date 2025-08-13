@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class HisuianSamurottVSTAR extends PokemonCard {
@@ -68,10 +68,14 @@ export class HisuianSamurottVSTAR extends PokemonCard {
         { min: 1, max: 1, allowCancel: true },
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          target.damage += 40;
-          player.usedVSTAR = true;
-        });
+        if (targets.length > 0) {
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
+          store.reduceEffect(state, damageEffect);
+          if (damageEffect.target) {
+            damageEffect.target.damage += 40;
+          }
+        }
+        player.usedVSTAR = true;
       });
     }
 

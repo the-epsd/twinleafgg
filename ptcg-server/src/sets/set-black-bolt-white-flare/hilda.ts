@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { EnergyCard, GameError, PokemonCard } from '../../game';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Hilda, effect: TrainerEffect): IterableIterator<State> {
@@ -62,8 +62,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards });
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
+  CLEAN_UP_SUPPORTER(effect, player);
 
 
   if (cards.length > 0) {

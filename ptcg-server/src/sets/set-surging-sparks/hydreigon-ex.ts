@@ -2,6 +2,7 @@ import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, Ch
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Hydreigonex extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class Hydreigonex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.deck.moveTo(opponent.discard, 3);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 3, sourceCard: this, sourceEffect: this.attacks[0] });
 
       return state;
     }

@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { Card, ChooseCardsPrompt, GameError, GameMessage, PowerType } from '../../game';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS_TO_HAND, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Fearow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -77,7 +77,7 @@ export class Fearow extends PokemonCard {
         cards = selected || [];
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        MOVE_CARDS_TO_HAND(store, state, player, cards);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
 
         SHUFFLE_DECK(store, state, player);
       });

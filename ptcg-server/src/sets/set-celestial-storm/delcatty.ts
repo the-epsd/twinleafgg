@@ -2,6 +2,7 @@ import { CardType, ChooseCardsPrompt, ConfirmPrompt, GameLog, GameMessage, Pokem
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardToHandEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Delcatty extends PokemonCard {
 
@@ -97,7 +98,7 @@ export class Delcatty extends PokemonCard {
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               cards
             )], () => {
-              player.discard.moveCardsTo(cards, player.hand);
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
             });
 
             cards.forEach(card => {

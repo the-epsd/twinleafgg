@@ -4,7 +4,8 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class DarkCroconaw extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,14 +33,17 @@ export class DarkCroconaw extends PokemonCard {
   public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Clamping Jaw
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof UseAttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SMOKESCREEN_MARKER, this);
+
+    // Smokescreen
+    if (effect instanceof UseAttackEffect && HAS_MARKER(MarkerConstants.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -60,15 +64,6 @@ export class DarkCroconaw extends PokemonCard {
         }
       });
     }
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SMOKESCREEN_MARKER, this);
-
-    // Might as well just use the same marker for both effects
-    BLOCK_RETREAT_IF_MARKER(effect, this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
-    }
-
     return state;
   }
 }

@@ -2,6 +2,7 @@ import { AttachEnergyPrompt, CardTag, CardTarget, CardType, ChoosePokemonPrompt,
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class MarniesGrimmsnarlex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -75,6 +76,7 @@ export class MarniesGrimmsnarlex extends PokemonCard {
             transfers = transfers || [];
             // cancelled by user
             if (transfers.length === 0) {
+              SHUFFLE_DECK(store, state, player);
               return state;
             }
             for (const transfer of transfers) {

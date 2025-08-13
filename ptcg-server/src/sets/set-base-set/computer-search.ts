@@ -6,17 +6,18 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ComputerSearch, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
-  
+
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -37,7 +38,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -50,22 +51,22 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.hand.moveCardTo(self, player.discard);
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
 
-  player.supporter.moveCardTo(self, player.discard);
-  player.deck.moveCardsTo(cards, player.hand);
-  
+  CLEAN_UP_SUPPORTER(effect, player);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

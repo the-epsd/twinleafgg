@@ -69,6 +69,7 @@ export class HisuianArcanine extends PokemonCard {
       store.reduceEffect(state, specialConditionEffect);
       return state;
     }
+
     return state;
   }
 }

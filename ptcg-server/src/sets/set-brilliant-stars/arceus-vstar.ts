@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import {
   StoreLike, State,
-  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, ChooseCardsPrompt, GameError, AttachEnergyPrompt, StateUtils, CardTarget
+  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, GameError, AttachEnergyPrompt, StateUtils, CardTarget
 } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 function* useTrinityNova(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -105,28 +106,10 @@ export class ArceusVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
+      ABILITY_USED(player, this);
+
       player.usedVSTAR = true;
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 2, allowCancel: false }
-      ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-          }
-        });
-
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-
-        return state;
-      });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 2, allowCancel: false }, this.powers[0]);
     }
 
     //     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -1,13 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, ConfirmPrompt, GameMessage, PlayerType } from '../../game';
+import { StoreLike, State, ConfirmPrompt, GameMessage, PlayerType, StateUtils } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class CrobatV extends PokemonCard {
 
@@ -77,6 +76,11 @@ export class CrobatV extends PokemonCard {
       } catch {
         return state;
       }
+
+      if (player.hand.cards.length >= 6) {
+        return state;
+      }
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -91,18 +95,13 @@ export class CrobatV extends PokemonCard {
             }
           });
 
-          while (player.hand.cards.length < 6) {
-            if (player.deck.cards.length === 0) {
-              break;
-            }
-            player.deck.moveTo(player.hand, 1);
-          }
+          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
         }
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
 
     return state;

@@ -11,6 +11,7 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -41,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Put Pokemon from hand into the deck
-  player.hand.moveCardsTo(cards, player.deck);
+  MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: effect.trainerCard });
 
   yield store.prompt(state, new ShowCardsPrompt(
     opponent.id,
@@ -60,7 +61,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -70,7 +71,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     ), () => next());
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

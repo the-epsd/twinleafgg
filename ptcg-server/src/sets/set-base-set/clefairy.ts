@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, Attack, ChooseAttackPrompt, GameLog, StateUtils, CoinFlipPrompt } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, Attack, ChooseAttackPrompt, GameLog, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 function* useMetronome(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -109,26 +110,13 @@ export class Clefairy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (opponent.active.specialConditions.includes(SpecialCondition.ASLEEP)) {
-        return state;
-      }
-
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), result => {
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
+          ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
-
-      return state;
     }
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const generator = useMetronome(() => generator.next(), store, state, effect);

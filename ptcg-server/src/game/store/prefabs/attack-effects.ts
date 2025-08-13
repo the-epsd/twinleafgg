@@ -2,7 +2,6 @@ import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, GameMessage, P
 import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
-import { CheckHpEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { COIN_FLIP_PROMPT } from './prefabs';
 
@@ -134,21 +133,16 @@ export function PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(
   }
 
   const maxAllowedDamage: DamageMap[] = [];
-  let damageLeft = 0;
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    const checkHpEffect = new CheckHpEffect(opponent, cardList);
-    store.reduceEffect(state, checkHpEffect);
-    damageLeft += checkHpEffect.hp - cardList.damage;
-    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+    maxAllowedDamage.push({ target, damage: 9999 });
   });
 
-  const damage = Math.min(10 * x, damageLeft);
   return store.prompt(state, new PutDamagePrompt(
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.TOP_PLAYER,
     slotTypes,
-    damage,
+    10 * x,
     maxAllowedDamage,
     { allowCancel: false }
   ), targets => {

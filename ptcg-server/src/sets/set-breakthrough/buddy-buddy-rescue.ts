@@ -3,6 +3,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -96,7 +97,7 @@ export class BuddyBuddyRescue extends TrainerCard {
               { min: 1, max: 1, allowCancel: false }
             ), selected => {
               if (selected && selected.length > 0) {
-                opponent.discard.moveCardsTo(selected, opponent.hand);
+                MOVE_CARDS(store, state, opponent.discard, opponent.hand, { cards: selected, sourceCard: this });
               }
             });
           }
@@ -126,7 +127,7 @@ export class BuddyBuddyRescue extends TrainerCard {
               { min: 1, max: 1, allowCancel: false }
             ), selected => {
               if (selected && selected.length > 0) {
-                player.discard.moveCardsTo(selected, player.hand);
+                MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this });
               }
             });
           }

@@ -5,6 +5,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -37,7 +38,7 @@ export class Arcanine extends PokemonCard {
       name: 'Flamethrower',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 50,
-      text: 'Discard 1 {R} Energy attached to Arcanine in order to use this attack.'
+      text: 'Discard 1 [R] Energy attached to Arcanine in order to use this attack.'
     },
     {
       name: 'Take Down',
@@ -48,8 +49,8 @@ export class Arcanine extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, R);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.FIRE);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

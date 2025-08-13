@@ -14,7 +14,7 @@ import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 export class GardevoirGX extends PokemonCard {
@@ -118,7 +118,7 @@ export class GardevoirGX extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
         }
       });
     }

@@ -1,6 +1,7 @@
-import { PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Galvantula extends PokemonCard {
   public stage = Stage.STAGE_1;
@@ -40,13 +41,11 @@ export class Galvantula extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.ELECTROWEB_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.ELECTROWEB_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.ELECTROWEB_MARKER, this);
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     return state;
   }

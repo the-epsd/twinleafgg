@@ -29,7 +29,7 @@ export class BurnedTower extends TrainerCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, player, { superType: SuperType.ENERGY, energyType: EnergyType.BASIC }, { min: 1, max: 1 });
+          SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.ENERGY, energyType: EnergyType.BASIC }, { min: 1, max: 1 });
         }
       });
     }

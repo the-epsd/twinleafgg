@@ -6,6 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage } from '../../game/game-message';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsPorygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -49,7 +50,7 @@ export class TeamRocketsPorygon extends PokemonCard {
           cards = cards || [];
 
           // Discard the selected card
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this, sourceEffect: this.attacks[0] });
 
           // Then opponent chooses 1 card to discard
           if (opponent.hand.cards.length > 0) {
@@ -63,7 +64,7 @@ export class TeamRocketsPorygon extends PokemonCard {
               oppCards = oppCards || [];
 
               // Discard the opponent's selected card
-              opponent.hand.moveCardsTo(oppCards, opponent.discard);
+              MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: oppCards, sourceCard: this, sourceEffect: this.attacks[0] });
 
               return state;
             });

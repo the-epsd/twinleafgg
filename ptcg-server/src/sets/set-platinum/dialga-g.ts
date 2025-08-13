@@ -2,14 +2,14 @@ import { GameError, GameMessage, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import { AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayItemEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DialgaG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
-  public tags = [ CardTag.POKEMON_SP ];
+  public tags = [CardTag.POKEMON_SP];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -41,23 +41,21 @@ export class DialgaG extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Deafen
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.opponent.marker.addMarker(this.DEAFEN_MARKER, this);
     }
-    if ((effect instanceof PlayItemEffect 
-      || effect instanceof PlayStadiumEffect 
-      || effect instanceof PlaySupporterEffect 
-      || effect instanceof AttachPokemonToolEffect) && effect.player.marker.hasMarker(this.DEAFEN_MARKER, this)) {
+    if ((effect instanceof PlayItemEffect
+      || effect instanceof PlayStadiumEffect) && effect.player.marker.hasMarker(this.DEAFEN_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DEAFEN_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DEAFEN_MARKER, this)) {
       effect.player.marker.removeMarker(this.DEAFEN_MARKER, this);
     }
 
     // Second Strike
-    if (WAS_ATTACK_USED(effect, 1, this)){
-      if (effect.opponent.active.damage >= 20){ effect.damage += 20; }
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      if (effect.opponent.active.damage >= 20) { effect.damage += 20; }
     }
 
     return state;

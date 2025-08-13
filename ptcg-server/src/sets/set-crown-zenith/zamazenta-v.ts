@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, GameError, GameMessage } from '../../game'
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, DRAW_CARDS, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class ZamazentaV extends PokemonCard {
@@ -60,8 +60,8 @@ export class ZamazentaV extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.hand.moveTo(player.discard);
-      player.deck.moveTo(player.hand, 5);
+      MOVE_CARDS(store, state, player.hand, player.discard, { sourceCard: this, sourceEffect: this.powers[0] });
+      DRAW_CARDS(player, 5);
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
       return state;

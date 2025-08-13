@@ -3,12 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameMessage } from '../../game/game-message';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -33,39 +29,13 @@ export class Magneton extends PokemonCard {
   public name: string = 'Magneton';
   public fullName: string = 'Magneton ASR';
 
-  public readonly BOUNCE_BACK_MARKER = 'BOUNCE_BACK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
 
-      player.marker.addMarker(this.BOUNCE_BACK_MARKER, this);
-
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BOUNCE_BACK_MARKER)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.marker.removeMarker(this.BOUNCE_BACK_MARKER);
-
-      if (player.active.cards[0] == this) {
-        return state; // Not active
-      }
-
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-          return state;
-        }
-      });
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
     }
 
     return state;

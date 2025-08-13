@@ -2,6 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, Con
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardToHandEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class DragoniteEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -88,9 +89,7 @@ export class DragoniteEX extends PokemonCard {
           ), selected => {
             if (selected && selected.length > 0) {
               selected.forEach(card => {
-
-                player.discard.moveCardsTo(selected, player.hand);
-
+                MOVE_CARDS(store, state, player.discard, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
               });
             }
             return state;

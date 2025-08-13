@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game';
-import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 
 export class Ralts extends PokemonCard {
@@ -35,7 +35,7 @@ export class Ralts extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       DRAW_CARDS(effect.player, 1);
     }
 

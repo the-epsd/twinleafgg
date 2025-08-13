@@ -3,6 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class TyranitarV extends PokemonCard {
@@ -11,7 +12,7 @@ export class TyranitarV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_V, CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.DARK;
 
@@ -19,18 +20,18 @@ export class TyranitarV extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Cragalanche',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       text: 'Discard the top 2 cards of your opponent\'s deck.'
     },
     {
       name: 'Single Strike Crush',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 240,
       text: 'Discard the top 4 cards of your deck.'
     }
@@ -51,17 +52,17 @@ export class TyranitarV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-        
+
       // Discard 2 cards from opponent's deck 
-      opponent.deck.moveTo(opponent.discard, 2);
-        
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 2, sourceCard: this, sourceEffect: this.attacks[0] });
+
     }
-  
+
 
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       // Discard 4 cards from your deck 
       player.deck.moveTo(player.discard, 4);
       return state;

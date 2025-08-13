@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class Centiskorch extends PokemonCard {
@@ -50,7 +51,7 @@ export class Centiskorch extends PokemonCard {
         ).length;
       });
 
-      opponent.deck.moveTo(opponent.discard, energyCount);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: energyCount, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

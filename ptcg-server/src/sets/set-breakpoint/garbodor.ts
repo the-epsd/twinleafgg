@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 import { PokemonCardList } from '../../game';
 
 export class Garbodor extends PokemonCard {
@@ -89,9 +89,9 @@ export class Garbodor extends PokemonCard {
     }
 
     // Offensive Bomb
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
 
     return state;

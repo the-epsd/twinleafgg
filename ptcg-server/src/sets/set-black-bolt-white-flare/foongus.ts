@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
+import { PokemonCard, Stage, CardType, State, StoreLike, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Foongus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -24,8 +24,8 @@ export class Foongus extends PokemonCard {
   public fullName: string = 'Foongus SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
     return state;
   }

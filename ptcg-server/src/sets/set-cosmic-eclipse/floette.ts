@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, MOVE_CARD_TO, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Floette extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,7 +44,7 @@ export class Floette extends PokemonCard {
           if (opponent.hand.cards.length > 0) {
             const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
             const randomCard = opponent.hand.cards[randomIndex];
-            MOVE_CARD_TO(state, randomCard, opponent.deck);
+            MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard], sourceCard: this, sourceEffect: this.powers[0] });
             SHUFFLE_DECK(store, state, opponent);
           }
         }

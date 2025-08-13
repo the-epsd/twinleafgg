@@ -7,6 +7,7 @@ import { GameMessage } from '../../game/game-message';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class GalarianMoltresV extends PokemonCard {
 
@@ -93,7 +94,7 @@ export class GalarianMoltresV extends PokemonCard {
         cards = cards || [];
         if (cards.length > 0) {
           player.marker.addMarker(this.DIREFLAME_WINGS_MARKER, this);
-          player.discard.moveCardsTo(cards, cardList);
+          MOVE_CARDS(store, state, player.discard, cardList, { cards, sourceCard: this, sourceEffect: this.powers[0] });
         }
       });
     }

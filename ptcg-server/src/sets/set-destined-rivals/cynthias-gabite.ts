@@ -12,7 +12,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { REMOVE_MARKER, HAS_MARKER, ABILITY_USED, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, ADD_MARKER } from '../../game/store/prefabs/prefabs';
+import { REMOVE_MARKER, HAS_MARKER, ABILITY_USED, SHOW_CARDS_TO_PLAYER, ADD_MARKER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class CynthiasGabite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -85,7 +85,7 @@ export class CynthiasGabite extends PokemonCard {
         { min: 0, max: 1, allowCancel: false, blocked }
       ), cards => {
         if (cards.length > 0) {
-          MOVE_CARDS_TO_HAND(store, state, player, cards);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         }
 

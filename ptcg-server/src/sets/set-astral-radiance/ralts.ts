@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class Ralts extends PokemonCard {
 
@@ -40,20 +39,10 @@ export class Ralts extends PokemonCard {
 
   public fullName: string = 'Ralts ASR';
 
-  public usedSpinTurn = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedSpinTurn = true;
-    }
-
-    if (effect instanceof AfterAttackEffect && this.usedSpinTurn === true) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
-    }
-
-    if (effect instanceof EndTurnEffect && this.usedSpinTurn) {
-      this.usedSpinTurn = false;
     }
 
     return state;

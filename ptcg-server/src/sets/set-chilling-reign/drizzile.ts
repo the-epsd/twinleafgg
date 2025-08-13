@@ -1,5 +1,6 @@
 import { PokemonCard, Stage, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, CardTag } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Drizzile extends PokemonCard {
 
@@ -7,7 +8,7 @@ export class Drizzile extends PokemonCard {
 
   public evolvesFrom = 'Sobble';
 
-  public tags = [ CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public cardType: CardType = CardType.WATER;
 
@@ -27,21 +28,21 @@ export class Drizzile extends PokemonCard {
       text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
-  
+
   public regulationMark = 'E';
 
   public set: string = 'CRE';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '42';
-  
+
   public name: string = 'Drizzile';
-  
+
   public fullName: string = 'Drizzile CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
       const hasBenched: boolean = player.bench.some(b => b.cards.length > 0);

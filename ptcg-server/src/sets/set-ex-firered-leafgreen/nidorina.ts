@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +35,7 @@ export class Nidorina extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
 
       const blocked: number[] = [];
       effect.player.deck.cards.forEach((card, index) => {

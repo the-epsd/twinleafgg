@@ -1,21 +1,21 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Sandygast extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark: string = 'F';
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = F;
   public hp: number = 80;
-  public weakness = [{ type: CardType.GRASS }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Corner',
-    cost: [CardType.FIGHTING],
+    cost: [F],
     damage: 10,
     text: 'During your opponent\'s next turn, the Defending Pokemon can\'t retreat.'
   }];
@@ -26,22 +26,13 @@ export class Sandygast extends PokemonCard {
   public name: string = 'Sandygast';
   public fullName: string = 'Sandygast SIT';
 
-  public readonly CORNER_MARKER = 'CORNER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.CORNER_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.CORNER_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-  
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.CORNER_MARKER, this);
-    }
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     return state;
   }

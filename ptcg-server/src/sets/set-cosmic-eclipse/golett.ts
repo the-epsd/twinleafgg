@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Golett extends PokemonCard {
 
@@ -28,15 +28,9 @@ export class Golett extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-
-      while (player.hand.cards.length < 5) {
-        if (player.deck.cards.length === 0) {
-          break;
-        }
-        player.deck.moveTo(player.hand, 1);
-      }
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
     }
 
     return state;

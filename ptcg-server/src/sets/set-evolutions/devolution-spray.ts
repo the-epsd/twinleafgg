@@ -2,7 +2,7 @@ import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessa
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -47,7 +47,7 @@ export class DevolutionSpray extends TrainerCard {
           if (results && results.length > 0) {
             DEVOLVE_POKEMON(store, state, results[0], effect.player.hand);
           }
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
           return state;
         }
       );

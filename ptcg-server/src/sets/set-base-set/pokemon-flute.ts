@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { StateUtils, GameError, GameMessage, Card, SuperType, Stage } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class PokemonFlute extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -51,10 +52,10 @@ export class PokemonFlute extends TrainerCard {
         if (cards.length > 0) {
           const card = cards[0];
           const slot = openSlots[0];
-          opponent.discard.moveCardTo(card, slot);
+          MOVE_CARDS(store, state, opponent.discard, slot, { cards: [card], sourceCard: this });
           slot.pokemonPlayedTurn = state.turn;
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
         }
       });
     }

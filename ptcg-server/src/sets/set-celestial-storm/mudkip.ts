@@ -1,6 +1,7 @@
 import { CardType, ChooseCardsPrompt, EnergyType, GameLog, GameMessage, PokemonCard, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Mudkip extends PokemonCard {
 
@@ -49,7 +50,7 @@ export class Mudkip extends PokemonCard {
         cards = cards || [];
 
         if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
 
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

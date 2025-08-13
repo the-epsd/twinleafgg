@@ -7,6 +7,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Ursaring extends PokemonCard {
 
@@ -24,18 +25,18 @@ export class Ursaring extends PokemonCard {
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Hammer Arm',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       text: 'Discard the top card of your opponent\'s deck.'
     },
     {
       name: 'Claw Slash',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       text: ''
     }
@@ -50,20 +51,20 @@ export class Ursaring extends PokemonCard {
   public name: string = 'Ursaring';
 
   public fullName: string = 'Ursaring DAA';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       if (opponent.deck.cards.length === 0) {
         return state;
       }
 
-      opponent.deck.moveTo(opponent.discard, 1);
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
     }
-    
+
     return state;
   }
 }

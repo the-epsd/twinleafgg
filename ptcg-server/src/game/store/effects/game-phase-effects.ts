@@ -50,10 +50,12 @@ export class AfterAttackEffect implements Effect {
   readonly type: string = GamePhaseEffects.AFTER_ATTACK_EFFECT;
   public preventDefault = false;
   public player: Player;
+  public opponent: Player;
   public attack: Attack;
 
-  constructor(player: Player, attack: Attack) {
+  constructor(player: Player, opponent: Player, attack: Attack) {
     this.player = player;
+    this.opponent = opponent;
     this.attack = attack;
   }
 }
