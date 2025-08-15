@@ -10,7 +10,8 @@ import { finalize } from 'rxjs/operators';
 import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../api.error';
 import { ApiService } from '../api.service';
-import { LocalGameState } from '../../shared/session/session.interface';
+import { LocalGameState, PlayerGameStats } from '../../shared/session/session.interface';
+import { isValidPlayerGameStats, sanitizePlayerGameStats } from '../../shared/session/game-stats.utils';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
 import { SessionService } from '../../shared/session/session.service';
@@ -59,6 +60,9 @@ export class GameService {
       const logs: StateLog[] = [];
       let lastGameId = this.sessionService.session.lastGameId || 0;
       lastGameId++;
+      const state = this.decodeStateData(gameState.stateData);
+      const enhancedPlayerStats = this.extractPlayerGameStats(state);
+
       const localGameState: LocalGameState = {
         ...gameState,
         localId: lastGameId,
@@ -66,10 +70,11 @@ export class GameService {
         deleted: replay ? true : false,
         switchSide: false,
         promptMinimized: false,
-        state: this.decodeStateData(gameState.stateData),
+        state,
         logs,
         replayPosition: 1,
         replay,
+        enhancedPlayerStats: enhancedPlayerStats,
       };
       const gameStates = [...games, localGameState];
       this.startListening(gameState.gameId);
@@ -258,9 +263,60 @@ export class GameService {
     if (index !== -1) {
       const gameStates = this.sessionService.session.gameStates.slice();
       const logs = [...gameStates[index].logs, ...state.logs];
-      gameStates[index] = { ...gameStates[index], state, logs, playerStats };
+
+      // Extract enhanced player statistics if available from the state
+      const enhancedPlayerStats = this.extractPlayerGameStats(state);
+
+      gameStates[index] = {
+        ...gameStates[index],
+        state,
+        logs,
+        enhancedPlayerStats: enhancedPlayerStats,
+        playerStats
+      };
       this.sessionService.set({ gameStates });
       this.boardInteractionService.updateGameLogs(logs);
+    }
+  }
+
+
+
+  private extractPlayerGameStats(state: State): PlayerGameStats[] | undefined {
+    // For now, return undefined as the server-side statistics tracking is not yet implemented
+    // This method will be updated when the server-side GameStatsTracker is implemented
+    // The method provides type safety and proper structure for when the data becomes available
+
+    if (!state || !state.players) {
+      return undefined;
+    }
+
+    try {
+      // Check if enhanced game statistics are available in the state
+      // This will be populated by the server-side GameStatsTracker in future tasks
+      const playerStats: PlayerGameStats[] = state.players.map((player, index) => {
+        // Extract game statistics if available, otherwise use defaults
+        const gameStats = (player as any).gameStats;
+
+        if (gameStats && isValidPlayerGameStats(gameStats)) {
+          return {
+            prizesTakenCount: gameStats.prizesTakenCount,
+            totalDamageDealt: gameStats.totalDamageDealt,
+            topPokemon: gameStats.topPokemon
+          };
+        }
+
+        // Fallback to default values when server-side tracking is not available
+        return {
+          prizesTakenCount: 0,
+          totalDamageDealt: 0,
+          topPokemon: null
+        };
+      });
+
+      return playerStats;
+    } catch (error) {
+      console.warn('Error extracting player game statistics:', error);
+      return undefined;
     }
   }
 

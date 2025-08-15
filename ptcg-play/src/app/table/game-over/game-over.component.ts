@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Card, GameWinner, GamePhase, SuperType } from 'ptcg-server';
-import { LocalGameState } from '../../shared/session/session.interface';
+import { LocalGameState, PlayerGameStats } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
 import { Router } from '@angular/router';
@@ -32,11 +32,17 @@ export class GameOverComponent implements OnInit {
   public playerPrizesTaken = 0;
   public opponentPrizesTaken = 0;
   public playerDamageDealt = 0;
+  public opponentDamageDealt = 0;
   public topPokemon: PokemonDamageStats | null = null;
+  public opponentTopPokemon: PokemonDamageStats | null = null;
   public isPlaying = false;
   public isDeleted = false;
   private gameId: number;
   private localId: number;
+
+  // Enhanced statistics properties
+  public playerStats: PlayerGameStats | null = null;
+  public opponentStats: PlayerGameStats | null = null;
 
   constructor(
     private sessionService: SessionService,
@@ -92,10 +98,92 @@ export class GameOverComponent implements OnInit {
     // to match the React implementation
     this.wentFirst = playerIndex !== 0; // Reversed logic - player at index 0 went second
 
-    // Calculate prizes taken
-    // First try using the 'prizes' array length
+    // Use accurate statistics from server if available
+    this.loadAccurateStatistics(playerIndex, opponentIndex);
+
+    // Try to get damage stats if available
+    this.findBestPokemon(playerIndex);
+    this.findBestOpponentPokemon(opponentIndex);
+
+    // Validate the loaded statistics
+    this.validateStatistics();
+  }
+
+  private loadAccurateStatistics(playerIndex: number, opponentIndex: number): void {
+    try {
+      // First, try to use enhanced player stats from the server
+      if (this.gameState.enhancedPlayerStats && this.gameState.enhancedPlayerStats.length >= 2) {
+        this.playerStats = this.gameState.enhancedPlayerStats[playerIndex];
+        this.opponentStats = this.gameState.enhancedPlayerStats[opponentIndex];
+
+        // Use accurate prize counts from server statistics
+        if (this.playerStats) {
+          this.playerPrizesTaken = this.playerStats.prizesTakenCount;
+          this.playerDamageDealt = this.playerStats.totalDamageDealt;
+        }
+
+        if (this.opponentStats) {
+          this.opponentPrizesTaken = this.opponentStats.prizesTakenCount;
+          this.opponentDamageDealt = this.opponentStats.totalDamageDealt;
+        }
+
+        console.log('Using enhanced player statistics from server');
+        return;
+      }
+
+      // Fallback: Try to use gameStats from individual players if available
+      const player = this.gameState.state.players[playerIndex];
+      const opponent = this.gameState.state.players[opponentIndex];
+
+      if (player && (player as any).gameStats) {
+        const playerGameStats = (player as any).gameStats;
+        this.playerPrizesTaken = playerGameStats.prizesTakenCount || 0;
+        this.playerDamageDealt = playerGameStats.totalDamageDealt || 0;
+
+        // Create PlayerGameStats object for consistency
+        this.playerStats = {
+          prizesTakenCount: this.playerPrizesTaken,
+          totalDamageDealt: this.playerDamageDealt,
+          topPokemon: playerGameStats.topPokemon || null
+        };
+      }
+
+      if (opponent && (opponent as any).gameStats) {
+        const opponentGameStats = (opponent as any).gameStats;
+        this.opponentPrizesTaken = opponentGameStats.prizesTakenCount || 0;
+
+        // Create PlayerGameStats object for consistency
+        this.opponentStats = {
+          prizesTakenCount: this.opponentPrizesTaken,
+          totalDamageDealt: opponentGameStats.totalDamageDealt || 0,
+          topPokemon: opponentGameStats.topPokemon || null
+        };
+        this.opponentDamageDealt = this.opponentStats.totalDamageDealt;
+      }
+
+      // If we got stats from gameStats, we're done
+      if (this.playerStats || this.opponentStats) {
+        console.log('Using gameStats from individual players');
+        return;
+      }
+
+      // Final fallback: Use traditional prize calculation but WITHOUT artificial inflation
+      this.calculateFallbackPrizeStats(playerIndex, opponentIndex);
+
+    } catch (error) {
+      console.error('Error loading accurate statistics:', error);
+      // Use fallback calculation on error
+      this.calculateFallbackPrizeStats(playerIndex, opponentIndex);
+    }
+  }
+
+  private calculateFallbackPrizeStats(playerIndex: number, opponentIndex: number): void {
+    console.warn('Using fallback prize calculation - server statistics not available');
+
+    const state = this.gameState.state;
+
+    // Calculate prizes taken based on remaining prizes (without artificial inflation)
     if (state.players[playerIndex] && state.players[playerIndex].prizes) {
-      // Calculate based on remaining prizes (out of 6)
       this.playerPrizesTaken = 6 - state.players[playerIndex].prizes.length;
     }
 
@@ -103,7 +191,7 @@ export class GameOverComponent implements OnInit {
       this.opponentPrizesTaken = 6 - state.players[opponentIndex].prizes.length;
     }
 
-    // If values are still 0, try alternate properties
+    // Try alternate properties if available
     if (this.playerPrizesTaken === 0 && state.players[playerIndex].prizesTaken !== undefined) {
       this.playerPrizesTaken = state.players[playerIndex].prizesTaken as number;
     }
@@ -112,87 +200,481 @@ export class GameOverComponent implements OnInit {
       this.opponentPrizesTaken = state.players[opponentIndex].prizesTaken as number;
     }
 
-    // Set placeholder values if still 0 and the game is over
-    if (state.phase === GamePhase.FINISHED) {
-      if (this.isWinner && this.playerPrizesTaken === 0) {
-        // If player won but prizes count is 0, set to 6 (or at least 1)
-        this.playerPrizesTaken = Math.max(1, this.playerPrizesTaken);
-      }
-
-      if (!this.isWinner && this.opponentPrizesTaken === 0) {
-        // If opponent won but prizes count is 0, set to 6 (or at least 1)
-        this.opponentPrizesTaken = Math.max(1, this.opponentPrizesTaken);
-      }
-    }
+    // REMOVED: Artificial prize inflation logic
+    // The old code would set prizes to at least 1 for winners, but this is inaccurate
+    // We now preserve the actual prize counts regardless of game outcome
 
     // Ensure prize values are numbers
-    this.playerPrizesTaken = Number(this.playerPrizesTaken);
-    this.opponentPrizesTaken = Number(this.opponentPrizesTaken);
+    this.playerPrizesTaken = Number(this.playerPrizesTaken) || 0;
+    this.opponentPrizesTaken = Number(this.opponentPrizesTaken) || 0;
 
-    // Try to get damage stats if available
-    this.findBestPokemon(playerIndex);
+    // Create basic PlayerGameStats objects for consistency
+    this.playerStats = {
+      prizesTakenCount: this.playerPrizesTaken,
+      totalDamageDealt: 0, // No damage data available in fallback
+      topPokemon: null
+    };
+
+    this.opponentStats = {
+      prizesTakenCount: this.opponentPrizesTaken,
+      totalDamageDealt: 0, // No damage data available in fallback
+      topPokemon: null
+    };
+
+    // Set damage values for consistency
+    this.playerDamageDealt = 0;
+    this.opponentDamageDealt = 0;
   }
 
   findBestPokemon(playerIndex: number): void {
+    try {
+      // First, try to use accurate top Pokemon from server statistics
+      if (this.playerStats && this.playerStats.topPokemon) {
+        // Ensure we're using the final evolved form from server statistics
+        const topPokemonCard = this.playerStats.topPokemon.card;
+
+        // Validate that the card is properly structured
+        if (topPokemonCard && this.isValidPokemonCard(topPokemonCard)) {
+          this.topPokemon = {
+            card: topPokemonCard, // This should already be the final evolved form
+            damage: this.playerStats.topPokemon.totalDamage,
+            reason: 'damage'
+          };
+          console.log('Using top Pokemon from server statistics:', {
+            name: topPokemonCard.name,
+            damage: this.playerStats.topPokemon.totalDamage
+          });
+          return;
+        } else {
+          console.warn('Invalid top Pokemon card from server statistics, falling back');
+        }
+      }
+
+      // Fallback to traditional Pokemon finding logic with evolution handling
+      this.findFallbackPokemon(playerIndex);
+
+    } catch (error) {
+      console.error('Error finding best Pokemon:', error);
+      // Use fallback on error
+      this.findFallbackPokemon(playerIndex);
+    }
+  }
+
+  private findFallbackPokemon(playerIndex: number): void {
     const player = this.gameState.state.players[playerIndex];
 
     if (!player) {
+      console.warn('Player not found for index:', playerIndex);
       return;
     }
+
+    // Try to find the best Pokemon using evolution-aware logic
+    const bestPokemon = this.findBestPokemonWithEvolution(player);
+
+    if (bestPokemon) {
+      this.topPokemon = {
+        card: bestPokemon,
+        damage: 0, // No accurate damage data available in fallback
+        reason: 'damage'
+      };
+      console.log('Found fallback Pokemon:', bestPokemon.name);
+    } else {
+      console.warn('No Pokemon found for player at index:', playerIndex);
+    }
+  }
+
+  findBestOpponentPokemon(opponentIndex: number): void {
+    try {
+      // First, try to use accurate top Pokemon from server statistics
+      if (this.opponentStats && this.opponentStats.topPokemon) {
+        // Ensure we're using the final evolved form from server statistics
+        const topPokemonCard = this.opponentStats.topPokemon.card;
+
+        // Validate that the card is properly structured
+        if (topPokemonCard && this.isValidPokemonCard(topPokemonCard)) {
+          this.opponentTopPokemon = {
+            card: topPokemonCard, // This should already be the final evolved form
+            damage: this.opponentStats.topPokemon.totalDamage,
+            reason: 'damage'
+          };
+          console.log('Using opponent top Pokemon from server statistics:', {
+            name: topPokemonCard.name,
+            damage: this.opponentStats.topPokemon.totalDamage
+          });
+          return;
+        } else {
+          console.warn('Invalid opponent top Pokemon card from server statistics, falling back');
+        }
+      }
+
+      // Fallback to traditional Pokemon finding logic with evolution handling
+      this.findFallbackOpponentPokemon(opponentIndex);
+
+    } catch (error) {
+      console.error('Error finding best opponent Pokemon:', error);
+      // Use fallback on error
+      this.findFallbackOpponentPokemon(opponentIndex);
+    }
+  }
+
+  private findFallbackOpponentPokemon(opponentIndex: number): void {
+    const opponent = this.gameState.state.players[opponentIndex];
+
+    if (!opponent) {
+      console.warn('Opponent not found for index:', opponentIndex);
+      return;
+    }
+
+    // Try to find the best Pokemon using evolution-aware logic
+    const bestPokemon = this.findBestPokemonWithEvolution(opponent);
+
+    if (bestPokemon) {
+      this.opponentTopPokemon = {
+        card: bestPokemon,
+        damage: 0, // No accurate damage data available in fallback
+        reason: 'damage'
+      };
+      console.log('Found fallback opponent Pokemon:', bestPokemon.name);
+    } else {
+      console.warn('No Pokemon found for opponent at index:', opponentIndex);
+    }
+  }
+
+  /**
+   * Checks if we have accurate statistics from the server
+   */
+  public hasAccurateStatistics(): boolean {
+    return !!(this.gameState.enhancedPlayerStats ||
+      (this.gameState.state.players[0] as any)?.gameStats ||
+      (this.gameState.state.players[1] as any)?.gameStats);
+  }
+
+  /**
+   * Checks if we have accurate damage statistics specifically
+   */
+  public hasAccurateDamageStats(): boolean {
+    return this.hasAccurateStatistics() && (
+      (this.playerStats && this.playerStats.totalDamageDealt !== undefined) ||
+      (this.opponentStats && this.opponentStats.totalDamageDealt !== undefined)
+    );
+  }
+
+  /**
+   * Gets display text for damage values, handling zero and undefined cases
+   */
+  public getDamageDisplayText(damage: number): string {
+    if (damage === undefined || damage === null) {
+      return this.hasAccurateDamageStats() ? '0' : 'Unknown';
+    }
+    return damage.toString();
+  }
+
+  /**
+   * Gets display text for Pokemon damage, handling zero and undefined cases
+   */
+  public getPokemonDamageDisplayText(pokemon: PokemonDamageStats | null): string {
+    if (!pokemon) {
+      return 'No Pokémon found';
+    }
+    if (pokemon.damage === undefined || pokemon.damage === null) {
+      return this.hasAccurateDamageStats() ? 'No damage dealt' : 'Damage unknown';
+    }
+    if (pokemon.damage === 0) {
+      return 'No damage dealt';
+    }
+    return `${pokemon.damage} damage dealt`;
+  }
+
+  /**
+   * Validates that a card is a valid Pokemon card
+   * @param card The card to validate
+   * @returns True if the card is a valid Pokemon card
+   */
+  private isValidPokemonCard(card: Card): boolean {
+    return card &&
+      card.superType === SuperType.POKEMON &&
+      card.name &&
+      card.name.trim().length > 0;
+  }
+
+  /**
+   * Finds the best Pokemon for a player, prioritizing evolved forms
+   * @param player The player to find Pokemon for
+   * @returns The best Pokemon card or null if none found
+   */
+  private findBestPokemonWithEvolution(player: any): Card | null {
+    const pokemonCandidates: Card[] = [];
 
     // Helper function to check if a card is a Pokémon
     const isPokemonCard = (card: Card): boolean => {
       return card.superType === SuperType.POKEMON;
     };
 
-    // First try to use active Pokémon
-    if (player.active && player.active.cards && player.active.cards.length > 0) {
-      const card = player.active.cards[0];
-      if (isPokemonCard(card)) {
-        this.topPokemon = {
-          card: card,
-          damage: 50, // Placeholder damage value
-          reason: 'damage'
-        };
-        return;
+    // Helper function to get the top card from a card list (evolved form)
+    const getTopCard = (cardList: any): Card | null => {
+      if (cardList && cardList.cards && cardList.cards.length > 0) {
+        // The top card in the stack is the most evolved form
+        const topCard = cardList.cards[cardList.cards.length - 1];
+        return isPokemonCard(topCard) ? topCard : null;
+      }
+      return null;
+    };
+
+    // First priority: Active Pokémon (get the evolved form)
+    if (player.active) {
+      const activeCard = getTopCard(player.active);
+      if (activeCard) {
+        pokemonCandidates.push(activeCard);
       }
     }
 
-    // If no active Pokémon, try to use bench Pokémon
+    // Second priority: Bench Pokémon (get evolved forms)
     if (player.bench && player.bench.length > 0) {
       for (const benchPokemon of player.bench) {
-        if (benchPokemon.cards && benchPokemon.cards.length > 0) {
-          const card = benchPokemon.cards[0];
-          if (isPokemonCard(card)) {
-            this.topPokemon = {
-              card: card,
-              damage: 30, // Placeholder damage value
-              reason: 'damage'
-            };
-            return;
-          }
+        const benchCard = getTopCard(benchPokemon);
+        if (benchCard) {
+          pokemonCandidates.push(benchCard);
         }
       }
     }
 
-    // If no bench Pokémon, try to use Pokémon from discard pile
+    // Third priority: Pokémon from discard pile (may include evolved forms)
     if (player.discard) {
       try {
-        // Look through discard pile for Pokémon cards
         const discardCards = player.discard.cards || [];
         for (const card of discardCards) {
           if (isPokemonCard(card)) {
-            this.topPokemon = {
-              card: card,
-              damage: 0,
-              reason: 'knockout'
-            };
-            return;
+            pokemonCandidates.push(card);
           }
         }
       } catch (e) {
         console.error('Error accessing discard pile:', e);
       }
+    }
+
+    // Return the best candidate (prioritize by evolution stage and rarity)
+    return this.selectBestPokemonCandidate(pokemonCandidates);
+  }
+
+  /**
+   * Selects the best Pokemon from a list of candidates, prioritizing evolved forms
+   * @param candidates Array of Pokemon cards to choose from
+   * @returns The best Pokemon card or null if none available
+   */
+  private selectBestPokemonCandidate(candidates: Card[]): Card | null {
+    if (candidates.length === 0) {
+      return null;
+    }
+
+    if (candidates.length === 1) {
+      return candidates[0];
+    }
+
+    // Sort candidates by preference:
+    // 1. Evolution stage (higher is better)
+    // 2. HP (higher is better)
+    // 3. Name (for consistency)
+    const sortedCandidates = candidates.sort((a, b) => {
+      // Try to determine evolution stage from card properties
+      const aStage = this.getEvolutionStage(a);
+      const bStage = this.getEvolutionStage(b);
+
+      if (aStage !== bStage) {
+        return bStage - aStage; // Higher stage first
+      }
+
+      // If same stage, prefer higher HP
+      const aHp = this.getCardHp(a);
+      const bHp = this.getCardHp(b);
+
+      if (aHp !== bHp) {
+        return bHp - aHp; // Higher HP first
+      }
+
+      // If same HP, sort by name for consistency
+      return a.name.localeCompare(b.name);
+    });
+
+    return sortedCandidates[0];
+  }
+
+  /**
+   * Attempts to determine the evolution stage of a Pokemon card
+   * @param card The Pokemon card
+   * @returns Estimated evolution stage (0 = basic, 1 = stage 1, 2 = stage 2, etc.)
+   */
+  private getEvolutionStage(card: Card): number {
+    // This is a heuristic approach since we don't have direct access to evolution stage
+    const cardName = card.name.toLowerCase();
+
+    // Check for common evolution indicators
+    if (cardName.includes('ex') || cardName.includes('gx') || cardName.includes('v')) {
+      return 3; // Special/powerful cards get high priority
+    }
+
+    // Check for stage indicators in the card text or properties
+    if ((card as any).stage) {
+      const stage = (card as any).stage.toLowerCase();
+      if (stage.includes('stage 2') || stage.includes('stage2')) return 2;
+      if (stage.includes('stage 1') || stage.includes('stage1')) return 1;
+      if (stage.includes('basic')) return 0;
+    }
+
+    // Fallback: use HP as a rough indicator (higher HP often means more evolved)
+    const hp = this.getCardHp(card);
+    if (hp >= 200) return 3;
+    if (hp >= 150) return 2;
+    if (hp >= 100) return 1;
+    return 0;
+  }
+
+  /**
+   * Gets the HP value of a Pokemon card
+   * @param card The Pokemon card
+   * @returns HP value or 0 if not available
+   */
+  private getCardHp(card: Card): number {
+    if ((card as any).hp && typeof (card as any).hp === 'number') {
+      return (card as any).hp;
+    }
+
+    // Try to parse HP from string if it's stored as text
+    if ((card as any).hp && typeof (card as any).hp === 'string') {
+      const hpMatch = (card as any).hp.match(/\d+/);
+      if (hpMatch) {
+        return parseInt(hpMatch[0], 10);
+      }
+    }
+
+    return 0;
+  }
+
+  /**
+   * Validates that the statistics data is consistent and logs any issues
+   */
+  private validateStatistics(): void {
+    try {
+      // Validate prize counts are within expected range (0-6)
+      if (this.playerPrizesTaken < 0 || this.playerPrizesTaken > 6) {
+        console.warn(`Invalid player prize count: ${this.playerPrizesTaken}. Expected 0-6.`);
+      }
+
+      if (this.opponentPrizesTaken < 0 || this.opponentPrizesTaken > 6) {
+        console.warn(`Invalid opponent prize count: ${this.opponentPrizesTaken}. Expected 0-6.`);
+      }
+
+      // Validate damage values are non-negative
+      if (this.playerDamageDealt < 0) {
+        console.warn(`Invalid player damage dealt: ${this.playerDamageDealt}. Expected >= 0.`);
+        this.playerDamageDealt = 0;
+      }
+
+      if (this.opponentDamageDealt < 0) {
+        console.warn(`Invalid opponent damage dealt: ${this.opponentDamageDealt}. Expected >= 0.`);
+        this.opponentDamageDealt = 0;
+      }
+
+      // Validate Pokemon card data
+      if (this.topPokemon) {
+        if (!this.isValidPokemonCard(this.topPokemon.card)) {
+          console.warn('Invalid player top Pokemon card:', this.topPokemon.card);
+        } else {
+          console.log('Player top Pokemon validated:', {
+            name: this.topPokemon.card.name,
+            damage: this.topPokemon.damage,
+            hp: this.getCardHp(this.topPokemon.card),
+            stage: this.getEvolutionStage(this.topPokemon.card)
+          });
+        }
+      }
+
+      if (this.opponentTopPokemon) {
+        if (!this.isValidPokemonCard(this.opponentTopPokemon.card)) {
+          console.warn('Invalid opponent top Pokemon card:', this.opponentTopPokemon.card);
+        } else {
+          console.log('Opponent top Pokemon validated:', {
+            name: this.opponentTopPokemon.card.name,
+            damage: this.opponentTopPokemon.damage,
+            hp: this.getCardHp(this.opponentTopPokemon.card),
+            stage: this.getEvolutionStage(this.opponentTopPokemon.card)
+          });
+        }
+      }
+
+      // Log statistics source for debugging
+      if (this.playerStats) {
+        console.log('Player statistics loaded:', {
+          prizesTaken: this.playerStats.prizesTakenCount,
+          damageDealt: this.playerStats.totalDamageDealt,
+          hasTopPokemon: !!this.playerStats.topPokemon,
+          topPokemonName: this.playerStats.topPokemon?.card?.name
+        });
+      }
+
+      if (this.opponentStats) {
+        console.log('Opponent statistics loaded:', {
+          prizesTaken: this.opponentStats.prizesTakenCount,
+          damageDealt: this.opponentStats.totalDamageDealt,
+          hasTopPokemon: !!this.opponentStats.topPokemon,
+          topPokemonName: this.opponentStats.topPokemon?.card?.name
+        });
+      }
+
+    } catch (error) {
+      console.error('Error validating statistics:', error);
+    }
+  }
+
+  /**
+   * Gets a safe display name for a Pokemon card, handling missing or invalid data
+   * @param pokemon The Pokemon stats object
+   * @returns A safe display name
+   */
+  public getSafePokemonName(pokemon: PokemonDamageStats | null): string {
+    if (!pokemon || !pokemon.card) {
+      return 'Unknown Pokémon';
+    }
+
+    if (!pokemon.card.name || pokemon.card.name.trim().length === 0) {
+      return 'Unnamed Pokémon';
+    }
+
+    return pokemon.card.name;
+  }
+
+  /**
+   * Checks if a Pokemon card has valid image data
+   * @param pokemon The Pokemon stats object
+   * @returns True if the card should be displayable
+   */
+  public hasValidCardImage(pokemon: PokemonDamageStats | null): boolean {
+    if (!pokemon || !pokemon.card) {
+      return false;
+    }
+
+    // Check if the card has the minimum required properties for display
+    return this.isValidPokemonCard(pokemon.card) &&
+      pokemon.card.name &&
+      pokemon.card.name.trim().length > 0;
+  }
+
+  /**
+   * Gets fallback card data when the primary card is invalid
+   * @param playerIndex The player index to get fallback for
+   * @returns A fallback Pokemon card or null
+   */
+  public getFallbackCard(playerIndex: number): Card | null {
+    try {
+      const player = this.gameState.state.players[playerIndex];
+      if (!player) {
+        return null;
+      }
+
+      // Try to find any valid Pokemon card as a fallback
+      return this.findBestPokemonWithEvolution(player);
+    } catch (error) {
+      console.error('Error getting fallback card:', error);
+      return null;
     }
   }
 

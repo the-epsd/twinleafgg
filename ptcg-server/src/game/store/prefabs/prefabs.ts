@@ -10,6 +10,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects'
 import { MoveCardsEffect } from '../effects/game-effects';
 import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
 import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
+import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
  * 
@@ -239,6 +240,7 @@ export function TAKE_SPECIFIC_PRIZES(
   }
 
   if (!preventDefault) {
+    let prizesTakenCount = 0;
     prizes.forEach(prize => {
       if (player.prizes.includes(prize)) {
         prize.moveTo(destination);
@@ -246,9 +248,15 @@ export function TAKE_SPECIFIC_PRIZES(
         if (destination === player.hand) {
           // If the destination is the hand, we've "taken" a prize
           player.prizesTaken += 1;
+          prizesTakenCount += 1;
         }
       }
     });
+
+    // Track accurate prize count using GameStatsTracker
+    if (prizesTakenCount > 0) {
+      GameStatsTracker.trackPrizeTaken(player, prizesTakenCount);
+    }
   }
 }
 
