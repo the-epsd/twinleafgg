@@ -57,6 +57,7 @@ export interface Power {
   useFromDiscard?: boolean;
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;
+  abilityLock?: boolean;
   barrage?: boolean;
   knocksOutSelf?: boolean;
   isFossil?: boolean;
