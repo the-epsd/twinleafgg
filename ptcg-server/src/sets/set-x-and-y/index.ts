@@ -13,6 +13,7 @@ import { MuscleBand } from './muscle-band';
 import { Phantump } from './phantump';
 import { Pikachu } from './pikachu';
 import { ProfessorsLetter } from './professors-letter';
+import { Pumpkaboo } from './pumpkaboo';
 import { Raichu } from './raichu';
 import { RollerSkates } from './roller-skates';
 import { ShadowCircle } from './shadow-circle';
@@ -41,6 +42,7 @@ export const setXY: Card[] = [
   new Phantump(),
   new Pikachu(),
   new ProfessorsLetter(),
+  new Pumpkaboo(),
   new Raichu(),
   new RollerSkates(),
   new ShadowCircle(),
