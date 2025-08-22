@@ -46,6 +46,7 @@ import {
   SuperScoopUpCES,
   SwitchCES,
 } from './other-prints';
+import { Regice } from './regice';
 
 export const setCelestialStorm: Card[] = [
   new ApricornMaker(),
@@ -70,6 +71,7 @@ export const setCelestialStorm: Card[] = [
   new Oricorio(),
   new Phanpy(),
   new RayquazaGX(),
+  new Regice(),
   new Registeel(),
   new Sableye(),
   new Sceptile(),
