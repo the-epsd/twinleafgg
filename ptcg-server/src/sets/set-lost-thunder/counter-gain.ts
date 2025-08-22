@@ -2,7 +2,7 @@ import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -26,7 +26,7 @@ export class CounterGain extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const index = effect.cost.indexOf(CardType.COLORLESS);
@@ -45,8 +45,8 @@ export class CounterGain extends TrainerCard {
       }
 
       if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
-        effect.cost.splice(index, 1);        
-      }      
+        effect.cost.splice(index, 1);
+      }
 
       return state;
     }

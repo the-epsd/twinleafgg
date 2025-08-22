@@ -6,6 +6,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 import { PokemonCardList } from './pokemon-card-list';
+import { GameStats } from './game-stats-interfaces';
 export class Player {
 
   id: number = 0;
@@ -111,6 +112,14 @@ export class Player {
 
   // Taken prize cards ("taken" means "moved to the player's hand")
   prizesTaken: number = 0;
+
+  // Game statistics tracking
+  gameStats: GameStats = {
+    prizesTakenCount: 0,
+    totalDamageDealt: 0,
+    pokemonDamageStats: {},
+    topPokemon: null
+  };
 
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);

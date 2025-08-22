@@ -12,6 +12,7 @@ import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Cloyster } from './cloytser';
 import { CyclingRoad } from './cycling-road';
+import { Dewgong } from './dewgong';
 import { Ditto } from './ditto';
 import { Dodrio } from './dodrio';
 import { Doduo } from './doduo';
@@ -85,6 +86,7 @@ export const setPokemon151: Card[] = [
   new Charmander(),
   new Cloyster(),
   new CyclingRoad(),
+  new Dewgong(),
   new Ditto(),
   new Dodrio(),
   new Doduo(),

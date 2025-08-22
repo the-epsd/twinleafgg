@@ -50,6 +50,10 @@ export class DarkDragonair extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
+      if (player.active.cards[0] !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }

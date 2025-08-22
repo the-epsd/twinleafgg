@@ -16,6 +16,7 @@ import { CardList } from '../state/card-list';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { GamePhase, GameWinner, State } from '../state/state';
 import { StoreLike } from '../store-like';
+import { GameStatsTracker } from '../game-stats-tracker';
 
 interface PokemonItem {
   playerNum: number;
@@ -193,10 +194,16 @@ function choosePrizeCards(store: StoreLike, state: State, prizeGroups: PrizeGrou
 
       // If prizes to take >= remaining prizes, automatically take all prizes and end game
       if (group.count >= prizeLeft && prizeLeft > 0) {
-        // Move all remaining prize cards to destination (default: hand)
-        player.prizes.forEach(prizeList => {
-          prizeList.moveTo(group.destination || player.hand);
+        // Use TAKE_SPECIFIC_PRIZES to properly track the prizes taken
+        const remainingPrizes = player.prizes.filter(p => p.cards.length > 0);
+        TAKE_SPECIFIC_PRIZES(store, state, player, remainingPrizes, {
+          destination: group.destination || player.hand,
+          skipReduce: false
         });
+
+        // Track the accurate number of prizes taken using GameStatsTracker
+        GameStatsTracker.trackPrizeTaken(player, remainingPrizes.length);
+
         // End game with this player as winner
         endGame(store, state, i === 0 ? GameWinner.PLAYER_1 : GameWinner.PLAYER_2);
         return [];

@@ -2,41 +2,38 @@ import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUti
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dewgong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Seel';
   public cardType: CardType = W;
-  public hp: number = 120;
-  public weakness = [{ type: M }];
+  public hp: number = 130;
+  public weakness = [{ type: L }];
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Tail Whap',
-    cost: [C, C],
-    damage: 60,
-    text: ''
+    name: 'Dual Splash ',
+    cost: [W, C],
+    damage: 0,
+    text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
-    name: 'Dual Blizzard',
-    cost: [C, C, C],
-    damage: 0,
-    text: 'Discard 2 Energy from this Pokémon. This attack does 60 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    name: 'Aurora Beam',
+    cost: [W, C, C],
+    damage: 100,
+    text: ''
   }];
 
-  public set: string = 'UNB';
+  public set: string = 'MEW';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '45';
+  public setNumber: string = '87';
   public name: string = 'Dewgong';
-  public fullName: string = 'Dewgong UNB';
+  public fullName: string = 'Dewgong MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
-
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Count all Pokémon in play (active + bench with cards)
@@ -52,7 +49,7 @@ export class Dewgong extends PokemonCard {
         { min: minMax, max: minMax, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
       });
     }
 

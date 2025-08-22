@@ -31,22 +31,17 @@ export class MetalCoreBarrier extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EndTurnEffect) {
-      const cardList = StateUtils.findCardList(state, this);
-      const player = StateUtils.findOwner(state, cardList);
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
-
-      if (effect.player === player) {
-        return state;
-      }
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (cardList.tools && cardList.tools.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
-        }
+      // Discard card at the end of opponent's turn
+      state.players.forEach(player => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (cardList.tools.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
+            // Check if tool is blocked before discarding
+            if (!IS_TOOL_BLOCKED(store, state, StateUtils.findOwner(state, cardList), this)) {
+              cardList.moveCardTo(this, player.discard);
+            }
+          }
+        });
       });
-
-      return state;
     }
 
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {

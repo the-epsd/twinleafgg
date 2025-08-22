@@ -57,6 +57,7 @@ import { Dragonite } from './dragonite';
 import { Dratini } from './dratini';
 import { Thundurus } from './thundurus';
 import { Tornadus } from './tornadus';
+import { MistysFavor } from './mistys-favor';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -94,6 +95,7 @@ export const setUnifiedMinds: Card[] = [
   new Meditite(),
   new MegaSableyeTyranitarGX(),
   new MewtwoMewGX(),
+  new MistysFavor(),
   new Munchlax(),
   new Necrozma(),
   new Numel(),

@@ -17,6 +17,7 @@ import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
 import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
+import { GameStatsTracker } from '../game-stats-tracker';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -59,6 +60,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       const targetOwner = StateUtils.findOwner(state, target);
       targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
 
+      // Track damage dealt by the attacking Pokemon
+      if (effect.attackEffect && effect.source) {
+        GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+      }
+
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
@@ -81,6 +87,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     const target = effect.target;
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
+
+    // Track damage dealt by the attacking Pokemon
+    if (damage > 0 && effect.attackEffect && effect.source) {
+      GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+    }
   }
 
   if (effect instanceof DealDamageEffect) {
@@ -128,6 +139,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
 
     if (damage > 0) {
+      // Track damage dealt by the attacking Pokemon
+      if (effect.attackEffect && effect.source) {
+        GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+      }
+
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
@@ -143,6 +159,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
+
+    // Track damage dealt by the attacking Pokemon
+    if (damage > 0 && effect.attackEffect && effect.source) {
+      GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+    }
   }
 
   if (effect instanceof PutCountersEffect) {
@@ -163,6 +184,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
         target: targetCard.name,
         effect: effect.attack.name,
       });
+
+      // Track damage dealt by the attacking Pokemon
+      if (effect.attackEffect && effect.source) {
+        GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+      }
     }
   }
 
