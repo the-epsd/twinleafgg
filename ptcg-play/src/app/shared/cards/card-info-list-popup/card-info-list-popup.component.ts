@@ -4,6 +4,7 @@ import { Card, CardList, SuperType } from 'ptcg-server';
 import { CardInfoPaneOptions, CardInfoPaneAction } from '../card-info-pane/card-info-pane.component';
 import { CardInfoPopupData, CardInfoPopupComponent } from '../card-info-popup/card-info-popup.component';
 
+const SORT_DISCARD_KEY = 'sortDiscardsPreference';
 
 @Component({
   selector: 'ptcg-card-info-list-popup',
@@ -33,6 +34,14 @@ export class CardInfoListPopupComponent {
     this.originalDiscard = this.cardList.cards.slice(); // Clone discard pile
   }
 
+  ngOnInit(): void {
+    const saved = localStorage.getItem(SORT_DISCARD_KEY);
+    if (saved !== null) {
+      this.sortDiscards = saved === 'true';
+      this.onSortDiscardsChange();
+    }
+  }
+
   public async showCardInfo(card: Card): Promise<void> {
     this.card = card;
 
@@ -58,7 +67,21 @@ export class CardInfoListPopupComponent {
     this.dialogRef.close(result);
   }
 
-  private getSortedCards(): Card[] {
+  public onSortDiscardsToggle(): void {
+    localStorage.setItem(SORT_DISCARD_KEY, String(this.sortDiscards));
+    this.onSortDiscardsChange();
+  }
+
+  public onSortDiscardsChange(): void {
+    if (this.sortDiscards) {
+      const sorted = this.getSortedDiscard();
+      this.cardList.cards = sorted;
+    } else {
+      this.cardList.cards = this.originalDiscard.slice(); // Restore discard order
+    }
+  }
+
+  private getSortedDiscard(): Card[] {
     return this.cardList.cards.slice().sort((a, b) => {
       const typeOrder = (card: Card): number => {
         if (card.superType === SuperType.POKEMON) return 0;
@@ -74,12 +97,4 @@ export class CardInfoListPopupComponent {
     });
   }
 
-  public onSortDiscardsChange(): void {
-    if (this.sortDiscards) {
-      const sorted = this.getSortedCards();
-      this.cardList.cards = sorted;
-    } else {
-      this.cardList.cards = this.originalDiscard.slice(); // Restore discard order
-    }
-  }
 }
