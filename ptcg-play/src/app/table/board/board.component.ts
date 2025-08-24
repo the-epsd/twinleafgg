@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
-import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, CoinFlipPrompt } from 'ptcg-server';
+import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, SuperType } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
@@ -451,7 +451,13 @@ export class BoardComponent implements OnDestroy {
 
         // Use ability from the card
         if (result.ability) {
-          this.gameService.ability(gameId, result.ability, target);
+          if (result.card.superType === SuperType.TRAINER) {
+            this.gameService.trainerAbility(gameId, result.ability, target);
+          } else if (result.card.superType === SuperType.ENERGY) {
+            this.gameService.energyAbility(gameId, result.ability, target);
+          } else {
+            this.gameService.ability(gameId, result.ability, target);
+          }
         }
       });
   }
