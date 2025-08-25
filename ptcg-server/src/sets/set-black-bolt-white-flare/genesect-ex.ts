@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, GameError, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, StateUtils, SuperType, CardTag } from '../../game';
+import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, GameError, GameMessage, SuperType, CardTag } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { HAS_MARKER, ABILITY_USED, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { HAS_MARKER, ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Genesectex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -49,39 +49,25 @@ export class Genesectex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+
 
       if (HAS_MARKER(this.METAL_SIGNAL_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
       ABILITY_USED(player, this);
+      ADD_MARKER(this.METAL_SIGNAL_MARKER, player, this);
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard && card.cardType === CardType.METAL && card.stage !== Stage.BASIC)) {
+        if (!(card instanceof PokemonCard && card.cardType === CardType.METAL && card.evolvesFrom !== '' && card.stage !== Stage.LV_X)) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: 2, allowCancel: false, blocked }
-      ), cards => {
-        if (cards.length > 0) {
-          MOVE_CARDS_TO_HAND(store, state, player, cards);
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          ADD_MARKER(this.METAL_SIGNAL_MARKER, player, this);
-        }
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.POKEMON }, { min: 0, max: 2, allowCancel: false }, this.powers[0]);
     }
+
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.METAL_SIGNAL_MARKER, this);
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

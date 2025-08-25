@@ -8,6 +8,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { GameError } from '../../game';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class AcerolasPremonition extends TrainerCard {
 
@@ -53,9 +54,8 @@ export class AcerolasPremonition extends TrainerCard {
       ), () => {
 
         const cardsToMove = cardsInOpponentHand.length;
-        player.deck.moveTo(player.hand, cardsToMove);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
+        DRAW_CARDS(player, cardsToMove);
+        CLEAN_UP_SUPPORTER(effect, player);
 
       });
     }

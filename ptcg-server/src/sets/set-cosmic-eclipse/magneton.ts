@@ -5,7 +5,7 @@ import {
   GameError
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { Card } from '../../game';
 
 export class Magneton extends PokemonCard {
@@ -71,7 +71,7 @@ export class Magneton extends PokemonCard {
         }
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
         });
 
         cards.forEach((card, index) => {

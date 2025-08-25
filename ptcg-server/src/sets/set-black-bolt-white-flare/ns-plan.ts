@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, MoveEnergyPrompt, StateUtils, PlayerType, SlotType, EnergyCard } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class NsPlan extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -74,11 +75,11 @@ export class NsPlan extends TrainerCard {
             const source = StateUtils.getTarget(state, player, transfer.from);
             if (source) {
               const target = player.active;
-              source.moveCardTo(transfer.card, target);
+              MOVE_CARDS(store, state, source, target, { cards: [transfer.card], sourceCard: this });
             }
           }
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
     return state;

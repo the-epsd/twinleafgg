@@ -8,6 +8,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: CynthiaAndCaitlin, effect: TrainerEffect): IterableIterator<State> {
@@ -41,14 +42,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), discarded => {
       if (discarded && discarded.length > 0) {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: discarded[0].name });
-        player.hand.moveCardsTo(discarded, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: discarded, sourceCard: self });
         // Draw 3 cards
-        const drawnCards = player.deck.cards.slice(0, 3);
-        player.deck.moveCardsTo(drawnCards, player.hand);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        DRAW_CARDS(player, 3);
+        CLEAN_UP_SUPPORTER(effect, player);
       }
     });
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -87,8 +87,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
       ), selected => {
         if (selected && selected.length > 0) {
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
-          player.discard.moveCardsTo(selected, player.hand);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: self });
+          CLEAN_UP_SUPPORTER(effect, player);
         }
       });
     } else if (choice === 1) {
@@ -133,7 +133,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     }
   });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  CLEAN_UP_SUPPORTER(effect, player);
   return state;
 }
 
@@ -169,7 +169,7 @@ export class CynthiaAndCaitlin extends TrainerCard {
 
       if (effect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
         return state;
       }
 

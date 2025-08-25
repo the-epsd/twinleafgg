@@ -11,7 +11,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Magneton extends PokemonCard {
@@ -77,7 +77,7 @@ export class Magneton extends PokemonCard {
       if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -106,7 +106,7 @@ export class Magneton extends PokemonCard {
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards
           )], () => {
-            player.discard.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
           });
 
           cards.forEach(card => {
@@ -114,7 +114,7 @@ export class Magneton extends PokemonCard {
           });
 
           // Move the discarded card to the discard pile after energy cards are added to the hand
-          player.hand.moveCardTo(cardToDiscard, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: [cardToDiscard], sourceCard: this, sourceEffect: this.powers[0] });
         });
 
         ADD_MARKER(this.MAGNETIC_FIELD_MARKER, player, this);

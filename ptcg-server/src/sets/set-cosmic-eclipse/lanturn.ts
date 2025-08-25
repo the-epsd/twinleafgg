@@ -55,7 +55,7 @@ export class Lanturn extends PokemonCard {
         GameMessage.CARDS_SHOWED_BY_EFFECT,
         deckTop.cards,
       ), () => {
-      // Move the card back to the top of the deck
+        // Move the card back to the top of the deck
         deckTop.moveTo(opponent.deck, 0); // Ensure the card is placed back on top of the deck
         opponent.deck.cards = deckTop.cards.concat(opponent.deck.cards);
       });
@@ -67,7 +67,7 @@ export class Lanturn extends PokemonCard {
 
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
+        GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK,
       ), wantToUse => {
         if (wantToUse) {
           SHUFFLE_DECK(store, state, opponent);

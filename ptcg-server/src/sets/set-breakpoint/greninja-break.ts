@@ -5,6 +5,7 @@ import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEff
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
@@ -64,7 +65,7 @@ export class GreninjaBREAK extends PokemonCard {
       ), cards => {
         cards = cards || [];
         player.marker.addMarker(this.GIANT_WATER_SHURIKEN_MARKER, this);
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[1] });
 
         return store.prompt(state, new ChoosePokemonPrompt(
           player.id,

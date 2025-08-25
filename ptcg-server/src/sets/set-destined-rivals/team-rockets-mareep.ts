@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, Card } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, Card, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsMareep extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -53,8 +53,8 @@ export class TeamRocketsMareep extends PokemonCard {
 
         if (selected.length === 0) { return state; }
 
-        SHOW_CARDS_TO_PLAYER(store, state, effect.opponent, cards);
-        MOVE_CARDS_TO_HAND(store, state, player, selected);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: this });
+        SHOW_CARDS_TO_PLAYER(store, state, StateUtils.getOpponent(state, player), cards);
         SHUFFLE_DECK(store, state, player);
       });
     }

@@ -3,7 +3,8 @@ import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-ty
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Weavile extends PokemonCard {
 
@@ -53,46 +54,30 @@ export class Weavile extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let benchPokemon: PokemonCard[] = [];
-      const pokemonWithAbilities: PokemonCard[] = [];
+      let pokemonWithUsableAbilities = 0;
+
+      // Check active Pokemon
       const opponentActive = opponent.active.getPokemonCard();
-
-      const stubPowerEffectForActive = new PowerEffect(opponent, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, opponent.active.getPokemonCard()!);
-
-      try {
-        store.reduceEffect(state, stubPowerEffectForActive);
-
-        if (opponentActive && opponentActive.powers.length) {
-          pokemonWithAbilities.push(opponentActive);
-        }
-      } catch {
-        // no abilities in active
-      }
-
-      if (opponent.bench.some(b => b.cards.length > 0)) {
-        const stubPowerEffectForBench = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, opponent.bench.filter(b => b.cards.length > 0)[0].getPokemonCard()!);
-
-        try {
-          store.reduceEffect(state, stubPowerEffectForBench);
-
-          benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-          pokemonWithAbilities.push(...benchPokemon.filter(card => card.powers.length));
-        } catch {
-          // no abilities on bench
+      if (opponentActive && opponentActive.powers.length > 0) {
+        // Check if the ability is actually usable
+        if (this.hasActuallyUsableAbility(store, state, opponent, opponentActive)) {
+          pokemonWithUsableAbilities++;
         }
       }
 
-      const abilities = pokemonWithAbilities.length;
-      effect.damage = abilities * 50;
-
+      // Check bench Pokemon
+      opponent.bench.forEach(benchSlot => {
+        if (benchSlot.cards.length > 0) {
+          const benchPokemon = benchSlot.getPokemonCard();
+          if (benchPokemon && benchPokemon.powers.length > 0) {
+            // Check if the ability is actually usable
+            if (this.hasActuallyUsableAbility(store, state, opponent, benchPokemon)) {
+              pokemonWithUsableAbilities++;
+            }
+          }
+        }
+      });
+      effect.damage = pokemonWithUsableAbilities * 50;
       return state;
     }
 
@@ -102,8 +87,17 @@ export class Weavile extends PokemonCard {
 
       return state;
     }
-
     return state;
   }
 
+  private hasActuallyUsableAbility(store: StoreLike, state: State, player: any, pokemon: PokemonCard): boolean {
+    for (const power of pokemon.powers) {
+      if (power.powerType === PowerType.ABILITY) {
+        if (!IS_ABILITY_BLOCKED(store, state, player, pokemon) || power.exemptFromAbilityLock || power.exemptFromInitialize || power.abilityLock) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }

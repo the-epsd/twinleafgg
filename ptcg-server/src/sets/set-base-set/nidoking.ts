@@ -1,10 +1,11 @@
-import { GameMessage } from '../../game';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { GameMessage, StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -63,10 +64,8 @@ export class Nidoking extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const addCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-      addCondition.poisonDamage = 20;
-      return store.reduceEffect(state, addCondition);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this, 20);
     }
 
     return state;

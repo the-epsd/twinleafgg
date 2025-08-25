@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Machamp extends PokemonCard {
@@ -58,7 +58,7 @@ export class Machamp extends PokemonCard {
           ), selected => {
             cards = selected;
           });
-          oppActive.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, oppActive, opponent.discard, { cards: cards, sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
     }

@@ -1,19 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt,
-  EnergyMap,
-  Player,
-  Card,
-  GameError,
-  ChooseCardsPrompt
-} from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, ChooseAttackPrompt, EnergyMap, Player } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class AlakazamStar extends PokemonCard {
 
@@ -47,27 +39,8 @@ export class AlakazamStar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      const hasCardInDiscard = player.discard.cards.some(c => {
-        return c instanceof Card;
-      });
-      if (!hasCardInDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-      }
-
-      return store.prompt(state, [
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          {},
-          { min: 1, max: 1, allowCancel: false }
-        )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, effect.player, this, {}, { min: 1, max: 1, allowCancel: false }, this.attacks[0]);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

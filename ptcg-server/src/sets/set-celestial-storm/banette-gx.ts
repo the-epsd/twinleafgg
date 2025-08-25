@@ -12,7 +12,7 @@ import { SlotType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { TrainerCard, TrainerType } from '../../game';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 // CES Banette-GX 66 (https://limitlesstcg.com/cards/CES/66)
 export class BanetteGX extends PokemonCard {
@@ -162,9 +162,9 @@ export class BanetteGX extends PokemonCard {
           {},
           { min: 1, max: 3, allowCancel: false }
         )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+          const cards = selected || [];
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[1] });
+        });
     }
 
     if (effect instanceof EndTurnEffect) {

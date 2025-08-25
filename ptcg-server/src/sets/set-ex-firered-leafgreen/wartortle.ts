@@ -3,8 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Wartortle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,8 +35,6 @@ export class Wartortle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
 
-  private usedSmashTurn = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -63,16 +60,9 @@ export class Wartortle extends PokemonCard {
       if (extraWaterEnergy == 2) effect.damage += 20;
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      this.usedSmashTurn = true;
-    }
-
-    if (effect instanceof AfterAttackEffect && this.usedSmashTurn) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
-
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-
-      this.usedSmashTurn = false;
     }
 
     return state;

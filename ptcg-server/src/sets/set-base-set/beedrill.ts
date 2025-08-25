@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage } from '../../game';
+import { GameMessage, StateUtils } from '../../game';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Beedrill extends PokemonCard {
 
@@ -67,17 +67,12 @@ export class Beedrill extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      return store.prompt(state, new CoinFlipPrompt(
-        effect.player.id, GameMessage.COIN_FLIP
-      ), (heads) => {
-        if (heads) {
-          const conditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-          store.reduceEffect(state, conditionEffect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
-
     }
 
     return state;

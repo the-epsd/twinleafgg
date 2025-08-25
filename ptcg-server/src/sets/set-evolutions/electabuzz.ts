@@ -4,8 +4,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SpecialCondition } from '../../game/store/card/card-types';
-import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Electabuzz extends PokemonCard {
 
@@ -18,7 +18,7 @@ export class Electabuzz extends PokemonCard {
   public weakness = [{ type: CardType.FIGHTING }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  
+
   public resistance = [{ type: CardType.METAL, value: -20 }];
 
   public attacks = [
@@ -47,21 +47,18 @@ export class Electabuzz extends PokemonCard {
   public fullName: string = 'Electabuzz EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, specialConditionEffect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -78,6 +75,5 @@ export class Electabuzz extends PokemonCard {
     }
     return state;
   }
-  
+
 }
-  

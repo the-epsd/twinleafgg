@@ -4,6 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, ConfirmPrompt, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Klinklang extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -71,6 +72,7 @@ export class Klinklang extends PokemonCard {
             transfers = transfers || [];
             // cancelled by user
             if (transfers.length === 0) {
+              SHUFFLE_DECK(store, state, player);
               return state;
             }
             for (const transfer of transfers) {

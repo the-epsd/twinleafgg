@@ -11,6 +11,7 @@ import { StateUtils } from '../state-utils';
 import { State } from '../state/state';
 import { Store } from '../store';
 import { StoreLike } from '../store-like';
+import { MOVE_CARDS } from './prefabs';
 
 export function WAS_TRAINER_USED(effect: Effect, card: TrainerCard): effect is TrainerEffect {
   return effect instanceof TrainerEffect && effect.trainerCard === card;
@@ -31,7 +32,7 @@ export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: Sto
   }
 
   if (cards.length == maxAmount) {
-    player.hand.moveCardsTo(player.hand.cards, player.discard);
+    MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: effect.trainerCard });
   }
 
   if (cards.length > maxAmount) {
@@ -46,7 +47,7 @@ export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: Sto
       if (cards.length === 0) {
         return;
       }
-      player.hand.moveCardsTo(cards, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: effect.trainerCard });
       cards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
       });

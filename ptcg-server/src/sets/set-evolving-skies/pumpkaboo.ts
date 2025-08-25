@@ -1,9 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, StateUtils
+import {
+  PowerType, StoreLike, State, ConfirmPrompt, GameMessage, StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Pumpkaboo extends PokemonCard {
 
@@ -19,7 +21,7 @@ export class Pumpkaboo extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Pumpkin Pit',
@@ -30,7 +32,7 @@ export class Pumpkaboo extends PokemonCard {
   public attacks = [
     {
       name: 'Stampede',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: ''
     }
@@ -57,11 +59,11 @@ export class Pumpkaboo extends PokemonCard {
           GameMessage.WANT_TO_USE_ABILITY,
         ), wantToUse => {
           if (wantToUse) {
-  
+
             // Discard Stadium
             const cardList = StateUtils.findCardList(state, stadiumCard);
             const player = StateUtils.findOwner(state, cardList);
-            cardList.moveTo(player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: [stadiumCard], sourceCard: this, sourceEffect: this.powers[0] });
             return state;
           }
           return state;

@@ -7,7 +7,7 @@ import { ChooseCardsPrompt, GameError, PlayerType } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class HolonRuins extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
@@ -46,7 +46,7 @@ export class HolonRuins extends TrainerCard {
         if (cards.length === 0) {
           return;
         }
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
         cards.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
         });

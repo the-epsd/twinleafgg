@@ -5,6 +5,7 @@ import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -33,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
     } catch {
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 
@@ -57,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         opponent.switchPokemon(targetCard.target);
       } else {
         // If no target, effect ends
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
         return state;
       }
 
@@ -97,7 +98,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
             const supporterEffect = new SupporterEffect(player, effect.trainerCard);
             store.reduceEffect(state, supporterEffect);
           } catch {
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            CLEAN_UP_SUPPORTER(effect, player);
             return state;
           }
         }
@@ -107,7 +108,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
         store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: target[0].getPokemonCard()!.name });
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
         return state;
       });
     });

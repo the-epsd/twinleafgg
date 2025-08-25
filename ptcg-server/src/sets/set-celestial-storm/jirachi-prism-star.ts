@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, DrawPrizesEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 
 export class JirachiPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -27,7 +26,7 @@ export class JirachiPrismStar extends PokemonCard {
     powerType: PowerType.ABILITY,
     exemptFromAbilityLock: true,
     text: 'If you took this Pokémon as a face-down Prize card during your turn and your Bench isn\'t full, ' +
-    'before you put it into your hand, you may put it onto your Bench and take 1 more Prize card.'
+      'before you put it into your hand, you may put it onto your Bench and take 1 more Prize card.'
   }];
 
   public attacks = [
@@ -59,27 +58,26 @@ export class JirachiPrismStar extends PokemonCard {
     if (effect instanceof DrawPrizesEffect) {
       const generator = this.handlePrizeEffect(
         () => generator.next(),
-        store, 
-        state, 
+        store,
+        state,
         effect
       );
       return generator.next().value;
     }
-    
+
     // Attack
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-
-      // First part of the attack
-      specialConditionEffect.target = effect.player.active;
-      store.reduceEffect(state, specialConditionEffect);
 
       // Second part of the attack
       effect.player.marker.addMarker(this.KNOCKOUT_MARKER, this);
       opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
       console.log('first marker added');
+    }
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.player, this);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
@@ -145,7 +143,7 @@ export class JirachiPrismStar extends PokemonCard {
     // because due to how the generator pattern works, the player could have
     // played another card to the bench)
     const emptyBenchSlots = GET_PLAYER_BENCH_SLOTS(player);
-    
+
     if (emptyBenchSlots.length === 0) {
       effect.preventDefault = false;
       fallback(prizeIndex);
@@ -157,7 +155,7 @@ export class JirachiPrismStar extends PokemonCard {
     // it does not go to the player's hand)
     this.abilityUsed = true;
     player.prizesTaken += 1;
-    
+
     const targetSlot = emptyBenchSlots[0];
     for (const [index, prize] of player.prizes.entries()) {
       if (prize.cards.includes(this)) {

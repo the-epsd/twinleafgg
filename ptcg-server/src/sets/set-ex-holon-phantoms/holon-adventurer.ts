@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -43,7 +43,7 @@ export class HolonAdventurer extends TrainerCard {
       effect.preventDefault = true;
 
       if (cards.length == 1) {
-        player.hand.moveCardsTo(player.hand.cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: player.hand.cards, sourceCard: this });
       }
 
       if (cards.length > 1) {
@@ -64,7 +64,7 @@ export class HolonAdventurer extends TrainerCard {
             cardsToDraw = 4;
           }
 
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
           });
@@ -73,7 +73,7 @@ export class HolonAdventurer extends TrainerCard {
         });
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 

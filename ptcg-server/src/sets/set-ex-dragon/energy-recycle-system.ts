@@ -5,6 +5,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
@@ -70,8 +71,8 @@ export class EnergyRecycleSystem extends TrainerCard {
                 store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
               });
 
-              player.discard.moveCardsTo(cards, player.deck);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+              MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
+              CLEAN_UP_SUPPORTER(effect, player);
 
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -97,8 +98,8 @@ export class EnergyRecycleSystem extends TrainerCard {
                 store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
               });
 
-              player.discard.moveCardsTo(cards, player.hand);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
+              CLEAN_UP_SUPPORTER(effect, player);
 
               return state;
             });

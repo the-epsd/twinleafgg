@@ -7,6 +7,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt, GameError, StateUtils } from '../../game';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class ColressMachine extends TrainerCard {
 
@@ -67,6 +68,7 @@ export class ColressMachine extends TrainerCard {
         transfers = transfers || [];
 
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
 
@@ -74,6 +76,7 @@ export class ColressMachine extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
+        SHUFFLE_DECK(store, state, player);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       });

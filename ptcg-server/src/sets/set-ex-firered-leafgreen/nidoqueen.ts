@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class Nidoqueen extends PokemonCard {
@@ -76,10 +75,8 @@ export class Nidoqueen extends PokemonCard {
       return state;
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-      specialCondition.poisonDamage = 20;
-      store.reduceEffect(state, specialCondition);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this, 20);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

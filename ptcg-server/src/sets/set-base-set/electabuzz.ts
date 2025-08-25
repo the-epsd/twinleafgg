@@ -1,11 +1,11 @@
-import { CoinFlipPrompt, GameMessage, State } from '../../game';
+import { CoinFlipPrompt, GameMessage, State, StateUtils } from '../../game';
 import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SpecialCondition } from '../../game/store/card/card-types';
-import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Electabuzz extends PokemonCard {
 
@@ -45,21 +45,18 @@ export class Electabuzz extends PokemonCard {
   public fullName: string = 'Electabuzz BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, specialConditionEffect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
         }
       });
     }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -76,6 +73,5 @@ export class Electabuzz extends PokemonCard {
     }
     return state;
   }
-  
+
 }
-  

@@ -6,6 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Copycat, effect: TrainerEffect): IterableIterator<State> {
@@ -19,7 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   if (cards.length > 0) {
-    player.hand.moveCardsTo(cards, player.deck);
+    MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: self });
   }
 
   yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
@@ -28,8 +29,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   const cardsNumber = opponent.hand.cards.length;
-  player.deck.moveTo(player.hand, cardsNumber);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  DRAW_CARDS(player, cardsNumber);
+  CLEAN_UP_SUPPORTER(effect, player);
   return state;
 }
 

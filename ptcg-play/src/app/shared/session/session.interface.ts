@@ -1,5 +1,7 @@
-import { GameInfo, GameState, ClientInfo, UserInfo, StateLog, ServerConfig,
-  Replay, State, ConversationInfo } from 'ptcg-server';
+import {
+  GameInfo, GameState, ClientInfo, UserInfo, StateLog, ServerConfig,
+  Replay, State, ConversationInfo, Card
+} from 'ptcg-server';
 import { Observable } from 'rxjs';
 
 export class Session {
@@ -15,6 +17,21 @@ export class Session {
   conversations: ConversationInfo[] = [];
 }
 
+export interface PlayerGameStats {
+  prizesTakenCount: number;
+  totalDamageDealt: number;
+  topPokemon: {
+    card: Card;
+    totalDamage: number;
+  } | null;
+}
+
+export interface EnhancedPokemonStats {
+  card: Card;
+  totalDamage: number;
+  evolutionLevel: number;
+}
+
 export interface LocalGameState extends GameState {
   localId: number;
   deleted: boolean;
@@ -25,6 +42,7 @@ export interface LocalGameState extends GameState {
   logs: StateLog[];
   replayPosition: number;
   replay?: Replay;
+  enhancedPlayerStats?: PlayerGameStats[];
 }
 
 export interface UserInfoMap {

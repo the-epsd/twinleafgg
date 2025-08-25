@@ -7,7 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, CoinFlipPrompt, PokemonCard } from '../../game';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_NO_SLOTS, CLEAN_UP_SUPPORTER, GET_PLAYER_BENCH_SLOTS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
 
 export class HolonFossil extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -55,10 +55,10 @@ export class HolonFossil extends TrainerCard {
       return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
         if (flipResult) {
           SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, {}, { min: 0, max: 1, blocked: blockedDeck });
-          player.supporter.moveCardTo(this, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
         } else if (!flipResult) {
           if (player.hand.cards.length === 0 || player.hand.cards.length === blockedHand.length) {
-            player.supporter.moveCardTo(this, player.discard);
+            CLEAN_UP_SUPPORTER(effect, player);
             return state;
           }
 
@@ -74,7 +74,7 @@ export class HolonFossil extends TrainerCard {
               player.hand.moveCardTo(card, slots[index]);
               slots[index].pokemonPlayedTurn = state.turn;
             });
-            player.supporter.moveCardTo(this, player.discard);
+            CLEAN_UP_SUPPORTER(effect, player);
           });
         }
         return state;

@@ -181,7 +181,10 @@ cardManager.defineSet(sets.setPrismaticEvolution);
 cardManager.defineSet(sets.setJourneyTogether);
 cardManager.defineSet(sets.setDestinedRivals);
 cardManager.defineSet(sets.setSV11);
+
+
 cardManager.defineSet(sets.setMegaEvolution);
+cardManager.defineSet(sets.setPhantasmalFlames);
 
 cardManager.defineSet(sets.setTest);
 

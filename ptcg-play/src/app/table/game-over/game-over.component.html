@@ -69,6 +69,10 @@
             <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 5">5</div>
             <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 6">6</div>
           </div>
+          <!-- Show accuracy indicator when using fallback data -->
+          <small *ngIf="!hasAccurateStatistics()" style="color: #888; font-size: 0.8em; margin-top: 4px;">
+            (Estimated - server stats unavailable)
+          </small>
         </div>
 
         <div class="ptcg-stats-row">
@@ -81,33 +85,90 @@
             <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 5">5</div>
             <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 6">6</div>
           </div>
+          <!-- Show accuracy indicator when using fallback data -->
+          <small *ngIf="!hasAccurateStatistics()" style="color: #888; font-size: 0.8em; margin-top: 4px;">
+            (Estimated - server stats unavailable)
+          </small>
         </div>
 
-        <!-- <div class="ptcg-stats-row">
-          <span class="ptcg-stat-label">Damage dealt</span>
-          <span class="ptcg-stat-value">{{playerDamageDealt}}</span>
-        </div> -->
+        <div class="ptcg-stats-row">
+          <span class="ptcg-stat-label">Your damage dealt</span>
+          <span class="ptcg-stat-value">{{getDamageDisplayText(playerDamageDealt)}}</span>
+          <small *ngIf="!hasAccurateDamageStats()" style="color: #888; font-size: 0.8em; margin-left: 8px;">
+            ({{hasAccurateStatistics() ? 'No damage tracked' : 'Estimated'}})
+          </small>
+        </div>
+
+        <div class="ptcg-stats-row">
+          <span class="ptcg-stat-label">Opponent's damage dealt</span>
+          <span class="ptcg-stat-value">{{getDamageDisplayText(opponentDamageDealt)}}</span>
+          <small *ngIf="!hasAccurateDamageStats()" style="color: #888; font-size: 0.8em; margin-left: 8px;">
+            ({{hasAccurateStatistics() ? 'No damage tracked' : 'Estimated'}})
+          </small>
+        </div>
       </div>
 
-      <!-- Right column - Card of the Game -->
+      <!-- Right column - Top Performing Pokémon -->
       <div class="ptcg-card-feature">
-        <!-- Card of the Game title -->
-        <div class="ptcg-card-title-container">
-          <h3 class="ptcg-card-title">Card of the Game</h3>
-          <div *ngIf="isWinner && topPokemon && topPokemon.reason === 'knockout'" class="ptcg-knockout-badge">
-            Last Knocked Out
+        <!-- Your Top Pokémon -->
+        <div class="ptcg-pokemon-section">
+          <div class="ptcg-card-title-container">
+            <h3 class="ptcg-card-title">Your Top Pokémon</h3>
+            <div *ngIf="topPokemon && topPokemon.damage > 0" class="ptcg-damage-badge">
+              {{getPokemonDamageDisplayText(topPokemon)}}
+            </div>
+            <div *ngIf="!topPokemon || topPokemon.damage === 0" class="ptcg-no-damage-badge">
+              {{getPokemonDamageDisplayText(topPokemon)}}
+            </div>
+          </div>
+
+          <!-- Your featured card -->
+          <div class="ptcg-featured-card-container ptcg-player-card">
+            <div class="ptcg-card-perspective">
+              <div class="ptcg-card-holder">
+                <div *ngIf="topPokemon && hasValidCardImage(topPokemon)" class="ptcg-top-pokemon">
+                  <ptcg-card [card]="topPokemon.card"></ptcg-card>
+                </div>
+                <div *ngIf="topPokemon && !hasValidCardImage(topPokemon)" class="ptcg-card-error">
+                  <div class="ptcg-card-back">
+                    <span class="ptcg-error-text">{{ getSafePokemonName(topPokemon) }}</span>
+                  </div>
+                </div>
+                <div *ngIf="!topPokemon" class="ptcg-card-placeholder">
+                  <div class="ptcg-card-back"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Featured card with proper aspect ratio -->
-        <div class="ptcg-featured-card-container">
-          <div class="ptcg-card-perspective">
-            <div class="ptcg-card-holder">
-              <div *ngIf="topPokemon" class="ptcg-top-pokemon">
-                <ptcg-card [card]="topPokemon.card"></ptcg-card>
-              </div>
-              <div *ngIf="!topPokemon" class="ptcg-card-placeholder">
-                <div class="ptcg-card-back"></div>
+        <!-- Opponent's Top Pokémon -->
+        <div class="ptcg-pokemon-section">
+          <div class="ptcg-card-title-container">
+            <h3 class="ptcg-card-title">Opponent's Top Pokémon</h3>
+            <div *ngIf="opponentTopPokemon && opponentTopPokemon.damage > 0" class="ptcg-damage-badge">
+              {{getPokemonDamageDisplayText(opponentTopPokemon)}}
+            </div>
+            <div *ngIf="!opponentTopPokemon || opponentTopPokemon.damage === 0" class="ptcg-no-damage-badge">
+              {{getPokemonDamageDisplayText(opponentTopPokemon)}}
+            </div>
+          </div>
+
+          <!-- Opponent's featured card -->
+          <div class="ptcg-featured-card-container ptcg-opponent-card">
+            <div class="ptcg-card-perspective">
+              <div class="ptcg-card-holder">
+                <div *ngIf="opponentTopPokemon && hasValidCardImage(opponentTopPokemon)" class="ptcg-top-pokemon">
+                  <ptcg-card [card]="opponentTopPokemon.card"></ptcg-card>
+                </div>
+                <div *ngIf="opponentTopPokemon && !hasValidCardImage(opponentTopPokemon)" class="ptcg-card-error">
+                  <div class="ptcg-card-back">
+                    <span class="ptcg-error-text">{{ getSafePokemonName(opponentTopPokemon) }}</span>
+                  </div>
+                </div>
+                <div *ngIf="!opponentTopPokemon" class="ptcg-card-placeholder">
+                  <div class="ptcg-card-back"></div>
+                </div>
               </div>
             </div>
           </div>

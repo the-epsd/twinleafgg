@@ -3,9 +3,10 @@ import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-
 import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, CoinFlipPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useKeepCalling(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+  effect: AttackEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 3);
@@ -35,7 +36,7 @@ function* useKeepCalling(next: Function, store: StoreLike, state: State,
   }
 
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
+    MOVE_CARDS(store, state, player.deck, slots[index], { cards: [card], sourceCard: self, sourceEffect: self.attacks[0] });
     slots[index].pokemonPlayedTurn = state.turn;
   });
 
@@ -86,8 +87,8 @@ export class Sobble extends PokemonCard {
   public fullName: string = 'Sobble CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useKeepCalling(() => generator.next(), store, state, effect);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const generator = useKeepCalling(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

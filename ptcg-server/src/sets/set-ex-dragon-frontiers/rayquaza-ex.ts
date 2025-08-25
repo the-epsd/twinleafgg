@@ -23,7 +23,7 @@ export class Rayquazaex extends PokemonCard {
     name: 'Special Circuit',
     cost: [L, C],
     damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon.This attack does 30 damage to the Pokémon. If you choose a Pokémon that has any Poké-Powers or Poké-Bodies, this attack does 50 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 30 damage to the Pokémon. If you choose a Pokémon that has any Poké-Powers or Poké-Bodies, this attack does 50 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Sky-High Claws',

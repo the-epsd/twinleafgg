@@ -5,6 +5,7 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Polteageist extends PokemonCard {
 
@@ -108,8 +109,8 @@ export class Polteageist extends PokemonCard {
           }
         });
 
-        player.hand.moveCardsTo(cards, player.discard);
-        player.deck.moveTo(player.hand, 2);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
+        DRAW_CARDS(player, 2);
       });
       return state;
     }

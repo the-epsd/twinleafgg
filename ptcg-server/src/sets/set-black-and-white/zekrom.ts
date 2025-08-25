@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
 
 
 export class Zekrom extends PokemonCard {
@@ -16,19 +16,19 @@ export class Zekrom extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Outrage',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on this Pokemon.'
     },
     {
       name: 'Bolt Strike',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 120,
       text: 'This Pokemon does 40 damage to itself.'
     }
@@ -45,17 +45,13 @@ export class Zekrom extends PokemonCard {
   public setNumber: string = '47';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage += effect.player.active.damage;
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      const dealDamage = new DealDamageEffect(effect, 40);
-      dealDamage.target = player.active;
-      return store.reduceEffect(state, dealDamage);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      return THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 40);
     }
 
     return state;

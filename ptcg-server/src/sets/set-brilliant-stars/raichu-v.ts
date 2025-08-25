@@ -4,7 +4,7 @@ import { StoreLike, State, PlayerType, SlotType, StateUtils, AttachEnergyPrompt,
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
-import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class RaichuV extends PokemonCard {
@@ -69,7 +69,7 @@ export class RaichuV extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
         }
 
         SHUFFLE_DECK(store, state, player);

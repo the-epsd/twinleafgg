@@ -10,6 +10,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsArcher extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -61,8 +62,8 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
       const cards = player.hand.cards.filter(c => c !== this);
 
       // Shuffle hands into decks
-      player.hand.moveCardsTo(cards, player.deck);
-      opponent.hand.moveTo(opponent.deck);
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: this });
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
 
       return store.prompt(state, [
         new ShuffleDeckPrompt(player.id),
@@ -72,10 +73,10 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
         opponent.deck.applyOrder(deckOrder[1]);
 
         // Draw new hands
-        player.deck.moveTo(player.hand, 5);
-        opponent.deck.moveTo(opponent.hand, 3);
+        DRAW_CARDS(player, 5);
+        DRAW_CARDS(opponent, 3);
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

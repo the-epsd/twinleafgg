@@ -37,7 +37,12 @@ export class TropicalBeach extends TrainerCard {
       }
 
       const cardsToDraw = 7 - player.hand.cards.length;
-      player.deck.moveTo(player.hand, cardsToDraw);
+      // Use prefab behavior similar to ASR Jubilife Village: draw via helper
+      for (let i = 0; i < cardsToDraw; i++) {
+        if (player.deck.cards.length > 0) {
+          player.deck.moveTo(player.hand, 1);
+        }
+      }
 
       // Log the message before turn ends.
       effect.preventDefault = true;

@@ -7,6 +7,7 @@ import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class RayquazaVMAX extends PokemonCard {
@@ -73,8 +74,8 @@ export class RayquazaVMAX extends PokemonCard {
       }
 
       const cards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(cards, player.discard);
-      player.deck.moveTo(player.hand, 3);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+      DRAW_CARDS(player, 3);
       player.marker.addMarker(this.AZURE_PULSE_MARKER, this);
     }
 

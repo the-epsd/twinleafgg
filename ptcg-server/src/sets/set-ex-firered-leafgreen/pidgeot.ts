@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType } from '../../game';
-import { ABILITY_USED, ADD_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class Pidgeot extends PokemonCard {
@@ -64,7 +64,7 @@ export class Pidgeot extends PokemonCard {
         {},
         { min: 1, max: 1, allowCancel: false }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
 
         SHUFFLE_DECK(store, state, player);
       });

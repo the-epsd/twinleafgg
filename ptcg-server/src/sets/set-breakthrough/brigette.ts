@@ -3,6 +3,7 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/ca
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class Brigette extends TrainerCard {
@@ -75,11 +76,11 @@ export class Brigette extends TrainerCard {
           cards = selectedCards || [];
 
           cards.forEach((card, index) => {
-            player.deck.moveCardTo(card, slots[index]);
+            MOVE_CARDS(store, state, player.deck, slots[index], { sourceCard: this });
             slots[index].pokemonPlayedTurn = state.turn;
           });
 
-          player.supporter.moveCardTo(this, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
 
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

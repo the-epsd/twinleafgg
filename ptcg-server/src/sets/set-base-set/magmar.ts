@@ -40,13 +40,13 @@ export class Magmar extends PokemonCard {
       name: 'Flamethrower',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 50,
-      text: 'Discard 1 {R} Energy attached to Magmar in order to use this attack.'
+      text: 'Discard 1 [R] Energy attached to Magmar in order to use this attack.'
     }
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, R);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.FIRE);
     }
 
     return state;

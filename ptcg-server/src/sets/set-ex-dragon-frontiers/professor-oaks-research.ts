@@ -5,7 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { GameError, GameMessage } from '../../game';
-import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class ProfessorOaksResearch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -36,7 +36,7 @@ export class ProfessorOaksResearch extends TrainerCard {
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, 5);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;

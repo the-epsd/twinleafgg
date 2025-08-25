@@ -9,6 +9,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Eelektrik extends PokemonCard {
 
@@ -84,7 +85,7 @@ export class Eelektrik extends PokemonCard {
         player.marker.addMarker(this.DYNAMOTOR_MAREKER, this);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
         }
       });
 

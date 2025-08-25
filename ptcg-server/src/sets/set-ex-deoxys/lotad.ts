@@ -43,7 +43,7 @@ export class Lotad extends PokemonCard {
           [randomCard]
         ), () => []);
 
-        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard] });
+        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard], sourceCard: this, sourceEffect: this.attacks[0] });
 
         return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

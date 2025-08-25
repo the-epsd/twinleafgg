@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, S
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useHaughtyOrders(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -115,7 +115,7 @@ export class TeamRocketsPersianex extends PokemonCard {
     }
 
     // Slash and Cash (thanks Pf987 for this name)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 

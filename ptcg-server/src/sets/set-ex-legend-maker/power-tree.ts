@@ -6,6 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -81,7 +82,7 @@ export class PowerTree extends TrainerCard {
             cards
           ), () => {
             cards.forEach((card, index) => {
-              player.discard.moveCardTo(card, player.hand);
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: [card], sourceCard: this });
             });
 
             cards.forEach((card, index) => {

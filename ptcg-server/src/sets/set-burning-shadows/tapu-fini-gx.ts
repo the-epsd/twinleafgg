@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class TapuFiniGX extends PokemonCard {
@@ -45,7 +45,7 @@ export class TapuFiniGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aqua Ring
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);

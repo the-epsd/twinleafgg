@@ -26,7 +26,7 @@ export class RadiantCharizard extends PokemonCard {
   public powers = [{
     name: 'Excited Heart',
     powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks cost C less for each Prize card your opponent has taken.'
+    text: 'This Pokémon\'s attacks cost [C] less for each Prize card your opponent has taken.'
   }];
 
   public attacks = [

@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, GameError, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DRAW_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Cleffa extends PokemonCard {
@@ -41,7 +41,7 @@ export class Cleffa extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const hasClefairy = player.hand.cards.some(card => card instanceof PokemonCard && card.name === 'Clefairy');
-      
+
       // Check if Clefairy is in the player's hand
       if (!hasClefairy) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -83,7 +83,7 @@ export class Cleffa extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       DRAW_CARDS(effect.player, 1);
     }
 

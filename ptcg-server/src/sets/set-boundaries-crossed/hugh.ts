@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StateUtils } from '../..';
-import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class Hugh extends TrainerCard {
@@ -54,7 +54,7 @@ export class Hugh extends TrainerCard {
           { min: discardAmount, max: discardAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-          opponent.hand.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards, sourceCard: this });
         });
       } else {
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(opponent, 5);
@@ -77,13 +77,13 @@ export class Hugh extends TrainerCard {
           { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
         });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
       } else {
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
       }
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
     return state;

@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { Card, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
@@ -45,7 +46,7 @@ export class Avery extends TrainerCard {
       effect.preventDefault = true;
 
       // Draw 3 cards
-      player.deck.moveTo(player.hand, 3);
+      DRAW_CARDS(player, 3);
 
       // Get opponent
       const opponent = StateUtils.getOpponent(state, player);
@@ -91,7 +92,7 @@ export class Avery extends TrainerCard {
               cardList.moveCardsTo(pokemons, opponent.discard);
             }
           });
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
           return state;
         });
       }

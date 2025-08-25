@@ -1,11 +1,12 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, CoinFlipPrompt, ChooseCardsPrompt, ShuffleDeckPrompt, ConfirmPrompt, PlayerType } from '../../game';
-import { Stage, CardType, SpecialCondition, BoardEffect } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, CoinFlipPrompt, ConfirmPrompt, PlayerType } from '../../game';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { GameLog, GameMessage } from '../../game/game-message';
+import { ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Roserade extends PokemonCard {
 
@@ -83,26 +84,10 @@ export class Roserade extends PokemonCard {
             }
           });
 
-          state = store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.deck,
-            {},
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-              }
-            });
-            player.deck.moveCardsTo(cards, player.hand);
-          });
+          ABILITY_USED(player, this);
+          SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false }, this.powers[0]);
+          SHUFFLE_DECK(store, state, player);
         }
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
       });
     }
 

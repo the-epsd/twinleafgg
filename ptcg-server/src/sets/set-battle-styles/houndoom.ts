@@ -8,6 +8,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 
@@ -81,12 +82,14 @@ export class Houndoom extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return;
         }
         player.marker.addMarker(this.SINGLE_STRIKE_ROAR_MARKER, this);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
+          SHUFFLE_DECK(store, state, player);
           target.damage += 20;
         }
       });

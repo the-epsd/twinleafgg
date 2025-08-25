@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
+import { Brionne } from './brionne';
 import { DoubleColorlessEnergySUM, EnergyRetrievalSUM, ExpShareSUM, HauSUM, NestBallSUM, RareCandySUM, RotomDexSR, UltraBallSUMSR } from './other-prints';
 import { Charjabug } from './charjabug';
 import { DecidueyeGX } from './decidueye-gx';
@@ -15,6 +16,8 @@ import { Herdier } from './herdier';
 import { LurantisGX } from './lurantis-gx';
 import { Oranguru } from './oranguru';
 import { Passimian } from './passimian';
+import { Popplio } from './popplio';
+import { Primarina } from './primarina';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
 import { Repel } from './repel';
@@ -33,6 +36,7 @@ export const setSunAndMoon: Card[] = [
   new AlolanGrimer(),
   new AlolanMuk(),
   new AlolanRattata(),
+  new Brionne(),
   new Charjabug(),
   new Dartrix(),
   new DecidueyeGX(),
@@ -46,6 +50,8 @@ export const setSunAndMoon: Card[] = [
   new LurantisGX(),
   new Oranguru(),
   new Passimian(),
+  new Popplio(),
+  new Primarina(),
   new ProfessorKukui(),
   new RainbowEnergy(),
   new RotomDex(),

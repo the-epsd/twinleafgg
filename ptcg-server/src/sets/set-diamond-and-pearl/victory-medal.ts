@@ -10,8 +10,9 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -41,8 +42,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     });
 
     // Get selected cards
-    player.deck.moveCardsTo(cards, player.hand);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
+    CLEAN_UP_SUPPORTER(effect, player);
     // Shuffle the deck
     yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
@@ -54,8 +55,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (coinResults.some(r => r === true)) {
     // Get selected cards
-    player.deck.moveTo(player.hand, 1);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    DRAW_CARDS(player, 1);
+    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -81,7 +82,7 @@ export class VictoryMedal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

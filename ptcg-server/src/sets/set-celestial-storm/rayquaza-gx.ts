@@ -13,7 +13,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 // CES Rayquaza-GX 109 (https://limitlesstcg.com/cards/CES/109)
 export class RayquazaGX extends PokemonCard {
@@ -131,7 +131,7 @@ export class RayquazaGX extends PokemonCard {
 
               for (const transfer of transfers) {
                 const target = StateUtils.getTarget(state, player, transfer.to);
-                player.discard.moveCardTo(transfer.card, target);
+                MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
               }
             });
           }

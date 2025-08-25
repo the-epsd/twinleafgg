@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CardTag } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Miraidon extends PokemonCard {
 
@@ -65,6 +66,7 @@ export class Miraidon extends PokemonCard {
         transfers = transfers || [];
         // cancelled by user
         if (transfers.length === 0) {
+          SHUFFLE_DECK(store, state, player);
           return state;
         }
         for (const transfer of transfers) {

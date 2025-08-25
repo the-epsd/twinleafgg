@@ -1,12 +1,11 @@
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
+import { StateUtils } from '../../game/store/state-utils';
 
 
 export class Accelgor extends PokemonCard {
@@ -46,28 +45,19 @@ export class Accelgor extends PokemonCard {
 
   public setNumber: string = '11';
 
-  public usedDeckAndCover = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(
-        effect, [SpecialCondition.PARALYZED, SpecialCondition.POISONED]
-      );
-      store.reduceEffect(state, specialConditionEffect);
-      this.usedDeckAndCover = true;
-    }
-
-    if (effect instanceof AfterAttackEffect && this.usedDeckAndCover) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
       player.active.moveTo(player.deck);
       player.active.clearEffects();
-      this.usedDeckAndCover = false;
+
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, player), this);
+      ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, player), this);
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
       });
-
     }
 
     return state;

@@ -3,6 +3,7 @@ import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Castaway, effect: TrainerEffect): IterableIterator<State> {
@@ -46,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   player.hand.moveCardTo(self, player.supporter);
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -55,6 +56,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
+
+  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

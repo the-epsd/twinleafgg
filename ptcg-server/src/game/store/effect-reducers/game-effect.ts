@@ -28,6 +28,7 @@ import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
+import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS } from '../prefabs/prefabs';
 import { CardList } from '../state/card-list';
@@ -193,7 +194,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     state = store.reduceEffect(state, dealDamage);
   }
 
-  const afterAttackEffect = new AfterAttackEffect(effect.player, attack);
+  const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);
   state = store.reduceEffect(state, afterAttackEffect);
 
   if (store.hasPrompts()) {
@@ -418,6 +419,15 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);
     }
+
+    // Track Pokemon evolution for damage continuity
+    GameStatsTracker.handlePokemonEvolution(
+      effect.player,
+      effect.target,
+      pokemonCard,
+      effect.pokemonCard
+    );
+
     store.log(state, GameLog.LOG_PLAYER_EVOLVES_POKEMON, {
       name: effect.player.name,
       pokemon: pokemonCard.name,

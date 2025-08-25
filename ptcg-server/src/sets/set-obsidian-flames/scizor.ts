@@ -1,52 +1,39 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PowerType } from '../../game/store/card/pokemon-types';
 
 export class Scizor extends PokemonCard {
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Scyther';
+  public cardType: CardType = M;
+  public hp: number = 140;
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
+
+  public attacks = [{
+    name: 'Punishing Scissors',
+    cost: [M],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 50 more damage for each of your opponent\'s Pokémon in play that has an Ability.'
+  },
+  {
+    name: 'Cut',
+    cost: [M, M],
+    damage: 70,
+    text: ''
+  }];
 
   public regulationMark = 'G';
-
-  public stage: Stage = Stage.STAGE_1;
-
-  public evolvesFrom = 'Scyther';
-
-  public cardType: CardType = CardType.METAL;
-
-  public hp: number = 140;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public attacks = [
-    {
-      name: 'Punishing Scissors',
-      cost: [CardType.METAL],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 50 more damage for each of your opponent\'s Pokémon in play that has an Ability.'
-    },
-    {
-      name: 'Cut',
-      cost: [CardType.METAL, CardType.METAL],
-      damage: 70,
-      text: ''
-    },
-  ];
-
   public set: string = 'OBF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '141';
-
   public name: string = 'Scizor';
-
   public fullName: string = 'Scizor OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -56,48 +43,46 @@ export class Scizor extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let benchPokemon: PokemonCard[] = [];
-      const pokemonWithAbilities: PokemonCard[] = [];
+      let pokemonWithUsableAbilities = 0;
+
+      // Check active Pokemon
       const opponentActive = opponent.active.getPokemonCard();
-
-      const stubPowerEffectForActive = new PowerEffect(opponent, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, opponent.active.getPokemonCard()!);
-
-      try {
-        store.reduceEffect(state, stubPowerEffectForActive);
-
-        if (opponentActive && opponentActive.powers.length) {
-          pokemonWithAbilities.push(opponentActive);
-        }
-      } catch {
-        // no abilities in active
-      }
-
-      if (opponent.bench.some(b => b.cards.length > 0)) {
-        const stubPowerEffectForBench = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, opponent.bench.filter(b => b.cards.length > 0)[0].getPokemonCard()!);
-
-        try {
-          store.reduceEffect(state, stubPowerEffectForBench);
-
-          benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-          pokemonWithAbilities.push(...benchPokemon.filter(card => card.powers.length));
-        } catch {
-          // no abilities on bench
+      if (opponentActive && opponentActive.powers.length > 0) {
+        // Check if the ability is actually usable
+        if (this.hasActuallyUsableAbility(store, state, opponent, opponentActive)) {
+          pokemonWithUsableAbilities++;
         }
       }
 
-      const abilities = pokemonWithAbilities.length;
-      effect.damage += abilities * 50;
+      // Check bench Pokemon
+      opponent.bench.forEach(benchSlot => {
+        if (benchSlot.cards.length > 0) {
+          const benchPokemon = benchSlot.getPokemonCard();
+          if (benchPokemon && benchPokemon.powers.length > 0) {
+            // Check if the ability is actually usable
+            if (this.hasActuallyUsableAbility(store, state, opponent, benchPokemon)) {
+              pokemonWithUsableAbilities++;
+            }
+          }
+        }
+      });
+
+      effect.damage += pokemonWithUsableAbilities * 50;
 
       return state;
     }
     return state;
+  }
+
+  private hasActuallyUsableAbility(store: StoreLike, state: State, player: any, pokemon: PokemonCard): boolean {
+    for (const power of pokemon.powers) {
+      if (power.powerType === PowerType.ABILITY) {
+        if (!IS_ABILITY_BLOCKED(store, state, player, pokemon) || power.exemptFromAbilityLock || power.exemptFromInitialize || power.abilityLock) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

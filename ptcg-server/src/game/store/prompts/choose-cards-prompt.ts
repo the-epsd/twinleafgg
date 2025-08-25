@@ -38,7 +38,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
   readonly type: string = ChooseCardsPromptType;
 
   public options: ChooseCardsOptions;
-  private blockedCardNames: string[] = [];
+  private blockedCardIds: number[] = [];
   public player: Player;
 
   constructor(
@@ -75,8 +75,8 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     if (this.options.blocked.length > 0) {
       for (let i = 0; i < this.cards.cards.length; i++) {
         if (this.options.blocked.indexOf(i) !== -1) {
-          if (this.blockedCardNames.indexOf(this.cards.cards[i].name) === -1) {
-            this.blockedCardNames.push(this.cards.cards[i].name);
+          if (this.blockedCardIds.indexOf(this.cards.cards[i].id) === -1) {
+            this.blockedCardIds.push(this.cards.cards[i].id);
           }
         }
       }
@@ -91,7 +91,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     if (this.options.blocked.length > 0) {
       this.options.blocked = [];
       this.cards.cards.forEach((card, index) => {
-        if (this.blockedCardNames.indexOf(card.name) !== -1) {
+        if (this.blockedCardIds.indexOf(card.id) !== -1) {
           this.options.blocked.push(index);
         }
       });

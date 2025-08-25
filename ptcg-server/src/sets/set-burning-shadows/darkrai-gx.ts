@@ -3,7 +3,7 @@ import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects'
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class DarkraiGX extends PokemonCard {
   public cardType: CardType = CardType.DARK;
@@ -72,7 +72,7 @@ export class DarkraiGX extends PokemonCard {
 
       const cards = player.discard.cards.filter(c => c === this);
       cards.forEach((card, index) => {
-        player.discard.moveCardTo(card, slots[index]);
+        MOVE_CARDS(store, state, player.discard, slots[index], { cards: [card], sourceCard: this });
       });
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -123,7 +123,7 @@ export class DarkraiGX extends PokemonCard {
 
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
+            MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           }
 
         });

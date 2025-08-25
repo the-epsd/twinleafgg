@@ -4,8 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, EnergyCard, PlayerType, PokemonCardList } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Girafarig extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -156,7 +155,7 @@ export class Girafarig extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       const opponent = effect.opponent;
       const pokemon = opponent.active;
 
@@ -171,7 +170,7 @@ export class Girafarig extends PokemonCard {
       });
 
       if (specialEnergyCount > 0) {
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+        ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
       }
     }
 

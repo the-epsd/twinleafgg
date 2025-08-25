@@ -9,6 +9,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Card, CardList } from '../../game';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -48,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: effect.trainerCard });
 
   const max = Math.min(basicEnergyCards, 2);
   return store.prompt(state, new ChooseCardsPrompt(
@@ -61,9 +62,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = cards || [];
     if (cards.length > 0) {
       // Recover discarded Pokemon
-      player.discard.moveCardsTo(cards, player.hand);
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: effect.trainerCard });
       // Discard item card
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
     }
   });
 }

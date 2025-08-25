@@ -34,7 +34,7 @@ export class Poliwag extends PokemonCard {
       name: 'Water Gun',
       cost: [CardType.WATER],
       damage: 10,
-      text: 'Does 10 damage plus 10 more damage for each {W} Energy attached to Poliwag but not used to pay for this attack\'s Energy cost. Extra {W} Energy after the 2nd don\'t count.'
+      text: 'Does 10 damage plus 10 more damage for each [W] Energy attached to Poliwag but not used to pay for this attack\'s Energy cost. Extra [W] Energy after the 2nd don\'t count.'
     }
   ];
 

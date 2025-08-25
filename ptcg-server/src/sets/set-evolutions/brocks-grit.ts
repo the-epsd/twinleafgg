@@ -11,6 +11,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class BrocksGrit extends TrainerCard {
 
@@ -63,8 +64,8 @@ export class BrocksGrit extends TrainerCard {
         cards.forEach((card) => {
           store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
         });
-        player.discard.moveCardsTo(cards, player.deck);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
+        CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, StateUtils, ChooseCardsPrompt, CoinFlipPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, StateUtils, CoinFlipPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,7 +35,7 @@ export class TeamRocketsMeowth extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cat Nab
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -43,19 +43,12 @@ export class TeamRocketsMeowth extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1, isSecret: true }
-      ), cards => {
-        cards = cards || [];
-
-        SHOW_CARDS_TO_PLAYER(store, state, player, cards);
-        opponent.hand.moveCardsTo(cards, opponent.deck);
+      if (opponent.hand.cards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+        const randomCard = opponent.hand.cards[randomIndex];
+        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard], sourceCard: this, sourceEffect: this.attacks[0] });
         SHUFFLE_DECK(store, state, opponent);
-      });
+      }
     }
 
     // Wild Scratch

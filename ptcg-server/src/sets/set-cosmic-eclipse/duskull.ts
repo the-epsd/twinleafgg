@@ -2,6 +2,7 @@ import { Card, CardTarget, CardType, ChooseCardsPrompt, ChoosePokemonPrompt, Gam
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Duskull extends PokemonCard {
 
@@ -59,7 +60,7 @@ export class Duskull extends PokemonCard {
       ), cards => {
         cards = cards || [];
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
 
         cards.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
@@ -107,7 +108,7 @@ export class Duskull extends PokemonCard {
             targets = selection || [];
 
             // Evolve Pokemon
-            player.deck.moveCardTo(evolution, targets[0]);
+            MOVE_CARDS(store, state, player.deck, targets[0], { cards: [evolution], sourceCard: this, sourceEffect: this.powers[0] });
             targets[0].clearEffects();
             targets[0].pokemonPlayedTurn = state.turn;
 

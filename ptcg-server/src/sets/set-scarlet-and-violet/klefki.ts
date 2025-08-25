@@ -24,6 +24,7 @@ export class Klefki extends PokemonCard {
   public powers = [{
     name: 'Mischievous Lock',
     powerType: PowerType.ABILITY,
+    abilityLock: true,
     text: 'As long as this Pokémon is in the Active Spot, Basic ' +
       'Pokémon in play (both yours and your opponent\'s) have no ' +
       'Abilities, except for Mischievous Lock.'

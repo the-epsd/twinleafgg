@@ -1,12 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Ivysaur extends PokemonCard {
-  
+
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Bulbasaur';
@@ -45,22 +44,15 @@ export class Ivysaur extends PokemonCard {
   public name: string = 'Ivysaur';
 
   public fullName: string = 'Ivysaur DEX';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-      store.reduceEffect(state, specialCondition);
-  
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-      store.reduceEffect(state, specialCondition);
-
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }
     return state;
   }

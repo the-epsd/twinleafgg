@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class Pokedex extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -45,7 +46,7 @@ export class Pokedex extends TrainerCard {
         deckTop.applyOrder(order);
         deckTop.moveToTopOfDestination(player.deck);
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
 
       });
     }

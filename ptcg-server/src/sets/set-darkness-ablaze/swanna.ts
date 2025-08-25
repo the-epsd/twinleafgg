@@ -7,8 +7,9 @@ import { GameMessage } from '../../game/game-message';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* useFeatherSlice(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useFeatherSlice(next: Function, store: StoreLike, state: State, effect: AttackEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
 
   // If our hand is empty, don't give a discard prompt.
@@ -30,7 +31,7 @@ function* useFeatherSlice(next: Function, store: StoreLike, state: State, effect
   if (cards.length === 0) { return state; }
 
   // Else, discard the card and do 140 damage.
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self, sourceEffect: self.attacks[0] });
   effect.damage += 70;
   return state;
 }
@@ -114,7 +115,7 @@ export class Swanna extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useFeatherSlice(() => generator.next(), store, state, effect);
+      const generator = useFeatherSlice(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 

@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage } from '../../game/game-message';
+import { ATTACH_ENERGY_PROMPT, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PlayerType, SlotType } from '../../game';
 
 export class Pignite extends PokemonCard {
 
@@ -36,31 +36,22 @@ export class Pignite extends PokemonCard {
   public setNumber: string = '17';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-
       const cardList = StateUtils.findCardList(state, this);
-      if (cardList === undefined) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseCardsPrompt(
+      if (!cardList) return state;
+      state = ATTACH_ENERGY_PROMPT(
+        store,
+        state,
         player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        SlotType.DECK,
+        [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { min: 1, max: 1, allowCancel: true }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, cardList);
-        }
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+      );
+      return SHUFFLE_DECK(store, state, player);
     }
-
     return state;
   }
 

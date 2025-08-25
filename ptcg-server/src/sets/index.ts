@@ -174,6 +174,7 @@ export * from './set-journey-together';
 export * from './set-destined-rivals';
 export * from './set-black-bolt-white-flare';
 export * from './set-mega-evolution';
+export * from './set-phantasmal-flames';
 
 //TEST
 export * from './set-test';

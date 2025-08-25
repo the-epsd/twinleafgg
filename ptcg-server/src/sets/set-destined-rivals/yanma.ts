@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Yanma extends PokemonCard {
   public regulationMark = 'I';
@@ -37,7 +37,7 @@ export class Yanma extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Whirlwind
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const opponent = effect.opponent;
       // Check if opponent has any benched Pokemon
       if (!opponent.bench.some(b => b.cards.length > 0)) {

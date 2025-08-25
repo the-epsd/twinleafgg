@@ -1,6 +1,6 @@
 import { PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Meowth extends PokemonCard {
   public cardType = D;
@@ -31,14 +31,8 @@ export class Meowth extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
-
-      DRAW_CARDS(player, 1);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      DRAW_CARDS(effect.player, 1);
     }
 
     return state;

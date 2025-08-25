@@ -1,34 +1,34 @@
-import { ChoosePokemonPrompt, ConfirmPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
-import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { ChoosePokemonPrompt, ConfirmPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 import { AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Shiftry extends PokemonCard {
-  public regulationMark: string = 'D';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Nuzleaf';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 150;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
+
+  public powers = [{
+    name: 'Shiftry Substitution',
+    text: 'As long as this Pokémon is in the Active Spot, each Supporter card in your opponent\'s hand has the effect "Draw 3 cards." (This happens instead of the card\'s usual effect.)',
+    useWhenInPlay: false,
+    powerType: PowerType.ABILITY
+  }];
 
   public attacks = [{
     name: 'Fan Tornado',
-    cost: [CardType.GRASS, CardType.COLORLESS],
+    cost: [G, C],
     damage: 110,
     damageCalculation: 'x',
     text: 'You may have your opponent switch their Active Pokémon with 1 of their Benched Pokémon.'
   }];
 
-  public powers = [{
-    name: 'Shiftry Substitution',
-    text: 'As long as this Pokémon is in the Active Spot, each Supporter card in your opponent\'s hand has the effect “Draw 3 cards.” (This happens instead of the card\'s usual effect.)',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY
-  }];
-
+  public regulationMark: string = 'D';
   public set: string = 'VIV';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
@@ -37,7 +37,7 @@ export class Shiftry extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+    if (effect instanceof PlaySupporterEffect) {
 
       const cardList = StateUtils.findCardList(state, this);
 
@@ -46,7 +46,7 @@ export class Shiftry extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // if shiftry's player played card, don't block it
-      if (player === effect.player) {
+      if (effect.player === player) {
         return state;
       }
 
@@ -54,10 +54,31 @@ export class Shiftry extends PokemonCard {
         return state;
       }
 
+      // Check if Shiftry is active
       if (player.active === cardList) {
+        // Check supporter turn counter BEFORE we process the effect
+        const supporterTurn = effect.player.supporterTurn;
+
+        if (supporterTurn > 0) {
+          throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+        }
+
+        // Prevent the original PlaySupporterEffect from executing
         effect.preventDefault = true;
 
+        // Move the supporter card to the supporter pile
+        effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
+
+        // Apply our "draw 3 cards" effect instead
         opponent.deck.moveTo(opponent.hand, 3);
+
+        // Move the supporter card to discard
+        effect.player.supporter.moveCardTo(effect.trainerCard, effect.player.discard);
+
+        // Increment supporter turn counter
+        effect.player.supporterTurn += 1;
+
+        return state;
       }
 
       return state;

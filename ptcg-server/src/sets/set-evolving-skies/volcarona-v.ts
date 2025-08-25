@@ -7,10 +7,11 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Card, ChooseEnergyPrompt, EnergyCard, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class VolcaronaV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
   public cardType: CardType = R;
   public hp: number = 210;
   public weakness = [{ type: W }];
@@ -39,11 +40,11 @@ export class VolcaronaV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Surging Flames
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       // counting the energies
       const energiesInDiscard = player.discard.cards.filter(c => c instanceof EnergyCard && c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC).length;
-      if (energiesInDiscard === 0){
+      if (energiesInDiscard === 0) {
         return state;
       }
 
@@ -51,7 +52,7 @@ export class VolcaronaV extends PokemonCard {
       // slapping those energies back into the deck
       player.discard.cards.forEach(c => {
         if (c instanceof EnergyCard && c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
-          player.discard.moveCardTo(c, player.deck);
+          MOVE_CARDS(store, state, player.discard, player.deck, { cards: [c], sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
 
@@ -61,7 +62,7 @@ export class VolcaronaV extends PokemonCard {
     }
 
     // Fire Blast
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
       if (!player.active.cards.some(c => c instanceof EnergyCard)) {
@@ -84,7 +85,7 @@ export class VolcaronaV extends PokemonCard {
         store.reduceEffect(state, discardEnergy);
       });
     }
-    
+
     return state;
   }
 }

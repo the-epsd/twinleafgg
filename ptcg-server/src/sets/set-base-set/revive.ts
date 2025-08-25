@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 
@@ -27,7 +28,7 @@ export class Revive extends TrainerCard {
 
       // Check if player's bench is full
       const openSlots = player.bench.filter(b => b.cards.length === 0);
-      
+
       if (openSlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -48,17 +49,17 @@ export class Revive extends TrainerCard {
         if (cards.length > 0) {
           const card = cards[0];
           const slot = openSlots[0];
-          
-          const pokemonCard = card as PokemonCard;          
+
+          const pokemonCard = card as PokemonCard;
           const damage = Math.floor(pokemonCard.hp / 2 / 10) * 10;
 
-          player.discard.moveCardTo(card, slot);
-          
+          MOVE_CARDS(store, state, player.discard, slot, { cards: [card], sourceCard: this });
+
           slot.damage = damage;
           slot.pokemonPlayedTurn = state.turn;
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+          CLEAN_UP_SUPPORTER(effect, player);
+
           return state;
         }
       });

@@ -1,6 +1,6 @@
 import { Attack, CardType, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -59,7 +59,7 @@ export class Steelix extends PokemonCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
         const monsDiscarded = cards.length;
         effect.damage = monsDiscarded * 50;
       });

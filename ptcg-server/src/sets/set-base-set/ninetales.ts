@@ -3,9 +3,8 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack, Power } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -45,12 +44,12 @@ export class Ninetales extends PokemonCard {
     name: 'Fire Blast',
     cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE],
     damage: 80,
-    text: 'Discard 1 {R} Energy card attached to Ninetales in order to use this attack.'
+    text: 'Discard 1 [R] Energy card attached to Ninetales in order to use this attack.'
   }];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       if (opponent.bench.some(b => b.cards.length > 0)) {
         return store.prompt(state, new ChoosePokemonPrompt(

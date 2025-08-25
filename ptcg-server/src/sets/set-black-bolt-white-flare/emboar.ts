@@ -22,7 +22,7 @@ export class Emboar extends PokemonCard {
     name: 'Inferno Fandango',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a Fire Energy card from your hand to 1 of your Pokémon.'
+    text: 'As often as you like during your turn, you may attach a [R] Energy card from your hand to 1 of your Pokémon.'
   }];
 
   public attacks = [

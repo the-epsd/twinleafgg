@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Bill extends TrainerCard {
 
@@ -32,8 +33,8 @@ export class Bill extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.deck.moveTo(player.hand, 2);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      DRAW_CARDS(player, 2);
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;

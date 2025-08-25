@@ -7,6 +7,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
+import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: GuzmaAndHala, effect: TrainerEffect): IterableIterator<State> {
@@ -39,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       { allowCancel: false, min: 0, max: 1, maxStadiums: 1, blocked }
     ), cards => {
       cards = cards || [];
-      player.deck.moveCardsTo(cards, player.hand);
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
       if (cards.length > 0) {
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
@@ -48,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         });
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(effect, player);
 
       return store.prompt(state, new ShowCardsPrompt(
         opponent.id,
@@ -89,7 +90,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         { allowCancel: false, min: 0, max: 1, maxStadiums: 1, blocked }
       ), cards => {
         cards = cards || [];
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
         if (cards.length > 0) {
           state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
@@ -98,7 +99,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
           });
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShowCardsPrompt(
           opponent.id,
@@ -115,7 +116,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         { allowCancel: false, min: 2, max: 2 }
       ), cards => {
         cards = cards || [];
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
 
         cards.forEach(card => {
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
@@ -139,7 +140,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
           { allowCancel: false, min: 0, max: 3, maxSpecialEnergies: 1, maxTools: 1, maxStadiums: 1, blocked }
         ), cards => {
           cards = cards || [];
-          player.deck.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
           if (cards.length > 0) {
             state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
@@ -148,7 +149,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
             });
           }
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          CLEAN_UP_SUPPORTER(effect, player);
 
           return store.prompt(state, new ShowCardsPrompt(
             opponent.id,

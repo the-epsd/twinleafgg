@@ -1,10 +1,10 @@
-import { CardList, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
+import { ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { BoardEffect, CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Mantine extends PokemonCard {
@@ -81,9 +81,6 @@ export class Mantine extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-
-          const deckTop = new CardList();
-
           return store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_DECK,
@@ -95,8 +92,7 @@ export class Mantine extends PokemonCard {
               store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
             });
 
-            player.discard.moveCardTo(selected[0], deckTop);
-            deckTop.moveToTopOfDestination(player.deck);
+            MOVE_CARDS(store, state, player.discard, player.deck, { cards: selected, sourceCard: this, sourceEffect: this.powers[0], toTop: true });
 
             store.prompt(state, new ShowCardsPrompt(
               opponent.id,

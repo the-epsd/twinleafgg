@@ -9,6 +9,7 @@ import { DimensionValley } from './dimension-valley';
 import { GengarEx } from './gengar-ex';
 import { GengarSpiritLink } from './gengar-spirit-link';
 import { Golbat } from './golbat';
+import { Gourgeist } from './gourgeist';
 import { Hydreigon } from './hydreigon';
 import { Joltik } from './joltik';
 import { Lampent } from './lampent';
@@ -59,6 +60,7 @@ export const setPhantomForces: Card[] = [
   new GengarEx(),
   new MGengarEx(),
   new GengarSpiritLink(),
+  new Gourgeist(),
   new Xerosic(),
 
   // Other prints

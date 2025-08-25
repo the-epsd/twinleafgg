@@ -1,15 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, Card, ChooseCardsPrompt, EnergyCard, GameError, PlayerType } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, EnergyCard, GameError, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
-  effect: PowerEffect): IterableIterator<State> {
+  effect: PowerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
 
@@ -69,8 +69,8 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
   });
 
 
-  player.hand.moveCardsTo(cards, player.discard);
-  player.discard.moveCardsTo(recovered, player.hand);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self, sourceEffect: self.powers[0] });
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: recovered, sourceCard: self, sourceEffect: self.powers[0] });
 
   return state;
 }
@@ -139,21 +139,16 @@ export class Starmie extends PokemonCard {
         return state;
       }
 
-      const generator = useSpaceBeacon(() => generator.next(), store, state, effect);
+      const generator = useSpaceBeacon(() => generator.next(), store, state, effect, this);
       player.marker.addMarker(this.SPACE_BEACON_MARKER, this);
       return generator.next().value;
     }
 
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result === true) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-          store.reduceEffect(state, specialConditionEffect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

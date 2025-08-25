@@ -4,7 +4,7 @@ import { StoreLike, State, GameError, GameMessage, StateUtils, PowerType, Player
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class NaganadelGuzzlordGX extends PokemonCard {
@@ -69,7 +69,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
             { superType: SuperType.POKEMON },
             { allowCancel: false, min: 1, max: 1 }
           ), cards => {
-            player.hand.moveCardsTo(cards, player.discard);
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
 
             card.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);
             player.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);
