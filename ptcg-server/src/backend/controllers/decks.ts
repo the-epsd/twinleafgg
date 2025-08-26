@@ -312,8 +312,8 @@ const BanLists: { [key: number]: string[] } = {
     'Miracle Diamond BRP 1',
     'Mysterious Pearl BRP 2',
     'Wonder Platinum DPt-P 33',
-    "Lysandre's Trump Card PHF 99",
-    "Lysandre's Trump Card PHF 118",
+    'Lysandre\'s Trump Card PHF 99',
+    'Lysandre\'s Trump Card PHF 118',
     'Oranguru UPR 114',
     'Forest of Giant Plants AOR 74',
     'Chip-Chip Ice Axe UNB 165',
@@ -349,10 +349,10 @@ const BanLists: { [key: number]: string[] } = {
     'Island Challenge Amulet CEC 194',
     'Jesse & James HIF 58',
     'Jesse & James HIF 68',
-    "Lt. Surge's Strategy UNB 178",
-    "Lt. Surge's Strategy HIF 60",
-    "Lysandre's Trump Card PHF 99",
-    "Lysandre's Trump Card PHF 118",
+    'Lt. Surge\'s Strategy UNB 178',
+    'Lt. Surge\'s Strategy HIF 60',
+    'Lysandre\'s Trump Card PHF 99',
+    'Lysandre\'s Trump Card PHF 118',
     'Marshadow SHL 45',
     'Marshadow PR-SM SM85',
     'Milotic FLF 23',
@@ -526,7 +526,7 @@ function getValidFormatsForCardList(cardNames: string[]): number[] {
   if (!cards || cards.length === 0) {
     return [];
   }
-  let formats: number[][] = [];
+  const formats: number[][] = [];
   cards.filter((c: any) => c && (c.superType !== SuperType.ENERGY || c.energyType === EnergyType.SPECIAL)).forEach((card: any) => {
     if (card) {
       formats.push(getValidFormats(card));
@@ -535,9 +535,9 @@ function getValidFormatsForCardList(cardNames: string[]): number[] {
   let formatList = formats.length > 0 ? formats.reduce((a, b) => a.filter((c: number) => b.includes(c))) : [];
   const set = new Set(cards.filter((c: any) => !!c).map((c: any) => c.name));
   if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
-    (set.has('Professor Juniper') && set.has("Professor's Research")) ||
-    (set.has('Professor Sycamore') && set.has("Professor's Research")) ||
-    (set.has('Lysandre') && set.has("Boss's Orders"))) {
+    (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
+    (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
+    (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
     return formatList.filter((f: number) =>
       f !== Format.GLC &&
       f !== Format.EXPANDED &&
