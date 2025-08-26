@@ -279,7 +279,7 @@ export class Store implements StoreLike {
     if ((card as any).trainerType !== undefined) {
       // Import here to avoid circular dependency at module level
       const { getOverriddenReduceEffect } = require('./card/card-effect-overrides');
-      let format = (store as any)?.handler?.gameSettings?.format ?? 0;
+      const format = (store as any)?.handler?.gameSettings?.format ?? 0;
       const override = getOverriddenReduceEffect(card, format);
       if (override) {
         return override(store, state, effect);

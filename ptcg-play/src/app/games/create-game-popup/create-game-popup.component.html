@@ -49,6 +49,11 @@
         {{ 'GAMES_UNLIMITED_ENERGY' | translate }}
       </mat-checkbox>
     </section>
+    <section class="ptcg-game-rule-checkbox">
+      <mat-checkbox color="primary" name="rule3" [(ngModel)]="settings.rules.alternativeSetup">
+        {{ 'GAMES_ALTERNATIVE_SETUP' | translate }}
+      </mat-checkbox>
+    </section>
     <!-- <section class="ptcg-game-rule-checkbox">
       <mat-checkbox color="primary" name="rule3"
         [(ngModel)]="settings.rules.firstTurnUseSupporter">

@@ -139,7 +139,7 @@ export class CoreSocket {
   public static buildGameState(game: Game): GameState {
     const serializer = new StateSerializer();
     const serializedState = serializer.serialize(game.state);
-    let stateObj = JSON.parse(serializedState);
+    const stateObj = JSON.parse(serializedState);
 
     // Inject computedHp for each PokemonCardList (active and bench)
     const players = game.state.players;
