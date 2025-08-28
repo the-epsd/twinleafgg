@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Poochyena extends PokemonCard {
@@ -39,22 +40,21 @@ export class Poochyena extends PokemonCard {
       const player = effect.player;
       let headsCount = 0;
 
-      const flipUntilTails = (): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
+      const flipUntilTails = () => {
+        const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
           if (result) {
             // Heads - increment count and flip again
             headsCount++;
-            return flipUntilTails();
+            flipUntilTails();
           } else {
             // Tails - calculate final damage
             effect.damage = 10 * headsCount;
-            return state;
           }
         });
+        store.reduceEffect(state, coinFlipEffect);
       };
-      return flipUntilTails();
+
+      flipUntilTails();
     }
     return state;
   }
