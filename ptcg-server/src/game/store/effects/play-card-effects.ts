@@ -171,9 +171,12 @@ export class CoinFlipEffect implements Effect {
   readonly type: string = PlayCardEffects.COIN_FLIP_EFFECT;
   public preventDefault = false;
   public player: Player;
+  public callback?: (result: boolean) => void;
+  public result?: boolean;
 
-  constructor(player: Player) {
+  constructor(player: Player, callback?: (result: boolean) => void) {
     this.player = player;
+    this.callback = callback;
   }
 }
 

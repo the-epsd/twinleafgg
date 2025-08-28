@@ -19,7 +19,7 @@ export class Seadra extends PokemonCard {
     name: 'Water Gun',
     cost: [W, C],
     damage: 20,
-    text: 'Does 20 damage plus 10 more damage for each {W} Energy attached to Seadra but not used to pay for this attack\'s Energy cost. You can\'t add more than 20 damage in this way.'
+    text: 'Does 20 damage plus 10 more damage for each [W] Energy attached to Seadra but not used to pay for this attack\'s Energy cost. You can\'t add more than 20 damage in this way.'
   },
   {
     name: 'Agility',

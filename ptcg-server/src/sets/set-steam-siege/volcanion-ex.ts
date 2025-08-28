@@ -16,6 +16,7 @@ export class VolcanionEX extends PokemonCard {
   public powers = [{
     name: 'Steam Up',
     powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
     text: 'Once during your turn (before your attack), you may discard a [R] Energy card from your hand. If you do, during this turn, your Basic [R] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 

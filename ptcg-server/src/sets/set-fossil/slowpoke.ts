@@ -23,7 +23,7 @@ export class Slowpoke extends PokemonCard {
     name: 'Scavenge',
     cost: [P, P],
     damage: 0,
-    text: 'Discard 1 {P} Energy card attached to Slowpoke in order to use this attack. Put a Trainer card from your discard pile into your hand.'
+    text: 'Discard 1 [P] Energy card attached to Slowpoke in order to use this attack. Put a Trainer card from your discard pile into your hand.'
   }];
 
   public set: string = 'FO';
