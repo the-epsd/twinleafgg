@@ -460,22 +460,55 @@ export class ReconnectionCleanupService {
   }
 
   /**
-   * Optimize the disconnected_session table
+   * Optimize reconnection-related database tables
    */
   private async optimizeSessionTable(): Promise<void> {
     const startTime = Date.now();
+    const tablesToOptimize = [
+      'disconnected_session',
+      'player_session',
+      'persisted_game_state',
+      'connection_metrics'
+    ];
 
     try {
-      // For SQLite, we can use VACUUM to optimize the database
-      // For other databases, this would be different (e.g., OPTIMIZE TABLE for MySQL)
-      await DisconnectedSession.query('VACUUM');
+      for (const tableName of tablesToOptimize) {
+        const tableStartTime = Date.now();
 
-      const duration = Date.now() - startTime;
+        try {
+          // For MySQL, use OPTIMIZE TABLE to optimize the database
+          // For SQLite, this would be VACUUM
+          await DisconnectedSession.query(`OPTIMIZE TABLE ${tableName}`);
+
+          const tableDuration = Date.now() - tableStartTime;
+          logger.logStructured({
+            level: LogLevel.INFO,
+            category: 'maintenance',
+            message: 'Database table optimization completed',
+            data: { table: tableName, durationMs: tableDuration }
+          });
+
+        } catch (error) {
+          const tableDuration = Date.now() - tableStartTime;
+          logger.logStructured({
+            level: LogLevel.ERROR,
+            category: 'maintenance',
+            message: 'Error during table optimization',
+            data: { table: tableName, durationMs: tableDuration },
+            error: error as Error
+          });
+        }
+      }
+
+      const totalDuration = Date.now() - startTime;
       logger.logStructured({
         level: LogLevel.INFO,
         category: 'maintenance',
-        message: 'Database table optimization completed',
-        data: { table: 'disconnected_session', durationMs: duration }
+        message: 'All reconnection tables optimization completed',
+        data: {
+          tablesOptimized: tablesToOptimize.length,
+          totalDurationMs: totalDuration
+        }
       });
 
     } catch (error) {
@@ -483,8 +516,8 @@ export class ReconnectionCleanupService {
       logger.logStructured({
         level: LogLevel.ERROR,
         category: 'maintenance',
-        message: 'Error during table optimization',
-        data: { table: 'disconnected_session', durationMs: duration },
+        message: 'Error during database tables optimization',
+        data: { durationMs: duration },
         error: error as Error
       });
     }
