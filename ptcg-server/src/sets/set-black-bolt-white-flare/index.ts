@@ -24,6 +24,8 @@ import { Fraxure } from './fraxure';
 import { Frillish } from './frillish';
 import { Genesectex } from './genesect-ex';
 import { Gothita } from './gothita';
+import { Gothorita } from './gothorita';
+import { Gothitelle } from './gothitelle';
 import { Haxorus } from './haxorus';
 import { Hilda } from './hilda';
 import { IgnitionEnergy } from './ignition-energy';
@@ -61,6 +63,8 @@ import { Zorua } from './zorua';
 
 export const setSV11: Card[] = [
   new Gothita(),
+  new Gothorita(),
+  new Gothitelle(),
   new Victini(),
   new Snivy(),
   new Servine(),
