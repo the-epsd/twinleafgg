@@ -32,7 +32,7 @@ export class FlappleV extends PokemonCard {
     cost: [CardType.GRASS],
     damage: 20,
     text: 'During your opponent\'s next turn, the Defending Pokémon\'s ' +
-      'attacks cost {C}{C} more.'
+      'attacks cost [C][C] more.'
   }, {
     name: 'Wing Attack',
     cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],

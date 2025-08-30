@@ -6,6 +6,7 @@ import { BrocksMankey } from './brocks-mankey';
 import { BrocksTrainingMethod } from './brocks-training-method';
 import { BrocksZubat } from './brocks-zubat';
 import { BrocksZubat2 } from './brocks-zubat-2';
+import { ErikasDratini } from './erikas-dratini';
 import { ErikasPerfume } from './erikas-perfume';
 import { GoodManners } from './good-manners';
 import { MistysPoliwhirl } from './mistys-poliwhirl';
@@ -20,6 +21,7 @@ export const setGymHeros: Card[] = [
   new BrocksTrainingMethod(),
   new BrocksZubat(),
   new BrocksZubat2(),
+  new ErikasDratini(),
   new ErikasPerfume(),
   new GoodManners(),
   new MistysPoliwhirl(),

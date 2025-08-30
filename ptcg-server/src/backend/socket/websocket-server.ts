@@ -5,13 +5,18 @@ import { SocketClient } from './socket-client';
 import { User } from '../../storage';
 import { authMiddleware } from './auth-middleware';
 import { config } from '../../config';
+import { ReconnectionManager } from '../services/reconnection-manager';
+import { logger } from '../../utils/logger';
 
 export type Middleware = (socket: Socket, next: (err?: any) => void) => void;
 
 export class WebSocketServer {
   public server: Server | undefined;
+  private reconnectionManager: ReconnectionManager;
 
-  constructor(private core: Core) { }
+  constructor(private core: Core) {
+    this.reconnectionManager = new ReconnectionManager(config.reconnection);
+  }
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
@@ -31,21 +36,56 @@ export class WebSocketServer {
     this.server = server;
     server.use(authMiddleware);
 
-    server.on('connection', (socket: Socket) => {
+    server.on('connection', async (socket: Socket) => {
       const user: User = (socket as any).user;
 
-      const socketClient = new SocketClient(user, this.core, server, socket);
-      this.core.connect(socketClient);
-      socketClient.attachListeners();
+      try {
+        const socketClient = new SocketClient(user, this.core, server, socket);
 
-      socket.on('disconnect', (reason) => {
-        try {
-          console.log(`[Socket] Disconnected user=${user?.id ?? 'unknown'} reason=${String(reason)}`);
-        } catch { /* noop */ }
-        this.core.disconnect(socketClient);
-        socketClient.dispose();
-        user.updateLastSeen();
-      });
+        // Simple connection - just connect to core
+        await this.core.connect(socketClient);
+        socketClient.attachListeners();
+
+        socket.on('disconnect', async (reason) => {
+          try {
+            // Simple disconnection - just disconnect from core
+            await this.core.disconnect(socketClient, String(reason));
+            socketClient.dispose();
+            user.updateLastSeen();
+          } catch (error) {
+            logger.log(`[Socket] Error handling disconnection: ${error}`);
+          }
+        });
+
+      } catch (error) {
+        logger.log(`[Socket] Error during connection setup: ${error}`);
+        socket.disconnect(true);
+      }
     });
+  }
+
+
+
+
+
+
+
+  /**
+   * Get the reconnection manager instance
+   */
+  public getReconnectionManager(): ReconnectionManager {
+    return this.reconnectionManager;
+  }
+
+  /**
+   * Dispose of the WebSocketServer and cleanup resources
+   */
+  public dispose(): void {
+    if (this.reconnectionManager) {
+      this.reconnectionManager.dispose();
+    }
+    if (this.server) {
+      this.server.close();
+    }
   }
 }

@@ -1,0 +1,62 @@
+<div class="reconnection-dialog">
+  <div class="dialog-header">
+    <mat-icon class="connection-icon" [class.reconnecting]="reconnectionStatus.isReconnecting">wifi_off</mat-icon>
+    <h2 mat-dialog-title>Connection Lost</h2>
+  </div>
+
+  <div mat-dialog-content class="dialog-content">
+    <!-- Automatic reconnection in progress -->
+    <div *ngIf="shouldShowProgressBar()" class="reconnection-progress">
+      <p>Attempting to reconnect to the game...</p>
+
+      <div class="progress-info">
+        <span>Attempt {{ reconnectionStatus.currentAttempt }} of {{ reconnectionStatus.maxAttempts }}</span>
+        <mat-progress-bar mode="determinate" [value]="getProgressPercentage()">
+        </mat-progress-bar>
+      </div>
+
+      <p class="retry-timer">{{ getNextRetryText() }}</p>
+
+      <div class="connection-tips">
+        <mat-icon class="tip-icon">info</mat-icon>
+        <span>Please keep this window open while we attempt to reconnect.</span>
+      </div>
+    </div>
+
+    <!-- Manual reconnection options -->
+    <div *ngIf="shouldShowRetryButton()" class="manual-options">
+      <div *ngIf="reconnectionStatus.error" class="error-message">
+        <mat-icon class="error-icon">error</mat-icon>
+        <span>{{ getErrorMessage() }}</span>
+      </div>
+      <p class="manual-instruction">Would you like to try reconnecting manually or return to the main menu?</p>
+
+      <div class="troubleshooting-tips">
+        <p class="tips-title">Troubleshooting tips:</p>
+        <ul>
+          <li>Check your internet connection</li>
+          <li>Try refreshing the page if the problem persists</li>
+          <li>Contact support if you continue experiencing issues</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Manual reconnection in progress -->
+    <div *ngIf="isManualReconnecting" class="manual-reconnecting">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Attempting to reconnect...</p>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <!-- Manual reconnection buttons -->
+    <div *ngIf="showManualOptions && !isManualReconnecting">
+      <button mat-button (click)="returnToMenu()" class="return-button">
+        Return to Menu
+      </button>
+      <button mat-raised-button color="primary" (click)="manualReconnect()" class="reconnect-button">
+        Try Again
+      </button>
+    </div>
+  </div>
+</div>

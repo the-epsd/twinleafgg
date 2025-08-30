@@ -5,21 +5,12 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Gengarex extends PokemonCard {
-
-  public regulationMark = 'H';
-
   public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Haunter';
-
   public cardType: CardType = CardType.DARK;
-
   public hp: number = 310;
-
   public weakness = [{ type: CardType.FIGHTING }];
-
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
@@ -28,23 +19,18 @@ export class Gengarex extends PokemonCard {
     text: 'Whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Tricky Steps',
-      cost: [CardType.DARK, CardType.DARK],
-      damage: 160,
-      text: 'You may move an Energy from your opponent\'s Active Pokémon to 1 of their Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tricky Steps',
+    cost: [CardType.DARK, CardType.DARK],
+    damage: 160,
+    text: 'You may move an Energy from your opponent\'s Active Pokémon to 1 of their Benched Pokémon.'
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'TEF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '104';
-
   public name: string = 'Gengar ex';
-
   public fullName: string = 'Gengar ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
@@ -75,8 +61,20 @@ export class Gengarex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttachEnergyEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
+    if (effect instanceof AttachEnergyEffect) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player)
+      // Find the owner of this Gengar-EX
+      let isGengarInPlay = false;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isGengarInPlay = true;
+        }
+      });
+
+      if (!isGengarInPlay) {
+        return state;
+      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {

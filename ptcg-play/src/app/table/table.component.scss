@@ -8,6 +8,14 @@
   user-select: none;
 }
 
+.connection-status-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
 .ptcg-table {
   display: flex;
   flex-direction: column;

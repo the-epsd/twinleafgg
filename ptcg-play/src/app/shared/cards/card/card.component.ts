@@ -20,10 +20,17 @@ export class CardComponent {
   @Input() showCardName: boolean = true;
   @Input() cardback = false;
   @Input() placeholder = false;
-  @Input() customImageUrl: string;
+  @Input() set customImageUrl(value: string) {
+    this._customImageUrl = value;
+    if (this.data) {
+      this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+    }
+  }
+  get customImageUrl(): string { return this._customImageUrl; }
+  private _customImageUrl: string;
   @Input() set card(value: Card) {
     this.data = value;
-    this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+    this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
   }
 
   shouldShowCardName(): boolean {
@@ -179,6 +186,16 @@ export class CardComponent {
       takeUntil(this.destroyed$)
     ).subscribe(enabled => {
       this.showCardName = enabled;
+    });
+
+    this.cardsBaseService.overridesChanged$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(identifier => {
+      if (!this.data) { return; }
+      const myIdentifier = `${this.data.set} ${this.data.setNumber}`;
+      if (identifier === myIdentifier) {
+        this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+      }
     });
   }
 

@@ -1,33 +1,31 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Poochyena extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
   public hp: number = 70;
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: G }];
   public resistance = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Continuous Steps',
-      cost: [CardType.DARK],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
-    },
-    {
-      name: 'Darkness Fang',
-      cost: [CardType.DARK, CardType.COLORLESS],
-      damage: 20,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Continuous Steps',
+    cost: [D],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
+  },
+  {
+    name: 'Darkness Fang',
+    cost: [D, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark = 'H';
   public set: string = 'TWM';
@@ -38,21 +36,25 @@ export class Poochyena extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
+      let headsCount = 0;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
+      const flipUntilTails = () => {
+        const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
+          if (result) {
+            // Heads - increment count and flip again
+            headsCount++;
+            flipUntilTails();
+          } else {
+            // Tails - calculate final damage
+            effect.damage = 10 * headsCount;
           }
-          effect.damage = 10 * heads;
-          return state;
         });
+        store.reduceEffect(state, coinFlipEffect);
       };
-      return flipCoin();
+
+      flipUntilTails();
     }
     return state;
   }

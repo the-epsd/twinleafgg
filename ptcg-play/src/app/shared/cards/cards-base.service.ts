@@ -7,7 +7,7 @@ import { CardInfoListPopupComponent } from './card-info-list-popup/card-info-lis
 import { CardInfoPaneAction } from './card-info-pane/card-info-pane.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionService } from '../session/session.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,6 +20,8 @@ export class CardsBaseService {
   private names: string[] = [];
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
+  private overridesChangedSubject = new Subject<string>();
+  public overridesChanged$ = this.overridesChangedSubject.asObservable();
 
   constructor(
     private apiService: ApiService,
@@ -93,6 +95,26 @@ export class CardsBaseService {
     if (storedImages) {
       this.customImages = JSON.parse(storedImages);
     }
+  }
+
+  public setCustomImageForCard(card: Card, imageUrl: string): void {
+    const fullCardIdentifier = `${card.set} ${card.setNumber}`;
+    if (!imageUrl) {
+      delete this.customImages[fullCardIdentifier];
+    } else {
+      this.customImages[fullCardIdentifier] = imageUrl;
+    }
+    localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
+    this.overridesChangedSubject.next(fullCardIdentifier);
+  }
+
+  public clearCustomImageForCard(card: Card): void {
+    const fullCardIdentifier = `${card.set} ${card.setNumber}`;
+    if (this.customImages[fullCardIdentifier]) {
+      delete this.customImages[fullCardIdentifier];
+      localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
+    }
+    this.overridesChangedSubject.next(fullCardIdentifier);
   }
 
   public getScanUrl(card: Card): string {

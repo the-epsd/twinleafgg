@@ -1,5 +1,17 @@
 <mat-dialog-content>
   <div class="ptcg-image-container">
-    <ptcg-card [card]="card" [class.cardback]="facedown"></ptcg-card>
+    <ptcg-card [card]="card" [class.cardback]="facedown" [customImageUrl]="customImageUrl"></ptcg-card>
+  </div>
+  <div class="ptcg-url-controls">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Custom image URL (only for this card)</mat-label>
+      <input matInput type="url" placeholder="https://..." [value]="customImageUrl" (input)="onUrlInput($event)">
+    </mat-form-field>
+    <div class="ptcg-url-input-hint">Paste a direct image URL to override this card's scan temporarily.</div>
+    <div style="display: flex; gap: 8px; margin-top: 8px;">
+      <button mat-flat-button color="primary" (click)="saveUrlOverride()"
+        [disabled]="!isValidUrl(customImageUrl)">Save</button>
+      <button mat-stroked-button color="warn" (click)="resetUrlOverride()">Reset</button>
+    </div>
   </div>
 </mat-dialog-content>

@@ -149,9 +149,13 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Listen for game creation
     this.socketService.on('matchmaking:gameCreated', (data: { gameId: number }) => {
+      console.log(`[Matchmaking] Received gameCreated event for game ${data.gameId}`);
       if (this.inQueue) {
+        console.log(`[Matchmaking] Navigating to game ${data.gameId}`);
         this.resetQueueState();
         this.router.navigate(['/table', data.gameId]);
+      } else {
+        console.log(`[Matchmaking] Received gameCreated but not in queue`);
       }
     });
   }

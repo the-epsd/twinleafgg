@@ -6,6 +6,17 @@ $avatar-size: map-get($ptcg-size, avatar);
   background-color: #ba3232;
 }
 
+.force-disconnect-button {
+  background-color: #ff6b35;
+  color: white;
+  border-color: #ff6b35;
+
+  &:hover {
+    background-color: #e55a2b;
+    border-color: #e55a2b;
+  }
+}
+
 .end-turn-button {
   background-color: blue;
   color: white;
@@ -17,11 +28,11 @@ $avatar-size: map-get($ptcg-size, avatar);
   grid-area: actions;
   padding: 0 $ptcg-sidebar-tiny-padding;
 
-  & > * {
+  &>* {
     margin-top: $ptcg-sidebar-tiny-padding;
   }
 
-  & > *:last-child {
+  &>*:last-child {
     margin-bottom: $ptcg-sidebar-tiny-padding;
   }
 }
