@@ -61,6 +61,25 @@ export const config = {
     // If set to 0, the bot matches are disabled
     botGamesIntervalCount: 0,
   },
+  reconnection: {
+    // How long to preserve game state (5 minutes)
+    preservationTimeoutMs: 5 * 60 * 1000,
+
+    // Automatic reconnection attempts
+    maxAutoReconnectAttempts: 3,
+
+    // Intervals between reconnection attempts (5s, 10s, 15s)
+    reconnectIntervals: [5000, 10000, 15000],
+
+    // Connection health check interval (30 seconds)
+    healthCheckIntervalMs: 30 * 1000,
+
+    // Cleanup interval for expired sessions (1 minute)
+    cleanupIntervalMs: 60 * 1000,
+
+    // Maximum number of preserved sessions per user
+    maxPreservedSessionsPerUser: 1
+  },
   sets: {
     scansDir: '',
     scansUrl: '{cardImage}'

@@ -40,6 +40,9 @@ export class GameService {
 
   public join(gameId: number): Observable<GameState> {
     this.boardInteractionService.endBoardSelection();
+    // Set the game ID for reconnection tracking
+    this.socketService.setGameId(gameId);
+
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
@@ -124,11 +127,15 @@ export class GameService {
   }
 
   public leave(gameId: number) {
+    // Clear the game ID for reconnection tracking
+    this.socketService.clearGameId();
+
     const games = this.sessionService.session.gameStates;
     const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
     if (index !== -1) {
       const localGameId = games[index].localId;
-      this.socketService.emit('game:leave', gameId)
+      // Use concede instead of leave to properly forfeit the game
+      this.socketService.emit('game:concede', { gameId })
         .subscribe(() => {
           this.removeGameState(gameId);
           this.removeLocalGameState(localGameId);
@@ -222,6 +229,14 @@ export class GameService {
           observer.complete();
         });
     });
+  }
+
+  public forceDisconnect() {
+    // Force disconnect from the socket to simulate network issues
+    this.socketService.forceDisconnect();
+
+    // Show a toast message to inform the user
+    this.alertService.toast(this.translate.instant('FORCE_DISCONNECT_MESSAGE'));
   }
 
   private startListening(id: number) {

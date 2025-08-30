@@ -5,7 +5,7 @@ import { AlertService } from '../../../shared/alert/alert.service';
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { SessionService } from '../../../shared/session/session.service';
-import {GamePhase} from 'ptcg-server';
+import { GamePhase } from 'ptcg-server';
 
 @Component({
   selector: 'ptcg-player-actions',
@@ -67,8 +67,20 @@ export class PlayerActionsComponent implements OnChanges {
     }
     const gameStates = this.sessionService.session.gameStates.slice();
     const switchSide = !this.gameState.switchSide;
-    gameStates[index] = {...gameStates[index], switchSide };
+    gameStates[index] = { ...gameStates[index], switchSide };
     this.sessionService.set({ gameStates });
+  }
+
+  public async forceDisconnect() {
+    const result = await this.alertService.confirm(
+      this.translate.instant('TABLE_FORCE_DISCONNECT_CONFIRM')
+    );
+
+    if (!result) {
+      return;
+    }
+
+    this.gameService.forceDisconnect();
   }
 
   ngOnChanges() {

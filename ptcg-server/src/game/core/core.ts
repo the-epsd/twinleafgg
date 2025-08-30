@@ -15,16 +15,33 @@ import { AbortGameAction } from '../store/actions/abort-game-action';
 import { AbortGameReason } from '../store/actions/abort-game-action';
 import { GamePhase } from '../store/state/state';
 import { BotManager } from '../bots/bot-manager';
+import { ReconnectionManager } from '../../backend/services/reconnection-manager';
+import { ReconnectionConfig } from '../../backend/interfaces/reconnection.interface';
+import { logger } from '../../utils/logger';
+import { User } from '../../storage';
 
 export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
   public messager: Messager;
   private botManager: BotManager;
+  private reconnectionManager: ReconnectionManager;
 
-  constructor() {
+  constructor(reconnectionConfig?: ReconnectionConfig) {
     this.messager = new Messager(this);
     this.botManager = BotManager.getInstance();
+
+    // Initialize reconnection manager with default config if not provided
+    const defaultConfig: ReconnectionConfig = {
+      preservationTimeoutMs: 5 * 60 * 1000, // 5 minutes
+      maxAutoReconnectAttempts: 3,
+      reconnectIntervals: [5000, 10000, 15000],
+      healthCheckIntervalMs: 30 * 1000,
+      cleanupIntervalMs: 60 * 1000,
+      maxPreservedSessionsPerUser: 1
+    };
+    this.reconnectionManager = new ReconnectionManager(reconnectionConfig || defaultConfig);
+
     const cleanerTask = new CleanerTask(this);
     cleanerTask.startTasks();
     this.startRankingDecrease();
@@ -35,43 +52,45 @@ export class Core {
     return this.botManager;
   }
 
-  public connect(client: Client): Client {
+  public getReconnectionManager(): ReconnectionManager {
+    return this.reconnectionManager;
+  }
+
+  public async connect(client: Client): Promise<Client> {
     client.id = generateId(this.clients);
     client.core = this;
     client.games = [];
-    this.emit(c => c.onConnect(client));
+
+    // Add client to the core
     this.clients.push(client);
+
+    // Emit connection events to notify other clients
+    this.emit(c => c.onConnect(client));
+
+    // Send updated user list to all clients to show the new user as online
+    this.broadcastUserUpdates();
+
     return client;
   }
 
-  public disconnect(client: Client): void {
-    try {
-      const index = this.clients.indexOf(client);
-      if (index === -1) {
-        console.log(`[Core Disconnect] Client not found for user ${client.user.name} (${client.user.id})`);
-        throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
-      }
-
-      // Log active games the user is leaving
-      if (client.games.length > 0) {
-        console.log(`[Core Disconnect] User ${client.user.name} (${client.user.id}) disconnected with ${client.games.length} active games`);
-        client.games.forEach(game => {
-          console.log(`[Game Disconnect] Game ${game.id}: ${game.state.phase} phase`);
-        });
-      }
-
-      client.games.forEach(game => this.leaveGame(client, game));
-      this.clients.splice(index, 1);
-      client.core = undefined;
-      this.emit(c => c.onDisconnect(client));
-    } catch (error) {
-      if (error instanceof GameError) {
-        console.error('[Core Disconnect Error]:', error.message);
-      } else {
-        console.error('[Core Disconnect Unknown Error]:', error);
-        throw error;
-      }
+  public async disconnect(client: Client, reason: string = 'unknown'): Promise<void> {
+    const index = this.clients.indexOf(client);
+    if (index === -1) {
+      throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
+
+    // Leave all games
+    client.games.forEach(game => this.leaveGame(client, game));
+
+    // Remove client from core
+    this.clients.splice(index, 1);
+    client.core = undefined;
+
+    // Notify other clients
+    this.emit(c => c.onDisconnect(client));
+
+    // Send updated user list to all clients to show the user as offline
+    this.broadcastUserUpdates();
   }
 
   public createGame(
@@ -121,6 +140,9 @@ export class Core {
     deck2: string[]
   ): Game {
     if (this.clients.indexOf(client) === -1) {
+      throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+    }
+    if (this.clients.indexOf(client2) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
 
@@ -201,6 +223,21 @@ export class Core {
     this.clients.forEach(fn);
   }
 
+  /**
+   * Broadcast user updates to all connected clients
+   */
+  private broadcastUserUpdates(): void {
+    // Get all unique users from connected clients
+    const userIds = new Set(this.clients.map(c => c.user.id));
+    const users = Array.from(userIds).map(userId => {
+      const client = this.clients.find(c => c.user.id === userId);
+      return client ? client.user : null;
+    }).filter((user): user is User => user !== null);
+
+    // Emit user updates to all clients
+    this.emit(c => c.onUsersUpdate(users));
+  }
+
   private startRankingDecrease() {
     const scheduler = Scheduler.getInstance();
     const rankingCalculator = new RankingCalculator();
@@ -218,11 +255,28 @@ export class Core {
   private startInactiveGameCleanup(): void {
     const scheduler = Scheduler.getInstance();
     // Check for inactive games every 5 minutes
-    scheduler.run(() => {
+    scheduler.run(async () => {
       const inactiveTimeout = 5 * 60 * 1000; // 5 minutes
 
-      this.games.forEach(game => {
+      for (const game of this.games) {
         if (game.isInactive(inactiveTimeout)) {
+          console.log(`[Game Cleanup] Checking inactive game ${game.id}`);
+
+          // Check if this game has preserved sessions before cleaning up
+          try {
+            const activeSessions = await this.reconnectionManager.getActiveDisconnectedSessions();
+            const gameHasPreservedSessions = activeSessions.some(session => session.gameId === game.id);
+
+            if (gameHasPreservedSessions) {
+              console.log(`[Game Cleanup] Skipping cleanup of game ${game.id} - has preserved sessions`);
+              continue;
+            }
+          } catch (error) {
+            console.log(`[Game Cleanup] Error checking preserved sessions for game ${game.id}: ${error}`);
+            // If we can't check, skip cleanup to be safe
+            continue;
+          }
+
           console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
           // Force end the game
           const state = game.state;
@@ -238,8 +292,18 @@ export class Core {
           game.cleanup();
           this.deleteGame(game);
         }
-      });
+      }
     }, 5 * 60); // Run every 5 minutes
+  }
+
+  /**
+   * Dispose of the Core and cleanup resources
+   */
+  public dispose(): void {
+    if (this.reconnectionManager) {
+      this.reconnectionManager.dispose();
+    }
+    logger.log('[Core] Disposed');
   }
 
 }

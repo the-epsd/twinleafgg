@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Connection, createConnection, EntityManager } from 'typeorm';
 import {
-  Avatar, Conversation, Deck, Match, Message, Replay, User,
+  Avatar, Conversation, Deck, DisconnectedSession, Match, Message, Replay, User,
   BattlePassSeason, UserBattlePass, UserUnlockedItem, CustomAvatar
 } from './';
 
@@ -29,6 +29,7 @@ export class Storage {
         Conversation,
         CustomAvatar,
         Deck,
+        DisconnectedSession,
         Match,
         Message,
         Replay,

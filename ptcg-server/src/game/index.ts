@@ -14,6 +14,7 @@ export * from './store/actions/action';
 export * from './store/actions/add-player-action';
 export * from './store/actions/append-log-action';
 export * from './store/actions/change-avatar-action';
+export * from './store/actions/concede-action';
 export * from './store/actions/game-actions';
 export * from './store/actions/invite-player-action';
 export * from './store/actions/play-card-action';

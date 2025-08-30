@@ -38,6 +38,8 @@
 
   <span class="epsd-spacer"></span>
 
+  <!-- Connection status indicator -->
+  <app-connection-status *ngIf="loggedUser"></app-connection-status>
 
   <!-- Language select -->
   <ptcg-language-select *ngIf="!loggedUser"></ptcg-language-select>

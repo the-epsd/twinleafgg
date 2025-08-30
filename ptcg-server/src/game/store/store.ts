@@ -1,6 +1,7 @@
 import { Action } from './actions/action';
 import { AbortGameAction } from './actions/abort-game-action';
 import { AppendLogAction } from './actions/append-log-action';
+import { ConcedeAction } from './actions/concede-action';
 import { Card } from './card/card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
@@ -28,6 +29,7 @@ import { playerStateReducer } from './reducers/player-state-reducer';
 import { retreatReducer } from './effect-reducers/retreat-effect';
 import { setupPhaseReducer } from './reducers/setup-reducer';
 import { abortGameReducer } from './reducers/abort-game-reducer';
+import { concedeReducer } from './reducers/concede-reducer';
 
 interface PromptItem {
   ids: number[],
@@ -50,6 +52,12 @@ export class Store implements StoreLike {
 
     if (action instanceof AbortGameAction) {
       state = abortGameReducer(this, state, action);
+      this.handler.onStateChange(state);
+      return state;
+    }
+
+    if (action instanceof ConcedeAction) {
+      state = concedeReducer(this, state, action);
       this.handler.onStateChange(state);
       return state;
     }

@@ -12,5 +12,7 @@ export interface Client extends CoreClient, GameClient, MessageClient {
   user: User;
   attachListeners?(): void;
   onTimerUpdate?(game: Game, playerStats: PlayerStats[]): void;
+  onPlayerDisconnected?(game: Game, disconnectedClient: Client): void;
+  onPlayerReconnected?(game: Game, reconnectedClient: Client): void;
 
 }

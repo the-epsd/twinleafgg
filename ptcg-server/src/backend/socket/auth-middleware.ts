@@ -5,10 +5,12 @@ import { User, Deck } from '../../storage';
 import { RateLimit } from '../common/rate-limit';
 import { validateToken } from '../services/auth-token';
 import { CardManager, DeckAnalyser } from '../../game';
+import { logger } from '../../utils/logger';
 
 export async function authMiddleware(socket: Socket, next: (err?: any) => void): Promise<void> {
   const rateLimit = RateLimit.getInstance();
   const token: string = socket.handshake.query && socket.handshake.query.token as string;
+  const reconnectionAttempt: string = socket.handshake.query && socket.handshake.query.reconnection as string;
   const userId = validateToken(token);
   const ipAddress: string = (socket.handshake.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim()
     || (socket.request.socket.remoteAddress || (socket.request.connection as any)?.remoteAddress)
@@ -27,6 +29,13 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
   if (user === undefined) {
     rateLimit.increment(ipAddress);
     return next(new Error(ApiErrorEnum.AUTH_TOKEN_INVALID));
+  }
+
+  // Log reconnection attempts for monitoring
+  if (reconnectionAttempt === 'true') {
+    logger.log(`[Auth] Reconnection attempt for user=${userId} from IP=${ipAddress}`);
+    // Mark this socket as a reconnection attempt
+    (socket as any).isReconnectionAttempt = true;
   }
 
   // --- Start Deck Migration Logic ---

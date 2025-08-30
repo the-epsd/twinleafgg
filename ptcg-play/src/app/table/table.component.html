@@ -12,6 +12,11 @@
   </ptcg-sidebar>
 
   <ptcg-content [loading]="loading || waiting">
+    <!-- Connection Status Indicator -->
+    <div class="connection-status-container">
+      <app-connection-status></app-connection-status>
+    </div>
+
     <div class="ptcg-table" *ngIf="gameState">
       <!-- <ptcg-vs-screen></ptcg-vs-screen> -->
       <!-- Table board -->
