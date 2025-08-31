@@ -58,6 +58,7 @@ import { SurfingBeach } from './surfing-beach';
 import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
+import { Yveltal } from './yveltal';
 
 export const setMegaEvolution: Card[] = [
   new Abra(),
@@ -119,6 +120,7 @@ export const setMegaEvolution: Card[] = [
   new WallysCompassion(),
   new Xerneas(),
   new Yungoos(),
+  new Yveltal(),
 
   // Other Prints
   // new BulbasaurM1S(),

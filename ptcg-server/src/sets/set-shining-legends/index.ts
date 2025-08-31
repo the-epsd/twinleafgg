@@ -3,6 +3,7 @@ import { Croconaw } from './croconaw';
 import { Hoopa } from './hoopa';
 import { Latios } from './latios';
 import { Marshadow } from './marshadow';
+import { MewtwoGX } from './mewtwo-gx';
 import { Plusle } from './plusle';
 import { Scraggy } from './scraggy';
 import { Shaymin } from './shaymin';
@@ -19,6 +20,7 @@ export const setShiningLegends: Card[] = [
   new Hoopa(),
   new Latios(),
   new Marshadow(),
+  new MewtwoGX(),
   new Plusle(),
   new Scraggy(),
   new Shaymin(),
