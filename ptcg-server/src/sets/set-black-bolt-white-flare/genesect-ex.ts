@@ -65,7 +65,7 @@ export class Genesectex extends PokemonCard {
         }
       });
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.POKEMON }, { min: 0, max: 2, allowCancel: false }, this.powers[0]);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.POKEMON }, { min: 0, max: 2, allowCancel: false, blocked }, this.powers[0]);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.METAL_SIGNAL_MARKER, this);

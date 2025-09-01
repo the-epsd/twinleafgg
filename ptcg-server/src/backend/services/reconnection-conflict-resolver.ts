@@ -149,7 +149,7 @@ export class ReconnectionConflictResolver {
   ): ConflictResolutionResult {
     const sessionId = `conflict-resolution-${userId}-${gameId}-${Date.now()}`;
     let resolvedState = { ...serverState }; // Start with server state as base
-    let fallbackApplied = false;
+    const fallbackApplied = false;
 
     try {
       logger.logStructured({
