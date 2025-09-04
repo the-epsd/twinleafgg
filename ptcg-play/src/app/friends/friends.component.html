@@ -1,0 +1,150 @@
+<div class="friends-dashboard">
+  <!-- Gaming-style tab navigation -->
+  <div class="nav-container">
+    <div class="tab-navigation">
+      <button class="nav-tab" [class.active]="activeTab === 'friends'" (click)="onTabChange('friends')"
+        [disabled]="tabTransitioning">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.999 1.999 0 0 0 18.06 7c-.8 0-1.54.5-1.85 1.26l-1.92 5.75c-.15.45-.23.93-.23 1.41V22h4zM12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2.5 16v-7H6V9.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V11h2v4.5c0 .83-.67 1.5-1.5 1.5S8 16.33 8 15.5V14H6.5v8H8z" />
+          </svg>
+        </div>
+        <div class="tab-content">
+          <span class="tab-title">Friends</span>
+          <span class="tab-badge">{{ friends.length }}</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" [class.active]="activeTab === 'pending'" (click)="onTabChange('pending')"
+        [disabled]="tabTransitioning">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+          </svg>
+        </div>
+        <div class="tab-content">
+          <span class="tab-title">Requests</span>
+          <span class="tab-badge" [class.has-requests]="pendingRequests.length > 0">{{ pendingRequests.length }}</span>
+        </div>
+      </button>
+
+      <button class="nav-tab" [class.active]="activeTab === 'sent'" (click)="onTabChange('sent')"
+        [disabled]="tabTransitioning">
+        <div class="tab-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </div>
+        <div class="tab-content">
+          <span class="tab-title">Sent</span>
+          <span class="tab-badge">{{ sentRequests.length }}</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content area -->
+  <div class="dashboard-content">
+    <!-- Main loading state -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading Battle Network...</div>
+    </div>
+
+    <!-- Content wrapper for smooth transitions -->
+    <div class="tab-content-container" *ngIf="!loading">
+      <!-- Transition indicator -->
+      <div *ngIf="tabTransitioning" class="tab-transition-indicator"></div>
+
+      <div class="tab-content-wrapper">
+
+        <!-- Friends List Tab -->
+        <div *ngIf="activeTab === 'friends'" class="tab-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg class="panel-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.47 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm2.78 1.58c-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57c0-.81-.48-1.53-1.22-1.85zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" />
+              </svg>
+              Your Battle Network
+            </h2>
+
+            <button class="add-friend-btn" (click)="openAddFriendModal()" title="Add Friend">
+              <svg class="add-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+              <span class="btn-text">Add Friend</span>
+            </button>
+          </div>
+
+          <app-friends-list [friends]="friends" [users]="users" (removeFriend)="onRemoveFriend($event)"
+            (blockUser)="onBlockUser($event)" (unblockUser)="onUnblockUser($event)">
+          </app-friends-list>
+        </div>
+
+        <!-- Pending Requests Tab -->
+        <div *ngIf="activeTab === 'pending'" class="tab-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg class="panel-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              Incoming Requests
+            </h2>
+            <div class="request-counter">
+              <span class="counter-value">{{ pendingRequests.length }}</span>
+              <span class="counter-label">pending</span>
+            </div>
+          </div>
+
+          <app-friend-requests [requests]="pendingRequests" [users]="users" requestType="pending"
+            (acceptRequest)="onAcceptRequest($event)" (rejectRequest)="onRejectRequest($event)">
+          </app-friend-requests>
+        </div>
+
+        <!-- Sent Requests Tab -->
+        <div *ngIf="activeTab === 'sent'" class="tab-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg class="panel-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+              </svg>
+              Outgoing Requests
+            </h2>
+            <div class="request-counter">
+              <span class="counter-value">{{ sentRequests.length }}</span>
+              <span class="counter-label">sent</span>
+            </div>
+          </div>
+
+          <app-friend-requests [requests]="sentRequests" [users]="users" requestType="sent"
+            (cancelRequest)="onCancelRequest($event)">
+          </app-friend-requests>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Friend Modal -->
+  <div class="modal-overlay" [class.active]="showAddFriendModal" (click)="closeAddFriendModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Friend</h3>
+        <button class="modal-close" (click)="closeAddFriendModal()">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <app-send-friend-request (requestSent)="onFriendRequestSent()"></app-send-friend-request>
+      </div>
+    </div>
+  </div>
+</div>

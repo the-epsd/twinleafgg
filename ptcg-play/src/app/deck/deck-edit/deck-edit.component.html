@@ -1,12 +1,13 @@
 <ptcg-content [loading]="loading">
   <div class="ptcg-deck-edit">
-    <ptcg-deck-edit-toolbar [disabled]="isThemeDeck || loading" [deck]="deck" (filterChange)="toolbarFilter = $event"
-      (save)="saveDeck()" (import)="importFromClipboard()" (export)="exportDeck()" (clearDeck)="clearDeck()"
-      [isThemeDeck]="isThemeDeck">
+    <ptcg-deck-edit-toolbar *ngIf="deck" [disabled]="isThemeDeck || loading" [deck]="deck"
+      (filterChange)="toolbarFilter = $event" (save)="saveDeck()" (import)="importFromClipboard()"
+      (export)="exportDeck()" (clearDeck)="clearDeck()" [isThemeDeck]="isThemeDeck">
     </ptcg-deck-edit-toolbar>
 
     <ptcg-deck-edit-panes [toolbarFilter]="toolbarFilter" [(deckItems)]="deckItems" [disabled]="isThemeDeck || loading"
-      [isThemeDeck]="isThemeDeck">
+      [isThemeDeck]="isThemeDeck" [unlockedArtworks]="unlockedArtworks" [selectedArtworks]="selectedArtworks"
+      (artworkChange)="onArtworkChange($event)">
     </ptcg-deck-edit-panes>
 
     <ptcg-deck-edit-info [deckItems]="deckItems">

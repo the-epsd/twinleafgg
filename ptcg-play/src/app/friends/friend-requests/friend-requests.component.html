@@ -1,0 +1,154 @@
+<div class="battle-requests">
+  <div *ngIf="requests.length === 0" class="empty-network">
+    <div class="empty-visual">
+      <div class="signal-container">
+        <svg class="signal-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+        </svg>
+
+        <div class="signal-waves">
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-content">
+      <h3 class="empty-title">{{ getEmptyStateMessage() }}</h3>
+      <p class="empty-description">{{ getEmptyStateDescription() }}</p>
+    </div>
+  </div>
+
+  <div class="request-roster" *ngIf="requests.length > 0">
+    <div *ngFor="let request of requests; trackBy: trackByRequest" class="request-card"
+      [class.incoming-request]="requestType === 'pending'" [class.outgoing-request]="requestType === 'sent'">
+
+      <!-- Request type indicator -->
+      <div class="request-indicator">
+        <div class="indicator-pulse" [class.incoming]="requestType === 'pending'"
+          [class.outgoing]="requestType === 'sent'"></div>
+      </div>
+
+      <!-- Trainer profile section -->
+      <div class="trainer-profile">
+        <div class="avatar-section">
+          <div class="avatar-frame">
+            <ptcg-avatar [avatarFile]="getRequestUser(request).avatarFile" class="avatar-image"></ptcg-avatar>
+
+            <div class="avatar-status" [class.online]="getRequestUser(request).connected">
+              <svg class="status-icon" viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="3" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Status badge -->
+          <div class="request-status-badge" [class]="getStatusBadgeClass(request.status)">
+            {{ getStatusText(request.status) }}
+          </div>
+        </div>
+
+        <!-- Trainer details -->
+        <div class="trainer-details">
+          <div class="trainer-header">
+            <div class="trainer-name">
+              {{ getRequestUser(request).name }}
+              <svg *ngIf="getRequestUser(request).connected" class="online-indicator" viewBox="0 0 8 8"
+                fill="currentColor">
+                <circle cx="4" cy="4" r="3" />
+              </svg>
+            </div>
+
+            <div class="trainer-meta">
+              <div class="rank-info">
+                <svg class="rank-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                <span class="rank-text">{{ getRequestUser(request).ranking || 'Unranked' }}</span>
+              </div>
+
+              <div class="connection-status">
+                <span class="status-text" [class.online]="getRequestUser(request).connected">
+                  {{ getRequestUser(request).connected ? 'ONLINE' : 'OFFLINE' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Request metadata -->
+          <div class="request-metadata">
+            <div class="timestamp-info">
+              <svg class="clock-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+              </svg>
+              <span class="timestamp-text">{{ request.created_at | date:'short' }}</span>
+            </div>
+
+            <div class="request-type">
+              <span class="type-label">
+                {{ requestType === 'pending' ? 'Incoming Battle Request' : 'Outgoing Battle Request' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Battle controls -->
+      <div class="battle-controls">
+        <!-- Pending requests - show accept/reject buttons -->
+        <div class="control-group" *ngIf="requestType === 'pending' && request.status === 'pending'">
+          <button class="action-btn accept-btn" (click)="onAcceptRequest(request.id)" title="Accept battle request">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            <span class="btn-text">Accept</span>
+          </button>
+
+          <button class="action-btn reject-btn" (click)="onRejectRequest(request.id)" title="Reject battle request">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+            <span class="btn-text">Reject</span>
+          </button>
+        </div>
+
+        <!-- Sent requests - show cancel button -->
+        <div class="control-group" *ngIf="requestType === 'sent' && request.status === 'pending'">
+          <button class="action-btn cancel-btn" (click)="onCancelRequest(request.id)" title="Cancel battle request">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            <span class="btn-text">Cancel</span>
+          </button>
+        </div>
+
+        <!-- Show status for non-pending requests -->
+        <div class="status-display" *ngIf="request.status !== 'pending'">
+          <div class="final-status" [class]="getStatusBadgeClass(request.status)">
+            <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor" *ngIf="request.status === 'accepted'">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor" *ngIf="request.status === 'rejected'">
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+            <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor"
+              *ngIf="request.status !== 'accepted' && request.status !== 'rejected'">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            <span>{{ getStatusText(request.status) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

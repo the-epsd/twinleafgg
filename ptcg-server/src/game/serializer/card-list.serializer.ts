@@ -26,6 +26,11 @@ export class CardListSerializer implements Serializer<CardList> {
       }
     }
 
+    // Include artworksMap if present so clients can resolve custom art
+    if ((cardList as any).artworksMap) {
+      data.artworksMap = (cardList as any).artworksMap;
+    }
+
     return {
       ...data,
       _type: constructorName,

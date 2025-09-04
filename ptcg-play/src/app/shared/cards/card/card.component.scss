@@ -7,6 +7,14 @@
     .holo-overlay {
       display: none;
     }
+
+    .custom-artwork-overlay {
+      display: none;
+    }
+
+    .base-image {
+      display: none;
+    }
   }
 
   .ptcg-card:after {
@@ -16,6 +24,14 @@
 
 :host.cardback {
   .ptcg-card-scan {
+    display: none;
+  }
+
+  .custom-artwork-overlay {
+    display: none;
+  }
+
+  .base-image {
     display: none;
   }
 
@@ -71,6 +87,17 @@
   left: 0;
 }
 
+// Base image styling
+.base-image {
+  z-index: 1;
+}
+
+// Custom artwork overlay styling
+.custom-artwork-overlay {
+  z-index: 2;
+  pointer-events: none;
+}
+
 .card-name {
   position: absolute;
   left: 50%;
@@ -80,7 +107,7 @@
   font-size: 8px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  z-index: 1;
+  z-index: 4;
   white-space: nowrap;
   background: rgba(26, 32, 44);
   border-radius: 10px;
@@ -103,7 +130,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 3;
   border-radius: $card-border-radius;
   pointer-events: none;
   animation: GradientScroll 2s linear infinite;

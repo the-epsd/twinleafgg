@@ -19,7 +19,6 @@ export interface BattlePassSeason {
 export interface BattlePassData {
   ok: boolean;
   season: BattlePassSeason;
-  isPremium: boolean;
 }
 
 export interface BattlePassProgress {
@@ -28,7 +27,6 @@ export interface BattlePassProgress {
   claimedRewards: number[];
   nextLevelXp: number;
   totalXpForCurrentLevel: number;
-  isPremium: boolean;
   availableRewards: BattlePassReward[];
 }
 

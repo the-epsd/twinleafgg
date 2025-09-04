@@ -8,6 +8,7 @@ import { ApiService } from './api.service';
 import { AvatarService } from './services/avatar.service';
 import { CardsService } from './services/cards.service';
 import { DeckService } from './services/deck.service';
+import { FriendsService } from './services/friends.service';
 import { GameService } from './services/game.service';
 import { LoginService } from './services/login.service';
 import { MainService } from './services/main.service';
@@ -31,6 +32,7 @@ import { SocketService } from './socket.service';
     AvatarService,
     CardsService,
     DeckService,
+    FriendsService,
     GameService,
     LoginService,
     MainService,

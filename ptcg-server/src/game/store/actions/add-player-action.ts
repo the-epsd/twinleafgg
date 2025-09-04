@@ -7,7 +7,8 @@ export class AddPlayerAction implements Action {
   constructor(
     public clientId: number,
     public name: string,
-    public deck: string[]
-  ) {}
+    public deck: string[],
+    public artworksMap?: { [code: string]: { imageUrl: string; holoType?: string } }
+  ) { }
 
 }

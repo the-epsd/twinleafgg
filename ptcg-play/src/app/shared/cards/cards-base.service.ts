@@ -20,8 +20,10 @@ export class CardsBaseService {
   private names: string[] = [];
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
+
   private overridesChangedSubject = new Subject<string>();
   public overridesChanged$ = this.overridesChangedSubject.asObservable();
+  private globalArtworksMap: { [code: string]: string } = {};
 
   constructor(
     private apiService: ApiService,
@@ -132,6 +134,27 @@ export class CardsBaseService {
       .replace('{name}', card.fullName);
   }
 
+  public setGlobalArtworksMap(map: { [code: string]: string } | undefined): void {
+    this.globalArtworksMap = map || {};
+  }
+
+  public getGlobalArtworkUrl(fullName: string): string | undefined {
+    return this.globalArtworksMap ? this.globalArtworksMap[fullName] : undefined;
+  }
+
+  public getScanUrlWithArt(card: Card, artworksSelection?: { code: string; artworkId?: number }[], unlocked?: { id: number, imageUrl: string }[]): string {
+    // If player selected an alternate art for this card, find it among unlocked and return its image
+    if (artworksSelection && unlocked) {
+      const code = card.fullName;
+      const selected = artworksSelection.find(a => a.code === code && a.artworkId);
+      if (selected) {
+        const art = unlocked.find(u => u.id === selected.artworkId);
+        if (art && art.imageUrl) return art.imageUrl;
+      }
+    }
+    return this.getScanUrl(card);
+  }
+
   public setScanUrl(jsonUrl: string): Observable<void> {
     return this.http.get(jsonUrl).pipe(
       map((json: any) => {
@@ -151,6 +174,11 @@ export class CardsBaseService {
   }
 
   public showCardInfo(data: CardInfoPopupData = {}): Promise<CardInfoPaneAction> {
+    // If caller passed a plain mapping to simulate artworksMap, wrap it into an object with artworksMap
+    const maybeMap = data.cardList as any;
+    if (maybeMap && !('cards' in maybeMap) && typeof maybeMap === 'object') {
+      data.cardList = { cards: [data.card], artworksMap: maybeMap } as any;
+    }
     const dialog = this.dialog.open(CardInfoPopupComponent, {
       maxWidth: '100%',
       width: '650px',

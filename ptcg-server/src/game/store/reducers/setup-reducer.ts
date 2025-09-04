@@ -574,6 +574,23 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
 
       const player = createPlayer(action.clientId, action.name);
       player.deck = CardList.fromList(action.deck);
+      // Attach alternate artwork map to player's lists so clients can resolve images
+      if (action.artworksMap) {
+        const lists: any[] = [
+          player.deck,
+          player.hand,
+          player.discard,
+          player.lostzone,
+          player.stadium,
+          player.supporter,
+          player.active,
+          ...player.bench,
+          ...player.prizes
+        ];
+        lists.forEach(list => { (list as any).artworksMap = action.artworksMap; });
+        // Also store on player for robustness
+        (player as any).artworksMap = action.artworksMap;
+      }
       player.deck.isSecret = true;
       player.deck.cards.forEach(c => {
         state.cardNames.push(c.fullName);

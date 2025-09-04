@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Archetype, Format } from 'ptcg-server';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { filter, takeUntil, map, takeWhile } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { SocketService } from '../../api/socket.service';
 import { DeckService } from '../../api/services/deck.service';
 import { DeckListEntry } from '../../api/interfaces/deck.interface';
@@ -13,12 +13,14 @@ import { DeckItem } from '../../deck/deck-card/deck-card.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
+@UntilDestroy()
 @Component({
   selector: 'ptcg-matchmaking-lobby',
   templateUrl: './matchmaking-lobby.component.html',
   styleUrls: ['./matchmaking-lobby.component.scss']
 })
 export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
+  @Output() formatSelected = new EventEmitter<Format>();
   // Make Format enum available to the template
   public Format = Format;
 
@@ -36,7 +38,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     { value: Format.RETRO, label: 'LABEL_RETRO' },
   ];
 
-  public selectedFormat: Format = Format.STANDARD;
+  public selectedFormat: Format | null = null;
   public deckId: number | null = null;
   public decksByFormat: DeckListEntry[] = [];
   public inQueue = false;
@@ -46,6 +48,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public timeInQueue = 0;
   public defaultDeckId: number | null = null;
   public formatDefaultDecks: { [key: string]: number } = {};
+  public formatDecks: { [key: number]: DeckListEntry[] } = {}; // Store decks for each format
+  public currentPage = 0; // Track which page of 4 formats we're viewing
+  public lastSelectedFormat: Format | null = null; // Store last selected format without auto-selecting
+  public isFormatAnimating = false; // Track if format animation is playing
+  public hoveredFormat: Format | null = null; // Track which format is being hovered
 
   private queueTimeout: ReturnType<typeof setTimeout> | null = null;
   private cooldownInterval: ReturnType<typeof setInterval> | null = null;
@@ -95,15 +102,17 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         }
       });
 
-    // Load last selected format from localStorage
+    // Load last selected format from localStorage, but don't auto-select
     const lastFormat = localStorage.getItem('lastSelectedFormat');
     if (lastFormat) {
-      this.selectedFormat = parseInt(lastFormat, 10);
+      // Store the last format but don't select it automatically
+      this.lastSelectedFormat = parseInt(lastFormat, 10);
     }
 
-    // Then load decks with the selected format
-    this.onFormatSelected(this.selectedFormat);
     this.setupSocketListeners();
+
+    // Load decks for the first page of formats
+    this.loadVisibleFormatDecks();
   }
 
   ngOnDestroy(): void {
@@ -171,14 +180,121 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     return this.defaultDeckId;
   }
 
+  // Helper method to get background image for selected format
+  getBackgroundImage(): string {
+    // Use hovered format if available, otherwise use selected format
+    const activeFormat = this.hoveredFormat || this.selectedFormat;
+
+    if (!activeFormat) {
+      return 'none';
+    }
+
+    // Return specific background for Standard format
+    if (activeFormat === Format.STANDARD) {
+      return 'url("assets/bg-standard.png")';
+    }
+
+    if (activeFormat === Format.STANDARD_NIGHTLY) {
+      return 'url("assets/bg-nightly.avif")';
+    }
+
+    // You can customize this to return different background images based on format
+    // For now, using a generic background
+    return 'url("assets/images/backgrounds/format-background.jpg")';
+  }
+
+  // Helper method to get deck for a specific format
+  getDeckForFormat(format: Format): DeckListEntry | undefined {
+    if (!format) return undefined;
+
+    // Get decks for this specific format
+    const formatDecks = this.formatDecks[format];
+    if (!formatDecks || formatDecks.length === 0) {
+      return undefined;
+    }
+
+    // Use the same deck selection logic as the main selected format
+    const formatDefaultDeckId = this.getFormatDefaultDeckId(format);
+
+    if (formatDefaultDeckId && formatDecks.some(d => d.id === formatDefaultDeckId)) {
+      return formatDecks.find(d => d.id === formatDefaultDeckId);
+    } else if (formatDecks.length > 0) {
+      return formatDecks[0];
+    }
+
+    return undefined;
+  }
+
+  // Helper method to check if a format has valid decks
+  hasValidDeckForFormat(format: Format): boolean {
+    return this.getDeckForFormat(format) !== undefined;
+  }
+
+  // Helper method to load decks for a specific format
+  private loadDecksForFormat(format: Format): void {
+    this.deckService.getListByFormat(format).subscribe(
+      decks => {
+        // Process deck items like in deck component
+        decks.forEach(deck => {
+          const deckCards: DeckItem[] = [];
+          deck.cards.forEach(card => {
+            deckCards.push({
+              card: this.cardsBaseService.getCardByName(card),
+              count: 0,
+              pane: null,
+              scanUrl: null
+            });
+          });
+          deck.deckItems = deckCards;
+        });
+
+        this.formatDecks[format] = decks;
+      },
+      error => {
+        console.error(`Failed to load decks for format ${format}:`, error);
+        this.formatDecks[format] = [];
+      }
+    );
+  }
+
+  // Helper method to load decks for adjacent formats
+  private loadAdjacentFormatDecks(): void {
+    const previousFormat = this.getPreviousFormat();
+    const nextFormat = this.getNextFormat();
+
+    if (previousFormat && !this.formatDecks[previousFormat.value]) {
+      this.loadDecksForFormat(previousFormat.value);
+    }
+
+    if (nextFormat && !this.formatDecks[nextFormat.value]) {
+      this.loadDecksForFormat(nextFormat.value);
+    }
+  }
+
   public onFormatSelected(format: Format): void {
     if (this.inQueue) {
       this.showErrorMessage('Cannot change format while in queue');
       return;
     }
 
-    this.selectedFormat = format;
-    // Save selected format to localStorage
+    // Force animation replay by temporarily clearing the format
+    if (this.selectedFormat === format) {
+      this.isFormatAnimating = true;
+      this.selectedFormat = null;
+
+      // Use setTimeout to ensure the DOM updates before setting the format again
+      setTimeout(() => {
+        this.selectedFormat = format;
+        this.isFormatAnimating = false;
+      }, 10);
+    } else {
+      this.selectedFormat = format;
+    }
+
+    this.lastSelectedFormat = format;
+    this.formatSelected.emit(format);
+
+    // Store the selected format in localStorage
     localStorage.setItem('lastSelectedFormat', format.toString());
 
     this.loading = true;
@@ -200,6 +316,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         });
 
         this.decksByFormat = decks;
+        this.formatDecks[format] = decks; // Store decks for this format
 
         // Get format-specific default deck
         const formatDefaultDeckId = this.getFormatDefaultDeckId(this.selectedFormat);
@@ -215,6 +332,9 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         }
 
         this.loading = false;
+
+        // Load decks for adjacent formats
+        this.loadAdjacentFormatDecks();
       },
       error => {
         console.error('Failed to load decks:', error);
@@ -222,6 +342,10 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         this.showErrorMessage('Failed to load decks');
       }
     );
+  }
+
+  public onFormatHover(format: Format | null): void {
+    this.hoveredFormat = format;
   }
 
   public joinQueue(): void {
@@ -241,7 +365,9 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.joinLeaveDebounce = true;
 
-    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards)
+    // Pass artworks selection if available on the deck
+    const artworks = (deck as any).artworks as { code: string; artworkId?: number }[] | undefined;
+    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards, artworks)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
@@ -366,5 +492,128 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Otherwise use auto-detection
     return ArchetypeUtils.getArchetype(deck.deckItems, returnSingle);
+  }
+
+  // Helper method to get format icon
+  getFormatIcon(format: Format): string {
+    const iconMap: { [key: number]: string } = {
+      [Format.STANDARD]: 'sports_esports',
+      [Format.STANDARD_NIGHTLY]: 'nightlight',
+      [Format.GLC]: 'group',
+      [Format.EXPANDED]: 'expand',
+      [Format.UNLIMITED]: 'all_inclusive',
+      [Format.SWSH]: 'sword',
+      [Format.SM]: 'sunny',
+      [Format.XY]: 'xy',
+      [Format.BW]: 'black_white',
+      [Format.RSPK]: 'history',
+      [Format.RETRO]: 'restore',
+    };
+    return iconMap[format] || 'casino';
+  }
+
+  // Helper method to get format description
+  getFormatDescription(format: Format): string {
+    const descriptionMap: { [key: number]: string } = {
+      [Format.STANDARD]: 'Current Standard Format',
+      [Format.STANDARD_NIGHTLY]: 'Nightly Standard Testing',
+      [Format.GLC]: 'Gym Leader Challenge',
+      [Format.EXPANDED]: 'Expanded Format',
+      [Format.UNLIMITED]: 'Unlimited Format',
+      [Format.SWSH]: 'Sword & Shield Era',
+      [Format.SM]: 'Sun & Moon Era',
+      [Format.XY]: 'X & Y Era',
+      [Format.BW]: 'Black & White Era',
+      [Format.RSPK]: 'RSPK Format',
+      [Format.RETRO]: 'Retro Format',
+    };
+    return descriptionMap[format] || 'Pokemon TCG Format';
+  }
+
+  // Helper method to get format label
+  getFormatLabel(format: Format): string {
+    const formatObj = this.formats.find(f => f.value === format);
+    return formatObj ? formatObj.label : 'LABEL_UNKNOWN';
+  }
+
+  // Helper method to get previous format
+  getPreviousFormat(): { value: Format; label: string } | undefined {
+    const currentIndex = this.formats.findIndex(f => f.value === this.selectedFormat);
+    if (currentIndex > 0) {
+      return this.formats[currentIndex - 1];
+    }
+    return undefined;
+  }
+
+  // Helper method to get next format
+  getNextFormat(): { value: Format; label: string } | undefined {
+    const currentIndex = this.formats.findIndex(f => f.value === this.selectedFormat);
+    if (currentIndex < this.formats.length - 1) {
+      return this.formats[currentIndex + 1];
+    }
+    return undefined;
+  }
+
+  // Helper method to get format by index
+  getFormatAtIndex(index: number): { value: Format; label: string } | undefined {
+    const startIndex = this.currentPage * 4;
+    const targetIndex = startIndex + index;
+
+    if (targetIndex >= 0 && targetIndex < this.formats.length) {
+      return this.formats[targetIndex];
+    }
+    return undefined;
+  }
+
+  // Navigation methods
+  previousFormat(): void {
+    if (this.inQueue) return;
+
+    if (this.currentPage > 0) {
+      this.currentPage--;
+
+      // Load decks for the newly visible formats
+      this.loadVisibleFormatDecks();
+    }
+  }
+
+  nextFormat(): void {
+    if (this.inQueue) return;
+
+    const maxPage = Math.floor((this.formats.length - 1) / 4);
+    if (this.currentPage < maxPage) {
+      this.currentPage++;
+
+      // Load decks for the newly visible formats
+      this.loadVisibleFormatDecks();
+    }
+  }
+
+  canNavigatePrevious(): boolean {
+    if (this.inQueue) return false;
+    return this.currentPage > 0;
+  }
+
+  canNavigateNext(): boolean {
+    if (this.inQueue) return false;
+    const maxPage = Math.floor((this.formats.length - 1) / 4);
+    return this.currentPage < maxPage;
+  }
+
+  // Helper method to get current page info
+  getCurrentPageInfo(): { current: number; total: number } {
+    const totalPages = Math.ceil(this.formats.length / 4);
+    return { current: this.currentPage + 1, total: totalPages };
+  }
+
+  // Helper method to load decks for visible formats
+  private loadVisibleFormatDecks(): void {
+    // Load decks for the 4 formats currently visible
+    for (let i = 0; i < 4; i++) {
+      const format = this.getFormatAtIndex(i);
+      if (format && !this.formatDecks[format.value]) {
+        this.loadDecksForFormat(format.value);
+      }
+    }
   }
 }

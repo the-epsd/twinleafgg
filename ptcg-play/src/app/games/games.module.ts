@@ -7,6 +7,9 @@ import { GameActionsComponent } from './game-actions/game-actions.component';
 import { CreateGamePopupComponent } from './create-game-popup/create-game-popup.component';
 import { GamesTableComponent } from './games-table/games-table.component';
 import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
+import { ActiveGamesComponent } from './active-games/active-games.component';
+import { GameHistoryComponent } from './game-history/game-history.component';
+import { PlayersComponent } from './players/players.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby
     MatchTableComponent,
     CreateGamePopupComponent,
     GamesTableComponent,
-    MatchmakingLobbyComponent
+    MatchmakingLobbyComponent,
+    ActiveGamesComponent,
+    GameHistoryComponent,
+    PlayersComponent
   ],
   entryComponents: [
     CreateGamePopupComponent

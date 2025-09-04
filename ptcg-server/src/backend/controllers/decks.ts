@@ -34,6 +34,7 @@ export class Decks extends Controller {
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
         format: getValidFormatsForCardList(cards),
+        ...(deck.artworks ? { artworks: JSON.parse(deck.artworks) } : {})
       };
     });
 

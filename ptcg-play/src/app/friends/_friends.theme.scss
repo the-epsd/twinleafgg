@@ -1,0 +1,34 @@
+// Friends Theme Variables
+:root {
+  --friends-bg-primary: #1a1a1a;
+  --friends-bg-secondary: #2a2a2a;
+  --friends-bg-card: #252525;
+  --friends-border: #3a3a3a;
+  --friends-border-hover: #4a4a4a;
+
+  --friends-green-primary: #4ade80;
+  --friends-green-secondary: #22c55e;
+  --friends-green-dark: #16a34a;
+  --friends-green-light: #86efac;
+  --friends-green-bg: rgba(74, 222, 128, 0.1);
+  --friends-green-border: rgba(74, 222, 128, 0.2);
+
+  --friends-text-primary: #ffffff;
+  --friends-text-secondary: #d1d5db;
+  --friends-text-muted: #9ca3af;
+  --friends-text-disabled: #6b7280;
+
+  --friends-radius-sm: 6px;
+  --friends-radius-md: 12px;
+  --friends-radius-lg: 16px;
+
+  --friends-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --friends-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --friends-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --friends-spacing-xs: 4px;
+  --friends-spacing-sm: 8px;
+  --friends-spacing-md: 16px;
+  --friends-spacing-lg: 24px;
+  --friends-spacing-xl: 32px;
+}
