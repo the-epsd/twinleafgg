@@ -1,70 +1,101 @@
 <ptcg-content [loading]="loading">
-  <mat-toolbar>
-    <mat-toolbar-row>
-      <h1 translate>RANKING_TITLE</h1>
+  <div class="ranking-container">
+    <!-- Header Section -->
+    <div class="ranking-header">
+      <div class="header-background">
+        <div class="header-content">
+          <div class="ranking-title-section">
+            <h1 class="ranking-title" translate>RANKING_TITLE</h1>
+            <div class="ranking-subtitle">COMPETE • RANK • DOMINATE</div>
+          </div>
 
-      <span class="ptcg-u-spacer"></span>
+          <div class="header-controls">
+            <div class="search-container">
+              <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="false"
+                [isActivated]="true"></ptcg-search-box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <ptcg-search-box class="ptcg-deck-edit-toolbar" (search)="onSearch($event)" [showSearchButton]="false"
-        [isActivated]="true"></ptcg-search-box>
+    <!-- Main Content -->
+    <div class="ranking-content">
+      <div class="ranking-table-container">
+        <!-- Modern Card-based Table -->
+        <div class="ranking-table">
+          <!-- Header -->
+          <div class="table-header">
+            <div class="table-cell position-cell">
+              <span translate>RANKING_POSITION</span>
+            </div>
+            <div class="table-cell ranking-cell">
+              <span translate>LABEL_RANKING</span>
+            </div>
+            <div class="table-cell player-cell">
+              <span translate>LABEL_PLAYER</span>
+            </div>
+            <div class="table-cell actions-cell">
+              <span translate>LABEL_ACTIONS</span>
+            </div>
+          </div>
 
-      <button mat-raised-button (click)="refresh()">
-        {{ 'BUTTON_REFRESH' | translate }}
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
+          <!-- Rows -->
+          <div class="table-body">
+            <div class="ranking-row" *ngFor="let rank of ranking; let i = index"
+              [class.current-user]="loggedUserId === rank.user.userId" [class.top-three]="i < 3">
 
-  <div class="ptcg-u-padding">
-    <table mat-table [dataSource]="ranking" class="mat-elevation-z2">
-      <!-- Position -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef translate>RANKING_POSITION</th>
-        <td mat-cell *matCellDef="let rank">{{rank.position}}</td>
-      </ng-container>
+              <!-- Position -->
+              <div class="table-cell position-cell">
+                <div class="position-badge" [class.top-position]="i < 3">
+                  <span class="position-number">{{ rank.position }}</span>
+                </div>
+              </div>
 
-      <!-- Ranking -->
-      <ng-container matColumnDef="ranking">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_RANKING</th>
-        <td mat-cell *matCellDef="let rank">
-          {{ rank.user.ranking }}
-        </td>
-      </ng-container>
+              <!-- Ranking -->
+              <div class="table-cell ranking-cell">
+                <div class="ranking-value">
+                  <span class="ranking-number">{{ rank.user.ranking }}</span>
+                </div>
+              </div>
 
-      <!-- User -->
-      <ng-container matColumnDef="user">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER</th>
-        <td mat-cell *matCellDef="let rank">
-          <ptcg-user-bar openUserPopup="true" [user]="rank.user" [marked]="loggedUserId === rank.user.userId">
-          </ptcg-user-bar>
-        </td>
-      </ng-container>
+              <!-- User -->
+              <div class="table-cell player-cell">
+                <div class="player-info">
+                  <ptcg-user-bar openUserPopup="true" [user]="rank.user" [marked]="loggedUserId === rank.user.userId">
+                  </ptcg-user-bar>
+                </div>
+              </div>
 
-      <!-- Actions -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_ACTIONS</th>
-        <td mat-cell *matCellDef="let rank">
-          <button mat-button [matMenuTriggerFor]="menu">
-            {{ 'BUTTON_ACTIONS' | translate }}
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item [routerLink]="['/profile', rank.user.userId]">
-              {{ 'BUTTON_SHOW_PROFILE' | translate }}
-            </button>
-            <button mat-menu-item *ngIf="rank.user.userId !== loggedUserId"
-              [routerLink]="['/message', rank.user.userId]">
-              {{ 'BUTTON_SEND_MESSAGE' | translate }}
-            </button>
-          </mat-menu>
-        </td>
-      </ng-container>
+              <!-- Actions -->
+              <div class="table-cell actions-cell">
+                <button class="actions-button" [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                  <span>{{ 'BUTTON_ACTIONS' | translate }}</span>
+                </button>
+                <mat-menu #menu="matMenu" class="modern-menu">
+                  <button mat-menu-item [routerLink]="['/profile', rank.user.userId]">
+                    <mat-icon>person</mat-icon>
+                    <span>{{ 'BUTTON_SHOW_PROFILE' | translate }}</span>
+                  </button>
+                  <button mat-menu-item *ngIf="rank.user.userId !== loggedUserId"
+                    [routerLink]="['/message', rank.user.userId]">
+                    <mat-icon>message</mat-icon>
+                    <span>{{ 'BUTTON_SEND_MESSAGE' | translate }}</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator hidePageSize="true" [disabled]="loading" [length]="rankingTotal" [pageIndex]="pageIndex"
-      [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
-    </mat-paginator>
+        <!-- Pagination -->
+        <div class="pagination-container">
+          <mat-paginator hidePageSize="true" [disabled]="loading" [length]="rankingTotal" [pageIndex]="pageIndex"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
   </div>
-
 </ptcg-content>
