@@ -230,7 +230,7 @@ export class CardComponent {
       if (!this.data) { return; }
       const myIdentifier = `${this.data.set} ${this.data.setNumber}`;
       if (identifier === myIdentifier) {
-        this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+        this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
       }
     });
   }
