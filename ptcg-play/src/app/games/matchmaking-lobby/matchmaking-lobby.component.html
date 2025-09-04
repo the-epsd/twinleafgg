@@ -20,6 +20,11 @@
           (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(0)?.value) && onFormatSelected(getFormatAtIndex(0)?.value)"
           (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(0)?.value) && onFormatHover(getFormatAtIndex(0)?.value)"
           (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(0)">
+          <!-- Queue Count Overlay -->
+          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(0)?.value) > 0">
+            {{ getQueueCountForFormat(getFormatAtIndex(0)?.value) }} {{
+            getQueueCountForFormat(getFormatAtIndex(0)?.value) === 1 ? 'player' : 'players' }} in queue
+          </div>
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(0)?.value))"
@@ -40,6 +45,11 @@
           (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(1)?.value) && onFormatSelected(getFormatAtIndex(1)?.value)"
           (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(1)?.value) && onFormatHover(getFormatAtIndex(1)?.value)"
           (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(1)">
+          <!-- Queue Count Overlay -->
+          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(1)?.value) > 0">
+            {{ getQueueCountForFormat(getFormatAtIndex(1)?.value) }} {{
+            getQueueCountForFormat(getFormatAtIndex(1)?.value) === 1 ? 'player' : 'players' }} in queue
+          </div>
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(1)?.value))"
@@ -60,6 +70,12 @@
           (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatSelected(getFormatAtIndex(2)?.value)"
           (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatHover(getFormatAtIndex(2)?.value)"
           (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(2)">
+          <!-- Queue Count Banner -->
+          <div class="queue-count-banner" [class.active-queue]="hasRealQueueActivity()"
+            *ngIf="getQueueCountForFormat(getFormatAtIndex(2)?.value) > 0">
+            {{ getQueueCountForFormat(getFormatAtIndex(2)?.value) }} {{
+            getQueueCountForFormat(getFormatAtIndex(2)?.value) === 1 ? 'player' : 'players' }} in queue
+          </div>
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(2)?.value))"
@@ -80,6 +96,12 @@
           (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatSelected(getFormatAtIndex(3)?.value)"
           (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatHover(getFormatAtIndex(3)?.value)"
           (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(3)">
+          <!-- Queue Count Banner -->
+          <div class="queue-count-banner" [class.active-queue]="hasRealQueueActivity()"
+            *ngIf="getQueueCountForFormat(getFormatAtIndex(3)?.value) > 0">
+            {{ getQueueCountForFormat(getFormatAtIndex(3)?.value) }} {{
+            getQueueCountForFormat(getFormatAtIndex(3)?.value) === 1 ? 'player' : 'players' }} in queue
+          </div>
           <div class="format-artwork">
             <div class="deck-archetype">
               <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(3)?.value))"

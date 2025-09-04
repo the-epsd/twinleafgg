@@ -71,8 +71,8 @@
     align-items: center;
     gap: 32px;
 
-    // Games Menu Button
-    button[mat-button] {
+    // Games Menu Button (now integrated into nav-item)
+    button[mat-button].nav-item {
       background: transparent;
       border: none;
       color: #e2e8f0;
@@ -89,19 +89,6 @@
 
       &:hover {
         color: #449058;
-      }
-
-      mat-icon {
-        margin-left: 4px;
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-      }
-
-      .notification-badge {
-        position: absolute;
-        top: -4px;
-        right: -4px;
       }
     }
   }
@@ -204,6 +191,23 @@
       &::after {
         background: #fbbf24;
       }
+    }
+  }
+
+  &.tables-item {
+
+    // Tables button styling - inherits from nav-item base styles
+    mat-icon {
+      margin-left: 4px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
     }
   }
 }

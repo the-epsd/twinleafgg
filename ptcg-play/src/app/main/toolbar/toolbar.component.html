@@ -27,6 +27,15 @@
       <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">BATTLE PASS</span>
       </a>
+
+      <!-- Tables Menu Button - Centered between Battle Pass and User Info -->
+      <button mat-button [matMenuTriggerFor]="gamesMenu" class="nav-item tables-item"
+        *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
+        <span class="nav-text">{{ 'MAIN_TABLES' | translate }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+        <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
+          [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
+      </button>
     </nav>
   </div>
 
@@ -35,12 +44,6 @@
   <!-- Connection status indicator -->
   <ptcg-connection-status *ngIf="loggedUser"></ptcg-connection-status>
 
-  <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
-    {{ 'MAIN_TABLES' | translate }}
-    <mat-icon>arrow_drop_down</mat-icon>
-    <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
-      [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
-  </button>
   <mat-menu #gamesMenu="matMenu">
     <a mat-menu-item *ngFor="let gameState of (gameStates$ | async)" [routerLink]="['/table', gameState.localId]">
       <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>

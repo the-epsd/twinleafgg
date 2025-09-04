@@ -53,6 +53,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public lastSelectedFormat: Format | null = null; // Store last selected format without auto-selecting
   public isFormatAnimating = false; // Track if format animation is playing
   public hoveredFormat: Format | null = null; // Track which format is being hovered
+  public formatQueueCounts: { [key: number]: number } = {}; // Track queue counts per format
 
   private queueTimeout: ReturnType<typeof setTimeout> | null = null;
   private cooldownInterval: ReturnType<typeof setInterval> | null = null;
@@ -99,6 +100,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         } else if (connected && this.connectionError) {
           // Connection restored
           this.connectionError = false;
+          // Refresh queue data when reconnected
+          this.requestQueueData();
+        } else if (connected) {
+          // Request queue data when first connected
+          this.requestQueueData();
         }
       });
 
@@ -113,6 +119,12 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Load decks for the first page of formats
     this.loadVisibleFormatDecks();
+
+    // Initialize empty queue counts - will be populated by real server data
+    this.formatQueueCounts = {};
+
+    // Request initial queue data
+    this.requestQueueData();
   }
 
   ngOnDestroy(): void {
@@ -152,8 +164,12 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   private setupSocketListeners(): void {
     // Setup queue update listener
-    this.socketService.on('matchmaking:queueUpdate', (data: { players: string[] }) => {
+    this.socketService.on('matchmaking:queueUpdate', (data: { players: string[], formatCounts?: { [format: number]: number } }) => {
       this.queuedPlayers = data.players;
+      // Update format counts with real server data
+      if (data.formatCounts) {
+        this.formatQueueCounts = data.formatCounts;
+      }
     });
 
     // Listen for game creation
@@ -616,4 +632,30 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+
+  // Get queue count for a specific format
+  getQueueCountForFormat(format: Format): number {
+    return this.formatQueueCounts[format] || 0;
+  }
+
+  // Check if there's real queue activity (not just simulated data)
+  hasRealQueueActivity(): boolean {
+    // Only show banners if there are actual players in the queue
+    return this.queuedPlayers.length > 0;
+  }
+
+  // Request current queue data from server
+  private requestQueueData(): void {
+    if (this.socketService.isConnected) {
+      // Emit a request for current queue data
+      this.socketService.emit('matchmaking:getQueueData', (response: any) => {
+        if (response.message === 'ok' && response.data) {
+          this.queuedPlayers = response.data.players;
+          this.formatQueueCounts = response.data.formatCounts;
+        }
+      });
+    }
+  }
+
 }

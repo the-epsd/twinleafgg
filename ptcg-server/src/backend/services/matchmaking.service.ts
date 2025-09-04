@@ -20,13 +20,16 @@ export class MatchmakingService {
   private queue: QueuedPlayer[] = [];
   private matchCheckInterval: NodeJS.Timeout;
   private validateInterval: NodeJS.Timeout;
+  private broadcastInterval: NodeJS.Timeout;
   private readonly CHECK_INTERVAL = 2000; // Check for matches every 2 seconds
   private readonly VALIDATE_INTERVAL = 30000; // Validate connections every 30 seconds
+  private readonly BROADCAST_INTERVAL = 10000; // Broadcast queue updates every 10 seconds
   private readonly MAX_QUEUE_TIME = 300000; // 5 minutes maximum in queue
 
   private constructor(private core: Core) {
     this.matchCheckInterval = setInterval(() => this.checkMatches(), this.CHECK_INTERVAL);
     this.validateInterval = setInterval(() => this.validateQueue(), this.VALIDATE_INTERVAL);
+    this.broadcastInterval = setInterval(() => this.broadcastQueueUpdate(), this.BROADCAST_INTERVAL);
   }
 
   public static getInstance(core: Core): MatchmakingService {
@@ -71,14 +74,32 @@ export class MatchmakingService {
     return this.queue.map(p => p.client.name);
   }
 
+  public getQueueCountsByFormat(): { [format: number]: number } {
+    const counts: { [format: number]: number } = {};
+    this.queue.forEach(player => {
+      counts[player.format] = (counts[player.format] || 0) + 1;
+    });
+    return counts;
+  }
+
   public isPlayerInQueue(client: Client): boolean {
     return this.queue.some(p => p.client === client);
   }
 
   private broadcastQueueUpdate(): void {
     const players = this.getQueuedPlayers();
-    this.queue.forEach(p => {
-      p.socketWrapper.emit('matchmaking:queueUpdate', { players });
+    const formatCounts = this.getQueueCountsByFormat();
+
+    // Broadcast to all connected clients, not just those in queue
+    this.core.clients.forEach(client => {
+      // Cast to SocketClient to access socket property
+      const socketClient = client as any;
+      if (socketClient.socket) {
+        socketClient.socket.emit('matchmaking:queueUpdate', {
+          players,
+          formatCounts
+        });
+      }
     });
   }
 
@@ -232,6 +253,9 @@ export class MatchmakingService {
     }
     if (this.validateInterval) {
       clearInterval(this.validateInterval);
+    }
+    if (this.broadcastInterval) {
+      clearInterval(this.broadcastInterval);
     }
     // Clear queue on dispose
     this.queue = [];
