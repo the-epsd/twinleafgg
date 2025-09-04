@@ -166,19 +166,20 @@ export class MatchmakingService {
 
         console.log(`[Matchmaking] Creating game between ${player1.client.name} and ${player2.client.name}`);
 
+        // Build artwork maps for both players
+        const map1 = await this.buildArtworksMap(player1.artworks);
+        const map2 = await this.buildArtworksMap(player2.artworks);
+
         // Use createGameWithDecks instead of createGame
         const game = this.core.createGameWithDecks(
           player1.client,
           player1.deck,
           gameSettings,
           player2.client,
-          player2.deck
+          player2.deck,
+          map1,
+          map2
         );
-        
-        
-      // Build artwork maps for both players
-      const map1 = await this.buildArtworksMap(player1.artworks);
-      const map2 = await this.buildArtworksMap(player2.artworks);
 
         if (game) {
           console.log(`[Matchmaking] Game ${game.id} created successfully`);

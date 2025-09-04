@@ -173,6 +173,14 @@ export class CardsBaseService {
     return this.cards.find(c => c.name === name && c.set === set && c.setNumber === setNumber);
   }
 
+  public getCardByNameSet(name: string, set: string): Card | undefined {
+    return this.cards.find(c => c.name === name && c.set === set);
+  }
+
+  public getCardByBaseName(name: string): Card | undefined {
+    return this.cards.find(c => c.name === name);
+  }
+
   public showCardInfo(data: CardInfoPopupData = {}): Promise<CardInfoPaneAction> {
     // If caller passed a plain mapping to simulate artworksMap, wrap it into an object with artworksMap
     const maybeMap = data.cardList as any;
