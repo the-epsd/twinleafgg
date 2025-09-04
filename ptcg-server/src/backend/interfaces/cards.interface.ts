@@ -1,4 +1,4 @@
-import { Card } from "../../game";
+import { Card } from '../../game';
 
 export interface CardsInfo {
   cards: Card[];

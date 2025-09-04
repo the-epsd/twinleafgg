@@ -23,6 +23,7 @@ import { Hoopa } from './hoopa';
 import { Jynx } from './jynx';
 import { KarateBelt } from './karate-belt';
 import { KeldeoGX } from './keldeo-gx';
+import { Leavanny } from './leavanny';
 import { Lickilicky } from './lickilicky';
 import { Meditite } from './meditite';
 import { MewtwoMewGX } from './mewtwo-and-mew-gx';
@@ -91,6 +92,7 @@ export const setUnifiedMinds: Card[] = [
   new KarateBelt(),
   new KeldeoGX(),
   new Magnemite(),
+  new Leavanny(),
   new Lickilicky(),
   new Meditite(),
   new MegaSableyeTyranitarGX(),

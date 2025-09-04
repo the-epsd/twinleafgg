@@ -89,6 +89,26 @@ export class SocketClient implements Client {
     this.gameSocket.onTimerUpdate(game, playerStats);
   }
 
+  public onPlayerDisconnected(game: Game, disconnectedClient: Client): void {
+    this.gameSocket.onPlayerDisconnected(game, disconnectedClient);
+  }
+
+  public onPlayerReconnected(game: Game, reconnectedClient: Client): void {
+    this.gameSocket.onPlayerReconnected(game, reconnectedClient);
+  }
+
+  public onConnectionStatusUpdate(game: Game, connectionStatuses: Array<{ playerId: number, playerName: string, isConnected: boolean, disconnectedAt?: number }>): void {
+    this.gameSocket.onConnectionStatusUpdate(game, connectionStatuses);
+  }
+
+  public onReconnectionTimeout(game: Game, playerId: number, playerName: string): void {
+    this.gameSocket.onReconnectionTimeout(game, playerId, playerName);
+  }
+
+  public onTimeoutWarning(game: Game, timeRemaining: number): void {
+    this.gameSocket.onTimeoutWarning(game, timeRemaining);
+  }
+
   public attachListeners(): void {
     this.socket.attachListeners();
   }

@@ -27,6 +27,13 @@
       <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">BATTLE PASS</span>
       </a>
+    </mat-menu>
+  </div>
+
+  <span class="epsd-spacer"></span>
+  
+  <!-- Connection status indicator -->
+  <app-connection-status *ngIf="loggedUser"></app-connection-status>
 
       <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
         {{ 'MAIN_TABLES' | translate }}

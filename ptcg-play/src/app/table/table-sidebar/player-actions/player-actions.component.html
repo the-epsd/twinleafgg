@@ -12,6 +12,10 @@
       [disabled]="!isYourTurn || gameState?.deleted">
       {{ 'TABLE_END_YOUR_TURN' | translate }}
     </button>
+    <!-- <button class="force-disconnect-button" mat-stroked-button color="warn" (click)="forceDisconnect()"
+      *ngIf="isPlaying">
+      {{ 'TABLE_FORCE_DISCONNECT' | translate }}
+    </button> -->
   </ng-template>
   <ng-template #observerActions>
     <button class="ptcg-button-colors" mat-stroked-button (click)="switchSides()">

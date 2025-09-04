@@ -1,7 +1,7 @@
 import { CardTag, CardType, DiscardEnergyPrompt, EnergyCard, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CardTarget } from '../../game/store/actions/play-card-action';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaCharizardXex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -29,7 +29,7 @@ export class MegaCharizardXex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let totalEnergy = 0;
@@ -82,7 +82,6 @@ export class MegaCharizardXex extends PokemonCard {
           totalDiscarded = transfers.length;
 
           effect.damage = totalDiscarded * 90;
-
         }
         return state;
       });

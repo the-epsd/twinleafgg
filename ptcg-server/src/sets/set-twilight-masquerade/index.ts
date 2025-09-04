@@ -5,6 +5,7 @@ import { Aipom } from './aipom';
 import { Alakazam } from './alakazam';
 import { Applin } from './applin';
 import { Applin2 } from './applin-2';
+import { Ariados } from './ariados';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
@@ -103,6 +104,7 @@ import { Zapdos } from './zapdos';
 export const setTwilightMasquerade: Card[] = [
 
   new Aggron(),
+  new Ariados(),
   new Aron(),
   new Blisseyex(),
   new BruteBonnet(),

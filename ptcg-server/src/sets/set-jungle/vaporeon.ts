@@ -28,7 +28,7 @@ export class Vaporeon extends PokemonCard {
     name: 'Water Gun',
     cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 30,
-    text: 'Does 30 damage plus 10 more damage for each {W} Energy attached to Vaporeon but not used to pay for this attack\'s Energy cost. Extra {W} Energy after the 2nd doesn\'t count.'
+    text: 'Does 30 damage plus 10 more damage for each [W] Energy attached to Vaporeon but not used to pay for this attack\'s Energy cost. Extra [W] Energy after the 2nd doesn\'t count.'
   }];
 
   public set: string = 'JU';

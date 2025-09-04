@@ -95,6 +95,12 @@ export class TableComponent implements OnInit, OnDestroy {
       .subscribe(([paramMap, gameStates, clientId]) => {
         this.gameId = parseInt(paramMap.get('gameId'), 10);
         this.gameState = gameStates.find(state => state.localId === this.gameId);
+
+        // Set the game ID in the socket service for reconnection tracking
+        if (this.gameState && this.gameState.gameId) {
+          this.gameService.socketService.setGameId(this.gameState.gameId);
+        }
+
         this.updatePlayers(this.gameState, clientId);
         this.updateCanUndo();
       });

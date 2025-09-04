@@ -223,6 +223,16 @@ export class CardComponent {
     ).subscribe(enabled => {
       this.showCardName = enabled;
     });
+
+    this.cardsBaseService.overridesChanged$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(identifier => {
+      if (!this.data) { return; }
+      const myIdentifier = `${this.data.set} ${this.data.setNumber}`;
+      if (identifier === myIdentifier) {
+        this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+      }
+    });
   }
 
   ngOnDestroy(): void {

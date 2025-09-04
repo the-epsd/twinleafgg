@@ -4,7 +4,8 @@ import {
   RetreatAction, AttackAction, UseAbilityAction, StateSerializer,
   UseStadiumAction, GameLog,
   UseTrainerAbilityAction,
-  UseEnergyAbilityAction
+  UseEnergyAbilityAction,
+  ConcedeAction
 } from '../../game';
 import { Base64 } from '../../utils';
 import { ChangeAvatarAction } from '../../game/store/actions/change-avatar-action';
@@ -40,6 +41,8 @@ export class GameSocket {
     // game listeners
     this.socket.addListener('game:join', this.joinGame.bind(this));
     this.socket.addListener('game:leave', this.leaveGame.bind(this));
+    this.socket.addListener('game:rejoin', this.rejoinGame.bind(this));
+    this.socket.addListener('game:concede', this.concedeGame.bind(this));
     this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
     this.socket.addListener('game:action:ability', this.ability.bind(this));
     this.socket.addListener('game:action:trainerAbility', this.trainerAbility.bind(this));
@@ -108,6 +111,87 @@ export class GameSocket {
     delete this.cache.lastLogIdCache[game.id];
     this.core.leaveGame(this.client, game);
     response('ok');
+  }
+
+  private async rejoinGame(params: { gameId: number }, response: Response<GameState>): Promise<void> {
+    try {
+      const gameId = params.gameId;
+
+      // Find the game
+      const game = this.core.games.find(g => g.id === gameId);
+      if (!game) {
+        response('error', ApiErrorEnum.GAME_INVALID_ID);
+        return;
+      }
+
+      // Check if the client is already in the game
+      const isAlreadyInGame = game.clients.some(client => client.id === this.client.id);
+      if (isAlreadyInGame) {
+        // Client is already in the game, just return the current state
+        this.cache.lastLogIdCache[game.id] = 0;
+        response('ok', CoreSocket.buildGameState(game));
+        return;
+      }
+
+      // Check if this user has a disconnected player in the game
+      // We need to find the disconnected player by checking if any player in the game matches this user
+      const userPlayer = game.state.players.find(p => p.id === this.client.user.id);
+
+      if (userPlayer) {
+        // This user is a player in the game, check if they're disconnected
+        const disconnectedPlayer = game.getDisconnectedPlayerInfo(userPlayer.id);
+
+        if (disconnectedPlayer) {
+          // User is disconnected, attempt reconnection
+          // Temporarily set client.id to match the player.id for reconnection
+          const originalClientId = this.client.id;
+          this.client.id = userPlayer.id;
+
+          const reconnected = game.handlePlayerReconnection(this.client);
+
+          if (reconnected) {
+            // Successfully reconnected to the game
+            this.cache.lastLogIdCache[game.id] = 0;
+            response('ok', CoreSocket.buildGameState(game));
+            return;
+          } else {
+            // Restore original client ID if reconnection failed
+            this.client.id = originalClientId;
+          }
+        } else {
+          // User is a player but not disconnected, they might already be connected
+          // Just return the current game state
+          this.cache.lastLogIdCache[game.id] = 0;
+          response('ok', CoreSocket.buildGameState(game));
+          return;
+        }
+      }
+
+      // If user is not a player or reconnection failed, return error
+      response('error', ApiErrorEnum.GAME_INVALID_ID);
+
+    } catch (error) {
+      console.error('Error in rejoinGame:', error);
+      response('error', ApiErrorEnum.SERVER_ERROR);
+    }
+  }
+
+  private concedeGame(params: { gameId: number }, response: Response<void>): void {
+    const gameId = params.gameId;
+    const game = this.core.games.find(g => g.id === gameId);
+    if (game === undefined) {
+      response('error', ApiErrorEnum.GAME_INVALID_ID);
+      return;
+    }
+
+    try {
+      const action = new ConcedeAction(this.client.id);
+      game.dispatch(this.client, action);
+      response('ok');
+    } catch (error) {
+      console.error('Error in concedeGame:', error);
+      response('error', ApiErrorEnum.SERVER_ERROR);
+    }
   }
 
   private getGameStatus(gameId: number, response: Response<GameState>): void {
@@ -233,9 +317,60 @@ export class GameSocket {
     this.socket.emit(`game[${game.id}]:timerUpdate`, { playerStats });
   }
 
+  public onPlayerDisconnected(game: Game, disconnectedClient: Client): void {
+    // Notify this client about the disconnection
+    this.socket.emit(`game[${game.id}]:playerDisconnected`, {
+      playerId: disconnectedClient.id,
+      playerName: disconnectedClient.name,
+      disconnectedAt: Date.now(),
+      gamePhase: game.state.phase,
+      isPaused: game.isPausedForDisconnection()
+    });
+  }
+
+  public onPlayerReconnected(game: Game, reconnectedClient: Client): void {
+    // Notify this client about the reconnection
+    this.socket.emit(`game[${game.id}]:playerReconnected`, {
+      playerId: reconnectedClient.id,
+      playerName: reconnectedClient.name,
+      reconnectedAt: Date.now(),
+      gamePhase: game.state.phase,
+      isPaused: game.isPausedForDisconnection()
+    });
+  }
+
+  public onConnectionStatusUpdate(game: Game, connectionStatuses: Array<{ playerId: number, playerName: string, isConnected: boolean, disconnectedAt?: number }>): void {
+    // Send connection status update to this client
+    this.socket.emit(`game[${game.id}]:connectionStatusUpdate`, {
+      connectionStatuses,
+      gamePhase: game.state.phase,
+      isPaused: game.isPausedForDisconnection()
+    });
+  }
+
+  public onReconnectionTimeout(game: Game, playerId: number, playerName: string): void {
+    // Notify this client about reconnection timeout
+    this.socket.emit(`game[${game.id}]:reconnectionTimeout`, {
+      playerId,
+      playerName,
+      timeoutAt: Date.now(),
+      gamePhase: game.state.phase
+    });
+  }
+
+  public onTimeoutWarning(game: Game, timeRemaining: number): void {
+    // Send timeout warning to this client
+    this.socket.emit(`game[${game.id}]:timeoutWarning`, {
+      timeRemaining,
+      gamePhase: game.state.phase
+    });
+  }
+
   public dispose(): void {
     this.socket.removeListener('game:join');
     this.socket.removeListener('game:leave');
+    this.socket.removeListener('game:rejoin');
+    this.socket.removeListener('game:concede');
     this.socket.removeListener('game:getStatus');
     this.socket.removeListener('game:action:ability');
     this.socket.removeListener('game:action:trainerAbility');

@@ -38,6 +38,7 @@ import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
 import { WaitPrompt } from '../prompts/wait-prompt';
+import { CoinFlipEffect } from '../effects/play-card-effects';
 
 
 function applyWeaknessAndResistance(
@@ -535,6 +536,23 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       source.moveTo(player.discard);
     }
 
+    return state;
+  }
+
+  if (effect instanceof CoinFlipEffect) {
+    // Simulate coin flip and store result
+    const result = Math.random() < 0.5;
+    (effect as CoinFlipEffect).result = result;
+    
+    // Log the coin flip result
+    const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
+    store.log(state, gameMessage, { name: (effect as CoinFlipEffect).player.name });
+    
+    // Call callback if provided
+    if ((effect as CoinFlipEffect).callback) {
+      (effect as CoinFlipEffect).callback!(result);
+    }
+    
     return state;
   }
 

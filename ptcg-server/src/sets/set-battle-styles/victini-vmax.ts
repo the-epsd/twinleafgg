@@ -29,7 +29,7 @@ export class VictiniVMAX extends PokemonCard {
       name: 'Spreading Flames',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Attach up to 3 {R} Energy cards from your discard pile to ' +
+      text: 'Attach up to 3 [R] Energy cards from your discard pile to ' +
         'your Pokémon in any way you like.'
     },
     {

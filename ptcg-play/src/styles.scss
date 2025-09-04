@@ -146,3 +146,15 @@
     color: white !important;
   }
 }
+
+// Reconnection dialog styles
+.reconnection-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.cdk-overlay-container .mat-dialog-container {
+  &.reconnection-dialog-container {
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}

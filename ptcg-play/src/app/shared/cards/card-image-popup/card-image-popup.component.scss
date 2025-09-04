@@ -1,6 +1,6 @@
 @import '../../../../theme/variables.scss';
 
-$card-width: calc(85vh / #{$card-aspect-ratio} - 2 * #{map-get($padding, normal)});
+$card-width: calc(64vh / #{$card-aspect-ratio} - 2 * #{map-get($padding, normal)});
 
 mat-dialog-content {
   max-height: none;
@@ -10,4 +10,14 @@ mat-dialog-content {
 .ptcg-image-container {
   min-width: 100%;
   width: $card-width;
+}
+
+.ptcg-url-controls {
+  margin-top: map-get($padding, normal);
+}
+
+.ptcg-url-input-hint {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
 }

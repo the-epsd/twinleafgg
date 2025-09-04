@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReconnectionDialogService } from './shared/services/reconnection-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -41,7 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private socketService: SocketService,
     private translate: TranslateService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private reconnectionDialogService: ReconnectionDialogService
   ) {
     this.authToken$ = this.sessionService.get(session => session.authToken);
     setTimeout(() => this.onResize());
@@ -65,36 +67,16 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.socketService.connection.pipe(
+    // The reconnection dialog service will handle connection status automatically
+    // We still need to handle the case where reconnection completely fails
+    this.socketService.reconnectionEvents$.pipe(
       untilDestroyed(this)
-    ).subscribe({
-      next: connected => {
-        if (!this.isLoggedIn) { return; }
-
-        if (!connected) {
-          // Show a reconnecting snackbar and give time for auto-reconnect
-          if (!this.reconnectSnackRef) {
-            this.reconnectSnackRef = this.snackBar.open(
-              this.translate.instant('RECONNECTING_TO_SERVER'),
-              undefined,
-              { duration: undefined, panelClass: 'disconnect-snackbar' }
-            );
-          }
-          if (!this.reconnectTimer) {
-            this.reconnectTimer = setTimeout(() => {
-              // Consider it a hard disconnect after grace period
-              this.dialog.closeAll();
-              if (this.reconnectSnackRef) { this.reconnectSnackRef.dismiss(); this.reconnectSnackRef = null; }
-              this.sessionService.clear();
-              this.router.navigate(['/login']);
-            }, 90 * 1000); // 90s grace period for reconnection
-          }
-          return;
-        }
-
-        // Connected again: clear UI and timers
-        if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
-        if (this.reconnectSnackRef) { this.reconnectSnackRef.dismiss(); this.reconnectSnackRef = null; }
+    ).subscribe(event => {
+      if (event.type === 'timeout' && this.isLoggedIn) {
+        // If reconnection times out completely, log the user out
+        this.dialog.closeAll();
+        this.sessionService.clear();
+        this.router.navigate(['/login']);
       }
     });
 
@@ -131,5 +113,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.socketService.disable();
+    this.reconnectionDialogService.destroy();
   }
 }

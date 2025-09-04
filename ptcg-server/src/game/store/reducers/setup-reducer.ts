@@ -43,7 +43,261 @@ function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: Stat
   }
 }
 
+// Helper: Alternative setup where players start with 13 cards and choose 6 as prizes
+function* alternativeSetupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
+  const player = state.players[0];
+  const opponent = state.players[1];
+  const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
+  const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
+
+  // 1. Decide who goes first
+  const whoBeginsEffect = new WhoBeginsEffect();
+  store.reduceEffect(state, whoBeginsEffect);
+  if (whoBeginsEffect.player) {
+    state.activePlayer = state.players.indexOf(whoBeginsEffect.player);
+  } else {
+    const coinFlipPrompt = new CoinFlipPrompt(player.id, GameMessage.SETUP_WHO_BEGINS_FLIP);
+    yield store.prompt(state, coinFlipPrompt, whoBegins => {
+      if (state.gameSettings?.format === Format.RSPK || state.gameSettings?.format === Format.RETRO) {
+        // In Retro & RSPK, coin flip winner MUST go first
+        state.activePlayer = whoBegins ? 0 : 1;
+        next();
+      } else {
+        // Other formats: winner chooses
+        const goFirstPrompt = new ConfirmPrompt(
+          whoBegins ? player.id : opponent.id,
+          GameMessage.GO_FIRST
+        );
+        store.prompt(state, goFirstPrompt, choice => {
+          if (choice === true) {
+            state.activePlayer = whoBegins ? 0 : 1;
+          } else {
+            state.activePlayer = whoBegins ? 1 : 0;
+          }
+          next();
+        });
+      }
+    });
+  }
+
+  // 2. Both players draw 13 cards (instead of 7)
+  // Prompt both players to shuffle their decks before drawing
+  yield store.prompt(state, [
+    new ShuffleDeckPrompt(player.id),
+    new ShuffleDeckPrompt(opponent.id)
+  ], orders => {
+    player.deck.applyOrder(orders[0]);
+    opponent.deck.applyOrder(orders[1]);
+    player.deck.moveTo(player.hand, 13);
+    opponent.deck.moveTo(opponent.hand, 13);
+    next();
+  });
+
+  // 3. Mulligan logic
+  let playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+  let opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+
+  // Track mulligan hands for each player
+  const playerMulliganHands: Card[][] = [];
+  const opponentMulliganHands: Card[][] = [];
+  let playerMulligans = 0;
+  let opponentMulligans = 0;
+
+  // 4. Repeat until at least one player has a Basic
+  while (!playerHasBasic && !opponentHasBasic) {
+    playerMulliganHands.push([...player.hand.cards]);
+    opponentMulliganHands.push([...opponent.hand.cards]);
+    playerMulligans++;
+    opponentMulligans++;
+    player.hand.moveTo(player.deck);
+    opponent.hand.moveTo(opponent.deck);
+    yield store.prompt(state, [
+      new ShuffleDeckPrompt(player.id),
+      new ShuffleDeckPrompt(opponent.id)
+    ], orders => {
+      player.deck.applyOrder(orders[0]);
+      opponent.deck.applyOrder(orders[1]);
+      player.deck.moveTo(player.hand, 13);
+      opponent.deck.moveTo(opponent.hand, 13);
+      next();
+    });
+    playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+    opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+  }
+
+  // 5. If only one player has a Basic, that player sets up, the other continues to mulligan
+  if (playerHasBasic && !opponentHasBasic) {
+    // Player sets up
+    yield* alternativeSetupSinglePlayer(player, chooseCardsOptions, state, store, next);
+    // Opponent continues to mulligan until they have a Basic
+    while (!opponentHasBasic) {
+      opponentMulliganHands.push([...opponent.hand.cards]);
+      opponentMulligans++;
+      opponent.hand.moveTo(opponent.deck);
+      yield store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+        opponent.deck.applyOrder(order);
+        opponent.deck.moveTo(opponent.hand, 13);
+        next();
+      });
+      opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+    }
+    // Opponent sets up
+    yield* alternativeSetupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
+    // Player is shown all opponent's mulligan hands
+    if (opponentMulligans > 0) {
+      yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+      yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+    }
+    // Player chooses how many cards to draw
+    if (opponentMulligans > 0) {
+      const options: { message: string, value: number }[] = [];
+      for (let i = opponentMulligans; i >= 0; i--) {
+        options.push({ message: `Draw ${i} card(s)`, value: i });
+      }
+      yield store.prompt(state, new SelectPrompt(
+        player.id,
+        GameMessage.WANT_TO_DRAW_CARDS,
+        options.map(c => c.message),
+        { allowCancel: false }
+      ), choice => {
+        const numCardsToDraw = options[choice].value;
+        player.deck.moveTo(player.hand, numCardsToDraw);
+        next();
+      });
+      // After drawing, allow player to place any new Basics onto their Bench
+      yield* allowExtraBenchPlacement(player, chooseCardsOptions, state, store, next);
+    }
+  } else if (!playerHasBasic && opponentHasBasic) {
+    // Opponent sets up
+    yield* alternativeSetupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
+    // Player continues to mulligan until they have a Basic
+    while (!playerHasBasic) {
+      playerMulliganHands.push([...player.hand.cards]);
+      playerMulligans++;
+      player.hand.moveTo(player.deck);
+      yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+        player.deck.moveTo(player.hand, 13);
+        next();
+      });
+      playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+    }
+    // Player sets up
+    yield* alternativeSetupSinglePlayer(player, chooseCardsOptions, state, store, next);
+    // Opponent is shown all player's mulligan hands
+    if (playerMulligans > 0) {
+      yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+      yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+    }
+    // Opponent chooses how many cards to draw
+    if (playerMulligans > 0) {
+      const options: { message: string, value: number }[] = [];
+      for (let i = playerMulligans; i >= 0; i--) {
+        options.push({ message: `Draw ${i} card(s)`, value: i });
+      }
+      yield store.prompt(state, new SelectPrompt(
+        opponent.id,
+        GameMessage.WANT_TO_DRAW_CARDS,
+        options.map(c => c.message),
+        { allowCancel: false }
+      ), choice => {
+        const numCardsToDraw = options[choice].value;
+        opponent.deck.moveTo(opponent.hand, numCardsToDraw);
+        next();
+      });
+      // After drawing, allow opponent to place any new Basics onto their Bench
+      yield* allowExtraBenchPlacement(opponent, chooseCardsOptions, state, store, next);
+    }
+  } else {
+    // Both have Basics, proceed with normal setup for both
+    yield* alternativeSetupSinglePlayer(player, chooseCardsOptions, state, store, next);
+    yield* alternativeSetupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
+  }
+
+  // Set initial Pokemon Played Turn, so players can't evolve during first turn
+  const first = state.players[state.activePlayer];
+  const second = state.players[state.activePlayer ? 0 : 1];
+  first.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => { cardList.pokemonPlayedTurn = 1; });
+  second.forEachPokemon(PlayerType.TOP_PLAYER, cardList => { cardList.pokemonPlayedTurn = 2; });
+
+  // Reveal all Active and Bench Pokémon (flip face-up) for both players
+  for (const p of state.players) {
+    p.active.isSecret = false;
+    p.bench.forEach(list => { list.isSecret = false; });
+  }
+
+  return initNextTurn(store, state);
+}
+
+// Helper: Alternative setup for a single player (choose Active, Bench, choose Prizes from hand)
+function* alternativeSetupSinglePlayer(player: Player, chooseCardsOptions: any, state: State, store: StoreLike, next: Function) {
+  const blocked: number[] = [];
+  player.hand.cards.forEach((c, index) => {
+    if (!(c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC))) {
+      blocked.push(index);
+    }
+  });
+
+  // First, choose starting Pokémon (Active + Bench)
+  yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
+    player.hand, {}, { ...chooseCardsOptions, blocked }), choice => {
+      // Place the chosen cards as Active and Bench
+      if (choice.length > 0) {
+        // Place Active (face-down)
+        player.hand.moveCardTo(choice[0], player.active);
+        player.active.isSecret = true;
+        // Place Bench (face-down)
+        for (let i = 1; i < choice.length; i++) {
+          player.hand.moveCardTo(choice[i], player.bench[i - 1]);
+          player.bench[i - 1].isSecret = true;
+        }
+      }
+      next();
+    });
+
+  // Then, choose 6 cards from remaining hand to be prize cards
+  // We need to create a temporary hand with only the remaining cards for selection
+  const remainingCards = player.hand.cards.filter(c =>
+    !player.active.cards.includes(c) &&
+    !player.bench.some(b => b.cards.includes(c))
+  );
+
+  if (remainingCards.length >= 6) {
+    // Create a temporary hand for prize selection
+    const tempHand = new CardList();
+    tempHand.cards = [...remainingCards];
+
+    yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_PRIZES_SETUP,
+      tempHand, {}, { min: 6, max: 6, allowCancel: false, blocked: [] }), choice => {
+        // Place chosen cards as prizes
+        for (let i = 0; i < 6; i++) {
+          if (choice[i]) {
+            // Find the card in the actual hand and move it to prizes
+            const cardToMove = choice[i];
+            const handIndex = player.hand.cards.indexOf(cardToMove);
+            if (handIndex !== -1) {
+              player.hand.moveCardTo(cardToMove, player.prizes[i]);
+              player.prizes[i].isSecret = true;
+            }
+          }
+        }
+        next();
+      });
+  } else {
+    // If not enough cards, place all remaining cards as prizes
+    for (let i = 0; i < Math.min(remainingCards.length, 6); i++) {
+      player.hand.moveCardTo(remainingCards[i], player.prizes[i]);
+      player.prizes[i].isSecret = true;
+    }
+  }
+}
+
 export function* setupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
+  // Check if alternative setup rule is enabled
+  if (state.rules.alternativeSetup) {
+    return yield* alternativeSetupGame(next, store, state);
+  }
+
   const player = state.players[0];
   const opponent = state.players[1];
   const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
@@ -232,8 +486,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
 function* setupSinglePlayer(player: Player, chooseCardsOptions: any, state: State, store: StoreLike, next: Function) {
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
-    if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-    } else {
+    if (!(c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC))) {
       blocked.push(index);
     }
   });

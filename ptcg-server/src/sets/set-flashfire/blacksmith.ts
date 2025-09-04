@@ -46,21 +46,13 @@ export class Blacksmith extends TrainerCard {
 
       let hasFirePokemon = false;
       const blockedTo: CardTarget[] = [];
-      player.bench.forEach((bench, index) => {
-        if (bench.cards.length === 0) {
-          return;
-        }
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(bench);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, _pokemonCard, target) => {
+        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(cardList);
         store.reduceEffect(state, checkPokemonTypeEffect);
 
         if (checkPokemonTypeEffect.cardTypes.includes(CardType.FIRE)) {
           hasFirePokemon = true;
         } else {
-          const target: CardTarget = {
-            player: PlayerType.BOTTOM_PLAYER,
-            slot: SlotType.BENCH,
-            index
-          };
           blockedTo.push(target);
         }
       });

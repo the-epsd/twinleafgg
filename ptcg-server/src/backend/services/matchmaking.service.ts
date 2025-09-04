@@ -136,50 +136,71 @@ export class MatchmakingService {
       const player1 = players[0];
       const player2 = players[1];
 
-      // Verify both players are still connected
-      if (!player1.socketWrapper.socket.connected || !player2.socketWrapper.socket.connected) {
+      // Verify both players are still connected and in the core
+      const isPlayer1Connected = player1.socketWrapper.socket.connected &&
+        this.core.clients.some(c => c.id === player1.client.id);
+      const isPlayer2Connected = player2.socketWrapper.socket.connected &&
+        this.core.clients.some(c => c.id === player2.client.id);
+
+      if (!isPlayer1Connected || !isPlayer2Connected) {
         // Remove disconnected players
-        if (!player1.socketWrapper.socket.connected) {
+        if (!isPlayer1Connected) {
+          console.log(`[Matchmaking] Removing disconnected player ${player1.client.name} from queue`);
           this.removeFromQueue(player1.client);
         }
-        if (!player2.socketWrapper.socket.connected) {
+        if (!isPlayer2Connected) {
+          console.log(`[Matchmaking] Removing disconnected player ${player2.client.name} from queue`);
           this.removeFromQueue(player2.client);
         }
         return;
       }
 
-      // Create game settings
-      const gameSettings: GameSettings = {
-        format: player1.format,
-        timeLimit: 1800,
-        rules: new Rules(),
-        recordingEnabled: true
-      };
+      try {
+        // Create game settings
+        const gameSettings: GameSettings = {
+          format: player1.format,
+          timeLimit: 1800,
+          rules: new Rules(),
+          recordingEnabled: true
+        };
 
+        console.log(`[Matchmaking] Creating game between ${player1.client.name} and ${player2.client.name}`);
+
+        // Use createGameWithDecks instead of createGame
+        const game = this.core.createGameWithDecks(
+          player1.client,
+          player1.deck,
+          gameSettings,
+          player2.client,
+          player2.deck
+        );
+        
+        
       // Build artwork maps for both players
       const map1 = await this.buildArtworksMap(player1.artworks);
       const map2 = await this.buildArtworksMap(player2.artworks);
 
-      // Use createGameWithDecks instead of createGame, and attach artwork maps
-      const game = this.core.createGameWithDecks(
-        player1.client,
-        player1.deck,
-        gameSettings,
-        player2.client,
-        player2.deck,
-        map1,
-        map2
-      );
+        if (game) {
+          console.log(`[Matchmaking] Game ${game.id} created successfully`);
 
-      if (game) {
-        // Notify players
-        player1.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
-        player2.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
+          // Notify players
+          console.log(`[Matchmaking] Notifying ${player1.client.name} about game ${game.id}`);
+          player1.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
 
-        // Remove matched players from queue
-        this.removeFromQueue(player1.client);
-        this.removeFromQueue(player2.client);
-      } else {
+          console.log(`[Matchmaking] Notifying ${player2.client.name} about game ${game.id}`);
+          player2.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
+
+          // Remove matched players from queue
+          this.removeFromQueue(player1.client);
+          this.removeFromQueue(player2.client);
+        } else {
+          console.log(`[Matchmaking] Failed to create game between ${player1.client.name} and ${player2.client.name}`);
+          // Remove players from queue if there was an error
+          this.removeFromQueue(player1.client);
+          this.removeFromQueue(player2.client);
+        }
+      } catch (error) {
+        console.error(`[Matchmaking] Error creating game: ${error}`);
         // Remove players from queue if there was an error
         this.removeFromQueue(player1.client);
         this.removeFromQueue(player2.client);

@@ -2,10 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { ApiModule } from '../../api/api.module';
 import { LoginComponent } from './login.component';
-import { LoginPopupService } from '../login-popup/login-popup.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -18,11 +16,11 @@ describe('LoginComponent', () => {
         FormsModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ LoginComponent ],
-      providers: [ { provide: LoginPopupService, useValue: { openDialog: () => {} } } ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [LoginComponent],
+      providers: [{ provide: LoginPopupService, useValue: { openDialog: () => { } } }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

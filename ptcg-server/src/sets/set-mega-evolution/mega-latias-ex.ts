@@ -10,7 +10,7 @@ import { SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class MegaLatiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.MEGA];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 280;
   public cardType: CardType = N;
   public retreat = [C];

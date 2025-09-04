@@ -22,6 +22,8 @@ import { SidebarContainerComponent } from './sidebar/sidebar-container.component
 import { UserInfoModule } from './user-info/user-info.module';
 import { ValidationModule } from './validation/validation.module';
 import { ArchetypeComponent } from './cards/archetype/archetype.component';
+import { ReconnectionDialogComponent } from './components/reconnection-dialog/reconnection-dialog.component';
+import { ConnectionStatusComponent } from './components/connection-status/connection-status.component';
 
 @NgModule({
   imports: [
@@ -45,7 +47,9 @@ import { ArchetypeComponent } from './cards/archetype/archetype.component';
     InfoComponent,
     SearchBoxComponent,
     SidebarComponent,
-    SidebarContainerComponent
+    SidebarContainerComponent,
+    ReconnectionDialogComponent,
+    ConnectionStatusComponent
   ],
   exports: [
     AlertModule,
@@ -68,7 +72,9 @@ import { ArchetypeComponent } from './cards/archetype/archetype.component';
     DndSortableModule,
     TranslateModule,
     UserInfoModule,
-    ValidationModule
+    ValidationModule,
+    ReconnectionDialogComponent,
+    ConnectionStatusComponent
   ],
   providers: [
     SessionService

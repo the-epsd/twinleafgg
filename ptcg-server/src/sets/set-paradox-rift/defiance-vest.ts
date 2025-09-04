@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, StateUtils } from '../../game';
+import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
@@ -53,7 +53,7 @@ export class DefianceVest extends TrainerCard {
       }
 
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        return state;
       }
 
       // Check if damage target is owned by this card's owner 
@@ -62,6 +62,7 @@ export class DefianceVest extends TrainerCard {
         effect.damage = Math.max(0, effect.damage - 40);
         effect.damageReduced = true;
       }
+      return state;
     }
     return state;
   }

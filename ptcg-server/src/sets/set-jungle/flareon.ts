@@ -28,7 +28,7 @@ export class Flareon extends PokemonCard {
     name: 'Flamethrower',
     cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
     damage: 60,
-    text: 'Discard 1 {R} Energy card attached to Flareon in order to use this attack.'
+    text: 'Discard 1 [R] Energy card attached to Flareon in order to use this attack.'
   }];
 
 

@@ -30,7 +30,7 @@ export class Marowak extends PokemonCard {
     name: 'Call for Friend',
     cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
     damage: 0,
-    text: 'Search your deck for a {F} Basic Pokémon card and put it onto your Bench. Shuffle your deck afterward. (You can\'t use this attack if your Bench is full.)'
+    text: 'Search your deck for a [F] Basic Pokémon card and put it onto your Bench. Shuffle your deck afterward. (You can\'t use this attack if your Bench is full.)'
   }];
 
   public set: string = 'JU';
