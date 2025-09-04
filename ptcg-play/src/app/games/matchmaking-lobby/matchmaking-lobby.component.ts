@@ -207,16 +207,16 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Return specific background for Standard format
     if (activeFormat === Format.STANDARD) {
-      return 'url("assets/bg-standard.png")';
+      return 'url("")';
     }
 
     if (activeFormat === Format.STANDARD_NIGHTLY) {
-      return 'url("assets/bg-nightly.avif")';
+      return 'url("")';
     }
 
     // You can customize this to return different background images based on format
     // For now, using a generic background
-    return 'url("assets/images/backgrounds/format-background.jpg")';
+    return 'url("")';
   }
 
   // Helper method to get deck for a specific format
