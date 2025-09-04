@@ -34,7 +34,7 @@ export class Tropius extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20)
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
     }
 
     if (AFTER_ATTACK(effect, 1, this)) {

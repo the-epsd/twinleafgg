@@ -1,5 +1,5 @@
-import { KeldeoEx } from "../set-boundaries-crossed/keldeo-ex";
-import { TropicalBeach } from "./tropical-beach";
+import { KeldeoEx } from '../set-boundaries-crossed/keldeo-ex';
+import { TropicalBeach } from './tropical-beach';
 
 export class KeldeoExBWP extends KeldeoEx {
   public set: string = 'BWP';

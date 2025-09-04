@@ -1,5 +1,5 @@
-import { Delcatty } from "../set-ex-ruby-and-sapphire/delcatty";
-import { EnergySwitch } from "../set-scarlet-and-violet/energy-switch";
+import { Delcatty } from '../set-ex-ruby-and-sapphire/delcatty';
+import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
 
 export class DelcattyPK extends Delcatty {
   public fullName = 'Delcatty PK';
@@ -13,5 +13,5 @@ export class EnergySwitchPK extends EnergySwitch {
   public name = 'Energy Switch';
   public set = 'PK';
   public setNumber = '75';
-  public text = 'Move a basic Energy from 1 of your Pokémon to another of your Pokémon.'
+  public text = 'Move a basic Energy from 1 of your Pokémon to another of your Pokémon.';
 }

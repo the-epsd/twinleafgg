@@ -33,7 +33,7 @@
   <span class="epsd-spacer"></span>
 
   <!-- Connection status indicator -->
-  <app-connection-status *ngIf="loggedUser"></app-connection-status>
+  <ptcg-connection-status *ngIf="loggedUser"></ptcg-connection-status>
 
   <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
     {{ 'MAIN_TABLES' | translate }}

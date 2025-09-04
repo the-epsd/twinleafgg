@@ -53,15 +53,15 @@ export class Slowpoke extends PokemonCard {
           { superType: SuperType.POKEMON },
           { min: 1, max: 1, allowCancel: false }
         )], selected => {
-          const cards = new CardList();
-          if (selected) {
-            cards.cards = selected;
-          }
-          selected.forEach(card => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
-          MOVE_CARDS(store, state, cards, player.hand);
+        const cards = new CardList();
+        if (selected) {
+          cards.cards = selected;
+        }
+        selected.forEach(card => {
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
+        MOVE_CARDS(store, state, cards, player.hand);
+      });
     }
 
     return state;

@@ -1,4 +1,4 @@
-import { MagearnaEX } from "./magearna-ex";
+import { MagearnaEX } from './magearna-ex';
 
 export class MagearnaEXSTS extends MagearnaEX {
   public set: string = 'STS';

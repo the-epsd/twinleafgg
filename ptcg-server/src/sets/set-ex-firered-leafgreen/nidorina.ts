@@ -46,7 +46,7 @@ export class Nidorina extends PokemonCard {
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, effect.player, {}, { min: 0, max: 2, blocked })
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, effect.player, {}, { min: 0, max: 2, blocked });
     }
 
     return state;

@@ -1,5 +1,5 @@
-import { BrocksGrit } from "../set-evolutions/brocks-grit";
-import { Guzma } from "../set-burning-shadows/guzma";
+import { BrocksGrit } from '../set-evolutions/brocks-grit';
+import { Guzma } from '../set-burning-shadows/guzma';
 
 export class BrocksGritHIF extends BrocksGrit {
   public fullName = 'Brock\'s Grit HIF';

@@ -10,7 +10,7 @@ interface ReconnectionDialogData {
 }
 
 @Component({
-  selector: 'app-reconnection-dialog',
+  selector: 'ptcg-reconnection-dialog',
   templateUrl: './reconnection-dialog.component.html',
   styleUrls: ['./reconnection-dialog.component.scss']
 })

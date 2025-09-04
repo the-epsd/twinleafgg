@@ -25,7 +25,7 @@ export class Fraxure extends PokemonCard {
       name: 'Boundless Power',
       cost: [F, M],
       damage: 90,
-      text: "During your next turn, this Pokémon can't attack."
+      text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
 

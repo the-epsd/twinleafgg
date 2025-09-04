@@ -13,39 +13,39 @@ export interface BattlePassReward {
 @Entity()
 export class BattlePassSeason extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column({ unique: true })
-  seasonId!: string;
+    seasonId!: string;
 
   @Column()
-  name!: string;
+    name!: string;
 
   @Column({ type: 'date', default: () => '(CURRENT_DATE)' })
-  startDate!: Date;
+    startDate!: Date;
 
   @Column({ type: 'date', default: () => '(CURRENT_DATE)' })
-  endDate!: Date;
+    endDate!: Date;
 
   @Column()
-  rewardsFile!: string;
+    rewardsFile!: string;
 
   rewards!: BattlePassReward[];
 
   @Column({ default: 1000 }) // Base XP needed per level
-  baseXpPerLevel!: number;
+    baseXpPerLevel!: number;
 
   @Column({ default: 0 }) // XP increase per level
-  xpIncreasePerLevel!: number;
+    xpIncreasePerLevel!: number;
 
   @Column({ default: 100 }) // Max level for the season
-  maxLevel!: number;
+    maxLevel!: number;
 
   @CreateDateColumn()
-  created!: Date;
+    created!: Date;
 
   @UpdateDateColumn()
-  updated!: Date;
+    updated!: Date;
 
   @AfterLoad()
   loadRewards() {

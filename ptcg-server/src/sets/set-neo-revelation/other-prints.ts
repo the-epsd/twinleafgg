@@ -1,4 +1,4 @@
-import { BalloonBerry } from "../set-ex-dragon/balloon-berry";
+import { BalloonBerry } from '../set-ex-dragon/balloon-berry';
 
 export class BalloonBerryN3 extends BalloonBerry {
   public fullName = 'Balloon Berry N3';

@@ -21,7 +21,7 @@ export class Turtonator extends PokemonCard {
       name: 'Fully Singe',
       cost: [CardType.FIRE],
       damage: 0,
-      text: "Discard an Energy from your opponent's Active Pokémon ex."
+      text: 'Discard an Energy from your opponent\'s Active Pokémon ex.'
     },
     {
       name: 'Steaming Stomp',

@@ -1,6 +1,6 @@
-import { GreatBall } from "../set-paldea-evolved/great-ball";
-import { Marnie } from "./marnie";
-import { ProfessorsResearch } from "../set-scarlet-and-violet/professors-research";
+import { GreatBall } from '../set-paldea-evolved/great-ball';
+import { Marnie } from './marnie';
+import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 
 export class GreatBallSSH extends GreatBall {
   public fullName = 'Great Ball SSH';

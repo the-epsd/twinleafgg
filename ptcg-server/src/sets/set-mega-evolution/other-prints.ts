@@ -1,11 +1,11 @@
-import { Bulbasaur } from "./bulbasaur";
-import { Inteleon } from "./inteleon";
-import { MegaGardevoirex } from "./mega-gardevoir-ex";
-import { MegaKangaskhanex } from "./mega-kangaskhan-ex";
-import { MegaLucarioex } from "./mega-lucario-ex";
-import { MegaVenusaurEx } from "./mega-venusaur-ex";
-import { NightlyStretcher } from "../set-shrouded-fable/nightly-stretcher";
-import { RareCandy } from "../set-scarlet-and-violet/rare-candy";
+import { Bulbasaur } from './bulbasaur';
+import { Inteleon } from './inteleon';
+import { MegaGardevoirex } from './mega-gardevoir-ex';
+import { MegaKangaskhanex } from './mega-kangaskhan-ex';
+import { MegaLucarioex } from './mega-lucario-ex';
+import { MegaVenusaurEx } from './mega-venusaur-ex';
+import { NightlyStretcher } from '../set-shrouded-fable/nightly-stretcher';
+import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 
 export class BulbasaurM1S extends Bulbasaur {
   public fullName = 'Bulbasaur M1S 64';

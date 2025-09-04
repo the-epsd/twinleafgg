@@ -8,7 +8,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-
 export class Pidgeotto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pidgey';
-  public tags = [CardTag.DELTA_SPECIES]
+  public tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 70;
   public weakness = [{ type: L }];

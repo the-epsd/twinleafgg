@@ -1,6 +1,6 @@
 <div class="ptcg-message-entry" [class.ptcg-written-by-me]="writtenByMe" *ngIf="user$ | async as user">
   <div class="ptcg-message-avatar-box">
-    <!-- <app-custom-avatar *ngIf="user.customAvatar; else defaultAvatar" [avatar]="user.customAvatar"></app-custom-avatar>
+    <!-- <ptcg-custom-avatar *ngIf="user.customAvatar; else defaultAvatar" [avatar]="user.customAvatar"></ptcg-custom-avatar>
     <ng-template #defaultAvatar> -->
     <ptcg-avatar class="ptcg-message-avatar" [avatarFile]="user.avatarFile" (click)="onAvatarClick()">
     </ptcg-avatar>

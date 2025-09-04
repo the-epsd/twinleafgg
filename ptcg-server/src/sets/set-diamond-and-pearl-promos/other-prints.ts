@@ -1,5 +1,5 @@
-import { DialgaLVX } from "../set-great-encounters/dialga-lv-x";
-import { MewtwoLVX } from "../set-legends-awakened/mewtwo-lv-x";
+import { DialgaLVX } from '../set-great-encounters/dialga-lv-x';
+import { MewtwoLVX } from '../set-legends-awakened/mewtwo-lv-x';
 
 export class DialgaLVXDPP extends DialgaLVX {
   public fullName = 'Dialga LV.X DPP 17';

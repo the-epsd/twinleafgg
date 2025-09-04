@@ -1,4 +1,4 @@
-import { RainbowEnergy } from "../set-sun-and-moon/rainbow-energy";
+import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 
 export class RainbowEnergyPL extends RainbowEnergy {
   public fullName = 'Rainbow Energy PL';

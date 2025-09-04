@@ -51,7 +51,7 @@ export class Cresselia extends PokemonCard {
       let totalHealed = 0;
 
       targets.forEach(target => {
-        let damageToMove = Math.min(target.damage, 20);
+        const damageToMove = Math.min(target.damage, 20);
         target.damage -= damageToMove;
         totalHealed += damageToMove;
       });

@@ -1,4 +1,4 @@
-import { TeamAquaHideout } from "../set-ex-team-magma-vs-team-aqua/team-aqua-hideout";
+import { TeamAquaHideout } from '../set-ex-team-magma-vs-team-aqua/team-aqua-hideout';
 
 export class TeamAquasSecretBase extends TeamAquaHideout {
   public set: string = 'DCR';

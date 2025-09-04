@@ -4,24 +4,24 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 export class CardArtwork extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  name!: string;
+    name!: string;
 
   @Column()
-  cardName!: string;
+    cardName!: string;
 
   @Column()
-  setCode!: string;
+    setCode!: string;
 
   @Column()
-  code!: string;
+    code!: string;
 
   @Column()
-  imageUrl!: string;
+    imageUrl!: string;
 
   @Column({ default: 'default' })
-  holoType!: string;
+    holoType!: string;
 
 } 

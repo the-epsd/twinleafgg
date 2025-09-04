@@ -37,8 +37,8 @@ export class Steelix extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      let bigBoys = player.hand.cards.filter(c => c instanceof PokemonCard && c.retreat.length === 4);
-      let blocked: number[] = [];
+      const bigBoys = player.hand.cards.filter(c => c instanceof PokemonCard && c.retreat.length === 4);
+      const blocked: number[] = [];
       player.hand.cards.forEach((card, index) => {
         if (card instanceof PokemonCard && card.retreat.length === 4) {
           return;

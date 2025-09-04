@@ -133,22 +133,22 @@ export class Jirachi extends PokemonCard {
         [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false, min: 0, max: checkProvidedEnergy.energyMap.length, blocked }
       ),
-        (results) => {
-          if (results && results.length > 0) {
-            for (const targetPokemon of results) {
-              const pokemons = targetPokemon.getPokemons();
+      (results) => {
+        if (results && results.length > 0) {
+          for (const targetPokemon of results) {
+            const pokemons = targetPokemon.getPokemons();
 
-              if (pokemons.length > 1) {
-                const highestStagePokemon = pokemons[pokemons.length - 1];
-                targetPokemon.moveCardsTo([highestStagePokemon], effect.opponent.hand);
-                targetPokemon.clearEffects();
-                targetPokemon.pokemonPlayedTurn = state.turn;
-              }
+            if (pokemons.length > 1) {
+              const highestStagePokemon = pokemons[pokemons.length - 1];
+              targetPokemon.moveCardsTo([highestStagePokemon], effect.opponent.hand);
+              targetPokemon.clearEffects();
+              targetPokemon.pokemonPlayedTurn = state.turn;
             }
           }
-
-          return state;
         }
+
+        return state;
+      }
       );
     }
 

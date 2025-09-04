@@ -1,6 +1,6 @@
-import { Judge } from "../set-scarlet-and-violet/judge";
-import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";
-import { SuperScoopUp } from "../set-diamond-and-pearl/super-scoop-up";
+import { Judge } from '../set-scarlet-and-violet/judge';
+import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
+import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 
 export class JudgeUL extends Judge {
   public fullName = 'Judge UL';

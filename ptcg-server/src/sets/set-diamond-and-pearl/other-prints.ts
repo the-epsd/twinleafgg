@@ -1,4 +1,4 @@
-import { Switch } from "../set-scarlet-and-violet/switch";
+import { Switch } from '../set-scarlet-and-violet/switch';
 
 export class SwitchDP extends Switch {
   public set: string = 'DP';

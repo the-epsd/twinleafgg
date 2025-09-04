@@ -7,7 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 export class Blissey extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chansey';
   public cardType: CardType = C;
   public hp: number = 120;

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FriendsService } from '../../api/services/friends.service';
 
 @Component({
-  selector: 'app-send-friend-request',
+  selector: 'ptcg-send-friend-request',
   templateUrl: './send-friend-request.component.html',
   styleUrls: ['./send-friend-request.component.scss']
 })

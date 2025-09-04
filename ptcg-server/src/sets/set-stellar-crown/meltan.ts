@@ -71,7 +71,7 @@ export class Meltan extends PokemonCard {
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           }
 
-          SHUFFLE_DECK(store, state, player)
+          SHUFFLE_DECK(store, state, player);
         });
       }
     }

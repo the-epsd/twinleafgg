@@ -38,7 +38,7 @@
           <div class="artwork-inline" *ngIf="!disabled">
             <select class="artwork-select-under-card" [value]="getSelectedArtworkIdString(render.data.card.fullName)"
               (change)="onArtworkSelect(render.data.card.fullName, $event.target.value)">
-              <option value="" [selected]="getSelectedArtworkId(render.data.card.fullName) == null">Default</option>
+              <option value="" [selected]="getSelectedArtworkId(render.data.card.fullName) === null">Default</option>
               <option *ngFor="let a of (unlockedArtworks | artworksFor:render.data.card)" [value]="a.id"
                 [selected]="getSelectedArtworkId(render.data.card.fullName) === a.id">{{ a.name }}
               </option>

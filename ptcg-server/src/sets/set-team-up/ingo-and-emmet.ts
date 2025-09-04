@@ -33,7 +33,7 @@ export class IngoAndEmmet extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARD_TO(state, effect.trainerCard, player.supporter)
+      MOVE_CARD_TO(state, effect.trainerCard, player.supporter);
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);

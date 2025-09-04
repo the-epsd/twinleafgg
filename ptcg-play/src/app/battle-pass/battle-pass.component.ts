@@ -12,7 +12,7 @@ interface BattlePassLevel {
 
 @UntilDestroy()
 @Component({
-  selector: 'app-battle-pass',
+  selector: 'ptcg-battle-pass',
   templateUrl: './battle-pass.component.html',
   styleUrls: ['./battle-pass.component.scss']
 })

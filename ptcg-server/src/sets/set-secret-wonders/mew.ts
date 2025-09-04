@@ -44,7 +44,7 @@ export class Mew extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length)
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

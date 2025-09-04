@@ -44,7 +44,7 @@ export class Vespiquen extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
-          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6)
+          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
         }
       });
     }

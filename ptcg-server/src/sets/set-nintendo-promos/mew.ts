@@ -74,13 +74,13 @@ export class Mew extends PokemonCard {
             [SlotType.ACTIVE, SlotType.BENCH],
             { allowCancel: false, min: 1, max: 1, blocked }
           ),
-            (results) => {
-              if (results && results.length > 0) {
-                DEVOLVE_POKEMON(store, state, results[0], effect.opponent.hand);
-              }
-
-              return state;
+          (results) => {
+            if (results && results.length > 0) {
+              DEVOLVE_POKEMON(store, state, results[0], effect.opponent.hand);
             }
+
+            return state;
+          }
           );
         }
       });

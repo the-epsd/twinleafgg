@@ -69,7 +69,7 @@ export class Milotic extends PokemonCard {
       //Blocks energy from being attached to Pokemon EX
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.tags.includes("CardTag.POKEMON_EX")) {
+        if (card.tags.includes('CardTag.POKEMON_EX')) {
           blocked2.push(target);
         }
       });

@@ -1,5 +1,5 @@
-import { EldegossV } from "../set-champions-path/eldegoss-v";
-import { TurffieldStadium } from "../set-champions-path/turffield-stadium";
+import { EldegossV } from '../set-champions-path/eldegoss-v';
+import { TurffieldStadium } from '../set-champions-path/turffield-stadium';
 
 export class EldegossVRCL extends EldegossV {
   public set: string = 'RCL';

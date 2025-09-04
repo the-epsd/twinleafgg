@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Card, CardTag } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./card.component.scss'],
   exportAs: 'ptcgCard',
 })
-export class CardComponent {
+export class CardComponent implements OnInit, OnDestroy {
   public scanUrl: string;
   public data: Card;
   private holoEnabled = true;

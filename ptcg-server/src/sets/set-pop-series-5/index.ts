@@ -1,4 +1,4 @@
-import { Card } from '../../game/store/card/card'
+import { Card } from '../../game/store/card/card';
 import { EspeonStar } from './espeon-star';
 import { Mew } from './mew';
 import { UmbreonStar } from './umbreon-star';
