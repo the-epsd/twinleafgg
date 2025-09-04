@@ -56,20 +56,14 @@
   position: fixed;
   top: 64px;
   right: 0;
-  width: 85px;
+  width: 230px;
   height: calc(100vh - 64px);
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+  background: linear-gradient(135deg, rgba(10, 10, 20, 0.95) 0%, rgba(5, 10, 25, 0.95) 100%);
   backdrop-filter: blur(20px);
-  border-left: 1px solid rgba(255, 215, 0, 0.1);
+  border-left: 1px solid rgba(68, 144, 88, 0.3);
   transition: all 0.3s ease;
-  overflow: visible;
+  overflow: hidden;
   z-index: 1000;
-
-  &:hover,
-  &.menu-open {
-    width: 230px;
-    overflow: hidden;
-  }
 
   .sidebar-content {
     width: 230px;
@@ -106,15 +100,15 @@
 // Pulse animation for online indicators
 @keyframes pulse-online {
   0% {
-    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
   }
 
   70% {
-    box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+    box-shadow: 0 0 0 6px rgba(74, 222, 128, 0);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
   }
 }
 
@@ -123,14 +117,9 @@
   align-items: center;
   padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
-  opacity: 0;
-  transform: translateX(20px);
+  opacity: 1;
+  transform: translateX(0);
   transition: all 0.3s ease 0.1s;
-
-  .players-sidebar:hover & {
-    opacity: 1;
-    transform: translateX(0);
-  }
 
   .section-icon {
     color: #ffd700;
@@ -140,7 +129,7 @@
   }
 
   .section-title {
-    color: rgba(255, 255, 255, 0.9);
+    color: #ffffff;
     font-weight: 600;
     font-size: 14px;
     text-transform: uppercase;
@@ -149,7 +138,7 @@
   }
 
   .player-count {
-    color: rgba(255, 255, 255, 0.6);
+    color: #d1d5db;
     font-size: 12px;
     margin-left: 0.5rem;
     white-space: nowrap;
@@ -158,14 +147,10 @@
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
   margin: 1rem 0;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s ease 0.2s;
-
-  .players-sidebar:hover & {
-    opacity: 1;
-  }
 }
 
 .players-list {
@@ -193,20 +178,20 @@
 
   &.friend {
     &:hover {
-      background: rgba(79, 172, 254, 0.1);
+      background: rgba(255, 215, 0, 0.15);
     }
 
     .player-avatar .avatar-image {
-      border-color: rgba(79, 172, 254, 0.6);
+      border-color: rgba(255, 215, 0, 0.6);
     }
   }
 
   &.current-user {
-    background: rgba(255, 215, 0, 0.05);
+    background: rgba(255, 215, 0, 0.1);
     border-left: 3px solid rgba(255, 215, 0, 0.6);
 
     &:hover {
-      background: rgba(255, 215, 0, 0.15);
+      background: rgba(255, 215, 0, 0.2);
     }
 
     .player-avatar .avatar-image {
@@ -215,7 +200,7 @@
     }
 
     .you-indicator {
-      color: rgba(255, 215, 0, 0.9);
+      color: #ffd700;
       font-size: 11px;
       font-weight: 600;
       margin-left: 0.5rem;
@@ -249,19 +234,19 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      border: 2px solid rgba(26, 26, 46, 0.95);
+      border: 2px solid rgba(10, 10, 20, 0.95);
       transition: all 0.3s ease;
       z-index: 3;
 
       &.online {
-        background: #4CAF50;
-        box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+        background: #4ade80;
+        box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
         animation: pulse-online 2s infinite;
       }
 
       &.offline {
-        background: #757575;
-        box-shadow: 0 0 5px rgba(117, 117, 117, 0.4);
+        background: #9ca3af;
+        box-shadow: 0 0 5px rgba(156, 163, 175, 0.4);
       }
     }
   }
@@ -269,18 +254,13 @@
   .player-info {
     flex: 1;
     min-width: 0;
-    opacity: 0;
-    transform: translateX(20px);
+    opacity: 1;
+    transform: translateX(0);
     transition: all 0.3s ease;
-
-    .players-sidebar:hover & {
-      opacity: 1;
-      transform: translateX(0);
-    }
 
     .player-name {
       display: block;
-      color: rgba(255, 255, 255, 0.9);
+      color: #ffffff;
       font-weight: 500;
       font-size: 14px;
       white-space: nowrap;
@@ -292,7 +272,7 @@
     .player-status,
     .player-rank {
       display: block;
-      color: rgba(255, 255, 255, 0.6);
+      color: #d1d5db;
       font-size: 12px;
       white-space: nowrap;
       overflow: hidden;
@@ -301,47 +281,18 @@
 
     .player-status {
       &:contains('Online') {
-        color: #4CAF50;
+        color: #4ade80;
       }
     }
   }
 
-  // Tooltip for collapsed state
-  &::before {
-    content: attr(data-player-name);
-    position: absolute;
-    left: 90px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 1001;
-  }
-
-  &:hover::before {
-    .players-sidebar:not(:hover) & {
-      opacity: 1;
-    }
-  }
 }
 
 .view-all-link {
   padding: 1rem;
-  opacity: 0;
-  transform: translateX(20px);
+  opacity: 1;
+  transform: translateX(0);
   transition: all 0.3s ease 0.3s;
-
-  .players-sidebar:hover & {
-    opacity: 1;
-    transform: translateX(0);
-  }
 
   .view-all-button {
     display: flex;
@@ -349,7 +300,7 @@
     justify-content: center;
     gap: 0.5rem;
     width: 100%;
-    color: rgba(255, 255, 255, 0.7);
+    color: #d1d5db;
     border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 20px;
     padding: 0.75rem;
@@ -385,13 +336,8 @@
   .players-sidebar {
     position: fixed !important;
     top: 64px;
-    width: 70px;
+    width: 280px;
     height: calc(100vh - 64px);
-
-    &:hover,
-    &.menu-open {
-      width: 280px;
-    }
   }
 }
 
@@ -406,11 +352,6 @@
   }
 
   .players-sidebar {
-    width: 60px !important;
-
-    &:hover,
-    &.menu-open {
-      width: 250px;
-    }
+    width: 250px !important;
   }
 }

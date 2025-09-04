@@ -45,9 +45,8 @@ export class GamesComponent implements OnInit, OnDestroy {
   public loggedUserId: number;
   public lobbyComponent = MatchmakingLobbyComponent;
   public isAdmin$: Observable<boolean>;
-  public sidebarMenuOpen = false;
+  public sidebarMenuOpen = true;
   public selectedFormat: Format | null = null;
-  private menuCloseTimeout: any;
 
   constructor(
     private alertService: AlertService,
@@ -150,10 +149,7 @@ export class GamesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Clean up any pending timeout
-    if (this.menuCloseTimeout) {
-      clearTimeout(this.menuCloseTimeout);
-    }
+    // No cleanup needed for always-open sidebar
   }
 
   public isPlayerOnline(userId: number): boolean {
@@ -164,28 +160,15 @@ export class GamesComponent implements OnInit, OnDestroy {
   }
 
   public onMenuOpened(): void {
-    console.log('Menu opened - keeping sidebar expanded'); // Debug log
-
-    // Clear any pending close timeout
-    if (this.menuCloseTimeout) {
-      clearTimeout(this.menuCloseTimeout);
-      this.menuCloseTimeout = null;
-    }
-
-    this.sidebarMenuOpen = true;
+    // Sidebar is always open now, no action needed
   }
 
   public onMenuClosed(): void {
-    if (this.menuCloseTimeout) {
-      clearTimeout(this.menuCloseTimeout);
-    }
-    this.menuCloseTimeout = setTimeout(() => {
-      this.sidebarMenuOpen = false;
-    }, 100);
+    // Sidebar is always open now, no action needed
   }
 
   public toggleSidebar(): void {
-    this.sidebarMenuOpen = !this.sidebarMenuOpen;
+    // Sidebar is always open now, no action needed
   }
 
   private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[]): Promise<CreateGamePopupResult> {
