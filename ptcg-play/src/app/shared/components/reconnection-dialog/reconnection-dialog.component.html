@@ -1,61 +1,117 @@
 <div class="reconnection-dialog">
+  <!-- Header Section -->
   <div class="dialog-header">
-    <mat-icon class="connection-icon" [class.reconnecting]="reconnectionStatus.isReconnecting">wifi_off</mat-icon>
-    <h2 mat-dialog-title>Connection Lost</h2>
+    <div class="header-background">
+      <div class="header-content">
+        <div class="connection-status-section">
+          <div class="connection-icon-container">
+            <mat-icon class="connection-icon"
+              [class.reconnecting]="reconnectionStatus.isReconnecting">wifi_off</mat-icon>
+            <div class="icon-pulse" *ngIf="reconnectionStatus.isReconnecting"></div>
+          </div>
+          <div class="status-text">
+            <h1 class="dialog-title">CONNECTION LOST</h1>
+            <div class="dialog-subtitle">RECONNECTING</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div mat-dialog-content class="dialog-content">
+  <!-- Main Content - Hidden for now -->
+  <div mat-dialog-content class="dialog-content" style="display: none;">
     <!-- Automatic reconnection in progress -->
     <div *ngIf="shouldShowProgressBar()" class="reconnection-progress">
-      <p>Attempting to reconnect to the game...</p>
+      <div class="progress-section">
+        <div class="progress-header">
+          <h3 class="progress-title">RECONNECTING TO GAME</h3>
+          <div class="attempt-counter">
+            <span class="attempt-text">ATTEMPT {{ reconnectionStatus.currentAttempt }} OF {{
+              reconnectionStatus.maxAttempts }}</span>
+          </div>
+        </div>
 
-      <div class="progress-info">
-        <span>Attempt {{ reconnectionStatus.currentAttempt }} of {{ reconnectionStatus.maxAttempts }}</span>
-        <mat-progress-bar mode="determinate" [value]="getProgressPercentage()">
-        </mat-progress-bar>
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+          </div>
+          <div class="progress-percentage">{{ getProgressPercentage() | number:'1.0-0' }}%</div>
+        </div>
+
+        <div class="retry-timer">
+          <mat-icon class="timer-icon">schedule</mat-icon>
+          <span class="timer-text">{{ getNextRetryText() }}</span>
+        </div>
       </div>
 
-      <p class="retry-timer">{{ getNextRetryText() }}</p>
-
       <div class="connection-tips">
-        <mat-icon class="tip-icon">info</mat-icon>
-        <span>Please keep this window open while we attempt to reconnect.</span>
+        <div class="tips-header">
+          <mat-icon class="tip-icon">info</mat-icon>
+          <span class="tips-title">KEEP WINDOW OPEN</span>
+        </div>
+        <p class="tips-description">Please keep this window open while we attempt to reconnect to your game.</p>
       </div>
     </div>
 
     <!-- Manual reconnection options -->
     <div *ngIf="shouldShowRetryButton()" class="manual-options">
-      <div *ngIf="reconnectionStatus.error" class="error-message">
-        <mat-icon class="error-icon">error</mat-icon>
-        <span>{{ getErrorMessage() }}</span>
+      <div class="manual-header">
+        <h3 class="manual-title">MANUAL RECONNECTION</h3>
+        <p class="manual-subtitle">Choose your next action</p>
       </div>
-      <p class="manual-instruction">Would you like to try reconnecting manually or return to the main menu?</p>
 
-      <div class="troubleshooting-tips">
-        <p class="tips-title">Troubleshooting tips:</p>
-        <ul>
-          <li>Check your internet connection</li>
-          <li>Try refreshing the page if the problem persists</li>
-          <li>Contact support if you continue experiencing issues</li>
-        </ul>
+      <div *ngIf="reconnectionStatus.error" class="error-message">
+        <div class="error-header">
+          <mat-icon class="error-icon">error</mat-icon>
+          <span class="error-title">CONNECTION ERROR</span>
+        </div>
+        <p class="error-description">{{ getErrorMessage() }}</p>
+      </div>
+
+      <div class="troubleshooting-section">
+        <div class="troubleshooting-header">
+          <mat-icon class="troubleshoot-icon">build</mat-icon>
+          <span class="troubleshoot-title">TROUBLESHOOTING TIPS</span>
+        </div>
+        <div class="troubleshooting-list">
+          <div class="troubleshoot-item">
+            <mat-icon class="item-icon">wifi</mat-icon>
+            <span>Check your internet connection</span>
+          </div>
+          <div class="troubleshoot-item">
+            <mat-icon class="item-icon">refresh</mat-icon>
+            <span>Try refreshing the page if the problem persists</span>
+          </div>
+          <div class="troubleshoot-item">
+            <mat-icon class="item-icon">support</mat-icon>
+            <span>Contact support if you continue experiencing issues</span>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Manual reconnection in progress -->
     <div *ngIf="isManualReconnecting" class="manual-reconnecting">
-      <mat-spinner diameter="40"></mat-spinner>
-      <p>Attempting to reconnect...</p>
+      <div class="reconnecting-content">
+        <div class="spinner-container">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        <h3 class="reconnecting-title">RECONNECTING</h3>
+        <p class="reconnecting-subtitle">Please wait while we establish a new connection...</p>
+      </div>
     </div>
   </div>
 
-  <div mat-dialog-actions class="dialog-actions">
-    <!-- Manual reconnection buttons -->
-    <div *ngIf="showManualOptions && !isManualReconnecting">
+  <!-- Dialog Actions - Hidden for now -->
+  <div mat-dialog-actions class="dialog-actions" style="display: none;">
+    <div *ngIf="showManualOptions && !isManualReconnecting" class="action-buttons">
       <button mat-button (click)="returnToMenu()" class="return-button">
-        Return to Menu
+        <mat-icon>home</mat-icon>
+        <span>RETURN TO MENU</span>
       </button>
-      <button mat-raised-button color="primary" (click)="manualReconnect()" class="reconnect-button">
-        Try Again
+      <button mat-raised-button (click)="manualReconnect()" class="reconnect-button">
+        <mat-icon>refresh</mat-icon>
+        <span>TRY AGAIN</span>
       </button>
     </div>
   </div>

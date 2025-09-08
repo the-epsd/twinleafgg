@@ -23,6 +23,7 @@ import { GameService } from '../api/services/game.service';
 import { FriendsService } from '../api/services/friends.service';
 import { FriendInfo } from '../api/interfaces/friends.interface';
 import { Format } from 'ptcg-server';
+import { ReconnectionDialogComponent } from '../shared/components/reconnection-dialog/reconnection-dialog.component';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +48,7 @@ export class GamesComponent implements OnInit, OnDestroy {
   public isAdmin$: Observable<boolean>;
   public sidebarMenuOpen = true;
   public selectedFormat: Format | null = null;
+  public isDevelopmentMode = true; // Set to false in production
 
   constructor(
     private alertService: AlertService,
@@ -250,5 +252,54 @@ export class GamesComponent implements OnInit, OnDestroy {
   // Handle format selection from matchmaking lobby
   onFormatSelected(format: Format): void {
     this.selectedFormat = format;
+  }
+
+  // Development method to test reconnection dialog
+  public openReconnectionDialog(testType: 'progress' | 'manual' | 'error'): void {
+    let dialogData: any = {};
+
+    switch (testType) {
+      case 'progress':
+        dialogData = {
+          gameId: 12345,
+          showManualOptions: false
+        };
+        break;
+      case 'manual':
+        dialogData = {
+          gameId: 12345,
+          showManualOptions: true
+        };
+        break;
+      case 'error':
+        dialogData = {
+          gameId: 12345,
+          showManualOptions: true,
+          error: 'Connection timeout exceeded'
+        };
+        break;
+    }
+
+    const dialogRef = this.dialog.open(ReconnectionDialogComponent, {
+      width: '500px',
+      maxWidth: '90vw',
+      data: dialogData,
+      disableClose: true,
+      panelClass: 'reconnection-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Reconnection dialog closed with result:', result);
+        switch (result.action) {
+          case 'reconnected':
+            console.log('Reconnection successful');
+            break;
+          case 'return_to_menu':
+            console.log('User chose to return to menu');
+            break;
+        }
+      }
+    });
   }
 }

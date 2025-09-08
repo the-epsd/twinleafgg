@@ -189,7 +189,7 @@
   backdrop-filter: blur(20px);
   transition: all 0.3s ease;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 1;
   transform: scale(1);
   overflow: hidden;
 
@@ -251,7 +251,7 @@
   }
 
   &.selected.fade-on-hover {
-    opacity: 0.4;
+    opacity: 1;
     transform: translateY(-2px) scale(1.02);
   }
 

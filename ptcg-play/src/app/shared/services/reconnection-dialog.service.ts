@@ -70,6 +70,7 @@ export class ReconnectionDialogService {
       disableClose: true,
       hasBackdrop: true,
       backdropClass: 'reconnection-backdrop',
+      panelClass: 'reconnection-dialog-container',
       data: {
         gameId: gameId,
         showManualOptions: false
@@ -98,6 +99,7 @@ export class ReconnectionDialogService {
       disableClose: true,
       hasBackdrop: true,
       backdropClass: 'reconnection-backdrop',
+      panelClass: 'reconnection-dialog-container',
       data: {
         gameId: gameId,
         showManualOptions: true

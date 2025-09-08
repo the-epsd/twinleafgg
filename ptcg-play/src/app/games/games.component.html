@@ -4,6 +4,19 @@
     <div class="matchmaking-container">
       <ptcg-matchmaking-lobby (formatSelected)="onFormatSelected($event)"></ptcg-matchmaking-lobby>
     </div>
+
+    <!-- Development Test Button for Reconnection Dialog -->
+    <div class="dev-test-controls" *ngIf="isDevelopmentMode && (isAdmin$ | async)">
+      <button mat-raised-button color="warn" (click)="openReconnectionDialog('progress')" class="test-button">
+        Test Reconnection Progress
+      </button>
+      <button mat-raised-button color="warn" (click)="openReconnectionDialog('manual')" class="test-button">
+        Test Manual Reconnection
+      </button>
+      <button mat-raised-button color="warn" (click)="openReconnectionDialog('error')" class="test-button">
+        Test Error State
+      </button>
+    </div>
   </div>
 
   <!-- <ptcg-sidebar>
