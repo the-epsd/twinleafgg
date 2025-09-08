@@ -71,8 +71,7 @@
           (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatHover(getFormatAtIndex(2)?.value)"
           (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(2)">
           <!-- Queue Count Banner -->
-          <div class="queue-count-banner" [class.active-queue]="hasRealQueueActivity()"
-            *ngIf="getQueueCountForFormat(getFormatAtIndex(2)?.value) > 0">
+          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(2)?.value) > 0">
             {{ getQueueCountForFormat(getFormatAtIndex(2)?.value) }} {{
             getQueueCountForFormat(getFormatAtIndex(2)?.value) === 1 ? 'player' : 'players' }} in queue
           </div>
@@ -97,8 +96,7 @@
           (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatHover(getFormatAtIndex(3)?.value)"
           (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(3)">
           <!-- Queue Count Banner -->
-          <div class="queue-count-banner" [class.active-queue]="hasRealQueueActivity()"
-            *ngIf="getQueueCountForFormat(getFormatAtIndex(3)?.value) > 0">
+          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(3)?.value) > 0">
             {{ getQueueCountForFormat(getFormatAtIndex(3)?.value) }} {{
             getQueueCountForFormat(getFormatAtIndex(3)?.value) === 1 ? 'player' : 'players' }} in queue
           </div>
