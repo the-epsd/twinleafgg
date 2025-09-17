@@ -46,7 +46,7 @@ export class MistysPoliwag extends PokemonCard {
         if (!result) {
           ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
         }
-      })
+      });
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);

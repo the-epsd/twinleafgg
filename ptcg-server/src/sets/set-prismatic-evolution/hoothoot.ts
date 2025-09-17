@@ -19,12 +19,12 @@ export class Hoothoot extends PokemonCard {
   }];
 
   public attacks = 
-  [{
-    name: 'Tackle',
-    cost: [C, C],
-    damage: 20,
-    text: ''
-  }];
+    [{
+      name: 'Tackle',
+      cost: [C, C],
+      damage: 20,
+      text: ''
+    }];
 
   public set: string = 'PRE';
   public regulationMark = 'H';

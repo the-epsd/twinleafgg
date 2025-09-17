@@ -1,4 +1,4 @@
-import { EscapeRope } from "../set-battle-styles/escape-rope";
+import { EscapeRope } from '../set-battle-styles/escape-rope';
 
 export class WarpPointG2 extends EscapeRope {
   public fullName = 'Warp Point G2';

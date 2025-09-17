@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BattlePassService } from './battle-pass.service';
+import { ApiService } from '../api/api.service';
 import { BattlePassReward, BattlePassSeason, BattlePassProgress } from './battle-pass.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { forkJoin } from 'rxjs';
@@ -7,12 +8,11 @@ import { forkJoin } from 'rxjs';
 interface BattlePassLevel {
   level: number;
   freeReward?: BattlePassReward;
-  premiumReward?: BattlePassReward;
 }
 
 @UntilDestroy()
 @Component({
-  selector: 'app-battle-pass',
+  selector: 'ptcg-battle-pass',
   templateUrl: './battle-pass.component.html',
   styleUrls: ['./battle-pass.component.scss']
 })
@@ -23,11 +23,10 @@ export class BattlePassComponent implements OnInit {
   public season: BattlePassSeason | undefined;
   public progress: BattlePassProgress | undefined;
   public levels: BattlePassLevel[] = [];
-  public isPremium = false;
   public loading = true;
   public claimingLevel: number | null = null;
 
-  constructor(private battlePassService: BattlePassService) { }
+  constructor(private battlePassService: BattlePassService, private api: ApiService) { }
 
   ngOnInit(): void {
     forkJoin({
@@ -38,7 +37,6 @@ export class BattlePassComponent implements OnInit {
       .subscribe({
         next: ({ seasonData, progressData }) => {
           this.season = seasonData.season;
-          this.isPremium = progressData.progress.isPremium;
           this.progress = progressData.progress;
           this.levels = this.groupRewardsByLevel(seasonData.season.rewards);
           this.loading = false;
@@ -49,20 +47,37 @@ export class BattlePassComponent implements OnInit {
       });
   }
 
+  public adminGrant(reward: BattlePassReward | undefined): void {
+    if (!reward) return;
+    if (reward.type === 'card_artwork') {
+      // Upsert artwork and grant to current user
+      // Assumes current userId/role are attached by AuthToken middleware
+      const artworkId = Number(reward.item);
+      if (Number.isFinite(artworkId)) {
+        this.api.post('/v1/artworks/admin/grant', { artworkId })
+          .pipe(untilDestroyed(this))
+          .subscribe({
+            next: () => { /* no-op */ },
+            error: (err) => console.error('Admin grant failed', err)
+          });
+      }
+    }
+  }
+
   private groupRewardsByLevel(rewards: BattlePassReward[]): BattlePassLevel[] {
     const levelMap = new Map<number, BattlePassLevel>();
 
     for (const reward of rewards) {
+      // Hide premium track completely on the client as well
+      if (reward && (reward as any).isPremium) { continue; }
+
       if (!levelMap.has(reward.level)) {
         levelMap.set(reward.level, { level: reward.level });
       }
 
       const level = levelMap.get(reward.level)!;
-      if (reward.isPremium) {
-        level.premiumReward = reward;
-      } else {
-        level.freeReward = reward;
-      }
+      // Assign the non-premium reward for the level
+      level.freeReward = reward;
     }
 
     // Sort by level and return

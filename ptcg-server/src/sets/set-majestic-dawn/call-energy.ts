@@ -34,7 +34,7 @@ export class CallEnergy extends EnergyCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      const player = effect.player
+      const player = effect.player;
       // Has to be active
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.cards.includes(this)) {

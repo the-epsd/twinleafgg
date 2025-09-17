@@ -1,4 +1,4 @@
-import { EscapeRope } from "../set-plasma-storm/escape-rope";
+import { EscapeRope } from '../set-plasma-storm/escape-rope';
 
 export class WarpPointMD extends EscapeRope {
   public fullName = 'Warp Point MD';

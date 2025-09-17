@@ -20,7 +20,7 @@ export class Rapidash extends PokemonCard {
     name: 'Searing Flame',
     cost: [R],
     damage: 20,
-    text: "Your opponent's Active Pokémon is now Burned."
+    text: 'Your opponent\'s Active Pokémon is now Burned.'
   },
   {
     name: 'Agility',

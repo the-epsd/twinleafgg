@@ -1,4 +1,4 @@
-import { AegislashEX } from "./aegislash-ex";
+import { AegislashEX } from './aegislash-ex';
 
 export class AegislashEXPHF extends AegislashEX {
   public fullName = 'Aegislash-EX PHF 65a';

@@ -1,4 +1,6 @@
 import { Format, GameSettings, Rules } from '../../game';
+import { CardArtwork } from '../../storage';
+import { In } from 'typeorm';
 import { Core } from '../../game/core/core';
 import { Client } from '../../game/client/client.interface';
 import { SocketWrapper } from '../socket/socket-wrapper';
@@ -8,6 +10,7 @@ interface QueuedPlayer {
   socketWrapper: SocketWrapper;
   format: Format;
   deck: string[];
+  artworks?: { code: string; artworkId?: number }[];
   joinedAt: number;
   lastValidated: number;
 }
@@ -17,13 +20,16 @@ export class MatchmakingService {
   private queue: QueuedPlayer[] = [];
   private matchCheckInterval: NodeJS.Timeout;
   private validateInterval: NodeJS.Timeout;
+  private broadcastInterval: NodeJS.Timeout;
   private readonly CHECK_INTERVAL = 2000; // Check for matches every 2 seconds
   private readonly VALIDATE_INTERVAL = 30000; // Validate connections every 30 seconds
+  private readonly BROADCAST_INTERVAL = 10000; // Broadcast queue updates every 10 seconds
   private readonly MAX_QUEUE_TIME = 300000; // 5 minutes maximum in queue
 
   private constructor(private core: Core) {
     this.matchCheckInterval = setInterval(() => this.checkMatches(), this.CHECK_INTERVAL);
     this.validateInterval = setInterval(() => this.validateQueue(), this.VALIDATE_INTERVAL);
+    this.broadcastInterval = setInterval(() => this.broadcastQueueUpdate(), this.BROADCAST_INTERVAL);
   }
 
   public static getInstance(core: Core): MatchmakingService {
@@ -33,7 +39,7 @@ export class MatchmakingService {
     return MatchmakingService.instance;
   }
 
-  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[]): void {
+  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[]): void {
     // Remove if already in queue
     this.removeFromQueue(client);
 
@@ -47,6 +53,7 @@ export class MatchmakingService {
       socketWrapper,
       format,
       deck,
+      artworks,
       joinedAt: Date.now(),
       lastValidated: Date.now()
     });
@@ -67,14 +74,32 @@ export class MatchmakingService {
     return this.queue.map(p => p.client.name);
   }
 
+  public getQueueCountsByFormat(): { [format: number]: number } {
+    const counts: { [format: number]: number } = {};
+    this.queue.forEach(player => {
+      counts[player.format] = (counts[player.format] || 0) + 1;
+    });
+    return counts;
+  }
+
   public isPlayerInQueue(client: Client): boolean {
     return this.queue.some(p => p.client === client);
   }
 
   private broadcastQueueUpdate(): void {
     const players = this.getQueuedPlayers();
-    this.queue.forEach(p => {
-      p.socketWrapper.emit('matchmaking:queueUpdate', { players });
+    const formatCounts = this.getQueueCountsByFormat();
+
+    // Broadcast to all connected clients, not just those in queue
+    this.core.clients.forEach(client => {
+      // Cast to SocketClient to access socket property
+      const socketClient = client as any;
+      if (socketClient.socket) {
+        socketClient.socket.emit('matchmaking:queueUpdate', {
+          players,
+          formatCounts
+        });
+      }
     });
   }
 
@@ -110,7 +135,7 @@ export class MatchmakingService {
     }
   }
 
-  private checkMatches(): void {
+  private async checkMatches(): Promise<void> {
     if (this.queue.length < 2) return;
 
     // Group players by format
@@ -122,7 +147,7 @@ export class MatchmakingService {
     });
 
     // Check each format group for potential matches
-    formatGroups.forEach(players => {
+    for (const players of formatGroups.values()) {
       if (players.length < 2) return;
 
       // Sort by time in queue
@@ -162,13 +187,19 @@ export class MatchmakingService {
 
         console.log(`[Matchmaking] Creating game between ${player1.client.name} and ${player2.client.name}`);
 
+        // Build artwork maps for both players
+        const map1 = await this.buildArtworksMap(player1.artworks);
+        const map2 = await this.buildArtworksMap(player2.artworks);
+
         // Use createGameWithDecks instead of createGame
         const game = this.core.createGameWithDecks(
           player1.client,
           player1.deck,
           gameSettings,
           player2.client,
-          player2.deck
+          player2.deck,
+          map1,
+          map2
         );
 
         if (game) {
@@ -196,7 +227,24 @@ export class MatchmakingService {
         this.removeFromQueue(player1.client);
         this.removeFromQueue(player2.client);
       }
-    });
+    }
+  }
+
+  private async buildArtworksMap(artworks?: { code: string; artworkId?: number }[]): Promise<{ [code: string]: { imageUrl: string; holoType?: string } }> {
+    const map: { [code: string]: { imageUrl: string; holoType?: string } } = {};
+    if (!artworks || artworks.length === 0) return map;
+    const ids = artworks.map(a => a.artworkId).filter((v): v is number => typeof v === 'number');
+    if (ids.length === 0) return map;
+    const rows = await CardArtwork.find({ where: { id: In(ids) } });
+    const byId = new Map(rows.map(r => [r.id, r]));
+    for (const a of artworks) {
+      if (!a.artworkId) continue;
+      const row = byId.get(a.artworkId);
+      if (row) {
+        map[a.code] = { imageUrl: row.imageUrl, holoType: row.holoType };
+      }
+    }
+    return map;
   }
 
   public dispose(): void {
@@ -205,6 +253,9 @@ export class MatchmakingService {
     }
     if (this.validateInterval) {
       clearInterval(this.validateInterval);
+    }
+    if (this.broadcastInterval) {
+      clearInterval(this.broadcastInterval);
     }
     // Clear queue on dispose
     this.queue = [];

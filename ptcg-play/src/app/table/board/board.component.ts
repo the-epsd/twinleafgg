@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
@@ -24,7 +24,7 @@ type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnDestroy {
+export class BoardComponent implements OnDestroy, OnChanges, OnInit {
 
   @Input() gameState: LocalGameState;
   @Input() topPlayer: Player;
@@ -132,7 +132,7 @@ export class BoardComponent implements OnDestroy {
   public deckSize: number = 0;
   public discardSize: number = 0;
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     if (this.player) {
       this.deck = this.player.deck;
       this.discard = this.player.discard;
@@ -274,7 +274,7 @@ export class BoardComponent implements OnDestroy {
     this.activePlayer = newActivePlayer;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Ensure board selection is cleared when board initializes
     this.boardInteractionService.endBoardSelection();
 
@@ -306,6 +306,11 @@ export class BoardComponent implements OnDestroy {
       : player.bench[item.index];
 
     const pokemonCard = cardList.getPokemonCard();
+    // If the server has provided an artworks map on cardList, prefer that image
+    const artworksMap = (cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+    if (pokemonCard && artworksMap && artworksMap[pokemonCard.fullName]?.imageUrl) {
+      return artworksMap[pokemonCard.fullName].imageUrl;
+    }
     return pokemonCard ? this.cardsBaseService.getScanUrl(pokemonCard) : undefined;
   }
 

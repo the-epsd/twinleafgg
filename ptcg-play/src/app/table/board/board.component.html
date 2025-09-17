@@ -9,8 +9,10 @@
           [ptcgDropHighlightVisible]="boardHighlight$ | async">
       </div>
       <div class="ptcg-card" *ngSwitchCase="'HAND_CARD'">
-        <img class="ptcg-card-preview" [ptcgImageCache]="item.data.scanUrl" ptcgDropHighlight="outside"
-          [ptcgDropHighlightVisible]="boardHighlight$ | async">
+        <ptcg-card class="ptcg-card-preview" [card]="item.data.card"
+          [artworksContext]="bottomPlayer?.hand?.artworksMap ? bottomPlayer?.hand : gameState"
+          ptcgDropHighlight="outside" [ptcgDropHighlightVisible]="boardHighlight$ | async">
+        </ptcg-card>
       </div>
     </ng-container>
   </ng-template>

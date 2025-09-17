@@ -34,6 +34,7 @@ export class Decks extends Controller {
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
         format: getValidFormatsForCardList(cards),
+        ...(deck.artworks ? { artworks: JSON.parse(deck.artworks) } : {})
       };
     });
 
@@ -71,7 +72,9 @@ export class Decks extends Controller {
     if (entity.artworks) {
       try {
         artworks = JSON.parse(entity.artworks);
-      } catch { }
+      } catch (error) {
+        // Ignore parsing errors for artworks
+      }
     }
 
     const deck = {
@@ -683,7 +686,7 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     case Format.UNLIMITED:
       return true;
     case Format.STANDARD: {
-      var setDate = SetReleaseDates[card.set];
+      const setDate = SetReleaseDates[card.set];
       if (card.regulationMark === 'J') {
         return false;
       }
@@ -695,12 +698,12 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.regulationMark === 'I' ||
         card.regulationMark === 'J';
     case Format.EXPANDED: {
-      var setDate = SetReleaseDates[card.set];
+      const setDate = SetReleaseDates[card.set];
       return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
         !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
     }
     case Format.GLC: {
-      var setDate = SetReleaseDates[card.set];
+      const setDate = SetReleaseDates[card.set];
       const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
       const isForceLegal = forceLegalSets.includes(card.set);
       return (

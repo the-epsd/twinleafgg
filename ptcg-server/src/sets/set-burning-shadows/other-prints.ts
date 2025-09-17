@@ -1,7 +1,7 @@
-import { EscapeRope } from "../set-battle-styles/escape-rope";
-import { Guzma } from "./guzma";
-import { RescueStretcher } from "../set-guardians-rising/rescue-stretcher";
-import { WeaknessPolicy } from "../set-primal-clash/weakness-policy";
+import { EscapeRope } from '../set-battle-styles/escape-rope';
+import { Guzma } from './guzma';
+import { RescueStretcher } from '../set-guardians-rising/rescue-stretcher';
+import { WeaknessPolicy } from '../set-primal-clash/weakness-policy';
 
 export class EscapeRopeBUS extends EscapeRope {
   public fullName = 'Escape Rope BUS';
@@ -34,5 +34,5 @@ export class WeaknessPolicyBUS extends WeaknessPolicy {
   public name = 'Weakness Policy';
   public set = 'BUS';
   public setNumber = '126';
-  public text = 'The Pokémon this card is attached to has no Weakness.'
+  public text = 'The Pokémon this card is attached to has no Weakness.';
 }

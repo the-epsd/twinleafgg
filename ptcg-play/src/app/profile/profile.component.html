@@ -1,57 +1,76 @@
-<ptcg-content [loading]="loading">
-  <mat-toolbar>
-    <mat-toolbar-row>
-      <h1 translate>PROFILE_TITLE</h1>
+<ptcg-content [loading]="loading" class="ptcg-profile-page">
+  <!-- Profile Header with Diagonal Cut -->
+  <div class="ptcg-profile-header" *ngIf="user$ | async; let user">
+    <!-- Top gradient section with diagonal cut -->
+    <div class="ptcg-profile-top">
+      <!-- Diagonal divider -->
+      <div class="ptcg-diagonal-divider"></div>
 
-      <span class="ptcg-u-spacer"></span>
-
-      <div *ngIf="owner$ | async ; then ownerActions ; else visitorActions"></div>
-      <ng-template #ownerActions>
-        <button mat-raised-button [matMenuTriggerFor]="menu">
-          {{ 'PROFILE_EDIT_PROFILE' | translate }}
-        </button>
-        <mat-menu #menu="matMenu">
-          <!-- <button mat-menu-item (click)="customizeAvatar()">
-            {{ 'PROFILE_CUSTOMIZE_AVATAR' | translate }}
-          </button> -->
-          <button mat-menu-item (click)="editAvatars()">
-            {{ 'PROFILE_EDIT_AVATARS' | translate }}
+      <!-- Action buttons positioned at top right -->
+      <div class="ptcg-profile-actions-top">
+        <div *ngIf="owner$ | async ; then ownerActions ; else visitorActions"></div>
+        <ng-template #ownerActions>
+          <button mat-raised-button [matMenuTriggerFor]="menu" class="ptcg-edit-button">
+            {{ 'PROFILE_EDIT_PROFILE' | translate }}
           </button>
-          <!-- <button mat-menu-item (click)="changeEmail(userId)">
-            {{ 'PROFILE_CHANGE_EMAIL' | translate }}
-          </button> -->
-          <button mat-menu-item (click)="changePassword()">
-            {{ 'SET_PASSWORD_BUTTON' | translate }}
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editAvatars(userId)">
+              {{ 'PROFILE_EDIT_AVATARS' | translate }}
+            </button>
+            <button mat-menu-item (click)="changePassword()">
+              {{ 'SET_PASSWORD_BUTTON' | translate }}
+            </button>
+            <button mat-menu-item (click)="openChangeCardImagesDialog()">
+              {{ 'PROFILE_CHANGE_CARD_IMAGES' | translate }}
+            </button>
+          </mat-menu>
+        </ng-template>
+        <ng-template #visitorActions>
+          <button mat-raised-button [routerLink]="['/message', userId]" class="ptcg-message-button">
+            {{ 'BUTTON_SEND_MESSAGE' | translate }}
           </button>
-          <button mat-menu-item (click)="openChangeCardImagesDialog()">
-            {{ 'PROFILE_CHANGE_CARD_IMAGES' | translate }}
+          <button *ngIf="isAdmin$ | async" mat-raised-button
+            [style.background-color]="(isBanned$ | async) ? '' : '#FF0000'"
+            [style.color]="(isBanned$ | async) ? '' : 'white'" (click)="banUser(userId)" class="ptcg-ban-button">
+            {{ (isBanned$ | async) ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
           </button>
-
-        </mat-menu>
-      </ng-template>
-      <ng-template #visitorActions>
-        <button mat-raised-button [routerLink]="['/message', userId]">
-          {{ 'BUTTON_SEND_MESSAGE' | translate }}
-        </button>
-        <button *ngIf="isAdmin$ | async" mat-raised-button
-          [style.background-color]="(isBanned$ | async) ? '' : '#FF0000'"
-          [style.color]="(isBanned$ | async) ? '' : 'white'" (click)="banUser(userId)">
-          {{ (isBanned$ | async) ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
-        </button>
-      </ng-template>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-  <div class="ptcg-user-details ptcg-u-padding" *ngIf="user$ | async; let user">
-    <mat-card>
-      <mat-card-content>
-        <ptcg-user-info-pane [user]="user"></ptcg-user-info-pane>
-      </mat-card-content>
-    </mat-card>
+        </ng-template>
+      </div>
+    </div>
   </div>
 
-  <div class="ptcg-recent-matches ptcg-u-padding" *ngIf="user$ | async; let user">
-    <ptcg-match-table [userId]="user.userId"></ptcg-match-table>
+  <!-- Avatar and Profile Info Section (Outside Header) -->
+  <div class="ptcg-profile-center" *ngIf="user$ | async; let user">
+    <div class="ptcg-profile-avatar-section">
+      <ptcg-avatar type="profile" openAvatarPopup="true" [avatarFile]="user.avatarFile"></ptcg-avatar>
+    </div>
+    <div class="ptcg-profile-info">
+      <div class="ptcg-profile-name-section">
+        <h1 class="ptcg-profile-username">{{ user.name }}</h1>
+        <div class="ptcg-profile-badges" *ngIf="user.roleId === 4">
+          <span class="ptcg-admin-badge">ADMIN</span>
+        </div>
+      </div>
+      <div class="ptcg-profile-rank">
+        <ptcg-rank [rank]="user.rank"></ptcg-rank>
+      </div>
+    </div>
   </div>
+
+  <!-- Main content section -->
+  <!-- <div class="ptcg-profile-content">
+    <div class="ptcg-user-details" *ngIf="user$ | async; let user">
+      <mat-card class="ptcg-profile-card">
+        <mat-card-content>
+          <ptcg-user-info-pane [user]="user"></ptcg-user-info-pane>
+        </mat-card-content>
+      </mat-card>
+    </div> -->
+
+  <!-- Recent matches section -->
+  <!-- <div class="ptcg-recent-matches" *ngIf="user$ | async; let user">
+      <ptcg-match-table [userId]="user.userId"></ptcg-match-table>
+    </div>
+  </div> -->
 
 </ptcg-content>

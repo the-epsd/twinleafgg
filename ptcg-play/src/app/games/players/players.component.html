@@ -1,0 +1,40 @@
+<div class="players-container">
+  <div class="page-header">
+    <button mat-icon-button routerLink="/games" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="page-title" translate>GAMES_ONLINE_PLAYERS</h1>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="players-grid">
+      <div class="player-card" *ngFor="let client of (clients$ | async)" [matMenuTriggerFor]="menu"
+        class="player-menu-trigger">
+        <ptcg-user-bar [user]="client.user" [marked]="clientId === client.clientId" [openUserPopup]="false">
+        </ptcg-user-bar>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/profile', client.user.userId]">
+            {{ 'BUTTON_SHOW_PROFILE' | translate }}
+          </button>
+          <button mat-menu-item *ngIf="clientId !== client.clientId" [disabled]="loading"
+            (click)="createGame(client.clientId)">
+            {{ 'BUTTON_INVITE' | translate }}
+          </button>
+          <button mat-menu-item *ngIf="loggedUserId !== client.user.userId"
+            [routerLink]="['/message', client.user.userId]">
+            {{ 'BUTTON_SEND_MESSAGE' | translate }}
+          </button>
+          <button mat-menu-item *ngIf="(isAdmin$ | async) && (loggedUserId !== client.user.userId)"
+            [style.color]="client.user.roleId === 1 ? '' : '#FF0000'" (click)="banUser(client.user.userId)">
+            {{ client.user.roleId === 1 ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="(clients$ | async)?.length === 0">
+      <mat-icon>people_outline</mat-icon>
+      <p translate>GAMES_NO_PLAYERS_ONLINE</p>
+    </div>
+  </div>
+</div>

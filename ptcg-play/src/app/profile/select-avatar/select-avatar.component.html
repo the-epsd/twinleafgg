@@ -1,20 +1,48 @@
 <ptcg-content [loading]="loading">
-  <mat-toolbar>
-    <mat-toolbar-row>
-      <h1 translate>PROFILE_SELECT_AVATAR</h1>
-      <span class="ptcg-u-spacer"></span>
-      <button mat-raised-button [routerLink]="['/profile']">
-        {{ 'BUTTON_BACK' | translate }}
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
+  <div class="avatar-selector-container">
+    <!-- Header Section - Battle Pass Style -->
+    <div class="avatar-header">
+      <div class="header-background"></div>
 
-  <div class="ptcg-avatar-grid">
-    <div class="ptcg-avatar-grid-container">
-      <div *ngFor="let avatar of avatars" class="ptcg-avatar-grid-item"
-        [class.ptcg-avatar-selected]="(defaultAvatar$ | async) === avatar.fileName" (click)="selectAvatar(avatar)">
-        <img [src]="getAvatarUrl(avatar.fileName)" [alt]="avatar.name" class="ptcg-avatar-image">
-        <div class="ptcg-avatar-name">{{ avatar.name }}</div>
+      <!-- Back Button - Top Left -->
+      <button class="back-button" mat-raised-button [routerLink]="['/profile']">
+        <mat-icon>arrow_back</mat-icon>
+        <span>{{ 'BUTTON_BACK' | translate }}</span>
+      </button>
+
+      <!-- Centered Title -->
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="main-title" translate>PROFILE_SELECT_AVATAR</h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatar Selection Area -->
+    <div class="avatar-selection-area">
+      <div class="avatar-grid">
+        <div *ngFor="let avatar of avatars; let i = index" class="avatar-card"
+          [class.selected]="(defaultAvatar$ | async) === avatar.fileName" (click)="selectAvatar(avatar)">
+
+          <!-- Avatar Image Container -->
+          <div class="avatar-image-container">
+            <div class="avatar-frame">
+              <img [src]="getAvatarUrl(avatar.fileName)" [alt]="avatar.name" class="avatar-image">
+              <div class="avatar-overlay"></div>
+            </div>
+
+            <!-- Selection Indicator -->
+            <div class="selection-indicator" *ngIf="(defaultAvatar$ | async) === avatar.fileName">
+              <mat-icon>check</mat-icon>
+            </div>
+          </div>
+
+          <!-- Avatar Info -->
+          <div class="avatar-info">
+            <h3 class="avatar-name">{{ avatar.name }}</h3>
+            <div class="avatar-badge">Avatar</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

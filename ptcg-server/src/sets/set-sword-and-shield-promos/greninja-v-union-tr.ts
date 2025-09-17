@@ -41,29 +41,29 @@ export class GreninjaVUNIONTopRight extends PokemonCard {
   ];
 
   public attacks = [{
-      name: 'Union Gain',
-      cost: [C],
-      damage: 0,
-      text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Aqua Edge',
-      cost: [W],
-      damage: 130,
-      text: ''
-    },
-    {
-      name: 'Twister Shuriken',
-      cost: [W, W, C],
-      damage: 0,
-      text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Waterfall Bind',
-      cost: [W, W, C],
-      damage: 180,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }];
+    name: 'Union Gain',
+    cost: [C],
+    damage: 0,
+    text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.'
+  },
+  {
+    name: 'Aqua Edge',
+    cost: [W],
+    damage: 130,
+    text: ''
+  },
+  {
+    name: 'Twister Shuriken',
+    cost: [W, W, C],
+    damage: 0,
+    text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  },
+  {
+    name: 'Waterfall Bind',
+    cost: [W, W, C],
+    damage: 180,
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+  }];
 
   public set: string = 'SWSH';
   public regulationMark = 'E';

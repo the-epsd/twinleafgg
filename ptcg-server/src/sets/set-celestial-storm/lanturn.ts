@@ -22,7 +22,7 @@ export class Lanturn extends PokemonCard {
     {
       name: 'Energy Grounding',
       powerType: PowerType.ABILITY,
-      text: "When 1 of your Pokémon is Knocked Out by damage from an opponent's attack, you may move a basic Energy card from that Pokémon to this Pokémon."
+      text: 'When 1 of your Pokémon is Knocked Out by damage from an opponent\'s attack, you may move a basic Energy card from that Pokémon to this Pokémon.'
     }
   ];
 

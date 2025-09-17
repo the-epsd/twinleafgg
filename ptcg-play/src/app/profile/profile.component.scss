@@ -1,45 +1,311 @@
 @import '../../theme/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
-// mat-toolbar-row button {
-//   margin-left: map-get($padding, normal);
-// }
-
-@import '../../theme/variables.scss';
-
-.ptcg-u-padding {
-  background-color: #1a202c;
+// Page-level background
+.ptcg-profile-page {
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  // min-height: 100vh;
 }
 
-.mat-toolbar-row {
-  background-color: #1a202c;
-
-  >h1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
+// Animation keyframes
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
 
-  >button {
-    margin-left: map-get($padding, small);
-    min-width: 80px;
+  to {
+    opacity: 1;
   }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradientWhoosh {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Profile header with diagonal cut
+.ptcg-profile-header {
+  position: relative;
+  width: 100%;
+  overflow: visible; // Allow content to extend beyond boundaries
+}
+
+// Top gradient section with diagonal cut
+.ptcg-profile-top {
+  position: relative;
+  padding: 40px;
+  height: 30vh;
+  min-height: 250px;
+  background: linear-gradient(135deg, #28303f, #313a4f, #28303f);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: visible; // Allow content to extend beyond boundaries
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  z-index: 1; // Lower z-index so content can appear above
+
+  // Diagonal cut
+  .ptcg-diagonal-divider {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: transparent;
+    transform: rotate(-3deg);
+    z-index: 1;
+  }
+}
+
+// Centered profile content (now outside header)
+.ptcg-profile-center {
+  position: relative;
+  z-index: 100; // Higher z-index to appear above header
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+  margin-top: -75px; // Pull content up to overlap diagonal cut
+  margin-bottom: 50px; // Add some bottom spacing
+
+  .ptcg-profile-avatar-section {
+    margin-bottom: 25px;
+
+    ptcg-avatar {
+      width: 160px;
+      height: 160px;
+      // border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      overflow: hidden;
+
+      // Override any conflicting styles from the avatar component
+      .ptcg-avatar {
+        border: none !important;
+        box-shadow: none !important;
+        position: relative;
+
+        &:after {
+          display: none !important;
+          content: none !important;
+        }
+
+        &:before {
+          display: none !important;
+          content: none !important;
+        }
+      }
+
+      // Ensure the image inside has no borders or lines
+      .ptcg-avatar img {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+
+  .ptcg-profile-info {
+    .ptcg-profile-name-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .ptcg-profile-username {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      letter-spacing: 2px;
+
+      @media (min-width: 768px) {
+        font-size: 3rem;
+      }
+    }
+
+    .ptcg-profile-rank {
+      margin-bottom: 15px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      ptcg-rank {
+        font-family: 'Urbanist', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        // Rank badge styling is now handled at the component level
+      }
+    }
+
+    .ptcg-profile-badges {
+      .ptcg-admin-badge {
+        background: linear-gradient(135deg, #67c85a, #4a9e40);
+        color: white;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-family: 'Urbanist', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
+
+// Action buttons positioned at top right
+.ptcg-profile-actions-top {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3;
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+
+  .ptcg-edit-button,
+  .ptcg-message-button,
+  .ptcg-ban-button {
+    background: linear-gradient(135deg, #67c85a, #4a9e40);
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 140px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #7ad86e, #58b14c);
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .ptcg-ban-button {
+    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+
+    &:hover {
+      background: linear-gradient(135deg, #f87171, #ef4444) !important;
+    }
+  }
+}
+
+// Main content section
+.ptcg-profile-content {
+  position: relative;
+  z-index: 5;
+  margin-top: -1rem;
+  padding: 20px 40px 30px;
+  min-height: calc(100vh - 30vh + 1rem);
+}
+
+// User details card
+.ptcg-user-details {
+  margin-bottom: 30px;
+
+  .ptcg-profile-card {
+    background: rgba(40, 49, 66, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+
+    mat-card-content {
+      padding: 25px;
+    }
+  }
+}
+
+// Recent matches section
+.ptcg-recent-matches {
+  animation: fadeIn 0.8s ease-out forwards;
+  animation-delay: 1s;
+  opacity: 0;
+
+  .ptcg-match-table {
+    padding-top: 0;
+  }
+}
+
+// Legacy styles for compatibility
+.ptcg-u-padding {
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
 }
 
 .mat-header-row {
-  background-color: #1a202c;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
 }
 
 .mat-cell {
-  background-color: #1a202c;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
 }
 
 .mat-paginator {
-  background-color: #1a202c;
-}
-
-.mat-raised-button {
-  margin-top: 12px;
-  background-color: #449058;
-  border-radius: 16px;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
 }
 
 .mat-form-field-infix {
@@ -48,13 +314,13 @@
 }
 
 .mat-select-value {
-  background-color: #1a202c;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
   font-size: 14px;
 }
 
 .mat-form-field-label {
   font-size: 14px;
-  background-color: #1a202c;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
 }
 
 .mat-form-field-underline {
@@ -63,31 +329,23 @@
 }
 
 .mat-form-field-flex input {
-  color: #449058;
+  color: #67c85a;
   font-size: 13px;
 }
 
 .mat-form-field-flex .mat-input-element {
-  color: #449058;
+  color: #67c85a;
   font-size: 13px;
   margin-bottom: 1px;
 }
 
 .mat-focused .mat-form-field-flex {
-  background-color: #1a202c;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
 
   .mat-select-value {
     width: 100%;
     max-width: 100%;
   }
-}
-
-.mat-card {
-  background-color: #283142;
-}
-
-.ptcg-match-table {
-  padding-top: 0;
 }
 
 .ptcg-table-loading {

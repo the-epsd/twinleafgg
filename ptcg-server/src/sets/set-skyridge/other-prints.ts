@@ -1,4 +1,4 @@
-import { Fisherman } from "../set-celestial-storm/fisherman";
+import { Fisherman } from '../set-celestial-storm/fisherman';
 
 export class FishermanSK extends Fisherman {
   public fullName = 'Fisherman SK';

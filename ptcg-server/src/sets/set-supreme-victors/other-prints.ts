@@ -1,4 +1,4 @@
-import { VsSeeker } from "../set-phantom-forces/vs-seeker";
+import { VsSeeker } from '../set-phantom-forces/vs-seeker';
 
 export class VsSeekerSV extends VsSeeker {
   public fullName = 'VS Seeker SV';

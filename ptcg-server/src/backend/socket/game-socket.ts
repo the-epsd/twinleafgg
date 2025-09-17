@@ -242,7 +242,7 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
-  private playGame(params: { gameId: number, deck: string[] }, response: Response<void>) {
+  private playGame(params: { gameId: number, deck: string[], artworks?: { code: string; artworkId?: number }[] }, response: Response<void>) {
     const action = new AddPlayerAction(this.client.id, this.client.user.name, params.deck);
     this.dispatch(params.gameId, action, response);
   }

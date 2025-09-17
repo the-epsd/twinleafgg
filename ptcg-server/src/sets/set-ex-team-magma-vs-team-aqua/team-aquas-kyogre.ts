@@ -78,7 +78,7 @@ export class TeamAquasKyogre extends PokemonCard {
         } else {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
         }
-      })
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

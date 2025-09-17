@@ -23,6 +23,9 @@ export class DeckCardComponent implements OnDestroy {
   @Input() card: DeckItem;
   @Input() showCardCount: boolean;
   @Input() isLibraryCard: boolean = false;
+  @Input() customImageUrl: string; // legacy base-image override (rare)
+  @Input() customArtworkUrl: string; // overlay artwork for selected art in deck editor
+  @Input() artworksContext: any;
 
   @Output() cardSelected = new EventEmitter<{ card: Card, action: 'add' | 'replace' }>();
   @Output() countClick = new EventEmitter<void>();
@@ -73,6 +76,10 @@ export class DeckCardComponent implements OnDestroy {
   }
 
   showCardInfo() {
-    this.cardsBaseService.showCardInfo({ card: this.card.card });
+    const overlayMap = this.customArtworkUrl
+      ? { [this.card.card.fullName]: { imageUrl: this.customArtworkUrl } }
+      : undefined;
+    const ctx = (overlayMap as any) || (this.artworksContext as any);
+    this.cardsBaseService.showCardInfo({ card: this.card.card, cardList: ctx });
   }
 }

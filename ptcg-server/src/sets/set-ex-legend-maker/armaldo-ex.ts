@@ -10,7 +10,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED }
 export class Armaldoex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Anorith';
-  public tags = [CardTag.POKEMON_ex]
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = F;
   public hp: number = 160;
   public weakness = [{ type: G }];

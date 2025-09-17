@@ -224,6 +224,9 @@ export class TableComponent implements OnInit, OnDestroy {
       this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
     }
 
+    // Do not set any global artworks map; overlays must come from the correct card list context
+    this.cardsBaseService.setGlobalArtworksMap({});
+
     // Check if the game is in the FINISHED phase and update the game over state
     if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
       this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);

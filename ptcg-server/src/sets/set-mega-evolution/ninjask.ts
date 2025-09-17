@@ -35,7 +35,7 @@ export class Ninjask extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (JUST_EVOLVED(effect, this)) {
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { name: 'Shedinja' }, { min: 0, max: 1 })
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { name: 'Shedinja' }, { min: 0, max: 1 });
     }
 
     if (AFTER_ATTACK(effect, 0, this)) {

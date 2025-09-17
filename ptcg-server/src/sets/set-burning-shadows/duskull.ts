@@ -11,7 +11,7 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
   const hasBasicInDiscard = player.hand.cards.some(c => {
-    return c instanceof PokemonCard && c.stage === Stage.BASIC
+    return c instanceof PokemonCard && c.stage === Stage.BASIC;
   });
   if (!hasBasicInDiscard) {
     return state;

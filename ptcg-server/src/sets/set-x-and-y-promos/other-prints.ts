@@ -1,4 +1,4 @@
-import { Bronzong } from "../set-phantom-forces/bronzong";
+import { Bronzong } from '../set-phantom-forces/bronzong';
 
 export class BronzongXYP extends Bronzong {
   public fullName = 'Bronzong XYP 21';

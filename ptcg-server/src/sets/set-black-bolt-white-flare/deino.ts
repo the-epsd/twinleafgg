@@ -17,7 +17,7 @@ export class Deino extends PokemonCard {
       name: 'Body Slam',
       cost: [C, C],
       damage: 20,
-      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
       name: 'Darkness Fang',

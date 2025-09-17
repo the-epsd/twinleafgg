@@ -14,7 +14,7 @@ export class Psyduck extends PokemonCard {
   public powers = [{
     name: 'Damp',
     powerType: PowerType.ABILITY,
-    text: `Pokémon with an Ability that cause that Pokémon to Knock itself Out don't have that Ability.`
+    text: 'Pokémon with an Ability that cause that Pokémon to Knock itself Out don\'t have that Ability.'
   }];
 
   public attacks = [{

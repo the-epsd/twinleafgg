@@ -83,7 +83,7 @@ export class Regidrago extends PokemonCard {
         }
       });
 
-      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 4)
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 4);
     }
 
     return state;

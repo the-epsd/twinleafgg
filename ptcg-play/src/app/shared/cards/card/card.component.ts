@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Card, CardTag, Player, State, StoreLike } from 'ptcg-server';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Card, CardTag } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./card.component.scss'],
   exportAs: 'ptcgCard',
 })
-export class CardComponent {
+export class CardComponent implements OnInit, OnDestroy {
   public scanUrl: string;
   public data: Card;
   private holoEnabled = true;
@@ -20,17 +20,20 @@ export class CardComponent {
   @Input() showCardName: boolean = true;
   @Input() cardback = false;
   @Input() placeholder = false;
-  @Input() set customImageUrl(value: string) {
-    this._customImageUrl = value;
-    if (this.data) {
-      this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
-    }
-  }
-  get customImageUrl(): string { return this._customImageUrl; }
-  private _customImageUrl: string;
+  @Input() customImageUrl: string;
+  // Optional overlay image URL (e.g., selected artwork) applied on top of base image
+  @Input() customArtworkUrl?: string;
+  @Input() cardList?: any;
   @Input() set card(value: Card) {
     this.data = value;
-    this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+    this.scanUrl = this.resolveScanUrl();
+  }
+
+  @Input() set artworksContext(list: any) {
+    this.cardList = list;
+    if (this.data && !this.customImageUrl) {
+      this.scanUrl = this.resolveScanUrl();
+    }
   }
 
   shouldShowCardName(): boolean {
@@ -181,6 +184,39 @@ export class CardComponent {
     settingsService.showCardName$.subscribe(enabled => this.showCardName = enabled);
   }
 
+  private resolveScanUrl(): string {
+    if (this.customImageUrl) {
+      return this.customImageUrl;
+    }
+    return this.cardsBaseService.getScanUrl(this.data);
+  }
+
+  // Resolve overlay artwork URL from artworksContext when not explicitly provided
+  get overlayUrl(): string | undefined {
+    if (this.customArtworkUrl) {
+      return this.customArtworkUrl;
+    }
+    const artworksMap = (this.cardList as any)?.artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+    if (artworksMap && this.data && artworksMap[this.data.fullName]?.imageUrl) {
+      return artworksMap[this.data.fullName].imageUrl;
+    }
+    const map = (this.cardList as any);
+    if (map && this.data && map[this.data.fullName]?.imageUrl) {
+      return map[this.data.fullName].imageUrl;
+    }
+    // Fallback: if a broader state object is provided, try players' artworksMap
+    // const players = (this.cardList as any)?.players as any[] | undefined;
+    // if (players && this.data) {
+    //   for (const player of players) {
+    //     const pMap = (player as any)?.artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+    //     if (pMap && pMap[this.data.fullName]?.imageUrl) {
+    //       return pMap[this.data.fullName].imageUrl;
+    //     }
+    //   }
+    // }
+    return undefined;
+  }
+
   ngOnInit(): void {
     this.settingsService.showCardName$.pipe(
       takeUntil(this.destroyed$)
@@ -194,7 +230,7 @@ export class CardComponent {
       if (!this.data) { return; }
       const myIdentifier = `${this.data.set} ${this.data.setNumber}`;
       if (identifier === myIdentifier) {
-        this.scanUrl = this._customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+        this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
       }
     });
   }

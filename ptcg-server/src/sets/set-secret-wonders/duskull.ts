@@ -49,7 +49,7 @@ export class Duskull extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = effect.opponent
+      const opponent = effect.opponent;
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           if (opponent.hand.cards.length > 0) {

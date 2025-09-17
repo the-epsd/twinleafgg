@@ -1,6 +1,6 @@
-import { CycloneEnergy } from "../set-ex-power-keepers/cyclone-energy";
-import { PremierBall } from "../set-great-encounters/premier-ball";
-import { WarpEnergy } from "../set-shining-legends/warp-energy";
+import { CycloneEnergy } from '../set-ex-power-keepers/cyclone-energy';
+import { PremierBall } from '../set-great-encounters/premier-ball';
+import { WarpEnergy } from '../set-shining-legends/warp-energy';
 
 export class CycloneEnergySF extends CycloneEnergy {
   public fullName = 'Cyclone Energy SF';

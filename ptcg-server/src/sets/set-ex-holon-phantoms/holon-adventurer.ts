@@ -58,7 +58,7 @@ export class HolonAdventurer extends TrainerCard {
           if (cards.length === 0) {
             return;
           }
-          let cardsToDraw = 3
+          let cardsToDraw = 3;
 
           if (cards[0] instanceof PokemonCard && cards[0].tags.includes(CardTag.DELTA_SPECIES)) {
             cardsToDraw = 4;

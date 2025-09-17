@@ -1,5 +1,5 @@
-import { MultiEnergy } from "../set-ex-sandstorm/multi-energy";
-import { SuperRod } from "../set-noble-victories/super-rod";
+import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
+import { SuperRod } from '../set-noble-victories/super-rod';
 
 export class MultiEnergyMT extends MultiEnergy {
   public fullName = 'Multi Energy MT';

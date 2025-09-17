@@ -1,6 +1,6 @@
-import { EnergySwitch } from "../set-scarlet-and-violet/energy-switch";
-import { MetalEnergySpecial } from "../set-undaunted/metal-energy-special";
-import { RainbowEnergy } from "../set-sun-and-moon/rainbow-energy";
+import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
+import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
+import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 
 export class EnergySwitchRS extends EnergySwitch {
   public set = 'RS';

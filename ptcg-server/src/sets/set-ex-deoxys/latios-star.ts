@@ -7,7 +7,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_A
 
 export class LatiosStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STAR]
+  public tags = [CardTag.STAR];
   public cardType: CardType = C;
   public hp: number = 80;
   public weakness = [{ type: C }];

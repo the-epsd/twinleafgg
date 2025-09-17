@@ -7,7 +7,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/sto
 
 export class LatiasStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STAR]
+  public tags = [CardTag.STAR];
   public cardType: CardType = C;
   public hp: number = 80;
   public weakness = [{ type: C }];

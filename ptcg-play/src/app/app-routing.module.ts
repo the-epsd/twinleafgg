@@ -4,10 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { CanActivateService } from './can-activate.service';
 import { DeckComponent } from './deck/deck.component';
 import { DeckEditComponent } from './deck/deck-edit/deck-edit.component';
+import { FriendsComponent } from './friends/friends.component';
 import { GamesComponent } from './games/games.component';
+import { ActiveGamesComponent } from './games/active-games/active-games.component';
+import { GameHistoryComponent } from './games/game-history/game-history.component';
+import { PlayersComponent } from './games/players/players.component';
 import { LoginComponent } from './login/login/login.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SelectAvatarComponent } from './profile/select-avatar/select-avatar.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { RegisterComponent } from './login/register/register.component';
 import { ReplaysComponent } from './replays/replays.component';
@@ -21,13 +26,18 @@ import { MaintenanceMessageComponent } from './maintenance/maintenance-message.c
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
   { path: 'deck/:deckId', component: DeckEditComponent, canActivate: [CanActivateService] },
+  { path: 'friends', component: FriendsComponent, canActivate: [CanActivateService] },
   { path: 'games', component: GamesComponent, canActivate: [CanActivateService] },
+  { path: 'games/active', component: ActiveGamesComponent, canActivate: [CanActivateService] },
+  { path: 'games/history', component: GameHistoryComponent, canActivate: [CanActivateService] },
+  { path: 'games/players', component: PlayersComponent, canActivate: [CanActivateService] },
   { path: 'login', component: LoginComponent },
   { path: 'message', redirectTo: 'message/', pathMatch: 'full' },
   { path: 'message/:userId', component: MessagesComponent, canActivate: [CanActivateService] },
   { path: 'ranking', component: RankingComponent, canActivate: [CanActivateService] },
   { path: 'register', component: RegisterComponent },
   { path: 'replays', component: ReplaysComponent, canActivate: [CanActivateService] },
+  { path: 'profile/select-avatar', component: SelectAvatarComponent, canActivate: [CanActivateService] },
   { path: 'profile/:userId', component: ProfileComponent, canActivate: [CanActivateService] },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
   { path: 'reset-password/:token', component: SetNewPasswordComponent },

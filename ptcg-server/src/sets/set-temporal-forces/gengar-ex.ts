@@ -63,7 +63,7 @@ export class Gengarex extends PokemonCard {
 
     if (effect instanceof AttachEnergyEffect) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player)
+      const opponent = StateUtils.getOpponent(state, player);
       // Find the owner of this Gengar-EX
       let isGengarInPlay = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {

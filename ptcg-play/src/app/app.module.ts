@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApiModule } from './api/api.module';
 import { AppComponent } from './app.component';
 import { DeckModule } from './deck/deck.module';
+import { FriendsModule } from './friends/friends.module';
 import { GamesModule } from './games/games.module';
 import { LanguageService } from './main/language-select/language.service';
 import { LoginModule } from './login/login.module';
@@ -32,6 +33,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
     ApiModule,
     BrowserModule,
     DeckModule,
+    FriendsModule,
     GamesModule,
     LoginModule,
     MainModule,

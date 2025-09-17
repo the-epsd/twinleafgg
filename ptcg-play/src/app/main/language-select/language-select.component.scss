@@ -1,0 +1,56 @@
+@import '../../../theme/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+
+:host {
+  display: flex;
+  align-items: center;
+}
+
+button[mat-button] {
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+
+  &:hover {
+    color: #449058;
+  }
+}
+
+::ng-deep .mat-menu-panel {
+  background: linear-gradient(135deg, #000000, #2d2d2d);
+  border: 1px solid rgba(68, 144, 88, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  .mat-menu-content {
+    padding: 8px 0;
+  }
+
+  .mat-menu-item {
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+    min-height: 40px;
+
+    &:hover {
+      background: rgba(68, 144, 88, 0.1);
+      color: #449058;
+    }
+  }
+}

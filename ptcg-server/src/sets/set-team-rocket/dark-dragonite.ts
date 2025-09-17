@@ -56,7 +56,7 @@ export class DarkDragonite extends PokemonCard {
           );
         }
       }
-      )
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -64,7 +64,7 @@ export class DarkDragonite extends PokemonCard {
         if (!result) {
           effect.damage = 0;
         }
-      })
+      });
     }
 
     return state;

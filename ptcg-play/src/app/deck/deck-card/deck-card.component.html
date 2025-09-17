@@ -1,6 +1,7 @@
 <div class="ptcg-deck-card">
-  <ptcg-card [card]="card.card" [dragSource]="source" [noHTML5Preview]="true" (click)="showCardInfo();"
-    (mouseenter)="showButtons = true;" (mouseleave)="showButtons = false;">
+  <ptcg-card [card]="card.card" [customArtworkUrl]="customArtworkUrl || customImageUrl" [dragSource]="source"
+    [noHTML5Preview]="true" (click)="showCardInfo();" (mouseenter)="showButtons = true;"
+    (mouseleave)="showButtons = false;">
     <div class="ptcg-deck-card-count" *ngIf="showCardCount && card.count > 0" (click)="onCountClick($event)">
       {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
     </div>

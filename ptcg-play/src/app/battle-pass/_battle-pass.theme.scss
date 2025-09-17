@@ -46,11 +46,7 @@
       background-color: $border-color;
     }
 
-    .reward-item.premium.locked {
-      .premium-tag {
-        background-color: $disabled-color;
-      }
-    }
+
 
     .reward-card {
       background: $bg-light-color;
@@ -60,10 +56,7 @@
         color: $text-secondary-color;
       }
 
-      .premium-tag {
-        background-color: $accent-color;
-        color: mat.get-contrast-color-from-palette($accent, 500);
-      }
+
     }
 
     .level-actions .claim-button {

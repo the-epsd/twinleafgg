@@ -7,7 +7,7 @@ import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, THIS_POKEMON_DOES_DAMAGE_TO_I
 
 export class Regirockex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex]
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = F;
   public hp: number = 100;
   public weakness = [{ type: W }];

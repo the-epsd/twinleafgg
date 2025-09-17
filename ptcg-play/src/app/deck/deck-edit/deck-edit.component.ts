@@ -15,6 +15,8 @@ import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
 import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
+import { ArtworksService } from 'src/app/api/services/artworks.service';
+import { CardArtwork } from 'src/app/api/interfaces/cards.interface';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 
@@ -34,11 +36,13 @@ export class DeckEditComponent implements OnInit {
   public DeckEditPane = DeckEditPane;
   public isThemeDeck = false;
   public selectedArtworks: { code: string; artworkId?: number }[] = [];
+  public unlockedArtworks: CardArtwork[] = [];
 
   constructor(
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
     private deckService: DeckService,
+    private artworksService: ArtworksService,
     // private fileDownloadService: FileDownloadService,
     private route: ActivatedRoute,
     private router: Router,
@@ -49,6 +53,18 @@ export class DeckEditComponent implements OnInit {
 
   ngOnInit() {
     // this.setupAutoSave();
+    // Load unlocked artworks in parallel
+    this.artworksService.getUnlockedArtworks()
+      .pipe(untilDestroyed(this))
+      .subscribe(resp => {
+        this.unlockedArtworks = resp.artworks || [];
+        try {
+          // Debug: Log unlocked artworks once on load
+          // eslint-disable-next-line no-console
+          console.log('[DeckEdit] Unlocked artworks:', this.unlockedArtworks);
+        } catch { }
+      }, () => { this.unlockedArtworks = []; });
+
     this.route.paramMap.pipe(
       switchMap(paramMap => {
         this.loading = true;
@@ -222,12 +238,32 @@ export class DeckEditComponent implements OnInit {
 
     const successfulCards = cardDetails.map(card => {
       const { name, set, setNumber } = card;
-      // Check if card exists in database
-      if (!this.cardsBaseService.getCardByNameSetNumber(name, set, setNumber)) {
+
+      // Apply card replacements to the name
+      let processedName = name;
+      for (const replacement of cardReplacements) {
+        processedName = processedName.replace(new RegExp(replacement.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), replacement.to);
+      }
+
+      // First try: exact match with name, set, and setNumber
+      let foundCard = this.cardsBaseService.getCardByNameSetNumber(processedName, set, setNumber);
+
+      // Second try: match by name and set (ignore setNumber)
+      if (!foundCard) {
+        foundCard = this.cardsBaseService.getCardByNameSet(processedName, set);
+      }
+
+      // Third try: match by name only (ignore set and setNumber)
+      if (!foundCard) {
+        foundCard = this.cardsBaseService.getCardByBaseName(processedName);
+      }
+
+      if (!foundCard) {
         const key = `${name} ${set} ${setNumber}`;
         failedCardCounts.set(key, (failedCardCounts.get(key) || 0) + 1);
       }
-      return this.cardsBaseService.getCardByNameSetNumber(name, set, setNumber)?.fullName;
+
+      return foundCard?.fullName;
     }).filter(name => !!name);
 
     this.deckItems = this.loadDeckItems(successfulCards as string[]);
@@ -285,6 +321,32 @@ export class DeckEditComponent implements OnInit {
         this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
       }
     });
+  }
+
+  public onArtworkChange(change: { code: string; artworkId?: number | null }) {
+    const code = change.code;
+    const artworkId = change.artworkId ?? undefined;
+    const next = this.selectedArtworks.slice();
+    const idx = next.findIndex(a => a.code === code);
+    if (artworkId === undefined) {
+      if (idx !== -1) {
+        next.splice(idx, 1);
+      }
+    } else {
+      if (idx !== -1) {
+        next[idx] = { code, artworkId };
+      } else {
+        next.push({ code, artworkId });
+      }
+    }
+    this.selectedArtworks = next;
+    // Save immediately for real-time persistence
+    this.saveDeck();
+  }
+
+  public getSelectedArtworkId(cardFullName: string): number | null {
+    const entry = this.selectedArtworks.find(a => a.code === cardFullName);
+    return entry && entry.artworkId != null ? entry.artworkId : null;
   }
 
   compareSupertype = (input: SuperType) => {

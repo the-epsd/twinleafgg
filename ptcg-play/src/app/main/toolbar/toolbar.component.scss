@@ -1,95 +1,345 @@
 @use '~@angular/material' as mat;
 @import '../../../theme/variables.scss';
-
-@mixin ptcg-toolbar-height() {
-  height: $ptcg-toolbar-height-desktop;
-
-  @media (max-width: 599px) {
-    height: $ptcg-toolbar-height-mobile;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
 :host {
-  z-index: 3;
+  z-index: 1000;
+  position: relative;
 }
 
-mat-toolbar {
-  @include mat.elevation(5);
-  @include ptcg-toolbar-height();
-  flex: 0 0 auto;
-  background-color: #0E1117;
-
-  .epsd-spacer {
-    flex: 1 1 auto;
-  }
-
-  &.is-logged-in {
-    padding-right: 0;
-  }
-}
-
-.notification-badge {
-  margin-left: 8px;
-}
-
-::ng-deep .mat-badge-content {
-  transform: scale(.8) !important;
-  transform-origin: center;
-  margin-top: 10px;
-  margin-right: 6px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.horizontal-nav {
+.gaming-toolbar {
   display: flex;
   align-items: center;
-  gap: 8px; // Adjust this value to control spacing between items
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 24px;
+  background: linear-gradient(to top, #000000 0%, #1a1a1a 100%);
+  border-bottom: 1px solid rgba(68, 144, 88, 0.3);
+  position: relative;
+  font-family: 'Urbanist', sans-serif;
 
-  .title-text {
-    margin-top: 3px;
-    font-size: 14px;
+  // Halftone pattern overlay
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(circle at 25% 25%, #333333 1.5px, transparent 1.5px),
+      radial-gradient(circle at 75% 75%, #333333 1.5px, transparent 1.5px);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 4px;
+    mask: linear-gradient(to top, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%);
+    -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%);
+    pointer-events: none;
+    z-index: 1;
   }
 }
 
-ptcg-user-bar {
-  cursor: pointer;
-  display: block;
-  left: unset;
-  width: map-get($ptcg-size, sidebar);
-  transform: scale(.8) !important; // Increase this value to make the badge larger
+// Left Section - Logo
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+
+    .twinleaf-logo {
+      height: 24px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(68, 144, 88, 0.3));
+    }
+  }
 }
 
-.games-menu {
-  .game-menu-item {
-    a[mat-menu-item] {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-right: 8px;
+// Center Section - Main Navigation
+.toolbar-center {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
 
-      ptcg-sidenav-item {
-        flex: 1;
-      }
+  .main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 32px;
 
-      .close-button {
-        margin-left: 8px;
-        color: rgba(255, 255, 255, 0.7);
+    // Games Menu Button (now integrated into nav-item)
+    button[mat-button].nav-item {
+      background: transparent;
+      border: none;
+      color: #e2e8f0;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
 
-        &:hover {
-          color: white;
-        }
+      &:hover {
+        color: #449058;
       }
     }
   }
 }
 
-.notification-dot {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 8px;
-  height: 8px;
-  background-color: #ff4081;
-  border-radius: 50%;
+// Right Section - User Info
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+
+  // ptcg-language-select {
+  //   // Language select styling
+  // }
+
+  .ptcg-toolbar-user-info {
+    display: flex;
+    align-items: center;
+
+    button {
+      background: linear-gradient(135deg, #449058, #5ba86b);
+      border: none;
+      border-radius: 16px;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      font-family: 'Urbanist', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #5ba86b, #449058);
+      }
+    }
+
+    .ptcg-logged-user {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+// Navigation Items
+.nav-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+
+  .nav-text {
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: #449058;
+  }
+
+  &.active {
+    color: #449058;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 2px;
+      background: #449058;
+      border-radius: 1px;
+    }
+  }
+
+  &.battle-pass-item {
+    color: #fbbf24;
+
+    &:hover {
+      color: #fbbf24;
+    }
+
+    &.active {
+      color: #fbbf24;
+
+      &::after {
+        background: #fbbf24;
+      }
+    }
+  }
+
+  &.tables-item {
+
+    // Tables button styling - inherits from nav-item base styles
+    mat-icon {
+      margin-left: 4px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+    }
+  }
+}
+
+// Menus
+::ng-deep .mat-menu-panel {
+  background: linear-gradient(135deg, #000000, #2d2d2d);
+  border: 1px solid rgba(68, 144, 88, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  .mat-menu-content {
+    padding: 8px 0;
+  }
+
+  .mat-menu-item {
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+    min-height: 40px;
+
+    &:hover {
+      background: rgba(68, 144, 88, 0.1);
+      color: #449058;
+    }
+
+    // For menu items containing ptcg-sidenav-item
+    ptcg-sidenav-item {
+      width: 100%;
+    }
+  }
+}
+
+// Specific styling for user menu
+.user-menu {
+  &.mat-menu-panel {
+    margin-top: 8px;
+  }
+}
+
+// Badge Styling
+::ng-deep .mat-badge-content {
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-family: 'Urbanist', sans-serif;
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .gaming-toolbar {
+    padding: 0 16px;
+  }
+
+  .toolbar-center {
+    .main-navigation {
+      gap: 24px;
+    }
+  }
+
+  .nav-item {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gaming-toolbar {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .toolbar-left {
+    .twinleaf-logo {
+      height: 28px;
+    }
+  }
+
+  .toolbar-center {
+    .main-navigation {
+      gap: 16px;
+    }
+  }
+
+  .nav-item {
+    padding: 4px 8px;
+    font-size: 12px;
+
+    .nav-text {
+      display: none;
+    }
+
+    &::before {
+      content: attr(data-label);
+      font-size: 10px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .gaming-toolbar {
+    height: 52px;
+    padding: 0 8px;
+  }
+
+  .toolbar-center {
+    .main-navigation {
+      gap: 12px;
+    }
+  }
+
+  .nav-item {
+    padding: 4px 6px;
+    font-size: 11px;
+
+    .nav-text {
+      display: none;
+    }
+
+    &::before {
+      content: attr(data-label);
+      font-size: 10px;
+    }
+  }
 }

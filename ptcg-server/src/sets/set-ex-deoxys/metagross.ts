@@ -81,7 +81,7 @@ export class Metagross extends PokemonCard {
         transfers = transfers || [];
 
         ADD_MARKER(this.SUPER_CONNECTIVITY_MARKER, player, this);
-        ABILITY_USED(player, this)
+        ABILITY_USED(player, this);
 
         if (transfers.length === 0) {
           return state;

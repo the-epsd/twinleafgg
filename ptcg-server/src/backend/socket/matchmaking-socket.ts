@@ -18,6 +18,7 @@ export class MatchmakingSocket {
 
     this.socket.addListener('matchmaking:join', this.joinQueue.bind(this));
     this.socket.addListener('matchmaking:leave', this.leaveQueue.bind(this));
+    this.socket.addListener('matchmaking:getQueueData', this.getQueueData.bind(this));
   }
 
   public onJoinQueue(from: Client, message: Message): void {
@@ -27,12 +28,18 @@ export class MatchmakingSocket {
   }
 
   public onLeaveQueue(): void {
-    this.socket.emit('matchmaking:queueUpdate', {
-      players: this.matchmakingService.getQueuedPlayers()
+    // The matchmaking service will handle broadcasting to all clients
+    // No need to emit here since broadcastQueueUpdate() is called by the service
+  }
+
+  public getQueueData(response: Response<{ players: string[], formatCounts: { [format: number]: number } }>): void {
+    response('ok', {
+      players: this.matchmakingService.getQueuedPlayers(),
+      formatCounts: this.matchmakingService.getQueueCountsByFormat()
     });
   }
 
-  public joinQueue(params: { format: Format, deck: string[] }, response: Response<void>): void {
+  public joinQueue(params: { format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[] }, response: Response<void>): void {
     if (!params || !params.format || !Array.isArray(params.deck) || params.deck.length === 0) {
       response('error', ApiErrorEnum.INVALID_FORMAT);
       return;
@@ -42,7 +49,8 @@ export class MatchmakingSocket {
       this.client,
       this.socket,
       params.format,
-      params.deck
+      params.deck,
+      params.artworks
     );
     response('ok');
   }

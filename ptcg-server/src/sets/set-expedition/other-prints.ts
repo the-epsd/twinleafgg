@@ -1,12 +1,12 @@
-import { Copycat } from "../set-ex-dragon-frontiers/copycat";
-import { DualBall } from "../set-unleashed/dual-ball";
-import { EnergyRemoval2 } from "../set-ex-power-keepers/energy-removal-2";
-import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
-import { PokemonReversal } from "../set-ex-unseen-forces/pokemon-reversal";
-import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
-import { ProfessorOaksResearch } from "../set-ex-dragon-frontiers/professor-oaks-research";
-import { StrengthCharm } from "../set-ex-dragon-frontiers/strength-charm";
-import { Switch } from "../set-scarlet-and-violet/switch";
+import { Copycat } from '../set-ex-dragon-frontiers/copycat';
+import { DualBall } from '../set-unleashed/dual-ball';
+import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
+import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
+import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
+import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';
+import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
+import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
+import { Switch } from '../set-scarlet-and-violet/switch';
 
 export class CopycatEX extends Copycat {
   public fullName = 'Copycat EX';
@@ -47,14 +47,14 @@ export class ProfessorElmsTrainingMethodEX extends ProfessorElmsTrainingMethod {
   public fullName = 'Professor Elm\'s Training Method EX';
   public set = 'EX';
   public setNumber = '148';
-  public text = 'Search your deck for an Evolution card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.'
+  public text = 'Search your deck for an Evolution card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 }
 
 export class ProfessorOaksResearchEX extends ProfessorOaksResearch {
   public fullName = 'Professor Oak\'s Research EX';
   public set = 'EX';
   public setNumber = '149';
-  public text = 'Shuffle your hand into your deck, then draw 5 cards.'
+  public text = 'Shuffle your hand into your deck, then draw 5 cards.';
 }
 
 export class StrengthCharmEX extends StrengthCharm {

@@ -1,199 +1,772 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
 :host {
   display: block;
-  height: 100%;
+  height: 100vh;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  overflow: hidden;
+  font-family: 'Urbanist', sans-serif;
 }
 
-.battle-pass-page {
+.battle-pass-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px;
-  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  /* Force app-bar typography: font and caps */
+  font-family: 'Urbanist', sans-serif;
+  text-transform: uppercase;
 }
 
-// Header and Progress
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-shrink: 0;
+// Main Header Section
+.battle-pass-header {
+  position: relative;
+  height: 35%;
+  min-height: 300px;
+  overflow: hidden;
+
+  .header-background {
+    position: relative;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+  }
+
+  .header-artwork {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .artwork-left {
+      position: absolute;
+      left: -10%;
+      top: -10%;
+      width: 50%;
+      height: 120%;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), transparent 70%);
+      filter: blur(1px);
+    }
+
+    .artwork-right {
+      position: absolute;
+      right: -10%;
+      top: -10%;
+      width: 50%;
+      height: 120%;
+      background: linear-gradient(-45deg, rgba(0, 0, 0, 0.8), transparent 70%);
+      filter: blur(1px);
+    }
+  }
 
   .header-content {
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      font-weight: bold;
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+}
+
+// Battle Pass Logo
+.battle-pass-logo {
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: 'Urbanist', sans-serif;
+
+  .logo-text {
+    .scarlet-violet {
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+      color: #459058;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-family: 'Urbanist', sans-serif;
+      opacity: 0.8;
+    }
+
+    .logo-main {
+      .black-white {
+        display: block;
+        font-size: 32px;
+        font-weight: 800;
+        color: #e2e8f0;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+        font-family: 'Urbanist', sans-serif;
+      }
+
+      .logo-symbols {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+
+        .bolt {
+          background: linear-gradient(45deg, #459058, #5ba86b);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-size: 24px;
+          font-weight: 800;
+          font-family: 'Urbanist', sans-serif;
+        }
+
+        .flare {
+          background: linear-gradient(45deg, #f59e0b, #ef4444);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-size: 24px;
+          font-weight: 800;
+          font-family: 'Orbitron', monospace;
+        }
+      }
+    }
+  }
+}
+
+// Level Progress Section
+.level-progress-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: 'Urbanist', sans-serif;
+
+  .level-display {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+
+    .level-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: #e2e8f0;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .level-badge {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(69, 144, 88, 0.3);
+      border-radius: 25px;
+      padding: 8px 16px;
+      backdrop-filter: blur(20px);
+
+      .badge-content {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #e2e8f0;
+        font-family: 'Urbanist', sans-serif;
+
+        .separator {
+          color: #64748b;
+        }
+      }
+    }
+  }
+
+  .xp-progress-bar {
+    width: 400px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(69, 144, 88, 0.3);
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #459058, #5ba86b);
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+  }
+}
+
+// Battle Pass Status
+.battle-pass-status {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-family: 'Urbanist', sans-serif;
+
+  .status-badge {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 20px;
+    padding: 8px 20px;
+    backdrop-filter: blur(20px);
+
+    .status-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+
+  .time-remaining {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .time-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .time-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+}
+
+// Rewards Track Section
+.rewards-track-section {
+  flex: 1;
+  padding: 20px;
+  overflow: hidden;
+
+  .rewards-track-container {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #459058, #5ba86b);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(90deg, #5ba86b, #459058);
+    }
+  }
+
+  .rewards-track {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    min-width: max-content;
+  }
+}
+
+// Track Level Items
+.track-level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  gap: 12px;
+
+  .item-panel {
+    width: 280px;
+    height: 380px;
+    border-radius: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 16px;
+
+    .item-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .item-image {
+        width: 70%;
+        height: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .placeholder-image {
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          background: linear-gradient(135deg, #0f172a, #1f2937);
+          border: 1px solid rgba(69, 144, 88, 0.3);
+        }
+      }
+
+      .reward-name {
+        font-size: 14px;
+        color: #e2e8f0;
+        text-align: center;
+        font-weight: 600;
+        font-family: 'Urbanist', sans-serif;
+      }
+    }
+
+    .completion-check {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 12px;
+        height: 12px;
+        color: #e2e8f0;
+      }
+    }
+
+    .claim-button {
+      width: 180px;
+      height: 40px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #e2e8f0;
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      border: 1px solid rgba(69, 144, 88, 0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      margin-top: auto;
+    }
+
+    .claim-button:hover:not([disabled]) {
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+      border-color: rgba(69, 144, 88, 0.5);
+    }
+
+    .claim-button[disabled] {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+
+  .level-rail {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .rail-line {
+      height: 4px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(71, 85, 105, 0.4), rgba(71, 85, 105, 0.15));
+
+      &.left {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+
+      &.right {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
+
+    .rail-badge {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      border: 2px solid #64748b;
+      background: radial-gradient(circle at 50% 40%, #0b1220, #111827);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 8px;
+      color: #94a3b8;
+      font-weight: 800;
+      font-size: 12px;
+
+      &.unlocked {
+        border-color: #459058;
+        color: #e2e8f0;
+        background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      }
+
+      .lock-icon {
+        width: 16px;
+        height: 16px;
+        color: #64748b;
+      }
+    }
+  }
+}
+
+// Track Rewards
+/* Old standard-track styles removed in favor of item-panel + level-rail */
+
+// Loading Spinner
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+
+  .spinner {
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    .spinner-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+
+      &:nth-child(1) {
+        border-top-color: #449058;
+        animation-duration: 2s;
+      }
+
+      &:nth-child(2) {
+        border-right-color: #5ba86b;
+        animation-duration: 1.5s;
+        animation-direction: reverse;
+        width: 70%;
+        height: 70%;
+        top: 15%;
+        left: 15%;
+      }
+
+      &:nth-child(3) {
+        border-bottom-color: #449058;
+        animation-duration: 1s;
+        width: 40%;
+        height: 40%;
+        top: 30%;
+        left: 30%;
+      }
+    }
+  }
+}
+
+// No Season State
+.no-season-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+
+  .no-season-content {
+    text-align: center;
+    padding: 40px;
+    font-family: 'Orbitron', monospace;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+      font-family: 'Orbitron', monospace;
     }
 
     p {
+      font-size: 16px;
+      color: #64748b;
       margin: 0;
-    }
-  }
-
-  .progress-container {
-    width: 400px;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
-  }
-
-  .level-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-  }
-
-  .level-display {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-
-  .xp-details {
-    font-size: 0.9rem;
-  }
-
-  .xp-bar-container {
-    width: 100%;
-    height: 12px;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .xp-bar {
-    height: 100%;
-    transition: width 0.5s ease-in-out;
-  }
-}
-
-// Rewards Track
-.rewards-track-container {
-  flex-grow: 1;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 16px;
-}
-
-.rewards-track {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-}
-
-.reward-level {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding: 0 16px;
-
-  .level-number {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 16px;
-  }
-}
-
-.claim-divider-container {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .claim-divider {
-    height: 2px;
-    width: 100%;
-  }
-}
-
-.reward-item {
-  width: 150px;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &.premium.locked {
-    opacity: 0.5;
-  }
-}
-
-.reward-card {
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  box-sizing: border-box;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
-
-  .reward-type {
-    text-transform: uppercase;
-    font-size: 0.8rem;
-  }
-
-  .reward-name {
-    font-weight: bold;
-    font-size: 1rem;
-  }
-
-  .premium-tag {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 2px 6px;
-    font-size: 0.7rem;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-}
-
-.reward-placeholder {
-  width: 100%;
-  height: 100%;
-}
-
-.level-actions {
-  margin-top: 16px;
-
-  .claim-button {
-    border: none;
-    padding: 10px 24px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:disabled {
-      cursor: not-allowed;
+      line-height: 1.5;
+      font-family: 'Orbitron', monospace;
     }
   }
 }
 
-.loading-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+// Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-// Custom scrollbar
-::-webkit-scrollbar {
-  height: 8px;
+// Responsive Design
+@media (max-width: 1200px) {
+  .battle-pass-header {
+    min-height: 280px;
+
+    .header-content {
+      padding: 30px;
+    }
+  }
+
+  .level-progress-section {
+    .xp-progress-bar {
+      width: 350px;
+    }
+  }
+
+  .rewards-track-section {
+    padding: 15px;
+  }
 }
 
-::-webkit-scrollbar-track {
-  border-radius: 4px;
+@media (max-width: 1024px) and (min-width: 769px) {
+  .battle-pass-header {
+    height: 38%;
+    min-height: 270px;
+
+    .header-content {
+      padding: 25px;
+    }
+  }
+
+  .level-progress-section {
+    .xp-progress-bar {
+      width: 320px;
+    }
+  }
+
+  .rewards-track-section {
+    padding: 12px;
+  }
+
+  .track-level {
+    .level-marker {
+      .level-number {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .standard-track {
+    .reward-item {
+      .reward-container {
+        .reward-card {
+          width: 70px;
+          height: 105px;
+        }
+
+        .reward-info {
+          .reward-name {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
+@media (max-width: 768px) {
+  .battle-pass-header {
+    height: 40%;
+    min-height: 250px;
+
+    .header-content {
+      padding: 20px;
+    }
+  }
+
+  .battle-pass-logo {
+    margin-bottom: 20px;
+
+    .logo-text {
+      .scarlet-violet {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .logo-main {
+        .black-white {
+          font-size: 28px;
+          margin-bottom: 12px;
+        }
+
+        .logo-symbols {
+          gap: 20px;
+
+          .bolt,
+          .flare {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .level-progress-section {
+    margin-bottom: 15px;
+
+    .level-display {
+      gap: 15px;
+      flex-direction: column;
+
+      .level-number {
+        font-size: 36px;
+        margin-bottom: 5px;
+      }
+
+      .level-badge {
+        .badge-content {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .xp-progress-bar {
+      width: 280px;
+      height: 10px;
+    }
+  }
+
+  .battle-pass-status {
+    gap: 15px;
+    flex-direction: column;
+
+    .status-badge {
+      .status-text {
+        font-size: 10px;
+      }
+    }
+
+    .time-remaining {
+      .time-label {
+        font-size: 10px;
+      }
+
+      .time-value {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .rewards-track-section {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .battle-pass-header {
+    height: 45%;
+    min-height: 220px;
+
+    .header-content {
+      padding: 15px;
+    }
+  }
+
+  .battle-pass-logo {
+    margin-bottom: 15px;
+
+    .logo-text {
+      .scarlet-violet {
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+    }
+  }
+
+  .level-progress-section {
+    .level-display {
+      .level-number {
+        font-size: 28px;
+      }
+    }
+
+    .xp-progress-bar {
+      width: 240px;
+      height: 8px;
+    }
+  }
+
+  .battle-pass-status {
+    gap: 10px;
+
+    .status-badge {
+      padding: 6px 16px;
+
+      .status-text {
+        font-size: 9px;
+      }
+    }
+
+    .time-remaining {
+      .time-label {
+        font-size: 9px;
+      }
+
+      .time-value {
+        font-size: 11px;
+      }
+    }
+  }
+
+  .rewards-track-section {
+    padding: 8px;
+  }
+
+  .track-level {
+    .level-marker {
+      margin-bottom: 10px;
+
+      .level-number {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .standard-track {
+    .reward-item {
+      .reward-container {
+        .reward-card {
+          width: 60px;
+          height: 90px;
+        }
+
+        .reward-info {
+          .reward-name {
+            font-size: 8px;
+          }
+
+
+        }
+      }
+    }
+  }
+
+
 }
