@@ -99,7 +99,7 @@ export class ProfileComponent implements OnInit {
   }
 
   editAvatars(userId: number) {
-    this.profilePopupService.openEditAvatarsPopup(userId);
+    this.router.navigate(['/profile/select-avatar']);
   }
 
   changeEmail(userId: number) {
