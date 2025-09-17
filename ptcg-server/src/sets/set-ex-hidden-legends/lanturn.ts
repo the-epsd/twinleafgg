@@ -93,7 +93,7 @@ export class Lanturn extends PokemonCard {
           DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
           effect.damage = 90;
         }
-      }, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK)
+      }, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK);
     }
 
     return state;

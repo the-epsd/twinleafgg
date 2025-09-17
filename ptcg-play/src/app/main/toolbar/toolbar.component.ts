@@ -34,6 +34,7 @@ export class ToolbarComponent implements OnInit {
   public hasTableNotifications$: Observable<boolean>;
   public tableBadgeContent$: Observable<string>;
   public tableBadgeColor$: Observable<string>;
+  public isAdmin$: Observable<boolean>;
 
   apiUrl = environment.apiUrl;
 
@@ -127,6 +128,12 @@ export class ToolbarComponent implements OnInit {
     ).pipe(map(([loggedUserId, users]) => {
       return users[loggedUserId];
     }));
+
+    this.isAdmin$ = this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 4;
+    });
   }
 
   public ngOnInit() {

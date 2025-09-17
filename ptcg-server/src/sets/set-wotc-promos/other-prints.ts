@@ -1,5 +1,5 @@
-import { Mewtwo } from "./mewtwo";
-import { Psyduck } from "../set-fossil/psyduck";
+import { Mewtwo } from './mewtwo';
+import { Psyduck } from '../set-fossil/psyduck';
 
 export class MewtwoPR extends Mewtwo {
   public set: string = 'PR';

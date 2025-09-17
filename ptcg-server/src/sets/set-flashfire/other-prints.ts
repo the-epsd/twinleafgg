@@ -1,4 +1,4 @@
-import { PokemonFanClub } from "../set-ultra-prism/pokemon-fan-club";
+import { PokemonFanClub } from '../set-ultra-prism/pokemon-fan-club';
 
 export class PokemonFanClubFLF extends PokemonFanClub {
   public set: string = 'FLF';

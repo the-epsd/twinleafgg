@@ -71,7 +71,7 @@ export class HolonFarmer extends TrainerCard {
         MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
 
         if (cards.length > 0) {
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards)
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         }
         SHUFFLE_DECK(store, state, player);
 

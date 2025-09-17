@@ -4,36 +4,36 @@ import { User, BattlePassSeason } from './';
 @Entity()
 export class UserBattlePass extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  userId!: number;
+    userId!: number;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
-  user!: User;
+    user!: User;
 
   @Column()
-  seasonId!: string;
+    seasonId!: string;
 
   @ManyToOne(() => BattlePassSeason)
   @JoinColumn({ name: 'seasonId', referencedColumnName: 'seasonId' })
-  season!: BattlePassSeason;
+    season!: BattlePassSeason;
 
   @Column({ default: 0 })
-  exp!: number;
+    exp!: number;
 
   @Column({ default: 1 })
-  level!: number;
+    level!: number;
 
   @Column('simple-json')
-  claimedRewards: number[] = [];
+    claimedRewards: number[] = [];
 
   @CreateDateColumn()
-  created!: Date;
+    created!: Date;
 
   @UpdateDateColumn()
-  updated!: Date;
+    updated!: Date;
 
   public async canClaimReward(level: number): Promise<boolean> {
     if (level < 1 || level > this.level) {

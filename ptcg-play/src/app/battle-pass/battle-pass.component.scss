@@ -3,7 +3,7 @@
 :host {
   display: block;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0d0d0d 100%);
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
 }
@@ -29,7 +29,7 @@
   .header-background {
     position: relative;
     height: 100%;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
   }
 
   .header-artwork {
@@ -83,11 +83,12 @@
       display: block;
       font-size: 16px;
       font-weight: 600;
-      color: #64748b;
+      color: #459058;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 10px;
       font-family: 'Urbanist', sans-serif;
+      opacity: 0.8;
     }
 
     .logo-main {
@@ -95,8 +96,7 @@
         display: block;
         font-size: 32px;
         font-weight: 800;
-        color: #ffffff;
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        color: #e2e8f0;
         letter-spacing: 3px;
         margin-bottom: 15px;
         font-family: 'Urbanist', sans-serif;
@@ -108,13 +108,12 @@
         gap: 30px;
 
         .bolt {
-          background: linear-gradient(45deg, #449058, #5ba86b);
+          background: linear-gradient(45deg, #459058, #5ba86b);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           font-size: 24px;
           font-weight: 800;
-          text-shadow: 0 0 20px rgba(68, 144, 88, 0.5);
           font-family: 'Urbanist', sans-serif;
         }
 
@@ -125,7 +124,6 @@
           background-clip: text;
           font-size: 24px;
           font-weight: 800;
-          text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
           font-family: 'Orbitron', monospace;
         }
       }
@@ -150,17 +148,16 @@
     .level-number {
       font-size: 48px;
       font-weight: 800;
-      color: #ffffff;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      color: #e2e8f0;
       font-family: 'Urbanist', sans-serif;
     }
 
     .level-badge {
-      background: linear-gradient(135deg, #000000, #2d2d2d);
-      border: 2px solid #449058;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(69, 144, 88, 0.3);
       border-radius: 25px;
       padding: 8px 16px;
-      box-shadow: 0 0 10px rgba(68, 144, 88, 0.3);
+      backdrop-filter: blur(20px);
 
       .badge-content {
         display: flex;
@@ -184,14 +181,13 @@
     background: rgba(0, 0, 0, 0.8);
     border-radius: 6px;
     overflow: hidden;
-    border: 1px solid rgba(68, 144, 88, 0.5);
+    border: 1px solid rgba(69, 144, 88, 0.3);
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #449058, #5ba86b);
+      background: linear-gradient(90deg, #459058, #5ba86b);
       border-radius: 6px;
       transition: width 0.5s ease;
-      box-shadow: 0 0 10px rgba(68, 144, 88, 0.5);
     }
   }
 }
@@ -204,15 +200,16 @@
   font-family: 'Urbanist', sans-serif;
 
   .status-badge {
-    background: linear-gradient(135deg, #449058, #5ba86b);
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
     border-radius: 20px;
     padding: 8px 20px;
-    box-shadow: 0 0 15px rgba(68, 144, 88, 0.3);
+    backdrop-filter: blur(20px);
 
     .status-text {
       font-size: 12px;
       font-weight: 700;
-      color: #ffffff;
+      color: #e2e8f0;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
@@ -236,7 +233,7 @@
     .time-value {
       font-size: 14px;
       font-weight: 700;
-      color: #ffffff;
+      color: #e2e8f0;
       font-family: 'Urbanist', sans-serif;
     }
   }
@@ -263,12 +260,12 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: linear-gradient(90deg, #449058, #5ba86b);
+      background: linear-gradient(90deg, #459058, #5ba86b);
       border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(90deg, #5ba86b, #449058);
+      background: linear-gradient(90deg, #5ba86b, #459058);
     }
   }
 
@@ -293,12 +290,13 @@
     width: 280px;
     height: 380px;
     border-radius: 0;
-    background: linear-gradient(180deg, rgba(34, 34, 34, 0.96), rgba(12, 12, 12, 0.94));
-    border: none;
-    box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.7), inset -1px 0 0 rgba(0, 0, 0, 0.7), 0 10px 22px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    backdrop-filter: blur(20px);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
     padding: 16px;
 
@@ -320,7 +318,7 @@
           height: 100%;
           border-radius: 8px;
           background: linear-gradient(135deg, #0f172a, #1f2937);
-          border: 2px solid #449058;
+          border: 1px solid rgba(69, 144, 88, 0.3);
         }
       }
 
@@ -344,28 +342,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.5);
 
       svg {
         width: 12px;
         height: 12px;
-        color: #ffffff;
+        color: #e2e8f0;
       }
     }
 
     .claim-button {
-      margin-top: 10px;
-      width: 110px;
-      height: 30px;
-      font-size: 12px;
+      width: 180px;
+      height: 40px;
+      font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.5px;
       color: #e2e8f0;
-      background: linear-gradient(135deg, #1f2937, #111827);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      border: 1px solid rgba(69, 144, 88, 0.3);
+      border-radius: 8px;
       cursor: pointer;
       text-transform: uppercase;
+      transition: all 0.3s ease;
+      margin-top: auto;
+    }
+
+    .claim-button:hover:not([disabled]) {
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+      border-color: rgba(69, 144, 88, 0.5);
     }
 
     .claim-button[disabled] {
@@ -410,10 +413,9 @@
       font-size: 12px;
 
       &.unlocked {
-        border-color: #22c55e;
+        border-color: #459058;
         color: #e2e8f0;
-        background: radial-gradient(circle at 50% 40%, #063a22, #052e1b);
-        box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+        background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
       }
 
       .lock-icon {
@@ -434,7 +436,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0d0d0d 100%);
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
 
   .spinner {
     position: relative;
@@ -482,7 +484,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0d0d0d 100%);
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
 
   .no-season-content {
     text-align: center;
@@ -492,9 +494,8 @@
     h2 {
       font-size: 32px;
       font-weight: 800;
-      color: #ffffff;
+      color: #e2e8f0;
       margin-bottom: 16px;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
       font-family: 'Orbitron', monospace;
     }
 

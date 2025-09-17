@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { SocketService } from '../../../api/socket.service';
 
 @Component({
-  selector: 'app-connection-status',
+  selector: 'ptcg-connection-status',
   templateUrl: './connection-status.component.html',
   styleUrls: ['./connection-status.component.scss']
 })

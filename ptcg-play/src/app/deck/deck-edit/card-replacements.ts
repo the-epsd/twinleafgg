@@ -7,6 +7,9 @@ export const setCodeReplacements = [
 
 // Single source of truth for card replacements
 export const cardReplacements = [
+  // Diamond symbol to Prism Star conversion
+  { from: '♢', to: 'Prism Star' },
+
   //Energy
   { from: 'Grass Energy 1', to: 'Grass Energy SVE 1' },
   { from: 'Basic Grass Energy 1', to: 'Grass Energy SVE 1' },

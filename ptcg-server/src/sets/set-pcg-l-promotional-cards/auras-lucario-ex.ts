@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class AurasLucarioex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.AURAS, CardTag.POKEMON_ex]
+  public tags = [CardTag.AURAS, CardTag.POKEMON_ex];
   public cardType: CardType = CardType.METAL;
   public hp: number = 100;
   public weakness = [{ type: R }];

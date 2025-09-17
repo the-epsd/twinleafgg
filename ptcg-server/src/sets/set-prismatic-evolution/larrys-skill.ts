@@ -29,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  MOVE_CARDS(store, state, player.hand, player.discard, { sourceCard: effect.trainerCard })
+  MOVE_CARDS(store, state, player.hand, player.discard, { sourceCard: effect.trainerCard });
 
   // Count tools and items separately
   let pokemons = 0;

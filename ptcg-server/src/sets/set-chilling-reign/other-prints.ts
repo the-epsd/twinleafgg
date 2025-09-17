@@ -1,4 +1,4 @@
-import { Bronzong } from "../set-battle-styles/bronzong";
+import { Bronzong } from '../set-battle-styles/bronzong';
 
 export class BronzongCRE extends Bronzong {
   public fullName = 'Bronzong CRE 223';

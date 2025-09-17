@@ -238,12 +238,32 @@ export class DeckEditComponent implements OnInit {
 
     const successfulCards = cardDetails.map(card => {
       const { name, set, setNumber } = card;
-      // Check if card exists in database
-      if (!this.cardsBaseService.getCardByNameSetNumber(name, set, setNumber)) {
+
+      // Apply card replacements to the name
+      let processedName = name;
+      for (const replacement of cardReplacements) {
+        processedName = processedName.replace(new RegExp(replacement.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), replacement.to);
+      }
+
+      // First try: exact match with name, set, and setNumber
+      let foundCard = this.cardsBaseService.getCardByNameSetNumber(processedName, set, setNumber);
+
+      // Second try: match by name and set (ignore setNumber)
+      if (!foundCard) {
+        foundCard = this.cardsBaseService.getCardByNameSet(processedName, set);
+      }
+
+      // Third try: match by name only (ignore set and setNumber)
+      if (!foundCard) {
+        foundCard = this.cardsBaseService.getCardByBaseName(processedName);
+      }
+
+      if (!foundCard) {
         const key = `${name} ${set} ${setNumber}`;
         failedCardCounts.set(key, (failedCardCounts.get(key) || 0) + 1);
       }
-      return this.cardsBaseService.getCardByNameSetNumber(name, set, setNumber)?.fullName;
+
+      return foundCard?.fullName;
     }).filter(name => !!name);
 
     this.deckItems = this.loadDeckItems(successfulCards as string[]);

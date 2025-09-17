@@ -44,7 +44,7 @@ export class Gardevoirex extends PokemonCard {
       const player = effect.player;
 
       if (player.active.getPokemonCard() !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER)
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       if (HAS_MARKER(this.IMPRISON_USED_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -60,7 +60,7 @@ export class Gardevoirex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
 
-        const pokemonList = targets[0]
+        const pokemonList = targets[0];
         if (pokemonList !== undefined) {
           ADD_MARKER(this.IMPRISON_MARKER, pokemonList, this);
         }

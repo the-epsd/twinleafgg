@@ -1,4 +1,4 @@
-import { TrainersMail } from "./trainers-mail";
+import { TrainersMail } from './trainers-mail';
 
 export class TrainersMailROS extends TrainersMail {
   public set: string = 'ROS';

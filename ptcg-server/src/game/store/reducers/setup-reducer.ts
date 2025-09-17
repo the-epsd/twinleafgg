@@ -241,19 +241,19 @@ function* alternativeSetupSinglePlayer(player: Player, chooseCardsOptions: any, 
   // First, choose starting Pokémon (Active + Bench)
   yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
     player.hand, {}, { ...chooseCardsOptions, blocked }), choice => {
-      // Place the chosen cards as Active and Bench
-      if (choice.length > 0) {
-        // Place Active (face-down)
-        player.hand.moveCardTo(choice[0], player.active);
-        player.active.isSecret = true;
-        // Place Bench (face-down)
-        for (let i = 1; i < choice.length; i++) {
-          player.hand.moveCardTo(choice[i], player.bench[i - 1]);
-          player.bench[i - 1].isSecret = true;
-        }
+    // Place the chosen cards as Active and Bench
+    if (choice.length > 0) {
+      // Place Active (face-down)
+      player.hand.moveCardTo(choice[0], player.active);
+      player.active.isSecret = true;
+      // Place Bench (face-down)
+      for (let i = 1; i < choice.length; i++) {
+        player.hand.moveCardTo(choice[i], player.bench[i - 1]);
+        player.bench[i - 1].isSecret = true;
       }
-      next();
-    });
+    }
+    next();
+  });
 
   // Then, choose 6 cards from remaining hand to be prize cards
   // We need to create a temporary hand with only the remaining cards for selection
@@ -269,20 +269,20 @@ function* alternativeSetupSinglePlayer(player: Player, chooseCardsOptions: any, 
 
     yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_PRIZES_SETUP,
       tempHand, {}, { min: 6, max: 6, allowCancel: false, blocked: [] }), choice => {
-        // Place chosen cards as prizes
-        for (let i = 0; i < 6; i++) {
-          if (choice[i]) {
-            // Find the card in the actual hand and move it to prizes
-            const cardToMove = choice[i];
-            const handIndex = player.hand.cards.indexOf(cardToMove);
-            if (handIndex !== -1) {
-              player.hand.moveCardTo(cardToMove, player.prizes[i]);
-              player.prizes[i].isSecret = true;
-            }
+      // Place chosen cards as prizes
+      for (let i = 0; i < 6; i++) {
+        if (choice[i]) {
+          // Find the card in the actual hand and move it to prizes
+          const cardToMove = choice[i];
+          const handIndex = player.hand.cards.indexOf(cardToMove);
+          if (handIndex !== -1) {
+            player.hand.moveCardTo(cardToMove, player.prizes[i]);
+            player.prizes[i].isSecret = true;
           }
         }
-        next();
-      });
+      }
+      next();
+    });
   } else {
     // If not enough cards, place all remaining cards as prizes
     for (let i = 0; i < Math.min(remainingCards.length, 6); i++) {
@@ -492,9 +492,9 @@ function* setupSinglePlayer(player: Player, chooseCardsOptions: any, state: Stat
   });
   yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
     player.hand, {}, { ...chooseCardsOptions, blocked }), choice => {
-      putStartingPokemonsAndPrizes(player, choice, state);
-      next();
-    });
+    putStartingPokemonsAndPrizes(player, choice, state);
+    next();
+  });
 }
 
 // Helper: Allow extra Bench placement after drawing extra cards
@@ -511,15 +511,15 @@ function* allowExtraBenchPlacement(player: Player, chooseCardsOptions: any, stat
     // Use CHOOSE_STARTING_POKEMONS as fallback prompt message
     yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
       player.hand, {}, { min: 0, max: newBasics.length, allowCancel: false, blocked }), choice => {
-        // Place any chosen new Basics onto the Bench
-        for (const card of choice) {
-          const emptyBench = player.bench.find(b => b.cards.length === 0);
-          if (emptyBench) {
-            player.hand.moveCardTo(card, emptyBench);
-          }
+      // Place any chosen new Basics onto the Bench
+      for (const card of choice) {
+        const emptyBench = player.bench.find(b => b.cards.length === 0);
+        if (emptyBench) {
+          player.hand.moveCardTo(card, emptyBench);
         }
-        next();
-      });
+      }
+      next();
+    });
   }
 }
 

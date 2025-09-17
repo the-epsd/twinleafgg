@@ -1,4 +1,4 @@
-import { Potion } from "../set-base-set/potion";
+import { Potion } from '../set-base-set/potion';
 
 export class PotionCG extends Potion {
   public fullName = 'Potion CG';

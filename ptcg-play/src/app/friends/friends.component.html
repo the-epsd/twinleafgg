@@ -79,9 +79,9 @@
             </button>
           </div>
 
-          <app-friends-list [friends]="friends" [users]="users" (removeFriend)="onRemoveFriend($event)"
+          <ptcg-friends-list [friends]="friends" [users]="users" (removeFriend)="onRemoveFriend($event)"
             (blockUser)="onBlockUser($event)" (unblockUser)="onUnblockUser($event)">
-          </app-friends-list>
+          </ptcg-friends-list>
         </div>
 
         <!-- Pending Requests Tab -->
@@ -143,7 +143,7 @@
       </div>
 
       <div class="modal-content">
-        <app-send-friend-request (requestSent)="onFriendRequestSent()"></app-send-friend-request>
+        <ptcg-send-friend-request (requestSent)="onFriendRequestSent()"></ptcg-send-friend-request>
       </div>
     </div>
   </div>

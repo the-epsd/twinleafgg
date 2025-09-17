@@ -1,91 +1,567 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 @import '../../theme/variables.scss';
 
-.ptcg-u-padding {
-  background-color: #1a202c;
+:host {
+  display: block;
+  height: 100vh;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  overflow: hidden;
+  font-family: 'Urbanist', sans-serif;
 }
 
-.mat-toolbar-row {
-  background-color: #1a202c;
+.ranking-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Urbanist', sans-serif;
+}
 
-  >h1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
+// Header Section
+.ranking-header {
+  position: relative;
+  height: 20%;
+  min-height: 200px;
+  overflow: hidden;
+  margin-top: 2rem;
+
+  .header-background {
+    position: relative;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
   }
 
-  >button {
-    margin-left: map-get($padding, small);
-    min-width: 80px;
-  }
-}
-
-.mat-header-row {
-  background-color: #2d3748;
-}
-
-.mat-cell {
-  background-color: #2d3748;
-}
-
-.mat-paginator {
-  background-color: #2d3748;
-}
-
-.mat-raised-button {
-  margin-top: 12px;
-  background-color: #449058;
-  border-radius: 16px;
-}
-
-// ... existing styles ...
-
-::ng-deep .ptcg-deck-edit-toolbar {
-  .mat-form-field-flex {
-    background-color: #090b0f;
-    border-radius: 32px;
-    padding: 0.5rem 1rem;
+  .header-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    font-size: 17px;
-    margin-top: 40px;
-    max-height: 40px;
+    padding: 40px 40px;
+    gap: 2rem;
+  }
+}
+
+.ranking-title-section {
+  text-align: center;
+
+  .ranking-title {
+    font-size: 42px;
+    font-weight: 800;
+    color: #ffffff;
+    font-family: 'Urbanist', sans-serif;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+
+  .ranking-subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #459058;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Urbanist', sans-serif;
+    opacity: 0.8;
+  }
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+
+// Main Content
+.ranking-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+.ranking-table-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ranking-table {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+// Table Header
+.table-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 2fr 120px;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+  border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+  height: 80px;
+  align-items: center;
+
+  .table-cell {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Urbanist', sans-serif;
+    line-height: 1.2;
+  }
+}
+
+// Table Body
+.table-body {
+  .ranking-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 2fr 120px;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    height: 80px;
+    align-items: center;
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.05), rgba(69, 144, 88, 0.02));
+    }
+
+    &.current-user {
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      border-left: 4px solid #459058;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, #459058, #5ba86b);
+        box-shadow: 0 0 10px rgba(69, 144, 88, 0.5);
+      }
+    }
+
+    &.top-three {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+
+      &.current-user {
+        background: linear-gradient(135deg, rgba(69, 144, 88, 0.15), rgba(69, 144, 88, 0.08));
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+// Table Cells
+.table-cell {
+  display: flex;
+  align-items: center;
+
+  &.position-cell {
+    justify-content: center;
+  }
+
+  &.ranking-cell {
+    justify-content: flex-start;
+  }
+
+  &.player-cell {
+    justify-content: flex-start;
+  }
+
+  &.actions-cell {
+    justify-content: center;
+  }
+}
+
+// Position Badge
+.position-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .position-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: #e2e8f0;
+    font-family: 'Urbanist', sans-serif;
+  }
+
+  &.top-position {
+    .position-number {
+      color: #ffd700;
+    }
+  }
+}
+
+// Ranking Value
+.ranking-value {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .ranking-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e2e8f0;
+    font-family: 'Urbanist', sans-serif;
+  }
+}
+
+// Player Info
+.player-info {
+  width: 100%;
+}
+
+// Actions Button
+.actions-button {
+  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+    border-color: rgba(69, 144, 88, 0.5);
+    transform: translateY(-1px);
+  }
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// Pagination
+.pagination-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+
+  ::ng-deep .mat-paginator {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    color: #e2e8f0;
+    font-family: 'Urbanist', sans-serif;
+
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label {
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .mat-icon-button {
+      color: #e2e8f0;
+
+      &:hover:not([disabled]) {
+        background: rgba(69, 144, 88, 0.1);
+        color: #459058;
+      }
+
+      &[disabled] {
+        color: rgba(226, 232, 240, 0.3);
+      }
+    }
+  }
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+
+  .loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .loading-text {
+      color: #e2e8f0;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Urbanist', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+// Modern Search Box Styling
+::ng-deep .modern-search-box {
+  width: 100%;
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-form-field-flex {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    align-items: center;
+    font-size: 14px;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    min-height: 48px;
+    width: 100%;
+
+    &:hover {
+      border-color: rgba(69, 144, 88, 0.5);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    }
   }
 
   .mat-form-field-infix {
     padding: 0;
     border-top: 0;
-  }
-
-  .mat-select-value {
-    color: #283142;
-    font-size: 14px;
+    min-height: 20px;
   }
 
   .mat-form-field-label {
+    color: #e2e8f0;
     font-size: 14px;
-    color: #283142;
+    font-weight: 500;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(1px);
   }
 
   .mat-form-field-underline {
     display: none;
-    margin-top: 4px;
   }
 
   .mat-form-field-flex input {
-    color: #449058;
-    font-size: 13px;
-  }
-
-  .mat-form-field-flex .mat-input-element {
-    color: #449058;
-    font-size: 13px;
-    margin-bottom: 1px;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-family: 'Urbanist', sans-serif;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(1px);
   }
 
   .mat-focused .mat-form-field-flex {
-    background-color: #283142;
+    border-color: #459058;
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+  }
+}
 
-    .mat-select-value {
-      width: 100%;
-      max-width: 100%;
+// Modern Menu Styling
+::ng-deep .modern-menu {
+  .mat-menu-panel {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.95));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+    .mat-menu-content {
+      padding: 8px 0;
+    }
+
+    .mat-menu-item {
+      color: #e2e8f0;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Urbanist', sans-serif;
+      padding: 12px 16px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      &:hover {
+        background: rgba(69, 144, 88, 0.1);
+        color: #459058;
+      }
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .ranking-content {
+    padding: 1.5rem;
+  }
+
+  .table-header,
+  .ranking-row {
+    grid-template-columns: 60px 1fr 2fr 100px;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    height: 70px;
+  }
+
+  .ranking-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ranking-header {
+    height: 18%;
+    min-height: 180px;
+    margin-top: 1.5rem;
+
+    .header-content {
+      padding: 30px 20px;
+      gap: 1.5rem;
+    }
+  }
+
+  .ranking-title {
+    font-size: 28px;
+  }
+
+  .ranking-subtitle {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .header-controls {
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  .search-container {
+    max-width: 100%;
+    flex: 1;
+  }
+
+  .header-controls {
+    max-width: 100%;
+  }
+
+  .refresh-button {
+    min-height: 44px;
+    height: 44px;
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+
+  .ranking-content {
+    padding: 1rem;
+  }
+
+  .table-header,
+  .ranking-row {
+    grid-template-columns: 50px 1fr 1.5fr 80px;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    height: 60px;
+  }
+
+  .position-number {
+    font-size: 18px;
+  }
+
+  .ranking-number {
+    font-size: 16px;
+  }
+
+  .actions-button {
+    padding: 6px 12px;
+    font-size: 11px;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-header {
+    height: 18%;
+    min-height: 160px;
+    margin-top: 1rem;
+  }
+
+  .ranking-title {
+    font-size: 24px;
+  }
+
+  .ranking-subtitle {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .table-header,
+  .ranking-row {
+    grid-template-columns: 40px 1fr 1fr 60px;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    height: 50px;
+  }
+
+  .position-number {
+    font-size: 16px;
+  }
+
+  .ranking-number {
+    font-size: 14px;
+  }
+
+  .actions-button {
+    padding: 4px 8px;
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
     }
   }
 }

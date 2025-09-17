@@ -38,7 +38,7 @@ export class CrystalShard extends TrainerCard {
     if (effect instanceof EndTurnEffect && HAS_MARKER(this.ATTACKED_MARKER, effect.player, this)) {
       const player = effect.player;
       console.log('Crystal Shard was used this turn, moving to discard');
-      MOVE_CARDS(store, state, player.active, player.discard, { cards: [this] })
+      MOVE_CARDS(store, state, player.active, player.discard, { cards: [this] });
       REMOVE_MARKER(this.ATTACKED_MARKER, player, this);
     }
 

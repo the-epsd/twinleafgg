@@ -5,7 +5,7 @@ import { FriendInfo, FriendRequestInfo } from '../api/interfaces/friends.interfa
 import { UserInfo } from 'ptcg-server';
 
 @Component({
-  selector: 'app-friends',
+  selector: 'ptcg-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss']
 })

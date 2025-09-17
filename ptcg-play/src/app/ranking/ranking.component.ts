@@ -132,5 +132,4 @@ export class RankingComponent implements OnInit {
       page: this.pageIndex
     });
   }
-
 }

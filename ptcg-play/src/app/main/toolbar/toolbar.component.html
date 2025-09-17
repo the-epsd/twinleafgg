@@ -15,7 +15,7 @@
       <a routerLink="/deck" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_DECKS' | translate }}</span>
       </a>
-      <a routerLink="/friends" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
+      <a routerLink="/friends" class="nav-item" routerLinkActive="active" *ngIf="loggedUser && (isAdmin$ | async)">
         <span class="nav-text">FRIENDS</span>
       </a>
       <a routerLink="/ranking" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
@@ -24,30 +24,32 @@
       <a routerLink="/message" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_MESSAGES' | translate }}</span>
       </a>
-      <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active" *ngIf="loggedUser">
+      <a routerLink="/battle-pass" class="nav-item battle-pass-item" routerLinkActive="active"
+        *ngIf="loggedUser && (isAdmin$ | async)">
         <span class="nav-text">BATTLE PASS</span>
       </a>
-    </mat-menu>
-  </div>
 
-  <span class="epsd-spacer"></span>
-  
-  <!-- Connection status indicator -->
-  <app-connection-status *ngIf="loggedUser"></app-connection-status>
-
-      <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
-        {{ 'MAIN_TABLES' | translate }}
+      <!-- Tables Menu Button - Centered between Battle Pass and User Info -->
+      <button mat-button [matMenuTriggerFor]="gamesMenu" class="nav-item tables-item"
+        *ngIf="loggedUser && (gameStates$ | async)?.length > 0">
+        <span class="nav-text">{{ 'MAIN_TABLES' | translate }}</span>
         <mat-icon>arrow_drop_down</mat-icon>
         <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
           [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
       </button>
-      <mat-menu #gamesMenu="matMenu">
-        <a mat-menu-item *ngFor="let gameState of (gameStates$ | async)" [routerLink]="['/table', gameState.localId]">
-          <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
-        </a>
-      </mat-menu>
     </nav>
   </div>
+
+  <span class="epsd-spacer"></span>
+
+  <!-- Connection status indicator -->
+  <ptcg-connection-status *ngIf="loggedUser"></ptcg-connection-status>
+
+  <mat-menu #gamesMenu="matMenu">
+    <a mat-menu-item *ngFor="let gameState of (gameStates$ | async)" [routerLink]="['/table', gameState.localId]">
+      <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
+    </a>
+  </mat-menu>
 
   <!-- Right Section - User Resources and Profile -->
   <div class="toolbar-right">

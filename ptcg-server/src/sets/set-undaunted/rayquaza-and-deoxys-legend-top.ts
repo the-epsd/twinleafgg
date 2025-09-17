@@ -113,7 +113,7 @@ export class RayquazaAndDeoxysLegendTop extends PokemonCard {
 
       checkProvidedEnergy.energyMap.forEach(em => {
         if (em.provides.includes(CardType.FIRE) || em.provides.includes(CardType.ANY)) {
-          MOVE_CARDS(store, state, player.active, player.discard, { cards: [em.card] })
+          MOVE_CARDS(store, state, player.active, player.discard, { cards: [em.card] });
         }
       });
     }

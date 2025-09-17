@@ -101,7 +101,7 @@ export class Clawitizer extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this)
+      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
     }
 
     return state;

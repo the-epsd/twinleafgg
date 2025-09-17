@@ -25,7 +25,7 @@ export class Bouffalantex extends PokemonCard {
     name: 'Gold Breaker',
     cost: [C, C, C],
     damage: 100,
-    text: "If your opponent's Active Pokemon is a Pokemon ex, this attack does 100 more damage."
+    text: 'If your opponent\'s Active Pokemon is a Pokemon ex, this attack does 100 more damage.'
   }];
 
   public regulationMark: string = 'I';

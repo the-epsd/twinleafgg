@@ -5,22 +5,22 @@ import { User } from './';
 export class UserUnlockedItem extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column()
-  userId!: number;
+    userId!: number;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
-  user!: User;
+    user!: User;
 
   @Column()
-  itemId!: string;
+    itemId!: string;
 
   @Column()
-  itemType!: string;
+    itemType!: string;
 
   @CreateDateColumn()
-  created!: Date;
+    created!: Date;
 
 } 

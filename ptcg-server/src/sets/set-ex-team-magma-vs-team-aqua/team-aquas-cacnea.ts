@@ -41,7 +41,7 @@ export class TeamAquasCacnea extends PokemonCard {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      })
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

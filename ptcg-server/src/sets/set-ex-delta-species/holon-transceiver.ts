@@ -110,9 +110,9 @@ export class HolonTransceiver extends TrainerCard {
           {
             allowCancel: true,
           }), choice => {
-            const option = options[choice];
-            option.action();
-          });
+          const option = options[choice];
+          option.action();
+        });
       }
     }
     return state;

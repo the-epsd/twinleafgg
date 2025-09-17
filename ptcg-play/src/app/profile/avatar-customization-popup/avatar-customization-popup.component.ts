@@ -8,7 +8,7 @@ import { UserInfo } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-avatar-customization-popup',
+  selector: 'ptcg-avatar-customization-popup',
   templateUrl: './avatar-customization-popup.component.html',
   styleUrls: ['./avatar-customization-popup.component.scss']
 })

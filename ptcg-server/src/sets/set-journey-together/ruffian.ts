@@ -53,7 +53,7 @@ export class Ruffian extends TrainerCard {
 
         // removing the tool
         if (target.tools.length > 0) {
-          let toolToDiscard = target.tools[0];
+          const toolToDiscard = target.tools[0];
           if (target.tools.length > 1) {
             return store.prompt(state, new ChooseCardsPrompt(
               player,

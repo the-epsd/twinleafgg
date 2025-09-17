@@ -31,7 +31,7 @@ export class Ranking extends Controller {
       };
     });
 
-    res.send({ok: true, ranking, total});
+    res.send({ ok: true, ranking, total });
   }
 
   @Post('/list/:page?/:pageSize?')
@@ -59,16 +59,26 @@ export class Ranking extends Controller {
       take: pageSize
     });
 
-    let position = page * pageSize;
+    // Get all users ordered by ranking to calculate actual global positions
+    const allUsers = await User.find({
+      order: { ranking: 'DESC', lastRankingChange: 'DESC', registered: 'ASC' }
+    });
+
+    // Create a map of user ID to actual global position
+    const userPositionMap = new Map<number, number>();
+    allUsers.forEach((user, index) => {
+      userPositionMap.set(user.id, index + 1);
+    });
+
     const ranking: RankingInfo[] = users.map(user => {
-      position += 1;
+      const actualPosition = userPositionMap.get(user.id) || 0;
       return {
-        position,
+        position: actualPosition,
         user: this.buildUserInfo(user)
       };
     });
 
-    res.send({ok: true, ranking, total});
+    res.send({ ok: true, ranking, total });
   }
 
 }

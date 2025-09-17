@@ -19,10 +19,10 @@ export class Nidoqueen extends PokemonCard {
   public retreat = [C, C, C];
 
   public powers = [{
-    name: "Queen's Call",
+    name: 'Queen\'s Call',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: "Once during your turn (before your attack), you may search your deck for a Pokémon that isn't a Pokémon-GX or Pokémon-EX, reveal it, and put it into your hand. Then, shuffle your deck."
+    text: 'Once during your turn (before your attack), you may search your deck for a Pokémon that isn\'t a Pokémon-GX or Pokémon-EX, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
   public attacks = [{

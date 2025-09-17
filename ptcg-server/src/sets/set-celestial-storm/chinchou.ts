@@ -25,7 +25,7 @@ export class Chinchou extends PokemonCard {
       name: 'Spark',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 10,
-      text: "This attack does 10 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      text: 'This attack does 10 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

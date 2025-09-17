@@ -46,7 +46,7 @@ export class NaganadelGX extends PokemonCard {
 
     // Beast Raid
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      var ultraBeastsInPlay = 0;
+      let ultraBeastsInPlay = 0;
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {

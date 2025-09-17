@@ -1,10 +1,10 @@
-import { DoubleColorlessEnergy } from "../set-base-set/double-colorless-energy";
-import { Fisherman } from "../set-celestial-storm/fisherman";
-import { Pokegear30 } from "../set-scarlet-and-violet/pokegear-30";
-import { PokemonCommunication } from "../set-team-up/pokemon-communication";
-import { PokemonReversal } from "../set-ex-unseen-forces/pokemon-reversal";
-import { RainbowEnergy } from "../set-sun-and-moon/rainbow-energy";
-import { Switch } from "../set-scarlet-and-violet/switch";
+import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
+import { Fisherman } from '../set-celestial-storm/fisherman';
+import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
+import { PokemonCommunication } from '../set-team-up/pokemon-communication';
+import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
+import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
+import { Switch } from '../set-scarlet-and-violet/switch';
 
 
 export class DoubleColorlessEnergyHS extends DoubleColorlessEnergy {
@@ -43,7 +43,7 @@ export class PokemonReversalHS extends PokemonReversal {
   public name = 'Pokemon Reversal';
   public set = 'HS';
   public setNumber = '99';
-  public text = 'Flip a coin. If heads, choose 1 of your opponent\'s Benched Pokémon and switch it with your opponent\'s Active Pokémon.'
+  public text = 'Flip a coin. If heads, choose 1 of your opponent\'s Benched Pokémon and switch it with your opponent\'s Active Pokémon.';
 }
 
 export class RainbowEnergyHS extends RainbowEnergy {

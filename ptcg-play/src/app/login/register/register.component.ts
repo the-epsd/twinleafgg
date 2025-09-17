@@ -7,7 +7,7 @@ import { ServerPasswordPopupService } from '../server-password-popup/server-pass
 
 @UntilDestroy()
 @Component({
-  selector: 'app-register',
+  selector: 'ptcg-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

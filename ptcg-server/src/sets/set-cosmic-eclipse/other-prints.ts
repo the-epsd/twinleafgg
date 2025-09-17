@@ -1,4 +1,4 @@
-import { GuzmaAndHala } from "./guzma-and-hala";
+import { GuzmaAndHala } from './guzma-and-hala';
 
 export class GuzmaAndHalaCEC extends GuzmaAndHala {
   public set: string = 'CEC';

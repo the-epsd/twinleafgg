@@ -30,7 +30,7 @@ export class Dratini extends PokemonCard {
         if (!result) {
           effect.damage = 0;
         }
-      })
+      });
     }
 
     return state;

@@ -1,6 +1,6 @@
-import { PokemonFanClub } from "../set-pop-series-4/pokemon-fan-club";
-import { RainbowEnergy } from "../set-sun-and-moon/rainbow-energy";
-import { WarpEnergy } from "../set-shining-legends/warp-energy";
+import { PokemonFanClub } from '../set-pop-series-4/pokemon-fan-club';
+import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
+import { WarpEnergy } from '../set-shining-legends/warp-energy';
 
 export class PokemonFanClubAQ extends PokemonFanClub {
   public fullName = 'Pokemon Fan Club AQ';

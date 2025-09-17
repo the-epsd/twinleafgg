@@ -33,7 +33,7 @@ export class TeamAquaBall extends TrainerCard {
       }
 
       // Not the most efficient way to handle this, but it was being weird when I tried another way
-      let blocked: number[] = [];
+      const blocked: number[] = [];
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           player.deck.cards.forEach((card, index) => {

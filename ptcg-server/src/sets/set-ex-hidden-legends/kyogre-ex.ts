@@ -7,7 +7,7 @@ import { CONFIRMATION_PROMPT, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WA
 
 export class Kyogreex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex]
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 100;
   public weakness = [{ type: G }];
@@ -66,7 +66,7 @@ export class Kyogreex extends PokemonCard {
 
           this.usedSTW = true;
         }
-      }, GameMessage.WANT_TO_USE_ABILITY)
+      }, GameMessage.WANT_TO_USE_ABILITY);
     }
 
     // doing this after so that the energy are in hand when they are shown to the opponent

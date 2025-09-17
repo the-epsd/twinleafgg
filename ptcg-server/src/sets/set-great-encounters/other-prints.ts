@@ -1,4 +1,4 @@
-import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";
+import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 
 export class RareCandyGE extends RareCandy {
   public fullName = 'Rare Candy GE';

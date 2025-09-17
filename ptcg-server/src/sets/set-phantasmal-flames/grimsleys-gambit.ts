@@ -1,7 +1,7 @@
-import { TrainerCard, TrainerType, StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt, SuperType, CardType } from "../../game";
-import { MOVE_CARDS } from "../../game/store/prefabs/prefabs";
-import { Effect } from "../../game/store/effects/effect";
-import { TrainerEffect } from "../../game/store/effects/play-card-effects";
+import { TrainerCard, TrainerType, StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt, SuperType, CardType } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class GrimsleysGambit extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;

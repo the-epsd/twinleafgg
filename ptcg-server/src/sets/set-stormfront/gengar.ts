@@ -61,7 +61,7 @@ export class Gengar extends PokemonCard {
             if (flipResult) {
               opponent.active.damage += 999;
             }
-          })
+          });
         }
       });
     }
@@ -80,7 +80,7 @@ export class Gengar extends PokemonCard {
           return;
         }
 
-        let damageAmount = 30
+        let damageAmount = 30;
         if (targets.some(cardList => cardList.getPokemonCard()?.powers
           && cardList.getPokemonCard()?.powers.some(power => power.powerType === PowerType.POKEPOWER))) {
           damageAmount = 60;

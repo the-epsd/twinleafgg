@@ -1,48 +1,457 @@
 @import '../../../../src/theme/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
-.ptcg-avatar-grid {
-  padding: map-get($padding, normal);
+// Battle Pass inspired color palette
+$primary-green: #459058;
+$secondary-green: #5ba86b;
+$dark-bg: rgba(10, 10, 20, 0.9);
+$card-bg: rgba(255, 255, 255, 0.05);
+$card-border: rgba(69, 144, 88, 0.3);
+$text-primary: #e2e8f0;
+$text-secondary: #64748b;
+$text-muted: #94a3b8;
 
-  .ptcg-avatar-grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: map-get($padding, normal);
-    max-width: 1200px;
-    margin: 0 auto;
+// Subtle animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
 
-  .ptcg-avatar-grid-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: map-get($padding, small);
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(69, 144, 88, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(69, 144, 88, 0.4);
+  }
+}
+
+// Main Container
+.avatar-selector-container {
+  min-height: 100vh;
+  background: linear-gradient(45deg, $dark-bg 0%, rgba(5, 10, 25, 0.9) 100%);
+  font-family: 'Urbanist', sans-serif;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(69, 144, 88, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(69, 144, 88, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+// Header Section - Battle Pass Style
+.avatar-header {
+  position: relative;
+  height: 35%;
+  min-height: 300px;
+  overflow: hidden;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .header-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+  }
+
+  .back-button {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    z-index: 20;
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid $card-border;
+    color: $text-primary;
+    padding: 12px 24px;
     border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    animation: slideUp 0.8s ease-out;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+      border-color: rgba(69, 144, 88, 0.5);
+      transform: translateY(-2px);
+    }
+
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    animation: slideUp 0.8s ease-out;
+  }
+
+  .title-section {
+    .main-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: $text-primary;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: $text-secondary;
+      margin: 0 0 2rem 0;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+// Avatar Selection Area
+.avatar-selection-area {
+  flex: 1;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: slideUp 0.8s ease-out;
+  animation-delay: 0.2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+// Avatar Card - Battle Pass Item Panel Style
+.avatar-card {
+  position: relative;
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 0;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 380px;
+
+  // Hover States
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(69, 144, 88, 0.5);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: glow 2s ease-in-out infinite;
+
+    .avatar-image {
       transform: scale(1.05);
     }
 
-    &.ptcg-avatar-selected {
-      background-color: rgba(68, 144, 88, 0.2);
-      border: 2px solid #449058;
+    .avatar-name {
+      color: $primary-green;
     }
   }
 
-  .ptcg-avatar-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-bottom: map-get($padding, small);
+  // Selected State
+  &.selected {
+    border-color: $primary-green;
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    box-shadow: 0 0 20px rgba(69, 144, 88, 0.2);
+
+    .selection-indicator {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+// Avatar Image Container
+.avatar-image-container {
+  position: relative;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.avatar-frame {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid $primary-green;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, $primary-green, $secondary-green);
+
+  .avatar-image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: all 0.3s ease;
+    border-radius: 50%;
   }
 
-  .ptcg-avatar-name {
-    text-align: center;
+  .avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(69, 144, 88, 0.1));
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+}
+
+.avatar-card:hover .avatar-overlay {
+  opacity: 1;
+}
+
+// Selection Indicator - Battle Pass Completion Check Style
+.selection-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  mat-icon {
+    color: white;
     font-size: 14px;
-    color: #fff;
+  }
+}
+
+// Avatar Info - Battle Pass Style
+.avatar-info {
+  text-align: center;
+  width: 100%;
+
+  .avatar-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0 0 12px 0;
+    transition: all 0.3s ease;
+    font-family: 'Urbanist', sans-serif;
+  }
+
+  .avatar-badge {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid $card-border;
+    color: $text-primary;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+      border-color: rgba(69, 144, 88, 0.5);
+    }
+  }
+}
+
+// Selection Confirmation - Battle Pass Status Style
+.selection-confirmation {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+  border: 1px solid $card-border;
+  color: $text-primary;
+  padding: 12px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(20px);
+  animation: slideUp 0.5s ease-out;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  .confirmation-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .confirmation-icon {
+      font-size: 18px;
+      color: $primary-green;
+    }
+
+    .confirmation-text {
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .avatar-header {
+    min-height: 280px;
+    padding: 30px;
+
+    .back-button {
+      top: 30px;
+      left: 30px;
+    }
+  }
+
+  .avatar-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .avatar-header {
+    height: 40%;
+    min-height: 250px;
+    padding: 20px;
+
+    .back-button {
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+
+    .title-section {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .avatar-selection-area {
+    padding: 15px;
+  }
+
+  .avatar-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .avatar-card {
+    min-height: 320px;
+    padding: 12px;
+  }
+
+  .avatar-frame {
+    width: 100px;
+    height: 100px;
+  }
+
+  .selection-confirmation {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-header {
+    height: 45%;
+    min-height: 220px;
+    padding: 15px;
+
+    .back-button {
+      top: 15px;
+      left: 15px;
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .title-section {
+      .main-title {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  .avatar-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .avatar-card {
+    min-height: 280px;
+  }
+
+  .avatar-frame {
+    width: 80px;
+    height: 80px;
   }
 }

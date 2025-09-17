@@ -1,5 +1,5 @@
-import { EnergyRetrieval } from "../set-scarlet-and-violet/energy-retrieval";
-import { Switch } from "../set-scarlet-and-violet/switch";
+import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
+import { Switch } from '../set-scarlet-and-violet/switch';
 
 export class EnergyRetrievalBLW extends EnergyRetrieval {
   public set: string = 'BLW';

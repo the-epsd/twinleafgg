@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
 
@@ -12,7 +12,7 @@ import { ChooseCardsSortable } from './choose-cards-panes.interface';
   templateUrl: './choose-cards-panes.component.html',
   styleUrls: ['./choose-cards-panes.component.scss']
 })
-export class ChooseCardsPanesComponent implements OnChanges {
+export class ChooseCardsPanesComponent implements OnChanges, OnInit {
   selectedCards: any[] = [];
   currentIndex = 0;
   visibleCards: any[] = [];

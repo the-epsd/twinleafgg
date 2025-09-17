@@ -23,7 +23,7 @@ export class LostWorld extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const winner = state.activePlayer
+      const winner = state.activePlayer;
 
       if (opponent.lostzone.cards.filter(c => c instanceof PokemonCard).length < 6) {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);

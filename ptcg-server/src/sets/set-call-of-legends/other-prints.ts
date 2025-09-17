@@ -1,7 +1,7 @@
-import { Cleffa } from "../set-heartgold-and-soulsilver/cleffa";
-import { Copycat } from "../set-evolving-skies/copycat";
-import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
-import { Smeargle } from "../set-undaunted/smeargle";
+import { Cleffa } from '../set-heartgold-and-soulsilver/cleffa';
+import { Copycat } from '../set-evolving-skies/copycat';
+import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';
+import { Smeargle } from '../set-undaunted/smeargle';
 
 export class CleffaCL extends Cleffa {
   public fullName = 'Cleffa CL';

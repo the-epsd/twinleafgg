@@ -55,7 +55,7 @@ export class Orbeetle extends PokemonCard {
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { stage: Stage.STAGE_2 }, { min: 0, max: totalEnergy, blocked })
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { stage: Stage.STAGE_2 }, { min: 0, max: totalEnergy, blocked });
     }
 
     return state;

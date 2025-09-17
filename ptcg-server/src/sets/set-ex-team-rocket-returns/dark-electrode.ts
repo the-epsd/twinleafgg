@@ -121,7 +121,7 @@ export class DarkElectrode extends PokemonCard {
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
 
-          let blockedCards: Card[] = [];
+          const blockedCards: Card[] = [];
           const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
             const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);

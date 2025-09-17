@@ -246,13 +246,13 @@ function formatPowers(powers) {
     `    {
       name: '${p.name?.en || p.name || ''}',
       powerType: '${p.type || ''}',
-      text: '${typeof p.effect === "string" ? p.effect.replace(/'/g, "\\'").replace(/\n/g, '\\n') : (p.effect?.en ? p.effect.en.replace(/'/g, "\\'").replace(/\n/g, '\\n') : '')}'
+      text: '${typeof p.effect === 'string' ? p.effect.replace(/'/g, '\\\'').replace(/\n/g, '\\n') : (p.effect?.en ? p.effect.en.replace(/'/g, '\\\'').replace(/\n/g, '\\n') : '')}'
     }`
   ).join(',\n') + '\n  ]';
 }
 
 function escapeSingleQuotes(str) {
-  return (str || '').replace(/'/g, "\\'");
+  return (str || '').replace(/'/g, '\\\'');
 }
 
 function formatAttacksRaw(attacks) {
@@ -354,12 +354,12 @@ async function main() {
   }
   props += `  public set: string = '${(setAbbr || '').toUpperCase()}';\n`;
   props += `  public setNumber: string = '${card.setNumber || card.localId || card.number || ''}';\n`;
-  props += `  public cardImage: string = 'assets/cardback.png';\n`;
+  props += '  public cardImage: string = \'assets/cardback.png\';\n';
   props += `  public name: string = '${escapeSingleQuotes(card.name?.en || card.name)}';\n`;
   props += `  public fullName: string = '${escapeSingleQuotes(card.name?.en || card.name)} ${(setAbbr || '').toUpperCase()}';\n`;
   let importLines = `import { ${baseClass} } from '${importPath}';\nimport { Stage } from '../../game/store/card/card-types';\n`;
   if (tags.length) {
-    importLines += `import { CardTag } from '../../game/store/card/card-types';\n`;
+    importLines += 'import { CardTag } from \'../../game/store/card/card-types\';\n';
   }
   const tsContent = `${importLines}\nexport class ${className} extends ${baseClass} {\n${props}}\n`;
   writeFileSync(outFile, tsContent.trim(), 'utf-8');

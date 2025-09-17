@@ -1,4 +1,4 @@
-import { DedenneGX } from "./dedenne-gx";
+import { DedenneGX } from './dedenne-gx';
 
 export class DedenneGXUNB extends DedenneGX {
   public fullName = 'Dedenne-GX UNB';

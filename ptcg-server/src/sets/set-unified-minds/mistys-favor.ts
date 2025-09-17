@@ -29,11 +29,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = selected || [];
     next();
   });
-    player.deck.moveCardsTo(cards, player.hand);
+  player.deck.moveCardsTo(cards, player.hand);
 
-    const opponent = StateUtils.getOpponent(state, player);
+  const opponent = StateUtils.getOpponent(state, player);
   
-    if (cards.length > 0) {
+  if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
       GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

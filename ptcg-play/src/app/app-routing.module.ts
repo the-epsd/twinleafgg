@@ -12,6 +12,7 @@ import { PlayersComponent } from './games/players/players.component';
 import { LoginComponent } from './login/login/login.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SelectAvatarComponent } from './profile/select-avatar/select-avatar.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { RegisterComponent } from './login/register/register.component';
 import { ReplaysComponent } from './replays/replays.component';
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'ranking', component: RankingComponent, canActivate: [CanActivateService] },
   { path: 'register', component: RegisterComponent },
   { path: 'replays', component: ReplaysComponent, canActivate: [CanActivateService] },
+  { path: 'profile/select-avatar', component: SelectAvatarComponent, canActivate: [CanActivateService] },
   { path: 'profile/:userId', component: ProfileComponent, canActivate: [CanActivateService] },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
   { path: 'reset-password/:token', component: SetNewPasswordComponent },

@@ -36,7 +36,7 @@ export class Gastly extends PokemonCard {
         } else {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
         }
-      })
+      });
     }
 
     return state;

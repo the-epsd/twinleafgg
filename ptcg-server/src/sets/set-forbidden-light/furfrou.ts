@@ -32,7 +32,7 @@ export class Furfrou extends PokemonCard {
         if (result) {
           DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
         }
-      })
+      });
     }
 
     return state;

@@ -4,7 +4,7 @@ import { UserInfo } from 'ptcg-server';
 import { SessionService } from '../../shared/session/session.service';
 
 @Component({
-  selector: 'app-friends-list',
+  selector: 'ptcg-friends-list',
   templateUrl: './friends-list.component.html',
   styleUrls: ['./friends-list.component.scss']
 })

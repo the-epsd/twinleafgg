@@ -1,5 +1,5 @@
-import { LevelBall } from "../set-next-destinies/level-ball";
-import { TrainersMail } from "../set-roaring-skies/trainers-mail";
+import { LevelBall } from '../set-next-destinies/level-ball';
+import { TrainersMail } from '../set-roaring-skies/trainers-mail';
 
 export class LevelBallAOR extends LevelBall {
   public set: string = 'AOR';

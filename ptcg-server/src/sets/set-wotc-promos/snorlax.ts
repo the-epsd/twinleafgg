@@ -64,7 +64,7 @@ export class Snorlax extends PokemonCard {
 
     // Roll Over
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.player, this)
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.player, this);
       COIN_FLIP_PROMPT(store, state, effect.player, (result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);

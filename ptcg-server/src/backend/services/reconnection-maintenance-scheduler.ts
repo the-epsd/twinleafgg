@@ -495,7 +495,7 @@ export class ReconnectionMaintenanceScheduler {
       intervalCount: number;
       nextExecution: number;
     }>;
-  } {
+    } {
     const tasks = Array.from(this.tasks.values()).map(task => ({
       name: task.name,
       description: task.description,

@@ -50,7 +50,7 @@ export class Meganium extends PokemonCard {
     if (JUST_EVOLVED(effect, this) && !IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
       CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
-          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, effect.player, {}, { min: 0, max: 3, allowCancel: true })
+          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, effect.player, {}, { min: 0, max: 3, allowCancel: true });
         }
       }, GameMessage.WANT_TO_USE_ABILITY);
     }

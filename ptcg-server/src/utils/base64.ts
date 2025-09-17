@@ -2,7 +2,7 @@ export class Base64 {
   public encode(s: string): string {
     // Encode string as UTF-8 bytes, then base64 encode
     const utf8Bytes = new TextEncoder().encode(s);
-    const binary = Array.from(utf8Bytes, (byte) => String.fromCodePoint(byte)).join("");
+    const binary = Array.from(utf8Bytes, (byte) => String.fromCodePoint(byte)).join('');
     return btoa(binary);
   }
 

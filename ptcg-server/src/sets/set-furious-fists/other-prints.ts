@@ -1,6 +1,6 @@
-import { Korrina } from "./korrina";
-import { Maintenance } from "../set-base-set/maintenance";
-import { SuperScoopUp } from "../set-diamond-and-pearl/super-scoop-up";
+import { Korrina } from './korrina';
+import { Maintenance } from '../set-base-set/maintenance';
+import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 
 export class KorrinaFFI extends Korrina {
   public set: string = 'FFI';

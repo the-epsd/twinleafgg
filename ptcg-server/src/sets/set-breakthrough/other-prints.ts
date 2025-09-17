@@ -1,6 +1,6 @@
-import { Fisherman } from "../set-celestial-storm/fisherman";
-import { FloatStone } from "../set-plasma-freeze/float-stone";
-import { ProfessorsLetter } from "../set-x-and-y/professors-letter";
+import { Fisherman } from '../set-celestial-storm/fisherman';
+import { FloatStone } from '../set-plasma-freeze/float-stone';
+import { ProfessorsLetter } from '../set-x-and-y/professors-letter';
 
 export class FishermanBKT extends Fisherman {
   public fullName = 'Fisherman BKT';

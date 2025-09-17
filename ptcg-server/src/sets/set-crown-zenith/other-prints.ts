@@ -1,5 +1,5 @@
-import { LostVacuum } from "../set-lost-origin/lost-vacuum";
-import { RescueCarrier } from "../set-evolving-skies/rescue-carrier";
+import { LostVacuum } from '../set-lost-origin/lost-vacuum';
+import { RescueCarrier } from '../set-evolving-skies/rescue-carrier';
 
 export class LostVacuumCRZ extends LostVacuum {
   public fullName = 'Lost Vacuum CRZ';

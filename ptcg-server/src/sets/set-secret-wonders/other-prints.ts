@@ -1,4 +1,4 @@
-import { SuperRod } from "../set-paldea-evolved/super-rod";
+import { SuperRod } from '../set-paldea-evolved/super-rod';
 
 export class NightMaintenanceSW extends SuperRod {
   public fullName = 'Night Maintenance SW';

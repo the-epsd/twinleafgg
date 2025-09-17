@@ -52,7 +52,7 @@ export class Lickitung extends PokemonCard {
           return;
         }
 
-        let damageAmount = 10
+        let damageAmount = 10;
         if (targets[0].getPokemonCard()?.tags?.includes(CardTag.DELTA_SPECIES)) {
           damageAmount = 30;
         }

@@ -3,7 +3,7 @@ import { FriendRequestInfo } from '../../api/interfaces/friends.interface';
 import { UserInfo } from 'ptcg-server';
 
 @Component({
-  selector: 'app-friend-requests',
+  selector: 'ptcg-friend-requests',
   templateUrl: './friend-requests.component.html',
   styleUrls: ['./friend-requests.component.scss']
 })

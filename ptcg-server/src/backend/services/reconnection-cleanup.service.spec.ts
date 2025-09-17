@@ -1,6 +1,7 @@
 import { ReconnectionCleanupService, MaintenanceConfig } from './reconnection-cleanup.service';
 import { GameStatePreserver } from './game-state-preserver';
 import { ReconnectionConfigManager } from './reconnection-config-manager';
+import { DisconnectedSession } from '../../storage/model/disconnected-session';
 
 describe('ReconnectionCleanupService', () => {
   let cleanupService: ReconnectionCleanupService;
@@ -175,7 +176,7 @@ describe('ReconnectionCleanupService', () => {
   describe('forceCleanupUserSessions', () => {
     beforeEach(() => {
       // Mock DisconnectedSession.find
-      spyOn(require('../../storage/model/disconnected-session').DisconnectedSession, 'find')
+      spyOn(DisconnectedSession, 'find')
         .and.returnValue(Promise.resolve([]));
     });
 
@@ -186,7 +187,7 @@ describe('ReconnectionCleanupService', () => {
     });
 
     it('should handle database errors gracefully', async () => {
-      spyOn(require('../../storage/model/disconnected-session').DisconnectedSession, 'find')
+      spyOn(DisconnectedSession, 'find')
         .and.returnValue(Promise.reject(new Error('Database error')));
 
       const result = await cleanupService.forceCleanupUserSessions(1);

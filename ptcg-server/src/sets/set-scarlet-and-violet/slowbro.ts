@@ -105,7 +105,7 @@ export class Slowbro extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30)
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }
     return state;
   }

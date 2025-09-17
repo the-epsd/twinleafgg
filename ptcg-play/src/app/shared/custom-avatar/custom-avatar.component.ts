@@ -3,7 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CustomAvatarInfo } from 'src/app/api/interfaces/profile.interface';
 
 @Component({
-  selector: 'app-custom-avatar',
+  selector: 'ptcg-custom-avatar',
   templateUrl: './custom-avatar.component.html',
   styleUrls: ['./custom-avatar.component.scss']
 })

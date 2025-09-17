@@ -1,4 +1,4 @@
-import { ProfessorJuniper } from "../set-black-and-white/professor-juniper";
+import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
 
 export class ProfessorSycamoreXY extends ProfessorJuniper {
   public set: string = 'XY';
