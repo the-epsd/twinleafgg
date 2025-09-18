@@ -51,4 +51,6 @@ export abstract class PokemonCard extends Card {
   public archetype: CardType[] = [];
 
   public canAttackTwice?: boolean;
+
+  public damageTakenLastTurn?: number = 0;
 }

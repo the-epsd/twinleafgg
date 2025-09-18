@@ -65,6 +65,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
         GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
       }
 
+      if (targetCard.damageTakenLastTurn !== undefined) {
+        targetCard.damageTakenLastTurn += damage;
+      }
+
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);

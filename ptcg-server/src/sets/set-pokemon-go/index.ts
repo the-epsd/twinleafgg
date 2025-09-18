@@ -5,6 +5,7 @@ import { Blastoise } from './blastoise';
 import { Camerupt } from './camerupt';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
+import { ConkeldurrV } from './conkeldurr-v';
 import { Ditto } from './ditto';
 import { Gyarados } from './gyarados';
 import { Ivysaur } from './ivysaur';
@@ -38,6 +39,7 @@ export const setPokemonGO: Card[] = [
   new SlakingV(),
   new Snorlax(),
   new Solrock(),
+  new ConkeldurrV(),
   new Zapdos(),
   new RadiantVenusaur(),
   new Articuno(),
