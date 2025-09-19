@@ -125,7 +125,6 @@ export class UnownE extends PokemonCard {
 
       if (card.stage === Stage.BASIC) {
         effect.hp += 10;
-        effect.target.hpBonus = (effect.target.hpBonus || 0) + 10;
       }
       return state;
     }

@@ -6,6 +6,7 @@ import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 import { TrainerCard } from '../card/trainer-card';
 import { Card } from '../card/card';
+import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from '../state/card-list';
 
 export enum CheckEffects {
@@ -62,14 +63,25 @@ export class CheckHpEffect implements Effect {
   public preventDefault = false;
   public player: Player;
   public target: PokemonCardList;
-  public hp: number;
+  private pokemonCard: PokemonCard | undefined;
+  public get hp(): number {
+    if (this.pokemonCard === undefined) {
+      return 0;
+    }
+    return this.pokemonCard.hp + this.target.hpBonus;
+  }
+  public set hp(value: number) {
+    if (this.pokemonCard !== undefined) {
+      this.target.hpBonus = value - this.pokemonCard.hp;
+    }
+  }
   public nonstackingBoosts: string[] = [];
 
   constructor(player: Player, target: PokemonCardList) {
     this.player = player;
     this.target = target;
-    const pokemonCard = target.getPokemonCard();
-    this.hp = pokemonCard ? pokemonCard.hp : 0;
+    this.pokemonCard = target.getPokemonCard();
+    this.hp = this.pokemonCard ? this.pokemonCard.hp : 0;
   }
 }
 

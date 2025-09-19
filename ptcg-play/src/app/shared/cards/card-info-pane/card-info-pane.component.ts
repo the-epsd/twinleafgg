@@ -23,14 +23,13 @@ export interface CardInfoPaneAction {
   cardList?: PokemonCardList;
 }
 
-// Helper type guards for computedHp and hp
-function hasComputedHp(obj: any): obj is { computedHp: number } {
-  return obj && typeof obj.computedHp === 'number';
-}
 function hasHp(obj: any): obj is { hp: number | string } {
   return obj && (typeof obj.hp === 'number' || typeof obj.hp === 'string');
 }
 
+function hasHpBonus(obj: any): obj is { hpBonus: number } {
+  return obj && typeof obj.hpBonus === 'number';
+}
 @Component({
   selector: 'ptcg-card-info-pane',
   templateUrl: './card-info-pane.component.html',
@@ -357,13 +356,14 @@ export class CardInfoPaneComponent implements OnChanges {
   public getComputedHp(): number | null {
     if (!this.card || this.card.superType !== SuperType.POKEMON) return null;
     // Prefer computedHp from cardList, fallback to card.hp
-    if (this.cardList && hasComputedHp(this.cardList)) {
-      return this.cardList.computedHp;
-    }
+    var hp: number = 0;
     if (hasHp(this.card)) {
-      return Number(this.card.hp) || 0;
+      hp = Number(this.card.hp) || 0;
     }
-    return 0;
+    if (hasHpBonus(this.cardList)) {
+      hp += this.cardList.hpBonus || 0;
+    }
+    return hp;
   }
 
   public getCurrentHp(): number | null {
