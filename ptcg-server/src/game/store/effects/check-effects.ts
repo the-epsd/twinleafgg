@@ -63,7 +63,7 @@ export class CheckHpEffect implements Effect {
   public player: Player;
   public target: PokemonCardList;
   public hp: number;
-  public hpBoosted?: boolean;
+  public nonstackingBoosts: string[] = [];
 
   constructor(player: Player, target: PokemonCardList) {
     this.player = player;

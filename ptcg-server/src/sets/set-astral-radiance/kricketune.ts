@@ -49,7 +49,7 @@ export class Kricketune extends PokemonCard {
       }
 
       // If HP boost already applied, skip
-      if (effect.hpBoosted) {
+      if (effect.nonstackingBoosts.includes(this.powers[0].name)) {
         return state;
       }
 
@@ -89,10 +89,8 @@ export class Kricketune extends PokemonCard {
       }
 
       // Finally, if we haven't boosted HP in this CheckHpEffect yet, add +40
-      if (!effect.hpBoosted) {
-        effect.hp += 40;
-        effect.hpBoosted = true;
-      }
+      effect.hp += 40;
+      effect.nonstackingBoosts.push(this.powers[0].name);
     }
 
     return state;

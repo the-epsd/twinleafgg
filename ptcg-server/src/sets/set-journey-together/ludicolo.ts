@@ -34,12 +34,12 @@ export class Ludicolo extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const player = StateUtils.findOwner(state, cardList);
 
-      if (!StateUtils.isPokemonInPlay(player, this) || IS_ABILITY_BLOCKED(store, state, player, this) || effect.hpBoosted) {
+      if (!StateUtils.isPokemonInPlay(player, this) || IS_ABILITY_BLOCKED(store, state, player, this) || effect.nonstackingBoosts.includes(this.powers[0].name)) {
         return state;
       }
 
       effect.hp += 40;
-      effect.hpBoosted = true;
+      effect.nonstackingBoosts.push(this.powers[0].name);
     }
 
     return state;
