@@ -9,8 +9,6 @@ import { SocketCache } from './socket-cache';
 import { SocketWrapper, Response } from './socket-wrapper';
 import { deepCompare } from '../../utils/utils';
 import { Base64 } from '../../utils';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 export class CoreSocket {
 
@@ -140,33 +138,6 @@ export class CoreSocket {
     const serializer = new StateSerializer();
     const serializedState = serializer.serialize(game.state);
     const stateObj = JSON.parse(serializedState);
-
-    // Inject computedHp for each PokemonCardList (active and bench)
-    const players = game.state.players;
-    const store = game.getStore();
-    for (let p = 0; p < players.length; p++) {
-      const player = players[p];
-      // Active
-      if (player.active instanceof PokemonCardList) {
-        const checkHp = new CheckHpEffect(player, player.active);
-        store.reduceEffect(game.state, checkHp);
-        if (stateObj[0][p].active) {
-          stateObj[0][p].active.computedHp = checkHp.hp;
-        }
-      }
-      // Bench
-      for (let b = 0; b < player.bench.length; b++) {
-        const bench = player.bench[b];
-        if (bench instanceof PokemonCardList) {
-          const checkHp = new CheckHpEffect(player, bench);
-          store.reduceEffect(game.state, checkHp);
-          if (stateObj[0][p].bench && stateObj[0][p].bench[b]) {
-            stateObj[0][p].bench[b].computedHp = checkHp.hp;
-          }
-        }
-      }
-    }
-
     const finalSerializedState = JSON.stringify(stateObj);
     const base64 = new Base64();
     const stateData = base64.encode(finalSerializedState);

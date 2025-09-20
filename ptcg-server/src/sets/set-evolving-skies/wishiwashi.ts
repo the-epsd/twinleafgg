@@ -51,7 +51,8 @@ export class Wishiwashi extends PokemonCard {
     if (effect instanceof CheckHpEffect) {
       const player = effect.player;
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this) || effect.hpBoosted) {
+      const targetPokemonCard = effect.target.getPokemonCard();
+      if (IS_ABILITY_BLOCKED(store, state, player, this) || targetPokemonCard !== this) {
         return state;
       }
 
@@ -67,8 +68,7 @@ export class Wishiwashi extends PokemonCard {
       });
 
       if (energyCount >= 3) {
-        effect.hpBoosted = true;
-        this.hp += 150;
+        effect.hp += 150;
       }
     }
 
