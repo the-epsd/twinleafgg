@@ -32,7 +32,9 @@ export class ReconnectionManager {
     this.configManager = new ReconnectionConfigManager(config);
     this.gameStatePreserver = new GameStatePreserver({
       preservationTimeoutMs: config.preservationTimeoutMs,
-      maxPreservedSessionsPerUser: config.maxPreservedSessionsPerUser
+      maxPreservedSessionsPerUser: config.maxPreservedSessionsPerUser,
+      maxSerializedStateSize: 1024 * 1024, // 1MB
+      compressionEnabled: true
     });
 
     // Initialize cleanup service
@@ -41,9 +43,9 @@ export class ReconnectionManager {
       this.configManager,
       {
         cleanupIntervalMs: config.cleanupIntervalMs,
-        databaseOptimizationIntervalMs: 60 * 60 * 1000, // 1 hour
-        memoryCleanupThresholdMb: 100,
-        maxSessionAge: 24 * 60 * 60 * 1000, // 24 hours
+        databaseOptimizationIntervalMs: 30 * 60 * 1000, // 30 minutes - more frequent
+        memoryCleanupThresholdMb: 500, // 500MB - more realistic threshold
+        maxSessionAge: 6 * 60 * 60 * 1000, // 6 hours - shorter retention
         enableScheduledCleanup: true,
         enableDatabaseOptimization: true,
         enableMemoryManagement: true

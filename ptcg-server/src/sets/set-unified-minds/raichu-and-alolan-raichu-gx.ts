@@ -24,7 +24,7 @@ export class RaichuAlolanRaichuGX extends PokemonCard {
       + ' this attack does 80 more damage, and your opponent\'s Active Pokémon is now Paralyzed.'
   },
   {
-    name: 'Lightning Ride GX',
+    name: 'Lightning Ride-GX',
     cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
     damage: 150,
     text: ' Switch this Pokémon with 1 of your Benched Pokémon. If this Pokémon has at least 2 extra [L] Energy attached to it (in addition to this attack\'s cost), this attack does 100 more damage.'
@@ -34,7 +34,7 @@ export class RaichuAlolanRaichuGX extends PokemonCard {
   public set = 'UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
-  public name = 'Raichu & Alolan Raichu GX';
+  public name = 'Raichu & Alolan Raichu-GX';
   public fullName = 'Raichu & Alolan Raichu GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

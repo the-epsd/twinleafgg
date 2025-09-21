@@ -74,7 +74,7 @@ export class Venusaurex extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_HEAL,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 0, max: 1, allowCancel: false, blocked }
+        { min: 1, max: 1, allowCancel: false, blocked }
       ), results => {
         targets = results || [];
         if (targets.length === 0) {

@@ -11,6 +11,7 @@ import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-action';
 import { Format } from '../store/card/card-types';
+import { CheckHpEffect } from '../store/effects/check-effects';
 import { deepClone } from '../../utils/utils';
 import { logger } from '../../utils/logger';
 
@@ -83,6 +84,21 @@ export class Game implements StoreHandler {
     // Clear disconnected players tracking
     this.disconnectedPlayers.clear();
     this.isPaused = false;
+  }
+
+  public setBonusHps(state: State): void {
+    for (const player of state.players) {
+      if (player.active.getPokemonCard() !== undefined) {
+        const checkHp = new CheckHpEffect(player, player.active);
+        this.store.reduceEffect(state, checkHp);
+      }
+      for (let b = 0; b < player.bench.length; b++) {
+        if (player.bench[b].getPokemonCard() !== undefined) {
+          const checkHp = new CheckHpEffect(player, player.bench[b]);
+          this.store.reduceEffect(state, checkHp);
+        }
+      }
+    }
   }
 
   public onStateChange(state: State): void {

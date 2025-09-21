@@ -41,10 +41,10 @@ export class ReconnectionCleanupService {
   };
 
   private config: MaintenanceConfig = {
-    cleanupIntervalMs: 5 * 60 * 1000, // 5 minutes
-    databaseOptimizationIntervalMs: 60 * 60 * 1000, // 1 hour
-    memoryCleanupThresholdMb: 100, // 100MB
-    maxSessionAge: 24 * 60 * 60 * 1000, // 24 hours
+    cleanupIntervalMs: 2 * 60 * 1000, // 2 minutes - more frequent cleanup
+    databaseOptimizationIntervalMs: 30 * 60 * 1000, // 30 minutes - more frequent DB optimization
+    memoryCleanupThresholdMb: 500, // 500MB - more realistic threshold
+    maxSessionAge: 6 * 60 * 60 * 1000, // 6 hours - shorter session retention
     enableScheduledCleanup: true,
     enableDatabaseOptimization: true,
     enableMemoryManagement: true
@@ -317,6 +317,9 @@ export class ReconnectionCleanupService {
           }
         });
 
+        // Perform aggressive cleanup before GC
+        await this.performAggressiveCleanup();
+
         // Force garbage collection if available
         if (global.gc) {
           const beforeGc = process.memoryUsage().heapUsed;
@@ -358,6 +361,41 @@ export class ReconnectionCleanupService {
         error: error as Error
       });
       return 0;
+    }
+  }
+
+  /**
+   * Perform aggressive memory cleanup operations
+   */
+  private async performAggressiveCleanup(): Promise<void> {
+    try {
+      // Clean up expired sessions more aggressively
+      const expiredCount = await this.cleanupExpiredSessions();
+
+      // Clean up orphaned game states
+      const orphanedCount = await this.cleanupOrphanedGameStates();
+
+      // Clean up old sessions beyond normal retention
+      const oldCount = await this.cleanupOldSessions();
+
+      logger.logStructured({
+        level: LogLevel.INFO,
+        category: 'memory-management',
+        message: 'Aggressive cleanup completed',
+        data: {
+          expiredSessionsRemoved: expiredCount,
+          orphanedStatesRemoved: orphanedCount,
+          oldSessionsRemoved: oldCount
+        }
+      });
+
+    } catch (error) {
+      logger.logStructured({
+        level: LogLevel.ERROR,
+        category: 'memory-management',
+        message: 'Error during aggressive cleanup',
+        error: error as Error
+      });
     }
   }
 
@@ -767,7 +805,7 @@ export class ReconnectionCleanupService {
     activeOperations: number;
     isShuttingDown: boolean;
     metrics: CleanupMetrics;
-    } {
+  } {
     const lastCleanupAge = Date.now() - this.metrics.lastCleanupTime;
     const isHealthy = !this.isShuttingDown && lastCleanupAge < (this.config.cleanupIntervalMs * 2);
 

@@ -12,7 +12,9 @@ describe('GameStatePreserver', () => {
   beforeEach(() => {
     mockConfig = {
       preservationTimeoutMs: 300000, // 5 minutes
-      maxPreservedSessionsPerUser: 1
+      maxPreservedSessionsPerUser: 1,
+      maxSerializedStateSize: 1024 * 1024, // 1MB
+      compressionEnabled: true
     };
 
     gameStatePreserver = new GameStatePreserver(mockConfig);
@@ -448,7 +450,9 @@ describe('GameStatePreserver', () => {
       // given
       const customConfig: GameStatePreserverConfig = {
         preservationTimeoutMs: 600000, // 10 minutes
-        maxPreservedSessionsPerUser: 3
+        maxPreservedSessionsPerUser: 3,
+        maxSerializedStateSize: 1024 * 1024, // 1MB
+        compressionEnabled: true
       };
 
       // when

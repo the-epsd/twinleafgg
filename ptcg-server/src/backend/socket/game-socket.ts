@@ -70,6 +70,7 @@ export class GameSocket {
 
   public onStateChange(game: Game, state: State): void {
     if (this.core.games.indexOf(game) !== -1) {
+      game.setBonusHps(state);
       state = this.stateSanitizer.sanitize(game.state, game.id);
 
       // Emit turn start if active player changed

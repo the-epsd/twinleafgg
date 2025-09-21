@@ -29,7 +29,7 @@ export class AlolanPersianGX extends PokemonCard {
     text: ''
   },
   {
-    name: 'Stalking Claws GX',
+    name: 'Stalking Claws-GX',
     cost: [D, C, C],
     damage: 0,
     text: 'This attack does 120 damage to 1 of your opponent\'s Pokémon. This damage isn\'t affected by Weakness, Resistance, or any other effects on that Pokémon. (You can\'t use more than 1 GX attack in a game.)'

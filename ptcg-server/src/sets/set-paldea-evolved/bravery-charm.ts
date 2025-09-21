@@ -35,7 +35,6 @@ export class BraveryCharm extends TrainerCard {
 
       if (card.stage === Stage.BASIC) {
         effect.hp += this.HP_BONUS;
-        effect.target.hpBonus = (effect.target.hpBonus || 0) + this.HP_BONUS;
       }
     }
     return state;

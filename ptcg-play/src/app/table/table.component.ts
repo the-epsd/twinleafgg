@@ -50,7 +50,8 @@ export class TableComponent implements OnInit, OnDestroy {
     [Format.XY]: 'LABEL_XY',
     [Format.BW]: 'LABEL_BW',
     [Format.RSPK]: 'LABEL_RSPK',
-    [Format.RETRO]: 'LABEL_RETRO'
+    [Format.RETRO]: 'LABEL_RETRO',
+    [Format.THEME]: 'LABEL_THEME',
   };
 
   constructor(

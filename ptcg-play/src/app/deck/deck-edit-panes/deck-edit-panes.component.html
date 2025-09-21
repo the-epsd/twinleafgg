@@ -35,7 +35,7 @@
             (addCard)="addCardToDeck(render.data)" (removeCard)="removeCardFromDeck(render.data)" [card]="render.data"
             [customArtworkUrl]="resolveArtworkUrlFor(render.data.card)" [artworksContext]="null">
           </ptcg-deck-card>
-          <div class="artwork-inline" *ngIf="!disabled">
+          <!-- <div class="artwork-inline" *ngIf="!disabled">
             <select class="artwork-select-under-card" [value]="getSelectedArtworkIdString(render.data.card.fullName)"
               (change)="onArtworkSelect(render.data.card.fullName, $event.target.value)">
               <option value="" [selected]="getSelectedArtworkId(render.data.card.fullName) === null">Default</option>
@@ -43,7 +43,7 @@
                 [selected]="getSelectedArtworkId(render.data.card.fullName) === a.id">{{ a.name }}
               </option>
             </select>
-          </div>
+          </div> -->
         </div>
       </ng-template>
     </dnd-sortable-list>
