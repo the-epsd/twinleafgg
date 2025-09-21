@@ -26,7 +26,7 @@ export class FlyiniumZAirSlash extends TrainerCard {
   public fullName: string = 'Flyinium Z: Air Slash UNM';
 
   public attacks: Attack[] = [{
-    name: 'Speeding Skystrike GX',
+    name: 'Speeding Skystrike-GX',
     cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 180,
     text: 'Prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'

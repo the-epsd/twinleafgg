@@ -16,6 +16,7 @@ import {
   EvolveEffect,
   HealEffect, KnockOutEffect,
   PowerEffect,
+  PutDamageCountersEffect,
   TrainerPowerEffect,
   UseAttackEffect,
   UsePowerEffect,
@@ -124,10 +125,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -414,6 +415,30 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     return state;
   }
 
+  if (effect instanceof PutDamageCountersEffect) {
+    // First process the EffectOfAbilityEffect
+    state = store.reduceEffect(state, effect.effectOfAbility);
+
+    // Then apply the damage if the effect wasn't prevented
+    if (effect.effectOfAbility.target) {
+      const damage = Math.max(0, effect.damage);
+      effect.effectOfAbility.target.damage += damage;
+
+      if (damage > 0) {
+        const targetCard = effect.effectOfAbility.target.getPokemonCard();
+        if (targetCard) {
+          store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+            name: effect.player.name,
+            damage: damage,
+            target: targetCard.name,
+            effect: effect.power.name,
+          });
+        }
+      }
+    }
+    return state;
+  }
+
   if (effect instanceof EvolveEffect) {
     const pokemonCard = effect.target.getPokemonCard();
 
@@ -543,16 +568,16 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     // Simulate coin flip and store result
     const result = Math.random() < 0.5;
     (effect as CoinFlipEffect).result = result;
-    
+
     // Log the coin flip result
     const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
     store.log(state, gameMessage, { name: (effect as CoinFlipEffect).player.name });
-    
+
     // Call callback if provided
     if ((effect as CoinFlipEffect).callback) {
       (effect as CoinFlipEffect).callback!(result);
     }
-    
+
     return state;
   }
 

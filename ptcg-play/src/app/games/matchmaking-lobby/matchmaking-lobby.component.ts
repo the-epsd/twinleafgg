@@ -36,6 +36,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     { value: Format.BW, label: 'LABEL_BW' },
     { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.THEME, label: 'LABEL_THEME' },
   ];
 
   public selectedFormat: Format | null = null;

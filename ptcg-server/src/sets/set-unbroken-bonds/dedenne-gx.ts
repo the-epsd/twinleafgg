@@ -31,7 +31,7 @@ export class DedenneGX extends PokemonCard {
     text: ''
   },
   {
-    name: 'Tingly Return GX',
+    name: 'Tingly Return-GX',
     cost: [CardType.LIGHTNING, CardType.COLORLESS],
     damage: 50,
     text: 'Your opponent\'s Active Pokémon is now Paralyzed. Put this Pokémon and all cards attached to it into your hand.'
@@ -41,7 +41,7 @@ export class DedenneGX extends PokemonCard {
   public set = 'UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '195';
-  public name = 'Dedenne GX';
+  public name = 'Dedenne-GX';
   public fullName = 'Dedenne GX UNB';
 
   public readonly DEDECHANGE_MARKER = 'DEDECHANGE_MARKER';

@@ -32,7 +32,7 @@ export class OricorioGX extends PokemonCard {
     text: ''
   },
   {
-    name: 'Strafe GX',
+    name: 'Strafe-GX',
     cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 100,
     text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
@@ -42,7 +42,7 @@ export class OricorioGX extends PokemonCard {
   public set: string = 'CEC';
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
-  public name = 'Oricorio GX';
+  public name = 'Oricorio-GX';
   public fullName = 'Oricorio GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

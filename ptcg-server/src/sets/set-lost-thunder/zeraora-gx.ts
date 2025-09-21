@@ -29,7 +29,7 @@ export class ZeraoraGX extends PokemonCard {
     text: 'This Pokémon can\'t attack during your next turn.'
   },
   {
-    name: 'Full Voltage GX',
+    name: 'Full Voltage-GX',
     cost: [CardType.LIGHTNING],
     damage: 0,
     text: 'Attach 5 basic Energy cards from your discard pile to your Pokémon in any way you like. (You can\'t use more than 1 GX attack in a game.)'
@@ -38,7 +38,7 @@ export class ZeraoraGX extends PokemonCard {
   public set = 'LOT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '201';
-  public name = 'Zeraora GX';
+  public name = 'Zeraora-GX';
   public fullName = 'Zeraora GX LOT';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
