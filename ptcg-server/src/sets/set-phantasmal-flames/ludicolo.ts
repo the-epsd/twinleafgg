@@ -10,7 +10,7 @@ import { CardTarget } from '../../game/store/actions/play-card-action';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
-export class Oricorioex extends PokemonCard {
+export class Ludicolo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Lombre';
   public cardType: CardType = G;
