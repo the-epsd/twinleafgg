@@ -12,3 +12,4 @@ export * from './replays';
 export * from './reset-password';
 export * from './battlepass';
 export * from './artworks.controller';
+export * from './memory-health.controller';

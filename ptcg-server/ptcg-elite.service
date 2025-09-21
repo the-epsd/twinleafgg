@@ -1,0 +1,23 @@
+[Unit]
+Description=PTCG Elite Server
+After=network.target
+
+[Service]
+Type=simple
+User=node
+WorkingDirectory=/Users/joemyerscough/ptcg-elite/ptcg-server
+ExecStart=/usr/bin/node --expose-gc --max-old-space-size=2048 start.js
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+Environment=NODE_OPTIONS=--expose-gc --max-old-space-size=2048
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=ptcg-elite
+
+# Memory limits
+MemoryLimit=2G
+MemoryAccounting=true
+
+[Install]
+WantedBy=multi-user.target
