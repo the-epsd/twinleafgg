@@ -19,9 +19,9 @@ export class Abra extends PokemonCard {
     text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '36';
+  public setNumber: string = '54';
   public name: string = 'Abra';
   public fullName: string = 'Abra M1S';
   public regulationMark = 'I';

@@ -20,9 +20,9 @@ export class Drizzile extends PokemonCard {
     text: 'Flip 2 coins. This attack does 30 damage for each heads.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '22';
+  public setNumber: string = '40';
   public name: string = 'Drizzile';
   public fullName: string = 'Drizzile M1S';
   public regulationMark = 'I';

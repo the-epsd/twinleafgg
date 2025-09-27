@@ -15,9 +15,9 @@ export class Chikorita extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '3';
+  public setNumber: string = '8';
   public name: string = 'Chikorita';
   public fullName: string = 'Chikorita M1S';
   public regulationMark: string = 'I';

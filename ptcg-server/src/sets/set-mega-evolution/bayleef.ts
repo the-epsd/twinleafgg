@@ -19,9 +19,9 @@ export class Bayleef extends PokemonCard {
     text: 'Switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '4';
+  public setNumber: string = '9';
   public name: string = 'Bayleef';
   public fullName: string = 'Bayleef M1S';
   public regulationMark: string = 'I';

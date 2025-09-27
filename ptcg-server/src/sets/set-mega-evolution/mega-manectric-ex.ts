@@ -29,9 +29,9 @@ export class MegaManectricEx extends PokemonCard {
     text: 'You may discard all Energy attached to this Pokémon. If you do, this attack does 130 more damage.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '32';
+  public setNumber: string = '50';
   public name: string = 'Mega Manectric ex';
   public fullName: string = 'Mega Manectric ex M1S';
   public regulationMark: string = 'I';

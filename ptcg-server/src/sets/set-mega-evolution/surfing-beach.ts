@@ -11,9 +11,9 @@ import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class SurfingBeach extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '62';
+  public setNumber: string = '129';
   public trainerType = TrainerType.STADIUM;
-  public set = 'M1S';
+  public set = 'MEG';
   public name = 'Surfing Beach';
   public fullName = 'Surfing Beach M1S';
   public regulationMark = 'I';

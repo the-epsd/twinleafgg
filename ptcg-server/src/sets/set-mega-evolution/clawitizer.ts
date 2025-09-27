@@ -24,8 +24,8 @@ export class Clawitizer extends PokemonCard {
     text: 'Discard all Energy from this Pokémon.'
   }];
 
-  public set: string = 'M1S';
-  public setNumber: string = '20';
+  public set: string = 'MEG';
+  public setNumber: string = '38';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Clawitizer M1S';

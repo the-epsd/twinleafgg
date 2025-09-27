@@ -12,8 +12,8 @@ import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class IronDefender extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M1L';
-  public setNumber = '57';
+  public set: string = 'MEG';
+  public setNumber = '118';
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'I';
   public name: string = 'Iron Defender';

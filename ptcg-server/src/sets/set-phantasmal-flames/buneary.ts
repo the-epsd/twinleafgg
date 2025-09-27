@@ -42,3 +42,5 @@ export class Buneary extends PokemonCard {
     return state;
   }
 }
+
+

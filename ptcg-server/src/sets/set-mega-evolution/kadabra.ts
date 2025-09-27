@@ -26,9 +26,9 @@ export class Kadabra extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '37';
+  public setNumber: string = '55';
   public name: string = 'Kadabra';
   public fullName: string = 'Kadabra M1S';
   public regulationMark = 'I';

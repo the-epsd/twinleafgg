@@ -37,9 +37,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class LilliesDetermination extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public regulationMark = 'I';
-  public setNumber: string = '62';
+  public setNumber: string = '119';
   public name: string = 'Lillie\'s Determination';
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Lillie\'s Determination M1L';

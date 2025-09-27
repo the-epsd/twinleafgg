@@ -24,9 +24,9 @@ export class Corphish extends PokemonCard {
     text: 'This Pokémon also does 10 damage to itself.'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '18';
+  public setNumber: string = '33';
   public name: string = 'Corphish';
   public fullName: string = 'Corphish M1L';
   public regulationMark: string = 'I';

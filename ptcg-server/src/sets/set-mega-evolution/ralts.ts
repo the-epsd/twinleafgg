@@ -32,8 +32,8 @@ export class Ralts extends PokemonCard {
   ];
 
   public regulationMark = 'I';
-  public set: string = 'M1S';
-  public setNumber: string = '40';
+  public set: string = 'MEG';
+  public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
 

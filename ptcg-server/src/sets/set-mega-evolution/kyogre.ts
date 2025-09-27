@@ -28,10 +28,10 @@ export class Kyogre extends PokemonCard {
     text: 'Discard 2 Energy from this Pokémon.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public name: string = 'Kyogre';
   public fullName: string = 'Kyogre M1S';
-  public setNumber: string = '16';
+  public setNumber: string = '34';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';
 

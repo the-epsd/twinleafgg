@@ -9,8 +9,8 @@ import { SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class Repel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M1L';
-  public setNumber = '60';
+  public set: string = 'MEG';
+  public setNumber = '126';
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'I';
   public name: string = 'Repel';

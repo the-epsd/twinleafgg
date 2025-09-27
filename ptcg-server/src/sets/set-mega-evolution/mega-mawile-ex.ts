@@ -28,9 +28,9 @@ export class MegaMawileEx extends PokemonCard {
     text: 'If your opponent\'s Active Pokémon already has any damage counters on it before this attack does damage, this attack does 30 damage instead.'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '46';
+  public setNumber: string = '94';
   public name: string = 'Mega Mawile ex';
   public fullName: string = 'Mega Mawile ex M1L';
   public regulationMark: string = 'I';

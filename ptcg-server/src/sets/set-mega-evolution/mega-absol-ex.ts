@@ -26,9 +26,9 @@ export class MegaAbsolex extends PokemonCard {
     text: 'Your opponent reveals their hand. Discard a card you find there.'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '38';
+  public setNumber: string = '86';
   public name: string = 'Mega Absol ex';
   public fullName: string = 'Mega Absol ex M1L';
   public regulationMark: string = 'I';

@@ -29,9 +29,9 @@ export class MegaKangaskhanex extends PokemonCard {
     text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '51';
+  public setNumber: string = '104';
   public name: string = 'Mega Kangaskhan ex';
   public fullName: string = 'Mega Kangaskhan ex M1S';
   public regulationMark: string = 'I';

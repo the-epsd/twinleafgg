@@ -47,9 +47,9 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 export class MysteryGarden extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public regulationMark = 'I';
-  public setNumber: string = '63';
+  public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mystery Garden';
   public fullName: string = 'Mystery Garden M1S';

@@ -21,8 +21,8 @@ export class Raboot extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M1L';
-  public setNumber: string = '16';
+  public set: string = 'MEG';
+  public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raboot';
   public fullName: string = 'Raboot M1L';
