@@ -27,9 +27,9 @@ export class Garganacl extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '36';
+  public setNumber: string = '84';
   public name: string = 'Garganacl';
   public fullName: string = 'Garganacl M1L';
   public regulationMark = 'I';

@@ -53,9 +53,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class MegaSignal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public regulationMark = 'I';
-  public setNumber: string = '58';
+  public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Signal';
   public fullName: string = 'Mega Signal M1S';

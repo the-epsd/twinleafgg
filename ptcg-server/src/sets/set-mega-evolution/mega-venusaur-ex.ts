@@ -72,7 +72,7 @@ export class MegaVenusaurEx extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Venusaur ex';

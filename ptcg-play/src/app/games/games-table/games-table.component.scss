@@ -1,3 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+
+.ptcg-games-table {
+  padding-top: 0;
+  font-family: 'Urbanist', sans-serif;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(69, 144, 88, 0.1);
+
+  h3 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+    color: #e2e8f0;
+    margin: 0;
+    padding: 24px 32px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+    font-family: 'Urbanist', sans-serif;
+    text-shadow: 0 0 10px rgba(69, 144, 88, 0.2);
+  }
+}
+
+// Games Grid
+.games-grid {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.6) 0%, rgba(5, 10, 25, 0.6) 100%);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #459058, #5ba86b);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #5ba86b, #459058);
+  }
+}
+
+// Game Card
+.game-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// Game Card Header
+.game-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+
+  .game-id {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .id-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .id-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: #e2e8f0;
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+
+  .game-status {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 20px;
+    padding: 6px 12px;
+    backdrop-filter: blur(20px);
+
+    .status-text {
+      font-size: 10px;
+      font-weight: 700;
+      color: #e2e8f0;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+}
+
+// Players Section
+.players-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 80px;
+}
+
+// Player Card
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+
+  .player-avatar {
+    position: relative;
+    z-index: 3;
+
+    .user-bar {
+      ::ng-deep {
+        .ptcg-user-bar {
+          background: transparent;
+          border: none;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    z-index: 3;
+    position: relative;
+
+    .player-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      font-family: 'Urbanist', sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .player-details {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .player-prizes {
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.8);
+        font-family: 'Urbanist', sans-serif;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+
+// VS Divider
+.vs-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+
+  .vs-line {
+    width: 20px;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(69, 144, 88, 0.4) 20%,
+        rgba(69, 144, 88, 0.8) 50%,
+        rgba(69, 144, 88, 0.4) 80%,
+        transparent 100%);
+    border-radius: 1px;
+  }
+
+  .vs-text {
+    font-size: 12px;
+    font-weight: 800;
+    color: #459058;
+    font-family: 'Urbanist', sans-serif;
+    text-shadow: 0 0 8px rgba(69, 144, 88, 0.4);
+    background: linear-gradient(135deg, #459058, #5ba86b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// Game Info
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  border-radius: 8px;
+  border: 1px solid rgba(69, 144, 88, 0.2);
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    .info-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+}
+
+// Game Actions
+.game-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(69, 144, 88, 0.2);
+}
+
+
+// Standard loading and error states handled by ptcg-content
 .ptcg-table-loading {
   display: flex;
   justify-content: center;
@@ -5,8 +265,81 @@
 
 .ptcg-table-loading-failed {
   text-align: center;
+  color: #e2e8f0;
+  font-family: 'Urbanist', sans-serif;
 }
 
-.bg {
-  background-color: #2D3748;
+// Responsive Design
+@media (max-width: 1200px) {
+  .games-grid {
+    padding: 15px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .games-grid {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .game-card {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .players-section {
+    flex-direction: column;
+    gap: 12px;
+    min-height: auto;
+  }
+
+  .player-card {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .vs-divider {
+    flex-direction: column;
+    gap: 8px;
+
+    .vs-line {
+      width: 2px;
+      height: 20px;
+      background: linear-gradient(180deg,
+          transparent 0%,
+          rgba(69, 144, 88, 0.6) 20%,
+          rgba(69, 144, 88, 0.8) 50%,
+          rgba(69, 144, 88, 0.6) 80%,
+          transparent 100%);
+    }
+  }
+
+  .game-info {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .games-grid {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .game-card {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .player-card {
+    .player-info .player-name {
+      font-size: 12px;
+    }
+
+    .player-info .player-details .player-prizes {
+      font-size: 10px;
+    }
+  }
+
 }

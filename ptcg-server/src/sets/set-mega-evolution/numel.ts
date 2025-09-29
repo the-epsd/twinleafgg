@@ -24,9 +24,9 @@ export class Numel extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '12';
+  public setNumber: string = '21';
   public name: string = 'Numel';
   public fullName: string = 'Numel M1L';
   public regulationMark = 'I';

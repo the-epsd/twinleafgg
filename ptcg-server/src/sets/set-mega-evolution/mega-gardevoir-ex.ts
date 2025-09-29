@@ -28,8 +28,8 @@ export class MegaGardevoirex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M1S';
-  public setNumber: string = '42';
+  public set: string = 'MEG';
+  public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Gardevoir ex';
   public fullName: string = 'Mega Gardevoir ex M1S';

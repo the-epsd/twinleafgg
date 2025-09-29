@@ -21,9 +21,9 @@ export class Makuhita extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '24';
+  public setNumber: string = '72';
   public name: string = 'Makuhita';
   public fullName: string = 'Makuhita M1L';
   public regulationMark = 'I';

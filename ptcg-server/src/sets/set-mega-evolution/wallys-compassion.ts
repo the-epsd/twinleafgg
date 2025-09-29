@@ -57,8 +57,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class WallysCompassion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M1S';
-  public setNumber: string = '60';
+  public set: string = 'MEG';
+  public setNumber: string = '132';
   public regulationMark = 'I';
   public name: string = 'Wally\'s Compassion';
   public fullName: string = 'Wally\'s Compassion M1S';

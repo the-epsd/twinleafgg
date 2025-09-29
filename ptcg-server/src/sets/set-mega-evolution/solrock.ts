@@ -18,9 +18,9 @@ export class Solrock extends PokemonCard {
     text: 'If you don\'t have Lunatone on your Bench, this attack does nothing. This attack\'s damage isn\'t affected by Weakness or Resistance.'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '27';
+  public setNumber: string = '75';
   public name: string = 'Solrock';
   public fullName: string = 'Solrock M1L';
   public regulationMark = 'I';

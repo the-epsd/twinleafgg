@@ -18,7 +18,7 @@ export class Ivysaur extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ivysaur';

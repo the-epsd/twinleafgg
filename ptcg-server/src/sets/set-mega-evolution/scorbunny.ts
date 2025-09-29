@@ -20,8 +20,8 @@ export class Scorbunny extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M1L';
-  public setNumber: string = '15';
+  public set: string = 'MEG';
+  public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scorbunny';
   public fullName: string = 'Scorbunny M1L';

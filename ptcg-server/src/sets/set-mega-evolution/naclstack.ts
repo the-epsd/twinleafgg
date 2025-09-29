@@ -19,9 +19,9 @@ export class Naclstack extends PokemonCard {
     text: 'This attack\'s damage isn\'t affected by Resistance.'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '35';
+  public setNumber: string = '83';
   public name: string = 'Naclstack';
   public fullName: string = 'Naclstack M1L';
   public regulationMark = 'I';

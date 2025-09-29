@@ -26,9 +26,9 @@ export class Cinderace extends PokemonCard {
     text: 'Search your deck for up to 3 Basic Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck.'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '17';
+  public setNumber: string = '28';
   public name: string = 'Cinderace';
   public fullName: string = 'Cinderace M1L';
   public regulationMark = 'I';

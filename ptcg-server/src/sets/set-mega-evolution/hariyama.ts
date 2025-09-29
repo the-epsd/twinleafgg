@@ -26,8 +26,8 @@ export class Hariyama extends PokemonCard {
     text: 'This Pokémon does 70 damage to itself.'
   },];
 
-  public set = 'M1L';
-  public setNumber: string = '25';
+  public set = 'MEG';
+  public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Hariyama';
   public fullName = 'Hariyama M1L';

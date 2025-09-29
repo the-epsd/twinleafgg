@@ -68,9 +68,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class FightingGong extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '59';
+  public setNumber: string = '116';
   public regulationMark = 'I';
   public name: string = 'Fighting Gong';
   public fullName: string = 'Fighting Gong M1L';

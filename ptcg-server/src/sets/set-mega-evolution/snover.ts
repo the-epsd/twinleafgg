@@ -21,10 +21,10 @@ export class Snover extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public name: string = 'Snover';
   public fullName: string = 'Snover M1S';
-  public setNumber: string = '17';
+  public setNumber: string = '35';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';
 }

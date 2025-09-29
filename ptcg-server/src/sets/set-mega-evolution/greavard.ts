@@ -25,9 +25,9 @@ export class Greavard extends PokemonCard {
     text: 'This Pokémon also does 10 damage to itself.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '47';
+  public setNumber: string = '65';
   public name: string = 'Greavard';
   public fullName: string = 'Greavard M1S';
   public regulationMark = 'I';

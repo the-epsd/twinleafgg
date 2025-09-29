@@ -29,9 +29,9 @@ export class Inteleon extends PokemonCard {
     text: 'Discard an Energy from this Pokémon.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '23';
+  public setNumber: string = '41';
   public name: string = 'Inteleon';
   public fullName: string = 'Inteleon M1S';
   public regulationMark = 'I';

@@ -56,3 +56,4 @@ export class Jigglypuff extends PokemonCard {
     return state;
   }
 }
+

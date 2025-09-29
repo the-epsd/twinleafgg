@@ -18,9 +18,9 @@ export class Sobble extends PokemonCard {
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '21';
+  public setNumber: string = '39';
   public name: string = 'Sobble';
   public fullName: string = 'Sobble M1S';
   public regulationMark = 'I';

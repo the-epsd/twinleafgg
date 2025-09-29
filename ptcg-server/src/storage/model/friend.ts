@@ -28,8 +28,7 @@ export class Friend extends BaseEntity {
   public friend!: User;
 
   @Column({
-    type: 'enum',
-    enum: FriendStatus,
+    type: 'varchar',
     default: FriendStatus.PENDING
   })
   public status!: FriendStatus;

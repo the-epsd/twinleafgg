@@ -26,9 +26,9 @@ export class Steelix extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '45';
+  public setNumber: string = '93';
   public name: string = 'Steelix';
   public fullName: string = 'Steelix M1L';
   public regulationMark = 'I';

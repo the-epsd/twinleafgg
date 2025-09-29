@@ -10,11 +10,11 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class PowerProtein extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '58';
+  public setNumber: string = '124';
   public regulationMark = 'I';
-  public name: string = 'Power Protein';
+  public name: string = 'Premium Power Pro';
   public fullName: string = 'Power Protein M1L';
   public text: string = 'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 

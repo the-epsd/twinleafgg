@@ -1,61 +1,82 @@
-<div class="ptcg-games-table ptcg-u-padding">
+<div class="ptcg-games-table">
 
-  <h3>Active games</h3>
+  <h3 translate>GAMES_ACTIVE_GAMES</h3>
 
   <ptcg-content>
-    <table mat-table [dataSource]="games$ | async" class="bg">
-      <!-- Game ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_NUMBER</th>
-        <td mat-cell *matCellDef="let row">{{row.game.gameId}}</td>
-      </ng-container>
+    <!-- Games Grid -->
+    <div class="games-grid">
+      <div class="game-card" *ngFor="let row of games$ | async; let i = index">
 
-      <!-- Player 1 -->
-      <ng-container matColumnDef="player1">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_1</th>
-        <td mat-cell *matCellDef="let row">
-          <ptcg-user-bar openUserPopup="true" *ngIf="row.users[0]" [user]="row.users[0]">
-          </ptcg-user-bar>
-        </td>
-      </ng-container>
-
-      <!-- Player 2 -->
-      <ng-container matColumnDef="player2">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_2</th>
-        <td mat-cell *matCellDef="let row">
-          <ptcg-user-bar openUserPopup="true" *ngIf="row.users[1]" [user]="row.users[1]">
-          </ptcg-user-bar>
-        </td>
-      </ng-container>
-
-      <!-- Current turn -->
-      <ng-container matColumnDef="turn">
-        <th mat-header-cell *matHeaderCellDef translate>GAMES_TURN</th>
-        <td mat-cell *matCellDef="let row">{{row.game.turn}}</td>
-      </ng-container>
-
-      <!-- prizes -->
-      <ng-container matColumnDef="prizes">
-        <th mat-header-cell *matHeaderCellDef translate>GAMES_PRIZES</th>
-        <td mat-cell *matCellDef="let row">
-          <div *ngIf="row.game.players[0] && row.game.players[1]">
-            <ptcg-badge color="primary">{{ row.game.players[0].prizes }}</ptcg-badge>
-            :
-            <ptcg-badge color="primary">{{ row.game.players[1].prizes }}</ptcg-badge>
+        <!-- Game Header -->
+        <div class="game-card-header">
+          <div class="game-id">
+            <span class="id-label">GAME</span>
+            <span class="id-value">#{{ row.game.gameId }}</span>
           </div>
-      </ng-container>
+          <div class="game-status">
+            <span class="status-text">ACTIVE</span>
+          </div>
+        </div>
 
-      <!-- Actions -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_ACTIONS</th>
-        <td mat-cell *matCellDef="let row">
+        <!-- Players Section -->
+        <div class="players-section">
+          <!-- Player 1 -->
+          <div class="player-card">
+            <div class="player-avatar">
+              <ptcg-user-bar openUserPopup="true" *ngIf="row.users[0]" [user]="row.users[0]" class="user-bar">
+              </ptcg-user-bar>
+            </div>
+            <div class="player-info">
+              <div class="player-name">{{ row.users[0]?.name || 'Unknown Player' }}</div>
+              <div class="player-details">
+                <span class="player-prizes">{{ row.game.players[0]?.prizes || 0 }} Prizes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- VS Divider -->
+          <div class="vs-divider">
+            <div class="vs-line"></div>
+            <div class="vs-text">VS</div>
+            <div class="vs-line"></div>
+          </div>
+
+          <!-- Player 2 -->
+          <div class="player-card">
+            <div class="player-info">
+              <div class="player-name">{{ row.users[1]?.name || 'Unknown Player' }}</div>
+              <div class="player-details">
+                <span class="player-prizes">{{ row.game.players[1]?.prizes || 0 }} Prizes</span>
+              </div>
+            </div>
+            <div class="player-avatar">
+              <ptcg-user-bar openUserPopup="true" *ngIf="row.users[1]" [user]="row.users[1]" class="user-bar">
+              </ptcg-user-bar>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info">
+          <div class="info-item">
+            <span class="info-label">TURN</span>
+            <span class="info-value">{{ row.game.turn }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">PRIZES</span>
+            <span class="info-value">{{ row.game.players[0]?.prizes || 0 }} : {{ row.game.players[1]?.prizes || 0
+              }}</span>
+          </div>
+        </div>
+
+        <!-- Game Actions -->
+        <div class="game-actions">
           <ptcg-game-actions [game]="row.game"></ptcg-game-actions>
-        </td>
-      </ng-container>
+        </div>
+      </div>
+    </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+
   </ptcg-content>
 
 </div>

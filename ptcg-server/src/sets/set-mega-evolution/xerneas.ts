@@ -24,9 +24,9 @@ export class Xerneas extends PokemonCard {
     text: 'This Pokémon can\'t use Bright Horns during your next turn.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '46';
+  public setNumber: string = '64';
   public name: string = 'Xerneas';
   public fullName: string = 'Xerneas M1S';
   public regulationMark = 'I';

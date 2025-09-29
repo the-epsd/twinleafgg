@@ -24,9 +24,9 @@ export class Yungoos extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '55';
+  public setNumber: string = '109';
   public name: string = 'Yungoos';
   public fullName: string = 'Yungoos M1L';
   public regulationMark = 'I';

@@ -30,7 +30,8 @@ import { PlayersComponent } from './players/players.component';
     SharedModule
   ],
   exports: [
-    MatchTableComponent
+    MatchTableComponent,
+    GamesTableComponent
   ],
   providers: []
 })

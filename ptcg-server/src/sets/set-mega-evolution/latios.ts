@@ -27,8 +27,8 @@ export class Latios extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M1S';
-  public setNumber: string = '50';
+  public set: string = 'MEG';
+  public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios';
   public fullName: string = 'Latios M1S';

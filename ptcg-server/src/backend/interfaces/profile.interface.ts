@@ -10,4 +10,10 @@ export interface MatchInfo {
   rankingStake2: number;
   winner: GameWinner;
   created: number;
+  player1Archetype?: string;
+  player2Archetype?: string;
+  player1DeckName?: string;
+  player2DeckName?: string;
+  player1DeckId?: number;
+  player2DeckId?: number;
 }

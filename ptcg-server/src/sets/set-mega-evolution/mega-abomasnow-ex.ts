@@ -30,9 +30,9 @@ export class MegaAbomasnowEx extends PokemonCard {
     text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '18';
+  public setNumber: string = '36';
   public name: string = 'Mega Abomasnow ex';
   public fullName: string = 'Mega Abomasnow ex M1S';
   public regulationMark: string = 'I';

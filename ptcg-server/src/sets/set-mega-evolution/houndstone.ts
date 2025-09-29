@@ -26,9 +26,9 @@ export class Houndstone extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '48';
+  public setNumber: string = '66';
   public name: string = 'Houndstone';
   public fullName: string = 'Houndstone M1S';
   public regulationMark = 'I';

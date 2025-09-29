@@ -27,9 +27,9 @@ export class Alakazam extends PokemonCard {
     text: 'Put 2 damage counters on your opponent\'s Active Pokémon for each card in your hand.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '38';
+  public setNumber: string = '56';
   public name: string = 'Alakazam';
   public fullName: string = 'Alakazam M1S';
   public regulationMark = 'I';

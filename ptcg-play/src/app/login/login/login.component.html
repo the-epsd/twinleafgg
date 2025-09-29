@@ -7,7 +7,8 @@
 
   <ng-container *ngIf="!loading && !initialLoading">
     <div class="logo" [@slideFadeIn]>
-      <img src="assets/tl-open-beta.webp" alt="Logo">
+      <img src="assets/tl-open-beta.webp" alt="Logo" (load)="onLogoLoad()" (error)="onLogoError()"
+        [style.opacity]="logoLoaded ? '1' : '0'" [style.transition]="'opacity 0.3s ease'">
     </div>
 
     <form (ngSubmit)="login()" class="login-form" [@formFadeIn]>

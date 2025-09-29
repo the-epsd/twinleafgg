@@ -7,11 +7,12 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class LushForest extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '61';
+  public setNumber: string = '117';
   public trainerType = TrainerType.STADIUM;
-  public set = 'M1S';
-  public name = 'Lush Forest';
-  public fullName = 'Lush Forest M1S';
+  public set = 'MEG';
+  public name = 'Forest of Vitality';
+  public fullName = 'Forest of Vitality MEG';
+  public legacyFullName = 'Lush Forest M1S';
   public regulationMark = 'I';
   public text = 'Each player\'s [G] Pokémon can evolve into another [G] Pokémon during the turn they play those Pokémon. (Players can\'t evolve a Pokémon during their first turn.)';
 

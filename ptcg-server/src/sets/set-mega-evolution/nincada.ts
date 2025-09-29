@@ -15,9 +15,9 @@ export class Nincada extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '7';
+  public setNumber: string = '16';
   public name: string = 'Nincada';
   public fullName: string = 'Nincada M1S';
   public regulationMark: string = 'I';

@@ -25,9 +25,9 @@ export class Ninjask extends PokemonCard {
     text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '8';
+  public setNumber: string = '17';
   public name: string = 'Ninjask';
   public fullName: string = 'Ninjask M1S';
   public regulationMark = 'I';

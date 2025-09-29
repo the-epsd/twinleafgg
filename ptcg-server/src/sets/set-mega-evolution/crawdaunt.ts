@@ -25,9 +25,9 @@ export class Crawdaunt extends PokemonCard {
     text: 'If this Pokémon has any damage counters on it, this attack can be used for [D].'
   }];
 
-  public set: string = 'M1L';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '37';
+  public setNumber: string = '85';
   public name: string = 'Crawdaunt';
   public fullName: string = 'Crawdaunt M1L';
   public regulationMark: string = 'I';

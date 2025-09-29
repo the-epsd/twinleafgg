@@ -26,9 +26,9 @@ export class Meganium extends PokemonCard {
     text: '',
   }];
 
-  public set: string = 'M1S';
+  public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '5';
+  public setNumber: string = '10';
   public name: string = 'Meganium';
   public fullName: string = 'Meganium M1S';
   public regulationMark: string = 'I';

@@ -29,8 +29,8 @@ export class Gumshoos extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'M1L';
-  public setNumber: string = '56';
+  public set: string = 'MEG';
+  public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gumshoos';
   public fullName: string = 'Gumshoos M1L';

@@ -29,8 +29,8 @@ export class MegaCameruptEx extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M1L';
-  public setNumber: string = '13';
+  public set: string = 'MEG';
+  public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Camerupt ex';
   public fullName: string = 'Mega Camerupt ex M1L';

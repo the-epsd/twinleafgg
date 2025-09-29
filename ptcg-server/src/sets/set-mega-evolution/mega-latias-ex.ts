@@ -29,8 +29,8 @@ export class MegaLatiasex extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M1S';
-  public setNumber: string = '49';
+  public set: string = 'MEG';
+  public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Latias ex';
   public fullName: string = 'Mega Latias ex M1S';
