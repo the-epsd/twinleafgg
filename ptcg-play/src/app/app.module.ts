@@ -20,10 +20,12 @@ import { MessagesModule } from './messages/messages.module';
 import { ProfileModule } from './profile/profile.module';
 import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
+import { SpectateModule } from './spectate/spectate.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
 import { TermsModule } from './terms/terms.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
+import { UxStudyModule } from './ux-study/ux-study.module';
 
 @NgModule({
   declarations: [
@@ -41,8 +43,10 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
     ProfileModule,
     RankingModule,
     ReplaysModule,
+    SpectateModule,
     SharedModule,
     TermsModule,
+    UxStudyModule,
     DndMultiBackendModule,
     DndModule.forRoot({ backend: MultiBackend, options: HTML5ToTouch }),
     TableModule,

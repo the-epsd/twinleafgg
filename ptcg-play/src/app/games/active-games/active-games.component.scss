@@ -1,56 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+
 .active-games-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
-  padding: 2rem;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  font-family: 'Urbanist', sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 2rem;
-  gap: 1rem;
+// Header Section
+.active-games-header {
+  position: relative;
+  min-height: 120px;
+  overflow: hidden;
+
+  .header-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+  }
+
+  .page-navigation {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+  }
 
   .back-button {
     color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
 
     &:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
+      color: #459058;
+      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+      border-color: rgba(69, 144, 88, 0.5);
+      transform: translateX(-2px);
+    }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
     }
   }
 
-  .page-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, #4F46E5, #7C3AED);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  .section-title {
+    flex: 1;
+    text-align: left;
+
+    .title-text {
+      display: block;
+      font-size: 28px;
+      font-weight: 800;
+      color: #e2e8f0;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      font-family: 'Urbanist', sans-serif;
+      text-shadow: 0 0 10px rgba(69, 144, 88, 0.2);
+    }
+
+    .title-accent {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #459058, #5ba86b);
+      border-radius: 2px;
+    }
   }
 }
 
-.content-wrapper {
-  background: rgba(42, 47, 58, 0.6);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+// Games Content
+.games-content {
+  flex: 1;
+  padding: 20px;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.6) 0%, rgba(5, 10, 25, 0.6) 100%);
+  border-top: 1px solid rgba(69, 144, 88, 0.2);
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .active-games-header {
+    min-height: 100px;
+
+    .header-content {
+      padding: 20px;
+    }
+  }
+
+  .games-content {
+    padding: 15px;
+  }
 }
 
 @media (max-width: 768px) {
-  .active-games-container {
-    padding: 1rem;
+  .active-games-header {
+    min-height: 80px;
+
+    .header-content {
+      padding: 15px;
+    }
+
+    .page-navigation {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+
+    .section-title {
+      text-align: center;
+
+      .title-text {
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+    }
   }
 
-  .page-header .page-title {
-    font-size: 1.8rem;
+  .games-content {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .active-games-header {
+    min-height: 70px;
+
+    .header-content {
+      padding: 10px;
+    }
+
+    .section-title .title-text {
+      font-size: 20px;
+    }
   }
 
-  .content-wrapper {
-    padding: 1rem;
+  .games-content {
+    padding: 8px;
   }
 }

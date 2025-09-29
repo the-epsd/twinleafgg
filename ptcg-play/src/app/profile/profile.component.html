@@ -68,9 +68,9 @@
     </div> -->
 
   <!-- Recent matches section -->
-  <!-- <div class="ptcg-recent-matches" *ngIf="user$ | async; let user">
-      <ptcg-match-table [userId]="user.userId"></ptcg-match-table>
-    </div>
-  </div> -->
+  <div class="ptcg-recent-matches" *ngIf="user$ | async; let user">
+    <ptcg-match-table [userId]="user.userId"></ptcg-match-table>
+  </div>
+  <!-- </div> -->
 
 </ptcg-content>

@@ -21,7 +21,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarContainerComponent } from './sidebar/sidebar-container.component';
 import { UserInfoModule } from './user-info/user-info.module';
 import { ValidationModule } from './validation/validation.module';
-import { ArchetypeComponent } from './cards/archetype/archetype.component';
 import { ReconnectionDialogComponent } from './components/reconnection-dialog/reconnection-dialog.component';
 import { ConnectionStatusComponent } from './components/connection-status/connection-status.component';
 
@@ -58,7 +57,6 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     CardsModule,
     ContentComponent,
     EnergyComponent,
-    ArchetypeComponent,
     FileInputComponent,
     ImageCacheModule,
     InfoComponent,

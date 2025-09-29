@@ -21,6 +21,9 @@
       <a routerLink="/ranking" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_RANKING' | translate }}</span>
       </a>
+      <a routerLink="/spectate" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
+        <span class="nav-text">SPECTATE</span>
+      </a>
       <a routerLink="/message" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_MESSAGES' | translate }}</span>
       </a>

@@ -67,6 +67,7 @@ import { ChangeServerPopupComponent } from '../change-server-popup/change-server
 export class LoginComponent implements OnInit, OnDestroy {
   public loading = false;
   public initialLoading = true;
+  public logoLoaded = false;
   public name: string;
   public password: string;
   public rememberMe = true;
@@ -165,6 +166,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   register() {
     this.router.navigate(['/register']);
+  }
+
+  onLogoLoad() {
+    this.logoLoaded = true;
+  }
+
+  onLogoError() {
+    this.logoLoaded = true; // Still show the container even if image fails
   }
 
   ngOnDestroy() {

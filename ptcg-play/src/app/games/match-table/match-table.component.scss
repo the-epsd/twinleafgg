@@ -1,7 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+
 .ptcg-match-table {
   padding-top: 0;
+  font-family: 'Urbanist', sans-serif;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(69, 144, 88, 0.1);
+
+  h3 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+    color: #e2e8f0;
+    margin: 0;
+    padding: 24px 32px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+    font-family: 'Urbanist', sans-serif;
+    text-shadow: 0 0 10px rgba(69, 144, 88, 0.2);
+  }
 }
 
+// Matches Grid
+.matches-grid {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.6) 0%, rgba(5, 10, 25, 0.6) 100%);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #459058, #5ba86b);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #5ba86b, #459058);
+  }
+}
+
+// Match Card
+.match-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// Match Card Header
+.match-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+
+  .match-date {
+    .date-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+
+  .match-status {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 20px;
+    padding: 6px 12px;
+    backdrop-filter: blur(20px);
+
+    .status-text {
+      font-size: 10px;
+      font-weight: 700;
+      color: #e2e8f0;
+      letter-spacing: 1px;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    &.winner {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+  }
+}
+
+// Players Section
+.players-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 80px;
+}
+
+// Player Card
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+
+  &.winner {
+    border-color: rgba(34, 197, 94, 0.4);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+  }
+
+  .player-avatar {
+    position: relative;
+    z-index: 3;
+
+    .avatar-image {
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      backdrop-filter: blur(10px);
+    }
+  }
+
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    z-index: 3;
+    position: relative;
+
+    .player-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      font-family: 'Urbanist', sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .player-details {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .player-ranking {
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.8);
+        font-family: 'Urbanist', sans-serif;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      .player-archetype {
+        .archetype-icon {
+          width: 20px;
+          height: 20px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+        }
+      }
+    }
+  }
+}
+
+// VS Divider
+.vs-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+
+  .vs-line {
+    width: 20px;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(69, 144, 88, 0.4) 20%,
+        rgba(69, 144, 88, 0.8) 50%,
+        rgba(69, 144, 88, 0.4) 80%,
+        transparent 100%);
+    border-radius: 1px;
+  }
+
+  .vs-text {
+    font-size: 12px;
+    font-weight: 800;
+    color: #459058;
+    font-family: 'Urbanist', sans-serif;
+    text-shadow: 0 0 8px rgba(69, 144, 88, 0.4);
+    background: linear-gradient(135deg, #459058, #5ba86b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// Match Actions
+.match-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(69, 144, 88, 0.2);
+}
+
+.action-button {
+  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Urbanist', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+    border-color: rgba(69, 144, 88, 0.5);
+  }
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// Pagination Section
+.pagination-section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(69, 144, 88, 0.2);
+
+  ::ng-deep .mat-paginator {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    color: #ffffff;
+    font-family: 'Urbanist', sans-serif;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label {
+      color: #ffffff;
+      font-weight: 500;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .mat-icon-button {
+      color: #ffffff;
+
+      &:hover:not([disabled]) {
+        background: rgba(69, 144, 88, 0.1);
+        color: #459058;
+      }
+
+      &[disabled] {
+        color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+
+// Standard loading and error states handled by ptcg-content
 .ptcg-table-loading {
   display: flex;
   justify-content: center;
@@ -9,8 +308,171 @@
 
 .ptcg-table-loading-failed {
   text-align: center;
+  color: #e2e8f0;
+  font-family: 'Urbanist', sans-serif;
 }
 
-.bg {
-  background-color: #2D3748;
+// Modern Menu Styling
+::ng-deep .modern-menu {
+  .mat-menu-panel {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+
+    .mat-menu-content {
+      padding: 8px 0;
+    }
+
+    .mat-menu-item {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Urbanist', sans-serif;
+      padding: 12px 16px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+
+      &:hover {
+        background: rgba(69, 144, 88, 0.1);
+        color: #459058;
+      }
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .match-history-header {
+    min-height: 100px;
+
+    .header-content {
+      padding: 20px;
+    }
+  }
+
+  .matches-grid {
+    padding: 15px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .match-history-header {
+    height: 25%;
+    min-height: 80px;
+
+    .header-content {
+      padding: 15px;
+    }
+
+    .section-title .title-text {
+      font-size: 20px;
+      letter-spacing: 2px;
+    }
+  }
+
+  .matches-grid {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .match-card {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .players-section {
+    flex-direction: column;
+    gap: 12px;
+    min-height: auto;
+  }
+
+  .player-card {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .vs-divider {
+    flex-direction: column;
+    gap: 8px;
+
+    .vs-line {
+      width: 2px;
+      height: 20px;
+      background: linear-gradient(180deg,
+          transparent 0%,
+          rgba(69, 144, 88, 0.6) 20%,
+          rgba(69, 144, 88, 0.8) 50%,
+          rgba(69, 144, 88, 0.6) 80%,
+          transparent 100%);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .match-history-header {
+    height: 30%;
+    min-height: 70px;
+
+    .header-content {
+      padding: 10px;
+    }
+
+    .section-title .title-text {
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+  }
+
+  .matches-grid {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .match-card {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .player-card {
+    .player-avatar .avatar-image {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .player-info .player-name {
+      font-size: 12px;
+    }
+
+    .player-info .player-details .player-ranking {
+      font-size: 10px;
+    }
+  }
+
+  .action-button {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
 }

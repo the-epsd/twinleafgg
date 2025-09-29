@@ -1,85 +1,93 @@
-<div class="ptcg-match-table ptcg-u-padding">
+<div class="ptcg-match-table">
 
   <h3 translate>GAMES_RECENT_GAMES_TITLE</h3>
 
   <ptcg-content [loading]="loading">
-    <table mat-table [dataSource]="matches" class="bg">
+    <!-- Match Cards Grid -->
+    <div class="matches-grid">
+      <div class="match-card" *ngFor="let match of matches; let i = index">
 
-      <!-- Game ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_NUMBER</th>
-        <td mat-cell *matCellDef="let match; let i = index;">
-          {{ pageIndex * pageSize + i + 1 }}
-        </td>
-      </ng-container>
+        <!-- Match Header -->
+        <div class="match-card-header">
+          <div class="match-date">
+            <span class="date-text">{{ match.created | date: ('DATE_FORMAT' | translate) }}</span>
+          </div>
+          <div class="match-status"
+            [class.winner]="match.winner === GameWinner.PLAYER_1 || match.winner === GameWinner.PLAYER_2">
+            <span class="status-text">COMPLETED</span>
+          </div>
+        </div>
 
-      <!-- Player 1 -->
-      <ng-container matColumnDef="player1">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_1</th>
-        <td mat-cell *matCellDef="let match">
-          <ptcg-user-bar openUserPopup="true" [user]="users[match.player1Id]"
-            [marked]="match.winner === GameWinner.PLAYER_1">
-          </ptcg-user-bar>
-        </td>
-      </ng-container>
+        <!-- Players Section -->
+        <div class="players-section">
+          <!-- Player 1 -->
+          <div class="player-card" [class.winner]="match.winner === GameWinner.PLAYER_1">
+            <div class="player-avatar">
+              <ptcg-avatar [avatarFile]="users[match.player1Id]?.avatarFile || ''" class="avatar-image">
+              </ptcg-avatar>
+            </div>
+            <div class="player-info">
+              <div class="player-name">{{ users[match.player1Id]?.name || 'Unknown Player' }}</div>
+              <div class="player-details">
+                <span class="player-ranking">Rank {{ users[match.player1Id]?.ranking || 0 }}</span>
+                <div class="player-archetype">
+                  <ptcg-archetype [class]="getPlayerArchetype(match.player1Id)" class="archetype-icon"></ptcg-archetype>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <!-- Player 2 -->
-      <ng-container matColumnDef="player2">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_2</th>
-        <td mat-cell *matCellDef="let match">
-          <ptcg-user-bar openUserPopup="true" [user]="users[match.player2Id]"
-            [marked]="match.winner === GameWinner.PLAYER_2">
-          </ptcg-user-bar>
-        </td>
-      </ng-container>
+          <!-- VS Divider -->
+          <div class="vs-divider">
+            <div class="vs-line"></div>
+            <div class="vs-text">VS</div>
+            <div class="vs-line"></div>
+          </div>
 
-      <!-- Date -->
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_DATE</th>
-        <td mat-cell *matCellDef="let match">
-          {{ match.created | date: ('DATE_FORMAT' | translate) }}
-        </td>
-      </ng-container>
+          <!-- Player 2 -->
+          <div class="player-card" [class.winner]="match.winner === GameWinner.PLAYER_2">
+            <div class="player-info">
+              <div class="player-name">{{ users[match.player2Id]?.name || 'Unknown Player' }}</div>
+              <div class="player-details">
+                <span class="player-ranking">Rank {{ users[match.player2Id]?.ranking || 0 }}</span>
+                <div class="player-archetype">
+                  <ptcg-archetype [class]="getPlayerArchetype(match.player2Id)" class="archetype-icon"></ptcg-archetype>
+                </div>
+              </div>
+            </div>
+            <div class="player-avatar">
+              <ptcg-avatar [avatarFile]="users[match.player2Id]?.avatarFile || ''" class="avatar-image">
+              </ptcg-avatar>
+            </div>
+          </div>
+        </div>
 
-      <!-- Ranking -->
-      <ng-container matColumnDef="ranking">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_RANKING</th>
-        <td mat-cell *matCellDef="let match">
-          <div *ngIf="id === match.player1Id; then ranking1; else ranking2"></div>
-          <ng-template #ranking1>
-            {{ match.ranking1 }} <span>({{ match.rankingStake1 }})</span>
-          </ng-template>
-          <ng-template #ranking2>
-            {{ match.ranking2 }} <span>({{ match.rankingStake2 }})</span>
-          </ng-template>
-        </td>
-      </ng-container>
-
-      <!-- Actions -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef translate>LABEL_ACTIONS</th>
-        <td mat-cell *matCellDef="let match">
-          <button mat-button [matMenuTriggerFor]="menu" translate>
-            {{ 'BUTTON_REPLAY' | translate }}
+        <!-- Match Actions -->
+        <div class="match-actions">
+          <button class="action-button" [matMenuTriggerFor]="menu">
+            <mat-icon>play_arrow</mat-icon>
+            <span>{{ 'BUTTON_REPLAY' | translate }}</span>
           </button>
-          <mat-menu #menu="matMenu">
+          <mat-menu #menu="matMenu" class="modern-menu">
             <button mat-menu-item [disabled]="loading" (click)="showReplay(match.matchId)">
-              {{ 'BUTTON_SHOW' | translate }}
+              <mat-icon>play_arrow</mat-icon>
+              <span>{{ 'BUTTON_SHOW' | translate }}</span>
             </button>
             <button mat-menu-item [disabled]="loading" (click)="saveReplay(match.matchId)">
-              {{ 'BUTTON_SAVE' | translate }}
+              <mat-icon>save</mat-icon>
+              <span>{{ 'BUTTON_SAVE' | translate }}</span>
             </button>
           </mat-menu>
-        </td>
-      </ng-container>
+        </div>
+      </div>
+    </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator class="bg" hidePageSize="true" [disabled]="loading" [length]="matchesTotal" [pageIndex]="pageIndex"
-      [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
-    </mat-paginator>
+    <!-- Pagination -->
+    <div class="pagination-section">
+      <mat-paginator hidePageSize="true" [disabled]="loading" [length]="matchesTotal" [pageIndex]="pageIndex"
+        [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+      </mat-paginator>
+    </div>
 
     <div class="ptcg-u-padding ptcg-table-loading-failed" *ngIf="loadingFailed">
       <p translate>TABLE_ERROR_LOADING</p>

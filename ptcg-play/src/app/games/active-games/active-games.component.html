@@ -1,12 +1,23 @@
 <div class="active-games-container">
-  <div class="page-header">
-    <button mat-icon-button routerLink="/games" class="back-button">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <h1 class="page-title" translate>GAMES_ACTIVE_GAMES</h1>
+
+  <!-- Header Section -->
+  <div class="active-games-header">
+    <div class="header-content">
+      <div class="page-navigation">
+        <button mat-icon-button routerLink="/games" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="section-title">
+          <span class="title-text" translate>GAMES_ACTIVE_GAMES</span>
+          <div class="title-accent"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="content-wrapper">
+  <!-- Games Content -->
+  <div class="games-content">
     <ptcg-games-table></ptcg-games-table>
   </div>
+
 </div>

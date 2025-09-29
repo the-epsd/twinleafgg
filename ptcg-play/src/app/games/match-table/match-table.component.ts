@@ -148,7 +148,7 @@ export class MatchTableComponent implements OnInit {
     if (this.sessionService.session.config) {
       pageSize = this.sessionService.session.config.defaultPageSize;
     }
-    this.pageSizeOptions = [ pageSize ];
+    this.pageSizeOptions = [pageSize];
     this.pageSize = pageSize;
   }
 
@@ -158,6 +158,20 @@ export class MatchTableComponent implements OnInit {
 
   public refresh() {
     this.matchesPageRequst$.next(this.pageIndex);
+  }
+
+  public getPlayerArchetype(playerId: number): string {
+    // Find the match for this player and return their archetype
+    const match = this.matches.find(m => m.player1Id === playerId || m.player2Id === playerId);
+    if (!match) {
+      return 'unown';
+    }
+
+    if (match.player1Id === playerId) {
+      return match.player1Archetype || 'unown';
+    } else {
+      return match.player2Archetype || 'unown';
+    }
   }
 
 }
