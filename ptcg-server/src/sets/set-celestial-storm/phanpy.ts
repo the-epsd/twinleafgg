@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { PutDamageEffect, AbstractAttackEffect } from '../../game/store/effects/attack-effects';
-import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 
 export class Phanpy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,45 +33,28 @@ export class Phanpy extends PokemonCard {
   public name = 'Phanpy';
   public fullName = 'Phanpy CES';
 
-  public readonly PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (!result)
-          return;
-        ADD_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
-        ADD_MARKER(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
+      const coinFlipEffect = new CoinFlipEffect(effect.player, (result: boolean) => {
+        if (result) {
+          ADD_MARKER(MarkerConstants.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
+          ADD_MARKER(MarkerConstants.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
+        }
       });
+      store.reduceEffect(state, coinFlipEffect);
       return state;
     }
 
     //Endure UP
-    if (effect instanceof AbstractAttackEffect && effect instanceof PutDamageEffect
-      && HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
-      store.reduceEffect(state, checkHpEffect);
-
-      if (effect.damage >= (checkHpEffect.hp - player.active.damage)) {
-        effect.preventDefault = true;
-        effect.target.damage = checkHpEffect.hp - 10;
-      }
+    if (effect instanceof PutDamageEffect
+      && effect.target.cards.includes(this)
+      && HAS_MARKER(MarkerConstants.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)) {
+      effect.surviveOnTenHPReason = this.attacks[1].name;
       return state;
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-
-    if (effect instanceof EndTurnEffect) {
-      //Remove the marker from Phanpy at the end of the opponent's turn.
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        REMOVE_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, cardList, this);
-      });
-    }
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, MarkerConstants.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, MarkerConstants.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
     return state;
   }
 }

@@ -3,7 +3,7 @@ import { TrainerEffect } from '../effects/play-card-effects';
 import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
-import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
+import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
@@ -1175,6 +1175,19 @@ export function BLOCK_RETREAT(store: StoreLike, state: State, effect: AttackEffe
 export function PREVENT_DAMAGE(store: StoreLike, state: State, effect: AttackEffect, source: Card): State {
   const damageEffect = preventDamageEffect(effect, source);
   return store.reduceEffect(state, damageEffect);
+}
+
+/**
+ * Checks if the a Pokemon is at full HP and that the damage dealt is enough to knock it out.
+ * TODO: This doesn't work if the an attack changes the result of a CheckHpEffect (e.g. discards an hp-modifying stadium)
+ */
+export function DAMAGED_FROM_FULL_HP(store: StoreLike, state: State, effect: PutDamageEffect, player: Player, target: PokemonCardList): boolean {
+  if (effect.target.damage != 0) {
+    return false;
+  }
+  const checkHpEffect = new CheckHpEffect(player, target);
+  store.reduceEffect(state, checkHpEffect);
+  return effect.damage >= checkHpEffect.hp;
 }
 
 /**
