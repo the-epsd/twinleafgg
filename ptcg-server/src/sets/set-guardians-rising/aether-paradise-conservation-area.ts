@@ -23,23 +23,22 @@ export class AetherParadiseConvserationArea extends TrainerCard {
   public name: string = 'Aether Paradise Conservation Area';
 
   public fullName: string = 'Aether Paradise Conservation Area GRI';
-  
+
   public text: string =
     'Basic [G] Pokémon and Basic [L] Pokémon (both yours and your opponent\'s) take 30 less damage from the opponent\'s attacks (after applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PutDamageEffect && StateUtils.getStadiumCard(state) === this) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
-      
+
       if ((checkPokemonType.cardTypes.includes(CardType.GRASS) || checkPokemonType.cardTypes.includes(CardType.LIGHTNING)) &&
         effect.target.isStage(Stage.BASIC)) {
-        effect.damage = Math.max(0, effect.damage - 30);
-        effect.damageReduced = true;     
+        effect.reduceDamage(30);
       }
     }
-    
+
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }

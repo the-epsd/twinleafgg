@@ -36,8 +36,7 @@ export class FullMetalLab extends TrainerCard {
       store.reduceEffect(state, checkPokemonType);
 
       if (checkPokemonType.cardTypes.includes(CardType.METAL)) {
-        effect.damage = Math.max(0, effect.damage - 30);
-        effect.damageReduced = true;
+        effect.reduceDamage(30);
       }
     }
 
