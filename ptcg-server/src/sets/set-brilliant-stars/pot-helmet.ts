@@ -38,14 +38,7 @@ export class PotHelmet extends TrainerCard {
         return state;
       }
 
-      if (effect.damageReduced) {
-        // Damage already reduced, don't reduce again
-        return state;
-      }
-
       const player = StateUtils.findOwner(state, effect.target);
-
-
 
       if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR || sourceCard.tags.includes(CardTag.POKEMON_ex || CardTag.RADIANT))) {
         return state;
@@ -54,8 +47,7 @@ export class PotHelmet extends TrainerCard {
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       if (targetPlayer === player) {
-        effect.damage = Math.max(0, effect.damage - 30);
-        effect.damageReduced = true;
+        effect.reduceDamage(30);
       }
 
       return state;

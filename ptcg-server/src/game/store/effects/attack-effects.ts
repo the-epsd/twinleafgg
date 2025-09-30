@@ -70,15 +70,26 @@ export class PutDamageEffect extends AbstractAttackEffect implements Effect {
   readonly type: string = AttackEffects.PUT_DAMAGE_EFFECT;
   public preventDefault = false;
   public damage: number;
-  public damageReduced = false;
   public damageIncreased = true;
   public wasKnockedOutFromFullHP: boolean = false;
   public surviveOnTenHPReason: undefined | string = undefined;
   public weaknessApplied: boolean = false;
 
+  private nonstackingDamageReducers: string[] = [];
+
   constructor(base: AttackEffect, damage: number) {
     super(base);
     this.damage = damage;
+  }
+
+  reduceDamage(amount: number, source: string | undefined = undefined): void {
+    if (source && this.nonstackingDamageReducers.includes(source)) {
+      return;
+    }
+    this.damage = Math.max(0, this.damage - amount);
+    if (source) {
+      this.nonstackingDamageReducers.push(source);
+    }
   }
 }
 

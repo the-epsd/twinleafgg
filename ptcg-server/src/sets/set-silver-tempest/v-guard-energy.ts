@@ -39,11 +39,6 @@ export class VGuardEnergy extends EnergyCard {
         return state;
       }
 
-      if (effect.damageReduced) {
-        // Damage already reduced, don't reduce again
-        return state;
-      }
-
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
@@ -56,8 +51,7 @@ export class VGuardEnergy extends EnergyCard {
         // Check if damage target is owned by this card's owner 
         const targetPlayer = StateUtils.findOwner(state, effect.target);
         if (targetPlayer === player) {
-          effect.damage = Math.max(0, effect.damage - 30);
-          effect.damageReduced = true;
+          effect.reduceDamage(30, this.name);
         }
 
         return state;

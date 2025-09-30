@@ -3,7 +3,7 @@ import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { GamePhase, State } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class StevensCarbink extends PokemonCard {
@@ -44,18 +44,13 @@ export class StevensCarbink extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (effect.damageReduced || state.phase != GamePhase.ATTACK) {
-        return state;
-      }
-
       // Try to reduce PowerEffect, to check if something is blocking our ability
       if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
         return state;
       }
 
       if (effect.target.getPokemonCard()?.tags.includes(CardTag.STEVENS)) {
-        effect.damage = Math.max(0, effect.damage - 30);
-        effect.damageReduced = true;
+        effect.reduceDamage(30, this.powers[0].name);
       }
       return state;
     }
