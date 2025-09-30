@@ -27,6 +27,7 @@ import { LilliesDetermination } from './lillies-determination';
 import { Lunatone } from './lunatone';
 import { LushForest } from './forest-of-vitality';
 import { Makuhita } from './makuhita';
+import { Magnemite } from './magnemite';
 import { MegaAbomasnowEx } from './mega-abomasnow-ex';
 import { MegaAbsolex } from './mega-absol-ex';
 import { MegaCameruptEx } from './mega-camerupt-ex';
@@ -88,6 +89,7 @@ export const setMegaEvolution: Card[] = [
   new LilliesDetermination(),
   new Lunatone(),
   new LushForest(),
+  new Magnemite(),
   new Makuhita(),
   new MegaAbomasnowEx(),
   new MegaAbsolex(),
