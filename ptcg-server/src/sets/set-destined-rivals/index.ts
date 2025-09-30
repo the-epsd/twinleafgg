@@ -19,6 +19,9 @@ import { CynthiasGabite } from './cynthias-gabite';
 import { CynthiasSpiritomb } from './cynthias-spiritomb';
 import { CynthiasPowerWeight } from './cynthias-power-weight';
 import { Rotom } from './rotom';
+import { MowRotom } from './mow-rotom';
+import { WashRotom } from './wash-rotom';
+import { HeatRotom } from './heat-rotom';
 import { Zeraora } from './zeraora';
 import { TealMaskOgerpon } from './teal-mask-ogerpon';
 import { HearthflameMaskOgerpon } from './hearthflame-mask-ogerpon';
@@ -140,6 +143,9 @@ export const setDestinedRivals: Card[] = [
   new HearthflameMaskOgerpon(),
   new WellspringMaskOgerpon(),
   new Rotom(),
+  new MowRotom(),
+  new WashRotom(),
+  new HeatRotom(),
   new Zeraora(),
   new CornerstoneMaskOgerpon(),
   new Ponyta(),
