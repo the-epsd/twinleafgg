@@ -217,6 +217,7 @@ export enum GameCardMessage {
 export enum GameLog {
   LOG_BANNED_BY_ARBITER = 'LOG_BANNED_BY_ARBITER', // { name }
   LOG_ABILITY_BLOCKS_DAMAGE = 'LOG_ABILITY_BLOCKS_DAMAGE', // { name, pokemon }
+  LOG_SURVIVES_ON_TEN_HP = 'LOG_SURVIVES_ON_TEN_HP', // { pokemon, reason }
   LOG_FLIP_ASLEEP = 'LOG_FLIP_ASLEEP', // { name }
   LOG_FLIP_CONFUSION = 'LOG_FLIP_CONFUSION', // { name }
   LOG_GAME_FINISHED = 'LOG_GAME_FINISHED',

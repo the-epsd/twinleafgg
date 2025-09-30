@@ -1,8 +1,8 @@
 import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -102,16 +102,11 @@ export class MachampLVX extends PokemonCard {
     }
 
     //Strong-Willed in effect
-    if (effect instanceof AbstractAttackEffect && effect instanceof PutDamageEffect
-      && HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
-      store.reduceEffect(state, checkHpEffect);
-
-      if (effect.damage >= (checkHpEffect.hp - player.active.damage)) {
-        effect.preventDefault = true;
-        effect.target.damage = checkHpEffect.hp - 10;
-      }
+    if (effect instanceof PutDamageEffect
+      && effect.target.cards.includes(this)
+      && HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)
+    ) {
+      effect.surviveOnTenHPReason = this.attacks[0].name;
       return state;
     }
 

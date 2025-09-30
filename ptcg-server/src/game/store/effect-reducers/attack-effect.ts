@@ -18,6 +18,7 @@ import { StateUtils } from '../state-utils';
 import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
 import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
+import { CheckHpEffect } from '../effects/check-effects';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -67,6 +68,18 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
       if (targetCard.damageTakenLastTurn !== undefined) {
         targetCard.damageTakenLastTurn += damage;
+      }
+
+      if (effect.surviveOnTenHPReason !== undefined) {
+        const checkHpEffect = new CheckHpEffect(effect.player, target);
+        state = store.reduceEffect(state, checkHpEffect);
+        if (target.damage > checkHpEffect.hp) {
+          store.log(state, GameLog.LOG_SURVIVES_ON_TEN_HP, {
+            pokemon: targetCard.name,
+            reason: effect.surviveOnTenHPReason,
+          });
+          target.damage = checkHpEffect.hp - 10;
+        }
       }
 
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);

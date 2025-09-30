@@ -2,11 +2,10 @@ import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, DAMAGED_FROM_FULL_HP, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Donphan extends PokemonCard {
 
@@ -43,19 +42,10 @@ export class Donphan extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.damage == 0) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
-      store.reduceEffect(state, checkHpEffect);
-
-      if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-          return state;
-        }
-
-        effect.preventDefault = true;
-        effect.target.damage = checkHpEffect.hp - 10;
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+        effect.surviveOnTenHPReason = this.powers[0].name;
       }
     }
 

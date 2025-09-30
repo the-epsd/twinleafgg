@@ -73,6 +73,7 @@ export class PutDamageEffect extends AbstractAttackEffect implements Effect {
   public damageReduced = false;
   public damageIncreased = true;
   public wasKnockedOutFromFullHP: boolean = false;
+  public surviveOnTenHPReason: undefined | string = undefined;
   public weaknessApplied: boolean = false;
 
   constructor(base: AttackEffect, damage: number) {

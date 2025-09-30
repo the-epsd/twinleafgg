@@ -45,8 +45,7 @@ export class MrMime extends PokemonCard {
           return state;
         }
 
-        effect.preventDefault = true;
-        effect.target.damage = checkHpEffect.hp - 10;
+        effect.surviveOnTenHPReason = this.powers[0].name;
       }
     }
 
