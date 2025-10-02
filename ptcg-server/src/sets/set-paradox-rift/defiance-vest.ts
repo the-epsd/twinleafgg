@@ -1,11 +1,11 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class DefianceVest extends TrainerCard {
@@ -35,22 +35,7 @@ export class DefianceVest extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      if (effect.damageReduced) {
-        // Damage already reduced, don't reduce again
-        return state;
-      }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         return state;
@@ -59,8 +44,7 @@ export class DefianceVest extends TrainerCard {
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       if (targetPlayer === player) {
-        effect.damage = Math.max(0, effect.damage - 40);
-        effect.damageReduced = true;
+        effect.reduceDamage(40);
       }
       return state;
     }

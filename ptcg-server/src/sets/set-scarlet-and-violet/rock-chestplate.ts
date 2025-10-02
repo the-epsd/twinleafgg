@@ -52,8 +52,7 @@ export class RockChestplate extends TrainerCard {
         // Check if damage target is owned by this card's owner 
         const targetPlayer = StateUtils.findOwner(state, effect.target);
         if (targetPlayer === player) {
-          effect.damage = Math.max(0, effect.damage - 30);
-          effect.damageReduced = true;
+          effect.reduceDamage(30);
         }
 
         return state;

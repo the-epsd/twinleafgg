@@ -45,8 +45,7 @@ export class MetalFryingPan extends TrainerCard {
       if (checkPokemonType.cardTypes.includes(CardType.METAL)) {
         // Allow damage
         effect.attackEffect.ignoreWeakness = true;
-        effect.damage = Math.max(0, effect.damage - 30);
-        effect.damageReduced = true;
+        effect.reduceDamage(30);
 
         const target = effect.target.getPokemonCard();
         if (target) {
