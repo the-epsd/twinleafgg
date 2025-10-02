@@ -12,6 +12,12 @@
       <a routerLink="/games" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_GAMES' | translate }}</span>
       </a>
+      <a routerLink="/spectate" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
+        <span class="nav-text">SPECTATE</span>
+      </a>
+      <a routerLink="/replays" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
+        <span class="nav-text">{{ 'MAIN_REPLAYS' | translate }}</span>
+      </a>
       <a routerLink="/deck" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_DECKS' | translate }}</span>
       </a>
@@ -20,9 +26,6 @@
       </a>
       <a routerLink="/ranking" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_RANKING' | translate }}</span>
-      </a>
-      <a routerLink="/spectate" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
-        <span class="nav-text">SPECTATE</span>
       </a>
       <a routerLink="/message" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_MESSAGES' | translate }}</span>

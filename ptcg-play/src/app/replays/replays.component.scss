@@ -1,52 +1,308 @@
-@import '../../theme/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
-.ptcg-u-padding {
-  background-color: #1a202c;
+.replays-container {
+  min-height: calc(100vh - 64px); // Account for app bar height
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: background 0.5s ease;
+  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  font-family: 'Urbanist', sans-serif;
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    z-index: -1;
+  }
 }
 
-.mat-toolbar-row {
-  background-color: #1a202c;
+.replays-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  z-index: 1;
+}
 
-  >h1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
+.replays-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h1 {
+    color: #e2e8f0;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Urbanist', sans-serif;
   }
 
-  >button {
-    margin-left: map-get($padding, small);
-    min-width: 80px;
-  }
-}
-
-.mat-header-row {
-  background-color: #2d3748;
-}
-
-.mat-cell {
-  background-color: #2d3748;
-}
-
-.mat-paginator {
-  background-color: #2d3748;
-}
-
-.mat-raised-button {
-  margin-top: 12px;
-  background-color: #449058;
-  border-radius: 16px;
-}
-
-// ... existing styles ...
-
-::ng-deep .ptcg-deck-edit-toolbar {
-  .mat-form-field-flex {
-    background-color: #090b0f;
-    border-radius: 32px;
-    padding: 0.5rem 1rem;
+  .replays-controls {
+    display: flex;
     align-items: center;
-    font-size: 17px;
-    margin-top: 40px;
-    max-height: 40px;
+    gap: 15px;
+    height: 40px;
+
+    >* {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .import-button {
+    background: linear-gradient(135deg, #449058, #2d5a3d);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(69, 144, 88, 0.3);
+    transition: all 0.3s ease;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 12px;
+    min-width: auto;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(69, 144, 88, 0.4);
+    }
+  }
+}
+
+.ptcg-replays-table {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+
+  h3 {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    color: #e2e8f0;
+    margin: 0;
+    padding: 20px 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+    font-family: 'Urbanist', sans-serif;
+  }
+
+  .replays-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .replay-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(69, 144, 88, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+      border-color: rgba(69, 144, 88, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .replay-date {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      color: rgba(226, 232, 240, 0.7);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .replay-players {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 30px 0 20px 0;
+      gap: 20px;
+
+      .player-info {
+        flex: 1;
+        display: flex;
+        align-items: center;
+
+        &.player-left {
+          justify-content: flex-start;
+        }
+
+        &.player-right {
+          justify-content: flex-end;
+        }
+      }
+
+      .vs-divider {
+        color: #e2e8f0;
+        font-weight: 700;
+        font-size: 14px;
+        font-family: 'Urbanist', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0 10px;
+      }
+    }
+
+    .replay-status {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+
+      .status-badge {
+        background: linear-gradient(135deg, #449058, #2d5a3d);
+        color: #e2e8f0;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: 'Urbanist', sans-serif;
+
+        &.completed {
+          background: linear-gradient(135deg, #449058, #2d5a3d);
+        }
+      }
+    }
+
+    .replay-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+
+      .replay-button {
+        background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
+        border: 1px solid rgba(69, 144, 88, 0.3);
+        color: #e2e8f0;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: 'Urbanist', sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        &:hover {
+          background: linear-gradient(135deg, rgba(69, 144, 88, 0.3), rgba(69, 144, 88, 0.2));
+          border-color: rgba(69, 144, 88, 0.5);
+          transform: translateY(-1px);
+        }
+
+        .play-icon {
+          font-size: 10px;
+        }
+      }
+
+      .actions-button {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #e2e8f0;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+          border-color: rgba(255, 255, 255, 0.3);
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+
+  .mat-paginator {
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.05), rgba(69, 144, 88, 0.02));
+    border-top: 1px solid rgba(69, 144, 88, 0.3);
+    color: #e2e8f0;
+    font-family: 'Urbanist', sans-serif;
+
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label {
+      color: #e2e8f0;
+    }
+
+    .mat-icon-button {
+      color: #e2e8f0;
+    }
+
+    .mat-icon-button:disabled {
+      color: rgba(226, 232, 240, 0.3);
+    }
+  }
+}
+
+// Search box styling
+::ng-deep .replays-search {
+  display: flex;
+  align-items: center;
+  height: 40px;
+
+  .mat-form-field {
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+
+  .mat-form-field-flex {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(69, 144, 88, 0.3);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    align-items: center;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    min-height: 40px;
+    height: 40px;
+    display: flex;
   }
 
   .mat-form-field-infix {
@@ -54,38 +310,230 @@
     border-top: 0;
   }
 
-  .mat-select-value {
-    color: #283142;
-    font-size: 14px;
-  }
-
-  .mat-form-field-label {
-    font-size: 14px;
-    color: #283142;
-  }
-
   .mat-form-field-underline {
     display: none;
-    margin-top: 4px;
   }
 
   .mat-form-field-flex input {
-    color: #449058;
-    font-size: 13px;
-  }
+    color: #e2e8f0;
+    font-size: 14px;
+    font-family: 'Urbanist', sans-serif;
+    height: 24px;
 
-  .mat-form-field-flex .mat-input-element {
-    color: #449058;
-    font-size: 13px;
-    margin-bottom: 1px;
+    &::placeholder {
+      color: rgba(226, 232, 240, 0.6);
+    }
   }
 
   .mat-focused .mat-form-field-flex {
-    background-color: #283142;
+    background: linear-gradient(135deg, rgba(69, 144, 88, 0.15), rgba(69, 144, 88, 0.08));
+    border-color: rgba(69, 144, 88, 0.5);
+    box-shadow: 0 0 0 2px rgba(69, 144, 88, 0.2);
+  }
+}
 
-    .mat-select-value {
+// Additional alignment fix for search box component
+::ng-deep .replays-search {
+  .mat-form-field-wrapper {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mat-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+// Responsive design
+@media (max-width: 1200px) {
+  .replays-content {
+    padding: 1.5rem;
+  }
+
+  .replays-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .replays-controls {
       width: 100%;
-      max-width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  .ptcg-replays-table {
+    .replay-card {
+      padding: 15px;
+
+      .replay-players {
+        margin: 25px 0 15px 0;
+        gap: 15px;
+
+        .vs-divider {
+          font-size: 12px;
+        }
+      }
+
+      .replay-actions {
+        .replay-button {
+          padding: 6px 12px;
+          font-size: 11px;
+        }
+
+        .actions-button {
+          width: 28px;
+          height: 28px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .replays-content {
+    padding: 1rem;
+    gap: 15px;
+  }
+
+  .replays-header {
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    .replays-controls {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .import-button {
+      width: 100%;
+      height: 40px;
+    }
+  }
+
+  .ptcg-replays-table {
+    h3 {
+      padding: 15px 20px;
+      font-size: 1rem;
+    }
+
+    .replay-card {
+      padding: 12px;
+
+      .replay-date {
+        font-size: 10px;
+        top: 12px;
+        left: 12px;
+      }
+
+      .replay-players {
+        margin: 20px 0 12px 0;
+        gap: 10px;
+        flex-direction: column;
+
+        .player-info {
+          width: 100%;
+
+          &.player-left,
+          &.player-right {
+            justify-content: center;
+          }
+        }
+
+        .vs-divider {
+          font-size: 11px;
+          margin: 5px 0;
+        }
+      }
+
+      .replay-status {
+        top: 12px;
+        right: 12px;
+
+        .status-badge {
+          font-size: 9px;
+          padding: 3px 8px;
+        }
+      }
+
+      .replay-actions {
+        justify-content: center;
+        margin-top: 10px;
+
+        .replay-button {
+          padding: 6px 10px;
+          font-size: 10px;
+        }
+
+        .actions-button {
+          width: 26px;
+          height: 26px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .replays-content {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .replays-header {
+    h1 {
+      font-size: 1.1rem;
+    }
+  }
+
+  .ptcg-replays-table {
+    .replay-card {
+      padding: 10px;
+
+      .replay-date {
+        font-size: 9px;
+        top: 10px;
+        left: 10px;
+      }
+
+      .replay-players {
+        margin: 18px 0 10px 0;
+        gap: 8px;
+
+        .vs-divider {
+          font-size: 10px;
+        }
+      }
+
+      .replay-status {
+        top: 10px;
+        right: 10px;
+
+        .status-badge {
+          font-size: 8px;
+          padding: 2px 6px;
+        }
+      }
+
+      .replay-actions {
+        .replay-button {
+          padding: 5px 8px;
+          font-size: 9px;
+        }
+
+        .actions-button {
+          width: 24px;
+          height: 24px;
+          font-size: 10px;
+        }
+      }
     }
   }
 }

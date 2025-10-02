@@ -45,8 +45,7 @@ export class FullFaceGuard extends TrainerCard {
         // Check if damage target is owned by this card's owner 
         const targetPlayer = StateUtils.findOwner(state, effect.target);
         if (targetPlayer === player) {
-          effect.damage = Math.max(0, effect.damage - 20);
-          effect.damageReduced = true;
+          effect.reduceDamage(20);
         }
 
         return state;

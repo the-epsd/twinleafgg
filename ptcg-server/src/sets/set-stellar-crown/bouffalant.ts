@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase, PlayerType, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class Bouffalant extends PokemonCard {
@@ -47,29 +47,13 @@ export class Bouffalant extends PokemonCard {
         return state;
       }
 
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      if (effect.damageReduced) {
-        return state;
-      }
-
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
       const targetPokemon = effect.target.getPokemonCard();
       if (targetPokemon && targetPokemon.cardType === CardType.COLORLESS && targetPokemon.stage === Stage.BASIC && StateUtils.findOwner(state, effect.target) === player) {
-        effect.damage = Math.max(0, effect.damage - 60);
-        effect.damageReduced = true;
+        effect.reduceDamage(60, this.powers[0].name);
       }
     }
     return state;

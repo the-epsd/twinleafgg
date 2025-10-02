@@ -50,7 +50,10 @@ export class ConkeldurrV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.damage += this.damageTakenLastTurn ?? 0;
+      const activeCard = effect.player.active.getPokemonCard();
+      if (activeCard !== undefined && activeCard.damageTakenLastTurn !== undefined) {
+        effect.damage += activeCard.damageTakenLastTurn;
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

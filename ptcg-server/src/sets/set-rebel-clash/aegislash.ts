@@ -1,4 +1,4 @@
-import { GamePhase, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Power, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -51,10 +51,6 @@ export class Aegislash extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PutDamageEffect) {
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
@@ -74,8 +70,7 @@ export class Aegislash extends PokemonCard {
         return state;
       }
 
-      effect.damage = Math.max(0, effect.damage - 30);
-      effect.damageReduced = true;
+      effect.reduceDamage(30, this.powers[0].name);
     }
 
     return state;

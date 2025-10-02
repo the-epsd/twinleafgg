@@ -1,8 +1,9 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, PowerType, Card, ChooseEnergyPrompt, GameMessage } from '../../game';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DAMAGED_FROM_FULL_HP, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Pikachuex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
@@ -37,27 +38,10 @@ export class Pikachuex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.damage == 0) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
-      store.reduceEffect(state, checkHpEffect);
-
-      if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        effect.preventDefault = true;
-        effect.target.damage = checkHpEffect.hp - 10;
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+        effect.surviveOnTenHPReason = this.powers[0].name;
       }
     }
 
