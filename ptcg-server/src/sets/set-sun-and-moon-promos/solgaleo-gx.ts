@@ -84,7 +84,7 @@ export class SolgaleoGX extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 2, sameTarget: true }
+        { allowCancel: false, min: 2, max: 2, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
 
