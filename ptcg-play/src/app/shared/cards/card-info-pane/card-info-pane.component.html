@@ -38,6 +38,10 @@
         <span *ngSwitchCase="Stage.STAGE_2" translate>CARDS_STAGE_2</span>
       </div>
       <div class="ptcg-u-spacer"></div>
+      <div class="subtitle-tags" *ngIf="getDisplayTags().length > 0">
+        <span class="tag" *ngFor="let tag of getDisplayTags()">{{ tag }}</span>
+      </div>
+      <div class="ptcg-u-spacer" *ngIf="getDisplayTags().length > 0"></div>
       <div class="subtitle-evolves-from" *ngIf="card.evolvesFrom">
         {{ 'CARDS_EVOLVES_FROM' | translate: { name: card.evolvesFrom } }}
       </div>

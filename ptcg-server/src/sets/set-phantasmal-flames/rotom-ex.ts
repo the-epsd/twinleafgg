@@ -33,7 +33,7 @@ export class Rotomex extends PokemonCard {
   public regulationMark = 'I';
   public set: string = 'M2';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '21';
+  public setNumber: string = '29';
   public name: string = 'Rotom ex';
   public fullName: string = 'Rotom ex M2';
 

@@ -7,15 +7,18 @@ import { BehaviorSubject } from 'rxjs';
 export class SettingsService {
   private readonly HOLO_ENABLED_KEY = 'holoEnabled';
   private readonly SHOW_CARD_NAMES_KEY = 'showCardName';
+  private readonly SHOW_TAGS_KEY = 'showTags';
   private readonly CARD_SIZE_KEY = 'cardSize';
 
   private holoEnabledSubject = new BehaviorSubject<boolean>(this.loadHoloSetting());
   private cardSizeSubject = new BehaviorSubject<number>(100);
   private showCardNameSubject = new BehaviorSubject<boolean>(this.loadCardNamesSetting());
+  private showTagsSubject = new BehaviorSubject<boolean>(this.loadTagsSetting());
 
   cardSize$ = this.cardSizeSubject.asObservable();
   holoEnabled$ = this.holoEnabledSubject.asObservable();
   showCardName$ = this.showCardNameSubject.asObservable();
+  showTags$ = this.showTagsSubject.asObservable();
 
   private loadHoloSetting(): boolean {
     const saved = localStorage.getItem(this.HOLO_ENABLED_KEY);
@@ -27,6 +30,11 @@ export class SettingsService {
     return saved ? JSON.parse(saved) : false;
   }
 
+  private loadTagsSetting(): boolean {
+    const saved = localStorage.getItem(this.SHOW_TAGS_KEY);
+    return saved ? JSON.parse(saved) : false;
+  }
+
   setHoloEnabled(enabled: boolean) {
     localStorage.setItem(this.HOLO_ENABLED_KEY, JSON.stringify(enabled));
     this.holoEnabledSubject.next(enabled);
@@ -35,6 +43,11 @@ export class SettingsService {
   setShowCardName(enabled: boolean) {
     localStorage.setItem(this.SHOW_CARD_NAMES_KEY, JSON.stringify(enabled));
     this.showCardNameSubject.next(enabled);
+  }
+
+  setShowTags(enabled: boolean) {
+    localStorage.setItem(this.SHOW_TAGS_KEY, JSON.stringify(enabled));
+    this.showTagsSubject.next(enabled);
   }
 
   setCardSize(size: number) {

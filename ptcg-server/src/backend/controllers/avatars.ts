@@ -17,6 +17,7 @@ export class Avatars extends Controller {
       { id: 2, name: 'gg', fileName: 'av_1.png' },
       { id: 3, name: 'um', fileName: 'av_2.png' },
       { id: 4, name: 'gr', fileName: 'av_3.png' },
+      { id: 5, name: 'gd', fileName: 'pao.webp' },
     ];
 
     // Avatars unlocked from battle pass, etc.
@@ -44,7 +45,8 @@ export class Avatars extends Controller {
     // or a consistent naming convention.
     const map: { [key: string]: string } = {
       'avatar_spring_lord': 'av_5.png',
-      'avatar_shadow_rider': 'av_4.png'
+      'avatar_shadow_rider': 'av_4.png',
+      'avatar_pao': 'pao.webp'
     };
     return map[itemId] || 'av_default.png';
   }

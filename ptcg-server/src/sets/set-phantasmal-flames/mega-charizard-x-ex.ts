@@ -22,7 +22,7 @@ export class MegaCharizardXex extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'M2';
-  public setNumber: string = '1';
+  public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Charizard X ex';
   public fullName: string = 'Mega Charizard X ex M2';
