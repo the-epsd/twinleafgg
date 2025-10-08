@@ -7,12 +7,19 @@
     <!-- Format -->
     <mat-form-field>
       <mat-label translate>GAMES_FORMAT</mat-label>
-      <mat-select [(value)]="settings.format" (selectionChange)="onFormatSelected($event.value)">
+      <mat-select [(value)]="settings.format" (selectionChange)="onFormatSelected($event.value)"
+        [disabled]="formatLocked">
         <mat-option *ngFor="let option of formats" [value]="option.value">
           {{ option.label | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!-- Bot format explanation -->
+    <div *ngIf="isInvitingBot" class="bot-format-info">
+      <mat-icon>info</mat-icon>
+      <span translate>GAMES_BOT_FORMAT_LOCKED</span>
+    </div>
 
     <!-- Deck -->
     <mat-form-field>

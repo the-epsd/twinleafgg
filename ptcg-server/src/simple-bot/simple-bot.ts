@@ -5,6 +5,7 @@ import { SimpleGameHandler } from './simple-game-handler';
 import { State } from '../game/store/state/state';
 import { User, Message } from '../storage';
 import { SimpleBotOptions } from './simple-bot-options';
+import { Format } from '../game/store/card/card-types';
 import {
   allSimpleTactics, allPromptResolvers, defaultStateScores,
   defaultArbiterOptions
@@ -16,8 +17,8 @@ export class SimpleBot extends BotClient {
   protected gameHandlers: SimpleGameHandler[] = [];
   private options: SimpleBotOptions;
 
-  constructor(name: string, options: Partial<SimpleBotOptions> = {}) {
-    super(name);
+  constructor(name: string, options: Partial<SimpleBotOptions> = {}, allowedFormats?: Format[]) {
+    super(name, allowedFormats);
     this.options = Object.assign({
       tactics: allSimpleTactics,
       promptResolvers: allPromptResolvers,

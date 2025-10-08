@@ -2,7 +2,7 @@ import { AddPlayerAction } from '../store/actions/add-player-action';
 import { CleanerTask } from '../tasks/cleaner-task';
 import { Client } from '../client/client.interface';
 import { GameError } from '../game-error';
-import { GameMessage } from '../game-message';
+import { GameMessage, GameCoreError } from '../game-message';
 import { Game } from './game';
 import { GameSettings } from './game-settings';
 import { InvitePlayerAction } from '../store/actions/invite-player-action';
@@ -104,6 +104,21 @@ export class Core {
     }
     if (invited && this.clients.indexOf(invited) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+    }
+
+    // Check if either client is a bot with format restrictions
+    if (invited && this.isBotClient(invited)) {
+      const botClient = invited as any; // Cast to access bot-specific methods
+      if (!botClient.isFormatAllowed(gameSettings.format)) {
+        throw new GameError(GameCoreError.ERROR_BOT_FORMAT_NOT_ALLOWED);
+      }
+    }
+
+    if (this.isBotClient(client)) {
+      const botClient = client as any; // Cast to access bot-specific methods
+      if (!botClient.isFormatAllowed(gameSettings.format)) {
+        throw new GameError(GameCoreError.ERROR_BOT_FORMAT_NOT_ALLOWED);
+      }
     }
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
@@ -306,6 +321,11 @@ export class Core {
       this.reconnectionManager.dispose();
     }
     logger.log('[Core] Disposed');
+  }
+
+  private isBotClient(client: Client): boolean {
+    // Check if the client has bot-specific methods
+    return 'isFormatAllowed' in client && 'getAllowedFormats' in client;
   }
 
 }

@@ -121,16 +121,12 @@ export class GamesComponent implements OnInit, OnDestroy {
       this.friendsList$
     ]).pipe(
       map(([clients, friends]) => {
-        console.log('Clients:', clients); // Debug log
-        console.log('Friends:', friends); // Debug log
 
         const friendUserIds = friends.map(friend => friend.userId);
         const filtered = clients.filter((client: any) =>
           !friendUserIds.includes(client.user?.userId)
           // Removed the filter that excluded the current user
         );
-
-        console.log('Filtered online players:', filtered); // Debug log
         return filtered;
       })
     );
@@ -173,11 +169,11 @@ export class GamesComponent implements OnInit, OnDestroy {
     // Sidebar is always open now, no action needed
   }
 
-  private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[]): Promise<CreateGamePopupResult> {
+  private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[], invitedUserId?: number): Promise<CreateGamePopupResult> {
     const dialog = this.dialog.open(CreateGamePopupComponent, {
       maxWidth: '100%',
       width: '350px',
-      data: { decks }
+      data: { decks, invitedUserId }
     });
     return dialog.afterClosed().toPromise();
   }
@@ -202,7 +198,7 @@ export class GamesComponent implements OnInit, OnDestroy {
             return EMPTY;
           }
 
-          return from(this.showCreateGamePopup(options));
+          return from(this.showCreateGamePopup(options, invitedId));
         }),
         switchMap(result => {
           this.loading = true;

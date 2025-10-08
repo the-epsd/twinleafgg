@@ -9,6 +9,7 @@ import { SessionService } from 'src/app/shared/session/session.service';
 
 export interface CreateGamePopupData {
   decks: SelectPopupOption<DeckListEntry>[];
+  invitedUserId?: number;
 }
 
 export interface CreateGamePopupResult {
@@ -27,6 +28,10 @@ export class CreateGamePopupComponent implements OnInit {
   public deckId: number;
   public settings = new GameSettings();
   public isAdmin = false;
+  public invitedUserId?: number;
+  public isInvitingBot = false;
+  public botFormat?: Format;
+  public formatLocked = false;
 
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
@@ -61,12 +66,30 @@ export class CreateGamePopupComponent implements OnInit {
     private sessionService: SessionService
   ) {
     this.decks = data.decks;
+    this.invitedUserId = data.invitedUserId;
     this.settings.format = Format.STANDARD;
 
     this.onFormatSelected(this.settings.format);
   }
 
   ngOnInit() {
+    // Check if we're inviting a bot and set format accordingly
+    if (this.invitedUserId) {
+      this.sessionService.get(session => {
+        // invitedUserId is actually a clientId, so we need to find the client first
+        const client = session.clients.find(c => c.clientId === this.invitedUserId);
+        console.log('Found client:', client);
+        if (client) {
+          const invitedUser = session.users[client.userId];
+          console.log('Invited user from session:', invitedUser);
+          if (invitedUser) {
+            this.detectBotAndSetFormat(invitedUser.name);
+          }
+        }
+        return client;
+      }).subscribe();
+    }
+
     // Check if user is admin (roleId === 4)
     this.sessionService.get(session => {
       const loggedUserId = session.loggedUserId;
@@ -115,6 +138,35 @@ export class CreateGamePopupComponent implements OnInit {
       this.deckId = this.formatValidDecks[0].value;
     } else {
       this.deckId = null;
+    }
+  }
+
+  private detectBotAndSetFormat(userName: string) {
+    console.log('Detecting bot for user:', userName);
+    // Map bot names to their specific formats
+    const botFormatMap: { [key: string]: Format } = {
+      'Standard': Format.STANDARD,
+      'Standard Nightly': Format.STANDARD_NIGHTLY,
+      'Expanded': Format.EXPANDED,
+      'GLC': Format.GLC,
+      'Retro': Format.RETRO,
+      'Theme': Format.THEME
+    };
+
+    if (botFormatMap[userName]) {
+      console.log('Bot detected, setting format to:', botFormatMap[userName]);
+      this.isInvitingBot = true;
+      this.botFormat = botFormatMap[userName];
+      this.formatLocked = true;
+      this.settings.format = this.botFormat;
+
+      // Force change detection by calling onFormatSelected
+      this.onFormatSelected(this.settings.format);
+
+      console.log('Format locked:', this.formatLocked);
+      console.log('Current format:', this.settings.format);
+    } else {
+      console.log('No bot format found for user:', userName);
     }
   }
 }
