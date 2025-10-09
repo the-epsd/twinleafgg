@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private dialog: MatDialog
   ) {
-    this.redirectUrl = this.route.snapshot.queryParams['returnUrl'] || '/games';
+    this.redirectUrl = this.route.snapshot.queryParams['redirectUrl'] || '/games';
   }
 
   ngOnInit() {

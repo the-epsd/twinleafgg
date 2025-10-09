@@ -4,7 +4,7 @@
 :host {
   display: block;
   height: 100vh;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: #10131e;
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
 }
@@ -29,7 +29,7 @@
   .header-background {
     position: relative;
     height: 100%;
-    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+    background: #10131e;
   }
 
   .header-content {

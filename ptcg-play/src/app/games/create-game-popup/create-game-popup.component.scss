@@ -16,7 +16,7 @@
 .create-game-header {
   position: relative;
   min-height: 80px;
-  background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+  background: #1b202b;
   border-bottom: 1px solid rgba(69, 144, 88, 0.3);
 
   .header-content {
@@ -105,18 +105,38 @@
       border: 1px solid rgba(69, 144, 88, 0.3);
       border-radius: 8px;
       backdrop-filter: blur(10px);
+      padding: 1rem;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    ::ng-deep .mat-form-field-underline {
+      display: none;
+    }
+
+    ::ng-deep .mat-form-field-ripple {
+      display: none;
+    }
+
+    ::ng-deep .mat-form-field-infix {
+      border: none;
+      padding: 0;
+      min-height: auto;
     }
 
     ::ng-deep .mat-form-field-label {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
     }
 
     ::ng-deep .mat-select-value {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
     }
 
     ::ng-deep .mat-select-arrow {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.7);
     }
   }
 }
@@ -162,19 +182,8 @@
     &.selected {
       border-color: #459058;
       background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(69, 144, 88, 0.3);
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #459058, #5ba86b);
-        box-shadow: 0 0 10px rgba(69, 144, 88, 0.5);
-      }
+      transform: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
   }
 
@@ -291,18 +300,38 @@
       border: 1px solid rgba(69, 144, 88, 0.3);
       border-radius: 8px;
       backdrop-filter: blur(10px);
+      padding: 1rem;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    ::ng-deep .mat-form-field-underline {
+      display: none;
+    }
+
+    ::ng-deep .mat-form-field-ripple {
+      display: none;
+    }
+
+    ::ng-deep .mat-form-field-infix {
+      border: none;
+      padding: 0;
+      min-height: auto;
     }
 
     ::ng-deep .mat-form-field-label {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
     }
 
     ::ng-deep .mat-select-value {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
     }
 
     ::ng-deep .mat-select-arrow {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.7);
     }
   }
 
@@ -370,14 +399,50 @@
   }
 }
 
+// Dropdown Panel Styling - Match Games Component Menu Style
+::ng-deep .mat-select-panel {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95));
+  border: 1px solid rgba(69, 144, 88, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  margin-top: 40px;
+
+  .mat-option {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Urbanist', sans-serif;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    height: auto;
+    line-height: normal;
+
+    &:hover:not(.mat-option-disabled),
+    &:focus:not(.mat-option-disabled) {
+      background: rgba(69, 144, 88, 0.1);
+      color: #459058;
+    }
+
+    &.mat-selected:not(.mat-option-disabled) {
+      background: rgba(69, 144, 88, 0.1);
+      color: #459058;
+    }
+  }
+}
+
 // Action Buttons
 .create-game-actions {
   display: flex;
   justify-content: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1b202b;
+  border-top: 1px solid rgba(69, 144, 88, 0.3);
   flex-shrink: 0;
 
   .action-button {

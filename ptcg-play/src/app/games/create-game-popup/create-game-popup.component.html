@@ -56,9 +56,6 @@
               <div class="deck-info">
                 <div class="deck-name">{{ deck.viewValue }}</div>
               </div>
-              <div class="selection-indicator" *ngIf="deckId === deck.value">
-                <mat-icon>check_circle</mat-icon>
-              </div>
             </div>
           </div>
         </div>
@@ -129,11 +126,9 @@
 <!-- Action Buttons -->
 <div class="create-game-actions">
   <button mat-raised-button class="action-button cancel-button" (click)="cancel()">
-    <mat-icon>close</mat-icon>
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
   <button mat-raised-button class="action-button confirm-button" (click)="confirm()" [disabled]="!hasValidDeck()">
-    <mat-icon>play_arrow</mat-icon>
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>
