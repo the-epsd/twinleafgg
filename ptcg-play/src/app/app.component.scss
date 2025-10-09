@@ -18,9 +18,11 @@
 }
 
 ::ng-deep .mat-dialog-container {
-  background: rgba(26, 32, 44);
-  border-radius: 10px;
+  background: #1b202b;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  font-family: 'Urbanist', sans-serif;
 
   .mat-dialog-actions {
     color: white;

@@ -1,42 +1,94 @@
-<div class="ptcg-prompt-title">
-  <h2 translate>PROMPT_INVITE_TITLE</h2>
-  <div class="ptcg-u-spacer"></div>
-  <button mat-button mat-icon-button (click)="minimize()">
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-</div>
+<div class="invite-game-container">
+  <!-- Compact Header -->
+  <div class="invite-header">
+    <div class="header-content">
+      <div class="invite-title-section">
+        <h2 class="invite-title" translate>PROMPT_INVITE_TITLE</h2>
+        <div class="format-badge">
+          <span class="format-label">{{ 'GAMES_FORMAT' | translate }}:</span>
+          <span class="format-value">{{ formats[gameState.format] | translate }}</span>
+        </div>
+      </div>
 
-<div class="ptcg-prompt-content">
-  <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate" class="ptcg-u-top">
-  </mat-progress-bar>
-
-  <p [translate]="'GAME_MESSAGES.' + prompt.message"></p>
-  <p><span>{{ 'GAMES_FORMAT' | translate }}: </span><span>{{ formats[gameState.format] | translate }}</span></p>
-
-  <form #form="ngForm" autocomplete="off" *ngIf="!loading && decks.length > 0">
-    <mat-form-field>
-      <mat-select [(value)]="deckId">
-        <mat-option *ngFor="let deck of decks" [value]="deck.value">
-          {{ deck.viewValue }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-
-  <div class="ptcg-no-decks" *ngIf="!loading && decks.length === 0">
-    <p translate>PROMPT_INVITE_NO_DECK</p>
-    <button mat-raised-button routerLink="/deck">
-      {{ 'PROMPT_INVITE_GO_TO_DECKS' | translate }}
-    </button>
+      <!-- Minimize Button -->
+      <button mat-icon-button class="minimize-button" (click)="minimize()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </div>
   </div>
 
-</div>
+  <!-- Main Content -->
+  <div class="invite-content">
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      <p class="loading-text">Loading your decks...</p>
+    </div>
 
-<div class="ptcg-prompt-actions">
-  <button mat-raised-button [disabled]="gameState.deleted" (click)="cancel()">
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button [disabled]="gameState.deleted || !deckId" (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
-  </button>
+    <!-- Game Message -->
+    <div class="game-message" *ngIf="!loading">
+      <div class="message-content">
+        <mat-icon class="message-icon">info</mat-icon>
+        <p [translate]="'GAME_MESSAGES.' + prompt.message"></p>
+      </div>
+    </div>
+
+    <!-- Deck Selection -->
+    <div class="deck-selection" *ngIf="!loading && decks.length > 0">
+      <div class="selection-header">
+        <h3 class="selection-title">Select Your Deck</h3>
+        <div class="deck-count">{{ decks.length }} deck{{ decks.length !== 1 ? 's' : '' }} available</div>
+      </div>
+
+      <div class="deck-grid">
+        <div class="deck-card" *ngFor="let deck of decks; let i = index" [class.selected]="deckId === deck.value"
+          [class.disabled]="gameState.deleted" (click)="!gameState.deleted && selectDeck(deck.value)">
+          <div class="deck-card-content">
+            <div class="deck-artwork">
+              <ptcg-archetype [class]="getDeckArchetype(deck.value)"
+                style="transform: scale(2); display: flex; image-rendering: pixelated;"></ptcg-archetype>
+            </div>
+            <div class="deck-info">
+              <div class="deck-name">{{ deck.viewValue }}</div>
+            </div>
+            <div class="selection-indicator" *ngIf="deckId === deck.value">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Decks State -->
+    <div class="no-decks-container" *ngIf="!loading && decks.length === 0">
+      <div class="no-decks-content">
+        <div class="no-decks-icon">
+          <mat-icon>deck</mat-icon>
+        </div>
+        <h3 class="no-decks-title" translate>PROMPT_INVITE_NO_DECK</h3>
+        <p class="no-decks-description">You need to create a deck for this format before you can join a game.</p>
+        <button mat-raised-button class="create-deck-button" routerLink="/deck">
+          <mat-icon>add</mat-icon>
+          {{ 'PROMPT_INVITE_GO_TO_DECKS' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="invite-actions">
+    <button mat-raised-button class="action-button cancel-button" [disabled]="gameState.deleted" (click)="cancel()">
+      <mat-icon>close</mat-icon>
+      {{ 'BUTTON_CANCEL' | translate }}
+    </button>
+    <button mat-raised-button class="action-button confirm-button" [disabled]="gameState.deleted || !deckId || loading"
+      (click)="confirm()">
+      <mat-icon>play_arrow</mat-icon>
+      {{ 'BUTTON_OK' | translate }}
+    </button>
+  </div>
 </div>

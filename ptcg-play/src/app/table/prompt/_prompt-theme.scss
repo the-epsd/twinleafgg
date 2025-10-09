@@ -27,7 +27,16 @@
       background: rgba(26, 32, 44);
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
+    .mat-dialog-container {
+      background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      font-family: 'Urbanist', sans-serif;
+      padding: 0;
     }
   }
 

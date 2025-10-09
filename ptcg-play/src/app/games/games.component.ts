@@ -171,8 +171,8 @@ export class GamesComponent implements OnInit, OnDestroy {
 
   private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[], invitedUserId?: number): Promise<CreateGamePopupResult> {
     const dialog = this.dialog.open(CreateGamePopupComponent, {
-      maxWidth: '100%',
-      width: '350px',
+      width: '75vw',
+      maxWidth: 'none',
       data: { decks, invitedUserId }
     });
     return dialog.afterClosed().toPromise();
