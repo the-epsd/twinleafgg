@@ -5,6 +5,8 @@ import { AlolanRattata } from './alolan_rattata';
 import { Brionne } from './brionne';
 import { DoubleColorlessEnergySUM, EnergyRetrievalSUM, ExpShareSUM, HauSUM, NestBallSUM, RareCandySUM, RotomDexSR, UltraBallSUMSR } from './other-prints';
 import { Charjabug } from './charjabug';
+import { Cosmog } from './cosmog';
+import { Cosmoem } from './cosmoem';
 import { DecidueyeGX } from './decidueye-gx';
 import { Dragonair } from './dragonair';
 import { Eevee } from './eevee';
@@ -32,11 +34,14 @@ import { Wishiwashi } from './wishiwashi';
 import { Dartrix } from './dartrix';
 import { DarknessEnergy, FairyEnergy, FightingEnergy, FireEnergy, GrassEnergy, LightningEnergy, MetalEnergy, PsychicEnergy, WaterEnergy } from './basic-energies';
 
+
 export const setSunAndMoon: Card[] = [
   new AlolanGrimer(),
   new AlolanMuk(),
   new AlolanRattata(),
   new Brionne(),
+  new Cosmog(),
+  new Cosmoem(),
   new Charjabug(),
   new Dartrix(),
   new DecidueyeGX(),
