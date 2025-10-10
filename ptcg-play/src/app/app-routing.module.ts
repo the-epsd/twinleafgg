@@ -23,7 +23,7 @@ import { VsScreenComponent } from './table/vs-screen/vs-screen.component';
 import { TermsComponent } from './terms/terms.component';
 import { MaintenanceMessageComponent } from './maintenance/maintenance-message.component';
 import { SpectateComponent } from './spectate/spectate.component';
-import { UxStudyComponent } from './ux-study/ux-study.component';
+import { UiShowcaseComponent } from './ui-showcase/ui-showcase.component';
 
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
@@ -47,7 +47,7 @@ const routes: Routes = [
   { path: 'vs-screen', component: VsScreenComponent },
   { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
   { path: 'terms', component: TermsComponent },
-  { path: 'ux-study', component: UxStudyComponent },
+  { path: 'ui-showcase', component: UiShowcaseComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },
   { path: 'maintenance', component: MaintenanceMessageComponent },
   { path: 'battle-pass', loadChildren: () => import('./battle-pass/battle-pass.module').then(m => m.BattlePassModule) },

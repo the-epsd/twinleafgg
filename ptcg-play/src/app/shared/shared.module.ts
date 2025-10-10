@@ -23,6 +23,9 @@ import { UserInfoModule } from './user-info/user-info.module';
 import { ValidationModule } from './validation/validation.module';
 import { ReconnectionDialogComponent } from './components/reconnection-dialog/reconnection-dialog.component';
 import { ConnectionStatusComponent } from './components/connection-status/connection-status.component';
+import { TwinleafPlayButtonComponent } from './twinleaf-play-button/twinleaf-play-button.component';
+import { TwinleafPreviousButtonComponent } from './twinleaf-previous-button/twinleaf-previous-button.component';
+import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-next-button.component';
 
 @NgModule({
   imports: [
@@ -48,7 +51,10 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     SidebarComponent,
     SidebarContainerComponent,
     ReconnectionDialogComponent,
-    ConnectionStatusComponent
+    ConnectionStatusComponent,
+    TwinleafPlayButtonComponent,
+    TwinleafPreviousButtonComponent,
+    TwinleafNextButtonComponent
   ],
   exports: [
     AlertModule,
@@ -72,7 +78,10 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     UserInfoModule,
     ValidationModule,
     ReconnectionDialogComponent,
-    ConnectionStatusComponent
+    ConnectionStatusComponent,
+    TwinleafPlayButtonComponent,
+    TwinleafPreviousButtonComponent,
+    TwinleafNextButtonComponent
   ],
   providers: [
     SessionService

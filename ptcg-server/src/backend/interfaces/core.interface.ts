@@ -2,14 +2,6 @@ import { Format, GamePhase } from '../../game';
 import { PlayerStats } from '../../game/core/player-stats';
 import { Rank } from './rank.enum';
 
-export interface CustomAvatarInfo {
-  face: string;
-  hair: string;
-  glasses: string;
-  shirt: string;
-  hat: string;
-  accessory: string;
-}
 
 export interface PlayerInfo {
   clientId: number;
@@ -60,5 +52,4 @@ export interface UserInfo {
   lastRankingChange: number;
   avatarFile: string;
   roleId: number;
-  customAvatar?: CustomAvatarInfo;
 }

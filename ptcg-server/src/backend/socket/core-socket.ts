@@ -123,8 +123,7 @@ export class CoreSocket {
       rank: user.getRank(),
       lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
-      roleId: user.roleId,
-      customAvatar: user.customAvatar
+      roleId: user.roleId
     };
   }
 

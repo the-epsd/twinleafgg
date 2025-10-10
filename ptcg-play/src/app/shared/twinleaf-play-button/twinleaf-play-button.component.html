@@ -1,0 +1,8 @@
+<button [class]="buttonClasses" [disabled]="isDisabled" (click)="onClick()" [style.width]="width"
+  [style.height]="height" [style.font-size]="fontSize">
+
+  <mat-spinner *ngIf="loading" diameter="20" style="display: inline-block; margin-right: 8px;">
+  </mat-spinner>
+
+  {{ buttonText }}
+</button>

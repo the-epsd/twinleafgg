@@ -2,11 +2,8 @@
   *ngIf="user$ | async as user">
 
   <div class="ptcg-contact-avatar-box">
-    <!-- <ptcg-custom-avatar *ngIf="user.customAvatar; else defaultAvatar" [avatar]="user.customAvatar"></ptcg-custom-avatar>
-    <ng-template #defaultAvatar> -->
     <ptcg-avatar class="ptcg-contact-avatar" [avatarFile]="user.avatarFile">
     </ptcg-avatar>
-    <!-- </ng-template> -->
   </div>
 
   <div class="ptcg-contact-info">

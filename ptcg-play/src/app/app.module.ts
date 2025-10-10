@@ -26,6 +26,7 @@ import { TableModule } from './table/table.module';
 import { TermsModule } from './terms/terms.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { UxStudyModule } from './ux-study/ux-study.module';
+import { UiShowcaseModule } from './ui-showcase/ui-showcase.module';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UxStudyModule } from './ux-study/ux-study.module';
     SharedModule,
     TermsModule,
     UxStudyModule,
+    UiShowcaseModule,
     DndMultiBackendModule,
     DndModule.forRoot({ backend: MultiBackend, options: HTML5ToTouch }),
     TableModule,
