@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { NgModule } from '@angular/core';
 import { DndModule } from '@ng-dnd/core';
@@ -26,6 +26,8 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
 import { TwinleafPlayButtonComponent } from './twinleaf-play-button/twinleaf-play-button.component';
 import { TwinleafPreviousButtonComponent } from './twinleaf-previous-button/twinleaf-previous-button.component';
 import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-next-button.component';
+import { TwinleafButtonComponent } from './twinleaf-button/twinleaf-button.component';
+import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
 
 @NgModule({
   imports: [
@@ -54,7 +56,8 @@ import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-nex
     ConnectionStatusComponent,
     TwinleafPlayButtonComponent,
     TwinleafPreviousButtonComponent,
-    TwinleafNextButtonComponent
+    TwinleafNextButtonComponent,
+    TwinleafButtonComponent
   ],
   exports: [
     AlertModule,
@@ -67,6 +70,7 @@ import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-nex
     ImageCacheModule,
     InfoComponent,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     SearchBoxComponent,
     SidebarComponent,
@@ -81,7 +85,9 @@ import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-nex
     ConnectionStatusComponent,
     TwinleafPlayButtonComponent,
     TwinleafPreviousButtonComponent,
-    TwinleafNextButtonComponent
+    TwinleafNextButtonComponent,
+    TwinleafButtonComponent,
+    TwinleafFormModule
   ],
   providers: [
     SessionService

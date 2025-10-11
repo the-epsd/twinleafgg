@@ -74,9 +74,8 @@
         </mat-menu>
       </div>
 
-      <button mat-raised-button class="deck-button" (click)="createDeck()">
-        <span>{{ 'DECK_CREATE' | translate }}</span>
-      </button>
+      <twinleaf-button [text]="'DECK_CREATE' | translate" (clicked)="createDeck()">
+      </twinleaf-button>
     </div>
 
     <div class="deck-grid-container">
@@ -148,9 +147,8 @@
         <p *ngIf="selectedFormat === 'all'">{{ 'DECK_NO_DECKS' | translate }}</p>
         <p *ngIf="selectedFormat !== 'all'">{{ 'DECK_NO_DECKS_FORMAT' | translate:{format:
           getFormatDisplayName(selectedFormat)} }}</p>
-        <button mat-raised-button class="deck-button" (click)="createDeck()">
-          {{ 'DECK_CREATE' | translate }}
-        </button>
+        <twinleaf-button [text]="'DECK_CREATE' | translate" (clicked)="createDeck()">
+        </twinleaf-button>
       </div>
     </div>
 

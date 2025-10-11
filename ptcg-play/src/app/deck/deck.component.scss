@@ -7,17 +7,7 @@ ptcg-archetype,
   display: flex;
 }
 
-.deck-button {
-  background-color: #449058;
-  border-radius: 16px;
-  flex-shrink: 0;
-  white-space: nowrap;
-
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    margin-top: 0;
-  }
-}
+// Deck button styles moved to twinleaf-button component
 
 .deck-grid-container {
   padding: 16px;

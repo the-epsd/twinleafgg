@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AlertService } from '../shared/alert/alert.service';
 import { MOCK_FORMATS, MOCK_DECKS, MOCK_FRIENDS, MOCK_FORM_DATA, MOCK_ARCHETYPES, MOCK_ENERGY_TYPES, MOCK_TRAINER_TYPES, MOCK_LOADING_STATES, MOCK_STATUS_INDICATORS } from './ui-showcase-mock-data';
+import { TwinleafFormField } from '../shared/twinleaf-form/twinleaf-form.component';
 
 @Component({
   selector: 'ptcg-ui-showcase',
@@ -24,6 +25,80 @@ export class UiShowcaseComponent implements OnInit {
   // Form examples
   exampleForm: FormGroup;
   formData = MOCK_FORM_DATA;
+
+  // Twinleaf form field definitions
+  loginFormFields: TwinleafFormField[] = [
+    {
+      name: 'username',
+      label: 'Username',
+      type: 'text',
+      placeholder: 'Enter username',
+      required: true,
+      validation: Validators.minLength(3)
+    },
+    {
+      name: 'password',
+      label: 'Password',
+      type: 'password',
+      placeholder: 'Enter password',
+      required: true,
+      validation: Validators.minLength(6)
+    },
+    {
+      name: 'rememberMe',
+      label: 'Remember me',
+      type: 'checkbox'
+    }
+  ];
+
+  futuristicFormFields: TwinleafFormField[] = [
+    {
+      name: 'trainerId',
+      label: 'Trainer ID',
+      type: 'text',
+      placeholder: 'Enter trainer ID',
+      required: true,
+      validation: Validators.pattern(/^\d+$/),
+      hint: 'Enter the trainer ID you want to send a request to'
+    },
+    {
+      name: 'message',
+      label: 'Message',
+      type: 'text',
+      placeholder: 'Optional message',
+      hint: 'Add a personal message to your request'
+    }
+  ];
+
+  minimalFormFields: TwinleafFormField[] = [
+    {
+      name: 'name',
+      label: 'Name',
+      type: 'text',
+      placeholder: 'Enter your name',
+      required: true
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+      placeholder: 'Enter your email',
+      required: true,
+      validation: Validators.email
+    },
+    {
+      name: 'format',
+      label: 'Preferred Format',
+      type: 'select',
+      placeholder: 'Select format',
+      required: true,
+      options: [
+        { value: 'standard', label: 'Standard' },
+        { value: 'glc', label: 'GLC' },
+        { value: 'unlimited', label: 'Unlimited' }
+      ]
+    }
+  ];
 
   // Interactive states
   loading = false;
@@ -63,6 +138,20 @@ export class UiShowcaseComponent implements OnInit {
   onButtonClick(buttonType: string): void {
     console.log(`${buttonType} button clicked`);
     this.snackBar.open(`${buttonType} button clicked!`, 'Close', { duration: 2000 });
+  }
+
+  onSearch(searchTerm: string): void {
+    console.log('Search term:', searchTerm);
+    this.snackBar.open(`Searching for: ${searchTerm}`, 'Close', { duration: 2000 });
+  }
+
+  onFormChange(formData: any): void {
+    console.log('Form changed:', formData);
+  }
+
+  onFormSubmit(formData: any): void {
+    console.log('Form submitted:', formData);
+    this.snackBar.open('Form submitted successfully!', 'Close', { duration: 2000 });
   }
 
   onToggleLoading(): void {

@@ -186,25 +186,75 @@
     }
   }
 
-  // Deck Button Styles
-  .deck-button {
-    background-color: #449058;
-    border-radius: 16px;
-    flex-shrink: 0;
-    white-space: nowrap;
-    color: white;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  // Deck button styles moved to twinleaf-button component
 
-    &:hover {
-      background-color: #3d7a4a;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(68, 144, 88, 0.3);
+  // Modern Search Box Styling (from Ranking component)
+  .search-demo {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    .modern-search-box {
+      width: 100%;
+      max-width: 600px;
+
+      ::ng-deep .mat-form-field {
+        width: 100%;
+      }
+
+      ::ng-deep .mat-form-field-flex {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        border: 1px solid rgba(69, 144, 88, 0.3);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        align-items: center;
+        font-size: 14px;
+        backdrop-filter: blur(20px);
+        transition: all 0.3s ease;
+        min-height: 48px;
+        width: 100%;
+
+        &:hover {
+          border-color: rgba(69, 144, 88, 0.5);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+        }
+      }
+
+      ::ng-deep .mat-form-field-infix {
+        padding: 0;
+        border-top: 0;
+        min-height: 20px;
+      }
+
+      ::ng-deep .mat-form-field-label {
+        color: #e2e8f0;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Urbanist', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transform: translateY(1px);
+      }
+
+      ::ng-deep .mat-form-field-underline {
+        display: none;
+      }
+
+      ::ng-deep .mat-form-field-flex input {
+        color: #e2e8f0;
+        font-size: 14px;
+        font-family: 'Urbanist', sans-serif;
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transform: translateY(1px);
+      }
+
+      ::ng-deep .mat-focused .mat-form-field-flex {
+        border-color: #459058;
+        background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      }
     }
   }
 
@@ -1423,14 +1473,16 @@
   // Demo Layout Styles
   .button-demo,
   .nav-button-demo,
-  .deck-button-demo,
+  .twinleaf-button-demo,
   .action-button-demo,
   .format-tabs-demo,
   .format-cards-demo,
   .deck-tiles-demo,
   .trainer-cards-demo,
   .login-form-demo,
+  .twinleaf-form-demo,
   .friend-request-demo,
+  .search-demo,
   .spinner-demo,
   .overlay-demo,
   .status-badges-demo,

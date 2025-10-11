@@ -39,12 +39,19 @@
         </div>
 
         <div class="component-group">
-          <h3>Deck Button</h3>
-          <p>Green rounded button used in deck management</p>
-          <div class="deck-button-demo">
-            <button mat-raised-button class="deck-button" (click)="onButtonClick('Create Deck')">
-              CREATE DECK
-            </button>
+          <h3>Twinleaf Button</h3>
+          <p>Green rounded button used throughout the application with multiple variants</p>
+          <div class="twinleaf-button-demo">
+            <twinleaf-button text="CREATE DECK" (clicked)="onButtonClick('Create Deck')">
+            </twinleaf-button>
+            <twinleaf-button text="SAVE DECK" [icon]="'save'" color="primary" (clicked)="onButtonClick('Save Deck')">
+            </twinleaf-button>
+            <twinleaf-button text="DELETE DECK" color="secondary" (clicked)="onButtonClick('Delete Deck')">
+            </twinleaf-button>
+            <twinleaf-button text="DISABLED" [disabled]="true">
+            </twinleaf-button>
+            <twinleaf-button text="LOADING" [loading]="true">
+            </twinleaf-button>
           </div>
         </div>
 
@@ -234,29 +241,32 @@
         <h2>Form Components</h2>
 
         <div class="component-group">
-          <h3>Login Form</h3>
-          <p>Custom styled form fields with labels, validation, and checkboxes</p>
-          <div class="login-form-demo">
-            <form class="login-form">
-              <div class="form-field">
-                <label>Username</label>
-                <input type="text" placeholder=" " value="testuser">
-              </div>
-              <div class="form-field">
-                <label>Password</label>
-                <input type="password" placeholder=" " value="password123">
-              </div>
-              <div class="remember-me">
-                <label class="checkbox-container">
-                  <input type="checkbox" checked>
-                  <span class="checkmark"></span>
-                  Remember me
-                </label>
-              </div>
-              <button type="submit" class="login-button">
-                LOGIN
-              </button>
-            </form>
+          <h3>Twinleaf Form</h3>
+          <p>Reusable form component with multiple style variants and validation</p>
+          <div class="twinleaf-form-demo">
+            <twinleaf-form [fields]="loginFormFields" submitText="LOGIN" [loading]="loading" formStyle="default"
+              (formSubmit)="onFormSubmit($event)" (formChange)="onFormChange($event)">
+            </twinleaf-form>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Futuristic Form</h3>
+          <p>Glassmorphism form with glow effects and status indicators</p>
+          <div class="twinleaf-form-demo">
+            <twinleaf-form [fields]="futuristicFormFields" submitText="SEND REQUEST" [loading]="loading"
+              formStyle="futuristic" (formSubmit)="onFormSubmit($event)" (formChange)="onFormChange($event)">
+            </twinleaf-form>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Minimal Form</h3>
+          <p>Clean minimal form with underline inputs</p>
+          <div class="twinleaf-form-demo">
+            <twinleaf-form [fields]="minimalFormFields" submitText="SUBMIT" [loading]="loading" formStyle="minimal"
+              (formSubmit)="onFormSubmit($event)" (formChange)="onFormChange($event)">
+            </twinleaf-form>
           </div>
         </div>
 
@@ -295,6 +305,20 @@
                 </div>
               </form>
             </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Search Bar</h3>
+          <p>Modern search input with glassmorphism styling from Ranking component</p>
+          <div class="search-demo">
+            <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="false"
+              [isActivated]="true" [label]="'Search players...'">
+            </ptcg-search-box>
+
+            <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="true"
+              [isActivated]="false" [label]="'Search...'">
+            </ptcg-search-box>
           </div>
         </div>
       </div>

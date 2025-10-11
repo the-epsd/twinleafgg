@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Format, InvitePlayerPrompt, Archetype } from 'ptcg-server';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
@@ -51,7 +52,8 @@ export class PromptInvitePlayerComponent implements OnInit {
     private alertService: AlertService,
     private deckService: DeckService,
     private gameService: GameService,
-    private cardsBaseService: CardsBaseService
+    private cardsBaseService: CardsBaseService,
+    private router: Router
   ) { }
 
   public minimize() {
@@ -189,6 +191,10 @@ export class PromptInvitePlayerComponent implements OnInit {
       return this.formatDefaultDecks[formatKey];
     }
     return this.defaultDeckId;
+  }
+
+  navigateToDeck(): void {
+    this.router.navigate(['/deck']);
   }
 
 }

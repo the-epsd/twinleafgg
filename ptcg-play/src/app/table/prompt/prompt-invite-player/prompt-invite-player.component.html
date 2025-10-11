@@ -71,24 +71,19 @@
         </div>
         <h3 class="no-decks-title" translate>PROMPT_INVITE_NO_DECK</h3>
         <p class="no-decks-description">You need to create a deck for this format before you can join a game.</p>
-        <button mat-raised-button class="create-deck-button" routerLink="/deck">
-          <mat-icon>add</mat-icon>
-          {{ 'PROMPT_INVITE_GO_TO_DECKS' | translate }}
-        </button>
+        <twinleaf-button [text]="'PROMPT_INVITE_GO_TO_DECKS' | translate" [icon]="'add'" (clicked)="navigateToDeck()">
+        </twinleaf-button>
       </div>
     </div>
   </div>
 
   <!-- Action Buttons -->
   <div class="invite-actions">
-    <button mat-raised-button class="action-button cancel-button" [disabled]="gameState.deleted" (click)="cancel()">
-      <mat-icon>close</mat-icon>
-      {{ 'BUTTON_CANCEL' | translate }}
-    </button>
-    <button mat-raised-button class="action-button confirm-button" [disabled]="gameState.deleted || !deckId || loading"
-      (click)="confirm()">
-      <mat-icon>play_arrow</mat-icon>
-      {{ 'BUTTON_OK' | translate }}
-    </button>
+    <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" [disabled]="gameState.deleted"
+      (clicked)="cancel()">
+    </twinleaf-button>
+    <twinleaf-button [text]="'BUTTON_OK' | translate" color="primary"
+      [disabled]="gameState.deleted || !deckId || loading" [loading]="loading" (clicked)="confirm()">
+    </twinleaf-button>
   </div>
 </div>

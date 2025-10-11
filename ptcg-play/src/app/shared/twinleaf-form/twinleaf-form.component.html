@@ -1,0 +1,75 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [class]="'twinleaf-form twinleaf-form--' + formStyle">
+  <div class="form-fields">
+    <div class="form-field" *ngFor="let field of fields" [class]="'form-field--' + field.type">
+
+      <!-- Text, Password, Email, Number inputs -->
+      <div
+        *ngIf="field.type === 'text' || field.type === 'password' || field.type === 'email' || field.type === 'number'"
+        class="input-container">
+        <label [for]="field.name" class="field-label">{{ field.label }}</label>
+
+        <div class="input-wrapper" [class.input-wrapper--futuristic]="formStyle === 'futuristic'">
+          <input [id]="field.name" [formControlName]="field.name" [type]="field.type"
+            [placeholder]="field.placeholder || ' '" [class.input-valid]="isFieldValid(field.name)"
+            [class.input-invalid]="isFieldInvalid(field.name)" class="form-input">
+
+          <div class="input-glow" *ngIf="formStyle === 'futuristic'"></div>
+
+          <div class="input-status" *ngIf="formStyle === 'futuristic'">
+            <svg *ngIf="isFieldValid(field.name)" class="status-icon valid" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            <svg *ngIf="isFieldInvalid(field.name)" class="status-icon invalid" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="field-hint" *ngIf="field.hint">{{ field.hint }}</div>
+        <div class="field-error" *ngIf="showValidation && isFieldInvalid(field.name)">
+          {{ getFieldError(field.name) }}
+        </div>
+      </div>
+
+      <!-- Checkbox input -->
+      <div *ngIf="field.type === 'checkbox'" class="checkbox-container">
+        <label class="checkbox-label">
+          <input [id]="field.name" [formControlName]="field.name" type="checkbox" class="checkbox-input">
+          <span class="checkmark"></span>
+          {{ field.label }}
+        </label>
+      </div>
+
+      <!-- Select input -->
+      <div *ngIf="field.type === 'select'" class="select-container">
+        <label [for]="field.name" class="field-label">{{ field.label }}</label>
+        <select [id]="field.name" [formControlName]="field.name" class="form-select">
+          <option value="" disabled>{{ field.placeholder || 'Select an option' }}</option>
+          <option *ngFor="let option of field.options" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+        <div class="field-error" *ngIf="showValidation && isFieldInvalid(field.name)">
+          {{ getFieldError(field.name) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <div class="form-actions">
+    <button type="submit" class="submit-button" [class.submit-button--futuristic]="formStyle === 'futuristic'"
+      [class.submit-button--minimal]="formStyle === 'minimal'" [disabled]="form.invalid || loading || disabled">
+
+      <span *ngIf="!loading" class="button-text">{{ submitText }}</span>
+
+      <div *ngIf="loading" class="button-spinner">
+        <svg class="spinner" width="20px" height="20px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+          <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
+      </div>
+    </button>
+  </div>
+</form>
