@@ -267,17 +267,8 @@
   }
 }
 
-// Ensure mat-menu dropdowns have proper z-index
-::ng-deep .mat-menu-panel {
-  z-index: 999999 !important; // Ensure dropdowns appear above everything
-}
-
 ::ng-deep .cdk-overlay-container {
   z-index: 999999 !important; // Ensure overlay container is at the top
-}
-
-::ng-deep .cdk-overlay-backdrop {
-  z-index: 999998 !important; // Ensure backdrop is below menu but above other content
 }
 
 // Responsive design
