@@ -47,17 +47,17 @@
 }
 
 .lobby-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
-  height: 100%;
-  position: relative;
-  z-index: 1;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  // gap: 3rem;
+  // width: 100%;
+  // max-width: 1200px;
+  // padding: 2rem;
+  // height: 100%;
+  // position: relative;
+  // z-index: 1;
 
   @media (max-width: 1200px) {
     max-width: 100%;
@@ -68,11 +68,15 @@
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 1.5rem;
+    align-items: center; // Ensure consistent vertical alignment
+    justify-content: center; // Ensure consistent horizontal alignment
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 425px) {
     padding: 0.5rem;
-    gap: 1rem;
+    gap: 1.5rem;
+    align-items: center; // Ensure consistent vertical alignment
+    justify-content: center; // Ensure consistent horizontal alignment
   }
 }
 
@@ -80,7 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -88,36 +92,78 @@
 
   @media (max-width: 1200px) {
     max-width: 100%;
-    gap: 0.5rem;
+    gap: 1.5rem; // Keep same gap as default to prevent condensation
   }
 
   @media (max-width: 768px) {
-    gap: 0.25rem;
+    max-width: 100%;
+    gap: 1.5rem; // Keep same gap as default
+    justify-content: center;
+    align-items: center;
   }
 }
 
 .format-selection-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; // Prevent vertical stretching of format boxes
+  flex-wrap: nowrap; // Prevent format boxes from wrapping to new lines
   gap: 1.5rem;
   width: 100%;
-  max-width: 1000px;
+  min-width: fit-content; // Ensure container can accommodate format boxes
+  white-space: nowrap; // Prevent any text wrapping that might affect layout
   margin: 0 auto;
   position: relative;
+  overflow: visible; // Allow hover effects to be visible
+  padding: 20px; // Add padding to prevent clipping of hover effects
 
   @media (max-width: 1200px) {
-    max-width: 100%;
-    gap: 1rem;
+    max-width: none; // Allow container to expand beyond viewport
+    gap: 1.5rem; // Keep same gap as default to prevent condensation
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+
+  @media (max-width: 900px) {
+    max-width: none;
+    gap: 1.5rem; // Keep same gap as default to prevent condensation
+    overflow-x: auto;
+    overflow-y: visible;
+    align-items: center; // Ensure consistent vertical alignment
+    justify-content: center; // Ensure consistent horizontal alignment
   }
 
   @media (max-width: 768px) {
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    max-width: 650px; // Allow space for 2 format boxes (280px each + gap)
+    gap: 1.5rem; // Keep same gap as default to prevent condensation
+    overflow-x: auto;
+    overflow-y: visible;
+    // Ensure container can accommodate format boxes horizontally
+    min-width: 600px; // Space for 2 format boxes + gap (280 + 24 + 280 = 584px)
+    flex-wrap: nowrap !important; // Force no wrapping at this breakpoint
+    align-items: flex-start; // Prevent vertical compression of format boxes
+    height: auto; // Allow container to grow with content
   }
 
-  @media (max-width: 480px) {
-    gap: 0.5rem;
+  @media (max-width: 767px) {
+    max-width: 320px; // Limit width for single format
+    gap: 1.5rem; // Keep same gap as default
+    overflow-x: auto;
+    overflow-y: visible;
+    flex-wrap: nowrap !important; // Force no wrapping at this breakpoint
+    align-items: flex-start; // Prevent vertical compression of format boxes
+    height: auto; // Allow container to grow with content
+    min-width: 280px; // Just enough for 1 format box
+  }
+
+  @media (max-width: 425px) {
+    max-width: 320px; // Limit width to prevent arrows from spreading too far
+    gap: 1.5rem; // Keep same gap as default
+    overflow-x: auto;
+    overflow-y: visible;
+    flex-wrap: nowrap !important; // Force no wrapping at this breakpoint
+    align-items: flex-start; // Prevent vertical compression of format boxes
+    height: auto; // Allow container to grow with content
   }
 }
 
@@ -133,26 +179,20 @@
   flex-direction: column;
   position: relative;
   backdrop-filter: blur(20px);
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; // Smooth transitions for responsive changes
   cursor: pointer;
   opacity: 1;
   transform: scale(1);
   overflow: hidden;
+  flex-shrink: 0; // Prevent shrinking to fit container
+  flex-grow: 0; // Prevent growing to fill available space
+  flex-basis: auto; // Use natural size
+  min-width: 280px; // Ensure minimum width is maintained
+  min-height: 400px; // Ensure minimum height is maintained
+  max-height: 400px; // Prevent height from growing beyond intended size
 
-  @media (max-width: 1200px) {
-    width: 240px;
-    height: 340px;
-  }
-
-  @media (max-width: 768px) {
-    width: 200px;
-    height: 280px;
-  }
-
-  @media (max-width: 480px) {
-    width: 160px;
-    height: 220px;
-  }
+  // Keep consistent sizing regardless of screen size
+  // The format-selection-container will handle responsive layout
 
   &:hover:not(.disabled) {
     border-color: rgba(255, 215, 0, 0.8);
@@ -160,6 +200,7 @@
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
     transform: translateY(-5px) scale(1.05);
     opacity: 1;
+    z-index: 10; // Ensure hovered format appears above others
 
     .format-name {
       color: #459058;
@@ -181,6 +222,7 @@
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
     transform: translateY(-5px) scale(1.05);
     opacity: 1;
+    z-index: 10; // Ensure selected format appears above others
 
     .format-name {
       color: #459058;
@@ -267,7 +309,7 @@
     padding: 0.35rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 425px) {
     font-size: 0.6rem;
     padding: 0.3rem;
   }
@@ -292,7 +334,7 @@
     padding: 1rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 425px) {
     padding: 0.75rem;
   }
 
@@ -327,7 +369,7 @@
         transform: scale(2);
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: 425px) {
         transform: scale(1.5);
       }
     }
@@ -335,43 +377,34 @@
 }
 
 .format-info {
-  padding: 1.5rem;
+  padding: 1.5rem; // Keep consistent padding across all screen sizes
   background: rgba(0, 0, 0, 0.4);
   border-top: 1px solid #459058;
-
-  @media (max-width: 1200px) {
-    padding: 1.25rem;
-  }
 
   @media (max-width: 768px) {
     padding: 1rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 425px) {
     padding: 0.75rem;
   }
 
   .format-name {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
+    font-size: 0.9rem; // Use smaller font size consistently
+    margin-bottom: 0.5rem; // Use smaller margin consistently
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-family: 'Urbanist', sans-serif;
-
-    @media (max-width: 1200px) {
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
 
     @media (max-width: 768px) {
       font-size: 0.8rem;
       margin-bottom: 0.5rem;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 425px) {
       font-size: 0.7rem;
       margin-bottom: 0.25rem;
     }
@@ -379,21 +412,17 @@
 
   .deck-name {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 0.85rem;
+    font-size: 0.75rem; // Use smaller font size consistently
     text-align: center;
     font-weight: 500;
     font-family: 'Urbanist', sans-serif;
     text-transform: uppercase;
 
-    @media (max-width: 1200px) {
-      font-size: 0.75rem;
-    }
-
     @media (max-width: 768px) {
       font-size: 0.7rem;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 425px) {
       font-size: 0.6rem;
     }
   }
@@ -433,7 +462,7 @@
     font-size: 0.8rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 425px) {
     font-size: 0.75rem;
   }
 }
@@ -443,41 +472,44 @@
   .lobby-content {
     padding: 1rem;
     gap: 2rem;
+    max-width: calc(100vw - 280px); // Account for sidebar width when open
+    transition: max-width 0.3s ease;
   }
 
   .format-selection-container {
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
     max-width: 600px;
   }
 
   .format-box {
-    width: 160px;
-    height: 240px;
+    // Keep original size at 768px to prevent awkward appearance
+    width: 280px;
+    height: 400px;
 
     .format-artwork {
-      padding: 1rem;
+      padding: 1.5rem;
 
       ptcg-archetype {
-        transform: scale(2);
+        transform: scale(1); // Keep original scale
       }
     }
 
     .format-info {
-      padding: 0.75rem;
+      padding: 1.5rem; // Keep consistent padding
 
       .format-name {
-        font-size: 0.8rem;
+        font-size: 0.9rem; // Keep consistent font size
       }
 
       .deck-name {
-        font-size: 0.7rem;
+        font-size: 0.75rem; // Keep consistent font size
       }
     }
   }
 
   .format-navigation {
-    gap: 1rem;
+    gap: 1.5rem;
 
     // Nav button responsive styles moved to twinleaf-previous-button and twinleaf-next-button components
 
@@ -493,18 +525,20 @@
   // Play button responsive styles moved to twinleaf-play-button component
 }
 
-@media (max-width: 480px) {
+@media (max-width: 425px) {
   .matchmaking-lobby {
     padding: 1rem;
   }
 
   .lobby-content {
     gap: 1.5rem;
+    max-width: calc(100vw - 280px); // Account for sidebar width when open
+    transition: max-width 0.3s ease;
   }
 
   .format-selection-container {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
     max-width: 300px;
   }
 
