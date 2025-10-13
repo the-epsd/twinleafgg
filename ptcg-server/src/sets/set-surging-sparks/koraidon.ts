@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, Attack, PlayerType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -70,8 +70,8 @@ export class Koraidon extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const playerLastAttack = state.playerLastAttack?.[player.id];
-      const originalCard = playerLastAttack ? this.findOriginalCard(state, playerLastAttack) : null;
+      const playerLastAttackInfo = state.playerLastAttack?.[player.id];
+      const originalCard = playerLastAttackInfo ? playerLastAttackInfo.sourceCard : null;
 
       if (originalCard && originalCard.tags.includes(CardTag.ANCIENT) && !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)) {
         effect.damage += 150;
@@ -81,26 +81,4 @@ export class Koraidon extends PokemonCard {
     return state;
   }
 
-  private findOriginalCard(state: State, playerLastAttack: Attack): PokemonCard | null {
-    let originalCard: PokemonCard | null = null;
-
-    state.players.forEach(player => {
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.attacks.some(attack => attack === playerLastAttack)) {
-          originalCard = card;
-        }
-      });
-
-      // Check deck, discard, hand, and lost zone
-      [player.deck, player.discard, player.hand, player.lostzone].forEach(cardList => {
-        cardList.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.attacks.some(attack => attack === playerLastAttack)) {
-            originalCard = card;
-          }
-        });
-      });
-    });
-
-    return originalCard;
-  }
 }

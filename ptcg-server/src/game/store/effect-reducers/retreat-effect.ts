@@ -26,7 +26,7 @@ function retreatPokemon(store: StoreLike, state: State, effect: RetreatEffect) {
   });
 
   player.retreatedTurn = state.turn;
-  player.switchPokemon(player.bench[effect.benchIndex]);
+  player.switchPokemon(player.bench[effect.benchIndex], store, state);
 }
 
 function flatMap<T, U>(array: T[], fn: (item: T) => U[]): U[] {
@@ -76,6 +76,11 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
       retreatPokemon(store, state, effect);
       const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
+      // Add to new tracking system
+      if (!player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
+        player.movedToActiveThisTurn.push(activePokemonCard.id);
+      }
+      // Keep existing boolean for backwards compatibility
       activePokemonCard.movedToActiveThisTurn = true;
       return state;
     }
@@ -101,6 +106,11 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
       retreatPokemon(store, state, effect);
       const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
+      // Add to new tracking system
+      if (!player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
+        player.movedToActiveThisTurn.push(activePokemonCard.id);
+      }
+      // Keep existing boolean for backwards compatibility
       activePokemonCard.movedToActiveThisTurn = true;
     });
   }

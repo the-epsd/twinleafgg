@@ -53,4 +53,8 @@ export abstract class PokemonCard extends Card {
   public canAttackTwice?: boolean;
 
   public damageTakenLastTurn?: number = 0;
+
+  public wasMovedToActiveThisTurn?(player: any): boolean {
+    return player.movedToActiveThisTurn.includes(this.id);
+  }
 }

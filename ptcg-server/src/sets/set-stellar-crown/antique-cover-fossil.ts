@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, PokemonType } from '../../game/store/card/card-types';
 import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
 import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
@@ -89,11 +89,6 @@ At any time during your turn, you may discard this card from play.`,
 
     if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
-    }
-
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
-      effect.prizeCount = 0;
-      return state;
     }
 
     if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
