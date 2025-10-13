@@ -134,36 +134,40 @@
   }
 
   @media (max-width: 768px) {
-    max-width: 650px; // Allow space for 2 format boxes (280px each + gap)
+    max-width: 700px; // Allow space for 2 format boxes + hover effects (280px each + gap + scale buffer)
     gap: 1.5rem; // Keep same gap as default to prevent condensation
     overflow-x: auto;
     overflow-y: visible;
-    // Ensure container can accommodate format boxes horizontally
-    min-width: 600px; // Space for 2 format boxes + gap (280 + 24 + 280 = 584px)
+    // Ensure container can accommodate format boxes horizontally with hover effects
+    min-width: 650px; // Space for 2 format boxes + gap + hover scale buffer
     flex-wrap: nowrap !important; // Force no wrapping at this breakpoint
     align-items: flex-start; // Prevent vertical compression of format boxes
     height: auto; // Allow container to grow with content
+    padding: 20px; // Add padding to accommodate hover scale effects
   }
 
   @media (max-width: 767px) {
-    max-width: 320px; // Limit width for single format
+    max-width: 360px; // Allow space for single format + hover effects (280px * 1.05 + buffer)
     gap: 1.5rem; // Keep same gap as default
     overflow-x: auto;
     overflow-y: visible;
     flex-wrap: nowrap !important; // Force no wrapping at this breakpoint
     align-items: flex-start; // Prevent vertical compression of format boxes
     height: auto; // Allow container to grow with content
-    min-width: 280px; // Just enough for 1 format box
+    min-width: 320px; // Space for format box + hover effects
+    padding: 20px; // Add padding to accommodate hover scale effects
   }
 
   @media (max-width: 425px) {
-    max-width: 320px; // Limit width to prevent arrows from spreading too far
+    max-width: 360px; // Allow space for single format + hover effects
     gap: 1.5rem; // Keep same gap as default
     overflow-x: auto;
     overflow-y: visible;
     flex-wrap: nowrap !important; // Force no wrapping at this breakpoint
     align-items: flex-start; // Prevent vertical compression of format boxes
     height: auto; // Allow container to grow with content
+    min-width: 320px; // Space for format box + hover effects
+    padding: 20px; // Add padding to accommodate hover scale effects
   }
 }
 
@@ -296,17 +300,19 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   font-family: 'Urbanist', sans-serif;
 
+  // Keep consistent sizing across all breakpoints to match 1200px+ standards
   @media (max-width: 1200px) {
-    font-size: 0.7rem;
-    padding: 0.4rem;
+    font-size: 0.75rem; // Keep same as default
+    padding: 0.5rem; // Keep same as default
   }
 
   @media (max-width: 768px) {
-    font-size: 0.65rem;
-    padding: 0.35rem;
+    font-size: 0.75rem; // Keep same as default
+    padding: 0.5rem; // Keep same as default
   }
 
   @media (max-width: 425px) {
