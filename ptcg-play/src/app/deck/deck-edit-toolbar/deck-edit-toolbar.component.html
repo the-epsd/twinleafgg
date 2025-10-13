@@ -2,182 +2,22 @@
   <mat-toolbar class="ptcg-deck-edit-toolbar">
     <mat-toolbar-row>
 
-      <ptcg-search-box (search)="onSearch($event)" [showSearchButton]="false" [isActivated]="true"
-        label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
+      <!-- Desktop Search Bar -->
+      <ptcg-search-box class="desktop-search" (search)="onSearch($event)" [showSearchButton]="false"
+        [isActivated]="true" label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
       </ptcg-search-box>
 
-      <!-- <h1 *ngIf="deck" translate [translateParams]="{name: deck.name}">
-        DECK_EDIT_TITLE
-      </h1> -->
-
-      <!-- <button mat-raised-button [disabled]="disabled" (click)="onClearDeck()">
-        {{ 'BUTTON_RENAME' | translate }}
-      </button> -->
-
-      <!-- <span class="ptcg-u-spacer"></span> -->
-
-      <div class="super-type-buttons" style="width: 235px;">
-        <button mat-button *ngFor="let superType of superTypes; let first = first; let last = last"
-          (click)="toggleSuperType(superType.value)" [class.selected]="selectedSuperTypes.includes(superType.value)"
-          [class.left-rounded]="first" [class.right-rounded]="last">
-          {{ superType.label | translate }}
-        </button>
-      </div>
-
-      <mat-form-field class="narrow-select2">
-        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_FORMATS' | translate" formControlName="formats">
-          <mat-option *ngFor="let format of formats" [value]="format.value">
-            {{ format.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="narrow-select1">
-        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_TAGS' | translate" formControlName="tags">
-          <mat-option *ngFor="let cardTag of cardTags" [value]="cardTag.value">
-            {{ cardTag.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <ng-container *ngIf="isPokemonSelected()">
-        <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
-
-        <ng-container *ngIf="form.get('superTypes').value.includes('POKEMON')">
-          <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
-
-          <mat-form-field floatLabel="never" appearance="legacy">
-            <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_STAGES' | translate" formControlName="stages">
-              <mat-option *ngFor="let stage of stages" [value]="stage.value">
-                {{ stage.label | translate }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field floatLabel="never" appearance="legacy">
-            <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ATTACK_COST' | translate"
-              formControlName="attackCosts">
-              <mat-option *ngFor="let cost of attackCost" [value]="cost.value">
-                {{ cost.label | translate }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field floatLabel="never" appearance="legacy">
-            <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_RETREAT_COST' | translate"
-              formControlName="retreatCosts">
-              <mat-option *ngFor="let cost of retreatCost" [value]="cost.value">
-                {{ cost.label | translate }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
-      </ng-container>
-      <!-- <mat-form-field>
-        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_STAGES' | translate" formControlName="stages">
-          <mat-option *ngFor="let stage of stages" [value]="stage.value">
-            {{ stage.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ATTACK_COST' | translate" formControlName="attackCosts">
-          <mat-option *ngFor="let cost of attackCost" [value]="cost.value">
-            {{ cost.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_RETREAT_COST' | translate"
-          formControlName="retreatCosts">
-          <mat-option *ngFor="let cost of retreatCost" [value]="cost.value">
-            {{ cost.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-
-      <ng-container *ngIf="isTrainerSelected()">
-        <mat-form-field class="narrow-select2">
-          <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_TRAINERS' | translate" formControlName="trainerTypes">
-            <mat-option *ngFor="let trainerType of trainerTypes" [value]="trainerType.value">
-              {{ trainerType.label | translate }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
-
-      <ng-container *ngIf="isEnergySelected()">
-        <mat-form-field class="narrow-select3">
-          <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ENERGY' | translate" formControlName="energyTypes">
-            <mat-option *ngFor="let energyType of energyTypes" [value]="energyType.value">
-              {{ energyType.label | translate }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
+      <button mat-raised-button class="filters-toggle-button" (click)="toggleFilters()">
+        Filters
+      </button>
 
       <span class="ptcg-u-spacer"></span>
-
-      <div class="archetype-selectors">
-        <mat-form-field class="narrow-select1">
-          <mat-select [value]="deck.manualArchetype1" [placeholder]="'Archetype 1'"
-            (selectionChange)="onArchetypeChange($event.value, deck.manualArchetype2)" [disabled]="isThemeDeck">
-            <mat-option [value]="null">
-              <div class="archetype-option">
-                <span>Auto</span>
-              </div>
-            </mat-option>
-            <mat-option [value]="undefined">
-              <div class="archetype-option">
-                <span>None</span>
-              </div>
-            </mat-option>
-            <div class="search-container">
-              <input matInput (keyup)="onArchetypeSearch($event.target.value)" placeholder="Search archetypes...">
-            </div>
-            <mat-option *ngFor="let archetype of filteredArchetypes" [value]="archetype.value">
-              <div class="archetype-option">
-                <span>{{ archetype.label }}</span>
-              </div>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="narrow-select1">
-          <mat-select [value]="deck.manualArchetype2" [placeholder]="'Archetype 2'"
-            (selectionChange)="onArchetypeChange(deck.manualArchetype1, $event.value)" [disabled]="isThemeDeck">
-            <mat-option [value]="null">
-              <div class="archetype-option">
-                <span>Auto</span>
-              </div>
-            </mat-option>
-            <mat-option [value]="undefined">
-              <div class="archetype-option">
-                <span>None</span>
-              </div>
-            </mat-option>
-            <div class="search-container">
-              <input matInput (keyup)="onArchetypeSearch($event.target.value)" placeholder="Search archetypes...">
-            </div>
-            <mat-option *ngFor="let archetype of filteredArchetypes" [value]="archetype.value">
-              <div class="archetype-option">
-                <span>{{ archetype.label }}</span>
-              </div>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
 
       <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']"
         [disabled]="!isThemeDeck && disabled">
         <span translate>DECK_EDIT_BACK</span>
       </button>
 
-      <!-- <button mat-raised-button [disabled]="disabled" (click)="onClearDeck()">
-                    {{ 'BUTTON_CLEAR_DECK' | translate }}
-                  </button> -->
       <button mat-raised-button class="green-button" (click)="exportToFile()" [disabled]="!isThemeDeck && disabled">
         {{ 'BUTTON_EXPORT' | translate }}
       </button>
@@ -191,6 +31,179 @@
       </button>
 
     </mat-toolbar-row>
+
+    <!-- Collapsible Filters Section -->
+    <div class="filters-section" [class.expanded]="showFilters">
+      <div class="filters-content">
+        <!-- Mobile Search Bar -->
+        <div class="filters-row mobile-search-row">
+          <ptcg-search-box class="mobile-search" (search)="onSearch($event)" [showSearchButton]="false"
+            [isActivated]="true" label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
+          </ptcg-search-box>
+        </div>
+
+        <!-- Card Type Selection -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">Card Type</h3>
+          <div class="super-type-buttons">
+            <button mat-button *ngFor="let superType of superTypes; let first = first; let last = last"
+              (click)="toggleSuperType(superType.value)" [class.selected]="selectedSuperTypes.includes(superType.value)"
+              [class.left-rounded]="first" [class.right-rounded]="last">
+              {{ superType.label | translate }}
+            </button>
+          </div>
+        </div>
+
+        <!-- General Filters -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">General Filters</h3>
+          <div class="filter-controls">
+            <mat-form-field class="filter-field">
+              <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_FORMATS' | translate"
+                formControlName="formats">
+                <mat-option *ngFor="let format of formats" [value]="format.value">
+                  {{ format.label | translate }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="filter-field">
+              <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_TAGS' | translate" formControlName="tags">
+                <mat-option *ngFor="let cardTag of cardTags" [value]="cardTag.value">
+                  {{ cardTag.label | translate }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Pokemon-specific Filters -->
+        <ng-container *ngIf="isPokemonSelected()">
+          <div class="filter-group">
+            <h3 class="filter-group-title">Pokemon Filters</h3>
+            <div class="filter-controls">
+              <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
+
+              <ng-container *ngIf="form.get('superTypes').value.includes('POKEMON')">
+                <mat-form-field class="filter-field">
+                  <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_STAGES' | translate" formControlName="stages">
+                    <mat-option *ngFor="let stage of stages" [value]="stage.value">
+                      {{ stage.label | translate }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="filter-field">
+                  <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ATTACK_COST' | translate"
+                    formControlName="attackCosts">
+                    <mat-option *ngFor="let cost of attackCost" [value]="cost.value">
+                      {{ cost.label | translate }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="filter-field">
+                  <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_RETREAT_COST' | translate"
+                    formControlName="retreatCosts">
+                    <mat-option *ngFor="let cost of retreatCost" [value]="cost.value">
+                      {{ cost.label | translate }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Trainer-specific Filters -->
+        <ng-container *ngIf="isTrainerSelected()">
+          <div class="filter-group">
+            <h3 class="filter-group-title">Trainer Filters</h3>
+            <div class="filter-controls">
+              <mat-form-field class="filter-field">
+                <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_TRAINERS' | translate"
+                  formControlName="trainerTypes">
+                  <mat-option *ngFor="let trainerType of trainerTypes" [value]="trainerType.value">
+                    {{ trainerType.label | translate }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Energy-specific Filters -->
+        <ng-container *ngIf="isEnergySelected()">
+          <div class="filter-group">
+            <h3 class="filter-group-title">Energy Filters</h3>
+            <div class="filter-controls">
+              <mat-form-field class="filter-field">
+                <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ENERGY' | translate"
+                  formControlName="energyTypes">
+                  <mat-option *ngFor="let energyType of energyTypes" [value]="energyType.value">
+                    {{ energyType.label | translate }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Archetype Selection -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">Deck Archetypes</h3>
+          <div class="archetype-selectors">
+            <mat-form-field class="archetype-field">
+              <mat-select [value]="deck.manualArchetype1" [placeholder]="'Primary Archetype'"
+                (selectionChange)="onArchetypeChange($event.value, deck.manualArchetype2)" [disabled]="isThemeDeck">
+                <mat-option [value]="null">
+                  <div class="archetype-option">
+                    <span>Auto</span>
+                  </div>
+                </mat-option>
+                <mat-option [value]="undefined">
+                  <div class="archetype-option">
+                    <span>None</span>
+                  </div>
+                </mat-option>
+                <div class="search-container">
+                  <input matInput (keyup)="onArchetypeSearch($event.target.value)" placeholder="Search archetypes...">
+                </div>
+                <mat-option *ngFor="let archetype of filteredArchetypes" [value]="archetype.value">
+                  <div class="archetype-option">
+                    <span>{{ archetype.label }}</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="archetype-field">
+              <mat-select [value]="deck.manualArchetype2" [placeholder]="'Secondary Archetype'"
+                (selectionChange)="onArchetypeChange(deck.manualArchetype1, $event.value)" [disabled]="isThemeDeck">
+                <mat-option [value]="null">
+                  <div class="archetype-option">
+                    <span>Auto</span>
+                  </div>
+                </mat-option>
+                <mat-option [value]="undefined">
+                  <div class="archetype-option">
+                    <span>None</span>
+                  </div>
+                </mat-option>
+                <div class="search-container">
+                  <input matInput (keyup)="onArchetypeSearch($event.target.value)" placeholder="Search archetypes...">
+                </div>
+                <mat-option *ngFor="let archetype of filteredArchetypes" [value]="archetype.value">
+                  <div class="archetype-option">
+                    <span>{{ archetype.label }}</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </mat-toolbar>
 

@@ -2,7 +2,9 @@
 
 .ptcg-deck-edit-toolbar {
   flex: 0 0 auto;
+  min-height: 64px; // Ensure consistent minimum height
   background-color: #1a1f29;
+  overflow: hidden;
 }
 
 .green-button {
@@ -18,13 +20,14 @@
 
   >button {
     margin-left: map-get($padding, small);
-    min-width: 80px;
+    min-width: 100px;
+    padding: 6px 20px;
     border-radius: 32px;
   }
 }
 
 .mat-toolbar-row {
-
+  min-height: 64px;
   place-items: center;
 
 
@@ -45,11 +48,12 @@
 
 .archetype-selectors {
   display: flex;
-  gap: 8px;
-  margin-right: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
 
-  .narrow-select1 {
-    width: 130px;
+  .archetype-field {
+    min-width: 180px;
+    flex: 1;
   }
 
   .search-container {
@@ -89,5 +93,339 @@
       font-size: 12px;
       color: white;
     }
+  }
+}
+
+// Filters Toggle Button
+.filters-toggle-button {
+  margin-left: map-get($padding, normal);
+  color: #ffffff;
+  background-color: #090b0f;
+  border-radius: 32px;
+  min-width: 100px;
+  padding: 6px 20px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #1a1f29;
+  }
+
+  // Override Material Design button styles
+  &.mat-raised-button {
+    background-color: #090b0f;
+    color: #ffffff;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #1a1f29;
+    }
+
+    &:focus {
+      background-color: #090b0f;
+    }
+  }
+}
+
+// Filters Section
+.filters-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  background-color: #1a1f29;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  &.expanded {
+    max-height: 450px; // Optimized for compact grid layout
+  }
+}
+
+.filters-content {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+// Filter Groups
+.filter-group {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.filter-group-title {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+}
+
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-field {
+  min-width: 120px;
+  flex: 1;
+}
+
+.filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+
+  &.mobile-search-row {
+    display: none; // Hidden by default, shown on mobile
+  }
+}
+
+// Super Type Buttons in Filters
+.super-type-buttons {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  button {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &.selected {
+      background-color: #4caf50;
+      color: #ffffff;
+    }
+
+    &.left-rounded {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    &.right-rounded {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .filters-content {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 12px;
+    max-height: 500px;
+  }
+
+  .filter-group {
+    padding: 10px;
+  }
+
+  .filter-controls {
+    gap: 6px;
+  }
+
+  .archetype-selectors {
+    flex-direction: column;
+    gap: 8px;
+
+    .archetype-field {
+      min-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+
+  // Make toolbar buttons smaller and more compact
+  .mat-toolbar-row {
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px 16px;
+
+    >button {
+      min-width: 90px;
+      padding: 6px 18px;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+  }
+
+  .filters-toggle-button {
+    margin-left: 4px;
+    min-width: 90px;
+    padding: 6px 18px;
+    font-size: 12px;
+  }
+
+  // Hide desktop search bar on mobile
+  .desktop-search {
+    display: none;
+  }
+
+  // Show mobile search bar in filters
+  .mobile-search-row {
+    display: flex !important;
+    margin-bottom: 12px;
+  }
+
+  .mobile-search {
+    width: 100%;
+  }
+
+  .filters-content {
+    grid-template-columns: 1fr;
+    padding: 8px;
+    gap: 8px;
+    max-height: 400px;
+  }
+
+  .filter-group {
+    padding: 8px;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .filter-field {
+    min-width: 100%;
+  }
+
+  .super-type-buttons {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+
+    button {
+      flex: 1;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+
+  .archetype-selectors {
+    flex-direction: column;
+    gap: 8px;
+
+    .archetype-field {
+      min-width: 100%;
+    }
+  }
+
+  .filters-toggle-button {
+    margin-left: map-get($padding, normal);
+  }
+}
+
+@media (max-width: 480px) {
+
+  // Make toolbar even more compact for very small screens
+  .mat-toolbar-row {
+    padding: 8px 16px;
+    gap: 2px;
+
+    >button {
+      min-width: 70px;
+      padding: 6px 12px;
+      font-size: 11px;
+      margin-left: 2px;
+    }
+  }
+
+  .filters-toggle-button {
+    margin-left: 2px;
+    min-width: 70px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .filters-section.expanded {
+    max-height: 500px; // Optimized for compact layout
+  }
+
+  .filters-content {
+    padding: 6px;
+    gap: 6px;
+    max-height: 350px;
+  }
+
+  .filter-group {
+    padding: 6px;
+  }
+
+  .filter-group-title {
+    font-size: 11px;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+  }
+
+  .filter-controls {
+    gap: 4px;
+  }
+
+  .super-type-buttons {
+    button {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+
+  // For very small screens, stack buttons vertically if needed
+  .mat-toolbar-row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    gap: 4px;
+
+    >button {
+      width: 80%;
+      max-width: 200px;
+      min-width: auto;
+      margin-left: 0;
+      margin-bottom: 2px;
+    }
+  }
+
+  .filters-toggle-button {
+    width: 80%;
+    max-width: 200px;
+    min-width: auto;
+    margin-left: 0;
+    margin-bottom: 2px;
   }
 }
