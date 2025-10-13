@@ -1,5 +1,16 @@
-import { TrainerType } from '../../game/store/card/card-types';
+import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
+import { TrainerType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { StoreLike } from '../../game/store/store-like';
+import { State, GamePhase } from '../../game/store/state/state';
+import { Effect } from '../../game/store/effects/effect';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+import { StateUtils } from '../../game/store/state-utils';
+import { IS_TOOL_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { CardList } from '../../game/store/state/card-list';
 
 
 export class WishfulBaton extends TrainerCard {
@@ -19,66 +30,64 @@ export class WishfulBaton extends TrainerCard {
   public text: string =
     'If the Pokémon this card is attached to is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, move up to 3 basic Energy cards from that Pokémon to 1 of your Benched Pokémon.';
 
-  // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  //   if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-  //     const player = effect.player;
-  //     const target = effect.target;
+  public readonly WISHFUL_BATON_MARKER: string = 'WISHFUL_BATON_MARKER';
 
-  //     if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-  //     // Get all cards from the target
-  //     const allCards = [...target.cards];
+    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const active = effect.target;
 
-  //     // Filter out basic energy cards
-  //     const basicEnergy = allCards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
+      if (IS_TOOL_BLOCKED(store, state, player, this)) { return state; }
 
-  //     // If there are basic energy cards, prompt to attach them
-  //     if (basicEnergy.length > 0) {
-  //       const energyToAttach = new CardList();
-  //       energyToAttach.cards = basicEnergy;
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
+      }
 
-  //       // Remove the energy cards from the target so they don't get moved to discard/lost zone
-  //       target.cards = target.cards.filter(c => !(c instanceof EnergyCard && c.energyType === EnergyType.BASIC));
+      if (active.marker.hasMarker(this.WISHFUL_BATON_MARKER)) {
+        return state;
+      }
 
-  //       // Remove the Wishful Baton from both the cards array and the tool property
-  //       target.cards = target.cards.filter(c => c !== this);
-  //       target.tool = undefined;
+      // Check if this tool is attached to the active Pokemon
+      if (!active.tools.includes(this)) {
+        return state;
+      }
 
-  //       // Move the Wishful Baton to the discard pile using MOVE_CARDS
-  //       state = MOVE_CARDS(store, state, target, player.discard, { cards: [this] });
+      // Get all basic energy cards from the active Pokemon
+      const basicEnergyCards = active.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
 
-  //       // Prevent the default knockout behavior since we're handling the energy cards
-  //       effect.preventDefault = true;
+      if (basicEnergyCards.length === 0) {
+        return state;
+      }
 
-  //       return store.prompt(state, new AttachEnergyPrompt(
-  //         player.id,
-  //         GameMessage.ATTACH_ENERGY_TO_BENCH,
-  //         energyToAttach,
-  //         PlayerType.BOTTOM_PLAYER,
-  //         [SlotType.BENCH],
-  //         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-  //         { allowCancel: false, min: 0, max: 3, sameTarget: true }
-  //       ), transfers => {
-  //         transfers = transfers || [];
-  //         if (transfers.length === 0) {
-  //           // If no transfers were made, move all energy to discard
-  //           state = MOVE_CARDS(store, state, energyToAttach, player.discard, { cards: energyToAttach.cards });
-  //           return state;
-  //         }
+      // Add marker, do not invoke this effect for other wishful batons
+      active.marker.addMarker(this.WISHFUL_BATON_MARKER, this);
 
-  //         for (const transfer of transfers) {
-  //           const target = StateUtils.getTarget(state, player, transfer.to);
-  //           energyToAttach.moveCardTo(transfer.card, target);
-  //         }
+      // Make copy of the basic energy cards, because they will be transferred to discard shortly
+      const energyToAttach = new CardList();
+      energyToAttach.cards = basicEnergyCards.slice();
 
-  //         // Move any remaining energy to discard
-  //         if (energyToAttach.cards.length > 0) {
-  //           state = MOVE_CARDS(store, state, energyToAttach, player.discard, { cards: energyToAttach.cards });
-  //         }
-  //         return state;
-  //       });
-  //     }
-  //   }
-  //   return state;
-  // }
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        energyToAttach,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: true, min: 0, max: 3, sameTarget: true }
+      ), transfers => {
+        transfers = transfers || [];
+        active.marker.removeMarker(this.WISHFUL_BATON_MARKER);
+
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card] });
+        }
+      });
+    }
+
+    return state;
+  }
 }
