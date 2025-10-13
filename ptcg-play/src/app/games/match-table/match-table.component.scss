@@ -26,11 +26,11 @@
 
 // Matches Grid
 .matches-grid {
-  padding: 20px;
+
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.6) 0%, rgba(5, 10, 25, 0.6) 100%);
+  background: #12141b;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -53,16 +53,21 @@
 
 // Match Card
 .match-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(69, 144, 88, 0.3);
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  overflow: hidden;
+  background: #12141b;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
+  overflow: visible;
   position: relative;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 // Match Card Header

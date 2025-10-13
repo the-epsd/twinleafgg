@@ -1,9 +1,11 @@
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SettingsService } from '../../../table/table-sidebar/settings-dialog/settings.service';
 
 export interface CardInfoPaneOptions {
   enableAbility?: {
@@ -35,7 +37,7 @@ function hasHpBonus(obj: any): obj is { hpBonus: number } {
   templateUrl: './card-info-pane.component.html',
   styleUrls: ['./card-info-pane.component.scss']
 })
-export class CardInfoPaneComponent implements OnChanges {
+export class CardInfoPaneComponent implements OnChanges, OnDestroy {
 
   @Input() card: Card;
   @Input() facedown: boolean;
@@ -44,12 +46,15 @@ export class CardInfoPaneComponent implements OnChanges {
   @Output() action = new EventEmitter<CardInfoPaneAction>();
 
   public enabledAbilities: { [name: string]: boolean } = {};
+  public showTags = false;
   public SuperType = SuperType;
   public Stage = Stage;
   public PowerType = PowerType;
   public EnergyType = EnergyType;
   public TrainerType = TrainerType;
   public CardTag = CardTag;
+
+  private subscriptions: Subscription[] = [];
 
   // Constants for better maintainability
   private readonly SET_NUMBER_PADDING = {
@@ -98,8 +103,15 @@ export class CardInfoPaneComponent implements OnChanges {
 
   constructor(
     private dialog: MatDialog,
-    private sanitizer: DomSanitizer
-  ) { }
+    private sanitizer: DomSanitizer,
+    private settingsService: SettingsService
+  ) {
+    this.subscriptions.push(
+      this.settingsService.showTags$.subscribe(showTags => {
+        this.showTags = showTags;
+      })
+    );
+  }
 
   public clickAction(action: CardInfoPaneAction) {
     action.card = this.card;
@@ -385,6 +397,19 @@ export class CardInfoPaneComponent implements OnChanges {
     }
 
     return this.options.enableAttack || false;
+  }
+
+  public getDisplayTags(): string[] {
+    if (!this.showTags || !this.card || this.card.superType !== SuperType.POKEMON) {
+      return [];
+    }
+
+    const pokemonCard = this.card as any;
+    return pokemonCard.tags || [];
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
 }

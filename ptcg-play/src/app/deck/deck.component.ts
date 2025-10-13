@@ -70,6 +70,12 @@ export class DeckComponent implements OnInit {
     if (savedFormatDefaults) {
       this.formatDefaultDecks = JSON.parse(savedFormatDefaults);
     }
+
+    // Load show theme decks toggle preference
+    const savedShowThemeDecks = localStorage.getItem('showThemeDecksInAllTab');
+    if (savedShowThemeDecks !== null) {
+      this.showThemeDecksInAllTab = JSON.parse(savedShowThemeDecks);
+    }
   }
 
   // Set default deck for all formats
@@ -292,6 +298,13 @@ export class DeckComponent implements OnInit {
         Array.isArray(deck.format) && deck.format.includes(Format[format.toUpperCase()])
       );
     }
+  }
+
+  public onShowThemeDecksToggleChange() {
+    // Save the toggle state to local storage
+    localStorage.setItem('showThemeDecksInAllTab', JSON.stringify(this.showThemeDecksInAllTab));
+    // Refresh the current format to apply the change
+    this.selectFormat(this.selectedFormat);
   }
 
   public getFormatDisplayName(format: string): string {

@@ -1,6 +1,63 @@
-import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike, StateUtils, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+
+function* useCopycat(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  // Get opponent's last attack info
+  const lastAttackInfo = state.playerLastAttack[opponent.id];
+
+  if (!lastAttackInfo) {
+    return state;
+  }
+
+  const { attack: lastAttack, sourceCard } = lastAttackInfo;
+
+  // Validate attack is copyable
+  if (lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: lastAttack.name
+  });
+
+  // Create AttackEffect with Mimikyu as the attacker
+  const copiedAttackEffect = new AttackEffect(player, opponent, lastAttack);
+  copiedAttackEffect.source = player.active;
+  copiedAttackEffect.target = opponent.active;
+
+  // CRITICAL: Call the source card's reduceEffect directly
+  // This ensures the attack logic runs even if the card is not in play
+  state = sourceCard.reduceEffect(store, state, copiedAttackEffect);
+
+  // Handle any prompts from the attack
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  // Deal damage if applicable and not already handled
+  if (copiedAttackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  // Create and process AfterAttackEffect (this is what triggers after-attack effects)
+  const afterAttackEffect = new AfterAttackEffect(player, opponent, lastAttack);
+  state = store.reduceEffect(state, afterAttackEffect);
+
+  // Handle any prompts from the after-attack effect
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  return state;
+}
 
 export class Mimikyu extends PokemonCard {
 
@@ -55,60 +112,10 @@ export class Mimikyu extends PokemonCard {
       return state;
     }
 
-    //     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-    //       const player = effect.player;
-    //       const opponent = StateUtils.getOpponent(state, player);
-    //       const lastAttackRaw = state.lastAttack;
-    //       // Extract the Attack object if lastAttack is a UseAttackEffect
-    //       const lastAttack = lastAttackRaw && (typeof (lastAttackRaw as any).attack === 'object')
-    //         ? (lastAttackRaw as any).attack as Attack
-    //         : lastAttackRaw as Attack;
-
-    //       if (!lastAttack || lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
-    //         return state;
-    //       }
-
-    //       // Find the original card that used the last attack
-    //       const originalCard = this.findOriginalCard(state, lastAttack);
-    //       if (!originalCard) {
-    //         return state;
-    //       }
-
-    //       // Create a new AttackEffect for the copied attack
-    //       const copiedAttackEffect = new AttackEffect(player, opponent, lastAttack);
-    //       copiedAttackEffect.source = player.active;
-    //       copiedAttackEffect.target = opponent.active;
-
-    //       // Call the original card's reduceEffect, with the original card as `this`
-    //       return originalCard.reduceEffect.call(originalCard, store, state, copiedAttackEffect);
-    //     }
-
-    //     return state;
-    //   }
-
-    //   private findOriginalCard(state: State, lastAttack: Attack): PokemonCard | null {
-    //     let originalCard: PokemonCard | null = null;
-
-    //     state.players.forEach(player => {
-    //       player.forEachPokemon(PlayerType.BOTTOM_PLAYER && PlayerType.TOP_PLAYER, (cardList, card) => {
-    //         if (card.attacks.some(attack => attack === lastAttack)) {
-    //           originalCard = card;
-    //         }
-    //       });
-
-    //       // Check deck, discard, hand, and lost zone
-    //       [player.deck, player.discard, player.hand, player.lostzone].forEach(cardList => {
-    //         cardList.cards.forEach(card => {
-    //           if (card instanceof PokemonCard && card.attacks.some(attack => attack === lastAttack)) {
-    //             originalCard = card;
-    //           }
-    //         });
-    //       });
-    //     });
-
-    //     return originalCard;
-    //   }
-    // }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const generator = useCopycat(() => generator.next(), store, state, effect);
+      return generator.next().value;
+    }
     return state;
   }
 }

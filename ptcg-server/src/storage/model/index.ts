@@ -1,6 +1,5 @@
 export * from './avatar';
 export * from './conversation';
-export * from './custom-avatar';
 export * from './deck';
 export * from './disconnected-session';
 export * from './friend';

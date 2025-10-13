@@ -1,12 +1,12 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, SpecialCondition, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
 import { StateUtils, PokemonCardList } from '../../game';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class AncientBoosterEnergyCapsule extends TrainerCard {
 
@@ -39,10 +39,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
       }
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
         return state;
       }
 
@@ -55,19 +52,15 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
       const cardList = StateUtils.findCardList(state, this);
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
         return state;
       }
 
       if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
         const card = cardList.getPokemonCard();
         if (card && card.tags.includes(CardTag.ANCIENT)) {
-          const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);
-          if (hasSpecialCondition) {
-            cardList.specialConditions = cardList.specialConditions.filter(condition => condition === SpecialCondition.ABILITY_USED);
+          if (cardList.specialConditions.length > 0) {
+            cardList.specialConditions = [];
           }
         }
       }

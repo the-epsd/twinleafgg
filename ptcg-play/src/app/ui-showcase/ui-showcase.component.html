@@ -1,0 +1,579 @@
+<div class="ui-showcase-container">
+  <div class="showcase-header">
+    <h1>PTCG Elite Design System</h1>
+    <p>Comprehensive showcase of UI components and patterns used throughout the PTCG Elite application</p>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="selectedTab" (selectedIndexChange)="onTabChange($event)">
+
+    <!-- Button Styles Section -->
+    <mat-tab label="Button Styles">
+      <div class="showcase-section">
+        <h2>Button Components</h2>
+
+        <div class="component-group">
+          <h3>Play Button</h3>
+          <p>Primary action button with custom clip-path and gradient effects</p>
+          <div class="button-demo">
+            <twinleaf-play-button text="FIND MATCH" [loading]="loading" (clicked)="onButtonClick('Play Button')">
+            </twinleaf-play-button>
+            <twinleaf-play-button text="LEAVE QUEUE" [inQueue]="true" (clicked)="onButtonClick('Leave Queue')">
+            </twinleaf-play-button>
+            <twinleaf-play-button text="DISABLED" [disabled]="true">
+            </twinleaf-play-button>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Navigation Buttons</h3>
+          <p>Circular glassmorphism buttons with blur backdrop effects</p>
+          <div class="nav-button-demo">
+            <twinleaf-previous-button (clicked)="onButtonClick('Previous')">
+            </twinleaf-previous-button>
+            <twinleaf-next-button (clicked)="onButtonClick('Next')">
+            </twinleaf-next-button>
+            <button mat-icon-button class="nav-button" [disabled]="true">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Twinleaf Button</h3>
+          <p>Green rounded button used throughout the application with multiple variants</p>
+          <div class="twinleaf-button-demo">
+            <twinleaf-button text="CREATE DECK" (clicked)="onButtonClick('Create Deck')">
+            </twinleaf-button>
+            <twinleaf-button text="SAVE DECK" [icon]="'save'" color="primary" (clicked)="onButtonClick('Save Deck')">
+            </twinleaf-button>
+            <twinleaf-button text="DELETE DECK" color="secondary" (clicked)="onButtonClick('Delete Deck')">
+            </twinleaf-button>
+            <twinleaf-button text="DISABLED" [disabled]="true">
+            </twinleaf-button>
+            <twinleaf-button text="LOADING" [loading]="true">
+            </twinleaf-button>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Action Buttons</h3>
+          <p>Friends list action buttons with custom styling</p>
+          <div class="action-button-demo">
+            <button class="action-btn challenge-btn" (click)="onButtonClick('Challenge')">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+              </svg>
+              <span>Challenge</span>
+            </button>
+            <button class="action-btn message-btn" (click)="onButtonClick('Message')">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+              </svg>
+            </button>
+            <button class="action-btn unblock-btn" (click)="onButtonClick('Unblock')">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z" />
+              </svg>
+              <span>Unblock</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Format Tab Buttons</h3>
+          <p>Deck format selector tabs with active states</p>
+          <div class="format-tabs-demo">
+            <button mat-button class="format-tab active">All</button>
+            <button mat-button class="format-tab">Standard</button>
+            <button mat-button class="format-tab">Standard Nightly</button>
+            <button mat-button class="format-tab">GLC</button>
+            <button mat-button class="format-tab">Expanded</button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Card Components Section -->
+    <mat-tab label="Card Components">
+      <div class="showcase-section">
+        <h2>Card Components</h2>
+
+        <div class="component-group">
+          <h3>Format Selection Cards</h3>
+          <p>Large format boxes from matchmaking lobby with hover effects and queue overlays</p>
+          <div class="format-cards-demo">
+            <div class="format-box" *ngFor="let format of mockFormats" [class.selected]="format.value === 'standard'"
+              (click)="onButtonClick('Format: ' + format.label)">
+              <div class="queue-overlay" *ngIf="format.queueCount > 0">
+                {{ format.queueCount }} {{ format.queueCount === 1 ? 'player' : 'players' }} in queue
+              </div>
+              <div class="format-artwork">
+                <div class="deck-archetype">
+                  <ptcg-archetype [class]="format.archetype"
+                    style="transform: scale(2); display: flex; image-rendering: pixelated;"></ptcg-archetype>
+                </div>
+              </div>
+              <div class="format-info">
+                <div class="format-name">{{ format.label }}</div>
+                <div class="deck-name">{{ format.deckName }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Deck Tiles</h3>
+          <p>Deck grid cards with archetype display, validity badges, and star icons</p>
+          <div class="deck-tiles-demo">
+            <div class="deck-tile" *ngFor="let deck of mockDecks" (click)="onButtonClick('Deck: ' + deck.name)">
+              <div class="deck-card">
+                <div class="deck-status">
+                  <div class="deck-validity" [class.valid]="deck.isValid" [class.invalid]="!deck.isValid">
+                    {{ deck.isValid ? 'VALID' : 'INVALID' }}
+                  </div>
+                  <div class="default-wrapper" *ngIf="deck.isDefault">
+                    <mat-icon class="default-star" color="accent">star</mat-icon>
+                    <div class="default-tooltip">Default Deck</div>
+                  </div>
+                </div>
+                <div class="deck-archetype">
+                  <ptcg-archetype [class]="deck.archetype"></ptcg-archetype>
+                </div>
+                <div class="deck-name-row">
+                  <div class="deck-name">{{ deck.name }}</div>
+                  <button mat-icon-button class="action-button-small" (click)="$event.stopPropagation()">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Trainer/Friend Cards</h3>
+          <p>Friend list trainer cards with avatars, status indicators, and battle stats</p>
+          <div class="trainer-cards-demo">
+            <div class="trainer-card" *ngFor="let friend of mockFriends" [class.trainer-online]="friend.connected"
+              [class.trainer-blocked]="friend.status === 'blocked'" (click)="onButtonClick('Friend: ' + friend.name)">
+              <div class="connection-status">
+                <div class="status-indicator" [class.online]="friend.connected"></div>
+              </div>
+              <div class="trainer-avatar">
+                <div class="avatar-frame">
+                  <ptcg-avatar [avatarFile]="friend.avatarFile" class="avatar-image"></ptcg-avatar>
+                  <div class="avatar-glow" *ngIf="friend.connected"></div>
+                </div>
+                <div class="battle-status" [class]="friend.status">
+                  {{ friend.status === 'accepted' ? 'FRIEND' : friend.status.toUpperCase() }}
+                </div>
+              </div>
+              <div class="trainer-info">
+                <div class="trainer-header">
+                  <div class="trainer-name">
+                    {{ friend.name }}
+                    <svg *ngIf="friend.connected" class="online-pulse" viewBox="0 0 8 8" fill="currentColor">
+                      <circle cx="4" cy="4" r="3" />
+                    </svg>
+                  </div>
+                  <div class="trainer-meta">
+                    <div class="ranking-display">
+                      <svg class="rank-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                      <span class="rank-value">{{ friend.ranking }}</span>
+                    </div>
+                    <div class="connection-info">
+                      <span class="connection-text" [class.online]="friend.connected">
+                        {{ friend.connected ? 'ONLINE' : 'OFFLINE' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="trainer-stats" *ngIf="friend.status === 'accepted'">
+                  <div class="stat-item">
+                    <span class="stat-label">Last Battle</span>
+                    <span class="stat-value">{{ friend.lastBattle }}</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-label">Win Rate</span>
+                    <span class="stat-value">{{ friend.winRate }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="trainer-actions">
+                <div class="action-group" *ngIf="friend.status === 'accepted'">
+                  <button class="action-btn challenge-btn" *ngIf="friend.connected" (click)="$event.stopPropagation()">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    <span>Challenge</span>
+                  </button>
+                  <button class="action-btn message-btn" (click)="$event.stopPropagation()">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="action-group" *ngIf="friend.status === 'blocked'">
+                  <button class="action-btn unblock-btn" (click)="$event.stopPropagation()">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z" />
+                    </svg>
+                    <span>Unblock</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Form Elements Section -->
+    <mat-tab label="Form Elements">
+      <div class="showcase-section">
+        <h2>Form Components</h2>
+
+        <div class="component-group">
+          <h3>Twinleaf Form</h3>
+          <p>Reusable form component with multiple style variants and validation</p>
+          <div class="twinleaf-form-demo">
+            <twinleaf-form [fields]="loginFormFields" submitText="LOGIN" [loading]="loading" formStyle="default"
+              (formSubmit)="onFormSubmit($event)" (formChange)="onFormChange($event)">
+            </twinleaf-form>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Futuristic Form</h3>
+          <p>Glassmorphism form with glow effects and status indicators</p>
+          <div class="twinleaf-form-demo">
+            <twinleaf-form [fields]="futuristicFormFields" submitText="SEND REQUEST" [loading]="loading"
+              formStyle="futuristic" (formSubmit)="onFormSubmit($event)" (formChange)="onFormChange($event)">
+            </twinleaf-form>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Minimal Form</h3>
+          <p>Clean minimal form with underline inputs</p>
+          <div class="twinleaf-form-demo">
+            <twinleaf-form [fields]="minimalFormFields" submitText="SUBMIT" [loading]="loading" formStyle="minimal"
+              (formSubmit)="onFormSubmit($event)" (formChange)="onFormChange($event)">
+            </twinleaf-form>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Friend Request Input</h3>
+          <p>Futuristic input with glow effects and status indicators</p>
+          <div class="friend-request-demo">
+            <div class="connection-terminal">
+              <div class="terminal-header">
+                <h3 class="terminal-title">Send Friend Request</h3>
+              </div>
+              <form class="connection-form">
+                <div class="input-container">
+                  <div class="input-group">
+                    <div class="input-wrapper">
+                      <input type="text" class="data-input input-valid" placeholder="Enter trainer ID..." value="12345">
+                      <div class="input-glow"></div>
+                      <div class="input-status">
+                        <svg class="status-icon valid" viewBox="0 0 24 24" fill="currentColor">
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="action-zone">
+                    <button class="transmission-btn">
+                      <div class="btn-content">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                        </svg>
+                        <span class="btn-text">Send Request</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Search Bar</h3>
+          <p>Modern search input with glassmorphism styling from Ranking component</p>
+          <div class="search-demo">
+            <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="false"
+              [isActivated]="true" [label]="'Search players...'">
+            </ptcg-search-box>
+
+            <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="true"
+              [isActivated]="false" [label]="'Search...'">
+            </ptcg-search-box>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Loading States Section -->
+    <mat-tab label="Loading States">
+      <div class="showcase-section">
+        <h2>Loading Components</h2>
+
+        <div class="component-group">
+          <h3>Custom SVG Spinner</h3>
+          <p>Circular loading spinner used in login and matchmaking</p>
+          <div class="spinner-demo">
+            <div class="loading-spinner">
+              <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                </circle>
+              </svg>
+            </div>
+            <div class="loading-spinner">
+              <svg class="spinner" width="32px" height="32px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                </circle>
+              </svg>
+            </div>
+            <div class="loading-spinner">
+              <svg class="spinner" width="24px" height="24px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                </circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Loading Overlays</h3>
+          <p>Full-screen loading states with backdrop</p>
+          <div class="overlay-demo">
+            <div class="loading-overlay">
+              <div class="loading-spinner">
+                <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                  <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+                  </circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Status Indicators Section -->
+    <mat-tab label="Status Indicators">
+      <div class="showcase-section">
+        <h2>Status Components</h2>
+
+        <div class="component-group">
+          <h3>Online/Offline Badges</h3>
+          <p>Connection status dots with glow effects</p>
+          <div class="status-badges-demo">
+            <div class="status-indicator online"></div>
+            <div class="status-indicator offline"></div>
+            <div class="status-indicator online pulse"></div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Queue Overlays</h3>
+          <p>"X players in queue" banner on format cards</p>
+          <div class="queue-overlay-demo">
+            <div class="queue-overlay">12 players in queue</div>
+            <div class="queue-overlay">1 player in queue</div>
+            <div class="queue-overlay">25 players in queue</div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Deck Validity Badges</h3>
+          <p>Valid/Invalid status on deck cards</p>
+          <div class="validity-badges-demo">
+            <div class="deck-validity valid">VALID</div>
+            <div class="deck-validity invalid">INVALID</div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Battle Status Badges</h3>
+          <p>Friend status indicators</p>
+          <div class="battle-status-demo">
+            <div class="battle-status">FRIEND</div>
+            <div class="battle-status blocked">BLOCKED</div>
+            <div class="battle-status">PENDING</div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Navigation Section -->
+    <mat-tab label="Navigation">
+      <div class="showcase-section">
+        <h2>Navigation Components</h2>
+
+        <div class="component-group">
+          <h3>Format Tabs</h3>
+          <p>Horizontal scrolling tab navigation for deck formats</p>
+          <div class="format-tabs-container-demo">
+            <div class="format-tabs">
+              <div class="format-tabs-primary">
+                <button mat-button class="format-tab active">All</button>
+                <button mat-button class="format-tab">Standard</button>
+                <button mat-button class="format-tab">Standard Nightly</button>
+                <button mat-button class="format-tab">GLC</button>
+                <button mat-button class="format-tab">Expanded</button>
+                <button mat-button class="format-tab">RSPK</button>
+                <button mat-button class="format-tab">Retro</button>
+                <button mat-button class="format-tab">Unlimited</button>
+              </div>
+              <button mat-button class="format-tab more-formats-btn" [matMenuTriggerFor]="moreFormatsMenu">
+                <span class="more-text">More Formats</span>
+                <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+              <mat-menu #moreFormatsMenu="matMenu" class="more-formats-menu">
+                <button mat-menu-item>Theme</button>
+                <button mat-menu-item>SWSH</button>
+                <button mat-menu-item>SM</button>
+                <button mat-menu-item>XY</button>
+                <button mat-menu-item>BW</button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Dropdown Menus</h3>
+          <p>More options dropdown with custom styling</p>
+          <div class="dropdown-demo">
+            <div class="dropdown">
+              <button class="action-btn more-btn">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+              </button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item remove-btn">Remove Friend</button>
+                <button class="dropdown-item block-btn">Block User</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Empty States Section -->
+    <mat-tab label="Empty States">
+      <div class="showcase-section">
+        <h2>Empty State Components</h2>
+
+        <div class="component-group">
+          <h3>Empty Friends List</h3>
+          <p>"Battle Network Offline" with hologram icon</p>
+          <div class="empty-state-demo">
+            <div class="empty-battlefield">
+              <div class="empty-visual">
+                <div class="hologram-container">
+                  <svg class="hologram-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.47 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm2.78 1.58c-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57c0-.81-.48-1.53-1.22-1.85zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="empty-content">
+                <h3 class="empty-title">Battle Network Offline</h3>
+                <p class="empty-description">No trainers connected to your network yet.</p>
+                <div class="empty-hint">
+                  Send friend requests to expand your battle network and challenge other trainers!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>No Decks Message</h3>
+          <p>Empty state for deck list</p>
+          <div class="no-decks-demo">
+            <div class="no-decks-message">
+              <mat-icon>info</mat-icon>
+              <p>No decks found for this format</p>
+              <button mat-raised-button class="deck-button">
+                CREATE DECK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Interactive Elements Section -->
+    <mat-tab label="Interactive Elements">
+      <div class="showcase-section">
+        <h2>Interactive Components</h2>
+
+        <div class="component-group">
+          <h3>Archetype Display</h3>
+          <p>ptcg-archetype component with scaling</p>
+          <div class="archetype-demo">
+            <ptcg-archetype [class]="archetype" *ngFor="let archetype of mockArchetypes"
+              style="transform: scale(2); display: flex; image-rendering: pixelated;"></ptcg-archetype>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Avatar Component</h3>
+          <p>User avatars with glow effects</p>
+          <div class="avatar-demo">
+            <div class="avatar-frame">
+              <ptcg-avatar [avatarFile]="friend.avatarFile" class="avatar-image"
+                *ngFor="let friend of mockFriends"></ptcg-avatar>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Rank Display</h3>
+          <p>Star icon with ranking value</p>
+          <div class="rank-demo">
+            <div class="ranking-display" *ngFor="let friend of mockFriends">
+              <svg class="rank-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <span class="rank-value">{{ friend.ranking }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Energy Types</h3>
+          <p>Energy type components</p>
+          <div class="energy-demo">
+            <ptcg-energy [energy]="energy" *ngFor="let energy of mockEnergyTypes"></ptcg-energy>
+          </div>
+        </div>
+
+        <div class="component-group">
+          <h3>Trainer Types</h3>
+          <p>Trainer type components</p>
+          <div class="trainer-type-demo">
+            <ptcg-trainer-type [trainerType]="type" *ngFor="let type of mockTrainerTypes"></ptcg-trainer-type>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

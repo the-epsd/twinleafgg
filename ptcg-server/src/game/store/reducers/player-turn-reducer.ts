@@ -89,7 +89,9 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       if (!state.playerLastAttack) {
         state.playerLastAttack = {};
       }
-      state.playerLastAttack[player.id] = attack;
+      if (pokemonCard) {
+        state.playerLastAttack[player.id] = { attack, sourceCard: pokemonCard };
+      }
 
       return state;
     }

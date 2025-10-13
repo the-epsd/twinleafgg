@@ -473,6 +473,11 @@ export function* executeCheckState(next: Function, store: StoreLike, state: Stat
       const playerActive = player.active.getPokemonCard();
       player.active = player.bench[benchIndex];
       if (playerActive) {
+        // Add to new tracking system
+        if (!player.movedToActiveThisTurn.includes(playerActive.id)) {
+          player.movedToActiveThisTurn.push(playerActive.id);
+        }
+        // Keep existing boolean for backwards compatibility
         playerActive.movedToActiveThisTurn = true;
       }
       player.bench[benchIndex] = temp;

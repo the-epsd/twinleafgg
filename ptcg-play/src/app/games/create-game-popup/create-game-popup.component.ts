@@ -1,14 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Format, GameSettings } from 'ptcg-server';
+import { Format, GameSettings, Archetype } from 'ptcg-server';
 import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
 import { SelectPopupOption } from '../../shared/alert/select-popup/select-popup.component';
 import { SessionService } from 'src/app/shared/session/session.service';
+import { ArchetypeUtils } from '../../deck/deck-archetype-service/archetype.utils';
 
 
 export interface CreateGamePopupData {
   decks: SelectPopupOption<DeckListEntry>[];
+  invitedUserId?: number;
 }
 
 export interface CreateGamePopupResult {
@@ -27,6 +29,10 @@ export class CreateGamePopupComponent implements OnInit {
   public deckId: number;
   public settings = new GameSettings();
   public isAdmin = false;
+  public invitedUserId?: number;
+  public isInvitingBot = false;
+  public botFormat?: Format;
+  public formatLocked = false;
 
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
@@ -44,6 +50,9 @@ export class CreateGamePopupComponent implements OnInit {
   ];
 
   public formatValidDecks: SelectPopupOption<number>[];
+  public deckEntries: DeckListEntry[] = [];
+  public formatDefaultDecks: { [format: string]: number } = {};
+  public defaultDeckId: number | null = null;
 
   public timeLimits: SelectPopupOption<number>[] = [
     { value: 0, viewValue: 'GAMES_LIMIT_NO_LIMIT' },
@@ -61,12 +70,32 @@ export class CreateGamePopupComponent implements OnInit {
     private sessionService: SessionService
   ) {
     this.decks = data.decks;
+    this.invitedUserId = data.invitedUserId;
     this.settings.format = Format.STANDARD;
-
-    this.onFormatSelected(this.settings.format);
   }
 
   ngOnInit() {
+    // Load default deck preferences
+    this.loadDefaultDeckPreferences();
+
+    // Initialize format selection first
+    this.onFormatSelected(this.settings.format);
+
+    // Check if we're inviting a bot and set format accordingly
+    if (this.invitedUserId) {
+      this.sessionService.get(session => {
+        // invitedUserId is actually a clientId, so we need to find the client first
+        const client = session.clients.find(c => c.clientId === this.invitedUserId);
+        if (client) {
+          const invitedUser = session.users[client.userId];
+          if (invitedUser) {
+            this.detectBotAndSetFormat(invitedUser.name);
+          }
+        }
+        return client;
+      }).subscribe();
+    }
+
     // Check if user is admin (roleId === 4)
     this.sessionService.get(session => {
       const loggedUserId = session.loggedUserId;
@@ -107,14 +136,129 @@ export class CreateGamePopupComponent implements OnInit {
   }
 
   onFormatSelected(format: Format) {
-    this.formatValidDecks = this.decks.filter(d =>
-      d.value.format.includes(format) && d.value.isValid
-    ).map(d => ({ value: d.value.id, viewValue: d.value.name }));
+    this.deckEntries = this.decks.filter(d => {
+      const deck = d.value;
+      return deck.format.includes(format) && deck.isValid;
+    }).map(d => d.value);
+
+    this.formatValidDecks = this.deckEntries.map(d => ({ value: d.id, viewValue: d.name }));
 
     if (this.formatValidDecks.length > 0) {
-      this.deckId = this.formatValidDecks[0].value;
+      // Try to select the user's default deck for this format
+      const defaultDeckId = this.getFormatDefaultDeckId(format);
+      const defaultDeckExists = this.formatValidDecks.some(deck => deck.value === defaultDeckId);
+
+      console.log('Format:', format, 'Default deck ID:', defaultDeckId, 'Exists:', defaultDeckExists);
+      console.log('Available decks:', this.formatValidDecks.map(d => ({ id: d.value, name: d.viewValue })));
+      console.log('Format default decks:', this.formatDefaultDecks);
+
+      if (defaultDeckExists) {
+        this.deckId = defaultDeckId;
+        console.log('Selected default deck:', defaultDeckId);
+      } else {
+        // Fall back to first available deck
+        this.deckId = this.formatValidDecks[0].value;
+        console.log('Fell back to first deck:', this.deckId);
+      }
     } else {
       this.deckId = null;
     }
+  }
+
+  public selectDeck(deckId: number) {
+    this.deckId = deckId;
+  }
+
+  public getDeckArchetype(deckId: number): Archetype | Archetype[] {
+    const deckEntry = this.deckEntries.find(deck => deck.id === deckId);
+    if (!deckEntry) return Archetype.UNOWN;
+
+    // If manual archetypes are set, use those
+    if (deckEntry.manualArchetype1 || deckEntry.manualArchetype2) {
+      const archetypes = [];
+      if (deckEntry.manualArchetype1) archetypes.push(deckEntry.manualArchetype1);
+      if (deckEntry.manualArchetype2) archetypes.push(deckEntry.manualArchetype2);
+      return archetypes.length > 0 ? archetypes : Archetype.UNOWN;
+    }
+
+    // Otherwise use auto-detection
+    return ArchetypeUtils.getArchetype(deckEntry.deckItems, false);
+  }
+
+  private detectBotAndSetFormat(userName: string) {
+    // Map bot names to their specific formats
+    const botFormatMap: { [key: string]: Format } = {
+      'Standard': Format.STANDARD,
+      'Standard Nightly': Format.STANDARD_NIGHTLY,
+      'Expanded': Format.EXPANDED,
+      'GLC': Format.GLC,
+      'Retro': Format.RETRO,
+      'Theme': Format.THEME
+    };
+
+    if (botFormatMap[userName]) {
+      this.isInvitingBot = true;
+      this.botFormat = botFormatMap[userName];
+      this.formatLocked = true;
+      this.settings.format = this.botFormat;
+
+      // Prevent scrolling during bot format change
+      this.preventScrollDuringFormatChange();
+    }
+  }
+
+  private preventScrollDuringFormatChange() {
+    // Store current scroll position
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Call format selection
+    this.onFormatSelected(this.settings.format);
+
+    // Restore scroll position immediately and after a delay
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollTop);
+    });
+
+    setTimeout(() => {
+      window.scrollTo(0, scrollTop);
+    }, 10);
+  }
+
+  private loadDefaultDeckPreferences() {
+    // Load global default deck
+    const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
+    if (savedDefaultDeckId) {
+      this.defaultDeckId = parseInt(savedDefaultDeckId, 10);
+    }
+
+    // Load format-specific default decks
+    const savedFormatDefaults = localStorage.getItem('formatDefaultDecks');
+    if (savedFormatDefaults) {
+      this.formatDefaultDecks = JSON.parse(savedFormatDefaults);
+    }
+  }
+
+  private getFormatDefaultDeckId(format: Format): number | null {
+    // Map Format enum to string keys used in localStorage
+    const formatKeyMap: { [key: number]: string } = {
+      [Format.STANDARD]: 'standard',
+      [Format.STANDARD_NIGHTLY]: 'standard_nightly',
+      [Format.GLC]: 'glc',
+      [Format.EXPANDED]: 'expanded',
+      [Format.UNLIMITED]: 'unlimited',
+      [Format.SWSH]: 'swsh',
+      [Format.SM]: 'sm',
+      [Format.XY]: 'xy',
+      [Format.BW]: 'bw',
+      [Format.RSPK]: 'rspk',
+      [Format.RETRO]: 'retro',
+      [Format.THEME]: 'theme'
+    };
+
+    const formatKey = formatKeyMap[format];
+    if (formatKey && this.formatDefaultDecks[formatKey]) {
+      return this.formatDefaultDecks[formatKey];
+    }
+    return this.defaultDeckId;
   }
 }

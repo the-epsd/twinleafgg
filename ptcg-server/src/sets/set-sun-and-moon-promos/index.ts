@@ -9,6 +9,7 @@ import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
 import { ShiningCelebi } from './shining-celebi';
 import { ShiningLugia } from './shining-lugia';
+import { SolgaleoGX } from './solgaleo-gx';
 import { TapuKoko } from './tapu-koko';
 import { TapuLele } from './tapu-lele';
 import { TrevenantDusknoirGX } from './trevenant-dusknoir-gx';
@@ -23,6 +24,7 @@ export const setSunAndMoonPromos: Card[] = [
   new PikachuZekromGX(),
   new ShiningCelebi(),
   new ShiningLugia(),
+  new SolgaleoGX(),
   new TapuKoko(),
   new TapuLele(),
   new TrevenantDusknoirGX(),

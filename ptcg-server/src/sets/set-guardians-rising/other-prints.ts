@@ -4,6 +4,7 @@ import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { FieldBlower } from './field-blower';
 import { MaxPotion } from '../set-emerging-powers/max-potion';
 import { RescueStretcher } from './rescue-stretcher';
+import { EnergyLoto } from '../set-astral-radiance/energy-loto';
 
 export class AlolanVulpixGRI extends AlolanVulpix {
   public fullName = 'Alolan Vulpix GRI';
@@ -17,7 +18,11 @@ export class DoubleColorlessEnergyGRISR extends DoubleColorlessEnergy {
   public set = 'GRI';
   public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
-
+export class EnergyLotoGRI extends EnergyLoto {
+  public fullName = 'Energy Loto GRI';
+  public setNumber = '122';
+  public set = 'GRI';
+}
 export class EnhancedHammerGRI extends EnhancedHammer {
   public fullName = 'Enhanced Hammer GRI';
   public setNumber = '124';

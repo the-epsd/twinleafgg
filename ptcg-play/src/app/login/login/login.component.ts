@@ -5,6 +5,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Validators } from '@angular/forms';
 import {
   trigger,
   transition,
@@ -22,6 +23,7 @@ import { ApiError } from '../../api/api.error';
 import { ApiErrorEnum } from 'ptcg-server';
 import { environment } from '../../../environments/environment';
 import { ChangeServerPopupComponent } from '../change-server-popup/change-server-popup.component';
+import { TwinleafFormField } from '../../shared/twinleaf-form/twinleaf-form.component';
 
 @UntilDestroy()
 @Component({
@@ -76,6 +78,31 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loginAborted$ = new Subject<void>();
   private redirectUrl: string;
 
+  // Twinleaf form field definitions
+  loginFormFields: TwinleafFormField[] = [
+    {
+      name: 'name',
+      label: 'LOGIN_USERNAME',
+      type: 'text',
+      placeholder: 'Enter username',
+      required: true,
+      validation: Validators.minLength(3)
+    },
+    {
+      name: 'password',
+      label: 'LOGIN_PASSWORD',
+      type: 'password',
+      placeholder: 'Enter password',
+      required: true,
+      validation: Validators.minLength(6)
+    },
+    {
+      name: 'rememberMe',
+      label: 'LOGIN_REMEMBER_ME',
+      type: 'checkbox'
+    }
+  ];
+
   constructor(
     private apiService: ApiService,
     private loginRememberService: LoginRememberService,
@@ -87,7 +114,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private dialog: MatDialog
   ) {
-    this.redirectUrl = this.route.snapshot.queryParams['returnUrl'] || '/games';
+    this.redirectUrl = this.route.snapshot.queryParams['redirectUrl'] || '/games';
   }
 
   ngOnInit() {
@@ -151,6 +178,20 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  onFormSubmit(formData: any): void {
+    this.name = formData.name;
+    this.password = formData.password;
+    this.rememberMe = formData.rememberMe;
+    this.login();
+  }
+
+  onFormChange(formData: any): void {
+    // Update component properties when form changes
+    this.name = formData.name;
+    this.password = formData.password;
+    this.rememberMe = formData.rememberMe;
   }
 
   changeServer() {

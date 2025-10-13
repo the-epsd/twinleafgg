@@ -80,6 +80,10 @@ export class Banetteex extends PokemonCard {
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
 
+      if (maxAllowedDamage.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       // doing the actual moving of cards
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,

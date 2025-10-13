@@ -9,6 +9,7 @@ import { SocketCache } from './socket-cache';
 import { SocketWrapper, Response } from './socket-wrapper';
 import { deepCompare } from '../../utils/utils';
 import { Base64 } from '../../utils';
+import { ApiErrorEnum } from '../common/errors';
 
 export class CoreSocket {
 
@@ -96,6 +97,16 @@ export class CoreSocket {
   private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[] },
     response: Response<GameState>): void {
     const invited = this.core.clients.find(c => c.id === params.clientId);
+
+    // Check if the invited client is a bot with format restrictions
+    if (invited && this.isBotClient(invited)) {
+      const botClient = invited as any; // Cast to access bot-specific methods
+      if (!botClient.isFormatAllowed(params.gameSettings.format)) {
+        response('error', ApiErrorEnum.INVALID_FORMAT);
+        return;
+      }
+    }
+
     const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited);
     response('ok', CoreSocket.buildGameState(game));
   }
@@ -112,8 +123,7 @@ export class CoreSocket {
       rank: user.getRank(),
       lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
-      roleId: user.roleId,
-      customAvatar: user.customAvatar
+      roleId: user.roleId
     };
   }
 
@@ -155,6 +165,11 @@ export class CoreSocket {
   public dispose(): void {
     this.socket.removeListener('core:getInfo');
     this.socket.removeListener('core:createGame');
+  }
+
+  private isBotClient(client: Client): boolean {
+    // Check if the client has bot-specific methods
+    return 'isFormatAllowed' in client && 'getAllowedFormats' in client;
   }
 
 }

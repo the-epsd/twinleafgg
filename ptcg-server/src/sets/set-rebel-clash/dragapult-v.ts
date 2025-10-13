@@ -2,7 +2,6 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DragapultV extends PokemonCard {
@@ -43,12 +42,10 @@ export class DragapultV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-    }
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (this.movedToActiveThisTurn) {
+      const player = state.players.find(p => p.active.getPokemonCard() === this);
+
+      if (this.wasMovedToActiveThisTurn?.(player)) {
         effect.damage += 80;
       }
     }

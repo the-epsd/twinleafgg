@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType } from '../../game';
 import { ABILITY_USED, ADD_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Pidgeot extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,6 +40,10 @@ export class Pidgeot extends PokemonCard {
   public readonly QUICK_SEARCH_POWER_MARKER = 'QUICK_SEARCH_POWER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.QUICK_SEARCH_POWER_MARKER, this);
+    }
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 

@@ -42,6 +42,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   @Input() isThemeDeck: boolean = false;
 
+  public showFilters: boolean = false;
+
   public onClearDeck() {
     if (this.disabled) return;
     this.clearDeck.emit();
@@ -358,6 +360,10 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.deck.manualArchetype1 = archetype1;
     this.deck.manualArchetype2 = archetype2;
     this.deckChange.emit(this.deck);
+  }
+
+  public toggleFilters() {
+    this.showFilters = !this.showFilters;
   }
 
 }

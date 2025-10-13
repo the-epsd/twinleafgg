@@ -52,35 +52,29 @@ export class Regirock extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER || this.ATTACK_USED_2_MARKER)) {
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player,
+        { superType: SuperType.POKEMON, stage: Stage.BASIC },
+        { min: 0, max: 1, allowCancel: false });
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
     }
 
-    if (AFTER_ATTACK(effect, 0, this)) {
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { superType: SuperType.POKEMON, stage: Stage.BASIC }, { min: 0, max: 1, allowCancel: false });
-    }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      // Check marker
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
-
     return state;
-
   }
 }

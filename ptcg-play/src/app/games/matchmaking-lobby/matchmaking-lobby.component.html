@@ -7,117 +7,41 @@
     <!-- Format Selection - Central Layout -->
     <div class="format-navigation-container">
       <!-- Previous Button -->
-      <button mat-icon-button class="nav-button prev" (click)="previousFormat()" [disabled]="!canNavigatePrevious()">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
+      <twinleaf-previous-button [disabled]="!canNavigatePrevious()" (clicked)="previousFormat()">
+      </twinleaf-previous-button>
 
       <!-- Format Selection Container -->
       <div class="format-selection-container">
-        <!-- First Format -->
-        <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(0)?.value"
-          [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(0)?.value"
-          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(0)?.value)"
-          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(0)?.value) && onFormatSelected(getFormatAtIndex(0)?.value)"
-          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(0)?.value) && onFormatHover(getFormatAtIndex(0)?.value)"
-          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(0)">
+        <!-- Dynamic Format List -->
+        <div class="format-box" *ngFor="let format of getVisibleFormats(); let i = index"
+          [class.selected]="selectedFormat === format.value"
+          [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === format.value"
+          [class.disabled]="inQueue || !hasValidDeckForFormat(format.value)"
+          (click)="!inQueue && hasValidDeckForFormat(format.value) && onFormatSelected(format.value)"
+          (mouseenter)="hasValidDeckForFormat(format.value) && onFormatHover(format.value)"
+          (mouseleave)="onFormatHover(null)">
           <!-- Queue Count Overlay -->
-          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(0)?.value) > 0">
-            {{ getQueueCountForFormat(getFormatAtIndex(0)?.value) }} {{
-            getQueueCountForFormat(getFormatAtIndex(0)?.value) === 1 ? 'player' : 'players' }} in queue
+          <div class="queue-overlay" *ngIf="getQueueCountForFormat(format.value) > 0">
+            {{ getQueueCountForFormat(format.value) }} {{
+            getQueueCountForFormat(format.value) === 1 ? 'player' : 'players' }} in queue
           </div>
           <div class="format-artwork">
             <div class="deck-archetype">
-              <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(0)?.value))"
+              <ptcg-archetype [class]="getArchetype(getDeckForFormat(format.value))"
                 style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
             </div>
           </div>
           <div class="format-info">
-            <div class="format-name">{{ getFormatLabel(getFormatAtIndex(0)?.value) | translate }}</div>
-            <div class="deck-name">{{ getDeckForFormat(getFormatAtIndex(0)?.value)?.name || 'NO_DECK' | translate }}
-            </div>
-          </div>
-        </div>
-
-        <!-- Second Format -->
-        <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(1)?.value"
-          [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(1)?.value"
-          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(1)?.value)"
-          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(1)?.value) && onFormatSelected(getFormatAtIndex(1)?.value)"
-          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(1)?.value) && onFormatHover(getFormatAtIndex(1)?.value)"
-          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(1)">
-          <!-- Queue Count Overlay -->
-          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(1)?.value) > 0">
-            {{ getQueueCountForFormat(getFormatAtIndex(1)?.value) }} {{
-            getQueueCountForFormat(getFormatAtIndex(1)?.value) === 1 ? 'player' : 'players' }} in queue
-          </div>
-          <div class="format-artwork">
-            <div class="deck-archetype">
-              <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(1)?.value))"
-                style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
-            </div>
-          </div>
-          <div class="format-info">
-            <div class="format-name">{{ getFormatLabel(getFormatAtIndex(1)?.value) | translate }}</div>
-            <div class="deck-name">{{ getDeckForFormat(getFormatAtIndex(1)?.value)?.name || 'NO_DECK' | translate }}
-            </div>
-          </div>
-        </div>
-
-        <!-- Third Format -->
-        <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(2)?.value"
-          [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(2)?.value"
-          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(2)?.value)"
-          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatSelected(getFormatAtIndex(2)?.value)"
-          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(2)?.value) && onFormatHover(getFormatAtIndex(2)?.value)"
-          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(2)">
-          <!-- Queue Count Banner -->
-          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(2)?.value) > 0">
-            {{ getQueueCountForFormat(getFormatAtIndex(2)?.value) }} {{
-            getQueueCountForFormat(getFormatAtIndex(2)?.value) === 1 ? 'player' : 'players' }} in queue
-          </div>
-          <div class="format-artwork">
-            <div class="deck-archetype">
-              <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(2)?.value))"
-                style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
-            </div>
-          </div>
-          <div class="format-info">
-            <div class="format-name">{{ getFormatLabel(getFormatAtIndex(2)?.value) | translate }}</div>
-            <div class="deck-name">{{ getDeckForFormat(getFormatAtIndex(2)?.value)?.name || 'NO_DECK' | translate }}
-            </div>
-          </div>
-        </div>
-
-        <!-- Fourth Format -->
-        <div class="format-box" [class.selected]="selectedFormat === getFormatAtIndex(3)?.value"
-          [class.fade-on-hover]="selectedFormat && hoveredFormat && selectedFormat !== hoveredFormat && selectedFormat === getFormatAtIndex(3)?.value"
-          [class.disabled]="inQueue || !hasValidDeckForFormat(getFormatAtIndex(3)?.value)"
-          (click)="!inQueue && hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatSelected(getFormatAtIndex(3)?.value)"
-          (mouseenter)="hasValidDeckForFormat(getFormatAtIndex(3)?.value) && onFormatHover(getFormatAtIndex(3)?.value)"
-          (mouseleave)="onFormatHover(null)" *ngIf="getFormatAtIndex(3)">
-          <!-- Queue Count Banner -->
-          <div class="queue-overlay" *ngIf="getQueueCountForFormat(getFormatAtIndex(3)?.value) > 0">
-            {{ getQueueCountForFormat(getFormatAtIndex(3)?.value) }} {{
-            getQueueCountForFormat(getFormatAtIndex(3)?.value) === 1 ? 'player' : 'players' }} in queue
-          </div>
-          <div class="format-artwork">
-            <div class="deck-archetype">
-              <ptcg-archetype [class]="getArchetype(getDeckForFormat(getFormatAtIndex(3)?.value))"
-                style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
-            </div>
-          </div>
-          <div class="format-info">
-            <div class="format-name">{{ getFormatLabel(getFormatAtIndex(3)?.value) | translate }}</div>
-            <div class="deck-name">{{ getDeckForFormat(getFormatAtIndex(3)?.value)?.name || 'NO_DECK' | translate }}
+            <div class="format-name">{{ getFormatLabel(format.value) | translate }}</div>
+            <div class="deck-name">{{ getDeckForFormat(format.value)?.name || 'NO_DECK' | translate }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- Next Button -->
-      <button mat-icon-button class="nav-button next" (click)="nextFormat()" [disabled]="!canNavigateNext()">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
+      <twinleaf-next-button [disabled]="!canNavigateNext()" (clicked)="nextFormat()">
+      </twinleaf-next-button>
     </div>
 
     <!-- Connection Status -->
@@ -126,13 +50,10 @@
     </div>
 
     <!-- Play Button -->
-    <button mat-raised-button [class.in-queue]="inQueue" [class.error]="connectionError"
-      (click)="inQueue ? leaveQueue() : joinQueue()"
-      [disabled]="!deckId || onCooldown || loading || connectionError || !selectedFormat" class="play-button">
-      <mat-spinner *ngIf="loading" diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
-      {{ (inQueue ? ('BUTTON_LEAVE_QUEUE' | translate) :
-      (onCooldown ? ('BUTTON_COOLDOWN' | translate) + ' (' + cooldownSeconds + ')' :
-      (!selectedFormat ? 'SELECT_FORMAT' : 'BUTTON_FIND_MATCH') | translate)) }}
-    </button>
+    <twinleaf-play-button [text]="(!selectedFormat ? 'SELECT_FORMAT' : 'BUTTON_FIND_MATCH') | translate"
+      [inQueue]="inQueue" [loading]="loading" [disabled]="!deckId || !selectedFormat" [onCooldown]="onCooldown"
+      [cooldownSeconds]="cooldownSeconds" [connectionError]="connectionError"
+      (clicked)="inQueue ? leaveQueue() : joinQueue()">
+    </twinleaf-play-button>
   </div>
 </div>

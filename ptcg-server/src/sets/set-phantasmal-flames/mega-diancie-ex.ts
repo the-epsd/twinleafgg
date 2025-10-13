@@ -28,7 +28,7 @@ export class MegaDiancieex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M2';
+  public set: string = 'MBD';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Diancie ex';

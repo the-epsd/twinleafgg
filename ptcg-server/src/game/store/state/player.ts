@@ -1,5 +1,5 @@
 import { GameError } from '../../game-error';
-import { GameMessage } from '../../game-message';
+import { GameMessage, GameLog } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
@@ -87,6 +87,9 @@ export class Player {
 
   public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
+
+  // Track Pokemon cards that moved from Bench to Active this turn
+  public movedToActiveThisTurn: number[] = [];
 
   usedRapidStrikeSearchThisTurn: any;
   usedExcitingStageThisTurn: any;
@@ -235,7 +238,7 @@ export class Player {
     }
   }
 
-  switchPokemon(target: PokemonCardList) {
+  switchPokemon(target: PokemonCardList, store?: any, state?: any) {
     const benchIndex = this.bench.indexOf(target);
     if (benchIndex !== -1) {
       const temp = this.active;
@@ -263,8 +266,25 @@ export class Player {
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.active.getPokemonCard()!.movedToActiveThisTurn = true;
+      const activePokemon = this.active.getPokemonCard();
+      if (activePokemon) {
+        // Add to new tracking system
+        if (!this.movedToActiveThisTurn.includes(activePokemon.id)) {
+          this.movedToActiveThisTurn.push(activePokemon.id);
+        }
+
+        // Keep existing boolean for backwards compatibility
+        activePokemon.movedToActiveThisTurn = true;
+
+        // Add logging if store and state are available
+        if (store && state) {
+          store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, {
+            name: this.name,
+            active: activePokemon.name,
+            benched: temp.getPokemonCard()?.name || 'Unknown'
+          });
+        }
+      }
     }
   }
 }

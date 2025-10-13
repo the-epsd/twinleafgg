@@ -55,9 +55,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public isFormatAnimating = false; // Track if format animation is playing
   public hoveredFormat: Format | null = null; // Track which format is being hovered
   public formatQueueCounts: { [key: number]: number } = {}; // Track queue counts per format
+  public visibleFormatCount = 4; // Track how many formats are currently visible
 
   private queueTimeout: ReturnType<typeof setTimeout> | null = null;
   private cooldownInterval: ReturnType<typeof setInterval> | null = null;
+  private resizeHandler = () => this.updateVisibleFormatCount();
   private queueTimerInterval: ReturnType<typeof setInterval> | null = null;
   private readonly MAX_QUEUE_TIME = 300; // 5 minutes
   public onCooldown = false;
@@ -126,6 +128,12 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Request initial queue data
     this.requestQueueData();
+
+    // Update visible format count based on screen size
+    this.updateVisibleFormatCount();
+
+    // Listen for window resize events to update visible format count
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   ngOnDestroy(): void {
@@ -134,6 +142,9 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
       this.leaveQueueSilently();
     }
     this.socketService.off('matchmaking:queueUpdate');
+
+    // Remove resize event listener
+    window.removeEventListener('resize', this.resizeHandler);
     this.socketService.off('matchmaking:gameCreated');
     this.destroy$.next();
     this.destroy$.complete();
@@ -573,13 +584,41 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   // Helper method to get format by index
   getFormatAtIndex(index: number): { value: Format; label: string } | undefined {
-    const startIndex = this.currentPage * 4;
+    const startIndex = this.currentPage * this.visibleFormatCount;
     const targetIndex = startIndex + index;
 
     if (targetIndex >= 0 && targetIndex < this.formats.length) {
       return this.formats[targetIndex];
     }
     return undefined;
+  }
+
+  // Get the currently visible formats based on current page and visible count
+  getVisibleFormats(): { value: Format; label: string }[] {
+    const startIndex = this.currentPage * this.visibleFormatCount;
+    const endIndex = startIndex + this.visibleFormatCount;
+    return this.formats.slice(startIndex, endIndex);
+  }
+
+  // Update visible format count based on screen size
+  updateVisibleFormatCount(): void {
+    const width = window.innerWidth;
+
+    if (width <= 767) {
+      this.visibleFormatCount = 1;
+    } else if (width <= 1079) {
+      this.visibleFormatCount = 2;
+    } else if (width <= 1439) {
+      this.visibleFormatCount = 3;
+    } else {
+      this.visibleFormatCount = 4;
+    }
+
+    // Adjust current page if it's now beyond the maximum
+    const maxPage = Math.floor((this.formats.length - 1) / this.visibleFormatCount);
+    if (this.currentPage > maxPage) {
+      this.currentPage = maxPage;
+    }
   }
 
   // Navigation methods
@@ -597,7 +636,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   nextFormat(): void {
     if (this.inQueue) return;
 
-    const maxPage = Math.floor((this.formats.length - 1) / 4);
+    const maxPage = Math.floor((this.formats.length - 1) / this.visibleFormatCount);
     if (this.currentPage < maxPage) {
       this.currentPage++;
 
@@ -613,21 +652,21 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   canNavigateNext(): boolean {
     if (this.inQueue) return false;
-    const maxPage = Math.floor((this.formats.length - 1) / 4);
+    const maxPage = Math.floor((this.formats.length - 1) / this.visibleFormatCount);
     return this.currentPage < maxPage;
   }
 
   // Helper method to get current page info
   getCurrentPageInfo(): { current: number; total: number } {
-    const totalPages = Math.ceil(this.formats.length / 4);
+    const totalPages = Math.ceil(this.formats.length / this.visibleFormatCount);
     return { current: this.currentPage + 1, total: totalPages };
   }
 
   // Helper method to load decks for visible formats
   private loadVisibleFormatDecks(): void {
-    // Load decks for the 4 formats currently visible
-    for (let i = 0; i < 4; i++) {
-      const format = this.getFormatAtIndex(i);
+    // Load decks for the currently visible formats
+    const visibleFormats = this.getVisibleFormats();
+    for (const format of visibleFormats) {
       if (format && !this.formatDecks[format.value]) {
         this.loadDecksForFormat(format.value);
       }

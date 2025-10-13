@@ -117,7 +117,7 @@ export class ReplaysComponent implements OnInit {
     if (this.sessionService.session.config) {
       pageSize = this.sessionService.session.config.defaultPageSize;
     }
-    this.pageSizeOptions = [ pageSize ];
+    this.pageSizeOptions = [pageSize];
     this.pageSize = pageSize;
   }
 
@@ -227,7 +227,8 @@ export class ReplaysComponent implements OnInit {
           if (avatar) {
             this.refreshList();
           }
-      }});
+        }
+      });
   }
 
   private refreshList() {

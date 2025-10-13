@@ -2,7 +2,7 @@ import { Player } from './player';
 import { Prompt } from '../prompts/prompt';
 import { StateLog } from './state-log';
 import { Rules } from './rules';
-import { Attack, GameSettings } from '../..';
+import { Attack, GameSettings, PokemonCard } from '../..';
 
 export enum GamePhase {
   WAITING_FOR_PLAYERS,
@@ -46,7 +46,7 @@ export class State {
 
   public lastAttack: Attack | null = null;
 
-  public playerLastAttack: { [playerId: number]: Attack } = {};
+  public playerLastAttack: { [playerId: number]: { attack: Attack, sourceCard: PokemonCard } } = {};
 
   public isSuddenDeath?: boolean;
 

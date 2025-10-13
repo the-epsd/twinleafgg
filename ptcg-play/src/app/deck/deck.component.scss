@@ -7,11 +7,7 @@ ptcg-archetype,
   display: flex;
 }
 
-.deck-button {
-  margin-top: 12px;
-  background-color: #449058;
-  border-radius: 16px;
-}
+// Deck button styles moved to twinleaf-button component
 
 .deck-grid-container {
   padding: 16px;
@@ -227,35 +223,43 @@ ptcg-archetype,
   margin-left: -4px;
 }
 
-.format-tabs {
+.format-tabs-container {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 12px 16px 4px;
-  overflow-x: auto;
   margin-bottom: 16px;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-  }
+  gap: 16px;
 
   @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
     padding: 12px 8px 4px;
-    justify-content: flex-start;
+    gap: 12px;
+  }
+}
+
+.format-tabs {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.format-tabs-primary {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+
+  @media screen and (max-width: 768px) {
+    gap: 4px;
   }
 }
 
 .format-tab {
   padding: 6px 16px;
-  margin-right: 8px;
   border-radius: 16px;
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(42, 47, 58, 0.5);
@@ -264,6 +268,7 @@ ptcg-archetype,
   letter-spacing: 0.5px;
   min-width: unset;
   flex-shrink: 0;
+  white-space: nowrap;
 
   &:hover {
     color: white;
@@ -278,8 +283,36 @@ ptcg-archetype,
 
   @media screen and (max-width: 768px) {
     padding: 6px 12px;
-    margin-right: 6px;
     font-size: 11px;
+  }
+}
+
+.more-formats-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+
+  .more-text {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.more-formats-menu {
+  .mat-menu-item {
+    &.active {
+      background-color: #384259;
+      color: white;
+      font-weight: bold;
+    }
   }
 }
 

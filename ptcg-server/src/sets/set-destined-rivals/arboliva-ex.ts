@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Arbolivaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -61,9 +60,7 @@ export class Arbolivaex extends PokemonCard {
         const results = targets || [];
         for (const result of results) {
           const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new DealDamageEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, result.damage, [target]);
         }
       });
     }

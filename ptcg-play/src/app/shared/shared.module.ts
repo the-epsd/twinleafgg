@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { NgModule } from '@angular/core';
 import { DndModule } from '@ng-dnd/core';
@@ -23,6 +23,11 @@ import { UserInfoModule } from './user-info/user-info.module';
 import { ValidationModule } from './validation/validation.module';
 import { ReconnectionDialogComponent } from './components/reconnection-dialog/reconnection-dialog.component';
 import { ConnectionStatusComponent } from './components/connection-status/connection-status.component';
+import { TwinleafPlayButtonComponent } from './twinleaf-play-button/twinleaf-play-button.component';
+import { TwinleafPreviousButtonComponent } from './twinleaf-previous-button/twinleaf-previous-button.component';
+import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-next-button.component';
+import { TwinleafButtonComponent } from './twinleaf-button/twinleaf-button.component';
+import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
 
 @NgModule({
   imports: [
@@ -48,7 +53,11 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     SidebarComponent,
     SidebarContainerComponent,
     ReconnectionDialogComponent,
-    ConnectionStatusComponent
+    ConnectionStatusComponent,
+    TwinleafPlayButtonComponent,
+    TwinleafPreviousButtonComponent,
+    TwinleafNextButtonComponent,
+    TwinleafButtonComponent
   ],
   exports: [
     AlertModule,
@@ -61,6 +70,7 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     ImageCacheModule,
     InfoComponent,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     SearchBoxComponent,
     SidebarComponent,
@@ -72,7 +82,12 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     UserInfoModule,
     ValidationModule,
     ReconnectionDialogComponent,
-    ConnectionStatusComponent
+    ConnectionStatusComponent,
+    TwinleafPlayButtonComponent,
+    TwinleafPreviousButtonComponent,
+    TwinleafNextButtonComponent,
+    TwinleafButtonComponent,
+    TwinleafFormModule
   ],
   providers: [
     SessionService

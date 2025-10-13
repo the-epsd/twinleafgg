@@ -56,6 +56,9 @@ export function initNextTurn(store: StoreLike, state: State): State {
   state.turn++;
   store.log(state, GameLog.LOG_TURN, { turn: state.turn });
 
+  // Clear movement tracking for the new turn
+  player.movedToActiveThisTurn = [];
+
   // Skip draw card on first turn
   if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
     return state;

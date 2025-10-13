@@ -75,7 +75,7 @@ export class Login extends Controller {
   })
   public async onLogin(req: Request, res: Response) {
     const body: LoginRequest = req.body;
-    const user = await User.findOne({ where: { name: body.name }, relations: ['customAvatar'] });
+    const user = await User.findOne({ where: { name: body.name } });
 
     if (this.rateLimit.isLimitExceeded(req.ip)) {
       res.status(400);

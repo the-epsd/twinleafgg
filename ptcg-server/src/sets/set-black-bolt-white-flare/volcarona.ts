@@ -22,6 +22,7 @@ export class Volcarona extends PokemonCard {
   public powers = [{
     name: 'Heat Wave Scales',
     powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
     text: 'Once during your turn, you may discard a Basic [R] Energy card from your hand in order to leave your opponent\'s Active Pokémon Burned.'
   }];
 

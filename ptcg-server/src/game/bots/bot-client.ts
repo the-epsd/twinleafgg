@@ -18,11 +18,13 @@ export abstract class BotClient implements Client {
   public core: Core | undefined;
   public games: Game[] = [];
   protected decks: Map<Format, string[]> = new Map();
+  protected allowedFormats: Format[] = [];
 
-  constructor(name: string) {
+  constructor(name: string, allowedFormats?: Format[]) {
     this.user = new User();
     this.user.name = name;
     this.name = name;
+    this.allowedFormats = allowedFormats || [];
   }
 
   public async getDeck(format: Format): Promise<string[] | null> {
@@ -35,6 +37,14 @@ export abstract class BotClient implements Client {
 
   public setDeck(format: Format, deck: string[]): void {
     this.decks.set(format, deck);
+  }
+
+  public isFormatAllowed(format: Format): boolean {
+    return this.allowedFormats.length === 0 || this.allowedFormats.includes(format);
+  }
+
+  public getAllowedFormats(): Format[] {
+    return [...this.allowedFormats];
   }
 
   public abstract onConnect(client: Client): void;

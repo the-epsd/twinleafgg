@@ -132,6 +132,7 @@
   "GAMES_TURN": "Turn",
   "GAMES_YOUR_DECK": "Your deck",
   "GAMES_YOUR_DECK_TITLE": "Choose your deck",
+  "GAMES_BOT_FORMAT_LOCKED": "This bot only plays in its specific format. Format selection is locked.",
   "LABEL_ACTIONS": "Actions",
   "LABEL_ANY": "Any",
   "LABEL_ASLEEP": "Asleep",
