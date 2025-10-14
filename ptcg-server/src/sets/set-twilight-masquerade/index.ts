@@ -25,6 +25,7 @@ import { Dipplin } from './dipplin';
 import { Dragapultex } from './dragapult-ex';
 import { Drakloak } from './drakloak';
 import { Dreepy } from './dreepy';
+import { Enamorus } from './enamorus';
 import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
@@ -118,6 +119,7 @@ export const setTwilightMasquerade: Card[] = [
   new Drakloak(),
   new Dragapultex(),
   new Emolga(),
+  new Enamorus(),
   new Farfetchd(),
   new Fezandipiti(),
   new Finizen(),
