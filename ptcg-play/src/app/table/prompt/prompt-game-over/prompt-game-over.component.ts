@@ -4,6 +4,7 @@ import { GameWinner } from 'ptcg-server';
 import { GameOverPrompt } from './game-over.prompt';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { SessionService } from '../../../shared/session/session.service';
+import { GameService } from '../../../api/services/game.service';
 
 @Component({
   selector: 'ptcg-prompt-game-over',
@@ -18,17 +19,14 @@ export class PromptGameOverComponent {
   public GameWinner = GameWinner;
 
   constructor(
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private gameService: GameService
   ) { }
 
   public confirm() {
-    const games = this.sessionService.session.gameStates;
-    const index = games.findIndex(g => g.localId === this.gameState.localId);
-    if (index !== -1) {
-      const gameStates = this.sessionService.session.gameStates.slice();
-      gameStates[index] = { ...gameStates[index], gameOver: true };
-      this.sessionService.set({ gameStates });
-    }
+    // Remove the game state completely when user confirms game over
+    this.gameService.removeGameState(this.gameState.gameId);
+    this.gameService.removeLocalGameState(this.gameState.localId);
   }
 
 }

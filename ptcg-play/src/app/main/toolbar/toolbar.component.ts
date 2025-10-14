@@ -47,13 +47,25 @@ export class ToolbarComponent implements OnInit {
     private translate: TranslateService,
     private gameService: GameService
   ) {
-    this.gameStates$ = this.sessionService.get(session => session.gameStates);
+    this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
+      map(gameStates => gameStates.filter(gameState => {
+        // Filter out finished games, games with gameOver flag, and deleted games
+        if (gameState.deleted || gameState.gameOver) {
+          return false;
+        }
+        // Check if game is in FINISHED phase
+        if (gameState.state && gameState.state.phase === GamePhase.FINISHED) {
+          return false;
+        }
+        return true;
+      }))
+    );
 
     this.hasTableNotifications$ = this.gameStates$.pipe(
       map(gameStates => {
         const clientId = this.sessionService.session.clientId;
         return gameStates.some(gameState => {
-          if (gameState.replay || gameState.deleted) {
+          if (gameState.replay) {
             return false;
           }
           const state = gameState.state;
@@ -70,7 +82,7 @@ export class ToolbarComponent implements OnInit {
       map(gameStates => {
         const clientId = this.sessionService.session.clientId;
         for (const gameState of gameStates) {
-          if (gameState.replay || gameState.deleted) {
+          if (gameState.replay) {
             continue;
           }
           const state = gameState.state;
@@ -93,7 +105,7 @@ export class ToolbarComponent implements OnInit {
       map(gameStates => {
         const clientId = this.sessionService.session.clientId;
         for (const gameState of gameStates) {
-          if (gameState.replay || gameState.deleted) {
+          if (gameState.replay) {
             continue;
           }
           const state = gameState.state;

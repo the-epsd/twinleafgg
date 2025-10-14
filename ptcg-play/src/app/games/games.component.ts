@@ -105,6 +105,10 @@ export class GamesComponent implements OnInit, OnDestroy {
         }),
         switchMap(result => {
           this.loading = true;
+          // Close the sidebar when the user confirms the invite (result is not undefined)
+          if (result !== undefined) {
+            this.closeSidebar();
+          }
           return result !== undefined
             ? this.deckService.getDeck(result.deckId).pipe(map(deckResult => ({
               deck: deckResult.deck.cards,

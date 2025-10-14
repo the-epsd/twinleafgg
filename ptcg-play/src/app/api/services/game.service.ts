@@ -133,12 +133,11 @@ export class GameService {
     const games = this.sessionService.session.gameStates;
     const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
     if (index !== -1) {
-      const localGameId = games[index].localId;
       // Use concede instead of leave to properly forfeit the game
       this.socketService.emit('game:concede', { gameId })
         .subscribe(() => {
-          this.removeGameState(gameId);
-          this.removeLocalGameState(localGameId);
+          // Don't immediately remove the game state - let the server send the FINISHED state first
+          // The game will be removed when the user confirms the game over dialog
         }, (error: ApiError) => this.handleError(error));
     }
   }
