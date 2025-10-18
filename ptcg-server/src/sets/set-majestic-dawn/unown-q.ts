@@ -58,6 +58,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownQ,
       // Move all attached cards to discard first
       const otherCards = unownQSlot.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !unownQSlot.getPokemons().includes(card as PokemonCard) &&
         (!unownQSlot.tools || !unownQSlot.tools.includes(card))
       );
       const tools = [...unownQSlot.tools];

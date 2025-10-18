@@ -65,6 +65,7 @@ export class Aipom extends PokemonCard {
       const pokemons = aipomSlot.getPokemons();
       const otherCards = aipomSlot.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !pokemons.includes(card as PokemonCard) &&
         (!aipomSlot.tools || !aipomSlot.tools.includes(card))
       );
       const tools = [...aipomSlot.tools];

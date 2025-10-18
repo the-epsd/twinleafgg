@@ -49,6 +49,7 @@ export class MistysPsyduck extends PokemonCard {
       // Get attached cards (energy, tools, etc.)
       const otherCards = cardList.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !cardList.getPokemons().includes(card as PokemonCard) &&
         (!cardList.tools || !cardList.tools.includes(card))
       );
       const tools = [...cardList.tools];

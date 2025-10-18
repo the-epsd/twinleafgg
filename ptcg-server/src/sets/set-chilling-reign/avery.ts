@@ -71,6 +71,7 @@ export class Avery extends TrainerCard {
             const pokemons = cardList.getPokemons();
             const otherCards = cardList.cards.filter((card: Card) =>
               !(card instanceof PokemonCard) &&
+              !pokemons.includes(card as PokemonCard) &&
               (!cardList.tools || !cardList.tools.includes(card))
             );
             const tools = [...cardList.tools];

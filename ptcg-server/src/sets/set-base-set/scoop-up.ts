@@ -50,6 +50,7 @@ export class ScoopUp extends TrainerCard {
           // Get non-Pokémon cards (excluding tools)
           const otherCards = cardList.cards.filter(card =>
             !(card instanceof PokemonCard) &&
+            !basicPokemonCards.includes(card as PokemonCard) &&
             (!cardList.tools || !cardList.tools.includes(card))
           );
           const tools = [...cardList.tools];

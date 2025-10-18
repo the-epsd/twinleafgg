@@ -53,6 +53,7 @@ export class Wishiwashi extends PokemonCard {
       const pokemons = pokemonCardList.getPokemons();
       const otherCards = cardList.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !pokemons.includes(card as PokemonCard) &&
         (!pokemonCardList.tools || !pokemonCardList.tools.includes(card))
       );
       const tools = [...pokemonCardList.tools];
