@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
 :host {
-  display: block;
-  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 80vh;
   background: #1b202b;
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  height: 100%;
 }
 
 .invite-game-container {
@@ -19,11 +21,11 @@
   font-family: 'Urbanist', sans-serif;
 }
 
-// Compact Header
+// Header Section
 .invite-header {
   position: relative;
   min-height: 80px;
-  background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+  background: #1b202b;
   border-bottom: 1px solid rgba(69, 144, 88, 0.3);
 
   .header-content {
@@ -44,11 +46,11 @@
   gap: 8px;
 
   .invite-title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     color: #ffffff;
     font-family: 'Urbanist', sans-serif;
-    margin: 0;
+    margin: 0 0 8px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
@@ -98,11 +100,12 @@
 // Main Content
 .invite-content {
   flex: 1;
-  padding: 1.5rem;
+  padding: 2rem;
   overflow-y: auto;
   position: relative;
   max-height: calc(90vh - 200px); // Reserve space for header and buttons
   min-height: 200px;
+  scroll-behavior: auto;
 }
 
 // Loading State
@@ -195,13 +198,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 
     .selection-title {
       color: #ffffff;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 700;
-      margin: 0;
+      margin: 0 0 8px 0;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -210,25 +213,22 @@
       color: rgba(255, 255, 255, 0.7);
       font-size: 14px;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
   }
 
   .deck-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1rem;
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 100%;
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 0.75rem;
     }
 
     @media (max-width: 480px) {
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 0.5rem;
     }
   }
@@ -255,19 +255,8 @@
     &.selected {
       border-color: #459058;
       background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(69, 144, 88, 0.3);
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #459058, #5ba86b);
-        box-shadow: 0 0 10px rgba(69, 144, 88, 0.5);
-      }
+      transform: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     &.disabled {
@@ -293,8 +282,8 @@
   }
 
   .deck-artwork {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -413,8 +402,9 @@
   justify-content: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1b202b;
+  border-top: 1px solid rgba(69, 144, 88, 0.3);
+  flex-shrink: 0;
 
   // Action button styles moved to twinleaf-button component
 }
@@ -435,17 +425,17 @@
 
   .invite-title-section {
     .invite-title {
-      font-size: 20px;
+      font-size: 24px;
     }
   }
 
   .invite-content {
-    padding: 1rem;
-    max-height: calc(95vh - 180px); // Reserve more space for buttons
+    padding: 1.5rem;
+    max-height: calc(95vh - 220px);
   }
 
   .invite-actions {
-    padding: 1rem;
+    padding: 0.75rem;
     flex-direction: column;
 
     // Action button responsive styles moved to twinleaf-button component
@@ -454,7 +444,7 @@
 
 @media (max-width: 480px) {
   :host {
-    max-height: 95vh;
+    max-height: 98vh;
   }
 
   .invite-header {
@@ -467,17 +457,17 @@
 
   .invite-title-section {
     .invite-title {
-      font-size: 18px;
+      font-size: 20px;
     }
   }
 
   .invite-content {
-    padding: 0.75rem;
-    max-height: 75vh;
+    padding: 1rem;
+    max-height: calc(98vh - 200px);
   }
 
   .deck-selection .deck-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
 
   .deck-card {
@@ -486,12 +476,27 @@
   }
 
   .deck-artwork {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     margin-bottom: 0.5rem;
   }
 
   .deck-name {
     font-size: 12px;
+  }
+}
+
+// Extra small screens - ensure buttons are always visible
+@media (max-width: 400px) {
+  :host {
+    max-height: 100vh;
+  }
+
+  .invite-content {
+    max-height: calc(100vh - 180px);
+  }
+
+  .invite-actions {
+    padding: 0.75rem;
   }
 }

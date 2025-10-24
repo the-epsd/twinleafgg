@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       type: 'password',
       placeholder: 'Enter password',
       required: true,
-      validation: Validators.minLength(6)
+      validation: Validators.minLength(3)
     },
     {
       name: 'rememberMe',

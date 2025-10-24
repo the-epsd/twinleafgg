@@ -78,6 +78,7 @@ export class Phione extends PokemonCard {
           // Get attached cards (energy, tools, etc.)
           const otherCards = phioneList.cards.filter(card =>
             !(card instanceof PokemonCard) &&
+            !phioneList.getPokemons().includes(card as PokemonCard) &&
             (!phioneList.tools || !phioneList.tools.includes(card))
           );
           const tools = [...phioneList.tools];

@@ -68,6 +68,7 @@ export class Unown extends PokemonCard {
       const pokemons = monCardList.getPokemons();
       const otherCards = monCardList.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !pokemons.includes(card as PokemonCard) &&
         (!monCardList.tools || !monCardList.tools.includes(card))
       );
       const tools = [...monCardList.tools];

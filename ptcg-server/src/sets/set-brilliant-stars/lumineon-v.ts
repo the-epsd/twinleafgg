@@ -103,6 +103,7 @@ export class LumineonV extends PokemonCard {
       const pokemons = player.active.getPokemons();
       const otherCards = player.active.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !pokemons.includes(card as PokemonCard) &&
         (!player.active.tools || !player.active.tools.includes(card))
       );
       const tools = [...player.active.tools];

@@ -61,6 +61,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownG,
 
       const otherCards = unownGSlot.cards.filter(card =>
         !(card instanceof PokemonCard) &&
+        !unownGSlot.getPokemons().includes(card as PokemonCard) &&
         (!unownGSlot.tools || !unownGSlot.tools.includes(card))
       );
       const tools = [...unownGSlot.tools];

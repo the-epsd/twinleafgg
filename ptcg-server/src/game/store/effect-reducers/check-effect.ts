@@ -131,6 +131,7 @@ function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: numbe
           const pokemons = cardList.getPokemons();
           const otherCards = cardList.cards.filter(card =>
             !(card instanceof PokemonCard) &&
+            !pokemons.includes(card as PokemonCard) &&
             (!cardList.tools || !cardList.tools.includes(card))
           );
           const tools = [...cardList.tools];
@@ -276,12 +277,8 @@ export function endGame(store: StoreLike, state: State, winner: GameWinner): Sta
     return state;
   }
 
-  if ([
-    GamePhase.WAITING_FOR_PLAYERS,
-    GamePhase.PLAYER_TURN,
-    GamePhase.ATTACK,
-    GamePhase.BETWEEN_TURNS
-  ].includes(state.phase) === false) {
+  // Allow ending the game during any phase except FINISHED
+  if (state.phase === GamePhase.FINISHED) {
     return state;
   }
 
