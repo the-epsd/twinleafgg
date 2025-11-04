@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface TwinleafFormField {
   name: string;
@@ -11,6 +12,7 @@ export interface TwinleafFormField {
   options?: { value: any; label: string }[];
   hint?: string;
   icon?: string;
+  value?: any;
 }
 
 @Component({
@@ -30,8 +32,12 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
   @Output() formChange = new EventEmitter<any>();
 
   form: FormGroup;
+  submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private translate: TranslateService
+  ) {
     this.form = this.fb.group({});
   }
 
@@ -57,7 +63,10 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
         validators.push(field.validation);
       }
 
-      formControls[field.name] = [field.type === 'checkbox' ? false : '', validators];
+      const defaultValue = field.value !== undefined
+        ? field.value
+        : (field.type === 'checkbox' ? false : '');
+      formControls[field.name] = [defaultValue, validators];
     });
 
     this.form = this.fb.group(formControls);
@@ -69,6 +78,7 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.submitted = true;
     if (this.form.valid && !this.loading && !this.disabled) {
       this.formSubmit.emit(this.form.value);
     }
@@ -76,18 +86,19 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
 
   getFieldError(fieldName: string): string {
     const field = this.form.get(fieldName);
-    if (field && field.errors && field.touched) {
+    if (field && field.errors && this.submitted) {
+      const translatedLabel = this.getTranslatedLabel(fieldName);
       if (field.errors['required']) {
-        return `${this.getFieldLabel(fieldName)} is required`;
+        return `${translatedLabel} is required`;
       }
       if (field.errors['email']) {
         return 'Please enter a valid email address';
       }
       if (field.errors['minlength']) {
-        return `${this.getFieldLabel(fieldName)} must be at least ${field.errors['minlength'].requiredLength} characters`;
+        return `${translatedLabel} must be at least ${field.errors['minlength'].requiredLength} characters`;
       }
       if (field.errors['maxlength']) {
-        return `${this.getFieldLabel(fieldName)} must not exceed ${field.errors['maxlength'].requiredLength} characters`;
+        return `${translatedLabel} must not exceed ${field.errors['maxlength'].requiredLength} characters`;
       }
     }
     return '';
@@ -98,13 +109,21 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
     return field ? field.label : fieldName;
   }
 
+  getTranslatedLabel(fieldName: string): string {
+    const field = this.fields.find(f => f.name === fieldName);
+    if (field) {
+      return this.translate.instant(field.label);
+    }
+    return fieldName;
+  }
+
   isFieldInvalid(fieldName: string): boolean {
     const field = this.form.get(fieldName);
-    return !!(field && field.invalid && field.touched);
+    return !!(field && field.invalid && this.submitted);
   }
 
   isFieldValid(fieldName: string): boolean {
     const field = this.form.get(fieldName);
-    return !!(field && field.valid && field.touched);
+    return !!(field && field.valid && this.submitted);
   }
 }

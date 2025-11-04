@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       name: 'name',
       label: 'LOGIN_USERNAME',
       type: 'text',
-      placeholder: 'Enter username',
+      placeholder: 'LOGIN_USERNAME',
       required: true,
       validation: Validators.minLength(3)
     },
@@ -92,14 +92,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       name: 'password',
       label: 'LOGIN_PASSWORD',
       type: 'password',
-      placeholder: 'Enter password',
+      placeholder: 'LOGIN_PASSWORD',
       required: true,
       validation: Validators.minLength(3)
     },
     {
       name: 'rememberMe',
       label: 'LOGIN_REMEMBER_ME',
-      type: 'checkbox'
+      type: 'checkbox',
+      value: true
     }
   ];
 
