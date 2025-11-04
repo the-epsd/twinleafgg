@@ -256,7 +256,7 @@
   "REGISTER_NAME": "Pseudo en jeu",
   "REGISTER_NAME_HINT": "Les autres joueurs verront ce pseudo unique en jeu. Merci d'utiliser au moins 6 caractères alphanumériques.",
   "REGISTER_NAME_TAKEN": "Ce nom est déjà utilisé.",
-  "REGISTER_NOTE": "Copyright © Twinleaf Ltd. 2024",
+  "REGISTER_NOTE": "Copyright © Twinleaf Ltd. 2025",
   "REGISTER_PASSWORD": "Mot de passe",
   "REGISTER_PASSWORD_CONFIRM": "Confirmer le mot de passe",
   "REGISTER_PASSWORD_CONFIRM_HINT": "Merci de confirmer votre mot de passe.",

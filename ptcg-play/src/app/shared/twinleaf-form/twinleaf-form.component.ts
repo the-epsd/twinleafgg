@@ -100,6 +100,15 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
       if (field.errors['maxlength']) {
         return `${translatedLabel} must not exceed ${field.errors['maxlength'].requiredLength} characters`;
       }
+      if (field.errors['name']) {
+        return this.translate.instant('VALIDATION_INVALID_NAME_FORMAT');
+      }
+      if (field.errors['password']) {
+        return this.translate.instant('VALIDATION_INVALID_PASSWORD_FORMAT');
+      }
+      if (field.errors['passwordMatch']) {
+        return this.translate.instant('VALIDATION_PASSWORD_MATCH');
+      }
     }
     return '';
   }

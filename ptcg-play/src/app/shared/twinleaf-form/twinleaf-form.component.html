@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <div class="field-hint" *ngIf="field.hint">{{ field.hint }}</div>
+        <div class="field-hint" *ngIf="field.hint">{{ field.hint | translate }}</div>
         <div class="field-error" *ngIf="showValidation && isFieldInvalid(field.name)">
           {{ getFieldError(field.name) }}
         </div>
