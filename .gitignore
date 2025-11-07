@@ -58,3 +58,4 @@ ptcg-server/dist
 ptcg-server/src/sets/set-test/
 /.kiro
 MEMORY_OPTIMIZATION_GUIDE.md
+frontend-cleanup-report.md

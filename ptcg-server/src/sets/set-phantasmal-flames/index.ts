@@ -2,6 +2,7 @@ import { Card } from '../../game';
 import { BattleColosseum } from './battle-colosseum';
 import { Bronzong } from './bronzong';
 import { Bronzor } from './bronzor';
+import { Buneary } from './buneary';
 import { Carvanha } from './carvanha';
 import { Ceruledge } from './ceruledge';
 import { Charcadet } from './charcadet';
@@ -45,6 +46,7 @@ export const setPhantasmalFlames: Card[] = [
   new BattleColosseum(),
   new Bronzong(),
   new Bronzor(),
+  new Buneary(),
   new Carvanha(),
   new Ceruledge(),
   new Charcadet(),

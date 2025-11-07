@@ -15,38 +15,21 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const opponent = StateUtils.getOpponent(state, player);
   const name = effect.trainerCard.name;
 
-  // Count Cross Switchers in hand
-  const count = player.hand.cards.reduce((sum, c) => {
-    return sum + (c.name === name ? 1 : 0);
-  }, 0);
-
-  // Must have 2 Cross Switchers to play
-  if (count < 2) {
+  // Must have another Cross Switcher in hand besides this one
+  const second = player.hand.cards.find(c => {
+    return c.name === name && c !== effect.trainerCard;
+  });
+  if (second === undefined) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   // Check if opponent has any benched Pokemon
-  const benchCount = opponent.bench.reduce((sum, b) => {
-    return sum + (b.cards.length > 0 ? 1 : 0);
-  }, 0);
-
-  if (benchCount === 0) {
+  const benchCount = opponent.bench.some(b => b.cards.length > 0);
+  if (!benchCount) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // Check if player has any benched Pokemon
-  const hasBench = player.bench.some(b => b.cards.length > 0);
-  if (!hasBench) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // Discard second Cross Switcher
-  const second = player.hand.cards.find(c => {
-    return c.name === name && c !== effect.trainerCard;
-  });
-  if (second !== undefined) {
-    player.hand.moveCardTo(second, player.discard);
-  }
+  // We already verified second exists; discard both at the end
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
@@ -68,6 +51,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     // Do not discard the card yet
     effect.preventDefault = true;
 
+    // Check if player has any benched Pokemon
+    const hasBench = player.bench.some(b => b.cards.length > 0);
+    if (!hasBench) {
+      // No bench for player: discard both Cross Switchers now and finish
+      if (second !== undefined) {
+        player.hand.moveCardTo(second, player.discard);
+      }
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      return state;
+    }
+
     let target: PokemonCardList[] = [];
     return store.prompt(state, new ChoosePokemonPrompt(
       player.id,
@@ -83,10 +77,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         return state;
       }
 
-      // Discard trainer only when user selected a Pokemon
+      // Perform player's switch, then discard both Cross Switchers
       player.active.clearEffects();
       player.switchPokemon(target[0]);
 
+      if (second !== undefined) {
+        player.hand.moveCardTo(second, player.discard);
+      }
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     });

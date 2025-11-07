@@ -1,4 +1,4 @@
-<div class="register-container">
+<div class="register-container" [class.is-loading]="loading">
   <div class="back-button" (click)="goToLogin()">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -6,60 +6,39 @@
     </svg>
   </div>
 
-  <div *ngIf="loading" class="loading-spinner">
+  <div *ngIf="loading" class="loading-spinner" [@fadeInOut]>
     <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
       <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
     </svg>
   </div>
 
   <ng-container *ngIf="!loading">
-    <div class="logo">
-      <img src="assets/tl-open-beta.webp" alt="Logo">
+    <div class="logo" [@slideFadeIn]>
+      <img src="assets/tl-open-beta.webp" alt="Logo" (load)="onLogoLoad()" (error)="onLogoError()"
+        [style.opacity]="logoLoaded ? '1' : '0'" [style.transition]="'opacity 0.3s ease'">
     </div>
 
-    <form #form="ngForm" class="register-form">
-      <div class="form-field">
-        <label>{{ 'REGISTER_NAME' | translate }}</label>
-        <input [(ngModel)]="name" name="name" type="text" required #nameField="ngModel" ptcgPlayerNameValidator
-          [ptcgInvalidValue]="invalidName" maxlength="32">
-        <div class="field-hint">{{ 'REGISTER_NAME_HINT' | translate }}</div>
-        <div class="field-error" *ngIf="nameField.errors?.name">
-          {{ 'VALIDATION_INVALID_NAME_FORMAT' | translate }}
-        </div>
-        <div class="field-error" *ngIf="nameField.errors?.invalidValue">
-          {{ 'REGISTER_NAME_TAKEN' | translate }}
-        </div>
+    <div class="register-form-container" [@formFadeIn]>
+      <twinleaf-form [fields]="registerFormFields" [submitText]="'REGISTER_BUTTON' | translate" [loading]="loading"
+        [disabled]="loading" formStyle="default" (formSubmit)="onFormSubmit($event)"
+        (formChange)="onFormChange($event)">
+      </twinleaf-form>
+
+      <div *ngIf="errorMessage" class="error-message" [@errorShake]>
+        {{ errorMessage }}
       </div>
 
-      <input type="hidden" name="email" [(ngModel)]="email">
-
-      <div class="form-field">
-        <label>{{ 'REGISTER_PASSWORD' | translate }}</label>
-        <input type="password" [(ngModel)]="password" name="password" required #passwordField="ngModel"
-          ptcgPasswordValidator maxlength="32">
-        <div class="field-hint">{{ 'REGISTER_PASSWORD_HINT' | translate }}</div>
-        <div class="field-error" *ngIf="passwordField.errors?.password">
-          {{ 'VALIDATION_INVALID_PASSWORD_FORMAT' | translate }}
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label>{{ 'REGISTER_PASSWORD_CONFIRM' | translate }}</label>
-        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required
-          #confirmPasswordField="ngModel" [ptcgPasswordMatchValidator]="password" maxlength="32">
-        <div class="field-hint">{{ 'REGISTER_PASSWORD_CONFIRM_HINT' | translate }}</div>
-        <div class="field-error" *ngIf="confirmPasswordField.errors?.passwordMatch">
-          {{ 'VALIDATION_PASSWORD_MATCH' | translate }}
-        </div>
+      <div *ngIf="invalidName" class="error-message" [@errorShake]>
+        {{ invalidName }}
       </div>
 
       <div class="register-note">
         {{ 'REGISTER_NOTE' | translate }}
       </div>
 
-      <button type="submit" class="register-button" [disabled]="form.invalid" (click)="register()">
-        {{ 'REGISTER_BUTTON' | translate }}
-      </button>
-    </form>
+      <!-- <div class="links">
+        <a (click)="goToLogin()">{{ 'LOGIN_BACK_TO_LOGIN' | translate }}</a>
+      </div> -->
+    </div>
   </ng-container>
 </div>

@@ -251,7 +251,7 @@
   "REGISTER_NAME": "Player Name",
   "REGISTER_NAME_HINT": "Other players will see this unique name in-game. Please use at least 6 alphanumeric characters.",
   "REGISTER_NAME_TAKEN": "This name is already in use.",
-  "REGISTER_NOTE": "Copyright © Twinleaf Ltd. 2024",
+  "REGISTER_NOTE": "Copyright © Twinleaf Ltd. 2025",
   "REGISTER_PASSWORD": "Password",
   "REGISTER_PASSWORD_CONFIRM": "Confirm password",
   "REGISTER_PASSWORD_CONFIRM_HINT": "Please confirm your password.",
