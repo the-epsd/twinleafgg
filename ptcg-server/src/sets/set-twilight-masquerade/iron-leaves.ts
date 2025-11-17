@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GamePhase, StateUtils } from '../../game';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, ChooseCardsPrompt } from '../../game';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class IronLeaves extends PokemonCard {
 
@@ -48,8 +48,6 @@ export class IronLeaves extends PokemonCard {
 
   public setNumber: string = '19';
 
-  public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -73,36 +71,15 @@ export class IronLeaves extends PokemonCard {
           { superType: SuperType.POKEMON },
           { min: 1, max, allowCancel: false }
         )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.RETALIATE_MARKER, this);
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
+      if (effect.player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
         effect.damage += 60;
       }
-    }
-
-    if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-      if (owner === player) {
-        effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
-      }
-      return state;
     }
 
     return state;

@@ -3,7 +3,7 @@ import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class EthansPinsir extends PokemonCard {
   public regulationMark = 'I';
@@ -35,22 +35,18 @@ export class EthansPinsir extends PokemonCard {
   public setNumber: string = '1';
   public name: string = 'Ethan\'s Pinsir';
   public fullName: string = 'Ethan\'s Pinsir DRI';
-  public readonly RETALIATE_MARKER = 'RETALIATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.RETALIATE_MARKER);
-    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
+      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
         effect.damage += 100;
       }
     }
 
+    // Special case: Only trigger if knocked out Pokémon is an Ethan's Pokémon
     if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -68,7 +64,7 @@ export class EthansPinsir extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
+        effect.player.marker.addMarkerToState(MarkerConstants.REVENGE_MARKER);
       }
 
       return state;

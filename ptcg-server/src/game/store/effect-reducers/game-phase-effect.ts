@@ -9,6 +9,7 @@ import { StoreLike } from '../store-like';
 import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { PlayerType } from '../actions/play-card-action';
+import { MarkerConstants } from '../markers/marker-constants';
 
 function getActivePlayer(state: State): Player {
   return state.players[state.activePlayer];
@@ -187,6 +188,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     });
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
+    effect.player.marker.removeMarker(MarkerConstants.REVENGE_MARKER);
 
     player.supporterTurn = 0;
     player.active.attacksThisTurn = 0;
