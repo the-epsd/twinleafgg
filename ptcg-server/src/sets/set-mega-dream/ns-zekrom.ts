@@ -23,7 +23,7 @@ export class NsZekrom extends PokemonCard {
   },
   {
     name: 'Rampage Thunder',
-    cost: [],
+    cost: [R, L, L, C],
     damage: 250,
     text: 'This Pokemon can\'t attack during your next turn.'
   }];
