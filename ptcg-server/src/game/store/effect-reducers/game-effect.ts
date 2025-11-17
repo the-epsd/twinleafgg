@@ -99,6 +99,16 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     }
   });
 
+  // Check if Pokemon cannot attack next turn
+  if (attackingPokemon.cannotAttackNextTurn) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
+  // Check if specific attack cannot be used next turn
+  if (attackingPokemon.cannotUseAttacksNextTurn.includes(attack.name)) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
   // Get the actual PokemonCard for power checks
   const attackingPokemonCard = attackingPokemon.getPokemonCard();
   // Check for barrage on powers (and not blocked)
@@ -126,10 +136,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -292,9 +302,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
       // Check if knockout occurred during opponent's attack phase and damage was dealt
       // The DAMAGE_DEALT_MARKER is set on the player who received damage (knockedOutOwner)
-      if (state.phase === GamePhase.ATTACK && 
-          state.players[state.activePlayer] === attacker &&
-          knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
+      if (state.phase === GamePhase.ATTACK &&
+        state.players[state.activePlayer] === attacker &&
+        knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
         knockedOutOwner.marker.addMarkerToState(MarkerConstants.REVENGE_MARKER);
       }
 

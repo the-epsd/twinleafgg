@@ -10,6 +10,7 @@ import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { PlayerType } from '../actions/play-card-action';
 import { MarkerConstants } from '../markers/marker-constants';
+import { StateUtils } from '../state-utils';
 
 function getActivePlayer(state: State): Player {
   return state.players[state.activePlayer];
@@ -189,6 +190,33 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
     effect.player.marker.removeMarker(MarkerConstants.REVENGE_MARKER);
+
+    // Clear damage reduction effects on opponent's Pokémon when their turn ends
+    const opponent = StateUtils.getOpponent(state, player);
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      cardList.damageReductionNextTurn = 0;
+    });
+
+    // Handle "cannot attack next turn" restrictions with two-stage cleanup
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      // First, clear active restrictions (they blocked this turn, now clear them)
+      if (cardList.cannotAttackNextTurn) {
+        cardList.cannotAttackNextTurn = false;
+      }
+      if (cardList.cannotUseAttacksNextTurn.length > 0) {
+        cardList.cannotUseAttacksNextTurn = [];
+      }
+
+      // Then, activate pending restrictions (set active for next turn, clear pending)
+      if (cardList.cannotAttackNextTurnPending) {
+        cardList.cannotAttackNextTurn = true;
+        cardList.cannotAttackNextTurnPending = false;
+      }
+      if (cardList.cannotUseAttacksNextTurnPending.length > 0) {
+        cardList.cannotUseAttacksNextTurn = [...cardList.cannotUseAttacksNextTurnPending];
+        cardList.cannotUseAttacksNextTurnPending = [];
+      }
+    });
 
     player.supporterTurn = 0;
     player.active.attacksThisTurn = 0;

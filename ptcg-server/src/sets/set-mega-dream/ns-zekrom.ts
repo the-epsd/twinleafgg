@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, State, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class NsZekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,30 +35,10 @@ export class NsZekrom extends PokemonCard {
   public fullName: string = 'N\'s Zekrom M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Cannot attack next turn (check before allowing any attack)
-    if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
-      if (effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
     // Rampage Thunder - prevent attack next turn
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Check marker
-      if (effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-    }
-
-    // Handle marker transitions at end of turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;
