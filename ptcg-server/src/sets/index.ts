@@ -173,8 +173,11 @@ export * from './set-prismatic-evolution';
 export * from './set-journey-together';
 export * from './set-destined-rivals';
 export * from './set-black-bolt-white-flare';
+
+//MEG Era
 export * from './set-mega-evolution';
 export * from './set-phantasmal-flames';
+export * from './set-mega-dream';
 
 //TEST
 export * from './set-test';
