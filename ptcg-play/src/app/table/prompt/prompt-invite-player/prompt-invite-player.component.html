@@ -20,7 +20,7 @@
   <!-- Main Content -->
   <div class="invite-content">
     <!-- Loading State -->
-    <div class="loading-container" *ngIf="loading">
+    <div class="loading-container" *ngIf="loading && !isConfirming">
       <div class="loading-spinner">
         <div class="spinner-ring"></div>
         <div class="spinner-ring"></div>
@@ -30,7 +30,7 @@
     </div>
 
     <!-- Game Message -->
-    <div class="game-message" *ngIf="!loading">
+    <div class="game-message" *ngIf="!loading || isConfirming">
       <div class="message-content">
         <mat-icon class="message-icon">info</mat-icon>
         <p [translate]="'GAME_MESSAGES.' + prompt.message"></p>
@@ -38,7 +38,7 @@
     </div>
 
     <!-- Deck Selection -->
-    <div class="deck-selection" *ngIf="!loading && decks.length > 0">
+    <div class="deck-selection" *ngIf="(!loading || isConfirming) && decks.length > 0">
       <div class="selection-header">
         <h3 class="selection-title">Select Your Deck</h3>
         <div class="deck-count">{{ decks.length }} deck{{ decks.length !== 1 ? 's' : '' }} available</div>
@@ -61,7 +61,7 @@
     </div>
 
     <!-- No Decks State -->
-    <div class="no-decks-container" *ngIf="!loading && decks.length === 0">
+    <div class="no-decks-container" *ngIf="(!loading || isConfirming) && decks.length === 0">
       <div class="no-decks-content">
         <div class="no-decks-icon">
           <mat-icon>deck</mat-icon>
@@ -80,7 +80,7 @@
       (clicked)="cancel()">
     </twinleaf-button>
     <twinleaf-button [text]="'BUTTON_OK' | translate" color="primary"
-      [disabled]="gameState.deleted || !deckId || loading" [loading]="loading" (clicked)="confirm()">
+      [disabled]="gameState.deleted || !deckId || loading || isConfirming" [loading]="isConfirming" (clicked)="confirm()">
     </twinleaf-button>
   </div>
 </div>

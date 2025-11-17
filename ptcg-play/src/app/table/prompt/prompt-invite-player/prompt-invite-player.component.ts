@@ -69,10 +69,8 @@ export class PromptInvitePlayerComponent implements OnInit {
     const id = this.prompt.id;
 
     this.isConfirming = true;
-    this.loading = true;
     this.deckService.getDeck(this.deckId)
       .pipe(finalize(() => {
-        this.loading = false;
         this.isConfirming = false;
       }))
       .subscribe({
