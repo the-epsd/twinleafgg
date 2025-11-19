@@ -110,6 +110,7 @@ import { TeamRocketsMeowth } from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
 import { TeamRocketsMimikyu } from './team-rockets-mimikyu';
 import { TeamRocketsMoltresex } from './team-rockets-moltres-ex';
+import { TeamRocketsMurkrow } from './team-rockets-murkrow';
 import { TeamRocketsNidokingex } from './team-rockets-nidoking-ex';
 import { TeamRocketsNidoqueen } from './team-rockets-nidoqueen';
 import { TeamRocketsNidoranFemale } from './team-rockets-nidoran-female';
@@ -282,6 +283,7 @@ export const setDestinedRivals: Card[] = [
   new TeamRocketsNidoqueen(),
   new TeamRocketsEkans(),
   new TeamRocketsArbok(),
+  new TeamRocketsMurkrow(),
   new TeamRocketsWatchtower(),
   new TeamRocketsFactory(),
   new TeamRocketsChingling(),

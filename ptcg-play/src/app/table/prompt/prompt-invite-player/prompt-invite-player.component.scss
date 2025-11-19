@@ -19,6 +19,7 @@
   position: relative;
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
+  transition: opacity 0.15s ease-out;
 }
 
 // Header Section
@@ -106,6 +107,7 @@
   max-height: calc(90vh - 200px); // Reserve space for header and buttons
   min-height: 200px;
   scroll-behavior: auto;
+  transition: opacity 0.15s ease-out;
 }
 
 // Loading State

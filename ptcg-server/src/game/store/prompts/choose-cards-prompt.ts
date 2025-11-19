@@ -29,6 +29,8 @@ export interface ChooseCardsOptions {
   allowDifferentSuperTypes: boolean;
   maxBasics: number | undefined;
   maxEvolutions: number | undefined;
+  maxStage1: number | undefined;
+  maxStage2: number | undefined;
 }
 
 export type FilterType = Partial<PokemonCard | TrainerCard | EnergyCard>;
@@ -70,6 +72,8 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       maxItems: undefined,
       maxBasics: undefined,
       maxEvolutions: undefined,
+      maxStage1: undefined,
+      maxStage2: undefined,
     }, options);
 
     if (this.options.blocked.length > 0) {
@@ -157,10 +161,11 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       }
     }
 
-    const { maxPokemons, maxBasicEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSupporters, maxSpecialEnergies, maxEnergies, maxBasics, maxEvolutions } = this.options;
+    const { maxPokemons, maxBasicEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSupporters, maxSpecialEnergies, maxEnergies, maxBasics, maxEvolutions, maxStage1, maxStage2 } = this.options;
 
     // Check if we have both basics and evolutions selected - only if maxBasics or maxEvolutions is defined
-    if (maxBasics !== undefined || maxEvolutions !== undefined) {
+    // AND maxStage1/maxStage2 are NOT defined (old pattern where we select EITHER basics OR evolutions)
+    if ((maxBasics !== undefined || maxEvolutions !== undefined) && maxStage1 === undefined && maxStage2 === undefined) {
       const hasBasics = countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] > 0;
       const hasEvolutions = countMap[`${SuperType.POKEMON}`] - (countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] || 0) > 0;
       if (hasBasics && hasEvolutions) {
@@ -178,7 +183,9 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       || (maxSpecialEnergies !== undefined && maxSpecialEnergies < countMap[`${SuperType.ENERGY}-${EnergyType.SPECIAL}`])
       || (maxTools !== undefined && maxTools < countMap[`${SuperType.TRAINER}-${TrainerType.TOOL}`])
       || (maxBasics !== undefined && maxBasics < countMap[`${SuperType.POKEMON}-${Stage.BASIC}`])
-      || (maxEvolutions !== undefined && maxEvolutions < (countMap[`${SuperType.POKEMON}`] - (countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] || 0)))) {
+      || (maxEvolutions !== undefined && maxEvolutions < (countMap[`${SuperType.POKEMON}`] - (countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] || 0)))
+      || (maxStage1 !== undefined && maxStage1 < (countMap[`${SuperType.POKEMON}-${Stage.STAGE_1}`] || 0))
+      || (maxStage2 !== undefined && maxStage2 < (countMap[`${SuperType.POKEMON}-${Stage.STAGE_2}`] || 0))) {
       return false;
     }
 

@@ -111,7 +111,7 @@
       <!-- Right column - Top Performing Pokémon -->
       <div class="ptcg-card-feature">
         <!-- Your Top Pokémon -->
-        <div class="ptcg-pokemon-section">
+        <div class="ptcg-pokemon-section" *ngIf="isWinner && prompt.winner !== GameWinner.DRAW">
           <div class="ptcg-card-title-container">
             <h3 class="ptcg-card-title">Your Top Pokémon</h3>
             <div *ngIf="topPokemon && topPokemon.damage > 0" class="ptcg-damage-badge">
@@ -143,7 +143,7 @@
         </div>
 
         <!-- Opponent's Top Pokémon -->
-        <div class="ptcg-pokemon-section">
+        <div class="ptcg-pokemon-section" *ngIf="!isWinner && prompt.winner !== GameWinner.DRAW">
           <div class="ptcg-card-title-container">
             <h3 class="ptcg-card-title">Opponent's Top Pokémon</h3>
             <div *ngIf="opponentTopPokemon && opponentTopPokemon.damage > 0" class="ptcg-damage-badge">

@@ -31,13 +31,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Count each stage separately
   let basics = 0;
-  let evolutions = 0;
+  let stage1 = 0;
+  let stage2 = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     if (c instanceof PokemonCard && c.stage === Stage.BASIC) {
       basics += 1;
-    } else if (c instanceof PokemonCard && (c.stage === Stage.STAGE_1 || c.stage === Stage.STAGE_2)) {
-      evolutions += 1;
+    } else if (c instanceof PokemonCard && c.stage === Stage.STAGE_1) {
+      stage1 += 1;
+    } else if (c instanceof PokemonCard && c.stage === Stage.STAGE_2) {
+      stage2 += 1;
     } else {
       blocked.push(index);
     }
@@ -45,10 +48,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Limit max for each type to 1
   const maxBasics = Math.min(basics, 1);
-  const maxEvolutions = Math.min(evolutions, 2); // Allow up to 2 evolutions (1 Stage 1 + 1 Stage 2)
+  const maxStage1 = Math.min(stage1, 1);
+  const maxStage2 = Math.min(stage2, 1);
 
   // Total max is sum of max for each 
-  const count = maxBasics + maxEvolutions;
+  const count = maxBasics + maxStage1 + maxStage2;
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -56,7 +60,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},
-    { min: 0, max: count, allowCancel: false, blocked, maxBasics, maxEvolutions }
+    { min: 0, max: count, allowCancel: false, blocked, maxBasics, maxStage1, maxStage2 }
   ), selected => {
     cards = selected || [];
     next();

@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class HisuianBasculegion extends PokemonCard {
   public regulationMark = 'F';
@@ -35,41 +35,18 @@ export class HisuianBasculegion extends PokemonCard {
   public name: string = 'Hisuian Basculegion';
   public fullName: string = 'Hisuian Basculegion ASR';
 
-  public readonly GRUDGE_DIVE_MARKER = 'GRUDGE_DIVE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.GRUDGE_DIVE_MARKER)) {
+      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
         effect.damage += 90;
         const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
         store.reduceEffect(state, specialConditionEffect);
       }
 
       return state;
-    }
-
-    if (effect instanceof KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-      if (owner === player) {
-        effect.player.marker.addMarkerToState(this.GRUDGE_DIVE_MARKER);
-      }
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.GRUDGE_DIVE_MARKER);
     }
 
     return state;

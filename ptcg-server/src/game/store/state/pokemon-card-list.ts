@@ -28,6 +28,11 @@ export class PokemonCardList extends CardList {
   public triggerEvolutionAnimation: boolean = false;
   public showBasicAnimation: boolean = false;
   public triggerAttackAnimation: boolean = false;
+  public damageReductionNextTurn: number = 0;
+  public cannotAttackNextTurn: boolean = false;
+  public cannotAttackNextTurnPending: boolean = false;
+  public cannotUseAttacksNextTurn: string[] = [];
+  public cannotUseAttacksNextTurnPending: string[] = [];
 
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -145,6 +150,11 @@ export class PokemonCardList extends CardList {
     this.removeSpecialCondition(SpecialCondition.PARALYZED);
     this.poisonDamage = 10;
     this.burnDamage = 20;
+    this.damageReductionNextTurn = 0;
+    this.cannotAttackNextTurn = false;
+    this.cannotAttackNextTurnPending = false;
+    this.cannotUseAttacksNextTurn = [];
+    this.cannotUseAttacksNextTurnPending = [];
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }

@@ -33,6 +33,7 @@ import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS } from '../prefabs/prefabs';
 import { CardList } from '../state/card-list';
+import { MarkerConstants } from '../markers/marker-constants';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
@@ -98,6 +99,16 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     }
   });
 
+  // Check if Pokemon cannot attack next turn
+  if (attackingPokemon.cannotAttackNextTurn) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
+  // Check if specific attack cannot be used next turn
+  if (attackingPokemon.cannotUseAttacksNextTurn.includes(attack.name)) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
   // Get the actual PokemonCard for power checks
   const attackingPokemonCard = attackingPokemon.getPokemonCard();
   // Check for barrage on powers (and not blocked)
@@ -125,10 +136,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -283,6 +294,19 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       }
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
+
+      // Centralized revenge attack detection: if Pokémon was knocked out during opponent's attack
+      // effect.player is the owner of the knocked out Pokémon
+      const knockedOutOwner = effect.player;
+      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
+
+      // Check if knockout occurred during opponent's attack phase and damage was dealt
+      // The DAMAGE_DEALT_MARKER is set on the player who received damage (knockedOutOwner)
+      if (state.phase === GamePhase.ATTACK &&
+        state.players[state.activePlayer] === attacker &&
+        knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
+        knockedOutOwner.marker.addMarkerToState(MarkerConstants.REVENGE_MARKER);
+      }
 
       // Handle Lost City marker or PRISM_STAR cards
       if (effect.target.marker.hasMarker('LOST_CITY_MARKER') || card.tags.includes(CardTag.PRISM_STAR)) {
