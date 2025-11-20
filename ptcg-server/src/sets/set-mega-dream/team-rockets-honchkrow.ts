@@ -84,6 +84,3 @@ export class TeamRocketsHonchkrow extends PokemonCard {
     return state;
   }
 }
-
-
-
