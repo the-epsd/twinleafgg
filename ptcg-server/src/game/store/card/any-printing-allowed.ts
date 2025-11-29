@@ -50,5 +50,6 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Professor Juniper',
   'Professor Sycamore',
   'Tool Scrapper',
-  'Double Colorless Energy'
+  'Double Colorless Energy',
+  'Lady'
 ]; 
