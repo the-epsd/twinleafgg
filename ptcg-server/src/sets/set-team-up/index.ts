@@ -6,6 +6,7 @@ import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
 import { BlackMarketPrismStar } from './black-market-prism-star';
 import { Bronzor } from './bronzor';
+import { BuffPadding } from './buff-padding';
 import { CelebiVenusaurGX } from './celebi-and-venusaur-gx';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
@@ -67,6 +68,7 @@ export const setTeamUp: Card[] = [
   new Bisharp(),
   new BlackMarketPrismStar(),
   new Bronzor(),
+  new BuffPadding(),
   new Charizard(),
   new Charmander(),
   new Charmander2(),
