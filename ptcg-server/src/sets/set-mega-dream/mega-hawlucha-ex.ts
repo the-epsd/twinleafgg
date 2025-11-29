@@ -82,5 +82,3 @@ export class MegaHawluchaex extends PokemonCard {
     return state;
   }
 }
-
-

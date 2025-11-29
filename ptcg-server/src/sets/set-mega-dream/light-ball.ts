@@ -47,10 +47,6 @@ export class LightBall extends TrainerCard {
         effect.damage += 50;
       }
     }
-
     return state;
   }
-
 }
-
-

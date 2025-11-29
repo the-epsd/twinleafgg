@@ -107,9 +107,6 @@ export class Dustox extends PokemonCard {
       specialConditionEffect.target = opponent.active;
       store.reduceEffect(state, specialConditionEffect);
     }
-
     return state;
   }
 }
-
-

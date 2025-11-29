@@ -72,9 +72,6 @@ export class Beautifly extends PokemonCard {
         effect.damage = 80 * energyCount;
       });
     }
-
     return state;
   }
 }
-
-

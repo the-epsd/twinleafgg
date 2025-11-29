@@ -23,5 +23,3 @@ export class Dratini extends PokemonCard {
   public name: string = 'Dratini';
   public fullName: string = 'Dratini M2a';
 }
-
-
