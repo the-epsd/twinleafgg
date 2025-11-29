@@ -1,9 +1,12 @@
 import { Card } from '../../game/store/card/card';
 import { AntheaAndConcordia } from './anthea-and-concordia';
+import { Beautifly } from './beautifly';
+import { Cascoon } from './cascoon';
 import { Camerupt } from './camerupt';
 import { Canari } from './canari';
 import { Dragonair } from './dragonair';
 import { Dratini } from './dratini';
+import { Dustox } from './dustox';
 import { Frosmoth } from './frosmoth';
 import { MegaCharizardYex } from './mega-charizard-y-ex';
 import { MegaDragoniteex } from './mega-dragonite-ex';
@@ -26,13 +29,17 @@ import { Snom } from './snom';
 import { Snorunt } from './snorunt';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
+import { Wurmple } from './wurmple';
 
 export const setMegaDream: Card[] = [
   new AntheaAndConcordia(),
+  new Beautifly(),
+  new Cascoon(),
   new Camerupt(),
   new Canari(),
   new Dragonair(),
   new Dratini(),
+  new Dustox(),
   new Frosmoth(),
   new LightBall(),
   new MegaCharizardYex(),
@@ -55,4 +62,5 @@ export const setMegaDream: Card[] = [
   new Snorunt(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
+  new Wurmple(),
 ];
