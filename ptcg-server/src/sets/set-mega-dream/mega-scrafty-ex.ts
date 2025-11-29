@@ -75,3 +75,5 @@ export class MegaScraftyex extends PokemonCard {
     return state;
   }
 }
+
+

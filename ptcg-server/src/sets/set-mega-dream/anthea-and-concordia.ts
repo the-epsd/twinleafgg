@@ -104,3 +104,5 @@ export class AntheaAndConcordia extends TrainerCard {
     return state;
   }
 }
+
+

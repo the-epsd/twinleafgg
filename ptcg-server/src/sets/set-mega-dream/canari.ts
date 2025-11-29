@@ -121,3 +121,4 @@ export class Canari extends TrainerCard {
     return state;
   }
 }
+

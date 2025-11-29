@@ -35,3 +35,5 @@ export class NightMine extends TrainerCard {
     return state;
   }
 }
+
+

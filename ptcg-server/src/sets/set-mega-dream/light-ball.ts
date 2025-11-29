@@ -52,3 +52,5 @@ export class LightBall extends TrainerCard {
   }
 
 }
+
+

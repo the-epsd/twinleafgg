@@ -64,3 +64,5 @@ export class Silcoon extends PokemonCard {
     return state;
   }
 }
+
+

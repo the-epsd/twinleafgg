@@ -23,3 +23,5 @@ export class Wurmple extends PokemonCard {
   public name: string = 'Wurmple';
   public fullName: string = 'Wurmple M2a';
 }
+
+

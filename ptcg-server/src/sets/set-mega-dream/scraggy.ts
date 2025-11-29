@@ -43,3 +43,5 @@ export class Scraggy extends PokemonCard {
     return state;
   }
 }
+
+

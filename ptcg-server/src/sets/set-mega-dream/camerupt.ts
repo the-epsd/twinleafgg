@@ -79,3 +79,5 @@ export class Camerupt extends PokemonCard {
     return state;
   }
 }
+
+

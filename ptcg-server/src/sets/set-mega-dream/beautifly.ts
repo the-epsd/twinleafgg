@@ -76,3 +76,5 @@ export class Beautifly extends PokemonCard {
     return state;
   }
 }
+
+

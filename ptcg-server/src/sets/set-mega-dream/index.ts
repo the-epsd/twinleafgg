@@ -30,6 +30,7 @@ import { Snorunt } from './snorunt';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
 import { Wurmple } from './wurmple';
+import { Silcoon } from './silcoon';
 
 export const setMegaDream: Card[] = [
   new AntheaAndConcordia(),
@@ -58,6 +59,7 @@ export const setMegaDream: Card[] = [
   new Rayquaza(),
   new Rotom(),
   new Scraggy(),
+  new Silcoon(),
   new Snom(),
   new Snorunt(),
   new TapuKoko(),

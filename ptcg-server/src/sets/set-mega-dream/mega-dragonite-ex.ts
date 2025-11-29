@@ -118,3 +118,5 @@ export class MegaDragoniteex extends PokemonCard {
     return state;
   }
 }
+
+
