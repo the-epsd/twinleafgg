@@ -1,3 +1,4 @@
+import { BlastoisePLB, CaitlinPLB, EnergyRetrievalPLB, PlumeFossilPLB, PokemonCatcherPLB, RareCandyPLB, PlasmaEnergyPLB, VirizionEX2PLB, GenesectEX2PLB, JirachiEX2PLB, PalkiaEX2PLB, ExeggcutePLB, DusknoirPLB, RareCandy2PLB } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Drifblim } from './drifblim';
@@ -47,4 +48,18 @@ export const setPlasmaBlast: Card[] = [
   new UltraBallPLB(),
   new MasterBallPLB(),
   new ProfessorJuniperPLB(),
+  new BlastoisePLB(),
+  new CaitlinPLB(),
+  new EnergyRetrievalPLB(),
+  new PlumeFossilPLB(),
+  new PokemonCatcherPLB(),
+  new RareCandyPLB(),
+  new PlasmaEnergyPLB(),
+  new VirizionEX2PLB(),
+  new GenesectEX2PLB(),
+  new JirachiEX2PLB(),
+  new PalkiaEX2PLB(),
+  new ExeggcutePLB(),
+  new DusknoirPLB(),
+  new RareCandy2PLB(),
 ];

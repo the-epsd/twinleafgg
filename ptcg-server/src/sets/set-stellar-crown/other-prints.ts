@@ -1,3 +1,25 @@
+import { Venusaurex } from "../set-pokemon-151/venusaur-ex";
+import { Blastoiseex } from "../set-pokemon-151/blastoise-ex";
+import { Yamask } from "../set-paradox-rift/yamask";
+import { Raboot as RabootSCR27 } from "../set-stellar-crown/raboot";
+import { Crabominable as CrabominableSCR42 } from "../set-stellar-crown/crabominable";
+import { Joltik as JoltikSCR50 } from "../set-stellar-crown/joltik";
+import { Zeraora as ZeraoraSCR55 } from "../set-stellar-crown/zeraora";
+import { Milcery as MilcerySCR64 } from "../set-stellar-crown/milcery";
+import { Gulpin as GulpinSCR91 } from "../set-stellar-crown/gulpin";
+import { Archaludon as ArchaludonSCR107 } from "../set-stellar-crown/archaludon";
+import { Hydrappleex as HydrappleexSCR14 } from "../set-stellar-crown/hydrapple-ex";
+import { Cinderaceex as CinderaceexSCR28 } from "../set-stellar-crown/cinderace-ex";
+import { Laprasex as LaprasexSCR32 } from "../set-stellar-crown/lapras-ex";
+import { Galvantulaex as GalvantulaexSCR51 } from "../set-stellar-crown/galvantula-ex";
+import { Medichamex as MedichamexSCR80 } from "../set-stellar-crown/medicham-ex";
+import { Orthwormex as OrthwormexSCR110 } from "../set-stellar-crown/orthworm-ex";
+import { Briar as BriarSCR132 } from "../set-stellar-crown/briar";
+import { Crispin as CrispinSCR133 } from "../set-stellar-crown/crispin";
+import { Kofu as KofuSCR138 } from "../set-stellar-crown/kofu";
+import { Lacey as LaceySCR139 } from "../set-stellar-crown/lacey";
+import { Terapagosex as TerapagosexSCR128 } from "../set-stellar-crown/terapagos-ex";
+import { AreaZeroUnderdepths as AreaZeroUnderdepthsSCR131 } from "../set-stellar-crown/area-zero-underdepths";
 import { Bulbasaur } from '../set-pokemon-151/bulbasaur';
 import { Squirtle } from '../set-pokemon-151/squirtle';
 import { Raboot } from './raboot';
@@ -171,3 +193,165 @@ export class BraveryCharmHR extends BraveryCharm {
   public regulationMark = 'G';
 }
 
+
+export class VenusaurexSCR extends Venusaurex {
+  public setNumber = '1';
+  public fullName: string = 'Venusaur ex SCR';
+  public set = 'SCR';
+}
+
+export class BlastoiseexSCR extends Blastoiseex {
+  public setNumber = '30';
+  public fullName: string = 'Blastoise ex SCR';
+  public set = 'SCR';
+}
+
+export class YamaskSCR extends Yamask {
+  public setNumber = '62';
+  public fullName: string = 'Yamask SCR';
+  public set = 'SCR';
+}
+
+export class Raboot2SCR extends RabootSCR27 {
+  public setNumber = '147';
+  public fullName: string = 'Raboot2 SCR';
+  public set = 'SCR';
+}
+
+export class Crabominable2SCR extends CrabominableSCR42 {
+  public setNumber = '149';
+  public fullName: string = 'Crabominable2 SCR';
+  public set = 'SCR';
+}
+
+export class Joltik2SCR extends JoltikSCR50 {
+  public setNumber = '150';
+  public fullName: string = 'Joltik2 SCR';
+  public set = 'SCR';
+}
+
+export class Zeraora2SCR extends ZeraoraSCR55 {
+  public setNumber = '151';
+  public fullName: string = 'Zeraora2 SCR';
+  public set = 'SCR';
+}
+
+export class Milcery2SCR extends MilcerySCR64 {
+  public setNumber = '152';
+  public fullName: string = 'Milcery2 SCR';
+  public set = 'SCR';
+}
+
+export class Gulpin2SCR extends GulpinSCR91 {
+  public setNumber = '154';
+  public fullName: string = 'Gulpin2 SCR';
+  public set = 'SCR';
+}
+
+export class Archaludon2SCR extends ArchaludonSCR107 {
+  public setNumber = '155';
+  public fullName: string = 'Archaludon2 SCR';
+  public set = 'SCR';
+}
+
+export class Hydrappleex2SCR extends HydrappleexSCR14 {
+  public setNumber = '156';
+  public fullName: string = 'Hydrapple ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Cinderaceex2SCR extends CinderaceexSCR28 {
+  public setNumber = '157';
+  public fullName: string = 'Cinderace ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Laprasex2SCR extends LaprasexSCR32 {
+  public setNumber = '158';
+  public fullName: string = 'Lapras ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Galvantulaex2SCR extends GalvantulaexSCR51 {
+  public setNumber = '159';
+  public fullName: string = 'Galvantula ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Medichamex2SCR extends MedichamexSCR80 {
+  public setNumber = '161';
+  public fullName: string = 'Medicham ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Orthwormex2SCR extends OrthwormexSCR110 {
+  public setNumber = '162';
+  public fullName: string = 'Orthworm ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Briar2SCR extends BriarSCR132 {
+  public setNumber = '163';
+  public fullName: string = 'Briar2 SCR';
+  public set = 'SCR';
+}
+
+export class Crispin2SCR extends CrispinSCR133 {
+  public setNumber = '164';
+  public fullName: string = 'Crispin2 SCR';
+  public set = 'SCR';
+}
+
+export class Kofu2SCR extends KofuSCR138 {
+  public setNumber = '165';
+  public fullName: string = 'Kofu2 SCR';
+  public set = 'SCR';
+}
+
+export class Lacey2SCR extends LaceySCR139 {
+  public setNumber = '166';
+  public fullName: string = 'Lacey2 SCR';
+  public set = 'SCR';
+}
+
+export class Hydrappleex3SCR extends HydrappleexSCR14 {
+  public setNumber = '167';
+  public fullName: string = 'Hydrapple ex3 SCR';
+  public set = 'SCR';
+}
+
+export class Galvantulaex3SCR extends GalvantulaexSCR51 {
+  public setNumber = '168';
+  public fullName: string = 'Galvantula ex3 SCR';
+  public set = 'SCR';
+}
+
+export class Terapagosex2SCR extends TerapagosexSCR128 {
+  public setNumber = '170';
+  public fullName: string = 'Terapagos ex2 SCR';
+  public set = 'SCR';
+}
+
+export class Briar3SCR extends BriarSCR132 {
+  public setNumber = '171';
+  public fullName: string = 'Briar3 SCR';
+  public set = 'SCR';
+}
+
+export class Lacey3SCR extends LaceySCR139 {
+  public setNumber = '172';
+  public fullName: string = 'Lacey3 SCR';
+  public set = 'SCR';
+}
+
+export class Terapagosex3SCR extends TerapagosexSCR128 {
+  public setNumber = '173';
+  public fullName: string = 'Terapagos ex3 SCR';
+  public set = 'SCR';
+}
+
+export class AreaZeroUnderdepths2SCR extends AreaZeroUnderdepthsSCR131 {
+  public setNumber = '174';
+  public fullName: string = 'Area Zero Underdepths2 SCR';
+  public set = 'SCR';
+}

@@ -1,3 +1,4 @@
+import { BebesSearchSW, PlusPowerSW, PotionSW, SwitchSW, DarknessEnergySpecialSW, MetalEnergyN1SW } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Duskull } from './duskull';
 import { Gallade } from './gallade';
@@ -35,4 +36,10 @@ export const setSecretWonders: Card[] = [
 
   // Other Prints
   new NightMaintenanceSW(),
+  new BebesSearchSW(),
+  new PlusPowerSW(),
+  new PotionSW(),
+  new SwitchSW(),
+  new DarknessEnergySpecialSW(),
+  new MetalEnergyN1SW(),
 ];

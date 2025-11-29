@@ -1,3 +1,4 @@
+import { JirachiUL, CheerleadersCheerUL, PlusPowerUL } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Crobat } from './crobat-prime';
 import { DualBall } from './dual-ball';
@@ -30,5 +31,8 @@ export const setUnleashed: Card[] = [
   // Other prints
   new JudgeUL(),
   new RareCandyUL(),
-  new SuperScoopUpUL()
+  new SuperScoopUpUL(),
+  new JirachiUL(),
+  new CheerleadersCheerUL(),
+  new PlusPowerUL(),
 ];

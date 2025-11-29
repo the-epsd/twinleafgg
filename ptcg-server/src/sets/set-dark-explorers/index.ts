@@ -1,3 +1,4 @@
+import { CherenDEX, NDEX, UltraBallDEX, RaikouEx2DEX, TornadusEx2DEX, ArcheopsDEX, PokemonCatcherDEX } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Accelgor } from './accelgor';
 import { DarkClaw } from './dark-claw';
@@ -52,4 +53,11 @@ export const setDarkExplorers: Card[] = [
   new EnhancedHammerDEX(),
   new ProfessorJuniperDEX(),
   new RareCandyDEX(),
+  new CherenDEX(),
+  new NDEX(),
+  new UltraBallDEX(),
+  new RaikouEx2DEX(),
+  new TornadusEx2DEX(),
+  new ArcheopsDEX(),
+  new PokemonCatcherDEX(),
 ];

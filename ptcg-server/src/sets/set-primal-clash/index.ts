@@ -1,3 +1,4 @@
+import { EnergyRetrievalPRC, EscapeRopeBUSPRC, ExpSharePRC, RareCandyPRC, WailordEx2PRC, GroudonEx2PRC, PrimalGroudonEx2PRC, GardevoirEx2PRC, MGardevoirEx2PRC, ArchiesAceInTheHole2PRC, MaxiesHiddenBallTrick2PRC, Teammates2PRC, DiveBall2PRC, EnhancedHammerPRC, SwitchPRC, WeaknessPolicy2PRC } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AcroBike } from './acro-bike';
 import { ArchiesAceInTheHole } from './archies-ace-in-the hole';
@@ -51,4 +52,20 @@ export const setPrimalClash: Card[] = [
   new GardevoirEx(),
   new MGardevoirEx(),
   new GardevoirSpiritLink(),
+  new EnergyRetrievalPRC(),
+  new EscapeRopeBUSPRC(),
+  new ExpSharePRC(),
+  new RareCandyPRC(),
+  new WailordEx2PRC(),
+  new GroudonEx2PRC(),
+  new PrimalGroudonEx2PRC(),
+  new GardevoirEx2PRC(),
+  new MGardevoirEx2PRC(),
+  new ArchiesAceInTheHole2PRC(),
+  new MaxiesHiddenBallTrick2PRC(),
+  new Teammates2PRC(),
+  new DiveBall2PRC(),
+  new EnhancedHammerPRC(),
+  new SwitchPRC(),
+  new WeaknessPolicy2PRC(),
 ];

@@ -1,3 +1,4 @@
+import { ZeraoraGXLOT, ShuckleGX2LOT, MagcargoGX2LOT, BlacephalonGX2LOT, AlolanNinetalesGX2LOT, MimikyuGX2LOT, LugiaGX2LOT, Faba2LOT, JudgeULLOT, Mina2LOT, ProfessorElmLecture3LOT, ShuckleGX3LOT, MagcargoGX3LOT, BlacephalonGX3LOT, ZeraoraGX3LOT, AlolanNinetalesGX3LOT, MimikyuGX3LOT, LugiaGX3LOT, AdventureBag2LOT, CounterGain2LOT, CustomCatcher2LOT, Electropower3LOT, LostBlender2LOT, NetBall3LOT, SpellTag2LOT, Electropower2LOT, NetBall2LOT, ProfessorElmLecture2LOT, Sightseer2LOT } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
@@ -129,4 +130,33 @@ export const setLostThunder: Card[] = [
   new Zebstrika(),
   new ZeraoraGX(),
   new BlacephalonGX(),
+  new ZeraoraGXLOT(),
+  new ShuckleGX2LOT(),
+  new MagcargoGX2LOT(),
+  new BlacephalonGX2LOT(),
+  new AlolanNinetalesGX2LOT(),
+  new MimikyuGX2LOT(),
+  new LugiaGX2LOT(),
+  new Faba2LOT(),
+  new JudgeULLOT(),
+  new Mina2LOT(),
+  new ProfessorElmLecture3LOT(),
+  new ShuckleGX3LOT(),
+  new MagcargoGX3LOT(),
+  new BlacephalonGX3LOT(),
+  new ZeraoraGX3LOT(),
+  new AlolanNinetalesGX3LOT(),
+  new MimikyuGX3LOT(),
+  new LugiaGX3LOT(),
+  new AdventureBag2LOT(),
+  new CounterGain2LOT(),
+  new CustomCatcher2LOT(),
+  new Electropower3LOT(),
+  new LostBlender2LOT(),
+  new NetBall3LOT(),
+  new SpellTag2LOT(),
+  new Electropower2LOT(),
+  new NetBall2LOT(),
+  new ProfessorElmLecture2LOT(),
+  new Sightseer2LOT(),
 ];

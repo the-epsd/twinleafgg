@@ -1,3 +1,4 @@
+import { YveltalXY, XerneasXY, GreatBallXY, MaxReviveXY, RedCardXY, TeamFlareGruntXY, RainbowEnergyPLXY, YveltalEx2XY, XerneasEX2XY } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy, FairyEnergy } from './basic-energies';
 import { Aromatisse } from './aromatisse';
@@ -67,4 +68,13 @@ export const setXY: Card[] = [
   new DarknessEnergy(),
   new MetalEnergy(),
   new FairyEnergy(),
+  new YveltalXY(),
+  new XerneasXY(),
+  new GreatBallXY(),
+  new MaxReviveXY(),
+  new RedCardXY(),
+  new TeamFlareGruntXY(),
+  new RainbowEnergyPLXY(),
+  new YveltalEx2XY(),
+  new XerneasEX2XY(),
 ];

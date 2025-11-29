@@ -1,3 +1,4 @@
+import { HeavyBallBKT, JudgeULBKT, SkylaBKT, SuperRodBKT, RainbowEnergyPLBKT, Brigette2BKT, ProfessorsLetter2BKT } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Brigette } from './brigette';
 import { BuddyBuddyRescue } from './buddy-buddy-rescue';
@@ -41,4 +42,11 @@ export const setBreakthrough: Card[] = [
   new FishermanBKT(),
   new FloatStoneBKT(),
   new ProfessorsLetterBKT(),
+  new HeavyBallBKT(),
+  new JudgeULBKT(),
+  new SkylaBKT(),
+  new SuperRodBKT(),
+  new RainbowEnergyPLBKT(),
+  new Brigette2BKT(),
+  new ProfessorsLetter2BKT(),
 ];

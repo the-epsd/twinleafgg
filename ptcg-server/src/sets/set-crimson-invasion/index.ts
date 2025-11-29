@@ -1,3 +1,4 @@
+import { SilvallyGXCIN, CounterCatcherCIN, BuzzwoleGX2CIN, GuzzlordGX3CIN, KartanaGX2CIN, SilvallyGX2CIN, Gladion2CIN, Lusamine2CIN, BuzzwoleGX3CIN, GuzzlordGX4CIN, KartanaGX3CIN, SilvallyGX3CIN, CounterCatcher2CIN, WishfulBatonCIN, CounterEnergy2CIN, WarpEnergySFCIN, WaterEnergyCIN, GuzzlordGX2CIN, Regigigas2CIN } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Aron } from './aron';
 import { BuzzwoleGX } from './buzzwole-gx';
@@ -33,4 +34,23 @@ export const setCrimsonInvasion: Card[] = [
   new Salandit(),
   new Salazzle(),
   new Haunter(),
+  new SilvallyGXCIN(),
+  new CounterCatcherCIN(),
+  new BuzzwoleGX2CIN(),
+  new GuzzlordGX3CIN(),
+  new KartanaGX2CIN(),
+  new SilvallyGX2CIN(),
+  new Gladion2CIN(),
+  new Lusamine2CIN(),
+  new BuzzwoleGX3CIN(),
+  new GuzzlordGX4CIN(),
+  new KartanaGX3CIN(),
+  new SilvallyGX3CIN(),
+  new CounterCatcher2CIN(),
+  new WishfulBatonCIN(),
+  new CounterEnergy2CIN(),
+  new WarpEnergySFCIN(),
+  new WaterEnergyCIN(),
+  new GuzzlordGX2CIN(),
+  new Regigigas2CIN(),
 ];

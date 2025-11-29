@@ -1,3 +1,4 @@
+import { RareCandyPGO, ConkeldurrV2PGO, ConkeldurrV3PGO, SlakingV2PGO, ProfessorsResearchPGO, ProfessorsResearch2PGO, LureModule2PGO } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AlolanRaticate } from './alolan-raticate';
 import { Articuno } from './articuno';
@@ -53,4 +54,11 @@ export const setPokemonGO: Card[] = [
 
   // Other Prints
   new RadiantCharizardPGO(),
+  new RareCandyPGO(),
+  new ConkeldurrV2PGO(),
+  new ConkeldurrV3PGO(),
+  new SlakingV2PGO(),
+  new ProfessorsResearchPGO(),
+  new ProfessorsResearch2PGO(),
+  new LureModule2PGO(),
 ];

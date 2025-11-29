@@ -1,3 +1,4 @@
+import { EnergySwitchPKFFI, FullHealFFI, SeismitoadEx2FFI, LucarioEx2FFI } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Dedenne } from './dedenne';
 import { FightingStadium } from './fighting-stadium';
@@ -33,4 +34,8 @@ export const setFuriousFists: Card[] = [
   new KorrinaFFI(),
   new MaintenanceFFI(),
   new SuperScoopUpFFI(),
+  new EnergySwitchPKFFI(),
+  new FullHealFFI(),
+  new SeismitoadEx2FFI(),
+  new LucarioEx2FFI(),
 ];

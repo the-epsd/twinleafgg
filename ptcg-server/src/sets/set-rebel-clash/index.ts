@@ -1,3 +1,4 @@
+import { GalarianWeezingRCL, BossOrdersRCL, FullHealRCL, PokeBallRCL, SkylaRCL, SoniaRCL, ToolScrapperRCL, DragapultV2RCL, BossOrders2RCL, Sonia2RCL, DragapultVMAX2RCL, BossOrders3RCL, Sonia3RCL, FrosmothRCL, GalarianPerrserker2RCL, BigCharmRCL, ScoopUpNet2RCL, ToolScrapper2RCL, TwinEnergy2RCL } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Aegislash } from './aegislash';
 import { Applin } from './applin';
@@ -81,4 +82,23 @@ export const setRebelClash: Card[] = [
   new EldegossVRCL(),
   new EldegossVRCLFullArt(),
   new TurffieldStadiumRCL(),
+  new GalarianWeezingRCL(),
+  new BossOrdersRCL(),
+  new FullHealRCL(),
+  new PokeBallRCL(),
+  new SkylaRCL(),
+  new SoniaRCL(),
+  new ToolScrapperRCL(),
+  new DragapultV2RCL(),
+  new BossOrders2RCL(),
+  new Sonia2RCL(),
+  new DragapultVMAX2RCL(),
+  new BossOrders3RCL(),
+  new Sonia3RCL(),
+  new FrosmothRCL(),
+  new GalarianPerrserker2RCL(),
+  new BigCharmRCL(),
+  new ScoopUpNet2RCL(),
+  new ToolScrapper2RCL(),
+  new TwinEnergy2RCL(),
 ];

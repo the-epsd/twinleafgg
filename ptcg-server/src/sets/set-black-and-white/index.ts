@@ -1,3 +1,4 @@
+import { EnergySearchBLW, EnergySwitchPKBLW, FullHealBLW, PokeBallBLW, PokemonCommunicationHSBLW, PotionBLW, SuperScoopUpBLW, Reshiram2BLW, Zekrom2BLW } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy } from './basic-energies';
 import { Cinccino } from './cinccino';
@@ -60,4 +61,13 @@ export const setBlackAndWhite: Card[] = [
   new FightingEnergy(),
   new DarknessEnergy(),
   new MetalEnergy(),
+  new EnergySearchBLW(),
+  new EnergySwitchPKBLW(),
+  new FullHealBLW(),
+  new PokeBallBLW(),
+  new PokemonCommunicationHSBLW(),
+  new PotionBLW(),
+  new SuperScoopUpBLW(),
+  new Reshiram2BLW(),
+  new Zekrom2BLW(),
 ];

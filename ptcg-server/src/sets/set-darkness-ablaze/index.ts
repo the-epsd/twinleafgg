@@ -1,3 +1,4 @@
+import { DartrixDAA, HoopaDAA, PiersDAA, VikavoltV2DAA, Piers2DAA, PokemonBreedersNurturing2DAA, EternatusVMAX2DAA, PokemonBreedersNurturing3DAA, RillaboomDAA, CoalossalDAA, BigParasol2DAA, CaptureEnergyDAA } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Arctozolt } from './arctozolt';
 import { BigParasol } from './big-parasol';
@@ -75,4 +76,16 @@ export const setDarknessAblaze: Card[] = [
 
   // Other prints
   new CrobatVDAA(),
+  new DartrixDAA(),
+  new HoopaDAA(),
+  new PiersDAA(),
+  new VikavoltV2DAA(),
+  new Piers2DAA(),
+  new PokemonBreedersNurturing2DAA(),
+  new EternatusVMAX2DAA(),
+  new PokemonBreedersNurturing3DAA(),
+  new RillaboomDAA(),
+  new CoalossalDAA(),
+  new BigParasol2DAA(),
+  new CaptureEnergyDAA(),
 ];

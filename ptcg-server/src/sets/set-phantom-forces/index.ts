@@ -1,3 +1,4 @@
+import { EnhancedHammerPHF, ProfessorSycamoreXYPHF, RollerSkatesPHF, ShaunaPHF, DoubleColorlessEnergyPHF, GengarEx2PHF, AZ2PHF, LysandresTrumpCard2PHF, Xerosic2PHF, MGengarEx2PHF, AegislashEX2PHF } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AegislashEX } from './aegislash-ex';
 import { AZ } from './az';
@@ -65,4 +66,15 @@ export const setPhantomForces: Card[] = [
 
   // Other prints
   new AegislashEXPHF(),
+  new EnhancedHammerPHF(),
+  new ProfessorSycamoreXYPHF(),
+  new RollerSkatesPHF(),
+  new ShaunaPHF(),
+  new DoubleColorlessEnergyPHF(),
+  new GengarEx2PHF(),
+  new AZ2PHF(),
+  new LysandresTrumpCard2PHF(),
+  new Xerosic2PHF(),
+  new MGengarEx2PHF(),
+  new AegislashEX2PHF(),
 ];

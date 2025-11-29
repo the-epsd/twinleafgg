@@ -1,3 +1,4 @@
+import { MewExDRX, TrubbishDRX, HoOhEx2DRX, MewEx2DRX, RayquazaEx2DRX, ReuniclusDRX, RayquazaDRX } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Altaria } from './altaria';
 import { BlendEnergyGRPD } from './blend-energy-grpd';
@@ -51,4 +52,11 @@ export const setDragonsExalted: Card[] = [
   new Vulpix(),
   new Zweilous(),
   new GiantCape(),
+  new MewExDRX(),
+  new TrubbishDRX(),
+  new HoOhEx2DRX(),
+  new MewEx2DRX(),
+  new RayquazaEx2DRX(),
+  new ReuniclusDRX(),
+  new RayquazaDRX(),
 ];

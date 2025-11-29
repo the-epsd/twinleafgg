@@ -1,3 +1,4 @@
+import { PikachuZekromGXTEU, ErikasHospitalityTEU, UnidentifiedFossilTEU, CelebiVenusaurGX2TEU, MagikarpWailordGX2TEU, PikachuZekromGX2TEU, GengarMimikyuGX2TEU, GengarMimikyuGX3TEU, CobalionGX2TEU, EeveeSnorlaxGX2TEU, BrocksGrit2TEU, ErikasHospitality2TEU, IngoAndEmmet2TEU, Jasmine2TEU, CelebiVenusaurGX3TEU, MagikarpWailordGX3TEU, PikachuZekromGX3TEU, GengarMimikyuGX4TEU, CobalionGX3TEU, EeveeSnorlaxGX3TEU, DangerousDrill2TEU, JudgeWhistle2TEU, MetalGoggles2TEU, PokemonCommunicationHS4TEU, PokemonCommunicationHS2TEU, PokemonCommunicationHS3TEU, GrassEnergyTEU, FireEnergyTEU, WaterEnergyTEU, LightningEnergyTEU, PsychicEnergyTEU, FightingEnergyTEU, DarknessEnergyTEU, MetalEnergyTEU, FairyEnergyTEU } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AlolanMuk } from './alolan-muk';
 import { Articuno } from './articuno';
@@ -122,4 +123,39 @@ export const setTeamUp: Card[] = [
 
   //Other Prints
   new BrocksGritTEU(),
+  new PikachuZekromGXTEU(),
+  new ErikasHospitalityTEU(),
+  new UnidentifiedFossilTEU(),
+  new CelebiVenusaurGX2TEU(),
+  new MagikarpWailordGX2TEU(),
+  new PikachuZekromGX2TEU(),
+  new GengarMimikyuGX2TEU(),
+  new GengarMimikyuGX3TEU(),
+  new CobalionGX2TEU(),
+  new EeveeSnorlaxGX2TEU(),
+  new BrocksGrit2TEU(),
+  new ErikasHospitality2TEU(),
+  new IngoAndEmmet2TEU(),
+  new Jasmine2TEU(),
+  new CelebiVenusaurGX3TEU(),
+  new MagikarpWailordGX3TEU(),
+  new PikachuZekromGX3TEU(),
+  new GengarMimikyuGX4TEU(),
+  new CobalionGX3TEU(),
+  new EeveeSnorlaxGX3TEU(),
+  new DangerousDrill2TEU(),
+  new JudgeWhistle2TEU(),
+  new MetalGoggles2TEU(),
+  new PokemonCommunicationHS4TEU(),
+  new PokemonCommunicationHS2TEU(),
+  new PokemonCommunicationHS3TEU(),
+  new GrassEnergyTEU(),
+  new FireEnergyTEU(),
+  new WaterEnergyTEU(),
+  new LightningEnergyTEU(),
+  new PsychicEnergyTEU(),
+  new FightingEnergyTEU(),
+  new DarknessEnergyTEU(),
+  new MetalEnergyTEU(),
+  new FairyEnergyTEU(),
 ];

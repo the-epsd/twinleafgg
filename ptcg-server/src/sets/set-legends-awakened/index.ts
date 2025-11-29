@@ -1,3 +1,4 @@
+import { ClawFossilLA } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Azelf } from './azelf';
 import { AzelfLVX } from './azelf-lv-x';
@@ -24,5 +25,6 @@ export const setLegendsAwakened: Card[] = [
   new StarkMountain(),
   new UnownR(),
   new Uxie(),
-  new UxieLVX()
+  new UxieLVX(),
+  new ClawFossilLA(),
 ];

@@ -1,3 +1,9 @@
+import { Bill } from "../set-base-set/bill";
+import { Copycat } from "../set-ex-dragon-frontiers/copycat";
+import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
+import { FullHeal } from "../set-base-set/full-heal";
+import { PokeBall } from "../set-jungle/pokeball";
+import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
 import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { Fisherman } from '../set-celestial-storm/fisherman';
 import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
@@ -59,4 +65,39 @@ export class SwitchHS extends Switch {
   public set = 'HS';
   public setNumber = '102';
   public text = 'Switch 1 of your Active Pokémon with 1 of your Benched Pokémon.';
+}
+export class BillHS extends Bill {
+  public setNumber = '89';
+  public fullName: string = 'Bill HS';
+  public set = 'HS';
+}
+
+export class CopycatHS extends Copycat {
+  public setNumber = '90';
+  public fullName: string = 'Copycat HS';
+  public set = 'HS';
+}
+
+export class EnergySwitchPKHS extends EnergySwitchPK {
+  public setNumber = '91';
+  public fullName: string = 'Energy Switch HS';
+  public set = 'HS';
+}
+
+export class FullHealHS extends FullHeal {
+  public setNumber = '93';
+  public fullName: string = 'Full Heal HS';
+  public set = 'HS';
+}
+
+export class PokeBallHS extends PokeBall {
+  public setNumber = '95';
+  public fullName: string = 'Poké Ball HS';
+  public set = 'HS';
+}
+
+export class ProfessorElmsTrainingMethodHS extends ProfessorElmsTrainingMethod {
+  public setNumber = '100';
+  public fullName: string = 'Professor Elm\'s Training Method HS';
+  public set = 'HS';
 }

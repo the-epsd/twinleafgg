@@ -1,3 +1,4 @@
+import { GothoritaEPO, GothitelleEPO, GreatBallEPO, Tornadus2EPO } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bianca } from './bianca';
 import { CrushingHammerEPO, RecycleEPO } from './other-prints';
@@ -14,4 +15,8 @@ export const setEmergingPowers: Card[] = [
   new RecycleEPO(),
   new PokemonCatcher(),
   new Tornadus(),
+  new GothoritaEPO(),
+  new GothitelleEPO(),
+  new GreatBallEPO(),
+  new Tornadus2EPO(),
 ];

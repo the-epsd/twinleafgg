@@ -1,3 +1,4 @@
+import { CrushingHammerSUM, EnergySwitchPKSUM, GreatBallSUM, LillieSUM, PokeBallSUM, PokemonCatcherSUM, PotionSUM, SwitchSUM, UltraBallSUM, LurantisGX2SUM, EspeonGX2SUM, TaurosGX2SUM, Lillie2SUM, ProfessorKukui2SUM, TeamSkullGrunt2SUM, LurantisGX3SUM, EspeonGX3SUM, TaurosGX3SUM, NestBall2SUM, Switch2SUM, Eevee2SUM } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
@@ -91,4 +92,25 @@ export const setSunAndMoon: Card[] = [
   new DarknessEnergy(),
   new MetalEnergy(),
   new FairyEnergy(),
+  new CrushingHammerSUM(),
+  new EnergySwitchPKSUM(),
+  new GreatBallSUM(),
+  new LillieSUM(),
+  new PokeBallSUM(),
+  new PokemonCatcherSUM(),
+  new PotionSUM(),
+  new SwitchSUM(),
+  new UltraBallSUM(),
+  new LurantisGX2SUM(),
+  new EspeonGX2SUM(),
+  new TaurosGX2SUM(),
+  new Lillie2SUM(),
+  new ProfessorKukui2SUM(),
+  new TeamSkullGrunt2SUM(),
+  new LurantisGX3SUM(),
+  new EspeonGX3SUM(),
+  new TaurosGX3SUM(),
+  new NestBall2SUM(),
+  new Switch2SUM(),
+  new Eevee2SUM(),
 ];

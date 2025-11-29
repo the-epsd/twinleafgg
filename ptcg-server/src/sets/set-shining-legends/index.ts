@@ -1,3 +1,4 @@
+import { EnergyRetrievalSLG, GreatBallSLG, HauSLG, LillieSLG, PokemonBreederSLG, PokemonCatcherSLG, SophoclesSLG, SuperScoopUpSLG, SwitchSLG, UltraBallSLG, DoubleColorlessEnergySLG, MewtwoGX2SLG, PokemonBreeder2SLG, MewtwoGX3SLG, ZoroarkGX2SLG, MewtwoGX4SLG, UltraBall2SLG, ZoroarkGX3SLG } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Croconaw } from './croconaw';
 import { Hoopa } from './hoopa';
@@ -31,4 +32,22 @@ export const setShiningLegends: Card[] = [
   new WarpEnergy(),
   new ZoroarkGX(),
   new Zorua(),
+  new EnergyRetrievalSLG(),
+  new GreatBallSLG(),
+  new HauSLG(),
+  new LillieSLG(),
+  new PokemonBreederSLG(),
+  new PokemonCatcherSLG(),
+  new SophoclesSLG(),
+  new SuperScoopUpSLG(),
+  new SwitchSLG(),
+  new UltraBallSLG(),
+  new DoubleColorlessEnergySLG(),
+  new MewtwoGX2SLG(),
+  new PokemonBreeder2SLG(),
+  new MewtwoGX3SLG(),
+  new ZoroarkGX2SLG(),
+  new MewtwoGX4SLG(),
+  new UltraBall2SLG(),
+  new ZoroarkGX3SLG(),
 ];

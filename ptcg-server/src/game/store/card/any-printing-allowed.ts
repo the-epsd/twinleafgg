@@ -51,5 +51,6 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Professor Sycamore',
   'Tool Scrapper',
   'Double Colorless Energy',
-  'Lady'
+  'Lady',
+  'Max Potion'
 ]; 

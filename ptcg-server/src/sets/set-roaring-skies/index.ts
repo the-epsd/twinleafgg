@@ -1,3 +1,4 @@
+import { ReviveROS, SwitchROS, UltraBallROS, RayquazaEx3ROS, MRayquazaEx3ROS, ShayminEx3ROS, Wally2ROS, Winona2ROS, EnergySwitchPKROS, VsSeekerSVROS, ShayminEx2ROS } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
@@ -51,4 +52,15 @@ export const setRoaringSkies: Card[] = [
 
   // Other Prints
   new TrainersMailROS(),
+  new ReviveROS(),
+  new SwitchROS(),
+  new UltraBallROS(),
+  new RayquazaEx3ROS(),
+  new MRayquazaEx3ROS(),
+  new ShayminEx3ROS(),
+  new Wally2ROS(),
+  new Winona2ROS(),
+  new EnergySwitchPKROS(),
+  new VsSeekerSVROS(),
+  new ShayminEx2ROS(),
 ];

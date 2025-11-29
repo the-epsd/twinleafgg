@@ -23,8 +23,15 @@ function readImplementedCards() {
 
   for (const folder of folders) {
     for (const file of fs.readdirSync(`${setsFolderPath}/${folder}`)) {
+      const filePath = `${setsFolderPath}/${folder}/${file}`;
+      const stats = fs.statSync(filePath);
+      
+      // Skip if it's not a file or not a TypeScript file
+      if (!stats.isFile() || !file.endsWith('.ts')) {
+        continue;
+      }
 
-      const content = fs.readFileSync(`${setsFolderPath}/${folder}/${file}`, 'utf-8');
+      const content = fs.readFileSync(filePath, 'utf-8');
       const sourceFile = ts.createSourceFile('file.ts', content, ts.ScriptTarget.ESNext, true);
 
       /** @type {ts.Visitor} */

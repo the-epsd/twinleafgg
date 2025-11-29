@@ -1,3 +1,4 @@
+import { SizzlipedeCPA, PurrloinCPA, BedeCPA, FullHealCPA, GreatBallCPA, HopCPA, PokeBallCPA, PotionCPA, ProfessorsResearchCPA, Hop2CPA, Piers2CPA } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { EldegossV } from './eldegoss-v';
 import { GalarianObstagoon } from './galarian-obstagoon';
@@ -23,4 +24,15 @@ export const setChampionsPath: Card[] = [
 
   // other prints
   new MarnieCPA(),
+  new SizzlipedeCPA(),
+  new PurrloinCPA(),
+  new BedeCPA(),
+  new FullHealCPA(),
+  new GreatBallCPA(),
+  new HopCPA(),
+  new PokeBallCPA(),
+  new PotionCPA(),
+  new ProfessorsResearchCPA(),
+  new Hop2CPA(),
+  new Piers2CPA(),
 ];

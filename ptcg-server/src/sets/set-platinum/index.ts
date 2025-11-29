@@ -1,3 +1,4 @@
+import { PlusPowerPL, PokeBallPL, PokedexHandyPL, ElectabuzzPL, HitmonchanPL, ScytherPL } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { BrokenTimeSpace } from './broken-time-space';
 import { BronzongG } from './bronzong-g';
@@ -46,5 +47,11 @@ export const setPlatinum: Card[] = [
   new Vulpix(),
 
   // Other prints
-  new RainbowEnergyPL()
+  new RainbowEnergyPL(),
+  new PlusPowerPL(),
+  new PokeBallPL(),
+  new PokedexHandyPL(),
+  new ElectabuzzPL(),
+  new HitmonchanPL(),
+  new ScytherPL(),
 ];

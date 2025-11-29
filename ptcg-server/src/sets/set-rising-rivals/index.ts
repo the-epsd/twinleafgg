@@ -1,3 +1,4 @@
+import { BebesSearchRR, DarknessEnergySpecialRR, MetalEnergyN1RR, PikachuRR } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { FloatzelGL } from './floatzel-gl';
 import { FloatzelGLLVX } from './floatzel-gl-lv-x';
@@ -23,4 +24,8 @@ export const setRisingRivals: Card[] = [
   new PokemonContestHall(),
   new RoseradeGL(),
   new UpperEnergy(),
+  new BebesSearchRR(),
+  new DarknessEnergySpecialRR(),
+  new MetalEnergyN1RR(),
+  new PikachuRR(),
 ];
