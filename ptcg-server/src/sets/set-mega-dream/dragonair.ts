@@ -115,7 +115,6 @@ export class Dragonair extends PokemonCard {
         dragonairCardList.addBoardEffect(BoardEffect.ABILITY_USED);
       }
     }
-
     return state;
   }
 }
