@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -17,7 +17,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Gible' },
+    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Misdreavus' },
     { min: 0, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -36,38 +36,30 @@ function* useAscension(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class Gible extends PokemonCard {
-
+export class Misdreavus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DRAGON;
-
-  public hp: number = 50;
-
-  public weakness = [{ type: CardType.FAIRY }];
-
-  public retreat = [CardType.COLORLESS];
+  public cardType: CardType = P;
+  public hp: number = 60;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Ascension',
-    cost: [CardType.FIGHTING],
+    cost: [P],
     damage: 0,
     text: 'Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
-  }
-  ];
+  }];
 
-  public set: string = 'UPR';
-
+  public regulationMark: string = 'I';
+  public set: string = 'M2a';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '96';
-
-  public name: string = 'Gible';
-
-  public fullName: string = 'Gible UPR';
+  public setNumber: string = '67';
+  public name: string = 'Misdreavus';
+  public fullName: string = 'Misdreavus M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Ascension attack
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = useAscension(() => generator.next(), store, state, effect);
       return generator.next().value;
