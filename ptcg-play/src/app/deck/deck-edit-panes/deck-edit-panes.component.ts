@@ -1113,27 +1113,27 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
             // Arrow should point downward, so final segment must go down
             targetY = target.position.top + arrowOverlap; // Extend into card area so arrowhead overlaps
             // Extend upward (toward horizontalY) to match visual weight, then final segment goes down
-            extendedY = target.position.top - verticalSpacing; // Extend above the card edge
-            // Path goes: horizontalY (top) → extendedY (above card) → targetY (into card)
-            // Final segment goes downward, ensuring arrowhead points down
+            // Clamp extendedY to not go above horizontalY to prevent poking out
+            const calculatedExtendedY = target.position.top - verticalSpacing;
+            extendedY = Math.max(horizontalY, calculatedExtendedY); // Don't extend past horizontal line
           } else {
             // Stage 1 → Stage 2: End at bottom of target, extend downward to match other vertical lines
             // Arrow should point upward, so final segment must go up
             targetY = target.position.top + target.position.height - arrowOverlap + 4; // Extend into card area so arrowhead overlaps, moved down 4px
             // Extend downward (toward horizontalY) to match visual weight, then final segment goes up
-            extendedY = target.position.top + target.position.height + verticalSpacing + 4; // Extend below the card edge, moved down 4px
-            // Path goes: horizontalY (bottom) → extendedY (below card) → targetY (into card)
-            // Final segment goes upward, ensuring arrowhead points up
+            // Clamp extendedY to not go below horizontalY to prevent poking out
+            const calculatedExtendedY = target.position.top + target.position.height + verticalSpacing + 4;
+            extendedY = Math.min(horizontalY, calculatedExtendedY); // Don't extend past horizontal line
           }
 
-          // Vertical line to target - extend to match the height of other vertical segments
+          // Vertical line to target - ensure it doesn't extend past the horizontal line
           const branchPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           if (isBasic) {
-            // For Basic → Stage 1: Draw from top down to extendedY (above card), then down to targetY
+            // For Basic → Stage 1: Draw from horizontalY down to extendedY (at or just above card), then down to targetY
             // Final segment goes downward, making arrowhead point down
             branchPath.setAttribute('d', `M ${targetX} ${horizontalY} L ${targetX} ${extendedY} L ${targetX} ${targetY}`);
           } else {
-            // For Stage 1 → Stage 2: Draw from bottom up to extendedY (below card), then up to targetY
+            // For Stage 1 → Stage 2: Draw from horizontalY up to extendedY (at or just below card), then up to targetY
             // Final segment goes upward, making arrowhead point up
             branchPath.setAttribute('d', `M ${targetX} ${horizontalY} L ${targetX} ${extendedY} L ${targetX} ${targetY}`);
           }
