@@ -490,4 +490,23 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     this.showCardImage(card, false);
   }
 
+  public isFavoriteCard(): boolean {
+    if (!this.card) {
+      return false;
+    }
+    return this.cardsBaseService.isFavoriteCard(this.card);
+  }
+
+  public toggleFavorite(): void {
+    if (!this.card) {
+      return;
+    }
+
+    if (this.isFavoriteCard()) {
+      this.cardsBaseService.clearFavoriteCard(this.card.name);
+    } else {
+      this.cardsBaseService.setFavoriteCard(this.card.name, this.card.fullName);
+    }
+  }
+
 }

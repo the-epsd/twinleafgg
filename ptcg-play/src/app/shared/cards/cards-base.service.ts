@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard, CardsInfo, CardManager } from 'ptcg-server';
 
 import { ApiService } from '../../api/api.service';
@@ -7,32 +7,38 @@ import { CardInfoListPopupComponent } from './card-info-list-popup/card-info-lis
 import { CardInfoPaneAction } from './card-info-pane/card-info-pane.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionService } from '../session/session.service';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, Subscription, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { FavoritesService } from '../../api/services/favorites.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CardsBaseService {
+export class CardsBaseService implements OnDestroy {
 
   private cards: Card[] = [];
   private names: string[] = [];
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
+  private favoriteCards: { [cardName: string]: string } = {};
 
   private overridesChangedSubject = new Subject<string>();
   public overridesChanged$ = this.overridesChangedSubject.asObservable();
   private globalArtworksMap: { [code: string]: string } = {};
+  private favoritesSubscription: Subscription | null = null;
 
   constructor(
     private apiService: ApiService,
     private dialog: MatDialog,
     private sessionService: SessionService,
-    private http: HttpClient
+    private http: HttpClient,
+    private favoritesService: FavoritesService
   ) {
     this.cardManager = CardManager.getInstance();
     this.loadCustomImages();
+    this.loadFavoriteCards();
+    this.setupFavoritesSubscription();
   }
 
   public loadCardsInfo(cardsInfo: CardsInfo) {
@@ -97,6 +103,53 @@ export class CardsBaseService {
     if (storedImages) {
       this.customImages = JSON.parse(storedImages);
     }
+  }
+
+  private loadFavoriteCards(): void {
+    if (this.isAuthenticated()) {
+      this.loadFavoritesFromAPI();
+    } else {
+      const storedFavorites = localStorage.getItem('favoriteCards');
+      if (storedFavorites) {
+        this.favoriteCards = JSON.parse(storedFavorites);
+      }
+    }
+  }
+
+  private isAuthenticated(): boolean {
+    const session = this.sessionService.session;
+    return !!(session.authToken && session.loggedUserId);
+  }
+
+  private setupFavoritesSubscription(): void {
+    // Subscribe to session changes to reload favorites when user logs in
+    this.favoritesSubscription = this.sessionService.get(s => s.loggedUserId).subscribe(userId => {
+      if (userId && this.isAuthenticated()) {
+        this.loadFavoritesFromAPI();
+      } else {
+        // User logged out, clear API favorites and use localStorage
+        this.favoriteCards = {};
+        const storedFavorites = localStorage.getItem('favoriteCards');
+        if (storedFavorites) {
+          this.favoriteCards = JSON.parse(storedFavorites);
+        }
+      }
+    });
+  }
+
+  private loadFavoritesFromAPI(): void {
+    this.favoritesService.getFavorites().pipe(
+      catchError(() => {
+        // If API fails, fall back to localStorage
+        const storedFavorites = localStorage.getItem('favoriteCards');
+        if (storedFavorites) {
+          this.favoriteCards = JSON.parse(storedFavorites);
+        }
+        return of({});
+      })
+    ).subscribe(favorites => {
+      this.favoriteCards = favorites;
+    });
   }
 
   public setCustomImageForCard(card: Card, imageUrl: string): void {
@@ -217,6 +270,59 @@ export class CardsBaseService {
       return artwork.imageUrl;
     }
     return this.getScanUrl(card);
+  }
+
+  public setFavoriteCard(cardName: string, fullName: string): void {
+    this.favoriteCards[cardName] = fullName;
+
+    if (this.isAuthenticated()) {
+      // Save to database via API
+      this.favoritesService.setFavorite(cardName, fullName).pipe(
+        catchError(() => {
+          // If API fails, fall back to localStorage
+          localStorage.setItem('favoriteCards', JSON.stringify(this.favoriteCards));
+          return of({ ok: false });
+        })
+      ).subscribe();
+    } else {
+      // Save to localStorage for unauthenticated users
+      localStorage.setItem('favoriteCards', JSON.stringify(this.favoriteCards));
+    }
+  }
+
+  public getFavoriteCard(cardName: string): string | undefined {
+    return this.favoriteCards[cardName];
+  }
+
+  public clearFavoriteCard(cardName: string): void {
+    if (this.favoriteCards[cardName]) {
+      delete this.favoriteCards[cardName];
+
+      if (this.isAuthenticated()) {
+        // Clear from database via API
+        this.favoritesService.clearFavorite(cardName).pipe(
+          catchError(() => {
+            // If API fails, fall back to localStorage
+            localStorage.setItem('favoriteCards', JSON.stringify(this.favoriteCards));
+            return of({ ok: false });
+          })
+        ).subscribe();
+      } else {
+        // Clear from localStorage for unauthenticated users
+        localStorage.setItem('favoriteCards', JSON.stringify(this.favoriteCards));
+      }
+    }
+  }
+
+  public isFavoriteCard(card: Card): boolean {
+    const favoriteFullName = this.favoriteCards[card.name];
+    return favoriteFullName === card.fullName;
+  }
+
+  ngOnDestroy(): void {
+    if (this.favoritesSubscription) {
+      this.favoritesSubscription.unsubscribe();
+    }
   }
 
 }

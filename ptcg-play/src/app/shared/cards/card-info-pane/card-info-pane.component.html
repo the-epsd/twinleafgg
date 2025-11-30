@@ -11,31 +11,6 @@
         <mat-icon>swap_horiz</mat-icon>
       </button>
     </div>
-
-    <!-- Evolution Cards Section - Only for Pokemon, when not in game and not facedown -->
-    <div class="evolution-section" *ngIf="!isInGame() && !facedown && card.superType === SuperType.POKEMON">
-      <div class="evolution-cards"
-        *ngIf="getEvolutionCards().preEvolutions.length > 0 || getEvolutionCards().evolutions.length > 0">
-        <div class="evolution-group" *ngIf="getEvolutionCards().preEvolutions.length > 0">
-          <div class="evolution-label">Pre-evolutions</div>
-          <div class="evolution-cards-list">
-            <div class="evolution-card-item" *ngFor="let evoCard of getEvolutionCards().preEvolutions"
-              (click)="onEvolutionCardClick(evoCard)">
-              <ptcg-card [card]="evoCard"></ptcg-card>
-            </div>
-          </div>
-        </div>
-        <div class="evolution-group" *ngIf="getEvolutionCards().evolutions.length > 0">
-          <div class="evolution-label">Evolutions</div>
-          <div class="evolution-cards-list">
-            <div class="evolution-card-item" *ngFor="let evoCard of getEvolutionCards().evolutions"
-              (click)="onEvolutionCardClick(evoCard)">
-              <ptcg-card [card]="evoCard"></ptcg-card>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">
@@ -182,6 +157,10 @@
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.ENERGY">
     <div class="title">
       <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
+      <button mat-icon-button class="favorite-button" *ngIf="!isInGame() && card.superType === SuperType.ENERGY"
+        (click)="toggleFavorite()" [matTooltip]="isFavoriteCard() ? 'Remove from favorites' : 'Add to favorites'">
+        <mat-icon>{{isFavoriteCard() ? 'favorite' : 'favorite_border'}}</mat-icon>
+      </button>
     </div>
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.energyType">
@@ -225,6 +204,10 @@
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.TRAINER">
     <div class="title">
       <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
+      <button mat-icon-button class="favorite-button" *ngIf="!isInGame() && card.superType === SuperType.TRAINER"
+        (click)="toggleFavorite()" [matTooltip]="isFavoriteCard() ? 'Remove from favorites' : 'Add to favorites'">
+        <mat-icon>{{isFavoriteCard() ? 'favorite' : 'favorite_border'}}</mat-icon>
+      </button>
     </div>
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.trainerType">

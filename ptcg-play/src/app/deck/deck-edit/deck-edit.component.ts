@@ -258,6 +258,17 @@ export class DeckEditComponent implements OnInit {
         foundCard = this.cardsBaseService.getCardByBaseName(processedName);
       }
 
+      // Check for favorite card if a match was found
+      if (foundCard) {
+        const favoriteFullName = this.cardsBaseService.getFavoriteCard(processedName);
+        if (favoriteFullName) {
+          const favoriteCard = this.cardsBaseService.getCardByName(favoriteFullName);
+          if (favoriteCard) {
+            foundCard = favoriteCard;
+          }
+        }
+      }
+
       if (!foundCard) {
         const key = `${name} ${set} ${setNumber}`;
         failedCardCounts.set(key, (failedCardCounts.get(key) || 0) + 1);

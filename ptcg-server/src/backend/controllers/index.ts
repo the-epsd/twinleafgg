@@ -2,6 +2,7 @@ export * from './controller';
 export * from './avatars';
 export * from './cards';
 export * from './decks';
+export * from './favorites';
 export * from './friends';
 export * from './game';
 export * from './login';

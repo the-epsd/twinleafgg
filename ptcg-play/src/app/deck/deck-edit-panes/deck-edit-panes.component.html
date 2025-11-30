@@ -14,7 +14,7 @@
   <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
     #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)"
     (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" (addCard)="addCardToDeck(card)"
-    (removeCard)="removeCardFromDeck(card)" [card]="card" [isLibraryCard]="true">
+    (removeCard)="removeCardFromDeck(card)" (favoriteToggled)="refreshLibrary()" [card]="card" [isLibraryCard]="true">
   </ptcg-deck-card>
 </cdk-virtual-scroll-viewport>
 

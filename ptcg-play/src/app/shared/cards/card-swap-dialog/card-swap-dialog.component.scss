@@ -36,9 +36,48 @@ mat-dialog-content {
       align-items: center;
     }
 
-    ::ng-deep ptcg-card.swap-card {
-      width: $current-card-width !important;
-      display: block;
+    .card-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: map-get($padding, small);
+
+      ::ng-deep ptcg-card.swap-card {
+        width: $current-card-width !important;
+        display: block;
+      }
+
+      .favorite-icon-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #ff6b6b;
+        opacity: 0.9;
+        transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
+        z-index: 10;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.8);
+          transform: scale(1.1);
+          opacity: 1;
+        }
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
     }
 
     .card-info {
@@ -112,6 +151,37 @@ mat-dialog-content {
               font-size: 24px;
               width: 24px;
               height: 24px;
+            }
+          }
+
+          .favorite-icon-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 28px;
+            height: 28px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #ff6b6b;
+            opacity: 0.9;
+            transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
+            z-index: 11;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.8);
+              transform: scale(1.1);
+              opacity: 1;
+            }
+
+            mat-icon {
+              font-size: 16px;
+              width: 16px;
+              height: 16px;
             }
           }
         }

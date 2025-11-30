@@ -8,3 +8,4 @@ export * from './match';
 export * from './message';
 export * from './replay';
 export * from './user';
+export * from './user-favorite-card';

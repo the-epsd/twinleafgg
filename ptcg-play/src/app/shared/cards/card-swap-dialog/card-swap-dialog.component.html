@@ -3,7 +3,13 @@
   <div class="cards-container">
     <div class="current-card-item">
       <div class="card-label">Current</div>
-      <ptcg-card [card]="data.currentCard" class="swap-card"></ptcg-card>
+      <div class="card-wrapper">
+        <ptcg-card [card]="data.currentCard" class="swap-card"></ptcg-card>
+        <div class="favorite-icon-button" (click)="toggleFavorite(data.currentCard, $event)"
+          [matTooltip]="isFavoriteCard(data.currentCard) ? 'Remove from favorites' : 'Add to favorites'">
+          <mat-icon>{{isFavoriteCard(data.currentCard) ? 'favorite' : 'favorite_border'}}</mat-icon>
+        </div>
+      </div>
       <div class="card-info">
         <span class="set-info">{{ data.currentCard.set }} {{ data.currentCard.setNumber }}</span>
       </div>
@@ -17,6 +23,10 @@
             <button mat-icon-button class="swap-icon-button" (click)="onCardSelected(card); $event.stopPropagation()">
               <mat-icon>swap_horiz</mat-icon>
             </button>
+            <div class="favorite-icon-button" (click)="toggleFavorite(card, $event)"
+              [matTooltip]="isFavoriteCard(card) ? 'Remove from favorites' : 'Add to favorites'">
+              <mat-icon>{{isFavoriteCard(card) ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </div>
           </div>
           <div class="card-info">
             <span class="set-info">{{ card.set }} {{ card.setNumber }}</span>

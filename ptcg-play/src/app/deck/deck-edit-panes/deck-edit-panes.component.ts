@@ -194,7 +194,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   };
 
   private loadLibraryCards(): LibraryItem[] {
-    return this.cardsBaseService.getCards().map((card, index) => {
+    const allItems = this.cardsBaseService.getCards().map((card, index) => {
       let item: LibraryItem;
 
       const spec: SortableSpec<DeckItem, any> = {
@@ -211,6 +211,30 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       };
       return item;
     });
+
+    // Group by card name
+    const grouped = new Map<string, LibraryItem[]>();
+    allItems.forEach(item => {
+      const name = item.card.name;
+      if (!grouped.has(name)) {
+        grouped.set(name, []);
+      }
+      grouped.get(name)!.push(item);
+    });
+
+    // Sort within each group: favorites first
+    grouped.forEach((items, name) => {
+      items.sort((a, b) => {
+        const aIsFavorite = this.cardsBaseService.isFavoriteCard(a.card);
+        const bIsFavorite = this.cardsBaseService.isFavoriteCard(b.card);
+        if (aIsFavorite && !bIsFavorite) return -1;
+        if (!aIsFavorite && bIsFavorite) return 1;
+        return 0; // Keep original order if both same favorite status
+      });
+    });
+
+    // Flatten back to array
+    return Array.from(grouped.values()).flat();
   }
 
   private moveDeckCards(item: DraggedItem<DeckItem>) {
@@ -650,6 +674,10 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   onLibraryCardClick(card: DeckItem) {
     this.addCardToDeck(card);
+  }
+
+  public refreshLibrary(): void {
+    this.cards = this.loadLibraryCards();
   }
 
   onCardSelectedOnDialog(currentCard: DeckItem, selectedCard: Card, action: 'add' | 'replace') {

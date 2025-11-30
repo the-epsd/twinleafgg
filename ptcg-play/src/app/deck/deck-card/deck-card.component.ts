@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { exhaustMap, filter, tap } from 'rxjs/operators';
 import { DeckCardDialogComponent } from '../deck-card-dialog/deck-card-dialog.component';
 import { Subject, merge } from 'rxjs';
-import { Card } from 'ptcg-server';
+import { Card, SuperType } from 'ptcg-server';
 
 export const DeckCardType = 'DECK_CARD';
 
@@ -18,6 +18,7 @@ export const DeckCardType = 'DECK_CARD';
 export class DeckCardComponent implements OnDestroy {
 
   public showButtons = false;
+  public SuperType = SuperType;
 
   @Input() source: DragSource<DeckItem, any>;
   @Input() card: DeckItem;
@@ -32,6 +33,7 @@ export class DeckCardComponent implements OnDestroy {
   @Output() infoClick = new EventEmitter<void>();
   @Output() addCard = new EventEmitter<void>();
   @Output() removeCard = new EventEmitter<void>();
+  @Output() favoriteToggled = new EventEmitter<void>();
 
   showCardDialog = new Subject();
   showCardDialog$ = this.showCardDialog.asObservable();
@@ -87,5 +89,28 @@ export class DeckCardComponent implements OnDestroy {
       const swapEvent = (result as any).cardSwap;
       this.cardSelected.emit({ card: swapEvent.replacementCard, action: 'replace' });
     }
+  }
+
+  public isFavoriteCard(): boolean {
+    if (!this.card || !this.card.card) {
+      return false;
+    }
+    return this.cardsBaseService.isFavoriteCard(this.card.card);
+  }
+
+  public toggleFavorite(event: MouseEvent): void {
+    event.stopPropagation();
+    if (!this.card || !this.card.card) {
+      return;
+    }
+
+    if (this.isFavoriteCard()) {
+      this.cardsBaseService.clearFavoriteCard(this.card.card.name);
+    } else {
+      this.cardsBaseService.setFavoriteCard(this.card.card.name, this.card.card.fullName);
+    }
+
+    // Notify parent to refresh library
+    this.favoriteToggled.emit();
   }
 }
