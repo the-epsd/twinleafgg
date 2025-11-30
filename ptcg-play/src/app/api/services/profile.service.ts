@@ -34,6 +34,13 @@ export class ProfileService {
     return this.api.post<Response>('/v1/profile/changeEmail', { email });
   }
 
+  public getCardImagesUrl() {
+    return this.api.get<{ ok: boolean; jsonUrl: string }>('/v1/profile/cardImagesUrl');
+  }
+
+  public setCardImagesUrl(jsonUrl: string) {
+    return this.api.post<Response>('/v1/profile/setCardImagesUrl', { jsonUrl });
+  }
 
   public updateUserRole(targetUserId: number, roleId: number) {
     return this.api.post<Response>('/v1/profile/updateRole', { targetUserId, roleId });

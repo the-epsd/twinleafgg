@@ -86,35 +86,41 @@ export class RareCandyM1S extends RareCandy {
   public fullName = 'Rare Candy M1S 82';
   public set = 'M1S';
   public setNumber = '82';
+  public regulationMark = 'I';
 }
 export class BossOrdersMEG extends BossOrders {
   public setNumber = '114';
   public fullName: string = 'Boss\'s Orders MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class EnergySwitchPKMEG extends EnergySwitchPK {
   public setNumber = '115';
   public fullName: string = 'Energy Switch MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class RareCandyMEG extends RareCandy {
   public setNumber = '125';
   public fullName: string = 'Rare Candy MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class SwitchMEG extends Switch {
   public setNumber = '130';
   public fullName: string = 'Switch MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class UltraBallMEG extends UltraBall {
   public setNumber = '131';
   public fullName: string = 'Ultra Ball MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class Bulbasaur2MEG extends BulbasaurMEG1 {
@@ -241,6 +247,7 @@ export class AirBalloonMEG extends AirBalloon {
   public setNumber = '166';
   public fullName: string = 'Air Balloon MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class BuddyBuddyPoffinMEG extends BuddyBuddyPoffin {
@@ -289,6 +296,7 @@ export class RareCandy2MEG extends RareCandyHP90 {
   public setNumber = '175';
   public fullName: string = 'Rare Candy2 MEG';
   public set = 'MEG';
+  public regulationMark = 'I';
 }
 
 export class WallysCompassion2MEG extends WallysCompassionMEG132 {
