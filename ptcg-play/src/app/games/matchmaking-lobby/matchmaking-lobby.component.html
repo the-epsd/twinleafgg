@@ -50,7 +50,7 @@
     </div>
 
     <!-- Play Button -->
-    <twinleaf-play-button [text]="(!selectedFormat ? 'SELECT_FORMAT' : 'BUTTON_FIND_MATCH') | translate"
+    <twinleaf-play-button [text]="(!selectedFormat ? 'LABEL_SELECT_FORMAT' : 'BUTTON_FIND_MATCH') | translate"
       [inQueue]="inQueue" [loading]="loading" [disabled]="!deckId || !selectedFormat" [onCooldown]="onCooldown"
       [cooldownSeconds]="cooldownSeconds" [connectionError]="connectionError"
       (clicked)="inQueue ? leaveQueue() : joinQueue()">

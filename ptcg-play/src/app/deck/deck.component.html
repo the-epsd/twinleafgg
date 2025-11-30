@@ -21,54 +21,61 @@
           <button mat-button class="format-tab" [class.active]="selectedFormat === 'all'" (click)="selectFormat('all')">
             {{ 'FORMAT_ALL' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'standard'"
-            (click)="selectFormat('standard')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('standard')"
+            [class.active]="selectedFormat === 'standard'" (click)="selectFormat('standard')">
             {{ 'FORMAT_STANDARD' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'standard_nightly'"
-            (click)="selectFormat('standard_nightly')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('standard_nightly')"
+            [class.active]="selectedFormat === 'standard_nightly'" (click)="selectFormat('standard_nightly')">
             {{ 'FORMAT_STANDARD_NIGHTLY' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'glc'" (click)="selectFormat('glc')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('glc')" [class.active]="selectedFormat === 'glc'"
+            (click)="selectFormat('glc')">
             {{ 'FORMAT_GLC' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'expanded'"
-            (click)="selectFormat('expanded')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('expanded')"
+            [class.active]="selectedFormat === 'expanded'" (click)="selectFormat('expanded')">
             {{ 'FORMAT_EXPANDED' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'RSPK'"
-            (click)="selectFormat('RSPK')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('RSPK')"
+            [class.active]="selectedFormat === 'RSPK'" (click)="selectFormat('RSPK')">
             {{ 'FORMAT_RSPK' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'retro'"
-            (click)="selectFormat('retro')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('retro')"
+            [class.active]="selectedFormat === 'retro'" (click)="selectFormat('retro')">
             {{ 'FORMAT_RETRO' | translate }}
           </button>
-          <button mat-button class="format-tab" [class.active]="selectedFormat === 'unlimited'"
-            (click)="selectFormat('unlimited')">
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('unlimited')"
+            [class.active]="selectedFormat === 'unlimited'" (click)="selectFormat('unlimited')">
             {{ 'FORMAT_UNLIMITED' | translate }}
           </button>
         </div>
 
         <!-- More formats dropdown -->
-        <button mat-button class="format-tab more-formats-btn" [matMenuTriggerFor]="moreFormatsMenu">
+        <button mat-button class="format-tab more-formats-btn" [class.hidden]="!hasVisibleMoreFormats()"
+          [matMenuTriggerFor]="moreFormatsMenu">
           <span class="more-text">{{ 'MORE_FORMATS' | translate }}</span>
         </button>
 
         <mat-menu #moreFormatsMenu="matMenu" class="more-formats-menu">
-          <button mat-menu-item (click)="selectFormat('theme')" [class.active]="selectedFormat === 'theme'">
+          <button mat-menu-item *ngIf="!isFormatHidden('theme')" (click)="selectFormat('theme')"
+            [class.active]="selectedFormat === 'theme'">
             {{ 'FORMAT_THEME' | translate }}
           </button>
-          <button mat-menu-item (click)="selectFormat('swsh')" [class.active]="selectedFormat === 'swsh'">
+          <button mat-menu-item *ngIf="!isFormatHidden('swsh')" (click)="selectFormat('swsh')"
+            [class.active]="selectedFormat === 'swsh'">
             {{ 'FORMAT_SWSH' | translate }}
           </button>
-          <button mat-menu-item (click)="selectFormat('sm')" [class.active]="selectedFormat === 'sm'">
+          <button mat-menu-item *ngIf="!isFormatHidden('sm')" (click)="selectFormat('sm')"
+            [class.active]="selectedFormat === 'sm'">
             {{ 'FORMAT_SM' | translate }}
           </button>
-          <button mat-menu-item (click)="selectFormat('xy')" [class.active]="selectedFormat === 'xy'">
+          <button mat-menu-item *ngIf="!isFormatHidden('xy')" (click)="selectFormat('xy')"
+            [class.active]="selectedFormat === 'xy'">
             {{ 'FORMAT_XY' | translate }}
           </button>
-          <button mat-menu-item (click)="selectFormat('bw')" [class.active]="selectedFormat === 'bw'">
+          <button mat-menu-item *ngIf="!isFormatHidden('bw')" (click)="selectFormat('bw')"
+            [class.active]="selectedFormat === 'bw'">
             {{ 'FORMAT_BW' | translate }}
           </button>
         </mat-menu>

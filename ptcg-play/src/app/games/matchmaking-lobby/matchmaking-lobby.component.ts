@@ -11,6 +11,7 @@ import { ArchetypeUtils } from '../../deck/deck-archetype-service/archetype.util
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { DeckItem } from '../../deck/deck-card/deck-card.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SettingsService } from '../../table/table-sidebar/settings-dialog/settings.service';
 
 
 @UntilDestroy()
@@ -56,6 +57,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public hoveredFormat: Format | null = null; // Track which format is being hovered
   public formatQueueCounts: { [key: number]: number } = {}; // Track queue counts per format
   public visibleFormatCount = 4; // Track how many formats are currently visible
+  public hiddenFormats: Format[] = []; // Track hidden formats from settings
 
   private queueTimeout: ReturnType<typeof setTimeout> | null = null;
   private cooldownInterval: ReturnType<typeof setInterval> | null = null;
@@ -74,7 +76,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     private socketService: SocketService,
     private router: Router,
     private cardsBaseService: CardsBaseService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +92,15 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     if (savedFormatDefaults) {
       this.formatDefaultDecks = JSON.parse(savedFormatDefaults);
     }
+
+    // Subscribe to hidden formats setting
+    this.settingsService.hiddenFormats$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(hiddenFormats => {
+      this.hiddenFormats = hiddenFormats;
+      // Adjust current page if needed after formats are filtered
+      this.updateVisibleFormatCount();
+    });
 
     // Monitor socket connection status
     this.socketService.connection
@@ -325,51 +337,75 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     // Store the selected format in localStorage
     localStorage.setItem('lastSelectedFormat', format.toString());
 
-    this.loading = true;
+    // Check if decks are already loaded for this format
+    const existingDecks = this.formatDecks[format];
+    if (existingDecks && existingDecks.length > 0) {
+      // Decks already exist, set deckId immediately without loading state
+      this.decksByFormat = existingDecks;
 
-    this.deckService.getListByFormat(this.selectedFormat).subscribe(
-      decks => {
-        // Process deck items like in deck component
-        decks.forEach(deck => {
-          const deckCards: DeckItem[] = [];
-          deck.cards.forEach(card => {
-            deckCards.push({
-              card: this.cardsBaseService.getCardByName(card),
-              count: 0,
-              pane: null,
-              scanUrl: null
-            });
-          });
-          deck.deckItems = deckCards;
-        });
+      // Get format-specific default deck
+      const formatDefaultDeckId = this.getFormatDefaultDeckId(this.selectedFormat);
 
-        this.decksByFormat = decks;
-        this.formatDecks[format] = decks; // Store decks for this format
-
-        // Get format-specific default deck
-        const formatDefaultDeckId = this.getFormatDefaultDeckId(this.selectedFormat);
-
-        // Check if the default deck for this format is available in the current deck list
-        if (formatDefaultDeckId && this.decksByFormat.some(d => d.id === formatDefaultDeckId)) {
-          this.deckId = formatDefaultDeckId;
-        } else if (this.decksByFormat.length > 0) {
-          // If no default for this format, use the first valid deck
-          this.deckId = this.decksByFormat[0].id;
-        } else {
-          this.deckId = null;
-        }
-
-        this.loading = false;
-
-        // Load decks for adjacent formats
-        this.loadAdjacentFormatDecks();
-      },
-      error => {
-        console.error('Failed to load decks:', error);
-        this.loading = false;
-        this.showErrorMessage('Failed to load decks');
+      // Check if the default deck for this format is available in the current deck list
+      if (formatDefaultDeckId && this.decksByFormat.some(d => d.id === formatDefaultDeckId)) {
+        this.deckId = formatDefaultDeckId;
+      } else if (this.decksByFormat.length > 0) {
+        // If no default for this format, use the first valid deck
+        this.deckId = this.decksByFormat[0].id;
+      } else {
+        this.deckId = null;
       }
-    );
+
+      // Load decks for adjacent formats
+      this.loadAdjacentFormatDecks();
+    } else {
+      // Decks don't exist, need to load them
+      this.loading = true;
+
+      this.deckService.getListByFormat(this.selectedFormat).subscribe(
+        decks => {
+          // Process deck items like in deck component
+          decks.forEach(deck => {
+            const deckCards: DeckItem[] = [];
+            deck.cards.forEach(card => {
+              deckCards.push({
+                card: this.cardsBaseService.getCardByName(card),
+                count: 0,
+                pane: null,
+                scanUrl: null
+              });
+            });
+            deck.deckItems = deckCards;
+          });
+
+          this.decksByFormat = decks;
+          this.formatDecks[format] = decks; // Store decks for this format
+
+          // Get format-specific default deck
+          const formatDefaultDeckId = this.getFormatDefaultDeckId(this.selectedFormat);
+
+          // Check if the default deck for this format is available in the current deck list
+          if (formatDefaultDeckId && this.decksByFormat.some(d => d.id === formatDefaultDeckId)) {
+            this.deckId = formatDefaultDeckId;
+          } else if (this.decksByFormat.length > 0) {
+            // If no default for this format, use the first valid deck
+            this.deckId = this.decksByFormat[0].id;
+          } else {
+            this.deckId = null;
+          }
+
+          this.loading = false;
+
+          // Load decks for adjacent formats
+          this.loadAdjacentFormatDecks();
+        },
+        error => {
+          console.error('Failed to load decks:', error);
+          this.loading = false;
+          this.showErrorMessage('Failed to load decks');
+        }
+      );
+    }
   }
 
   public onFormatHover(format: Format | null): void {
@@ -558,6 +594,11 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     return descriptionMap[format] || 'Pokemon TCG Format';
   }
 
+  // Get filtered formats (excluding hidden ones)
+  getFilteredFormats(): { value: Format; label: string }[] {
+    return this.formats.filter(f => !this.hiddenFormats.includes(f.value));
+  }
+
   // Helper method to get format label
   getFormatLabel(format: Format): string {
     const formatObj = this.formats.find(f => f.value === format);
@@ -566,38 +607,42 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   // Helper method to get previous format
   getPreviousFormat(): { value: Format; label: string } | undefined {
-    const currentIndex = this.formats.findIndex(f => f.value === this.selectedFormat);
+    const filteredFormats = this.getFilteredFormats();
+    const currentIndex = filteredFormats.findIndex(f => f.value === this.selectedFormat);
     if (currentIndex > 0) {
-      return this.formats[currentIndex - 1];
+      return filteredFormats[currentIndex - 1];
     }
     return undefined;
   }
 
   // Helper method to get next format
   getNextFormat(): { value: Format; label: string } | undefined {
-    const currentIndex = this.formats.findIndex(f => f.value === this.selectedFormat);
-    if (currentIndex < this.formats.length - 1) {
-      return this.formats[currentIndex + 1];
+    const filteredFormats = this.getFilteredFormats();
+    const currentIndex = filteredFormats.findIndex(f => f.value === this.selectedFormat);
+    if (currentIndex < filteredFormats.length - 1) {
+      return filteredFormats[currentIndex + 1];
     }
     return undefined;
   }
 
   // Helper method to get format by index
   getFormatAtIndex(index: number): { value: Format; label: string } | undefined {
+    const filteredFormats = this.getFilteredFormats();
     const startIndex = this.currentPage * this.visibleFormatCount;
     const targetIndex = startIndex + index;
 
-    if (targetIndex >= 0 && targetIndex < this.formats.length) {
-      return this.formats[targetIndex];
+    if (targetIndex >= 0 && targetIndex < filteredFormats.length) {
+      return filteredFormats[targetIndex];
     }
     return undefined;
   }
 
   // Get the currently visible formats based on current page and visible count
   getVisibleFormats(): { value: Format; label: string }[] {
+    const filteredFormats = this.getFilteredFormats();
     const startIndex = this.currentPage * this.visibleFormatCount;
     const endIndex = startIndex + this.visibleFormatCount;
-    return this.formats.slice(startIndex, endIndex);
+    return filteredFormats.slice(startIndex, endIndex);
   }
 
   // Update visible format count based on screen size
@@ -615,7 +660,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     }
 
     // Adjust current page if it's now beyond the maximum
-    const maxPage = Math.floor((this.formats.length - 1) / this.visibleFormatCount);
+    const filteredFormats = this.getFilteredFormats();
+    const maxPage = Math.floor((filteredFormats.length - 1) / this.visibleFormatCount);
     if (this.currentPage > maxPage) {
       this.currentPage = maxPage;
     }
@@ -636,7 +682,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   nextFormat(): void {
     if (this.inQueue) return;
 
-    const maxPage = Math.floor((this.formats.length - 1) / this.visibleFormatCount);
+    const filteredFormats = this.getFilteredFormats();
+    const maxPage = Math.floor((filteredFormats.length - 1) / this.visibleFormatCount);
     if (this.currentPage < maxPage) {
       this.currentPage++;
 
@@ -652,13 +699,15 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   canNavigateNext(): boolean {
     if (this.inQueue) return false;
-    const maxPage = Math.floor((this.formats.length - 1) / this.visibleFormatCount);
+    const filteredFormats = this.getFilteredFormats();
+    const maxPage = Math.floor((filteredFormats.length - 1) / this.visibleFormatCount);
     return this.currentPage < maxPage;
   }
 
   // Helper method to get current page info
   getCurrentPageInfo(): { current: number; total: number } {
-    const totalPages = Math.ceil(this.formats.length / this.visibleFormatCount);
+    const filteredFormats = this.getFilteredFormats();
+    const totalPages = Math.ceil(filteredFormats.length / this.visibleFormatCount);
     return { current: this.currentPage + 1, total: totalPages };
   }
 
