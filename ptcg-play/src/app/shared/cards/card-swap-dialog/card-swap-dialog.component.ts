@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Card } from 'ptcg-server';
+import { Card, SuperType } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 
 export interface CardSwapDialogData {
@@ -41,5 +41,9 @@ export class CardSwapDialogComponent {
     } else {
       this.cardsBaseService.setFavoriteCard(card.name, card.fullName);
     }
+  }
+
+  isPokemonCard(card: Card): boolean {
+    return card.superType === SuperType.POKEMON;
   }
 }
