@@ -13,7 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 import { ArtworksService } from 'src/app/api/services/artworks.service';
 import { CardArtwork } from 'src/app/api/interfaces/cards.interface';
@@ -174,30 +174,246 @@ export class DeckEditComponent implements OnInit {
   }
 
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
-    // First, separate cards by type
+    // Separate cards by supertype
     const pokemonCards = cards.filter(d => d.card.superType === SuperType.POKEMON);
-    const nonPokemonCards = cards.filter(d => d.card.superType !== SuperType.POKEMON);
+    const trainerCards = cards.filter(d => d.card.superType === SuperType.TRAINER);
+    const energyCards = cards.filter(d => d.card.superType === SuperType.ENERGY);
 
-    // Sort Pokemon by evolution
-    for (let i = pokemonCards.length - 1; i >= 0; i--) {
-      if ((<PokemonCard>pokemonCards[i].card).evolvesFrom) {
-        const indexOfPrevolution = this.findLastIndex(
-          pokemonCards,
-          c => c.card.name === (<PokemonCard>pokemonCards[i].card).evolvesFrom
-        );
+    // Build evolution chains
+    const evolutionChains = new Map<string, DeckItem[]>();
+    const processedCards = new Set<string>();
+    const cardNameMap = new Map<string, DeckItem[]>();
 
-        if (indexOfPrevolution === -1) {
-          continue;
+    // Create a map of cards by name for quick lookup
+    pokemonCards.forEach(item => {
+      const pokemonCard = item.card as PokemonCard;
+      const name = pokemonCard.name;
+      if (!cardNameMap.has(name)) {
+        cardNameMap.set(name, []);
+      }
+      cardNameMap.get(name)!.push(item);
+    });
+
+    // Find the basic Pokemon for each evolution chain
+    const findBasicPokemon = (pokemonCard: PokemonCard, visited: Set<string> = new Set()): string | null => {
+      const cardName = pokemonCard.name;
+      if (visited.has(cardName)) {
+        return null; // Circular reference
+      }
+      visited.add(cardName);
+
+      // If it's a basic Pokemon, return its name
+      if (pokemonCard.stage === Stage.BASIC && !pokemonCard.evolvesFrom) {
+        return cardName;
+      }
+
+      // If it evolves from another Pokemon, find that Pokemon's basic
+      if (pokemonCard.evolvesFrom) {
+        const preEvolutionCards = cardNameMap.get(pokemonCard.evolvesFrom);
+        if (preEvolutionCards && preEvolutionCards.length > 0) {
+          const preEvoCard = preEvolutionCards[0].card as PokemonCard;
+          const basic = findBasicPokemon(preEvoCard, visited);
+          if (basic) {
+            return basic;
+          }
+        }
+      }
+
+      // Check if any Pokemon in the deck evolves from this one (reverse relationship)
+      for (const [name, items] of cardNameMap.entries()) {
+        if (name === cardName) continue;
+        const otherCard = items[0].card as PokemonCard;
+        if (otherCard.evolvesFrom === cardName) {
+          // This is a basic Pokemon that others evolve from
+          if (pokemonCard.stage === Stage.BASIC) {
+            return cardName;
+          }
+        }
+      }
+
+      // If no basic found and this is a basic, return it
+      if (pokemonCard.stage === Stage.BASIC) {
+        return cardName;
+      }
+
+      return null;
+    };
+
+    // Group cards into evolution chains
+    const addToChain = (item: DeckItem, chainKey: string) => {
+      const fullName = item.card.fullName;
+      if (processedCards.has(fullName)) {
+        return;
+      }
+
+      if (!evolutionChains.has(chainKey)) {
+        evolutionChains.set(chainKey, []);
+      }
+
+      // Add this card to the chain
+      evolutionChains.get(chainKey)!.push(item);
+      processedCards.add(fullName);
+
+      const pokemonCard = item.card as PokemonCard;
+
+      // Add all cards with the same name to the chain
+      const sameNameCards = cardNameMap.get(pokemonCard.name) || [];
+      sameNameCards.forEach(card => {
+        if (!processedCards.has(card.card.fullName)) {
+          evolutionChains.get(chainKey)!.push(card);
+          processedCards.add(card.card.fullName);
+        }
+      });
+
+      // Recursively add cards that evolve from this one
+      pokemonCards.forEach(otherItem => {
+        const otherPokemon = otherItem.card as PokemonCard;
+        if (otherPokemon.evolvesFrom === pokemonCard.name && !processedCards.has(otherItem.card.fullName)) {
+          addToChain(otherItem, chainKey);
+        }
+      });
+
+      // Recursively add cards that this one evolves from
+      if (pokemonCard.evolvesFrom) {
+        const preEvolutionCards = cardNameMap.get(pokemonCard.evolvesFrom);
+        if (preEvolutionCards) {
+          preEvolutionCards.forEach(preEvo => {
+            if (!processedCards.has(preEvo.card.fullName)) {
+              addToChain(preEvo, chainKey);
+            }
+          });
+        }
+      }
+
+      // Handle evolvesTo relationships
+      if (pokemonCard.evolvesTo && pokemonCard.evolvesTo.length > 0) {
+        pokemonCard.evolvesTo.forEach(evolutionName => {
+          const evolutionCards = cardNameMap.get(evolutionName);
+          if (evolutionCards) {
+            evolutionCards.forEach(evo => {
+              if (!processedCards.has(evo.card.fullName)) {
+                addToChain(evo, chainKey);
+              }
+            });
+          }
+        });
+      }
+    };
+
+    pokemonCards.forEach(item => {
+      const fullName = item.card.fullName;
+      if (processedCards.has(fullName)) {
+        return;
+      }
+
+      const pokemonCard = item.card as PokemonCard;
+      const basicName = findBasicPokemon(pokemonCard);
+
+      // Use the basic Pokemon name as the chain key, or the card's name if no basic found
+      const chainKey = basicName || pokemonCard.name;
+
+      addToChain(item, chainKey);
+    });
+
+    // Stage order for sorting
+    const stageOrder = [
+      Stage.BASIC,
+      Stage.STAGE_1,
+      Stage.STAGE_2,
+      Stage.VMAX,
+      Stage.VSTAR,
+      Stage.VUNION,
+      Stage.LEGEND,
+      Stage.MEGA,
+      Stage.BREAK,
+      Stage.RESTORED,
+      Stage.NONE
+    ];
+
+    // Sort each evolution chain by stage, then by name
+    evolutionChains.forEach(chain => {
+      chain.sort((a, b) => {
+        const pokemonA = a.card as PokemonCard;
+        const pokemonB = b.card as PokemonCard;
+        const aStageIndex = stageOrder.indexOf(pokemonA.stage);
+        const bStageIndex = stageOrder.indexOf(pokemonB.stage);
+
+        // If stage is not in the order list, put it at the end
+        const aIndex = aStageIndex === -1 ? Infinity : aStageIndex;
+        const bIndex = bStageIndex === -1 ? Infinity : bStageIndex;
+
+        if (aIndex !== bIndex) {
+          return aIndex - bIndex;
         }
 
-        const currentPokemon = { ...pokemonCards.splice(i, 1)[0] };
+        // If same stage, sort by name
+        return pokemonA.name.localeCompare(pokemonB.name);
+      });
+    });
 
-        pokemonCards.splice(indexOfPrevolution + 1, 0, currentPokemon);
-      }
-    }
+    // Get all cards that are part of evolution chains
+    const evolutionChainCards = Array.from(evolutionChains.values()).flat();
+    const evolutionCardNames = new Set(evolutionChainCards.map(item => item.card.name));
 
-    // Recombine the cards in the correct order
-    return [...pokemonCards, ...nonPokemonCards];
+    // Get non-evolution Pokemon cards
+    const nonEvolutionPokemon = pokemonCards.filter(item => !evolutionCardNames.has(item.card.name));
+
+    // Sort non-evolution Pokemon by type and name
+    const compareCardType = (cardType: CardType) => {
+      const order = [
+        CardType.GRASS,
+        CardType.FIRE,
+        CardType.WATER,
+        CardType.LIGHTNING,
+        CardType.PSYCHIC,
+        CardType.FIGHTING,
+        CardType.DARK,
+        CardType.METAL,
+        CardType.COLORLESS,
+        CardType.FAIRY,
+        CardType.DRAGON
+      ];
+      return order.indexOf(cardType);
+    };
+
+    const sortedNonEvolutionPokemon = nonEvolutionPokemon.sort((a, b) => {
+      const pokemonA = a.card as PokemonCard;
+      const pokemonB = b.card as PokemonCard;
+
+      // First sort by card type
+      const typeCompare = compareCardType(pokemonA.cardType) - compareCardType(pokemonB.cardType);
+      if (typeCompare !== 0) return typeCompare;
+
+      // Then sort by name
+      return pokemonA.name.localeCompare(pokemonB.name);
+    });
+
+    // Sort chains alphabetically by their basic Pokemon name
+    const sortedChains = Array.from(evolutionChains.entries())
+      .sort(([aKey], [bKey]) => aKey.localeCompare(bKey))
+      .map(([_, chain]) => chain)
+      .flat();
+
+    // Sort trainer cards
+    const sortedTrainerCards = trainerCards.sort((a, b) => {
+      const trainerA = a.card as TrainerCard;
+      const trainerB = b.card as TrainerCard;
+      const typeCompare = this.compareTrainerType(trainerA.trainerType) - this.compareTrainerType(trainerB.trainerType);
+      if (typeCompare !== 0) return typeCompare;
+      return trainerA.name.localeCompare(trainerB.name);
+    });
+
+    // Sort energy cards
+    const sortedEnergyCards = energyCards.sort((a, b) => {
+      const energyA = a.card as EnergyCard;
+      const energyB = b.card as EnergyCard;
+      const typeCompare = this.compareEnergyType(energyA.energyType) - this.compareEnergyType(energyB.energyType);
+      if (typeCompare !== 0) return typeCompare;
+      return energyA.name.localeCompare(energyB.name);
+    });
+
+    // Combine everything in the correct order: evolution chains, non-evolution Pokemon, Trainer, Energy
+    return [...sortedChains, ...sortedNonEvolutionPokemon, ...sortedTrainerCards, ...sortedEnergyCards];
   }
 
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {

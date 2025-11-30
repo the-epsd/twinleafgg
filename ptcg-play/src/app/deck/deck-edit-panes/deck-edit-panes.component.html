@@ -24,10 +24,10 @@
     [matTooltip]="(showLibrary ? 'Hide' : 'Show') + ' Card Library'" [disabled]="disabled">
     <mat-icon>{{ showLibrary ? 'chevron_left' : 'chevron_right' }}</mat-icon>
   </button>
-  <div #deckPane>
+  <div #deckPane class="deck-pane-container">
     <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">
       <ng-template dndSortableTemplate let-context>
-        <div class="deck-card-inline">
+        <div class="deck-card-inline" [attr.data-card-fullname]="context?.card?.fullName">
           <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
             [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
             (countClick)="setCardCount(render.data)"
@@ -47,6 +47,13 @@
         </div>
       </ng-template>
     </dnd-sortable-list>
+    <svg #evolutionArrows class="evolution-arrows-overlay" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowhead" markerWidth="3" markerHeight="3" refX="1.5" refY="1.5" orient="auto">
+          <polygon points="0,0 3,1.5 0,3" fill="#FFD700" stroke="#2d3748" stroke-width="0" />
+        </marker>
+      </defs>
+    </svg>
   </div>
   <div class="deck-validity-container">
     <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>

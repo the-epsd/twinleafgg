@@ -129,21 +129,27 @@ ptcg-deck-card.placeholder {
   margin-top: auto;
 }
 
-// .deck-pane-container {
-//   position: relative;
-//   width: 100%;
-//   height: 100%;
-//   overflow: hidden;
-// }
+.deck-pane-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  padding: 30px 20px 20px 20px; // More top padding for arrow visibility, side and bottom padding
+  box-sizing: border-box;
+}
 
-// .deck-pane {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: auto;
-//   min-height: 100%;
-// }
+.evolution-arrows-overlay {
+  position: absolute;
+  top: 0;
+  left: -6px; // Shift left to account for card margins
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+  // Account for container padding - SVG should cover the entire container including padding area
+  box-sizing: border-box;
+}
 
 .library-toggle {
   position: absolute;
