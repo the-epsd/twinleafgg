@@ -26,8 +26,8 @@ export class MegaSharpedoex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M2';
-  public setNumber: string = '51';
+  public set: string = 'PFL';
+  public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Sharpedo ex';
   public fullName: string = 'Mega Sharpedo ex M2';

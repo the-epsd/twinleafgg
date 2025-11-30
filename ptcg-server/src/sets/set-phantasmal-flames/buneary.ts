@@ -26,9 +26,9 @@ export class Buneary extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '71';
+  public setNumber: string = '83';
   public name: string = 'Buneary';
   public fullName: string = 'Buneary M2';
 

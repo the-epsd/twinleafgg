@@ -28,7 +28,7 @@ export class Charmander extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Charmander';

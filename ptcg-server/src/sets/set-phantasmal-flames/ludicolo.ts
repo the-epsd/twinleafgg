@@ -33,7 +33,7 @@ export class Ludicolo extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Ludicolo';

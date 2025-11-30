@@ -16,7 +16,7 @@ export class Charmeleon extends PokemonCard {
     text: '',
   }];
 
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';

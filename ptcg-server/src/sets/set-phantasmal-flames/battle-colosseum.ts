@@ -9,11 +9,11 @@ import { StateUtils } from '../../game/store/state-utils';
 export class BattleColosseum extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public name: string = 'Battle Colosseum';
   public fullName: string = 'Battle Colosseum M2';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '79';
+  public setNumber: string = '85';
   public text: string = 'Prevent all damage counters from being placed on Benched Pokemon (both yours and your opponent\'s) by the effects of the attacks or Abilities used by the opponent\'s Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

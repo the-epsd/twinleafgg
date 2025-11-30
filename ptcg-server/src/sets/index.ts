@@ -175,6 +175,7 @@ export * from './set-destined-rivals';
 export * from './set-black-bolt-white-flare';
 
 //MEG Era
+export * from './set-mega-evolution-promos';
 export * from './set-mega-evolution';
 export * from './set-phantasmal-flames';
 export * from './set-mega-dream';

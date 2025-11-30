@@ -89,9 +89,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Dawn extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '77';
+  public setNumber: string = '87';
   public name: string = 'Dawn';
   public fullName: string = 'Dawn M2';
 

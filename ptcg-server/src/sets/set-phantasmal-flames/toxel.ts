@@ -62,9 +62,9 @@ export class Toxel extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '56';
+  public setNumber: string = '67';
   public name: string = 'Toxel';
   public fullName: string = 'Toxel M2';
 

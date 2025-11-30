@@ -16,10 +16,10 @@ import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs
 export class WonderPatch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'I';
-  public set: string = 'MBD';
-  public name: string = 'Wonder Patch';
+  public set: string = 'PFL';
+  public name: string = 'Wondrous Patch';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '15';
+  public setNumber: string = '94';
   public fullName: string = 'Wonder Patch MBD';
   public text: string = 'Attach a basic [P] Energy card from your discard pile to 1 of your Benched [P] Pokémon.';
 

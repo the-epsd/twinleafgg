@@ -23,9 +23,9 @@ export class Zacian extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '39';
+  public setNumber: string = '45';
   public name: string = 'Zacian';
   public fullName: string = 'Zacian M2';
 

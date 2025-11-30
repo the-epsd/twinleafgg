@@ -62,9 +62,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class Firebreather extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '78';
+  public setNumber: string = '89';
   public regulationMark = 'I';
   public name: string = 'Firebreather';
   public fullName: string = 'Firebreather M2';

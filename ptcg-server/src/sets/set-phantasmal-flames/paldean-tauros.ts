@@ -29,9 +29,9 @@ export class PaldeanTauros extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '42';
+  public setNumber: string = '48';
   public name: string = 'Paldean Tauros';
   public fullName: string = 'Paldean Tauros M2';
 

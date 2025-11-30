@@ -33,9 +33,9 @@ export class Bronzor extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '59';
+  public setNumber: string = '71';
   public name: string = 'Bronzor';
   public fullName: string = 'Bronzor M2';
 

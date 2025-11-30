@@ -28,8 +28,8 @@ export class MegaGengarex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'MBG';
-  public setNumber: string = '3';
+  public set: string = 'PFL';
+  public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Gengar ex';
   public fullName: string = 'Mega Gengar ex MBG';
