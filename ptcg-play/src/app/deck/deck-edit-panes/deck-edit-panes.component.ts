@@ -931,6 +931,23 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     return positions;
   }
 
+  /**
+   * Checks if two card positions are on the same grid line (horizontal row).
+   * Cards on the same grid line will have similar top positions.
+   * @param position1 First card position
+   * @param position2 Second card position
+   * @returns true if cards are on the same grid line, false otherwise
+   */
+  private areCardsOnSameGridLine(position1: DOMRect, position2: DOMRect): boolean {
+    // Use a threshold of 40 pixels to account for:
+    // - Card height variations
+    // - Margin spacing (5px per card)
+    // - Slight rendering differences
+    const threshold = 40;
+    const topDifference = Math.abs(position1.top - position2.top);
+    return topDifference <= threshold;
+  }
+
   private drawEvolutionArrows() {
     if (!this.evolutionArrows || !this.evolutionArrows.nativeElement || !this.deckPane) {
       return;
@@ -975,7 +992,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
       // Reduced spacing - arrows stay very close to cards
       const verticalSpacing = 8; // Small spacing to keep arrows close
       const horizontalSpacing = 5; // Minimal horizontal extension
-      const arrowOverlap = 3; // Amount to extend arrow into card area
+      const arrowOverlap = 6; // Amount to extend arrow into card area
 
       // Calculate start point based on stage - ensure perfect horizontal centering
       const startX = Math.round((fromPosition.left + fromPosition.width / 2) * 100) / 100;
@@ -996,18 +1013,23 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
           return;
         }
 
+        // Only draw arrow if cards are on the same grid line
+        if (!this.areCardsOnSameGridLine(fromPosition, toPosition)) {
+          return;
+        }
+
         const endX = Math.round((toPosition.left + toPosition.width / 2) * 100) / 100;
         let endY: number;
         let pathD: string;
 
         if (isBasic) {
           // Basic → Stage 1: Go up slightly (overtop), then down to top of target
-          const midY = startY - verticalSpacing; // Go up from source (small amount)
+          const midY = startY - verticalSpacing + 4; // Go up from source (small amount), moved down 4px
           endY = toPosition.top + arrowOverlap; // Extend into card area so arrowhead overlaps
           pathD = `M ${startX} ${startY} L ${startX} ${midY} L ${endX} ${midY} L ${endX} ${endY}`;
         } else {
           // Stage 1 → Stage 2: Go down slightly, then up to bottom of target
-          const midY = startY + verticalSpacing; // Go down from source (small amount)
+          const midY = startY + verticalSpacing - 2; // Go down from source (small amount), moved up 2px
           endY = toPosition.top + toPosition.height - arrowOverlap + 4; // Extend into card area so arrowhead overlaps, moved down 4px
           pathD = `M ${startX} ${startY} L ${startX} ${midY} L ${endX} ${midY} L ${endX} ${endY}`;
         }
@@ -1021,7 +1043,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
         svg.appendChild(path);
       } else {
         // Multiple evolutions - split arrow
-        const validEvolutions = evolutions.filter(e => positions.has(e.card.fullName));
+        // Filter to only include cards that have positions and are on the same grid line
+        const validEvolutions = evolutions.filter(e => {
+          const evolutionPosition = positions.get(e.card.fullName);
+          return evolutionPosition && this.areCardsOnSameGridLine(fromPosition, evolutionPosition);
+        });
         if (validEvolutions.length === 0) {
           return;
         }
@@ -1040,11 +1066,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
 
         if (isBasic) {
           // Basic → Stage 1: Go up, then horizontal, then down to each target
-          midY = startY - verticalSpacing; // Go up from source
+          midY = startY - verticalSpacing + 4; // Go up from source, moved down 4px
           horizontalY = midY;
         } else {
           // Stage 1 → Stage 2: Go down, then horizontal, then up to each target
-          midY = startY + verticalSpacing; // Go down from source
+          midY = startY + verticalSpacing - 2; // Go down from source, moved up 2px
           horizontalY = midY;
         }
 
