@@ -62,4 +62,20 @@ export class CardInfoPopupComponent {
     this.dialogRef.close(result);
   }
 
+  public onCardSwap(event: { originalCard: Card, replacementCard: Card }) {
+    // Update the card reference to show the swapped card
+    this.card = event.replacementCard;
+
+    // If there's a cardList, we might need to update it too
+    if (this.cardList && this.cardList.cards) {
+      const index = this.cardList.cards.findIndex(c => c.fullName === event.originalCard.fullName);
+      if (index !== -1) {
+        this.cardList.cards[index] = event.replacementCard;
+      }
+    }
+
+    // Emit the swap event to parent (e.g., deck editor) so it can update the deck
+    this.dialogRef.close({ cardSwap: event });
+  }
+
 }

@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Swap Card Artwork</h2>
+<mat-dialog-content>
+  <div class="cards-container">
+    <div class="current-card-item">
+      <div class="card-label">Current</div>
+      <ptcg-card [card]="data.currentCard" class="swap-card"></ptcg-card>
+      <div class="card-info">
+        <span class="set-info">{{ data.currentCard.set }} {{ data.currentCard.setNumber }}</span>
+      </div>
+    </div>
+
+    <div class="alternatives-section" *ngIf="data.alternativeCards.length > 0">
+      <div class="cards-row">
+        <div class="card-item" *ngFor="let card of data.alternativeCards" (click)="onCardSelected(card)">
+          <div class="card-wrapper">
+            <ptcg-card [card]="card" class="swap-card"></ptcg-card>
+            <button mat-icon-button class="swap-icon-button" (click)="onCardSelected(card); $event.stopPropagation()">
+              <mat-icon>swap_horiz</mat-icon>
+            </button>
+          </div>
+          <div class="card-info">
+            <span class="set-info">{{ card.set }} {{ card.setNumber }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-alternatives" *ngIf="data.alternativeCards.length === 0">
+      <p>No alternative printings found for this card.</p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+</mat-dialog-actions>

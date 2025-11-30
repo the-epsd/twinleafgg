@@ -75,11 +75,17 @@ export class DeckCardComponent implements OnDestroy {
     this.removeCard.next();
   }
 
-  showCardInfo() {
+  async showCardInfo() {
     const overlayMap = this.customArtworkUrl
       ? { [this.card.card.fullName]: { imageUrl: this.customArtworkUrl } }
       : undefined;
     const ctx = (overlayMap as any) || (this.artworksContext as any);
-    this.cardsBaseService.showCardInfo({ card: this.card.card, cardList: ctx });
+    const result = await this.cardsBaseService.showCardInfo({ card: this.card.card, cardList: ctx });
+
+    // Handle card swap event
+    if (result && (result as any).cardSwap) {
+      const swapEvent = (result as any).cardSwap;
+      this.cardSelected.emit({ card: swapEvent.replacementCard, action: 'replace' });
+    }
   }
 }

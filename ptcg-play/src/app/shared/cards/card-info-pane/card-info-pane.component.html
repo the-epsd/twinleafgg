@@ -2,6 +2,40 @@
   <div class="ptcg-card-info-image">
     <ptcg-card [card]="card" [artworksContext]="cardList || null" [class.cardback]="facedown"
       (click)="showCardImage(card, facedown)"></ptcg-card>
+
+    <!-- Swap Button - Only show when not in game and not facedown -->
+    <div class="swap-button-container" *ngIf="!isInGame() && !facedown">
+      <button mat-icon-button class="swap-button" (click)="openCardSwapDialog()"
+        [disabled]="getCardsWithSameName().length === 0"
+        [matTooltip]="getCardsWithSameName().length > 0 ? 'Swap with alternative printing' : 'No alternative printings available'">
+        <mat-icon>swap_horiz</mat-icon>
+      </button>
+    </div>
+
+    <!-- Evolution Cards Section - Only for Pokemon, when not in game and not facedown -->
+    <div class="evolution-section" *ngIf="!isInGame() && !facedown && card.superType === SuperType.POKEMON">
+      <div class="evolution-cards"
+        *ngIf="getEvolutionCards().preEvolutions.length > 0 || getEvolutionCards().evolutions.length > 0">
+        <div class="evolution-group" *ngIf="getEvolutionCards().preEvolutions.length > 0">
+          <div class="evolution-label">Pre-evolutions</div>
+          <div class="evolution-cards-list">
+            <div class="evolution-card-item" *ngFor="let evoCard of getEvolutionCards().preEvolutions"
+              (click)="onEvolutionCardClick(evoCard)">
+              <ptcg-card [card]="evoCard"></ptcg-card>
+            </div>
+          </div>
+        </div>
+        <div class="evolution-group" *ngIf="getEvolutionCards().evolutions.length > 0">
+          <div class="evolution-label">Evolutions</div>
+          <div class="evolution-cards-list">
+            <div class="evolution-card-item" *ngFor="let evoCard of getEvolutionCards().evolutions"
+              (click)="onEvolutionCardClick(evoCard)">
+              <ptcg-card [card]="evoCard"></ptcg-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">

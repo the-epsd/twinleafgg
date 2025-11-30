@@ -11,6 +11,27 @@
   flex: 1 1 33%;
   min-width: map-get($ptcg-size, card);
   padding-right: map-get($padding, normal);
+
+  >ptcg-card:first-child {
+    width: 100%;
+    display: block;
+  }
+
+  .swap-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: map-get($padding, small);
+  }
+
+  .evolution-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: map-get($padding, normal);
+  }
 }
 
 .ptcg-card-info-text {
@@ -191,5 +212,81 @@ ptcg-energy {
 
   &[type="energyless"] {
     background-position: -50px -50px;
+  }
+}
+
+.swap-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .swap-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.evolution-section {
+  margin-top: map-get($padding, normal);
+  width: 100%;
+
+  .evolution-cards {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($padding, normal);
+  }
+
+  .evolution-group {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($padding, small);
+
+    .evolution-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #cccccc;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .evolution-cards-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: map-get($padding, small);
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .evolution-card-item {
+      cursor: pointer;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      ptcg-card {
+        width: 120px;
+        height: auto;
+      }
+    }
   }
 }
