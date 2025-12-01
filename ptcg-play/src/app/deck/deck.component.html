@@ -103,8 +103,12 @@
             </div>
 
             <!-- Card archetype -->
-            <div class="deck-archetype">
+            <div class="deck-archetype" (mouseenter)="hoveredDeckId = deck.id" (mouseleave)="hoveredDeckId = null">
               <ptcg-archetype [class]="getArchetype(deck)"></ptcg-archetype>
+              <button mat-icon-button class="archetype-edit-button" *ngIf="hoveredDeckId === deck.id"
+                (click)="navigateToDeckStats(deck.id); $event.stopPropagation()" [attr.aria-label]="'View deck stats'">
+                <mat-icon>visibility</mat-icon>
+              </button>
             </div>
 
             <!-- Deck name and actions row -->

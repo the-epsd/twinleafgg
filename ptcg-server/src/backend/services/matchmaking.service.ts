@@ -11,6 +11,7 @@ interface QueuedPlayer {
   format: Format;
   deck: string[];
   artworks?: { code: string; artworkId?: number }[];
+  deckId?: number;
   joinedAt: number;
   lastValidated: number;
 }
@@ -39,7 +40,7 @@ export class MatchmakingService {
     return MatchmakingService.instance;
   }
 
-  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[]): void {
+  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number): void {
     // Remove if already in queue
     this.removeFromQueue(client);
 
@@ -54,6 +55,7 @@ export class MatchmakingService {
       format,
       deck,
       artworks,
+      deckId,
       joinedAt: Date.now(),
       lastValidated: Date.now()
     });
@@ -199,7 +201,9 @@ export class MatchmakingService {
           player2.client,
           player2.deck,
           map1,
-          map2
+          map2,
+          player1.deckId,
+          player2.deckId
         );
 
         if (game) {

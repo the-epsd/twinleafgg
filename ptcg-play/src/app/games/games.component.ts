@@ -112,12 +112,13 @@ export class GamesComponent implements OnInit, OnDestroy {
           return result !== undefined
             ? this.deckService.getDeck(result.deckId).pipe(map(deckResult => ({
               deck: deckResult.deck.cards,
-              gameSettings: result.gameSettings
+              gameSettings: result.gameSettings,
+              deckId: result.deckId
             })))
             : EMPTY;
         }),
         switchMap(data => {
-          return this.mainSevice.createGame(data.deck, data.gameSettings, invitedId);
+          return this.mainSevice.createGame(data.deck, data.gameSettings, invitedId, data.deckId);
         }),
         finalize(() => { this.loading = false; })
       )

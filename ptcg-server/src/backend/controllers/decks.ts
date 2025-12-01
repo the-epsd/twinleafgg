@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
+import { Not, IsNull } from 'typeorm';
 
 import { AuthToken, Validate, check } from '../services';
-import { CardManager, DeckAnalyser } from '../../game';
+import { CardManager, DeckAnalyser, GameWinner } from '../../game';
 import { Controller, Get, Post } from './controller';
 import { DeckSaveRequest } from '../interfaces';
 import { ApiErrorEnum } from '../common/errors';
-import { User, Deck } from '../../storage';
+import { User, Deck, Match } from '../../storage';
 import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
@@ -273,6 +274,177 @@ export class Decks extends Controller {
     delete body.id;
     body.cards = JSON.parse(deck.cards);
     return this.onSave(req, res);
+  }
+
+  @Get('/stats/:deckId')
+  @AuthToken()
+  public async onStats(req: Request, res: Response) {
+    const userId: number = req.body.userId;
+    const deckId: number = parseInt(req.params.deckId, 10);
+
+    // Verify deck belongs to user
+    const deck = await Deck.findOne(deckId, { relations: ['user'] });
+    if (deck === undefined || deck.user.id !== userId) {
+      res.send({ error: ApiErrorEnum.DECK_INVALID });
+      return;
+    }
+
+    // Get all matches where this deck was used
+    const matches = await Match.find({
+      where: [
+        { player1DeckId: deckId },
+        { player2DeckId: deckId }
+      ],
+      relations: ['player1', 'player2'],
+      order: { created: 'DESC' }
+    });
+
+    let totalGames = 0;
+    let wins = 0;
+    let losses = 0;
+    const matchupMap: { [archetype: string]: { games: number; wins: number; losses: number } } = {};
+    const replays: Array<{
+      matchId: number;
+      opponentName: string;
+      opponentId: number;
+      winner: GameWinner;
+      created: number;
+      won: boolean;
+    }> = [];
+
+    matches.forEach(match => {
+      const isPlayer1 = match.player1DeckId === deckId;
+      const isPlayer2 = match.player2DeckId === deckId;
+
+      if (!isPlayer1 && !isPlayer2) {
+        return; // Skip if deck wasn't used in this match
+      }
+
+      totalGames++;
+
+      // Determine win/loss
+      let won = false;
+      if (isPlayer1 && match.winner === GameWinner.PLAYER_1) {
+        won = true;
+        wins++;
+      } else if (isPlayer2 && match.winner === GameWinner.PLAYER_2) {
+        won = true;
+        wins++;
+      } else {
+        losses++;
+      }
+
+      // Get opponent archetypes (primary and secondary)
+      const opponentArchetype1 = isPlayer1 ? match.player2Archetype : match.player1Archetype;
+      const opponentArchetype2 = isPlayer1 ? match.player2Archetype2 : match.player1Archetype2;
+
+      // Combine archetypes: "PRIMARY" or "PRIMARY/SECONDARY"
+      let archetypeKey = opponentArchetype1 || 'UNKNOWN';
+      if (opponentArchetype2 && opponentArchetype2.trim() !== '') {
+        archetypeKey = `${opponentArchetype1}/${opponentArchetype2}`;
+      }
+
+      // Update matchup stats
+      if (!matchupMap[archetypeKey]) {
+        matchupMap[archetypeKey] = { games: 0, wins: 0, losses: 0 };
+      }
+      matchupMap[archetypeKey].games++;
+      if (won) {
+        matchupMap[archetypeKey].wins++;
+      } else {
+        matchupMap[archetypeKey].losses++;
+      }
+
+      // Add to replays list
+      const opponent = isPlayer1 ? match.player2 : match.player1;
+      replays.push({
+        matchId: match.id,
+        opponentName: opponent.name,
+        opponentId: opponent.id,
+        winner: match.winner,
+        created: match.created,
+        won
+      });
+    });
+
+    // Convert matchup map to array with win rates
+    const matchups = Object.entries(matchupMap).map(([archetype, stats]) => ({
+      archetype,
+      games: stats.games,
+      wins: stats.wins,
+      losses: stats.losses,
+      winRate: stats.games > 0 ? (stats.wins / stats.games) * 100 : 0
+    })).sort((a, b) => b.games - a.games); // Sort by games played
+
+    const winRate = totalGames > 0 ? (wins / totalGames) * 100 : 0;
+
+    res.send({
+      ok: true,
+      deckId,
+      totalGames,
+      wins,
+      losses,
+      winRate,
+      matchups,
+      replays
+    });
+  }
+
+  @Post('/backfill-secondary-archetypes')
+  @AuthToken()
+  public async onBackfillSecondaryArchetypes(req: Request, res: Response) {
+    // Get all matches that have deck IDs but may be missing secondary archetypes
+    const matches = await Match.find({
+      where: [
+        { player1DeckId: Not(IsNull()) },
+        { player2DeckId: Not(IsNull()) }
+      ],
+      relations: ['player1', 'player2']
+    });
+
+    let updatedCount = 0;
+
+    for (const match of matches) {
+      let needsUpdate = false;
+
+      // Backfill player1 secondary archetype
+      if (match.player1DeckId && !match.player1Archetype2) {
+        try {
+          const deck = await Deck.findOne(match.player1DeckId);
+          if (deck && deck.manualArchetype2) {
+            match.player1Archetype2 = deck.manualArchetype2;
+            needsUpdate = true;
+          }
+        } catch (error) {
+          console.error('[Decks] Error loading deck for backfill:', error);
+        }
+      }
+
+      // Backfill player2 secondary archetype
+      if (match.player2DeckId && !match.player2Archetype2) {
+        try {
+          const deck = await Deck.findOne(match.player2DeckId);
+          if (deck && deck.manualArchetype2) {
+            match.player2Archetype2 = deck.manualArchetype2;
+            needsUpdate = true;
+          }
+        } catch (error) {
+          console.error('[Decks] Error loading deck for backfill:', error);
+        }
+      }
+
+      if (needsUpdate) {
+        await match.save();
+        updatedCount++;
+      }
+    }
+
+    res.send({
+      ok: true,
+      message: `Backfilled ${updatedCount} matches with secondary archetypes`,
+      updatedCount,
+      totalMatches: matches.length
+    });
   }
 
   @Post('/validate-formats')

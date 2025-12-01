@@ -36,3 +36,30 @@ export interface Deck {
 export interface DeckResponse extends Response {
   deck: Deck;
 }
+
+export interface DeckStatsMatchup {
+  archetype: string;
+  games: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+}
+
+export interface DeckStatsReplay {
+  matchId: number;
+  opponentName: string;
+  opponentId: number;
+  winner: number;
+  created: number;
+  won: boolean;
+}
+
+export interface DeckStatsResponse extends Response {
+  deckId: number;
+  totalGames: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  matchups: DeckStatsMatchup[];
+  replays: DeckStatsReplay[];
+}

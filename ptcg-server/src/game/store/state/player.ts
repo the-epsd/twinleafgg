@@ -13,6 +13,8 @@ export class Player {
 
   name: string = '';
 
+  deckId?: number;
+
   deck: CardList = new CardList();
 
   hand: CardList = new CardList();

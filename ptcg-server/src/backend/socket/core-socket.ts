@@ -94,7 +94,7 @@ export class CoreSocket {
     response('ok', this.buildCoreInfo());
   }
 
-  private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[] },
+  private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number },
     response: Response<GameState>): void {
     const invited = this.core.clients.find(c => c.id === params.clientId);
 
@@ -107,7 +107,7 @@ export class CoreSocket {
       }
     }
 
-    const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited);
+    const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited, params.deckId);
     response('ok', CoreSocket.buildGameState(game));
   }
 

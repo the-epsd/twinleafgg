@@ -1,0 +1,100 @@
+mat-dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.search-field {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.archetype-section {
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.archetype-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.archetype-option {
+  background-color: #2a2f3a;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+
+  &:hover {
+    background-color: #384259;
+    border-color: rgba(77, 171, 247, 0.5);
+    transform: translateY(-2px);
+  }
+
+  &.selected {
+    background-color: #384259;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.3);
+  }
+}
+
+.archetype-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.archetype-icon {
+  transform: scale(2);
+  image-rendering: pixelated;
+}
+
+.archetype-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+::ng-deep {
+  .mat-dialog-container {
+    background-color: #1a202c;
+    color: white;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #4dabf7;
+  }
+
+  .mat-input-element {
+    color: white;
+  }
+
+  .mat-form-field-label {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}

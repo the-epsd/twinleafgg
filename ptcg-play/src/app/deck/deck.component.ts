@@ -32,6 +32,7 @@ export class DeckComponent implements OnInit {
   public filteredDecks: DeckListEntry[] = [];
   public showThemeDecksInAllTab = false;
   public hiddenFormats: Format[] = [];
+  public hoveredDeckId: number | null = null;
 
   // Map Format enum values to their string keys for display
   public formatNameMap: { [key: number]: string } = {
@@ -365,5 +366,9 @@ export class DeckComponent implements OnInit {
   public hasVisibleMoreFormats(): boolean {
     const moreFormats = ['theme', 'swsh', 'sm', 'xy', 'bw'];
     return moreFormats.some(format => !this.isFormatHidden(format));
+  }
+
+  public navigateToDeckStats(deckId: number) {
+    this.router.navigate(['/deck', deckId, 'stats']);
   }
 }

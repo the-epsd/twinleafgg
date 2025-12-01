@@ -431,7 +431,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Pass artworks selection if available on the deck
     const artworks = (deck as any).artworks as { code: string; artworkId?: number }[] | undefined;
-    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards, artworks)
+    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards, artworks, this.deckId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {

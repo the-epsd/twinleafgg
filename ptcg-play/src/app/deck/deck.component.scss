@@ -157,11 +157,50 @@ ptcg-archetype,
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1a1f2e;
+  }
 
   ptcg-archetype {
     transform: scale(3);
     image-rendering: pixelated;
     transition: transform 0.3s ease;
+  }
+}
+
+.archetype-edit-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  background-color: rgba(77, 171, 247, 0.9);
+  color: white;
+  border-radius: 50%;
+  z-index: 3;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background-color: rgba(77, 171, 247, 1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  ::ng-deep .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
   }
 }
 

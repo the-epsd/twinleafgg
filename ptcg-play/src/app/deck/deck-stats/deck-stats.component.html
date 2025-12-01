@@ -1,0 +1,110 @@
+<body style="background-color:#1A202C;">
+  <ptcg-content [loading]="loading">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="goBack()" [attr.aria-label]="'Back'">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Deck Statistics</h2>
+      <span class="ptcg-u-spacer"></span>
+    </mat-toolbar-row>
+
+    <div class="deck-stats-container" *ngIf="stats && deck">
+      <!-- Deck Header -->
+      <div class="deck-header">
+        <h1 class="deck-name">{{ deck.name }}</h1>
+        <ptcg-archetype [class]="getDeckArchetypes()"></ptcg-archetype>
+        <div class="deck-archetypes" (click)="openArchetypeSelect()">
+          <mat-icon class="edit-icon">create</mat-icon>
+        </div>
+      </div>
+
+      <!-- Win/Loss Summary -->
+      <div class="stats-summary">
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.totalGames }}</div>
+          <div class="stat-label">Total Games</div>
+        </div>
+        <div class="stat-card win">
+          <div class="stat-value">{{ stats.wins }}</div>
+          <div class="stat-label">Wins</div>
+        </div>
+        <div class="stat-card loss">
+          <div class="stat-value">{{ stats.losses }}</div>
+          <div class="stat-label">Losses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ formatWinRate(stats.winRate) }}</div>
+          <div class="stat-label">Win Rate</div>
+        </div>
+      </div>
+
+      <!-- Matchup Statistics -->
+      <div class="matchups-section" *ngIf="stats.matchups.length > 0">
+        <h3>Matchup Statistics</h3>
+        <div class="matchups-grid">
+          <div class="matchup-card" *ngFor="let matchup of stats.matchups"
+            [class]="getMatchupWinRateClass(matchup.winRate)">
+            <div class="matchup-icon">
+              <ptcg-archetype [class]="convertArchetypeStringToEnum(matchup.archetype)"></ptcg-archetype>
+            </div>
+            <div class="matchup-name">{{ matchup.archetype }}</div>
+            <div class="matchup-record">
+              <span class="wins">{{ matchup.wins }}W</span>
+              <span class="separator">-</span>
+              <span class="losses">{{ matchup.losses }}L</span>
+            </div>
+            <div class="matchup-winrate" [class]="getMatchupWinRateClass(matchup.winRate)">
+              {{ formatWinRate(matchup.winRate) }}
+            </div>
+            <div class="matchup-games">{{ matchup.games }} games</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-matchups" *ngIf="stats.matchups.length === 0">
+        <p>No matchup data available yet.</p>
+      </div>
+
+      <!-- Replays -->
+      <div class="replays-section" *ngIf="stats.replays.length > 0">
+        <h3>Replays</h3>
+        <table mat-table [dataSource]="stats.replays" class="replays-table">
+          <ng-container matColumnDef="opponent">
+            <th mat-header-cell *matHeaderCellDef>Opponent</th>
+            <td mat-cell *matCellDef="let replay">{{ replay.opponentName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let replay">{{ formatDate(replay.created) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="result">
+            <th mat-header-cell *matHeaderCellDef>Result</th>
+            <td mat-cell *matCellDef="let replay">
+              <span [class]="replay.won ? 'win-badge' : 'loss-badge'">
+                {{ replay.won ? 'Win' : 'Loss' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let replay">
+              <button mat-icon-button (click)="viewReplay(replay.matchId)" [attr.aria-label]="'View replay'">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedReplayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedReplayColumns;"></tr>
+        </table>
+      </div>
+
+      <div class="no-replays" *ngIf="stats.replays.length === 0">
+        <p>No replays available for this deck.</p>
+      </div>
+    </div>
+  </ptcg-content>
+</body>
