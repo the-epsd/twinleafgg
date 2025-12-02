@@ -93,8 +93,9 @@ export class DeckService {
     );
   }
 
-  public getDeckStats(deckId: number) {
-    return this.api.get<DeckStatsResponse>('/v1/decks/stats/' + deckId);
+  public getDeckStats(deckId: number, replayLimit?: number) {
+    const params = replayLimit !== undefined ? { limit: replayLimit } : undefined;
+    return this.api.get<DeckStatsResponse>('/v1/decks/stats/' + deckId, params);
   }
 
 }

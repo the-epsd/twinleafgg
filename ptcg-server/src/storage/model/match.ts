@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, Index } from 'typeorm';
 
 import { User } from './user';
 import { GameWinner } from '../../game';
@@ -57,9 +57,11 @@ export class Match extends BaseEntity {
   public player2DeckName: string = '';
 
   @Column({ type: 'int', nullable: true })
+  @Index()
   public player1DeckId: number | null = null;
 
   @Column({ type: 'int', nullable: true })
+  @Index()
   public player2DeckId: number | null = null;
 
 }

@@ -25,6 +25,7 @@ export class DeckStatsComponent implements OnInit {
   public stats: DeckStatsResponse | null = null;
   public deck: Deck | null = null;
   public displayedReplayColumns: string[] = ['opponent', 'date', 'result', 'actions'];
+  private readonly defaultReplayLimit = 100;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,7 +62,7 @@ export class DeckStatsComponent implements OnInit {
 
   private loadStats(): void {
     this.loading = true;
-    this.deckService.getDeckStats(this.deckId).pipe(
+    this.deckService.getDeckStats(this.deckId, this.defaultReplayLimit).pipe(
       finalize(() => { this.loading = false; }),
       untilDestroyed(this)
     ).subscribe(

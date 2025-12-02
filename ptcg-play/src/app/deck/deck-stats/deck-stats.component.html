@@ -67,6 +67,10 @@
       <!-- Replays -->
       <div class="replays-section" *ngIf="stats.replays.length > 0">
         <h3>Replays</h3>
+        <p class="replays-hint"
+          *ngIf="stats.totalReplays && stats.replayLimit && stats.totalReplays > stats.replayLimit">
+          Showing the last {{ stats.replayLimit }} games out of {{ stats.totalReplays }}.
+        </p>
         <table mat-table [dataSource]="stats.replays" class="replays-table">
           <ng-container matColumnDef="opponent">
             <th mat-header-cell *matHeaderCellDef>Opponent</th>

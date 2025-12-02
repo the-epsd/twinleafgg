@@ -62,4 +62,6 @@ export interface DeckStatsResponse extends Response {
   winRate: number;
   matchups: DeckStatsMatchup[];
   replays: DeckStatsReplay[];
+  replayLimit?: number;
+  totalReplays?: number;
 }
