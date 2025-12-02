@@ -172,7 +172,6 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
 
 
   // handleCoinFlipComplete(result: boolean) {
-  //   console.log('Animation complete, processing result:', result);
   // }
 
   createRange(length: number): number[] {

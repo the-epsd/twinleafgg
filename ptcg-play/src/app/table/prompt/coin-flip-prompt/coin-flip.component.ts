@@ -65,13 +65,11 @@
 // }
 
 // const decodedState = decodeGameState(state as unknown as GameState);
-// console.log('Decoded game state:', decodedState);
 
 // export function decodeGameState(state: GameState) {
 //   try {
 //     return JSON.parse(atob(state.stateData));
 //   } catch (e) {
-//     console.log('Failed to decode state data:', e);
 //     return null;
 //   }
 // }

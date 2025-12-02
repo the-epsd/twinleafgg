@@ -1,3 +1,4 @@
+import { EnergySearchBCR, GreatBallBCR, PokeBallBCR, SwitchBCR, TownMapBCR, LandorusEx2BCR, BiancaBCR, CherenBCR, Skyla2BCR, TerrakionBCR, AltariaBCR, RockyHelmet2BCR } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AspertiaCityGym } from './aspertia-city-gym';
 import { BlackKyurem } from './black-kyurem';
@@ -57,4 +58,16 @@ export const setBoundariesCrossed: Card[] = [
   // Other prints
   new KeldeoExBCR(),
   new RockyHelmetBCR(),
+  new EnergySearchBCR(),
+  new GreatBallBCR(),
+  new PokeBallBCR(),
+  new SwitchBCR(),
+  new TownMapBCR(),
+  new LandorusEx2BCR(),
+  new BiancaBCR(),
+  new CherenBCR(),
+  new Skyla2BCR(),
+  new TerrakionBCR(),
+  new AltariaBCR(),
+  new RockyHelmet2BCR(),
 ];

@@ -1,3 +1,4 @@
+import { PonytaGEN, RapidashGEN, PikachuGEN, RaichuGEN, GolbatGEN, SlowpokeGEN, HaunterGEN, GengarGEN, MrMimeGEN, CrushingHammerGEN, EnergySwitchPKGEN, EvosodaGEN, MaintenanceGEN, PokeBallGEN, PokemonFanClubGEN, ShaunaGEN, DoubleColorlessEnergyGEN, JolteonEX2GEN, TeamFlareGrunt2GEN, Raichu2GEN, WobbuffetGEN, YveltalGEN, SwirlixGEN, WallyGEN, Pikachu2GEN, GardevoirExGEN, MGardevoirExGEN } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy, FairyEnergy } from './basic-energies';
 import { Charmeleon } from './charmeleon';
@@ -29,4 +30,31 @@ export const setGenerations: Card[] = [
   new DarknessEnergy(),
   new MetalEnergy(),
   new FairyEnergy(),
+  new PonytaGEN(),
+  new RapidashGEN(),
+  new PikachuGEN(),
+  new RaichuGEN(),
+  new GolbatGEN(),
+  new SlowpokeGEN(),
+  new HaunterGEN(),
+  new GengarGEN(),
+  new MrMimeGEN(),
+  new CrushingHammerGEN(),
+  new EnergySwitchPKGEN(),
+  new EvosodaGEN(),
+  new MaintenanceGEN(),
+  new PokeBallGEN(),
+  new PokemonFanClubGEN(),
+  new ShaunaGEN(),
+  new DoubleColorlessEnergyGEN(),
+  new JolteonEX2GEN(),
+  new TeamFlareGrunt2GEN(),
+  new Raichu2GEN(),
+  new WobbuffetGEN(),
+  new YveltalGEN(),
+  new SwirlixGEN(),
+  new WallyGEN(),
+  new Pikachu2GEN(),
+  new GardevoirExGEN(),
+  new MGardevoirExGEN(),
 ];

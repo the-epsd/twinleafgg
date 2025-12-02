@@ -5,9 +5,9 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class GrimsleysGambit extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '78';
+  public setNumber: string = '90';
   public regulationMark = 'I';
   public name: string = 'Grimsley\'s Gambit';
   public fullName: string = 'Grimsley\'s Gambit M2';

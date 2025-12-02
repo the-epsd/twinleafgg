@@ -1,3 +1,4 @@
+import { ChimcharDPP, PiplupDPP, GiratinaLVXDPP, GarchompCLVXDPP, ArceusLvX22DPP } from './other-prints';
 import { Card } from '../../game/store/card/card';
 
 // Other Prints
@@ -11,4 +12,9 @@ export const setDiamondAndPearlPromos: Card[] = [
   new DialgaLVXDPP(),
   new DialgaLVXDPP2(),
   new MewtwoLVXDPP(),
+  new ChimcharDPP(),
+  new PiplupDPP(),
+  new GiratinaLVXDPP(),
+  new GarchompCLVXDPP(),
+  new ArceusLvX22DPP(),
 ];

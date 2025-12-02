@@ -8,7 +8,8 @@ export class AddPlayerAction implements Action {
     public clientId: number,
     public name: string,
     public deck: string[],
-    public artworksMap?: { [code: string]: { imageUrl: string; holoType?: string } }
+    public artworksMap?: { [code: string]: { imageUrl: string; holoType?: string } },
+    public deckId?: number
   ) { }
 
 }

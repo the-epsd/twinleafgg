@@ -1,3 +1,4 @@
+import { GardevoirSpiritLinkSTS, VolcanionEX2STS, GardevoirEx2STS, MGardevoirEx2STS, PokemonRanger2STS, ProfessorSycamoreXYSTS, VolcanionEX3STS, GardevoirEx3STS } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { CaptivatingPokePuff } from './captivating-pokepuff';
 import { Cobalion } from './cobalion';
@@ -43,4 +44,12 @@ export const setSteamSiege: Card[] = [
 
   // Other Prints
   new MagearnaEXSTS(),
+  new GardevoirSpiritLinkSTS(),
+  new VolcanionEX2STS(),
+  new GardevoirEx2STS(),
+  new MGardevoirEx2STS(),
+  new PokemonRanger2STS(),
+  new ProfessorSycamoreXYSTS(),
+  new VolcanionEX3STS(),
+  new GardevoirEx3STS(),
 ];

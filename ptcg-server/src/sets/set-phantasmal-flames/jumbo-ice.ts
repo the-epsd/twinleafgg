@@ -10,11 +10,11 @@ import { HealEffect } from '../../game/store/effects/game-effects';
 export class JumboIce extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public name: string = 'Jumbo Ice';
   public fullName: string = 'Jumbo Ice M2';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '73';
+  public setNumber: string = '91';
   public text: string = 'Heal 80 damage from your Active Pokemon that has 3 or more Energy attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

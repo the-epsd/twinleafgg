@@ -26,10 +26,10 @@ export class Weavile extends PokemonCard {
     text: '',
   }];
 
-  public set: string = 'M2';
+  public set: string = 'MEP';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '49';
+  public setNumber: string = '21';
   public name: string = 'Weavile';
   public fullName: string = 'Weavile M2';
 

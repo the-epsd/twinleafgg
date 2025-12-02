@@ -1,3 +1,4 @@
+import { EnergySwitchPKDP, PokeBallDP, WarpPointG2DP, EnergySearchDP, PotionDP } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy } from './basic-energies';
 import { Chimchar } from './chimchar';
@@ -44,4 +45,9 @@ export const setDiamondAndPearl: Card[] = [
   new FightingEnergy(),
   new DarknessEnergy(),
   new MetalEnergy(),
+  new EnergySwitchPKDP(),
+  new PokeBallDP(),
+  new WarpPointG2DP(),
+  new EnergySearchDP(),
+  new PotionDP(),
 ];

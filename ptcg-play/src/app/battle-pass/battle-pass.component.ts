@@ -58,7 +58,7 @@ export class BattlePassComponent implements OnInit {
           .pipe(untilDestroyed(this))
           .subscribe({
             next: () => { /* no-op */ },
-            error: (err) => console.error('Admin grant failed', err)
+            error: (err) => { }
           });
       }
     }
@@ -109,7 +109,6 @@ export class BattlePassComponent implements OnInit {
           this.claimingLevel = null;
         },
         error: (err) => {
-          console.error(`Failed to claim reward for level ${level}`, err);
           this.claimingLevel = null;
           // Optionally show an error message to the user
         }
@@ -153,7 +152,6 @@ export class BattlePassComponent implements OnInit {
             });
         },
         error: (err) => {
-          console.error('Failed to add debug exp', err);
         }
       });
   }

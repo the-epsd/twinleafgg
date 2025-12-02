@@ -1,3 +1,4 @@
+import { BillsMaintenanceCES, EnergySwitchPKCES, PokeNavCES, RareCandyCES, TvReporterCES, RainbowEnergyPLCES, ArticunoGX2CES, ElectrodeGX2CES, BanetteGX2CES, RayquazaGX2CES, ApricornMaker2CES, BillsMaintenance2CES, Copycat2CES, StevensResolve2CES, TateAndLiza3CES, TvReporter2CES, ArticunoGX3CES, ElectrodeGX3CES, BanetteGX3CES, RayquazaGX3CES, HustleBelt2CES, PokeNav2CES, RainbowEnergyPL2CES, Sceptile2CES, TateAndLiza2CES, RayquazaGX4CES } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { ApricornMaker } from './apricorn-maker';
 import { ArticunoGX } from './articuno-gx';
@@ -95,4 +96,30 @@ export const setCelestialStorm: Card[] = [
   new AcroBikeCESSR(),
   new SuperScoopUpCES(),
   new SwitchCES(),
+  new BillsMaintenanceCES(),
+  new EnergySwitchPKCES(),
+  new PokeNavCES(),
+  new RareCandyCES(),
+  new TvReporterCES(),
+  new RainbowEnergyPLCES(),
+  new ArticunoGX2CES(),
+  new ElectrodeGX2CES(),
+  new BanetteGX2CES(),
+  new RayquazaGX2CES(),
+  new ApricornMaker2CES(),
+  new BillsMaintenance2CES(),
+  new Copycat2CES(),
+  new StevensResolve2CES(),
+  new TateAndLiza3CES(),
+  new TvReporter2CES(),
+  new ArticunoGX3CES(),
+  new ElectrodeGX3CES(),
+  new BanetteGX3CES(),
+  new RayquazaGX3CES(),
+  new HustleBelt2CES(),
+  new PokeNav2CES(),
+  new RainbowEnergyPL2CES(),
+  new Sceptile2CES(),
+  new TateAndLiza2CES(),
+  new RayquazaGX4CES(),
 ];

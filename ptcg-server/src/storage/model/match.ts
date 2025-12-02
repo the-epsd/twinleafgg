@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, Index } from 'typeorm';
 
 import { User } from './user';
 import { GameWinner } from '../../game';
@@ -12,10 +12,10 @@ export class Match extends BaseEntity {
   public id!: number;
 
   @ManyToOne(type => User)
-    player1: User = new User();
+  player1: User = new User();
 
   @ManyToOne(type => User)
-    player2: User = new User();
+  player2: User = new User();
 
   @Column()
   public ranking1: number = 0;
@@ -42,7 +42,13 @@ export class Match extends BaseEntity {
   public player1Archetype: string = '';
 
   @Column({ type: 'varchar', length: 50, nullable: true })
+  public player1Archetype2: string = '';
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
   public player2Archetype: string = '';
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  public player2Archetype2: string = '';
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   public player1DeckName: string = '';
@@ -51,9 +57,11 @@ export class Match extends BaseEntity {
   public player2DeckName: string = '';
 
   @Column({ type: 'int', nullable: true })
+  @Index()
   public player1DeckId: number | null = null;
 
   @Column({ type: 'int', nullable: true })
+  @Index()
   public player2DeckId: number | null = null;
 
 }

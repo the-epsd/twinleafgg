@@ -16,6 +16,16 @@
         <input type="range" [(ngModel)]="cardSize" min="50" max="200" step="10" (change)="onCardSizeChange($event)">
         <span>{{cardSize}}%</span>
       </div>
+      <div class="hidden-formats-container">
+        <label class="section-label">Hidden Formats</label>
+        <div class="format-checkboxes">
+          <label *ngFor="let format of availableFormats">
+            <input type="checkbox" [checked]="isFormatHidden(format.value)"
+              (change)="onHiddenFormatsChange(format.value, $event.target.checked)">
+            {{ format.label | translate }}
+          </label>
+        </div>
+      </div>
     </div>
     <div class="settings-actions">
       <button (click)="dialogRef.close()">Cancel</button>

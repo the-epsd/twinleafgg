@@ -3,7 +3,7 @@ import { Transaction, TransactionManager, EntityManager } from 'typeorm';
 import { Client } from '../client/client.interface';
 import { Core } from './core';
 import { State, GamePhase, GameWinner } from '../store/state/state';
-import { User, Match } from '../../storage';
+import { User, Match, Deck } from '../../storage';
 import { RankingCalculator } from './ranking-calculator';
 import { Replay } from './replay';
 import { ReplayPlayer } from './replay.interface';
@@ -71,12 +71,16 @@ export class MatchRecorder {
       match.rankingStake2 = 0;
 
       // Store archetype information based on deck analysis
-      match.player1Archetype = this.getPlayerArchetype(state.players[0]);
-      match.player2Archetype = this.getPlayerArchetype(state.players[1]);
+      const player1Archetypes = await this.getPlayerArchetypes(state.players[0]);
+      const player2Archetypes = await this.getPlayerArchetypes(state.players[1]);
+      match.player1Archetype = player1Archetypes.primary;
+      match.player1Archetype2 = player1Archetypes.secondary || '';
+      match.player2Archetype = player2Archetypes.primary;
+      match.player2Archetype2 = player2Archetypes.secondary || '';
       match.player1DeckName = `Deck ${match.player1.id}`;
       match.player2DeckName = `Deck ${match.player2.id}`;
-      match.player1DeckId = null; // Will be populated later when we have deck ID tracking
-      match.player2DeckId = null; // Will be populated later when we have deck ID tracking
+      match.player1DeckId = state.players[0].deckId || null;
+      match.player2DeckId = state.players[1].deckId || null;
 
       this.replay.setCreated(match.created);
       this.replay.player1 = this.buildReplayPlayer(match.player1);
@@ -145,13 +149,32 @@ export class MatchRecorder {
     return { userId: player.id, name: player.name, ranking: player.ranking };
   }
 
-  private getPlayerArchetype(player: any): string {
+  private async getPlayerArchetypes(player: any): Promise<{ primary: string; secondary?: string }> {
+    // First, check if we have a deckId and can get manual archetype from deck
+    if (player.deckId) {
+      try {
+        const deck = await Deck.findOne(player.deckId);
+        if (deck) {
+          // Use manual archetypes if set, otherwise fall through to auto-detection
+          if (deck.manualArchetype1) {
+            return {
+              primary: deck.manualArchetype1,
+              secondary: deck.manualArchetype2 || undefined
+            };
+          }
+        }
+      } catch (error) {
+        // If we can't load the deck, fall through to auto-detection
+        console.error('[MatchRecorder] Error loading deck for archetype:', error);
+      }
+    }
+
     // Analyze the player's deck to determine archetype
     // For now, we'll use a simple approach based on the most common Pokemon in the deck
     const deckCards = player.deck.cards || [];
 
     if (deckCards.length === 0) {
-      return 'UNKNOWN';
+      return { primary: 'UNKNOWN' };
     }
 
     // Count Pokemon cards and their types
@@ -190,24 +213,28 @@ export class MatchRecorder {
     });
 
     // Determine archetype based on most common Pokemon
-    let maxCount = 0;
-    let archetype = 'UNKNOWN';
+    const sortedTypes = Object.entries(typeCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([pokemon]) => pokemon.toUpperCase().replace(/\s+/g, '_'));
 
-    for (const [pokemon, count] of Object.entries(typeCounts)) {
-      if (count > maxCount) {
-        maxCount = count;
-        archetype = pokemon.toUpperCase().replace(/\s+/g, '_');
+    let primary = 'UNKNOWN';
+    let secondary: string | undefined = undefined;
+
+    if (sortedTypes.length > 0) {
+      primary = sortedTypes[0];
+      if (sortedTypes.length > 1) {
+        secondary = sortedTypes[1];
       }
     }
 
     // Fallback to common archetypes if no specific Pokemon found
-    if (archetype === 'UNKNOWN') {
+    if (primary === 'UNKNOWN') {
       const commonArchetypes = ['PIKACHU', 'CHARIZARD', 'ARCEUS', 'GIRATINA', 'COMFEY'];
       const randomIndex = Math.floor(Math.random() * commonArchetypes.length);
-      archetype = commonArchetypes[randomIndex];
+      primary = commonArchetypes[randomIndex];
     }
 
-    return archetype;
+    return { primary, secondary };
   }
 
 }

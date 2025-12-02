@@ -18,7 +18,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { ArtworksForPipe } from './artworks-for.pipe';
+import { ArchetypeSelectPopupComponent } from './archetype-select-popup/archetype-select-popup.component';
+import { DeckStatsComponent } from './deck-stats/deck-stats.component';
 
 @NgModule({
   imports: [
@@ -31,10 +35,13 @@ import { ArtworksForPipe } from './artworks-for.pipe';
     MatSlideToggleModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    MatTableModule
   ],
   entryComponents: [
-    ImportDeckPopupComponent
+    ImportDeckPopupComponent,
+    ArchetypeSelectPopupComponent
   ],
   declarations: [
     DeckCardComponent,
@@ -46,7 +53,9 @@ import { ArtworksForPipe } from './artworks-for.pipe';
     DeckEditInfoComponent,
     ImportDeckPopupComponent,
     DeckCardDialogComponent,
-    ArtworksForPipe
+    ArtworksForPipe,
+    ArchetypeSelectPopupComponent,
+    DeckStatsComponent
   ]
 })
 export class DeckModule { }

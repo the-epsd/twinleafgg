@@ -1,11 +1,14 @@
 import { Component, OnChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag, PokemonCard } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { SettingsService } from '../../../table/table-sidebar/settings-dialog/settings.service';
+import { CardsBaseService } from '../cards-base.service';
+import { CardSwapDialogComponent } from '../card-swap-dialog/card-swap-dialog.component';
 
 export interface CardInfoPaneOptions {
   enableAbility?: {
@@ -44,6 +47,7 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   @Input() cardList: PokemonCardList;
   @Input() options: CardInfoPaneOptions = {};
   @Output() action = new EventEmitter<CardInfoPaneAction>();
+  @Output() cardSwap = new EventEmitter<{ originalCard: Card, replacementCard: Card }>();
 
   public enabledAbilities: { [name: string]: boolean } = {};
   public showTags = false;
@@ -104,7 +108,9 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private sanitizer: DomSanitizer,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private router: Router,
+    private cardsBaseService: CardsBaseService
   ) {
     this.subscriptions.push(
       this.settingsService.showTags$.subscribe(showTags => {
@@ -410,6 +416,97 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  public isInGame(): boolean {
+    return this.router.url.includes('/table');
+  }
+
+  public getCardsWithSameName(): Card[] {
+    if (!this.card) {
+      return [];
+    }
+    return this.cardsBaseService.getCards().filter(c =>
+      c.name === this.card.name && c.fullName !== this.card.fullName
+    );
+  }
+
+  public getEvolutionCards(): { preEvolutions: Card[], evolutions: Card[] } {
+    if (!this.card || this.card.superType !== SuperType.POKEMON) {
+      return { preEvolutions: [], evolutions: [] };
+    }
+
+    const pokemonCard = this.card as PokemonCard;
+    const allCards = this.cardsBaseService.getCards();
+
+    const preEvolutions = allCards.filter(c => {
+      if (c.superType !== SuperType.POKEMON) return false;
+      const cPokemon = c as PokemonCard;
+      return cPokemon.evolvesFrom === this.card.name ||
+        (cPokemon.evolvesTo && cPokemon.evolvesTo.includes(this.card.name));
+    });
+
+    const evolutions = allCards.filter(c => {
+      if (c.superType !== SuperType.POKEMON) return false;
+      const cPokemon = c as PokemonCard;
+      return cPokemon.name === pokemonCard.evolvesFrom ||
+        (pokemonCard.evolvesTo && pokemonCard.evolvesTo.includes(cPokemon.name));
+    });
+
+    return { preEvolutions, evolutions };
+  }
+
+  public async openCardSwapDialog(): Promise<void> {
+    const cardsWithSameName = this.getCardsWithSameName();
+    if (cardsWithSameName.length === 0) {
+      return;
+    }
+
+    const dialog = this.dialog.open(CardSwapDialogComponent, {
+      maxWidth: '95vw',
+      width: 'min(1200px, 90vw)',
+      data: {
+        currentCard: this.card,
+        alternativeCards: cardsWithSameName
+      }
+    });
+
+    const result = await dialog.afterClosed().toPromise();
+    if (result && result.selectedCard) {
+      this.onCardSwap(result.selectedCard);
+    }
+  }
+
+  public onCardSwap(replacementCard: Card): void {
+    if (this.card && replacementCard) {
+      this.cardSwap.emit({
+        originalCard: this.card,
+        replacementCard: replacementCard
+      });
+    }
+  }
+
+  public onEvolutionCardClick(card: Card): void {
+    this.showCardImage(card, false);
+  }
+
+  public isFavoriteCard(): boolean {
+    if (!this.card) {
+      return false;
+    }
+    return this.cardsBaseService.isFavoriteCard(this.card);
+  }
+
+  public toggleFavorite(): void {
+    if (!this.card) {
+      return;
+    }
+
+    if (this.isFavoriteCard()) {
+      this.cardsBaseService.clearFavoriteCard(this.card.name);
+    } else {
+      this.cardsBaseService.setFavoriteCard(this.card.name, this.card.fullName);
+    }
   }
 
 }

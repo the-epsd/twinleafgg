@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '../api.service';
-import { DeckListResponse, DeckResponse } from '../interfaces/deck.interface';
+import { DeckListResponse, DeckResponse, DeckStatsResponse } from '../interfaces/deck.interface';
 import { Response } from '../interfaces/response.interface';
 import { Format, Archetype } from 'ptcg-server';
 import { map } from 'rxjs/operators';
@@ -91,6 +91,11 @@ export class DeckService {
     return this.api.post<any>('/v1/decks/validate-formats', { cardNames }).pipe(
       map(response => response.formats || [])
     );
+  }
+
+  public getDeckStats(deckId: number, replayLimit?: number) {
+    const params = replayLimit !== undefined ? { limit: replayLimit } : undefined;
+    return this.api.get<DeckStatsResponse>('/v1/decks/stats/' + deckId, params);
   }
 
 }

@@ -1,3 +1,4 @@
+import { GreatBallBKP, MaxPotionBKP, PokemonCatcherBKP, PotionBKP, ProfessorSycamoreXYBKP, ManaphyEX2BKP, SkylaBKP, Delinquent2BKP, Delinquent3BKP, ProfessorSycamoreXY2BKP } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bayleef } from './bayleef';
 import { BurstingBalloon } from './bursting-balloon';
@@ -47,4 +48,14 @@ export const setBreakpoint: Card[] = [
   new Garbodor(),
   new GreninjaBREAK(),
   new TrevenantBREAK(),
+  new GreatBallBKP(),
+  new MaxPotionBKP(),
+  new PokemonCatcherBKP(),
+  new PotionBKP(),
+  new ProfessorSycamoreXYBKP(),
+  new ManaphyEX2BKP(),
+  new SkylaBKP(),
+  new Delinquent2BKP(),
+  new Delinquent3BKP(),
+  new ProfessorSycamoreXY2BKP(),
 ];

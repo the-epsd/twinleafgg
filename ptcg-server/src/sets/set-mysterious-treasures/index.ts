@@ -1,3 +1,4 @@
+import { DuskBallMT, QuickBallMT, DarknessEnergySpecialMT, MetalEnergyN1MT } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { BebesSearch } from './bebes-search';
 import { Chansey } from './chansey';
@@ -28,5 +29,9 @@ export const setMysteriousTreasures: Card[] = [
 
   // Other prints
   new MultiEnergyMT(),
-  new NightMaintenanceMT()
+  new NightMaintenanceMT(),
+  new DuskBallMT(),
+  new QuickBallMT(),
+  new DarknessEnergySpecialMT(),
+  new MetalEnergyN1MT(),
 ];

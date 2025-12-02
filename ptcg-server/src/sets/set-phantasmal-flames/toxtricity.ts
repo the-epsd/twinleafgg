@@ -34,9 +34,9 @@ export class Toxtricity extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '57';
+  public setNumber: string = '68';
   public name: string = 'Toxtricity';
   public fullName: string = 'Toxtricity M2';
 

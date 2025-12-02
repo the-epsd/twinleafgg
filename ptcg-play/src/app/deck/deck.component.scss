@@ -157,11 +157,53 @@ ptcg-archetype,
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1a1f2e;
+  }
 
   ptcg-archetype {
     transform: scale(3);
     image-rendering: pixelated;
     transition: transform 0.3s ease;
+  }
+}
+
+.archetype-edit-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #449058;
+  color: white;
+  border-radius: 50%;
+  z-index: 3;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background-color: #5ba86b;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(68, 144, 88, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  ::ng-deep .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
   }
 }
 
@@ -292,6 +334,11 @@ ptcg-archetype,
   align-items: center;
   gap: 4px;
   padding: 6px 12px;
+
+  &.hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
 
   .more-text {
     @media screen and (max-width: 768px) {

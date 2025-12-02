@@ -165,6 +165,46 @@ export class Profile extends Controller {
     res.send({ ok: true });
   }
 
+  @Get('/cardImagesUrl')
+  @AuthToken()
+  public async onGetCardImagesUrl(req: Request, res: Response) {
+    const userId: number = req.body.userId;
+    const user = await User.findOne(userId);
+    if (user === undefined) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
+      return;
+    }
+    res.send({ ok: true, jsonUrl: user.cardImagesJsonUrl || '' });
+  }
+
+  @Post('/setCardImagesUrl')
+  @AuthToken()
+  @Validate({
+    jsonUrl: check().isString()
+  })
+  public async onSetCardImagesUrl(req: Request, res: Response) {
+    const userId: number = req.body.userId;
+    const body: { jsonUrl: string } = req.body;
+    const user = await User.findOne(userId);
+
+    if (user === undefined) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
+      return;
+    }
+
+    try {
+      user.cardImagesJsonUrl = body.jsonUrl || '';
+      await user.save();
+      res.send({ ok: true });
+    } catch (error) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.SERVER_ERROR });
+      return;
+    }
+  }
+
   @Post('/updateRole')
   @AuthToken()
   @Validate({

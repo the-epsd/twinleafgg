@@ -48,7 +48,6 @@ export class FriendsComponent implements OnInit {
     ]).then(() => {
       this.loading = false;
     }).catch(error => {
-      console.error('Error loading friends data:', error);
       this.loading = false;
     });
   }
@@ -59,13 +58,11 @@ export class FriendsComponent implements OnInit {
     // Load friends list
     this.friendsService.getFriendsList().subscribe(
       response => {
-        console.log('Friends response:', response);
         this.friends = response.friends;
         this.updateUsers(response.users);
         this.loading = false;
       },
       error => {
-        console.error('Error loading friends:', error);
         this.loading = false;
       }
     );
@@ -75,13 +72,11 @@ export class FriendsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.friendsService.getFriendsList().subscribe({
         next: (response) => {
-          console.log('Friends response:', response);
           this.friends = response.friends;
           this.updateUsers(response.users);
           resolve();
         },
         error: (error) => {
-          console.error('Error loading friends:', error);
           reject(error);
         }
       });
@@ -95,7 +90,6 @@ export class FriendsComponent implements OnInit {
         this.updateUsers(response.users);
       },
       error => {
-        console.error('Error loading pending requests:', error);
       }
     );
   }
@@ -109,7 +103,6 @@ export class FriendsComponent implements OnInit {
           resolve();
         },
         error: (error) => {
-          console.error('Error loading pending requests:', error);
           reject(error);
         }
       });
@@ -123,7 +116,6 @@ export class FriendsComponent implements OnInit {
         this.updateUsers(response.users);
       },
       error => {
-        console.error('Error loading sent requests:', error);
       }
     );
   }
@@ -137,7 +129,6 @@ export class FriendsComponent implements OnInit {
           resolve();
         },
         error: (error) => {
-          console.error('Error loading sent requests:', error);
           reject(error);
         }
       });
@@ -181,7 +172,6 @@ export class FriendsComponent implements OnInit {
         this.loadAllFriendsData();
       },
       error => {
-        console.error('Error accepting friend request:', error);
       }
     );
   }
@@ -192,7 +182,6 @@ export class FriendsComponent implements OnInit {
         this.loadPendingRequests();
       },
       error => {
-        console.error('Error rejecting friend request:', error);
       }
     );
   }
@@ -203,7 +192,6 @@ export class FriendsComponent implements OnInit {
         this.loadSentRequests();
       },
       error => {
-        console.error('Error canceling friend request:', error);
       }
     );
   }
@@ -214,7 +202,6 @@ export class FriendsComponent implements OnInit {
         this.loadFriendsData();
       },
       error => {
-        console.error('Error removing friend:', error);
       }
     );
   }
@@ -225,7 +212,6 @@ export class FriendsComponent implements OnInit {
         this.loadFriendsData();
       },
       error => {
-        console.error('Error blocking user:', error);
       }
     );
   }
@@ -236,7 +222,6 @@ export class FriendsComponent implements OnInit {
         this.loadFriendsData();
       },
       error => {
-        console.error('Error unblocking user:', error);
       }
     );
   }

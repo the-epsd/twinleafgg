@@ -30,6 +30,7 @@ export class Dragonite extends PokemonCard {
     text: 'Discard the top 2 cards of your deck.'
   }];
 
+  public regulationMark: string = 'G';
   public set: string = 'MEW';
   public name: string = 'Dragonite';
   public fullName: string = 'Dragonite MEW';

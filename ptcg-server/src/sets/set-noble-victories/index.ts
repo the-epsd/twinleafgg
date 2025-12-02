@@ -1,3 +1,4 @@
+import { CobalionNVI, NNVI, RockyHelmetNVI, Terrakion2NVI, Cobalion2NVI, N2NVI } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
@@ -51,4 +52,10 @@ export const setNobleVictories: Card[] = [
   new Victini(),
   new Xtransceiver(),
   new Zweilous(),
+  new CobalionNVI(),
+  new NNVI(),
+  new RockyHelmetNVI(),
+  new Terrakion2NVI(),
+  new Cobalion2NVI(),
+  new N2NVI(),
 ];

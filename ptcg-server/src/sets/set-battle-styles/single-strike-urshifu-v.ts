@@ -45,12 +45,10 @@ export class SingleStrikeUrshifuV extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -82,11 +80,9 @@ export class SingleStrikeUrshifuV extends PokemonCard {
 
       // Check marker
       if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
     return state;
   }

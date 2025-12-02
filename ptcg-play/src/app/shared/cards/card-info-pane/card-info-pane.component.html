@@ -2,6 +2,15 @@
   <div class="ptcg-card-info-image">
     <ptcg-card [card]="card" [artworksContext]="cardList || null" [class.cardback]="facedown"
       (click)="showCardImage(card, facedown)"></ptcg-card>
+
+    <!-- Swap Button - Only show when not in game and not facedown -->
+    <div class="swap-button-container" *ngIf="!isInGame() && !facedown">
+      <button mat-icon-button class="swap-button" (click)="openCardSwapDialog()"
+        [disabled]="getCardsWithSameName().length === 0"
+        [matTooltip]="getCardsWithSameName().length > 0 ? 'Swap with alternative printing' : 'No alternative printings available'">
+        <mat-icon>swap_horiz</mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">
@@ -148,6 +157,10 @@
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.ENERGY">
     <div class="title">
       <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
+      <button mat-icon-button class="favorite-button" *ngIf="!isInGame() && card.superType === SuperType.ENERGY"
+        (click)="toggleFavorite()" [matTooltip]="isFavoriteCard() ? 'Remove from favorites' : 'Add to favorites'">
+        <mat-icon>{{isFavoriteCard() ? 'favorite' : 'favorite_border'}}</mat-icon>
+      </button>
     </div>
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.energyType">
@@ -191,6 +204,10 @@
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.TRAINER">
     <div class="title">
       <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
+      <button mat-icon-button class="favorite-button" *ngIf="!isInGame() && card.superType === SuperType.TRAINER"
+        (click)="toggleFavorite()" [matTooltip]="isFavoriteCard() ? 'Remove from favorites' : 'Add to favorites'">
+        <mat-icon>{{isFavoriteCard() ? 'favorite' : 'favorite_border'}}</mat-icon>
+      </button>
     </div>
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.trainerType">

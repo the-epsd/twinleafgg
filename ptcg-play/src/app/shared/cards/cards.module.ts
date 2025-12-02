@@ -12,6 +12,7 @@ import { CardInfoPaneComponent } from './card-info-pane/card-info-pane.component
 import { CardInfoPopupComponent } from './card-info-popup/card-info-popup.component';
 import { CardListPaneComponent } from './card-list-pane/card-list-pane.component';
 import { CardListPopupComponent } from './card-list-popup/card-list-popup.component';
+import { CardSwapDialogComponent } from './card-swap-dialog/card-swap-dialog.component';
 import { CardPlaceholderDirective } from './card-placeholder/card-placeholder.directive';
 import { DropHighlightDirective } from './drop-highlight/drop-highlight.directive';
 import { EnergyComponent } from './energy/energy.component';
@@ -47,13 +48,15 @@ import { FormsModule } from '@angular/forms';
     TrainerTypeComponent,
     HoverHighlightComponent,
     CardInfoListPopupComponent,
-    PokemonCardInfoPaneComponent
+    PokemonCardInfoPaneComponent,
+    CardSwapDialogComponent
   ],
   entryComponents: [
     CardImagePopupComponent,
     CardInfoPopupComponent,
     CardInfoListPopupComponent,
-    CardListPopupComponent
+    CardListPopupComponent,
+    CardSwapDialogComponent
   ],
   exports: [
     CardComponent,

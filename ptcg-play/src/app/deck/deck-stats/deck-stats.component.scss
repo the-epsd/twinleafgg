@@ -1,0 +1,294 @@
+.deck-stats-container {
+  padding: 24px;
+}
+
+.deck-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.deck-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  flex: 1;
+}
+
+.deck-archetypes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    .edit-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.deck-archetype-icon {
+  transform: scale(2);
+  image-rendering: pixelated;
+}
+
+ptcg-archetype,
+.ptcg-archetype-container {
+  display: flex;
+}
+
+ptcg-archetype {
+  transform: scale(2);
+  image-rendering: pixelated;
+}
+
+.edit-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background-color: #2a2f3a;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  &.win {
+    border-left: 4px solid #4CAF50;
+  }
+
+  &.loss {
+    border-left: 4px solid #ff4444;
+  }
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.matchups-section,
+.replays-section {
+  margin-bottom: 32px;
+}
+
+h3 {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.matchups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+}
+
+.matchup-card {
+  background-color: #2a2f3a;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &.favorable {
+    border-left: 4px solid #4CAF50;
+  }
+
+  &.even {
+    border-left: 4px solid rgba(255, 255, 255, 0.3);
+  }
+
+  &.unfavorable {
+    border-left: 4px solid #ff4444;
+  }
+}
+
+.matchup-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+  min-height: 80px;
+
+  ptcg-archetype {
+    transform: scale(3);
+    image-rendering: pixelated;
+  }
+}
+
+.matchup-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+  margin-bottom: 12px;
+  word-break: break-word;
+}
+
+.matchup-record {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+
+  .wins {
+    color: #4CAF50;
+  }
+
+  .separator {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .losses {
+    color: #ff4444;
+  }
+}
+
+.matchup-winrate {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+
+  &.favorable {
+    color: #4CAF50;
+  }
+
+  &.even {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &.unfavorable {
+    color: #ff4444;
+  }
+}
+
+.matchup-games {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.replays-table {
+  width: 100%;
+  background-color: #2a2f3a;
+  border-radius: 8px;
+  overflow: hidden;
+
+  ::ng-deep {
+    .mat-header-cell {
+      background-color: #384259;
+      color: white;
+      font-weight: 500;
+    }
+
+    .mat-cell {
+      color: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mat-row:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+.replays-hint {
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.favorable {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.even {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.unfavorable {
+  color: #ff4444;
+  font-weight: bold;
+}
+
+.win-badge {
+  background-color: #4CAF50;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.loss-badge {
+  background-color: #ff4444;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.no-matchups,
+.no-replays {
+  text-align: center;
+  padding: 32px;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: #2a2f3a;
+  border-radius: 8px;
+}

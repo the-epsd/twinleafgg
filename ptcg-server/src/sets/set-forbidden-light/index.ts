@@ -1,3 +1,4 @@
+import { JudgeULFLI, UnidentifiedFossilFLI, GreninjaGX2FLI, NaganadelGX2FLI, LucarioGXFLI, YveltalGX2FLI, DialgaGX2FLI, XerneasGX2FLI, UltraNecrozmaGX2FLI, Diantha2FLI, GreninjaGX3FLI, NaganadelGX3FLI, LucarioGX2FLI, YveltalGX3FLI, DialgaGX3FLI, XerneasGX3FLI, UltraNecrozmaGX3FLI, BeastRing3FLI, EnergyRecyclerFLI, MetalFryingPan3FLI, MysteriousTreasure3FLI, UnitEnergyFDY2FLI, AlolanExeggutor2FLI, BeastRing2FLI, MetalFryingPan2FLI } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AlolanExeggutor } from './alolan-exeggutor';
 import { BeastEnergy } from './beast-energy-prism-star';
@@ -89,4 +90,29 @@ export const setForbiddenLight: Card[] = [
   // Other prints
   new LadyFLI(),
   new MysteriousTreasureFLI(),
+  new JudgeULFLI(),
+  new UnidentifiedFossilFLI(),
+  new GreninjaGX2FLI(),
+  new NaganadelGX2FLI(),
+  new LucarioGXFLI(),
+  new YveltalGX2FLI(),
+  new DialgaGX2FLI(),
+  new XerneasGX2FLI(),
+  new UltraNecrozmaGX2FLI(),
+  new Diantha2FLI(),
+  new GreninjaGX3FLI(),
+  new NaganadelGX3FLI(),
+  new LucarioGX2FLI(),
+  new YveltalGX3FLI(),
+  new DialgaGX3FLI(),
+  new XerneasGX3FLI(),
+  new UltraNecrozmaGX3FLI(),
+  new BeastRing3FLI(),
+  new EnergyRecyclerFLI(),
+  new MetalFryingPan3FLI(),
+  new MysteriousTreasure3FLI(),
+  new UnitEnergyFDY2FLI(),
+  new AlolanExeggutor2FLI(),
+  new BeastRing2FLI(),
+  new MetalFryingPan2FLI(),
 ];

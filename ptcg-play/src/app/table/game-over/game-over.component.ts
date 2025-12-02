@@ -71,7 +71,6 @@ export class GameOverComponent implements OnInit {
 
   calculateGameStats(): void {
     if (!this.gameState || !this.gameState.state) {
-      console.error('Game state not available');
       return;
     }
 
@@ -127,7 +126,6 @@ export class GameOverComponent implements OnInit {
           this.opponentDamageDealt = this.opponentStats.totalDamageDealt;
         }
 
-        console.log('Using enhanced player statistics from server');
         return;
       }
 
@@ -163,7 +161,6 @@ export class GameOverComponent implements OnInit {
 
       // If we got stats from gameStats, we're done
       if (this.playerStats || this.opponentStats) {
-        console.log('Using gameStats from individual players');
         return;
       }
 
@@ -171,14 +168,12 @@ export class GameOverComponent implements OnInit {
       this.calculateFallbackPrizeStats(playerIndex, opponentIndex);
 
     } catch (error) {
-      console.error('Error loading accurate statistics:', error);
       // Use fallback calculation on error
       this.calculateFallbackPrizeStats(playerIndex, opponentIndex);
     }
   }
 
   private calculateFallbackPrizeStats(playerIndex: number, opponentIndex: number): void {
-    console.warn('Using fallback prize calculation - server statistics not available');
 
     const state = this.gameState.state;
 
@@ -240,13 +235,9 @@ export class GameOverComponent implements OnInit {
             damage: this.playerStats.topPokemon.totalDamage,
             reason: 'damage'
           };
-          console.log('Using top Pokemon from server statistics:', {
-            name: topPokemonCard.name,
-            damage: this.playerStats.topPokemon.totalDamage
-          });
           return;
         } else {
-          console.warn('Invalid top Pokemon card from server statistics, falling back');
+          // Invalid top Pokemon card from server statistics, falling back
         }
       }
 
@@ -254,7 +245,6 @@ export class GameOverComponent implements OnInit {
       this.findFallbackPokemon(playerIndex);
 
     } catch (error) {
-      console.error('Error finding best Pokemon:', error);
       // Use fallback on error
       this.findFallbackPokemon(playerIndex);
     }
@@ -264,7 +254,6 @@ export class GameOverComponent implements OnInit {
     const player = this.gameState.state.players[playerIndex];
 
     if (!player) {
-      console.warn('Player not found for index:', playerIndex);
       return;
     }
 
@@ -277,9 +266,6 @@ export class GameOverComponent implements OnInit {
         damage: 0, // No accurate damage data available in fallback
         reason: 'damage'
       };
-      console.log('Found fallback Pokemon:', bestPokemon.name);
-    } else {
-      console.warn('No Pokemon found for player at index:', playerIndex);
     }
   }
 
@@ -297,13 +283,9 @@ export class GameOverComponent implements OnInit {
             damage: this.opponentStats.topPokemon.totalDamage,
             reason: 'damage'
           };
-          console.log('Using opponent top Pokemon from server statistics:', {
-            name: topPokemonCard.name,
-            damage: this.opponentStats.topPokemon.totalDamage
-          });
           return;
         } else {
-          console.warn('Invalid opponent top Pokemon card from server statistics, falling back');
+          // Invalid opponent top Pokemon card from server statistics, falling back
         }
       }
 
@@ -311,7 +293,6 @@ export class GameOverComponent implements OnInit {
       this.findFallbackOpponentPokemon(opponentIndex);
 
     } catch (error) {
-      console.error('Error finding best opponent Pokemon:', error);
       // Use fallback on error
       this.findFallbackOpponentPokemon(opponentIndex);
     }
@@ -321,7 +302,6 @@ export class GameOverComponent implements OnInit {
     const opponent = this.gameState.state.players[opponentIndex];
 
     if (!opponent) {
-      console.warn('Opponent not found for index:', opponentIndex);
       return;
     }
 
@@ -334,9 +314,6 @@ export class GameOverComponent implements OnInit {
         damage: 0, // No accurate damage data available in fallback
         reason: 'damage'
       };
-      console.log('Found fallback opponent Pokemon:', bestPokemon.name);
-    } else {
-      console.warn('No Pokemon found for opponent at index:', opponentIndex);
     }
   }
 
@@ -448,7 +425,7 @@ export class GameOverComponent implements OnInit {
           }
         }
       } catch (e) {
-        console.error('Error accessing discard pile:', e);
+        // Error accessing discard pile
       }
     }
 
@@ -556,72 +533,33 @@ export class GameOverComponent implements OnInit {
     try {
       // Validate prize counts are within expected range (0-6)
       if (this.playerPrizesTaken < 0 || this.playerPrizesTaken > 6) {
-        console.warn(`Invalid player prize count: ${this.playerPrizesTaken}. Expected 0-6.`);
+        // Invalid player prize count
       }
 
       if (this.opponentPrizesTaken < 0 || this.opponentPrizesTaken > 6) {
-        console.warn(`Invalid opponent prize count: ${this.opponentPrizesTaken}. Expected 0-6.`);
+        // Invalid opponent prize count
       }
 
       // Validate damage values are non-negative
       if (this.playerDamageDealt < 0) {
-        console.warn(`Invalid player damage dealt: ${this.playerDamageDealt}. Expected >= 0.`);
         this.playerDamageDealt = 0;
       }
 
       if (this.opponentDamageDealt < 0) {
-        console.warn(`Invalid opponent damage dealt: ${this.opponentDamageDealt}. Expected >= 0.`);
         this.opponentDamageDealt = 0;
       }
 
       // Validate Pokemon card data
-      if (this.topPokemon) {
-        if (!this.isValidPokemonCard(this.topPokemon.card)) {
-          console.warn('Invalid player top Pokemon card:', this.topPokemon.card);
-        } else {
-          console.log('Player top Pokemon validated:', {
-            name: this.topPokemon.card.name,
-            damage: this.topPokemon.damage,
-            hp: this.getCardHp(this.topPokemon.card),
-            stage: this.getEvolutionStage(this.topPokemon.card)
-          });
-        }
+      if (this.topPokemon && !this.isValidPokemonCard(this.topPokemon.card)) {
+        // Invalid player top Pokemon card
       }
 
-      if (this.opponentTopPokemon) {
-        if (!this.isValidPokemonCard(this.opponentTopPokemon.card)) {
-          console.warn('Invalid opponent top Pokemon card:', this.opponentTopPokemon.card);
-        } else {
-          console.log('Opponent top Pokemon validated:', {
-            name: this.opponentTopPokemon.card.name,
-            damage: this.opponentTopPokemon.damage,
-            hp: this.getCardHp(this.opponentTopPokemon.card),
-            stage: this.getEvolutionStage(this.opponentTopPokemon.card)
-          });
-        }
-      }
-
-      // Log statistics source for debugging
-      if (this.playerStats) {
-        console.log('Player statistics loaded:', {
-          prizesTaken: this.playerStats.prizesTakenCount,
-          damageDealt: this.playerStats.totalDamageDealt,
-          hasTopPokemon: !!this.playerStats.topPokemon,
-          topPokemonName: this.playerStats.topPokemon?.card?.name
-        });
-      }
-
-      if (this.opponentStats) {
-        console.log('Opponent statistics loaded:', {
-          prizesTaken: this.opponentStats.prizesTakenCount,
-          damageDealt: this.opponentStats.totalDamageDealt,
-          hasTopPokemon: !!this.opponentStats.topPokemon,
-          topPokemonName: this.opponentStats.topPokemon?.card?.name
-        });
+      if (this.opponentTopPokemon && !this.isValidPokemonCard(this.opponentTopPokemon.card)) {
+        // Invalid opponent top Pokemon card
       }
 
     } catch (error) {
-      console.error('Error validating statistics:', error);
+      // Error validating statistics
     }
   }
 
@@ -673,7 +611,6 @@ export class GameOverComponent implements OnInit {
       // Try to find any valid Pokemon card as a fallback
       return this.findBestPokemonWithEvolution(player);
     } catch (error) {
-      console.error('Error getting fallback card:', error);
       return null;
     }
   }

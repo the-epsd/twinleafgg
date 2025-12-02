@@ -1,3 +1,4 @@
+import { EnergyRecyclerAOR, LuckyHelmetAOR, LysandreAOR, HoopaEX2AOR, GiratinaEX2AOR, EnergyRetrievalAOR, HexManiac2AOR } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AceTrainer } from './ace-trainer';
 import { Ariados } from './ariados';
@@ -39,4 +40,11 @@ export const setAncientOrigins: Card[] = [
   // Other Prints
   new LevelBallAOR(),
   new TrainersMailAOR(),
+  new EnergyRecyclerAOR(),
+  new LuckyHelmetAOR(),
+  new LysandreAOR(),
+  new HoopaEX2AOR(),
+  new GiratinaEX2AOR(),
+  new EnergyRetrievalAOR(),
+  new HexManiac2AOR(),
 ];

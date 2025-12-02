@@ -22,7 +22,7 @@ export class Darmanitan extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Darmanitan';

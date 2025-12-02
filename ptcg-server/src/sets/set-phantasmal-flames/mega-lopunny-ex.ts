@@ -27,9 +27,9 @@ export class MegaLopunnyex extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '72';
+  public setNumber: string = '84';
   public name: string = 'Mega Lopunny ex';
   public fullName: string = 'Mega Lopunny ex M2';
 

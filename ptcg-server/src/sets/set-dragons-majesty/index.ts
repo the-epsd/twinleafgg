@@ -1,3 +1,4 @@
+import { FieryFlint3DRM, SwitchRaft2DRM, UltraNecrozmaGXDRM, FieryFlint2DRM } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Blaziken } from './blaziken';
 import { Combusken } from './combusken';
@@ -30,4 +31,8 @@ export const setDragonsMajesty: Card[] = [
   new Turtonator(),
   new VictiniPrismStar(),
   new Wooper(),
+  new FieryFlint3DRM(),
+  new SwitchRaft2DRM(),
+  new UltraNecrozmaGXDRM(),
+  new FieryFlint2DRM(),
 ];

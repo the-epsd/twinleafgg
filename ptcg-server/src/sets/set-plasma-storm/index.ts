@@ -1,3 +1,4 @@
+import { EviolitePLS, VictiniEX2PLS, LugiaEx2PLS, Colress2PLS, BlastoisePLS, RandomReceiverPLS } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bicycle } from './bicycle';
 import { BlackKyuremEX } from './black-kyurem-ex';
@@ -41,4 +42,10 @@ export const setPlasmaStorm: Card[] = [
 
   //Reprints
   new EscapeRopePLS(),
+  new EviolitePLS(),
+  new VictiniEX2PLS(),
+  new LugiaEx2PLS(),
+  new Colress2PLS(),
+  new BlastoisePLS(),
+  new RandomReceiverPLS(),
 ];

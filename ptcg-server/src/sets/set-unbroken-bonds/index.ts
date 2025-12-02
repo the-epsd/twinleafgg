@@ -1,3 +1,4 @@
+import { FirefighterPikachuUNB, PheromosaBuzzwoleGX2UNB, PheromosaBuzzwoleGX3UNB, ReshiramCharizardGX2UNB, MukAlolanMukGX2UNB, MukAlolanMukGX3UNB, MarshadowMachampGX2UNB, MarshadowMachampGX3UNB, GreninjaZoroarkGX2UNB, GreninjaZoroarkGX3UNB, HonchkrowGX2UNB, LucarioMelmetalGX2UNB, GardevoirSylveonGX2UNB, GardevoirSylveonGX3UNB, GreensExploration2UNB, Welder3UNB, PheromosaBuzzwoleGX4UNB, ReshiramCharizardGX3UNB, DedenneGX4UNB, MukAlolanMukGX4UNB, MarshadowMachampGX4UNB, GreninjaZoroarkGX4UNB, HonchkrowGX3UNB, LucarioMelmetalGX3UNB, GardevoirSylveonGX4UNB, ElectromagneticRadar2UNB, FireCrystal2UNB, MetalCoreBarrier2UNB, Pokegear30HS4UNB, TripleAccelerationEnergy2UNB, Pokegear30HS2UNB, Pokegear30HS3UNB, Welder2UNB, DedenneGX3UNB } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Arcanine } from './arcanine';
 import { Aron } from './aron';
@@ -117,4 +118,38 @@ export const setUnbrokenBonds: Card[] = [
 
   // other prints
   new DedenneGXUNB(),
+  new FirefighterPikachuUNB(),
+  new PheromosaBuzzwoleGX2UNB(),
+  new PheromosaBuzzwoleGX3UNB(),
+  new ReshiramCharizardGX2UNB(),
+  new MukAlolanMukGX2UNB(),
+  new MukAlolanMukGX3UNB(),
+  new MarshadowMachampGX2UNB(),
+  new MarshadowMachampGX3UNB(),
+  new GreninjaZoroarkGX2UNB(),
+  new GreninjaZoroarkGX3UNB(),
+  new HonchkrowGX2UNB(),
+  new LucarioMelmetalGX2UNB(),
+  new GardevoirSylveonGX2UNB(),
+  new GardevoirSylveonGX3UNB(),
+  new GreensExploration2UNB(),
+  new Welder3UNB(),
+  new PheromosaBuzzwoleGX4UNB(),
+  new ReshiramCharizardGX3UNB(),
+  new DedenneGX4UNB(),
+  new MukAlolanMukGX4UNB(),
+  new MarshadowMachampGX4UNB(),
+  new GreninjaZoroarkGX4UNB(),
+  new HonchkrowGX3UNB(),
+  new LucarioMelmetalGX3UNB(),
+  new GardevoirSylveonGX4UNB(),
+  new ElectromagneticRadar2UNB(),
+  new FireCrystal2UNB(),
+  new MetalCoreBarrier2UNB(),
+  new Pokegear30HS4UNB(),
+  new TripleAccelerationEnergy2UNB(),
+  new Pokegear30HS2UNB(),
+  new Pokegear30HS3UNB(),
+  new Welder2UNB(),
+  new DedenneGX3UNB(),
 ];

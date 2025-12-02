@@ -47,7 +47,6 @@ export class Heatran extends PokemonCard {
 
       player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      console.log('marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -55,9 +54,9 @@ export class Heatran extends PokemonCard {
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergy);
-      
+
       const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.FIRE));
-      
+
       if (hasFireEnergy) {
         effect.damage += 80;
       }
@@ -78,7 +77,6 @@ export class Heatran extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
-      console.log('marker removed');
     }
     return state;
   }

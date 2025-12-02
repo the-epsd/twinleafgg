@@ -1,3 +1,4 @@
+import { CrushingHammerSSH, EnergyRetrievalSSH, EnergySearchSSH, EnergySwitchPKSSH, LumBerrySSH, PalPadSSH, Pokegear30HSSSH, PokemonCatcherSSH, PotionSSH, RareCandySSH, VitalityBandSSH, StonjournerV2SSH, ZacianV2SSH, CramorantV2SSH, Bede2SSH, ProfessorsResearch2SSH, StonjournerVMAX2SSH, Bede3SSH, ProfessorsResearch3SSH, ZacianV3SSH, AirBalloon2SSH, MetalSaucer2SSH, OrdinaryRod2SSH, QuickBall2SSH } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AirBalloon } from './air-balloon';
 import { AuroraEnergy } from './aurora-energy';
@@ -114,4 +115,28 @@ export const setSwordAndShield: Card[] = [
   new FightingEnergy(),
   new DarknessEnergy(),
   new MetalEnergy(),
+  new CrushingHammerSSH(),
+  new EnergyRetrievalSSH(),
+  new EnergySearchSSH(),
+  new EnergySwitchPKSSH(),
+  new LumBerrySSH(),
+  new PalPadSSH(),
+  new Pokegear30HSSSH(),
+  new PokemonCatcherSSH(),
+  new PotionSSH(),
+  new RareCandySSH(),
+  new VitalityBandSSH(),
+  new StonjournerV2SSH(),
+  new ZacianV2SSH(),
+  new CramorantV2SSH(),
+  new Bede2SSH(),
+  new ProfessorsResearch2SSH(),
+  new StonjournerVMAX2SSH(),
+  new Bede3SSH(),
+  new ProfessorsResearch3SSH(),
+  new ZacianV3SSH(),
+  new AirBalloon2SSH(),
+  new MetalSaucer2SSH(),
+  new OrdinaryRod2SSH(),
+  new QuickBall2SSH(),
 ];

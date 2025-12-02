@@ -1,3 +1,4 @@
+import { EnergySwitchPKSF, GreatBallSF, PotionSF, SwitchSF, CharmanderSF, CharmeleonSF, CharizardSF } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Combee } from './combee';
 import { Dusclops } from './dusclops';
@@ -44,5 +45,12 @@ export const setStormfront: Card[] = [
   // Other prints
   new CycloneEnergySF(),
   new PremierBallSF(),
-  new WarpEnergySF()
+  new WarpEnergySF(),
+  new EnergySwitchPKSF(),
+  new GreatBallSF(),
+  new PotionSF(),
+  new SwitchSF(),
+  new CharmanderSF(),
+  new CharmeleonSF(),
+  new CharizardSF(),
 ];

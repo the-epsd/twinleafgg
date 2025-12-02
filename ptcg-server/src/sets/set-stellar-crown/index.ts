@@ -1,3 +1,4 @@
+import { VenusaurexSCR, BlastoiseexSCR, YamaskSCR, Raboot2SCR, Crabominable2SCR, Joltik2SCR, Zeraora2SCR, Milcery2SCR, Gulpin2SCR, Archaludon2SCR, Hydrappleex2SCR, Cinderaceex2SCR, Laprasex2SCR, Galvantulaex2SCR, Medichamex2SCR, Orthwormex2SCR, Briar2SCR, Crispin2SCR, Kofu2SCR, Lacey2SCR, Hydrappleex3SCR, Galvantulaex3SCR, Terapagosex2SCR, Briar3SCR, Lacey3SCR, Terapagosex3SCR, AreaZeroUnderdepths2SCR } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Archaludon } from './archaludon';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
@@ -138,4 +139,31 @@ export const setStellarCrown: Card[] = [
   new AreaZeroUnderdepthsHR(),
   new BraveryCharmHR(),
 
+  new VenusaurexSCR(),
+  new BlastoiseexSCR(),
+  new YamaskSCR(),
+  new Raboot2SCR(),
+  new Crabominable2SCR(),
+  new Joltik2SCR(),
+  new Zeraora2SCR(),
+  new Milcery2SCR(),
+  new Gulpin2SCR(),
+  new Archaludon2SCR(),
+  new Hydrappleex2SCR(),
+  new Cinderaceex2SCR(),
+  new Laprasex2SCR(),
+  new Galvantulaex2SCR(),
+  new Medichamex2SCR(),
+  new Orthwormex2SCR(),
+  new Briar2SCR(),
+  new Crispin2SCR(),
+  new Kofu2SCR(),
+  new Lacey2SCR(),
+  new Hydrappleex3SCR(),
+  new Galvantulaex3SCR(),
+  new Terapagosex2SCR(),
+  new Briar3SCR(),
+  new Lacey3SCR(),
+  new Terapagosex3SCR(),
+  new AreaZeroUnderdepths2SCR(),
 ];

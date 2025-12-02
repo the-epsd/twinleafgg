@@ -1,3 +1,4 @@
+import { BillHS, CopycatHS, EnergySwitchPKHS, FullHealHS, PokeBallHS, ProfessorElmsTrainingMethodHS } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
@@ -77,4 +78,10 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new PokemonReversalHS(),
   new RainbowEnergyHS(),
   new SwitchHS(),
+  new BillHS(),
+  new CopycatHS(),
+  new EnergySwitchPKHS(),
+  new FullHealHS(),
+  new PokeBallHS(),
+  new ProfessorElmsTrainingMethodHS(),
 ];

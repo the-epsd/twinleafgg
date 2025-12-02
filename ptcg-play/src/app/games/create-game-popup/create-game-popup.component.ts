@@ -121,7 +121,6 @@ export class CreateGamePopupComponent implements OnInit {
     const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
     if (!selectedDeck || !selectedDeck.value.format.includes(this.settings.format) || !selectedDeck.value.isValid) {
       // Show an error message or alert
-      console.error('Selected deck is not valid for the chosen format.');
       return;
     }
 
@@ -148,17 +147,11 @@ export class CreateGamePopupComponent implements OnInit {
       const defaultDeckId = this.getFormatDefaultDeckId(format);
       const defaultDeckExists = this.formatValidDecks.some(deck => deck.value === defaultDeckId);
 
-      console.log('Format:', format, 'Default deck ID:', defaultDeckId, 'Exists:', defaultDeckExists);
-      console.log('Available decks:', this.formatValidDecks.map(d => ({ id: d.value, name: d.viewValue })));
-      console.log('Format default decks:', this.formatDefaultDecks);
-
       if (defaultDeckExists) {
         this.deckId = defaultDeckId;
-        console.log('Selected default deck:', defaultDeckId);
       } else {
         // Fall back to first available deck
         this.deckId = this.formatValidDecks[0].value;
-        console.log('Fell back to first deck:', this.deckId);
       }
     } else {
       this.deckId = null;

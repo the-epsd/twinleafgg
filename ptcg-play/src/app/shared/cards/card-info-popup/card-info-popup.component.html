@@ -5,7 +5,7 @@
 
 <mat-dialog-content>
   <ptcg-card-info-pane [card]="card" [cardList]="cardList" [facedown]="facedown" [options]="options"
-    (action)="close($event)">
+    (action)="close($event)" (cardSwap)="onCardSwap($event)">
   </ptcg-card-info-pane>
 </mat-dialog-content>
 

@@ -1,3 +1,4 @@
+import { UmbreonUD, DefenderUD, SagesTrainingUD } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bellossom } from './bellossom';
 import { BurnedTower } from './burned-tower';
@@ -41,4 +42,7 @@ export const setUndaunted: Card[] = [
   new Smeargle(),
   new Sneasel(),
   new Vileplume(),
+  new UmbreonUD(),
+  new DefenderUD(),
+  new SagesTrainingUD(),
 ];

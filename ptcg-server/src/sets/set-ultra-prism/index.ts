@@ -1,3 +1,4 @@
+import { CosmoemUPR, PalPadUPR, UnidentifiedFossilUPR, GlaceonGX2UPR, DawnWingsNecrozmaGX2UPR, DuskManeNecrozmaGX2UPR, DialgaGX2UPR, Cynthia3UPR, Gardenia2UPR, Lillie3UPR, LusamineUPR, Mars2UPR, PokemonFanClub2UPR, Volkner3UPR, GlaceonGX3UPR, DawnWingsNecrozmaGX3UPR, DuskManeNecrozmaGX3UPR, DialgaGX3UPR, CrushingHammerUPR, EscapeBoard3UPR, UnitEnergyGRW2UPR, UnitEnergyLPM2UPR, Cynthia2UPR, EscapeBoard2UPR, Lillie2UPR, Volkner2UPR, Lusamine2UPR } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bastiodon } from './bastiodon';
 import { Cynthia } from './cynthia';
@@ -81,4 +82,31 @@ export const setUltraPrism: Card[] = [
   new SuperBoostEnergy(),
   new TypeNull(),
   new SilvallyGX(),
+  new CosmoemUPR(),
+  new PalPadUPR(),
+  new UnidentifiedFossilUPR(),
+  new GlaceonGX2UPR(),
+  new DawnWingsNecrozmaGX2UPR(),
+  new DuskManeNecrozmaGX2UPR(),
+  new DialgaGX2UPR(),
+  new Cynthia3UPR(),
+  new Gardenia2UPR(),
+  new Lillie3UPR(),
+  new LusamineUPR(),
+  new Mars2UPR(),
+  new PokemonFanClub2UPR(),
+  new Volkner3UPR(),
+  new GlaceonGX3UPR(),
+  new DawnWingsNecrozmaGX3UPR(),
+  new DuskManeNecrozmaGX3UPR(),
+  new DialgaGX3UPR(),
+  new CrushingHammerUPR(),
+  new EscapeBoard3UPR(),
+  new UnitEnergyGRW2UPR(),
+  new UnitEnergyLPM2UPR(),
+  new Cynthia2UPR(),
+  new EscapeBoard2UPR(),
+  new Lillie2UPR(),
+  new Volkner2UPR(),
+  new Lusamine2UPR(),
 ];

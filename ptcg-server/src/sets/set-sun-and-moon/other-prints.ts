@@ -1,3 +1,21 @@
+import { CrushingHammer } from "../set-scarlet-and-violet/crushing-hammer";
+import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
+import { GreatBall } from "../set-ex-firered-leafgreen/great-ball";
+import { Lillie } from "../set-ultra-prism/lillie";
+import { PokeBall } from "../set-jungle/pokeball";
+import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { Potion } from "../set-base-set/potion";
+import { Switch } from "../set-base-set/switch";
+import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";
+import { LurantisGX as LurantisGXSUM15 } from "../set-sun-and-moon/lurantis-gx";
+import { EspeonGX as EspeonGXSUM61 } from "../set-sun-and-moon/espeon-gx";
+import { TaurosGX as TaurosGXSUM100 } from "../set-sun-and-moon/tauros-gx";
+import { Lillie as LillieUPR125 } from "../set-ultra-prism/lillie";
+import { ProfessorKukui as ProfessorKukuiSUM128 } from "../set-sun-and-moon/professor-kukui";
+import { TeamSkullGrunt as TeamSkullGruntSUM133 } from "../set-sun-and-moon/team-skull-grunt";
+import { NestBall as NestBallSVI181 } from "../set-scarlet-and-violet/nest-ball";
+import { Switch as SwitchBS95 } from "../set-base-set/switch";
+import { Eevee as EeveeSUM101 } from "../set-sun-and-moon/eevee";
 import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { ExpShare } from '../set-scarlet-and-violet/exp-share';
@@ -5,7 +23,6 @@ import { Hau } from '../set-celestial-storm/hau';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { RotomDex } from './rotom-dex';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 
 export class DoubleColorlessEnergySUM extends DoubleColorlessEnergy {
   public setNumber = '136';
@@ -53,5 +70,130 @@ export class RotomDexSR extends RotomDex {
 export class UltraBallSUMSR extends UltraBall {
   public setNumber = '161';
   public fullName: string = 'Ultra Ball SUM SR';
+  public set = 'SUM';
+}
+export class CrushingHammerSUM extends CrushingHammer {
+  public setNumber = '115';
+  public fullName: string = 'Crushing Hammer SUM';
+  public set = 'SUM';
+}
+
+export class EnergySwitchPKSUM extends EnergySwitchPK {
+  public setNumber = '117';
+  public fullName: string = 'Energy Switch SUM';
+  public set = 'SUM';
+}
+
+export class GreatBallSUM extends GreatBall {
+  public setNumber = '119';
+  public fullName: string = 'Great Ball SUM';
+  public set = 'SUM';
+}
+
+export class LillieSUM extends Lillie {
+  public setNumber = '122';
+  public fullName: string = 'Lillie SUM';
+  public set = 'SUM';
+}
+
+export class PokeBallSUM extends PokeBall {
+  public setNumber = '125';
+  public fullName: string = 'Poké Ball SUM';
+  public set = 'SUM';
+}
+
+export class PokemonCatcherSUM extends PokemonCatcher {
+  public setNumber = '126';
+  public fullName: string = 'Pokemon Catcher SUM';
+  public set = 'SUM';
+}
+
+export class PotionSUM extends Potion {
+  public setNumber = '127';
+  public fullName: string = 'Potion SUM';
+  public set = 'SUM';
+}
+
+export class SwitchSUM extends Switch {
+  public setNumber = '132';
+  public fullName: string = 'Switch SUM';
+  public set = 'SUM';
+}
+
+export class UltraBallSUM extends UltraBall {
+  public setNumber = '135';
+  public fullName: string = 'Ultra Ball SUM';
+  public set = 'SUM';
+}
+
+export class LurantisGX2SUM extends LurantisGXSUM15 {
+  public setNumber = '138';
+  public fullName: string = 'Lurantis-GX2 SUM';
+  public set = 'SUM';
+}
+
+export class EspeonGX2SUM extends EspeonGXSUM61 {
+  public setNumber = '140';
+  public fullName: string = 'Espeon-GX2 SUM';
+  public set = 'SUM';
+}
+
+export class TaurosGX2SUM extends TaurosGXSUM100 {
+  public setNumber = '144';
+  public fullName: string = 'Tauros-GX2 SUM';
+  public set = 'SUM';
+}
+
+export class Lillie2SUM extends LillieUPR125 {
+  public setNumber = '147';
+  public fullName: string = 'Lillie2 SUM';
+  public set = 'SUM';
+}
+
+export class ProfessorKukui2SUM extends ProfessorKukuiSUM128 {
+  public setNumber = '148';
+  public fullName: string = 'Professor Kukui2 SUM';
+  public set = 'SUM';
+}
+
+export class TeamSkullGrunt2SUM extends TeamSkullGruntSUM133 {
+  public setNumber = '149';
+  public fullName: string = 'Team Skull Grunt2 SUM';
+  public set = 'SUM';
+}
+
+export class LurantisGX3SUM extends LurantisGXSUM15 {
+  public setNumber = '150';
+  public fullName: string = 'Lurantis-GX3 SUM';
+  public set = 'SUM';
+}
+
+export class EspeonGX3SUM extends EspeonGXSUM61 {
+  public setNumber = '152';
+  public fullName: string = 'Espeon-GX3 SUM';
+  public set = 'SUM';
+}
+
+export class TaurosGX3SUM extends TaurosGXSUM100 {
+  public setNumber = '156';
+  public fullName: string = 'Tauros-GX3 SUM';
+  public set = 'SUM';
+}
+
+export class NestBall2SUM extends NestBallSVI181 {
+  public setNumber = '158';
+  public fullName: string = 'Nest Ball2 SUM';
+  public set = 'SUM';
+}
+
+export class Switch2SUM extends SwitchBS95 {
+  public setNumber = '160';
+  public fullName: string = 'Switch2 SUM';
+  public set = 'SUM';
+}
+
+export class Eevee2SUM extends EeveeSUM101 {
+  public setNumber = '101a';
+  public fullName: string = 'Eevee2 SUM';
   public set = 'SUM';
 }

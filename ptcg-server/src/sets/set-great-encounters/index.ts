@@ -1,3 +1,4 @@
+import { LeftoversGE } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Baltoy } from './baltoy';
 import { Buizel } from './buizel';
@@ -32,5 +33,6 @@ export const setGreatEncounters: Card[] = [
   new Weedle(),
 
   // Other prints
-  new RareCandyGE()
+  new RareCandyGE(),
+  new LeftoversGE(),
 ];

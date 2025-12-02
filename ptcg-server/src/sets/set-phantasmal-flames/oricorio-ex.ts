@@ -32,7 +32,7 @@ export class Oricorioex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Oricorio ex';

@@ -142,7 +142,6 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
 
     // If the bonus seems too high, return a capped value
     if (this.cardList.hpBonus > MAX_REASONABLE_HP_BONUS) {
-      console.warn(`Excessive HP bonus detected: ${this.cardList.hpBonus}, capping at ${MAX_REASONABLE_HP_BONUS}`);
       return MAX_REASONABLE_HP_BONUS;
     }
 

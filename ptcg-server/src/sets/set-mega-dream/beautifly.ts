@@ -10,6 +10,7 @@ import { COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '
 
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Silcoon';
   public cardType: CardType = G;
   public hp: number = 130;
   public weakness = [{ type: R }];

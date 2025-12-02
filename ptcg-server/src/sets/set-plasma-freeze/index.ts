@@ -1,3 +1,4 @@
+import { PlasmaEnergyPLF, ThundurusEX2PLF, DeoxysEX2PLF, LatiasEX2PLF, Ghetsis2PLF, EmpoleonPLF, SigilyphPLF, GarbodorPLF, UltraBallPLF } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Absol } from './absol';
 import { Cofagrigus } from './cofagrigus';
@@ -59,4 +60,13 @@ export const setPlasmaFreeze: Card[] = [
   // Other Prints
   new MaxPotionPLF(),
   new ProfessorJuniperPLF(),
+  new PlasmaEnergyPLF(),
+  new ThundurusEX2PLF(),
+  new DeoxysEX2PLF(),
+  new LatiasEX2PLF(),
+  new Ghetsis2PLF(),
+  new EmpoleonPLF(),
+  new SigilyphPLF(),
+  new GarbodorPLF(),
+  new UltraBallPLF(),
 ];

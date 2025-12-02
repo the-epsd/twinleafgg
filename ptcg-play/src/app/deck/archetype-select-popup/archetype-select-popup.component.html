@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>Select Archetype Icons</h2>
+
+<mat-dialog-content>
+  <!-- Search bar -->
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search archetypes</mat-label>
+    <input matInput [(ngModel)]="searchText" (ngModelChange)="onSearch($event)" placeholder="Type to search...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <!-- Primary Archetype Selection -->
+  <div class="archetype-section">
+    <h3 class="section-title">Primary Archetype</h3>
+    <div class="archetype-grid">
+      <!-- Auto option -->
+      <div class="archetype-option" [class.selected]="isSelected1(null)" (click)="selectArchetype1(null)">
+        <div class="archetype-icon-container">
+          <span class="archetype-label">Auto</span>
+        </div>
+      </div>
+
+      <!-- None option -->
+      <div class="archetype-option" [class.selected]="isSelected1(undefined)" (click)="selectArchetype1(undefined)">
+        <div class="archetype-icon-container">
+          <span class="archetype-label">None</span>
+        </div>
+      </div>
+
+      <!-- Archetype options with icons -->
+      <div class="archetype-option" *ngFor="let archetype of filteredArchetypes"
+        [class.selected]="isSelected1(archetype.value)" (click)="selectArchetype1(archetype.value)">
+        <div class="archetype-icon-container">
+          <ptcg-archetype [class]="archetype.value" class="archetype-icon"></ptcg-archetype>
+          <span class="archetype-label">{{ archetype.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secondary Archetype Selection -->
+  <div class="archetype-section">
+    <h3 class="section-title">Secondary Archetype</h3>
+    <div class="archetype-grid">
+      <!-- Auto option -->
+      <div class="archetype-option" [class.selected]="isSelected2(null)" (click)="selectArchetype2(null)">
+        <div class="archetype-icon-container">
+          <span class="archetype-label">Auto</span>
+        </div>
+      </div>
+
+      <!-- None option -->
+      <div class="archetype-option" [class.selected]="isSelected2(undefined)" (click)="selectArchetype2(undefined)">
+        <div class="archetype-icon-container">
+          <span class="archetype-label">None</span>
+        </div>
+      </div>
+
+      <!-- Archetype options with icons -->
+      <div class="archetype-option" *ngFor="let archetype of filteredArchetypes"
+        [class.selected]="isSelected2(archetype.value)" (click)="selectArchetype2(archetype.value)">
+        <div class="archetype-icon-container">
+          <ptcg-archetype [class]="archetype.value" class="archetype-icon"></ptcg-archetype>
+          <span class="archetype-label">{{ archetype.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()">
+    Cancel
+  </button>
+  <button mat-raised-button color="primary" (click)="save()">
+    Save
+  </button>
+</mat-dialog-actions>

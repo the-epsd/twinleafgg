@@ -25,8 +25,8 @@ export class Psyduck extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'SVP';
-  public setNumber = '262';
+  public set: string = 'MEP';
+  public setNumber = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
   public fullName: string = 'Psyduck SVP';

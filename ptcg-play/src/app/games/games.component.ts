@@ -112,12 +112,13 @@ export class GamesComponent implements OnInit, OnDestroy {
           return result !== undefined
             ? this.deckService.getDeck(result.deckId).pipe(map(deckResult => ({
               deck: deckResult.deck.cards,
-              gameSettings: result.gameSettings
+              gameSettings: result.gameSettings,
+              deckId: result.deckId
             })))
             : EMPTY;
         }),
         switchMap(data => {
-          return this.mainSevice.createGame(data.deck, data.gameSettings, invitedId);
+          return this.mainSevice.createGame(data.deck, data.gameSettings, invitedId, data.deckId);
         }),
         finalize(() => { this.loading = false; })
       )
@@ -173,13 +174,10 @@ export class GamesComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Reconnection dialog closed with result:', result);
         switch (result.action) {
           case 'reconnected':
-            console.log('Reconnection successful');
             break;
           case 'return_to_menu':
-            console.log('User chose to return to menu');
             break;
         }
       }

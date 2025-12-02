@@ -67,7 +67,6 @@ export class Alcremie extends PokemonCard {
         });
       });
 
-      console.log('Unique types:', uniqueTypes);
       // Set the damage based on the count of unique Pokémon types
       effect.damage += 40 * uniqueTypes.size;
 

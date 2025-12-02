@@ -1,7 +1,6 @@
-import { Card, CardTag, CardType, ChooseEnergyPrompt, GameMessage, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardTag, CardType, DiscardEnergyPrompt, GameMessage, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike, PlayerType, SlotType, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -28,33 +27,41 @@ export class MegaDiancieex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
-  public set: string = 'MBD';
-  public setNumber: string = '5';
+  public set: string = 'PFL';
+  public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Diancie ex';
   public fullName: string = 'Mega Diancie ex M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);
-
-      state = store.prompt(state, new ChooseEnergyPrompt(
+      state = store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE],
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 2, allowCancel: false }
+      ), transfers => {
 
-        effect.damage += 120 * cards.length;
-        store.reduceEffect(state, discardEnergy);
+        if (transfers === null) {
+          effect.damage = 0;
+          return state;
+        }
+
+        const cardsDiscarded = transfers.length;
+        effect.damage = 120 * cardsDiscarded;
+
+        for (const transfer of transfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = player.discard;
+          source.moveCardTo(transfer.card, target);
+        }
+
+        return state;
       });
     }
 

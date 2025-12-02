@@ -22,9 +22,9 @@ export class Jigglypuff extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'M2';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '64';
+  public setNumber: string = '76';
   public name: string = 'Jigglypuff';
   public fullName: string = 'Jigglypuff M2';
 

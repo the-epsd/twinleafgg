@@ -1,3 +1,6 @@
+import { Jirachi } from "../set-call-of-legends/jirachi";
+import { CheerleadersCheer } from "../set-call-of-legends/cheerleaders-cheer";
+import { PlusPower } from "../set-base-set/pluspower";
 import { Judge } from '../set-scarlet-and-violet/judge';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
@@ -24,4 +27,21 @@ export class SuperScoopUpUL extends SuperScoopUp {
   public set = 'UL';
   public setNumber = '83';
   public text = 'Flip a coin. If heads, return 1 of your Pokémon and all cards attached to it to your hand.';
+}
+export class JirachiUL extends Jirachi {
+  public setNumber = '1';
+  public fullName: string = 'Jirachi UL';
+  public set = 'UL';
+}
+
+export class CheerleadersCheerUL extends CheerleadersCheer {
+  public setNumber = '71';
+  public fullName: string = 'Cheerleader\'s Cheer UL';
+  public set = 'UL';
+}
+
+export class PlusPowerUL extends PlusPower {
+  public setNumber = '80';
+  public fullName: string = 'PlusPower UL';
+  public set = 'UL';
 }

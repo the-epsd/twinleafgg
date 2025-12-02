@@ -1,3 +1,4 @@
+import { PalPadFLF, UltraBallFLF, ToxicroakEx2FLF, KangaskhanEX2FLF, Lysandre2FLF, PokemonFanClub2FLF, MCharizardEX4FLF, MKangaskhanEX2FLF, Blacksmith2FLF } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
@@ -53,4 +54,13 @@ export const setFlashfire: Card[] = [
 
   // Other Prints
   new PokemonFanClubFLF(),
+  new PalPadFLF(),
+  new UltraBallFLF(),
+  new ToxicroakEx2FLF(),
+  new KangaskhanEX2FLF(),
+  new Lysandre2FLF(),
+  new PokemonFanClub2FLF(),
+  new MCharizardEX4FLF(),
+  new MKangaskhanEX2FLF(),
+  new Blacksmith2FLF(),
 ];

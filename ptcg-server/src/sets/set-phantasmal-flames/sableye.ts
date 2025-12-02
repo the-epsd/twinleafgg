@@ -18,9 +18,9 @@ export class Sableye extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-  public set: string = 'MBG';
+  public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '6';
+  public setNumber: string = '59';
   public name: string = 'Sableye';
   public fullName: string = 'Sableye MBG';
 

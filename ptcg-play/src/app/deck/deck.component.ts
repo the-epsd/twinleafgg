@@ -12,6 +12,7 @@ import { DeckItem } from './deck-card/deck-card.interface';
 import { Archetype } from 'ptcg-server';
 import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
 import { Format } from 'ptcg-server';
+import { SettingsService } from '../table/table-sidebar/settings-dialog/settings.service';
 
 @UntilDestroy()
 
@@ -30,6 +31,8 @@ export class DeckComponent implements OnInit {
   public selectedFormat: string = 'all';
   public filteredDecks: DeckListEntry[] = [];
   public showThemeDecksInAllTab = false;
+  public hiddenFormats: Format[] = [];
+  public hoveredDeckId: number | null = null;
 
   // Map Format enum values to their string keys for display
   public formatNameMap: { [key: number]: string } = {
@@ -53,6 +56,7 @@ export class DeckComponent implements OnInit {
     private cardsBaseService: CardsBaseService,
     private translate: TranslateService,
     private router: Router,
+    private settingsService: SettingsService,
   ) { }
 
   public ngOnInit() {
@@ -76,6 +80,13 @@ export class DeckComponent implements OnInit {
     if (savedShowThemeDecks !== null) {
       this.showThemeDecksInAllTab = JSON.parse(savedShowThemeDecks);
     }
+
+    // Subscribe to hidden formats setting
+    this.settingsService.hiddenFormats$.pipe(
+      untilDestroyed(this)
+    ).subscribe(hiddenFormats => {
+      this.hiddenFormats = hiddenFormats;
+    });
   }
 
   // Set default deck for all formats
@@ -323,5 +334,41 @@ export class DeckComponent implements OnInit {
       'bw': this.translate.instant('FORMAT_BW'),
     };
     return formatDisplayNames[format] || format;
+  }
+
+  // Check if a format should be hidden based on settings
+  public isFormatHidden(format: string): boolean {
+    // Map format string to Format enum value
+    const formatEnumMap: { [key: string]: Format } = {
+      'standard': Format.STANDARD,
+      'standard_nightly': Format.STANDARD_NIGHTLY,
+      'glc': Format.GLC,
+      'expanded': Format.EXPANDED,
+      'unlimited': Format.UNLIMITED,
+      'RSPK': Format.RSPK,
+      'retro': Format.RETRO,
+      'theme': Format.THEME,
+      'swsh': Format.SWSH,
+      'sm': Format.SM,
+      'xy': Format.XY,
+      'bw': Format.BW,
+    };
+
+    const formatEnum = formatEnumMap[format];
+    if (formatEnum === undefined) {
+      return false; // Don't hide 'all' or unknown formats
+    }
+
+    return this.hiddenFormats.includes(formatEnum);
+  }
+
+  // Check if any formats in the "More Formats" dropdown are visible
+  public hasVisibleMoreFormats(): boolean {
+    const moreFormats = ['theme', 'swsh', 'sm', 'xy', 'bw'];
+    return moreFormats.some(format => !this.isFormatHidden(format));
+  }
+
+  public navigateToDeckStats(deckId: number) {
+    this.router.navigate(['/deck', deckId, 'stats']);
   }
 }

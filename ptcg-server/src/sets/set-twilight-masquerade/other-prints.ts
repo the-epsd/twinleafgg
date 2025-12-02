@@ -1,3 +1,36 @@
+import { Dipplin as DipplinTWM18 } from "../set-twilight-masquerade/dipplin";
+import { Poltchageist as PoltchageistTWM20 } from "../set-twilight-masquerade/poltchageist";
+import { Infernape as InfernapeTWM33 } from "../set-twilight-masquerade/infernape";
+import { Froslass as FroslassTWM53 } from "../set-twilight-masquerade/froslass";
+import { Phione as PhioneTWM55 } from "../set-twilight-masquerade/phione";
+import { Enamorus as EnamorusTWM93 } from "../set-twilight-masquerade/enamorus";
+import { HisuianGrowlithe as HisuianGrowlitheTWM99 } from "../set-twilight-masquerade/hisuian-growlithe";
+import { Timburr as TimburrTWM103 } from "../set-twilight-masquerade/timburr";
+import { Lairon as LaironTWM121 } from "../set-twilight-masquerade/lairon";
+import { Applin as ApplinTWM126 } from "../set-twilight-masquerade/applin";
+import { Tatsugiri as TatsugiriTWM131 } from "../set-twilight-masquerade/tatsugiri";
+import { Chansey as ChanseyTWM133 } from "../set-twilight-masquerade/chansey";
+import { Sinistchaex as SinistchaexTWM23 } from "../set-twilight-masquerade/sinistcha-ex";
+import { TealMaskOgerponex as TealMaskOgerponexTWM25 } from "../set-twilight-masquerade/teal-mask-ogerpon-ex";
+import { Magcargoex as MagcargoexTWM29 } from "../set-twilight-masquerade/magcargo-ex";
+import { HearthflameMaskOgerponex as HearthflameMaskOgerponexTWM40 } from "../set-twilight-masquerade/hearthflame-mask-ogerpon-ex";
+import { Palafinex as PalafinexTWM61 } from "../set-twilight-masquerade/palafin-ex";
+import { WellspringMaskOgerponex as WellspringMaskOgerponexTWM64 } from "../set-twilight-masquerade/wellspring-mask-ogerpon-ex";
+import { Luxrayex as LuxrayexTWM68 } from "../set-twilight-masquerade/luxray-ex";
+import { IronThornsex as IronThornsexTWM77 } from "../set-twilight-masquerade/iron-thorns-ex";
+import { ScreamTailex as ScreamTailexTWM94 } from "../set-twilight-masquerade/scream-tail-ex";
+import { Greninjaex as GreninjaexTWM106 } from "../set-twilight-masquerade/greninja-ex";
+import { CornerstoneMaskOgerponex as CornerstoneMaskOgerponexTWM112 } from "../set-twilight-masquerade/cornerstone-mask-ogerpon-ex";
+import { Dragapultex as DragapultexTWM130 } from "../set-twilight-masquerade/dragapult-ex";
+import { Blisseyex as BlisseyexTWM134 } from "../set-twilight-masquerade/blissey-ex";
+import { BloodmoonUrsalunaex as BloodmoonUrsalunaexTWM141 } from "../set-twilight-masquerade/bloodmoon-ursaluna-ex";
+import { Caretaker as CaretakerTWM144 } from "../set-twilight-masquerade/caretaker";
+import { Carmine as CarmineTWM145 } from "../set-twilight-masquerade/carmine";
+import { Hassel as HasselTWM151 } from "../set-twilight-masquerade/hassel";
+import { Kieran as KieranTWM154 } from "../set-twilight-masquerade/kieran";
+import { LanasAssistance as LanasAssistanceTWM155 } from "../set-twilight-masquerade/lanas-assistance";
+import { Perrin as PerrinTWM160 } from "../set-twilight-masquerade/perrin";
+import { EnhancedHammer as EnhancedHammerTWM148 } from "../set-twilight-masquerade/enhanced-hammer";
 import { Cook } from '../set-fusion-strike/cook';
 import { LuminousEnergy } from '../set-paldea-evolved/luminous-energy';
 import { BuddyBuddyPoffin } from '../set-temporal-forces/buddy-buddy-poffin';
@@ -299,4 +332,280 @@ export class LuminousEnergyHR extends LuminousEnergy {
   public set = 'TWM';
   public setNumber = '226';
   public fullName = 'Luminous Energy TWM';
+}
+
+export class Dipplin3TWM extends DipplinTWM18 {
+  public setNumber = '170';
+  public fullName: string = 'Dipplin3 TWM';
+  public set = 'TWM';
+}
+
+export class Poltchageist3TWM extends PoltchageistTWM20 {
+  public setNumber = '171';
+  public fullName: string = 'Poltchageist3 TWM';
+  public set = 'TWM';
+}
+
+export class Infernape2TWM extends InfernapeTWM33 {
+  public setNumber = '173';
+  public fullName: string = 'Infernape2 TWM';
+  public set = 'TWM';
+}
+
+export class Froslass2TWM extends FroslassTWM53 {
+  public setNumber = '174';
+  public fullName: string = 'Froslass2 TWM';
+  public set = 'TWM';
+}
+
+export class Phione2TWM extends PhioneTWM55 {
+  public setNumber = '175';
+  public fullName: string = 'Phione2 TWM';
+  public set = 'TWM';
+}
+
+export class Enamorus2TWM extends EnamorusTWM93 {
+  public setNumber = '180';
+  public fullName: string = 'Enamorus2 TWM';
+  public set = 'TWM';
+}
+
+export class HisuianGrowlithe2TWM extends HisuianGrowlitheTWM99 {
+  public setNumber = '181';
+  public fullName: string = 'Hisuian Growlithe2 TWM';
+  public set = 'TWM';
+}
+
+export class Timburr2TWM extends TimburrTWM103 {
+  public setNumber = '183';
+  public fullName: string = 'Timburr2 TWM';
+  public set = 'TWM';
+}
+
+export class Lairon2TWM extends LaironTWM121 {
+  public setNumber = '184';
+  public fullName: string = 'Lairon2 TWM';
+  public set = 'TWM';
+}
+
+export class Applin3TWM extends ApplinTWM126 {
+  public setNumber = '185';
+  public fullName: string = 'Applin3 TWM';
+  public set = 'TWM';
+}
+
+export class Tatsugiri2TWM extends TatsugiriTWM131 {
+  public setNumber = '186';
+  public fullName: string = 'Tatsugiri2 TWM';
+  public set = 'TWM';
+}
+
+export class Chansey2TWM extends ChanseyTWM133 {
+  public setNumber = '187';
+  public fullName: string = 'Chansey2 TWM';
+  public set = 'TWM';
+}
+
+export class Sinistchaex2TWM extends SinistchaexTWM23 {
+  public setNumber = '189';
+  public fullName: string = 'Sinistcha ex2 TWM';
+  public set = 'TWM';
+}
+
+export class TealMaskOgerponex2TWM extends TealMaskOgerponexTWM25 {
+  public setNumber = '190';
+  public fullName: string = 'Teal Mask Ogerpon ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Magcargoex2TWM extends MagcargoexTWM29 {
+  public setNumber = '191';
+  public fullName: string = 'Magcargo ex2 TWM';
+  public set = 'TWM';
+}
+
+export class HearthflameMaskOgerponex2TWM extends HearthflameMaskOgerponexTWM40 {
+  public setNumber = '192';
+  public fullName: string = 'Hearthflame Mask Ogerpon ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Palafinex2TWM extends PalafinexTWM61 {
+  public setNumber = '193';
+  public fullName: string = 'Palafin ex2 TWM';
+  public set = 'TWM';
+}
+
+export class WellspringMaskOgerponex2TWM extends WellspringMaskOgerponexTWM64 {
+  public setNumber = '194';
+  public fullName: string = 'Wellspring Mask Ogerpon ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Luxrayex2TWM extends LuxrayexTWM68 {
+  public setNumber = '195';
+  public fullName: string = 'Luxray ex2 TWM';
+  public set = 'TWM';
+}
+
+export class IronThornsex2TWM extends IronThornsexTWM77 {
+  public setNumber = '196';
+  public fullName: string = 'Iron Thorns ex2 TWM';
+  public set = 'TWM';
+}
+
+export class ScreamTailex2TWM extends ScreamTailexTWM94 {
+  public setNumber = '197';
+  public fullName: string = 'Scream Tail ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Greninjaex2TWM extends GreninjaexTWM106 {
+  public setNumber = '198';
+  public fullName: string = 'Greninja ex2 TWM';
+  public set = 'TWM';
+}
+
+export class CornerstoneMaskOgerponex2TWM extends CornerstoneMaskOgerponexTWM112 {
+  public setNumber = '199';
+  public fullName: string = 'Cornerstone Mask Ogerpon ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Dragapultex2TWM extends DragapultexTWM130 {
+  public setNumber = '200';
+  public fullName: string = 'Dragapult ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Blisseyex2TWM extends BlisseyexTWM134 {
+  public setNumber = '201';
+  public fullName: string = 'Blissey ex2 TWM';
+  public set = 'TWM';
+}
+
+export class BloodmoonUrsalunaex2TWM extends BloodmoonUrsalunaexTWM141 {
+  public setNumber = '202';
+  public fullName: string = 'Bloodmoon Ursaluna ex2 TWM';
+  public set = 'TWM';
+}
+
+export class Caretaker2TWM extends CaretakerTWM144 {
+  public setNumber = '203';
+  public fullName: string = 'Caretaker2 TWM';
+  public set = 'TWM';
+}
+
+export class Carmine2TWM extends CarmineTWM145 {
+  public setNumber = '204';
+  public fullName: string = 'Carmine2 TWM';
+  public set = 'TWM';
+}
+
+export class Hassel2TWM extends HasselTWM151 {
+  public setNumber = '205';
+  public fullName: string = 'Hassel2 TWM';
+  public set = 'TWM';
+}
+
+export class Kieran2TWM extends KieranTWM154 {
+  public setNumber = '206';
+  public fullName: string = 'Kieran2 TWM';
+  public set = 'TWM';
+}
+
+export class LanasAssistance2TWM extends LanasAssistanceTWM155 {
+  public setNumber = '207';
+  public fullName: string = 'Lana\'s Aid2 TWM';
+  public set = 'TWM';
+}
+
+export class Perrin2TWM extends PerrinTWM160 {
+  public setNumber = '209';
+  public fullName: string = 'Perrin2 TWM';
+  public set = 'TWM';
+}
+
+export class Sinistchaex3TWM extends SinistchaexTWM23 {
+  public setNumber = '210';
+  public fullName: string = 'Sinistcha ex3 TWM';
+  public set = 'TWM';
+}
+
+export class TealMaskOgerponex3TWM extends TealMaskOgerponexTWM25 {
+  public setNumber = '211';
+  public fullName: string = 'Teal Mask Ogerpon ex3 TWM';
+  public set = 'TWM';
+}
+
+export class HearthflameMaskOgerponex3TWM extends HearthflameMaskOgerponexTWM40 {
+  public setNumber = '212';
+  public fullName: string = 'Hearthflame Mask Ogerpon ex3 TWM';
+  public set = 'TWM';
+}
+
+export class WellspringMaskOgerponex3TWM extends WellspringMaskOgerponexTWM64 {
+  public setNumber = '213';
+  public fullName: string = 'Wellspring Mask Ogerpon ex3 TWM';
+  public set = 'TWM';
+}
+
+export class Greninjaex3TWM extends GreninjaexTWM106 {
+  public setNumber = '214';
+  public fullName: string = 'Greninja ex3 TWM';
+  public set = 'TWM';
+}
+
+export class CornerstoneMaskOgerponex3TWM extends CornerstoneMaskOgerponexTWM112 {
+  public setNumber = '215';
+  public fullName: string = 'Cornerstone Mask Ogerpon ex3 TWM';
+  public set = 'TWM';
+}
+
+export class BloodmoonUrsalunaex3TWM extends BloodmoonUrsalunaexTWM141 {
+  public setNumber = '216';
+  public fullName: string = 'Bloodmoon Ursaluna ex3 TWM';
+  public set = 'TWM';
+}
+
+export class Carmine3TWM extends CarmineTWM145 {
+  public setNumber = '217';
+  public fullName: string = 'Carmine3 TWM';
+  public set = 'TWM';
+}
+
+export class Kieran3TWM extends KieranTWM154 {
+  public setNumber = '218';
+  public fullName: string = 'Kieran3 TWM';
+  public set = 'TWM';
+}
+
+export class LanasAssistance3TWM extends LanasAssistanceTWM155 {
+  public setNumber = '219';
+  public fullName: string = 'Lana\'s Aid3 TWM';
+  public set = 'TWM';
+}
+
+export class Perrin3TWM extends PerrinTWM160 {
+  public setNumber = '220';
+  public fullName: string = 'Perrin3 TWM';
+  public set = 'TWM';
+}
+
+export class TealMaskOgerponex4TWM extends TealMaskOgerponexTWM25 {
+  public setNumber = '221';
+  public fullName: string = 'Teal Mask Ogerpon ex4 TWM';
+  public set = 'TWM';
+}
+
+export class BloodmoonUrsalunaex4TWM extends BloodmoonUrsalunaexTWM141 {
+  public setNumber = '222';
+  public fullName: string = 'Bloodmoon Ursaluna ex4 TWM';
+  public set = 'TWM';
+}
+
+export class EnhancedHammer2TWM extends EnhancedHammerTWM148 {
+  public setNumber = '224';
+  public fullName: string = 'Enhanced Hammer2 TWM';
+  public set = 'TWM';
 }

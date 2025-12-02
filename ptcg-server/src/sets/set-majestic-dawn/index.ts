@@ -1,3 +1,4 @@
+import { DuskBallMD, PokeBallMD, SuperScoopUpMD, EnergySearchMD, DarknessEnergySpecialMD, MetalEnergyN1MD } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bronzong } from './bronzong';
 import { Bronzor } from './bronzor';
@@ -34,5 +35,11 @@ export const setMajesticDawn: Card[] = [
   new UnownQ(),
 
   // Other prints
-  new WarpPointMD()
+  new WarpPointMD(),
+  new DuskBallMD(),
+  new PokeBallMD(),
+  new SuperScoopUpMD(),
+  new EnergySearchMD(),
+  new DarknessEnergySpecialMD(),
+  new MetalEnergyN1MD(),
 ];

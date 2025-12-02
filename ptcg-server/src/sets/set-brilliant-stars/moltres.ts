@@ -48,7 +48,6 @@ export class Moltres extends PokemonCard {
       if (damage > 0) {
         effect.damage += 70;
       }
-      console.log(effect.damage);
       return state;
     }
     return state;

@@ -56,10 +56,8 @@ function* useMetronome(next: Function, store: StoreLike, state: State,
 
     return state; // Successfully executed attack, exit the function
   } catch (error) {
-    console.log('Attack failed:', error);
     retryCount++;
     if (retryCount >= maxRetries) {
-      console.log('Max retries reached. Exiting loop.');
       return state;
     }
   }
