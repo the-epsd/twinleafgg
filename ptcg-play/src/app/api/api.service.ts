@@ -43,8 +43,20 @@ export class ApiService {
     return this.http.get<InfoResponse>(url).pipe(share());
   }
 
-  public get<T>(uri: string): Observable<T> {
-    const url = this.buildUrl(uri);
+  public get<T>(uri: string, params?: { [key: string]: any }): Observable<T> {
+    let url = this.buildUrl(uri);
+
+    // Build query string from params if provided
+    if (params) {
+      const queryString = Object.keys(params)
+        .filter(key => params[key] !== undefined && params[key] !== null)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+      if (queryString) {
+        url += (url.includes('?') ? '&' : '?') + queryString;
+      }
+    }
+
     const options = this.buildHeaderOptions();
 
     return this.http.get<T>(url, options).pipe(share());
