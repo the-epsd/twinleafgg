@@ -38,8 +38,10 @@ export class MegaMawileEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.damage = 0;
-      DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 80);
+      const player = effect.player;
+      const prizesTaken = 6 - player.getPrizeLeft();
+      const damagePerPrize = 80;
+      effect.damage = (prizesTaken * damagePerPrize);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

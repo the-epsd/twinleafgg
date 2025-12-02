@@ -14,7 +14,7 @@ export class Frillish extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Sea Shadows',
+    name: 'Oceanic Gloom',
     cost: [P],
     damage: 20,
     text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
