@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game';
-import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaMawileEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
