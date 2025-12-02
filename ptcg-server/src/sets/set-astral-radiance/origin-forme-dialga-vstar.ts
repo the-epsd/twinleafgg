@@ -67,12 +67,10 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
       effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER, this);
       effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER_2, this);
       effect.player.usedTurnSkip = false;
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER, this)) {
       effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER_2, this);
-      console.log('marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

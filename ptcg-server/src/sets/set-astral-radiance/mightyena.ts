@@ -60,7 +60,6 @@ export class Mightyena extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        console.log(effect.cost);
         return state;
       }
 
