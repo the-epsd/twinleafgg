@@ -4,7 +4,6 @@
       <button mat-icon-button (click)="goBack()" [attr.aria-label]="'Back'">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <h2>Deck Statistics</h2>
       <span class="ptcg-u-spacer"></span>
     </mat-toolbar-row>
 
@@ -45,7 +44,7 @@
           <div class="matchup-card" *ngFor="let matchup of stats.matchups"
             [class]="getMatchupWinRateClass(matchup.winRate)">
             <div class="matchup-icon">
-              <ptcg-archetype [class]="convertArchetypeStringToEnum(matchup.archetype)"></ptcg-archetype>
+              <ptcg-archetype [class]="convertArchetypeStringToEnumArray(matchup.archetype)"></ptcg-archetype>
             </div>
             <div class="matchup-name">{{ matchup.archetype }}</div>
             <div class="matchup-record">

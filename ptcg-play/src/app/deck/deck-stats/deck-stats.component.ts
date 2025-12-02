@@ -169,13 +169,8 @@ export class DeckStatsComponent implements OnInit {
       return Archetype.UNOWN;
     }
 
-    // Handle combined archetype strings like "CHARIZARD/PIDGEOT"
-    // Extract the first archetype (before "/") for icon display
-    const primaryArchetype = archetypeString.split('/')[0].trim();
-
-    // Try to find the enum key that matches the string
-    // Match strings like "CHARIZARD", "PIKACHU" to enum keys like "CHARIZARD", "PIKACHU"
-    const upperString = primaryArchetype.toUpperCase().replace(/\s+/g, '_');
+    // Normalize the string (e.g. "CHARIZARD", "CHARIZARD/PIDGEOT")
+    const upperString = archetypeString.toUpperCase().replace(/\s+/g, '_');
     const enumKey = Object.keys(Archetype).find(key => key === upperString);
 
     if (enumKey) {
@@ -193,6 +188,28 @@ export class DeckStatsComponent implements OnInit {
 
     // Fallback to UNOWN if no match found
     return Archetype.UNOWN;
+  }
+
+  public convertArchetypeStringToEnumArray(archetypeString: string): Archetype[] {
+    if (!archetypeString || archetypeString === 'UNKNOWN') {
+      return [Archetype.UNOWN];
+    }
+
+    const parts = archetypeString
+      .split('/')
+      .map(part => part.trim())
+      .filter(part => part.length > 0);
+
+    const result: Archetype[] = [];
+
+    for (const part of parts) {
+      const single = this.convertArchetypeStringToEnum(part);
+      if (single !== null) {
+        result.push(single);
+      }
+    }
+
+    return result.length > 0 ? result : [Archetype.UNOWN];
   }
 
   public getDeckArchetypes(): Archetype[] {
