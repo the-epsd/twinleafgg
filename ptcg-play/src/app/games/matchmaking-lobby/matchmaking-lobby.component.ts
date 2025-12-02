@@ -108,7 +108,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
       .subscribe(connected => {
         if (!connected && this.inQueue) {
           // Handle socket disconnection while in queue
-          console.warn('Socket disconnected while in matchmaking queue');
           this.connectionError = true;
           this.resetQueueState();
           this.showErrorMessage('Connection lost. Please try again.');
@@ -198,13 +197,9 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Listen for game creation
     this.socketService.on('matchmaking:gameCreated', (data: { gameId: number }) => {
-      console.log(`[Matchmaking] Received gameCreated event for game ${data.gameId}`);
       if (this.inQueue) {
-        console.log(`[Matchmaking] Navigating to game ${data.gameId}`);
         this.resetQueueState();
         this.router.navigate(['/table', data.gameId]);
-      } else {
-        console.log(`[Matchmaking] Received gameCreated but not in queue`);
       }
     });
   }
@@ -291,7 +286,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         this.formatDecks[format] = decks;
       },
       error => {
-        console.error(`Failed to load decks for format ${format}:`, error);
         this.formatDecks[format] = [];
       }
     );
@@ -400,7 +394,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
           this.loadAdjacentFormatDecks();
         },
         error => {
-          console.error('Failed to load decks:', error);
           this.loading = false;
           this.showErrorMessage('Failed to load decks');
         }
@@ -455,7 +448,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
           this.loading = false;
           this.inQueue = false;
           this.joinLeaveDebounce = false;
-          console.error('Failed to join queue:', error);
           this.showErrorMessage('Failed to join matchmaking queue');
         }
       );
@@ -506,8 +498,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   private leaveQueueSilently(): void {
     // Used when component is destroyed, doesn't update UI
     this.socketService.leaveMatchmakingQueue().subscribe(
-      () => console.log('Successfully left queue on component destroy'),
-      (error) => console.error('Error leaving queue on component destroy:', error)
+      () => { },
+      (error) => { }
     );
   }
 

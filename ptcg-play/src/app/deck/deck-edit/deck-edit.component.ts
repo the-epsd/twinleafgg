@@ -58,11 +58,6 @@ export class DeckEditComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(resp => {
         this.unlockedArtworks = resp.artworks || [];
-        try {
-          // Debug: Log unlocked artworks once on load
-          // eslint-disable-next-line no-console
-          console.log('[DeckEdit] Unlocked artworks:', this.unlockedArtworks);
-        } catch { }
       }, () => { this.unlockedArtworks = []; });
 
     this.route.paramMap.pipe(

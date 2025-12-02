@@ -136,21 +136,17 @@ export class UiShowcaseComponent implements OnInit {
 
   // Button interactions
   onButtonClick(buttonType: string): void {
-    console.log(`${buttonType} button clicked`);
     this.snackBar.open(`${buttonType} button clicked!`, 'Close', { duration: 2000 });
   }
 
   onSearch(searchTerm: string): void {
-    console.log('Search term:', searchTerm);
     this.snackBar.open(`Searching for: ${searchTerm}`, 'Close', { duration: 2000 });
   }
 
   onFormChange(formData: any): void {
-    console.log('Form changed:', formData);
   }
 
   onFormSubmit(formData: any): void {
-    console.log('Form submitted:', formData);
     this.snackBar.open('Form submitted successfully!', 'Close', { duration: 2000 });
   }
 
@@ -168,7 +164,6 @@ export class UiShowcaseComponent implements OnInit {
   // Form interactions
   onSubmit(): void {
     if (this.exampleForm.valid) {
-      console.log('Form submitted:', this.exampleForm.value);
       this.snackBar.open('Form submitted successfully!', 'Close', { duration: 2000 });
     } else {
       this.snackBar.open('Please fix form errors', 'Close', { duration: 2000 });
@@ -245,13 +240,11 @@ export class UiShowcaseComponent implements OnInit {
 
   // Card interactions
   onCardClick(card: any): void {
-    console.log('Card clicked:', card);
     this.snackBar.open(`Clicked on ${card.name}`, 'Close', { duration: 2000 });
   }
 
   // User interactions
   onUserClick(user: any): void {
-    console.log('User clicked:', user);
     this.snackBar.open(`Clicked on ${user.name}`, 'Close', { duration: 2000 });
   }
 }

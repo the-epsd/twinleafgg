@@ -82,7 +82,6 @@ export class OnlinePlayersComponent implements OnInit, OnDestroy {
           });
       }),
       catchError(error => {
-        console.error('Failed to load friends list:', error);
         return of([]); // Return empty array on error
       }),
       startWith([]) // Start with empty array while loading

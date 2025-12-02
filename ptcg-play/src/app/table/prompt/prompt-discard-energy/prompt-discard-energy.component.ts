@@ -127,7 +127,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     const opponent = state.players.find(p => p.id !== this.prompt.playerId);
 
     if (!player || !opponent) {
-      console.error('Failed to find players:', { promptPlayerId: this.prompt.playerId, playerIds: state.players.map(p => p.id) });
       return;
     }
 
@@ -280,10 +279,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     // Store the card reference and its index in the Pokemon's card list
     const originalIndex = this.selectedPokemon.cardList.cards.indexOf(energy);
     if (originalIndex === -1) {
-      console.error('Energy card not found in Pokemon card list!', {
-        energyName: energy.name,
-        pokemonName: this.selectedPokemon.cardList.cards[0]?.name || 'Unknown'
-      });
       return;
     }
 
@@ -301,7 +296,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
     } else {
       // Check max selection limit before adding
       if (this.maxSelection !== undefined && this.selectedEnergies.length >= this.maxSelection) {
-        console.warn(`Cannot select more energy cards: Maximum selection limit (${this.maxSelection}) reached`);
         this.statusMessage = `Maximum ${this.maxSelection} energy card(s) allowed.`;
         setTimeout(() => this.statusMessage = '', 3000);
         return;
@@ -347,8 +341,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       }
 
       this.validateSelection();
-    } else {
-      console.warn('Energy selection not found for removal');
     }
   }
 
@@ -417,16 +409,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       card: e.card
     }));
 
-    // Log additional details for debugging
-    if (formattedSelections.length === 0) {
-      console.log('Empty selection being validated with prompt settings:', {
-        promptMin: this.prompt.options.min,
-        promptMax: this.prompt.options.max,
-        componentMin: this.minSelection,
-        componentMax: this.maxSelection,
-        allowCancel: this.prompt.options.allowCancel
-      });
-    }
 
     // Check if the prompt validates the selection
     try {
@@ -440,7 +422,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
         setTimeout(() => this.statusMessage = '', 3000);
       }
     } catch (error) {
-      console.error('Validation error:', error);
       this.isInvalid = true;
     }
 
@@ -498,7 +479,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Double-check min constraints
     if (this.selectedEnergies.length < this.minSelection) {
-      console.warn(`Cannot confirm: Minimum selection not met (${this.selectedEnergies.length}/${this.minSelection})`);
       this.statusMessage = `Please select at least ${this.minSelection} energy card(s).`;
       setTimeout(() => this.statusMessage = '', 3000);
       return;
@@ -506,7 +486,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     // Double-check max constraints
     if (this.maxSelection !== undefined && this.selectedEnergies.length > this.maxSelection) {
-      console.warn(`Cannot confirm: Maximum selection exceeded (${this.selectedEnergies.length}/${this.maxSelection})`);
       this.statusMessage = `Please select at most ${this.maxSelection} energy card(s).`;
       setTimeout(() => this.statusMessage = '', 3000);
       return;
@@ -531,7 +510,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       for (const selection of this.selectedEnergies) {
         const target = selection.pokemon.target;
         if (this.isTargetBlocked(target)) {
-          console.error(`Cannot confirm: Attempting to discard from blocked Pokémon at ${target.player}-${target.slot}-${target.index}`);
           this.isConfirming = false;
           this.statusMessage = 'Cannot discard energy from this Pokémon. Try another.';
           setTimeout(() => this.statusMessage = '', 3000);
@@ -541,7 +519,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
         // Check if energy card is blocked
         const blockedIndices = this.getBlockedIndices(target);
         if (blockedIndices.includes(selection.originalIndex)) {
-          console.error(`Cannot confirm: Attempting to discard blocked energy at index ${selection.originalIndex}`);
           this.isConfirming = false;
           this.statusMessage = 'Cannot discard this specific energy card. Try another.';
           setTimeout(() => this.statusMessage = '', 3000);
@@ -549,18 +526,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
         }
       }
 
-      // Log detailed information for debugging
-      console.log('Confirm attempt details:', {
-        attempt: this.confirmAttempts,
-        energyCount: this.selectedEnergies.length,
-        promptId: this.prompt.id,
-        gameId: this.gameState.gameId,
-        pokemonSources: this.selectedEnergies.map(s =>
-          `${s.pokemon.playerType}-${s.pokemon.slot}-${s.pokemon.index}`
-        ),
-        blockedFrom: this.blockedFrom.map(b => `${b.player}-${b.slot}-${b.index}`),
-        blockedMap: this.blockedMap.map(b => `${b.source.player}-${b.source.slot}-${b.source.index}: [${b.blocked.join(', ')}]`)
-      });
 
       // Create the exact structure that the server expects
       // The server expects array of {from: CardTarget, index: number}
@@ -583,9 +548,6 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
       // Track if we're sending the same selection repeatedly
       const isDuplicateSelection = selectionJson === this.lastSelectionSent;
-      if (isDuplicateSelection) {
-        console.warn('Warning: Sending the same selection as the previous attempt');
-      }
       this.lastSelectionSent = selectionJson;
 
       try {
@@ -615,13 +577,11 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
           }
         }, 5000); // Increased timeout to give server more time
       } catch (serverError) {
-        console.error(`Server error during confirm (attempt ${this.confirmAttempts}):`, serverError);
         this.isConfirming = false;
         this.statusMessage = 'Error confirming selection. Try different energy cards.';
         setTimeout(() => this.statusMessage = '', 3000);
       }
     } catch (error) {
-      console.error(`Error in confirm method (attempt ${this.confirmAttempts}):`, error);
       this.isConfirming = false;
       this.statusMessage = 'An error occurred. Please try again.';
       setTimeout(() => this.statusMessage = '', 3000);

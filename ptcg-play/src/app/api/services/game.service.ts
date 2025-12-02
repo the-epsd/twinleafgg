@@ -329,7 +329,6 @@ export class GameService {
 
       return playerStats;
     } catch (error) {
-      console.warn('Error extracting player game statistics:', error);
       return undefined;
     }
   }

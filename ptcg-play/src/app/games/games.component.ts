@@ -174,13 +174,10 @@ export class GamesComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Reconnection dialog closed with result:', result);
         switch (result.action) {
           case 'reconnected':
-            console.log('Reconnection successful');
             break;
           case 'return_to_menu':
-            console.log('User chose to return to menu');
             break;
         }
       }

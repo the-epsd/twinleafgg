@@ -108,7 +108,6 @@ export class SocketService {
       retry(1),
       catchError((error) => {
         const apiError = ApiError.fromError(error);
-        console.error('Failed to join matchmaking queue:', error);
         return throwError(apiError);
       })
     );
@@ -119,7 +118,6 @@ export class SocketService {
       timeout(5000),
       catchError((error) => {
         const apiError = ApiError.fromError(error);
-        console.error('Failed to leave matchmaking queue:', error);
         return throwError(apiError);
       })
     );
@@ -153,7 +151,6 @@ export class SocketService {
     if (this.socket && this.socket.connected) {
       // Disconnect the socket but keep the service enabled
       this.socket.disconnect();
-      console.log('[SocketService] Force disconnect triggered for testing');
     }
   }
 
@@ -257,7 +254,6 @@ export class SocketService {
   }
 
   private handleConnect(): void {
-    console.log('[SocketService] Connected to server');
     this.connectionSubject.next(true);
     this.wasConnectedBefore = true;
 
@@ -267,34 +263,28 @@ export class SocketService {
   }
 
   private handleReconnect(): void {
-    console.log('[SocketService] Reconnected to server');
     this.connectionSubject.next(true);
     this.handleSuccessfulReconnection();
   }
 
   private handleReconnectAttempt(): void {
-    console.log('[SocketService] Attempting to reconnect...');
     this.connectionSubject.next(false);
   }
 
   private handleReconnectError(error: any): void {
-    console.warn('[SocketService] Reconnection error:', error);
     this.connectionSubject.next(false);
   }
 
   private handleReconnectFailed(): void {
-    console.error('[SocketService] All reconnection attempts failed');
     this.connectionSubject.next(false);
     this.handleReconnectionFailure('All automatic reconnection attempts failed');
   }
 
   private handleConnectError(error: any): void {
-    console.error('[SocketService] Connection error:', error);
     this.connectionSubject.next(false);
   }
 
   private handleDisconnect(reason: string): void {
-    console.log('[SocketService] Disconnected from server. Reason:', reason);
     this.connectionSubject.next(false);
 
     if (this.wasConnectedBefore && this.enabled) {
@@ -344,7 +334,6 @@ export class SocketService {
       nextRetryIn: delay
     });
 
-    console.log(`[SocketService] Reconnection attempt ${this.reconnectionStatus.currentAttempt}/${this.reconnectionStatus.maxAttempts} in ${delay}ms`);
 
     // Update countdown
     this.startCountdown(delay);
@@ -384,7 +373,6 @@ export class SocketService {
   }
 
   private handleSuccessfulReconnection(): void {
-    console.log('[SocketService] Reconnection successful');
     this.stopAutoReconnection();
     this.resetReconnectionStatus();
 
@@ -402,7 +390,6 @@ export class SocketService {
   }
 
   private handleReconnectionFailure(error: string): void {
-    console.error('[SocketService] Reconnection failed:', error);
     this.stopAutoReconnection();
 
     this.reconnectionStatus.error = error;
@@ -429,30 +416,24 @@ export class SocketService {
       return;
     }
 
-    console.log(`[SocketService] Attempting to rejoin game ${this.lastKnownGameId} (attempt ${attempt}/3)`);
 
     this.emit('game:rejoin', { gameId: this.lastKnownGameId }).pipe(
       timeout(15000), // 15 second timeout for rejoin operations
       catchError((error) => {
-        console.error('Failed to rejoin game:', error);
         return throwError(error);
       })
     ).subscribe(
       (response) => {
-        console.log('[SocketService] Successfully rejoined game');
       },
       (error) => {
-        console.error(`[SocketService] Failed to rejoin game (attempt ${attempt}/3):`, error);
 
         // Retry up to 3 times with increasing delays
         if (attempt < 3) {
           const retryDelay = attempt * 2000; // 2s, 4s delays
-          console.log(`[SocketService] Retrying game rejoin in ${retryDelay}ms`);
           setTimeout(() => {
             this.attemptGameRejoin(attempt + 1);
           }, retryDelay);
         } else {
-          console.error('[SocketService] All rejoin attempts failed, clearing game ID');
           this.clearGameId();
         }
       }

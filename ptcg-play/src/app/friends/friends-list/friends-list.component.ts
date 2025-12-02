@@ -22,18 +22,10 @@ export class FriendsListComponent {
   getFriendUser(friend: FriendInfo): UserInfo {
     const currentUserId = this.getCurrentUserId();
 
-    // Add debugging
-    console.log('Friend object:', friend);
-    console.log('Current user ID:', currentUserId);
-
     // Add safety checks
     if (!friend || !friend.user || !friend.friend) {
-      console.error('Invalid friend object:', friend);
       return null;
     }
-
-    console.log('Friend user:', friend.user);
-    console.log('Friend friend:', friend.friend);
 
     return friend.user.userId === currentUserId ? friend.friend : friend.user;
   }
@@ -48,7 +40,6 @@ export class FriendsListComponent {
       if (friendUser && friendUser.userId) {
         this.removeFriend.emit(friendUser.userId);
       } else {
-        console.error('Could not determine friend user ID for removal');
         alert('Error: Could not remove friend. Please try again.');
       }
     }
