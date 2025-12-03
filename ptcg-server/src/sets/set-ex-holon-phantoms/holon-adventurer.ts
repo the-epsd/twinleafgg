@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard } from '../../game';
+import { ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard } from '../../game';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -17,8 +17,9 @@ export class HolonAdventurer extends TrainerCard {
   public name: string = 'Holon Adventurer';
   public fullName: string = 'Holon Adventurer HP';
 
-  public text: string =
-    'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nDraw 3 cards. If you discarded a Pokémon that has δ on its card, draw 4 cards instead.';
+  public text: string = `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
+  
+  Draw 3 cards. If you discarded a Pokémon that has δ on its card, draw 4 cards instead.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -29,49 +30,38 @@ export class HolonAdventurer extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      let cards: Card[] = [];
-      cards = player.hand.cards.filter(c => c !== effect.trainerCard);
-
-      const hasCardInHand = player.hand.cards.some(c => {
-        return c instanceof Card;
-      });
-      if (!hasCardInHand) {
+      if (player.hand.cards.filter(c => c !== effect.trainerCard).length < 1 || player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      if (cards.length == 1) {
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: player.hand.cards, sourceCard: this });
-      }
+      state = store.prompt(state, new ChooseCardsPrompt(
+        effect.player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        {},
+        { allowCancel: false, min: 1, max: 1 }
+      ), cards => {
+        cards = cards || [];
+        if (cards.length === 0) {
+          CLEAN_UP_SUPPORTER(effect, player);
+          return;
+        }
+        let cardsToDraw = 3;
 
-      if (cards.length > 1) {
-        state = store.prompt(state, new ChooseCardsPrompt(
-          effect.player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          {},
-          { allowCancel: false, min: 1, max: 1 }
-        ), cards => {
-          cards = cards || [];
-          if (cards.length === 0) {
-            return;
-          }
-          let cardsToDraw = 3;
+        if (cards[0] instanceof PokemonCard && cards[0].tags.includes(CardTag.DELTA_SPECIES)) {
+          cardsToDraw = 4;
+        }
 
-          if (cards[0] instanceof PokemonCard && cards[0].tags.includes(CardTag.DELTA_SPECIES)) {
-            cardsToDraw = 4;
-          }
-
-          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-          });
-
-          DRAW_CARDS(player, cardsToDraw);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+        cards.forEach((card, index) => {
+          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
         });
-      }
+
+        DRAW_CARDS(player, cardsToDraw);
+      });
 
       CLEAN_UP_SUPPORTER(effect, player);
       return state;
