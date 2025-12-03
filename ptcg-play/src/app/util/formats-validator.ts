@@ -30,7 +30,8 @@ export class FormatValidator {
         f !== Format.GLC &&
         f !== Format.EXPANDED &&
         f !== Format.STANDARD &&
-        f !== Format.UNLIMITED
+        f !== Format.UNLIMITED &&
+        f !== Format.ETERNAL
       );
     }
 
@@ -59,7 +60,8 @@ export class FormatValidator {
           f !== Format.EXPANDED &&
           f !== Format.STANDARD &&
           f !== Format.STANDARD_NIGHTLY &&
-          f !== Format.UNLIMITED
+          f !== Format.UNLIMITED &&
+          f !== Format.ETERNAL
         );
       }
     }
@@ -102,6 +104,7 @@ export class FormatValidator {
   static getValidFormats(card: Card): Format[] {
     const formats = [Format.UNLIMITED];
     [
+      Format.ETERNAL,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
       Format.EXPANDED,
@@ -128,6 +131,8 @@ export class FormatValidator {
       switch (format) {
         case Format.UNLIMITED:
           return true;
+        case Format.ETERNAL:
+          return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
         case Format.STANDARD: {
           if (card.regulationMark === 'J') {
             return false;
@@ -180,6 +185,8 @@ export class FormatValidator {
     switch (format) {
       case Format.UNLIMITED:
         return true;
+      case Format.ETERNAL:
+        return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
         var setDate = SetReleaseDates[card.set];
         if (card.regulationMark === 'J') {
@@ -419,6 +426,9 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
+  [Format.ETERNAL]: [
+    'Arceus VSTAR BRS 123',
+  ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
   [Format.BW]: [],
@@ -564,5 +574,5 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'M1L': new Date('2025-09-26'),
   'M1S': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
-  'M2a': new Date('2025-11-28'),
+  'M2a': new Date('2026-01-31'),
 };

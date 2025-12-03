@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, HostListener, ChangeDetectorRef } from '@angular/core';
 import { DndService, DropTarget } from '@ng-dnd/core';
 import { DraggedItem, SortableSpec } from '@ng-dnd/sortable';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
 import { map, debounceTime } from 'rxjs/operators';
@@ -12,9 +12,10 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage } from 'ptcg-server';
+import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage, Format } from 'ptcg-server';
 import html2canvas from 'html2canvas';
 import { DeckService } from 'src/app/api/services/deck.service';
+import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -59,10 +60,12 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
   tempList: DeckItem[] = [];
   public deckFormats: number[] = [];
   public deckIsValid: boolean = false;
+  public hiddenFormats: Format[] = [];
 
   @ViewChild('evolutionArrows') evolutionArrows: ElementRef<SVGElement>;
   private updateArrowsSubject = new Subject<void>();
   private arrowsUpdateSubscription: any;
+  private hiddenFormatsSubscription: Subscription;
 
   constructor(
     private alertService: AlertService,
@@ -71,7 +74,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     private dnd: DndService,
     private translate: TranslateService,
     private deckService: DeckService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private settingsService: SettingsService
   ) {
     [this.deckTarget, this.deckHighlight$] = this.initDropTarget(DeckEditPane.DECK);
     [this.libraryTarget, this.libraryHighlight$] = this.initDropTarget(DeckEditPane.LIBRARY);
@@ -724,6 +728,14 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     ).subscribe(() => {
       this.updateArrows();
     });
+
+    // Subscribe to hidden formats from settings
+    this.hiddenFormatsSubscription = this.settingsService.hiddenFormats$.subscribe(
+      formats => {
+        this.hiddenFormats = formats;
+        this.cdr.markForCheck();
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -756,6 +768,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     this.deckTarget.unsubscribe();
     if (this.arrowsUpdateSubscription) {
       this.arrowsUpdateSubscription.unsubscribe();
+    }
+    if (this.hiddenFormatsSubscription) {
+      this.hiddenFormatsSubscription.unsubscribe();
     }
   }
 

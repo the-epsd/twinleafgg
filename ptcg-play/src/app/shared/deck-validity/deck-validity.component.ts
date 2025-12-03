@@ -25,11 +25,14 @@ export class DeckValidityComponent {
     { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    { value: Format.ETERNAL, label: 'LABEL_ETERNAL' },
   ];
 
   @Input() validOnly = false;
 
   @Input() validFormats: number[] | null = null;
+
+  @Input() hiddenFormats: Format[] = [];
 
   @Input()
   set deck(cards: DeckItem[]) {
@@ -53,4 +56,8 @@ export class DeckValidityComponent {
       return FormatValidator.getValidFormatsForCardList(cardList);
     })
   );
+
+  get visibleFormats() {
+    return this.formats.filter(format => !this.hiddenFormats.includes(format.value));
+  }
 }

@@ -44,6 +44,7 @@ export class TableComponent implements OnInit, OnDestroy {
     [Format.STANDARD_NIGHTLY]: 'LABEL_STANDARD_NIGHTLY',
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
+    [Format.ETERNAL]: 'LABEL_ETERNAL',
     [Format.EXPANDED]: 'LABEL_EXPANDED',
     [Format.SWSH]: 'LABEL_SWSH',
     [Format.SM]: 'LABEL_SM',

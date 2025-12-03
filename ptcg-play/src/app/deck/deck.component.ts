@@ -40,6 +40,7 @@ export class DeckComponent implements OnInit {
     [Format.STANDARD_NIGHTLY]: 'standard_nightly',
     [Format.EXPANDED]: 'expanded',
     [Format.UNLIMITED]: 'unlimited',
+    [Format.ETERNAL]: 'eternal',
     [Format.RSPK]: 'RSPK',
     [Format.RETRO]: 'retro',
     [Format.GLC]: 'glc',

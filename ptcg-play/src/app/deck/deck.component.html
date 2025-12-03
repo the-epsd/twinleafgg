@@ -49,6 +49,10 @@
             [class.active]="selectedFormat === 'unlimited'" (click)="selectFormat('unlimited')">
             {{ 'FORMAT_UNLIMITED' | translate }}
           </button>
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('eternal')"
+            [class.active]="selectedFormat === 'eternal'" (click)="selectFormat('eternal')">
+            {{ 'FORMAT_ETERNAL' | translate }}
+          </button>
         </div>
 
         <!-- More formats dropdown -->
