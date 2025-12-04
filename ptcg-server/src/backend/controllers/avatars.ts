@@ -14,10 +14,10 @@ export class Avatars extends Controller {
 
     // Standard predefined avatars
     const predefinedAvatars: AvatarInfo[] = [
-      { id: 2, name: 'gg', fileName: 'av_1.png' },
-      { id: 3, name: 'um', fileName: 'av_2.png' },
-      { id: 4, name: 'gr', fileName: 'av_3.png' },
-      { id: 5, name: 'gd', fileName: 'pao.webp' },
+      { id: 2, name: 'gg', fileName: 'predefined_2.png' },
+      { id: 3, name: 'um', fileName: 'predefined_3.png' },
+      { id: 4, name: 'gr', fileName: 'predefined_4.png' },
+      { id: 5, name: 'gd', fileName: 'predefined_5.png' },
     ];
 
     // Avatars unlocked from battle pass, etc.

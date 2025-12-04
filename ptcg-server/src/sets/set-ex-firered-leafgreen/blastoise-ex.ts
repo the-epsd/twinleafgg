@@ -9,7 +9,9 @@ import {
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { AFTER_ATTACK, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Blastoiseex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -77,17 +79,17 @@ export class Blastoiseex extends PokemonCard {
       });
     }
 
-    if (AFTER_ATTACK(effect, 0, this)) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;
-      const energyCards = active.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      if (energyCards.length === 0) {
+      // Check for energy cards early
+      if (!active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
-      // Flip coins until tails, then prompt to discard
+      // Flip coins until tails, counting heads
       let heads = 0;
       const flipCoins = (s: State): State => {
         return store.prompt(s, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
@@ -95,31 +97,36 @@ export class Blastoiseex extends PokemonCard {
             heads++;
             return flipCoins(s);
           }
-          // After flipping, ask opponent to discard up to heads (or all if less)
-          const maxToDiscard = Math.min(heads, energyCards.length);
+          // Tails - now discard energy cards based on heads count
+          // Get fresh opponent and active in case state changed
+          const currentOpponent = StateUtils.getOpponent(s, player);
+          const currentActive = currentOpponent.active;
+          const currentEnergyCards = currentActive.cards.filter(c => c.superType === SuperType.ENERGY);
+          const maxToDiscard = Math.min(heads, currentEnergyCards.length);
+
           if (maxToDiscard === 0) {
             return s;
           }
+
           return store.prompt(s, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-            active,
+            currentActive,
             { superType: SuperType.ENERGY },
             { min: maxToDiscard, max: maxToDiscard, allowCancel: false }
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
-              MOVE_CARDS(store, s, active, opponent.discard, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = currentActive;
+              return store.reduceEffect(s, discardEnergy);
             }
             return s;
           });
         });
       };
-
       return flipCoins(state);
     }
-
     return state;
   }
-
 }

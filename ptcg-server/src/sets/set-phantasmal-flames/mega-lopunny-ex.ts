@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class MegaLopunnyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,6 +43,16 @@ export class MegaLopunnyex extends PokemonCard {
       const activePokemon = player.active.getPokemonCard();
       if (activePokemon && activePokemon.movedToActiveThisTurn) {
         effect.damage += 170;
+      }
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+
+      // Check if this Pokemon was on the bench this turn
+      const activePokemon = player.active.getPokemonCard();
+      if (activePokemon && activePokemon.movedToActiveThisTurn) {
+        activePokemon.movedToActiveThisTurn = false;
       }
     }
 
