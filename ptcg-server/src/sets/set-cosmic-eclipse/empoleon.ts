@@ -1,0 +1,106 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, Attack, ChooseAttackPrompt, GameLog, StateUtils, Card } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../game/store/prefabs/prefabs';
+
+function* useRecall(next: Function, store: StoreLike, state: State,
+  self: Empoleon, effect: AttackEffect): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  // Gather all Pokémon cards from the evolution chain (previous evolutions)
+  const evolutionCards: Card[] = [];
+  for (const card of player.active.cards) {
+    if (card.superType === SuperType.POKEMON && card !== self) {
+      evolutionCards.push(card);
+    }
+  }
+
+  // If there are no previous evolutions with attacks, can't use this attack
+  if (evolutionCards.length === 0 || !evolutionCards.some(c => c.attacks && c.attacks.length > 0)) {
+    return state;
+  }
+
+  let selected: any;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    evolutionCards,
+    { allowCancel: false }
+  ), result => {
+    selected = result;
+    next();
+  });
+
+  const attack: Attack | null = selected;
+
+  if (attack === null) {
+    return state; // Player chose to cancel
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: attack.name
+  });
+
+  const attackEffect = new AttackEffect(player, opponent, attack);
+  state = store.reduceEffect(state, attackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  return state;
+}
+
+export class Empoleon extends PokemonCard {
+  public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Prinplup';
+  public cardType: CardType = W;
+  public hp: number = 160;
+  public weakness = [{ type: L }];
+  public retreat = [C, C];
+
+  public attacks = [{
+    name: 'Recall',
+    cost: [C],
+    damage: 0,
+    text: 'Choose an attack from 1 of this Pokémon\'s previous Evolutions and use it as this attack.'
+  },
+  {
+    name: 'Aquafall',
+    cost: [C, C],
+    damage: 130,
+    text: 'Discard all Energy from this Pokémon.'
+  }];
+
+  public set: string = 'CEC';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '56';
+  public name: string = 'Empoleon';
+  public fullName: string = 'Empoleon CEC';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    // Recall attack
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const generator = useRecall(() => generator.next(), store, state, this, effect);
+      return generator.next().value;
+    }
+
+    // Aquafall attack - discard all energy after damage is dealt
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
+    }
+
+    return state;
+  }
+}
