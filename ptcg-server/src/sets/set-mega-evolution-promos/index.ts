@@ -3,6 +3,7 @@ import { Card } from '../../game/store/card/card';
 import { Psyduck } from './psyduck';
 import { Sneasel } from './sneasel';
 import { Weavile } from './weavile';
+import { Golduck } from './golduck';
 
 export const setMegaEvolutionPromos: Card[] = [
   new Psyduck(),
@@ -25,4 +26,5 @@ export const setMegaEvolutionPromos: Card[] = [
   new OricorioexMEP(),
   new MegaKangaskhanexMEP(),
   new HaunterMEP(),
+  new Golduck(),
 ];
