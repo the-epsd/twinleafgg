@@ -1,7 +1,7 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { StoreLike, State, PowerType, GameError, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -37,6 +37,23 @@ export class Golduck extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Damp') {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isGolduckInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isGolduckInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isGolduckInPlay = true;
+        }
+      });
+
+      if (!isGolduckInPlay) {
+        return state;
+      }
 
       if (!effect.power.knocksOutSelf) {
         return state;

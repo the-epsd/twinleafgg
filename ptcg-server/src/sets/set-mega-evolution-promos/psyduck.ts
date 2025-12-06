@@ -1,8 +1,9 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { StoreLike, State, PowerType, GameError, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { StateUtils } from '../../game/store/state-utils';
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,6 +35,23 @@ export class Psyduck extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Damp') {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isPsyduckInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isPsyduckInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isPsyduckInPlay = true;
+        }
+      });
+
+      if (!isPsyduckInPlay) {
+        return state;
+      }
 
       if (!effect.power.knocksOutSelf) {
         return state;
@@ -46,6 +64,7 @@ export class Psyduck extends PokemonCard {
       } catch {
         return state;
       }
+
       if (!effect.power.exemptFromAbilityLock) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
