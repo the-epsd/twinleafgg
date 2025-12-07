@@ -97,6 +97,15 @@
             </mat-checkbox>
           </div>
         </div>
+
+        <!-- Sandbox Mode (Admin only) -->
+        <div class="setting-item" *ngIf="isAdmin">
+          <div class="checkbox-setting">
+            <mat-checkbox color="primary" name="sandboxMode" [(ngModel)]="settings.sandboxMode">
+              {{ 'GAMES_SANDBOX_MODE' | translate }}
+            </mat-checkbox>
+          </div>
+        </div>
       </div>
     </div>
 

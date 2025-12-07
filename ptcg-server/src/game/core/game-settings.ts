@@ -11,4 +11,6 @@ export class GameSettings {
 
   format: Format = Format.STANDARD;
 
+  sandboxMode: boolean = false;
+
 }

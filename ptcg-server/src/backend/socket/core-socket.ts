@@ -96,6 +96,12 @@ export class CoreSocket {
 
   private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number },
     response: Response<GameState>): void {
+    // Validate that only admins can enable sandbox mode
+    if (params.gameSettings.sandboxMode && this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
+      return;
+    }
+
     const invited = this.core.clients.find(c => c.id === params.clientId);
 
     // Check if the invited client is a bot with format restrictions

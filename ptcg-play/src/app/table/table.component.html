@@ -2,7 +2,24 @@
   <source src="assets/star-bg.mp4" type="video/mp4">
 </video> -->
 
-<ptcg-sidebar-container>
+<ptcg-sidebar-container 
+  [class.has-sandbox]="showSandboxPanel && gameState && gameState.state && gameState.gameId"
+  [class.sandbox-collapsed]="sandboxSidebarCollapsed">
+
+  <!-- Sandbox Control Panel (Admin only, Sandbox mode only) - Beside sidebar -->
+  <div class="sandbox-sidebar-container" *ngIf="showSandboxPanel && gameState && gameState.state && gameState.gameId">
+    <div class="sandbox-sidebar" [class.collapsed]="sandboxSidebarCollapsed">
+      <div class="sandbox-toggle" (click)="toggleSandboxSidebar()">
+        <mat-icon>{{ sandboxSidebarCollapsed ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+      </div>
+      <ptcg-sandbox-control
+        [gameId]="gameState.gameId"
+        [gameState]="gameState.state"
+        [players]="gameState.state.players"
+        [clientId]="clientId">
+      </ptcg-sandbox-control>
+    </div>
+  </div>
 
   <!-- Table sidebar -->
   <ptcg-sidebar>

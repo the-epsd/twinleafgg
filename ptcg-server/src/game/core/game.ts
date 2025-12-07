@@ -161,7 +161,9 @@ export class Game implements StoreHandler {
       if (this.isStartOfTurnAction(action, state)) {
         this.turnStartHistoryIndex = this.stateHistory.length - 1;
       }
-      state = this.store.dispatch(action);
+      // Pass client roleId for sandbox actions
+      const clientRoleId = client.user?.roleId;
+      state = this.store.dispatch(action, clientRoleId);
       state = this.updateInvalidMoves(state, client.id, false);
     } catch (error) {
       state = this.updateInvalidMoves(state, client.id, true);

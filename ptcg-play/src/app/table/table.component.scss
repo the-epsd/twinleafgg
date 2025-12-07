@@ -1,3 +1,5 @@
+@import '../../theme/variables.scss';
+
 :host {
   display: block;
   height: 100%;
@@ -38,4 +40,60 @@ ptcg-hand {
 
 .opp-hand {
   margin-bottom: 1%;
+}
+
+.sandbox-sidebar-container {
+  position: absolute;
+  right: map-get($ptcg-size, sidebar);
+  top: 0;
+  height: 100%;
+  z-index: 1;
+}
+
+.sandbox-sidebar {
+  position: relative;
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+  background: #1a1a1a;
+  border-left: 1px solid #333;
+  transition: transform 0.3s ease-in-out;
+  
+  &.collapsed {
+    transform: translateX(calc(100% - 40px));
+    
+    .sandbox-toggle {
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  .sandbox-toggle {
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 80px;
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s;
+    
+    &:hover {
+      background: #3d3d3d;
+    }
+    
+    mat-icon {
+      color: #e0e0e0;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
 }

@@ -7,6 +7,10 @@ import {
   UseEnergyAbilityAction,
   ConcedeAction
 } from '../../game';
+import { SandboxModifyPlayerAction } from '../../game/store/actions/sandbox-modify-player-action';
+import { SandboxModifyGameStateAction } from '../../game/store/actions/sandbox-modify-game-state-action';
+import { SandboxModifyCardAction } from '../../game/store/actions/sandbox-modify-card-action';
+import { SandboxModifyPokemonAction } from '../../game/store/actions/sandbox-modify-pokemon-action';
 import { Base64 } from '../../utils';
 import { ChangeAvatarAction } from '../../game/store/actions/change-avatar-action';
 import { Client } from '../../game/client/client.interface';
@@ -58,6 +62,11 @@ export class GameSocket {
     this.socket.addListener('game:action:passTurn', this.passTurn.bind(this));
     this.socket.addListener('game:action:appendLog', this.appendLog.bind(this));
     this.socket.addListener('game:action:changeAvatar', this.changeAvatar.bind(this));
+    // Sandbox actions
+    this.socket.addListener('game:sandbox:modifyPlayer', this.sandboxModifyPlayer.bind(this));
+    this.socket.addListener('game:sandbox:modifyGameState', this.sandboxModifyGameState.bind(this));
+    this.socket.addListener('game:sandbox:modifyCard', this.sandboxModifyCard.bind(this));
+    this.socket.addListener('game:sandbox:modifyPokemon', this.sandboxModifyPokemon.bind(this));
   }
 
   public onGameJoin(game: Game, client: Client): void {
@@ -314,6 +323,92 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
+  private sandboxModifyPlayer(params: {
+    gameId: number,
+    targetPlayerId: number,
+    modifications: any
+  }, response: Response<void>) {
+    // Validate admin role
+    if (this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
+      return;
+    }
+    const action = new SandboxModifyPlayerAction(
+      this.client.id,
+      params.targetPlayerId,
+      params.modifications
+    );
+    this.dispatch(params.gameId, action, response);
+  }
+
+  private sandboxModifyGameState(params: {
+    gameId: number,
+    modifications: any
+  }, response: Response<void>) {
+    // Validate admin role
+    if (this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
+      return;
+    }
+    const action = new SandboxModifyGameStateAction(
+      this.client.id,
+      params.modifications
+    );
+    this.dispatch(params.gameId, action, response);
+  }
+
+  private sandboxModifyCard(params: {
+    gameId: number,
+    targetPlayerId: number,
+    action: 'add' | 'remove' | 'move',
+    cardName: string,
+    fromZone?: string,
+    toZone?: string,
+    fromIndex?: number,
+    toIndex?: number,
+    prizeIndex?: number
+  }, response: Response<void>) {
+    // Validate admin role
+    if (this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
+      return;
+    }
+    const action = new SandboxModifyCardAction(
+      this.client.id,
+      params.targetPlayerId,
+      params.action,
+      params.cardName,
+      params.fromZone as any,
+      params.toZone as any,
+      params.fromIndex,
+      params.toIndex,
+      params.prizeIndex
+    );
+    this.dispatch(params.gameId, action, response);
+  }
+
+  private sandboxModifyPokemon(params: {
+    gameId: number,
+    targetPlayerId: number,
+    location: 'active' | 'bench',
+    benchIndex?: number,
+    modifications: any
+  }, response: Response<void>) {
+    // Validate admin role
+    if (this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
+      return;
+    }
+    const action = new SandboxModifyPokemonAction(
+      this.client.id,
+      params.targetPlayerId,
+      params.location,
+      params.modifications,
+      params.benchIndex
+    );
+    this.dispatch(params.gameId, action, response);
+  }
+
   public onTimerUpdate(game: Game, playerStats: any[]): void {
     this.socket.emit(`game[${game.id}]:timerUpdate`, { playerStats });
   }
@@ -386,6 +481,10 @@ export class GameSocket {
     this.socket.removeListener('game:action:passTurn');
     this.socket.removeListener('game:action:appendLog');
     this.socket.removeListener('game:action:changeAvatar');
+    this.socket.removeListener('game:sandbox:modifyPlayer');
+    this.socket.removeListener('game:sandbox:modifyGameState');
+    this.socket.removeListener('game:sandbox:modifyCard');
+    this.socket.removeListener('game:sandbox:modifyPokemon');
   }
 
   public onUndoing(game: Game, playerName: string): void {

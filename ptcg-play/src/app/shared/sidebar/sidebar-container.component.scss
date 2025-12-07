@@ -4,4 +4,14 @@
   display: block;
   height: 100%;
   margin-right: map-get($ptcg-size, sidebar);
+  
+  // Adjust margin when sandbox sidebar is visible
+  &.has-sandbox {
+    margin-right: calc(#{map-get($ptcg-size, sidebar)} + 400px);
+    
+    // When collapsed, only need space for the tab
+    &.sandbox-collapsed {
+      margin-right: calc(#{map-get($ptcg-size, sidebar)} + 40px);
+    }
+  }
 }
