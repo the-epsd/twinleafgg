@@ -59,3 +59,5 @@ ptcg-server/src/sets/set-test/
 /.kiro
 MEMORY_OPTIMIZATION_GUIDE.md
 frontend-cleanup-report.md
+ptcg-server/implementedCardIds.json
+ptcg-server/generate-implemented-card-ids-json.js
