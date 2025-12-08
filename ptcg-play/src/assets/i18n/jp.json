@@ -166,6 +166,7 @@
   "LABEL_UNLIMITED": "アンリミテッド",
   "LABEL_ETERNAL": "エターナル",
   "LABEL_RETRO": "レトロ",
+  "LABEL_PRE_RELEASE": "プレリリース",
   "LOGIN_CHANGE_SERVER": "サーバーアドレスを変更する",
   "LOGIN_CHANGE_SERVER_SUCCESS": "サーバーアドレスが正常に変更されました。",
   "LOGIN_CREATE_ACCOUNT": "新しいアカウントを作成する",

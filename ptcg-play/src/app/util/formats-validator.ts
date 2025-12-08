@@ -1,4 +1,5 @@
 import { Card, CardTag, CardType, EnergyCard, EnergyType, Format, PokemonCard, SuperType, ANY_PRINTING_ALLOWED } from "ptcg-server";
+import { DeckListEntry } from "../api/interfaces/deck.interface";
 
 export class FormatValidator {
 
@@ -116,6 +117,7 @@ export class FormatValidator {
       Format.BW,
       Format.RSPK,
       Format.RETRO,
+      // Format.PRE_RELEASE,
     ].forEach(format => {
       this.isValid(card, format, ANY_PRINTING_ALLOWED) ? formats.push(format) : null;
     });
@@ -180,6 +182,8 @@ export class FormatValidator {
           return true;
         case Format.RSPK:
           return true;
+        // case Format.PRE_RELEASE:
+        //   return true;
       }
     }
     switch (format) {
@@ -348,12 +352,31 @@ export class FormatValidator {
           card.set === 'PLB' ||
           card.set === 'LTR' ||
           card.set === 'BWP';
+      // case Format.PRE_RELEASE:
+      //   // Pre-Release format allows all cards (like UNLIMITED)
+      //   return true;
     }
 
     if (BanLists[format] && BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`)) {
       return false;
     }
     return false;
+  }
+
+  /**
+   * Checks if a deck is valid for a specific format based on deck size requirements.
+   * All formats require 60 cards.
+   * @param deck The deck to validate
+   * @param format The format to check validity for
+   * @returns true if the deck has the correct size for the format
+   */
+  static isDeckValidForFormat(deck: DeckListEntry, format: Format): boolean {
+    if (!deck || !deck.cards) {
+      return false;
+    }
+
+    const requiredDeckSize = 60; // format === Format.PRE_RELEASE ? 40 : 60;
+    return deck.cards.length === requiredDeckSize;
   }
 }
 

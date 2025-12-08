@@ -22,6 +22,7 @@ export class BoardPrizesComponent implements OnChanges {
       this.prizes = this.player.prizes;
       this.isOwner = this.player.id === this.clientId;
     } else {
+      // Default to 6 prizes if no player
       this.prizes = new Array(6);
       this.isOwner = false;
     }

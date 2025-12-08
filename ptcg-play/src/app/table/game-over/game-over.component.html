@@ -62,12 +62,8 @@
         <div class="ptcg-stats-row">
           <span class="ptcg-stat-label">Your prizes taken</span>
           <div class="ptcg-prize-indicators">
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 1">1</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 2">2</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 3">3</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 4">4</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 5">5</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-taken]="playerPrizesTaken >= 6">6</div>
+            <div class="ptcg-prize-indicator" *ngFor="let prizeNum of prizeIndicators" 
+                 [class.ptcg-prize-taken]="playerPrizesTaken >= prizeNum">{{prizeNum}}</div>
           </div>
           <!-- Show accuracy indicator when using fallback data -->
           <small *ngIf="!hasAccurateStatistics()" style="color: #888; font-size: 0.8em; margin-top: 4px;">
@@ -78,12 +74,8 @@
         <div class="ptcg-stats-row">
           <span class="ptcg-stat-label">Opponent's prizes taken</span>
           <div class="ptcg-prize-indicators">
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 1">1</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 2">2</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 3">3</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 4">4</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 5">5</div>
-            <div class="ptcg-prize-indicator" [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= 6">6</div>
+            <div class="ptcg-prize-indicator" *ngFor="let prizeNum of prizeIndicators" 
+                 [class.ptcg-prize-opponent-taken]="opponentPrizesTaken >= prizeNum">{{prizeNum}}</div>
           </div>
           <!-- Show accuracy indicator when using fallback data -->
           <small *ngIf="!hasAccurateStatistics()" style="color: #888; font-size: 0.8em; margin-top: 4px;">

@@ -170,6 +170,7 @@
   "LABEL_STANDARD_NIGHTLY": "Standard Nightly",
   "LABEL_EXPANDED": "Expanded",
   "LABEL_GLC": "GLC",
+  "LABEL_PRE_RELEASE": "Pre-Release",
   "LABEL_UNLIMITED": "Unlimited",
   "LABEL_ETERNAL": "Eternal",
   "LABEL_RSPK": "RS-PK",

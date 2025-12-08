@@ -13,6 +13,7 @@ import { LocalGameState } from '../../../shared/session/session.interface';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { ArchetypeUtils } from '../../../deck/deck-archetype-service/archetype.utils';
 import { DeckListEntry } from '../../../api/interfaces/deck.interface';
+import { FormatValidator } from '../../../util/formats-validator';
 
 @UntilDestroy()
 @Component({
@@ -122,7 +123,13 @@ export class PromptInvitePlayerComponent implements OnInit {
       ).
       subscribe({
         next: decks => {
-          this.deckEntries = decks.filter(deckEntry => deckEntry.isValid);
+          // Check both format array and deck size
+          this.deckEntries = decks.filter(deckEntry => {
+            // if (this.gameState.format === Format.PRE_RELEASE) {
+            //   return FormatValidator.isDeckValidForFormat(deckEntry, this.gameState.format);
+            // }
+            return deckEntry.format.includes(this.gameState.format) && FormatValidator.isDeckValidForFormat(deckEntry, this.gameState.format);
+          });
           this.decks = this.deckEntries.map(deckEntry => ({ value: deckEntry.id, viewValue: deckEntry.name }));
 
           if (this.decks.length > 0) {

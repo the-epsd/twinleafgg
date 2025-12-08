@@ -26,6 +26,7 @@ export class DeckValidityComponent {
     { value: Format.RETRO, label: 'LABEL_RETRO' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
     { value: Format.ETERNAL, label: 'LABEL_ETERNAL' },
+    // { value: Format.PRE_RELEASE, label: 'LABEL_PRE_RELEASE' },
   ];
 
   @Input() validOnly = false;

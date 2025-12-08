@@ -824,6 +824,7 @@ function getValidFormats(card: any): number[] {
     Format.BW,
     Format.RSPK,
     Format.RETRO,
+    Format.PRE_RELEASE,
   ].forEach((format: number) => {
     isValid(card, format, ANY_PRINTING_ALLOWED) ? formats.push(format) : null;
   });
@@ -883,6 +884,9 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       case Format.SM:
         return true;
       case Format.RSPK:
+        return true;
+      case Format.PRE_RELEASE:
+        // Pre-Release format allows all cards (like UNLIMITED)
         return true;
     }
   }
@@ -1046,6 +1050,9 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.set === 'PLB' ||
         card.set === 'LTR' ||
         card.set === 'BWP';
+    case Format.PRE_RELEASE:
+      // Pre-Release format allows all cards (like UNLIMITED)
+      return true;
   }
   return false;
 }

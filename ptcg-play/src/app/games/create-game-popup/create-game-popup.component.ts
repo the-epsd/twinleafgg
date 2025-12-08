@@ -6,6 +6,7 @@ import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
 import { SelectPopupOption } from '../../shared/alert/select-popup/select-popup.component';
 import { SessionService } from 'src/app/shared/session/session.service';
 import { ArchetypeUtils } from '../../deck/deck-archetype-service/archetype.utils';
+import { FormatValidator } from '../../util/formats-validator';
 
 
 export interface CreateGamePopupData {
@@ -48,6 +49,7 @@ export class CreateGamePopupComponent implements OnInit {
     { value: Format.RSPK, label: 'LABEL_RSPK' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },
     { value: Format.THEME, label: 'FORMAT_THEME' },
+    // { value: Format.PRE_RELEASE, label: 'LABEL_PRE_RELEASE' },
   ];
 
   public formatValidDecks: SelectPopupOption<number>[];
@@ -113,17 +115,42 @@ export class CreateGamePopupComponent implements OnInit {
 
   hasValidDeck(): boolean {
     const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
-    return selectedDeck && selectedDeck.value.format.includes(this.settings.format) && selectedDeck.value.isValid;
+    if (!selectedDeck) {
+      return false;
+    }
+    // Check both format array and deck size
+    if (!selectedDeck.value.format.includes(this.settings.format)) {
+      return false;
+    }
+    // Use format-specific validation for deck size (60 cards required)
+    return FormatValidator.isDeckValidForFormat(selectedDeck.value, this.settings.format);
   }
 
 
   public confirm() {
     // Check if the selected deck is valid for the chosen format
     const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
-    if (!selectedDeck || !selectedDeck.value.format.includes(this.settings.format) || !selectedDeck.value.isValid) {
+    if (!selectedDeck) {
       // Show an error message or alert
       return;
     }
+    // Check both format array and deck size
+    // if (this.settings.format === Format.PRE_RELEASE) {
+    //   if (!FormatValidator.isDeckValidForFormat(selectedDeck.value, this.settings.format)) {
+    //     // Show an error message or alert
+    //     return;
+    //   }
+    // } else {
+      if (!selectedDeck.value.format.includes(this.settings.format)) {
+        // Show an error message or alert
+        return;
+      }
+      // Use format-specific validation for deck size (60 cards required)
+      if (!FormatValidator.isDeckValidForFormat(selectedDeck.value, this.settings.format)) {
+        // Show an error message or alert
+        return;
+      }
+    // }
 
     this.dialogRef.close({
       deckId: this.deckId,
@@ -138,7 +165,11 @@ export class CreateGamePopupComponent implements OnInit {
   onFormatSelected(format: Format) {
     this.deckEntries = this.decks.filter(d => {
       const deck = d.value;
-      return deck.format.includes(format) && deck.isValid;
+      // Check both format array and deck size (60 cards required)
+      // if (format === Format.PRE_RELEASE) {
+      //   return FormatValidator.isDeckValidForFormat(deck, format);
+      // }
+      return deck.format.includes(format) && FormatValidator.isDeckValidForFormat(deck, format);
     }).map(d => d.value);
 
     this.formatValidDecks = this.deckEntries.map(d => ({ value: d.id, viewValue: d.name }));

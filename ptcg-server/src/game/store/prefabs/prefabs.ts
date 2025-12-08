@@ -248,6 +248,7 @@ export function TAKE_SPECIFIC_PRIZES(
         if (destination === player.hand) {
           // If the destination is the hand, we've "taken" a prize
           player.prizesTaken += 1;
+          player.prizesTakenThisTurn += 1;
           prizesTakenCount += 1;
         }
       }
