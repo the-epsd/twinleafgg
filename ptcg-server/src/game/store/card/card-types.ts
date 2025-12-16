@@ -1303,6 +1303,7 @@ export enum Format {
   STANDARD,
   EXPANDED,
   UNLIMITED,
+  ETERNAL,
   RETRO,
   GLC,
   STANDARD_NIGHTLY,

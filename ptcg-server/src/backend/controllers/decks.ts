@@ -571,6 +571,9 @@ const BanLists: { [key: number]: string[] } = {
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
+  [Format.ETERNAL]: [
+    'Arceus VSTAR BRS 123',
+  ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
   [Format.BW]: [],
@@ -716,7 +719,7 @@ const SetReleaseDates: { [key: string]: Date } = {
   'M1L': new Date('2025-09-26'),
   'M1S': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
-  'M2a': new Date('2025-11-28'),
+  'M2a': new Date('2026-01-31'),
 };
 
 function getValidFormatsForCardList(cardNames: string[]): number[] {
@@ -741,7 +744,8 @@ function getValidFormatsForCardList(cardNames: string[]): number[] {
       f !== Format.GLC &&
       f !== Format.EXPANDED &&
       f !== Format.STANDARD &&
-      f !== Format.UNLIMITED
+      f !== Format.UNLIMITED &&
+      f !== Format.ETERNAL
     );
   }
   // Check for Unown card restriction
@@ -768,7 +772,8 @@ function getValidFormatsForCardList(cardNames: string[]): number[] {
         f !== Format.EXPANDED &&
         f !== Format.STANDARD &&
         f !== Format.STANDARD_NIGHTLY &&
-        f !== Format.UNLIMITED
+        f !== Format.UNLIMITED &&
+        f !== Format.ETERNAL
       );
     }
   }
@@ -807,6 +812,7 @@ function getValidFormatsForCardList(cardNames: string[]): number[] {
 function getValidFormats(card: any): number[] {
   const formats = [Format.UNLIMITED];
   [
+    Format.ETERNAL,
     Format.STANDARD,
     Format.STANDARD_NIGHTLY,
     Format.EXPANDED,
@@ -832,6 +838,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     switch (format) {
       case Format.UNLIMITED:
         return true;
+      case Format.ETERNAL:
+        return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
@@ -881,6 +889,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
   switch (format) {
     case Format.UNLIMITED:
       return true;
+    case Format.ETERNAL:
+      return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
     case Format.STANDARD: {
       const setDate = SetReleaseDates[card.set];
       if (card.regulationMark === 'J') {

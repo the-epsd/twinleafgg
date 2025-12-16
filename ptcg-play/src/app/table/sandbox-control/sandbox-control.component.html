@@ -1,0 +1,261 @@
+<div class="sandbox-control-panel">
+  <div class="panel-header">
+    <h3>Sandbox Controls</h3>
+  </div>
+
+  <mat-tab-group>
+    <!-- Player Controls Tab -->
+    <mat-tab label="Player">
+      <div class="tab-content">
+        <div class="form-group">
+          <label>Select Player:</label>
+          <mat-select [(value)]="selectedPlayerIndex">
+            <mat-option *ngFor="let player of players; let i = index" [value]="i">
+              {{ player.name }} (ID: {{ player.id }})
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div class="form-group">
+          <label>Prizes:</label>
+          <input type="number" [(ngModel)]="playerMods.prizes" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>Hand Size:</label>
+          <input type="number" [(ngModel)]="playerMods.handSize" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>Deck Size:</label>
+          <input type="number" [(ngModel)]="playerMods.deckSize" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>Discard Size:</label>
+          <input type="number" [(ngModel)]="playerMods.discardSize" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>Lost Zone Size:</label>
+          <input type="number" [(ngModel)]="playerMods.lostzoneSize" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="playerMods.usedVSTAR">Used VSTAR</mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="playerMods.usedGX">Used GX</mat-checkbox>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="applyPlayerModifications()">
+          Apply Player Modifications
+        </button>
+      </div>
+    </mat-tab>
+
+    <!-- Game State Tab -->
+    <mat-tab label="Game State">
+      <div class="tab-content">
+        <div class="form-group">
+          <label>Turn:</label>
+          <input type="number" [(ngModel)]="gameStateMods.turn" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>Phase:</label>
+          <mat-select [(value)]="gameStateMods.phase">
+            <mat-option *ngFor="let phase of gamePhases" [value]="phase.value">
+              {{ phase.label | translate }}
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div class="form-group">
+          <label>Active Player Index:</label>
+          <input type="number" [(ngModel)]="gameStateMods.activePlayer" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="gameStateMods.skipOpponentTurn">Skip Opponent Turn</mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="gameStateMods.isSuddenDeath">Sudden Death</mat-checkbox>
+        </div>
+
+        <div class="rules-section">
+          <h4>Rules:</h4>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="gameStateMods.rules.firstTurnDrawCard">First Turn Draw Card</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="gameStateMods.rules.firstTurnUseSupporter">First Turn Use Supporter</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="gameStateMods.rules.attackFirstTurn">Attack First Turn</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="gameStateMods.rules.unlimitedEnergyAttachments">Unlimited Energy Attachments</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="gameStateMods.rules.alternativeSetup">Alternative Setup</mat-checkbox>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="applyGameStateModifications()">
+          Apply Game State Modifications
+        </button>
+      </div>
+    </mat-tab>
+
+    <!-- Card Manipulation Tab -->
+    <mat-tab label="Cards">
+      <div class="tab-content">
+        <div class="form-group">
+          <label>Select Player:</label>
+          <mat-select [(value)]="selectedPlayerIndex" (selectionChange)="onPlayerChange()">
+            <mat-option *ngFor="let player of players; let i = index" [value]="i">
+              {{ player.name }} (ID: {{ player.id }})
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div class="form-group">
+          <label>From Zone:</label>
+          <mat-select [(value)]="fromZone" (selectionChange)="onFromZoneChange()">
+            <mat-option value="hand">Hand</mat-option>
+            <mat-option value="deck">Deck</mat-option>
+            <mat-option value="discard">Discard</mat-option>
+            <mat-option value="lostzone">Lost Zone</mat-option>
+            <mat-option value="prizes">Prizes</mat-option>
+            <mat-option value="stadium">Stadium</mat-option>
+            <mat-option value="supporter">Supporter</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="form-group">
+          <label>Card:</label>
+          <mat-select [(value)]="selectedCardIndex" (selectionChange)="onCardSelected()" [disabled]="availableCards.length === 0">
+            <mat-option [value]="null">-- Select Card --</mat-option>
+            <mat-option *ngFor="let card of availableCards; let i = index" [value]="i">
+              {{ card }}
+            </mat-option>
+          </mat-select>
+          <small *ngIf="availableCards.length === 0" style="color: #888; display: block; margin-top: 4px;">
+            No cards in {{ fromZone }}
+          </small>
+        </div>
+
+        <div class="form-group" *ngIf="availableCards.length > 0">
+          <label>Select Multiple Cards (for Move/Remove):</label>
+          <div class="card-checkbox-list">
+            <div class="card-checkbox-item" *ngFor="let card of availableCards; let i = index">
+              <mat-checkbox 
+                [checked]="isCardSelected(i)" 
+                (change)="onCardCheckboxChange(i, $event.checked)">
+                {{ card }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>To Zone:</label>
+          <mat-select [(value)]="toZone">
+            <mat-option value="hand">Hand</mat-option>
+            <mat-option value="deck">Deck</mat-option>
+            <mat-option value="discard">Discard</mat-option>
+            <mat-option value="lostzone">Lost Zone</mat-option>
+            <mat-option value="prizes">Prizes</mat-option>
+            <mat-option value="stadium">Stadium</mat-option>
+            <mat-option value="supporter">Supporter</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="button-group">
+          <button mat-raised-button color="primary" (click)="addCard()">Add Card</button>
+          <button mat-raised-button color="warn" (click)="removeCard()">Remove Card</button>
+          <button mat-raised-button color="accent" (click)="moveCard()">Move Card</button>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Pokemon Tab -->
+    <mat-tab label="Pokemon">
+      <div class="tab-content">
+        <div class="form-group">
+          <label>Select Player:</label>
+          <mat-select [(value)]="selectedPlayerIndex">
+            <mat-option *ngFor="let player of players; let i = index" [value]="i">
+              {{ player.name }} (ID: {{ player.id }})
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div class="form-group">
+          <label>Location:</label>
+          <mat-select [(value)]="pokemonLocation">
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="bench">Bench</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="form-group" *ngIf="pokemonLocation === 'bench'">
+          <label>Bench Index:</label>
+          <input type="number" [(ngModel)]="selectedBenchIndex" min="0" max="4">
+        </div>
+
+        <div class="form-group">
+          <label>Damage:</label>
+          <input type="number" [(ngModel)]="pokemonMods.damage" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>HP:</label>
+          <input type="number" [(ngModel)]="pokemonMods.hp" placeholder="Leave empty to skip">
+        </div>
+
+        <div class="form-group">
+          <label>Energy Count:</label>
+          <input type="number" [(ngModel)]="pokemonMods.energyCount" placeholder="Leave empty to skip" min="0">
+        </div>
+
+        <div class="form-group" *ngIf="pokemonMods.energyCount !== null && pokemonMods.energyCount > 0">
+          <label>Energy Type:</label>
+          <mat-select [(value)]="selectedEnergyType">
+            <mat-option [value]="">-- Select Energy Type --</mat-option>
+            <mat-option *ngFor="let energy of energyTypes" [value]="energy">
+              {{ energy }}
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div class="conditions-section">
+          <h4>Conditions:</h4>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="pokemonMods.conditions.burned">Burned</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="pokemonMods.conditions.poisoned">Poisoned</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="pokemonMods.conditions.asleep">Asleep</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="pokemonMods.conditions.paralyzed">Paralyzed</mat-checkbox>
+          </div>
+          <div class="form-group">
+            <mat-checkbox [(ngModel)]="pokemonMods.conditions.confused">Confused</mat-checkbox>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="applyPokemonModifications()">
+          Apply Pokemon Modifications
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+

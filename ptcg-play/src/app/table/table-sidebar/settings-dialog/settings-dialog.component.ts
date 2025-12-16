@@ -26,6 +26,7 @@ export class SettingsDialogComponent {
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    { value: Format.ETERNAL, label: 'LABEL_ETERNAL' },
     { value: Format.SWSH, label: 'LABEL_SWSH' },
     { value: Format.SM, label: 'LABEL_SM' },
     { value: Format.XY, label: 'LABEL_XY' },

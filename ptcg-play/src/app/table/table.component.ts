@@ -38,12 +38,15 @@ export class TableComponent implements OnInit, OnDestroy {
   public showGameOver = false;
   public gameOverPrompt: GameOverPrompt;
   public canUndoBackend = false;
+  public showSandboxPanel = false;
+  public sandboxSidebarCollapsed: boolean = false;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
     [Format.STANDARD_NIGHTLY]: 'LABEL_STANDARD_NIGHTLY',
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
+    [Format.ETERNAL]: 'LABEL_ETERNAL',
     [Format.EXPANDED]: 'LABEL_EXPANDED',
     [Format.SWSH]: 'LABEL_SWSH',
     [Format.SM]: 'LABEL_SM',
@@ -96,6 +99,12 @@ export class TableComponent implements OnInit, OnDestroy {
       .subscribe(([paramMap, gameStates, clientId]) => {
         this.gameId = parseInt(paramMap.get('gameId'), 10);
         this.gameState = gameStates.find(state => state.localId === this.gameId);
+        // Check if sandbox mode is enabled
+        if (this.gameState && this.gameState.state && this.gameState.state.gameSettings) {
+          this.showSandboxPanel = this.isAdmin && this.gameState.state.gameSettings.sandboxMode === true;
+        } else {
+          this.showSandboxPanel = false;
+        }
 
         // Set the game ID in the socket service for reconnection tracking
         if (this.gameState && this.gameState.gameId) {
@@ -113,6 +122,12 @@ export class TableComponent implements OnInit, OnDestroy {
       )
       .subscribe(([gameStates, clientId]) => {
         this.gameState = gameStates.find(state => state.localId === this.gameId);
+        // Update sandbox panel visibility
+        if (this.gameState && this.gameState.state && this.gameState.state.gameSettings) {
+          this.showSandboxPanel = this.isAdmin && this.gameState.state.gameSettings.sandboxMode === true;
+        } else {
+          this.showSandboxPanel = false;
+        }
         this.updatePlayers(this.gameState, clientId);
         this.updateCanUndo();
       });
@@ -268,5 +283,9 @@ export class TableComponent implements OnInit, OnDestroy {
       // Optionally, optimistically set canUndoBackend to false until next state update
       this.canUndoBackend = false;
     }
+  }
+
+  toggleSandboxSidebar() {
+    this.sandboxSidebarCollapsed = !this.sandboxSidebarCollapsed;
   }
 }

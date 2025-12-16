@@ -184,7 +184,8 @@ export class MatchmakingService {
           format: player1.format,
           timeLimit: 1800,
           rules: new Rules(),
-          recordingEnabled: true
+          recordingEnabled: true,
+          sandboxMode: false
         };
 
         console.log(`[Matchmaking] Creating game between ${player1.client.name} and ${player2.client.name}`);

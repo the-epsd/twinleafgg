@@ -164,6 +164,7 @@
   "LABEL_EXPANDED": "エクスパンドード",
   "LABEL_GLC": "GLC",
   "LABEL_UNLIMITED": "アンリミテッド",
+  "LABEL_ETERNAL": "エターナル",
   "LABEL_RETRO": "レトロ",
   "LOGIN_CHANGE_SERVER": "サーバーアドレスを変更する",
   "LOGIN_CHANGE_SERVER_SUCCESS": "サーバーアドレスが正常に変更されました。",

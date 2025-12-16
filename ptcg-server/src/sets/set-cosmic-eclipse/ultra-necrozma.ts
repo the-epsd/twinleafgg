@@ -97,9 +97,9 @@ export class UltraNecrozma extends PokemonCard {
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         cards = selected || [];
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        return store.reduceEffect(state, discardEnergy);
       });
-      const discardEnergy = new DiscardCardsEffect(effect, cards);
-      return store.reduceEffect(state, discardEnergy);
     }
 
     return state;

@@ -30,6 +30,11 @@ import { retreatReducer } from './effect-reducers/retreat-effect';
 import { setupPhaseReducer } from './reducers/setup-reducer';
 import { abortGameReducer } from './reducers/abort-game-reducer';
 import { concedeReducer } from './reducers/concede-reducer';
+import { sandboxReducer } from './reducers/sandbox-reducer';
+import { SandboxModifyPlayerAction } from './actions/sandbox-modify-player-action';
+import { SandboxModifyGameStateAction } from './actions/sandbox-modify-game-state-action';
+import { SandboxModifyCardAction } from './actions/sandbox-modify-card-action';
+import { SandboxModifyPokemonAction } from './actions/sandbox-modify-pokemon-action';
 
 interface PromptItem {
   ids: number[],
@@ -47,8 +52,21 @@ export class Store implements StoreLike {
 
   constructor(private handler: StoreHandler) { }
 
-  public dispatch(action: Action): State {
+  public dispatch(action: Action, clientRoleId?: number): State {
     let state = this.state;
+
+    // Handle sandbox actions
+    if (action instanceof SandboxModifyPlayerAction
+      || action instanceof SandboxModifyGameStateAction
+      || action instanceof SandboxModifyCardAction
+      || action instanceof SandboxModifyPokemonAction) {
+      if (clientRoleId === undefined) {
+        throw new GameError(GameMessage.ILLEGAL_ACTION);
+      }
+      state = sandboxReducer(this, state, action, clientRoleId);
+      this.handler.onStateChange(state);
+      return state;
+    }
 
     if (action instanceof AbortGameAction) {
       state = abortGameReducer(this, state, action);

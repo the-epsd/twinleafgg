@@ -1,6 +1,7 @@
 import { UnidentifiedFossilCEC, VenusaurSnivyGX2CEC, VileplumeGX2CEC, CharizardBraixenGX2CEC, BlastoisePiplupGX2CEC, BlastoisePiplupGX3CEC, SolgaleoLunalaGX2CEC, OricorioGX2CEC, AlolanPersianGX2CEC, ArceusDialgaPalkiaGX2CEC, ArceusDialgaPalkiaGX3CEC, NaganadelGuzzlordGX2CEC, NaganadelGuzzlordGX3CEC, MegaLopunnyJigglypuffGX2CEC, MegaLopunnyJigglypuffGX3CEC, CynthiaAndCaitlin2CEC, LilliesFullForce2CEC, MallowAndLana2CEC, ProfessorOaksSetup2CEC, Rosa2CEC, Wishiwashi2CEC, Pikachu2CEC, Koffing2CEC, Mimikyu3CEC, Excadrill2CEC, Steelix2CEC, Stoutland2CEC, VenusaurSnivyGX3CEC, VileplumeGX3CEC, CharizardBraixenGX3CEC, BlastoisePiplupGX4CEC, SolgaleoLunalaGX3CEC, OricorioGX3CEC, AlolanPersianGX3CEC, ArceusDialgaPalkiaGX4CEC, NaganadelGuzzlordGX4CEC, MegaLopunnyJigglypuffGX4CEC, GiantHearthCEC, GreatCatcher2CEC, LanasFishingRod2CEC, LilliesPokeDoll2CEC, MartialArtsDojoCEC, PowerPlantCEC, TagCall2CEC, DrawEnergy2CEC, TogepiCleffaIgglybuffGX2CEC } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Aipom } from './aipom';
+import { Ambipom } from './ambipom';
 import { AlolanPersianGX } from './alolan-persian-gx';
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
@@ -16,16 +17,19 @@ import { Drampa } from './drampa';
 import { DrawEnergy } from './draw-energy';
 import { Dusclops } from './dusclops';
 import { Duskull } from './duskull';
+import { Empoleon } from './empoleon';
 import { Entei } from './entei';
 import { Excadrill } from './excadrill';
 import { Flabebe } from './flabebe';
 import { Flabebe2 } from './flabebe2';
 import { Floette } from './floette';
+import { Golduck } from './golduck';
 import { Golett } from './golett';
 import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { Koffing } from './koffing';
+import { Kyogre } from './kyogre';
 import { LanasFishingRod } from './lanas-fishing-rod';
 import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
@@ -36,8 +40,12 @@ import { Natu } from './natu';
 import { Onix } from './onix';
 import { Phione } from './phione';
 import { Pikachu } from './pikachu';
+import { Piplup } from './piplup';
 import { Ponyta } from './ponyta';
+import { Prinplup } from './prinplup';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
+import { Psyduck } from './psyduck';
+import { RollerSkater } from './roller-skater';
 import { Rosa } from './rosa';
 import { Roxie } from './roxie';
 import { Sawsbuck } from './sawsbuck';
@@ -75,6 +83,7 @@ import { GuzmaAndHalaCEC } from './other-prints';
 
 export const setCosmicEclipse: Card[] = [
   new Aipom(),
+  new Ambipom(),
   new AlolanPersianGX(),
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
@@ -94,6 +103,7 @@ export const setCosmicEclipse: Card[] = [
   new DrawEnergy(),
   new Dusclops(),
   new Duskull(),
+  new Empoleon(),
   new Entei(),
   new Excadrill(),
   new Flabebe(),
@@ -105,6 +115,7 @@ export const setCosmicEclipse: Card[] = [
   new GuzmaAndHala(),
   new Guzzlord(),
   new Koffing(),
+  new Kyogre(),
   new LanasFishingRod(),
   new Lanturn(),
   new LilliesFullForce(),
@@ -121,8 +132,13 @@ export const setCosmicEclipse: Card[] = [
   new OricorioGX(),
   new Phione(),
   new Pikachu(),
+  new Piplup(),
   new Ponyta(),
+  new Prinplup(),
   new ProfessorOaksSetup(),
+  new Psyduck(),
+  new Golduck(),
+  new RollerSkater(),
   new Rosa(),
   new Roxie(),
   new Sawsbuck(),

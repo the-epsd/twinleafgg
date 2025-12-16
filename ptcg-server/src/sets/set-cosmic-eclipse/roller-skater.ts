@@ -1,5 +1,6 @@
-import { ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard } from '../../game';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { ChooseCardsPrompt, GameError, GameLog, GameMessage } from '../../game';
+import { TrainerType } from '../../game/store/card/card-types';
+import { EnergyCard } from '../../game/store/card/energy-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -7,19 +8,15 @@ import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/pre
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class HolonAdventurer extends TrainerCard {
+export class RollerSkater extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.DELTA_SPECIES];
-  public set: string = 'HP';
+  public set: string = 'CEC';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '85';
-  public name: string = 'Holon Adventurer';
-  public fullName: string = 'Holon Adventurer HP';
-
-  public text: string = `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
-  
-  Draw 3 cards. If you discarded a Pokémon that has δ on its card, draw 4 cards instead.`;
+  public setNumber: string = '203';
+  public name: string = 'Roller Skater';
+  public fullName: string = 'Roller Skater CEC';
+  public text: string = 'Discard a card from your hand. If you do, draw 2 cards. If you discarded an Energy card in this way, draw 2 more cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -49,9 +46,9 @@ export class HolonAdventurer extends TrainerCard {
           CLEAN_UP_SUPPORTER(effect, player);
           return;
         }
-        let cardsToDraw = 3;
+        let cardsToDraw = 2;
 
-        if (cards[0] instanceof PokemonCard && cards[0].tags.includes(CardTag.DELTA_SPECIES)) {
+        if (cards[0] instanceof EnergyCard) {
           cardsToDraw = 4;
         }
 
@@ -70,3 +67,4 @@ export class HolonAdventurer extends TrainerCard {
     return state;
   }
 }
+

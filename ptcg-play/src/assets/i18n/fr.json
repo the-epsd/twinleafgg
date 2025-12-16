@@ -183,6 +183,7 @@
   "LABEL_EXPANDED": "Étendu",
   "LABEL_GLC": "GLC",
   "LABEL_UNLIMITED": "Illimité",
+  "LABEL_ETERNAL": "Éternel",
   "LABEL_RETRO": "Rétro",
   "LOGIN_CHANGE_SERVER": "Changer d'adresse de serveur",
   "LOGIN_CHANGE_SERVER_SUCCESS": "L'adresse du serveur a été modifiée avec succès.",
