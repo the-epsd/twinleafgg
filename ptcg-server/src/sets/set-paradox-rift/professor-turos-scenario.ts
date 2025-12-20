@@ -9,21 +9,17 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { GameError, TrainerType } from '../../game';
 import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CardTag } from '../../game/store/card/card-types';
 
 export class ProfessorTurosScenario extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public tags = [CardTag.FUTURE];
   public regulationMark = 'G';
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '171';
-
   public name: string = 'Professor Turo\'s Scenario';
-
   public fullName: string = 'Professor Turo\'s Scenario PAR';
 
   public text: string =
