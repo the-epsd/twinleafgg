@@ -7,7 +7,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../..
 export class PalkiaEX extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public tags: string[] = [CardTag.POKEMON_EX];
+  public tags: string[] = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public cardType: CardType = N;
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: N }];
