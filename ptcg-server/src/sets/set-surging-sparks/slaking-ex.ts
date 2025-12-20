@@ -9,46 +9,35 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 export class Slakingex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom: string = 'Vigoroth';
-
-  public tags: string[] = [CardTag.POKEMON_EX];
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public tags: string[] = [CardTag.POKEMON_ex];
+  public cardType: CardType = C;
   public hp: number = 340;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C, C, C];
 
   public powers: Power[] = [
     {
       name: 'Born to Slack',
       powerType: PowerType.ABILITY,
-      text: 'If your opponent has no Pokemon ex or Pokemon V in play, this Pokemon can\'t attack.',
+      text: 'If your opponent has no Pokémon ex or Pokémon V in play, this Pokémon can\'t attack.',
     }
   ];
 
   public attacks = [
     {
       name: 'Great Swing',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 280,
-      text: 'Discard an Energy from this Pokemon.'
+      text: 'Discard an Energy from this Pokémon.'
     }
   ];
 
   public set: string = 'SSP';
-
   public setNumber = '147';
-
   public cardImage = 'assets/cardback.png';
-
   public regulationMark: string = 'H';
-
   public name: string = 'Slaking ex';
-
   public fullName: string = 'Slaking ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
