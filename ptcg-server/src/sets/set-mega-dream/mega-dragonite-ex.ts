@@ -16,14 +16,14 @@ export class MegaDragoniteex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Sky Carry',
+    name: 'Sky Transport',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may switch your Active Pokémon with 1 of your Benched Pokémon.'
   }];
 
   public attacks = [{
-    name: 'Dragon Glide',
+    name: 'Ryuno Glide',
     cost: [W, L, L],
     damage: 330,
     text: 'Discard 2 Energy from this Pokémon.'
@@ -51,7 +51,7 @@ export class MegaDragoniteex extends PokemonCard {
       player.marker.removeMarker(this.SKY_CARRY_MARKER, this);
     }
 
-    // Sky Carry ability
+    // Sky Transport ability
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
@@ -85,7 +85,7 @@ export class MegaDragoniteex extends PokemonCard {
       });
     }
 
-    // Dragon Glide attack
+    // Ryuno Glide attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
