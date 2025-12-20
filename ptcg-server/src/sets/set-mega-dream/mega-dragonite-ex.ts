@@ -19,7 +19,7 @@ export class MegaDragoniteex extends PokemonCard {
     name: 'Sky Transport',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may switch your Active Pokémon with 1 of your Benched Pokémon.'
+    text: 'Once during your turn, you may use this Ability. Switch your Active Pokémon with 1 of your Benched Pokémon.'
   }];
 
   public attacks = [{
