@@ -31,7 +31,7 @@ export class ManaphyEX extends PokemonCard {
   public set: string = 'BKP';
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Manaphy EX';
+  public name: string = 'Manaphy-EX';
   public fullName: string = 'Manaphy EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -39,7 +39,7 @@ export class MewtwoEx extends PokemonCard {
 
   public set: string = 'NXD';
 
-  public name: string = 'Mewtwo EX';
+  public name: string = 'Mewtwo-EX';
 
   public fullName: string = 'Mewtwo EX NXD';
 

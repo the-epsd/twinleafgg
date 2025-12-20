@@ -82,7 +82,7 @@ export class JirachiEX extends PokemonCard {
 
   public set: string = 'PLB';
 
-  public name: string = 'Jirachi EX';
+  public name: string = 'Jirachi-EX';
 
   public fullName: string = 'Jirachi EX PLB';
 

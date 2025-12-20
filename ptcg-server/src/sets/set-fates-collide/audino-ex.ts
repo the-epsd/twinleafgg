@@ -29,7 +29,7 @@ export class AudinoEx extends PokemonCard {
   ];
 
   public set: string = 'FCO';
-  public name: string = 'Audino EX';
+  public name: string = 'Audino-EX';
   public fullName: string = 'Audino EX FCO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';

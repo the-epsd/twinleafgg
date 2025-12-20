@@ -37,7 +37,7 @@ export class ZekromEx extends PokemonCard {
 
   public set: string = 'NXD';
 
-  public name: string = 'Zekrom EX';
+  public name: string = 'Zekrom-EX';
 
   public fullName: string = 'Zekrom EX NXD';
 

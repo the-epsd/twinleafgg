@@ -12,7 +12,7 @@ import { StoreLike } from '../../game/store/store-like';
 function* playCard(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   
-  if (player.active.getPokemonCard()?.name !== 'Genesect EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
+  if (player.active.getPokemonCard()?.name !== 'Genesect-EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
   THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(100, effect, store, state);
   
   return state;
@@ -43,7 +43,7 @@ export class GScope extends TrainerCard {
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const pokemonCard = effect.player.active.getPokemonCard();
 
-      if (pokemonCard?.name !== 'Genesect EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
+      if (pokemonCard?.name !== 'Genesect-EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
       if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
         const colorlessReudction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
         for (let i = 0; i < colorlessReudction && effect.cost.includes(CardType.COLORLESS); i++) {

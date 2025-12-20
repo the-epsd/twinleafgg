@@ -13,7 +13,7 @@ export class MCharizardEX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
 
-  public evolvesFrom = 'Charizard EX';
+  public evolvesFrom = 'Charizard-EX';
 
   public cardType: CardType = CardType.DRAGON;
 
@@ -34,7 +34,7 @@ export class MCharizardEX extends PokemonCard {
 
   public set: string = 'FLF';
 
-  public name: string = 'M Charizard EX';
+  public name: string = 'M Charizard-EX';
 
   public fullName: string = 'M Charizard EX FLF';
 

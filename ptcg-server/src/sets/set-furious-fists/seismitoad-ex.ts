@@ -41,7 +41,7 @@ export class SeismitoadEx extends PokemonCard {
 
   public set: string = 'FFI';
 
-  public name: string = 'Seismitoad EX';
+  public name: string = 'Seismitoad-EX';
 
   public fullName: string = 'Seismitoad EX FFI';
 

@@ -28,7 +28,6 @@ import { TropicalBeach } from './tropical-beach';
 export class KeldeoExBWP extends KeldeoEx {
   public set: string = 'BWP';
   public setNumber: string = '61';
-  public name: string = 'Keldeo EX';
   public fullName: string = 'Keldeo EX BWP';
 }
 

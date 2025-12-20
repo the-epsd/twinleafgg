@@ -43,7 +43,7 @@ export class MewEx extends PokemonCard {
 
   public set: string = 'LTR';
 
-  public name: string = 'Mew EX';
+  public name: string = 'Mew-EX';
 
   public fullName: string = 'Mew EX LTR';
 

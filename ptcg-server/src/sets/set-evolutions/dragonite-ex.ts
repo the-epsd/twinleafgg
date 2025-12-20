@@ -32,7 +32,7 @@ export class DragoniteEX extends PokemonCard {
 
   public setNumber: string = '72';
 
-  public name: string = 'Dragonite EX';
+  public name: string = 'Dragonite-EX';
 
   public fullName: string = 'Dragonite EX EVO';
 
@@ -75,7 +75,7 @@ export class DragoniteEX extends PokemonCard {
 
           const blocked: number[] = [];
           player.bench.forEach((card, index) => {
-            if ((card instanceof PokemonCard && card.name === 'Dragonite EX')) {
+            if ((card instanceof PokemonCard && card.name === 'Dragonite-EX')) {
               blocked.push(index);
             }
           });

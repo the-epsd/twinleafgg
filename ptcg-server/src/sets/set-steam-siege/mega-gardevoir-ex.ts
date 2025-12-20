@@ -9,7 +9,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class MGardevoirEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
-  public evolvesFrom = 'Gardevoir EX';
+  public evolvesFrom = 'Gardevoir-EX';
   public cardType: CardType = Y;
   public additionalCardTypes = [P];
   public hp: number = 210;

@@ -41,7 +41,7 @@ export class LucarioEx extends PokemonCard {
 
   public set: string = 'FFI';
 
-  public name: string = 'Lucario EX';
+  public name: string = 'Lucario-EX';
 
   public fullName: string = 'Lucario EX FFI';
 

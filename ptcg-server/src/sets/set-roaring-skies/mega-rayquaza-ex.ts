@@ -9,7 +9,7 @@ import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
 export class MRayquazaEx extends PokemonCard {
   public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
   public stage: Stage = Stage.MEGA;
-  public evolvesFrom = 'Rayquaza EX';
+  public evolvesFrom = 'Rayquaza-EX';
   public cardType: CardType = C;
   public hp: number = 220;
   public weakness = [{ type: L }];

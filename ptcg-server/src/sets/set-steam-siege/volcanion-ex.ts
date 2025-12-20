@@ -30,7 +30,7 @@ export class VolcanionEX extends PokemonCard {
   public set = 'STS';
   public setNumber = '26';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Volcanion EX';
+  public name: string = 'Volcanion-EX';
   public fullName = 'Volcanion EX STS';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
