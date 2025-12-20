@@ -50,11 +50,11 @@ export enum CardTag {
   ARVENS = 'Arven\'s',
   AURAS = 'Aura\'s',
   POKEMON_SV_MEGA = 'Mega',
-  HOLONS = 'Holo\'s',
+  HOLONS = 'Holon\'s',
   ROCKETS = 'Team Rocket\'s', // For old cards
   TEAM_ROCKET = 'Team Rocket\'s', // For new cards
   UNOWN = 'Unown',
-  PRIMAL = 'Prima',
+  PRIMAL = 'Primal',
   ARCEUS = 'Arceus',
   VS = 'VS', // Japanese VS Pack (from movie or theater promos)
 }
