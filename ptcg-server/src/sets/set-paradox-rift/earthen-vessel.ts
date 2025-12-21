@@ -106,9 +106,9 @@ export class EarthenVessel extends TrainerCard {
   public fullName: string = 'Earthen Vessel PAR';
 
   public text: string =
-    'You can play this card only if you discard another card from your hand.' +
-    '' +
-    'Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';
+    `You can use this card only if you discard another card from your hand.
+
+Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
