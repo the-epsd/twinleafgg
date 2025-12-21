@@ -1,5 +1,5 @@
 import { CardList, ChooseCardsPrompt, GameError, GameMessage } from '../../game';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -45,7 +45,7 @@ export class Hapu extends TrainerCard {
       player.deck.moveTo(deckTop, 6);
 
       const min = Math.min(2, deckTop.cards.length);
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,

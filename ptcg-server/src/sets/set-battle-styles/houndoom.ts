@@ -2,61 +2,46 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import {
   PowerType,
-  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike
+  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike,
+  CardTarget,
+  GameError
 } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 
 
 export class Houndoom extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
-  public regulationMark = 'E';
-
   public evolvesFrom = 'Houndour';
-
   public tags = [CardTag.SINGLE_STRIKE];
-
-  public cardType: CardType = CardType.DARK;
-
+  public cardType: CardType = D;
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Single Strike Roar',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for a ' +
-      'Single Strike Energy card and attach it to 1 of your Single ' +
-      'Strike Pokémon. Then, shuffle your deck. If you attached ' +
-      'Energy to a Pokémon in this way, put 2 damage counters ' +
-      'on that Pokémon.'
+    text: 'Once during your turn, you may search your deck for a Single Strike Energy card and attach it to 1 of your Single Strike Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Darkness Fang',
-      cost: [CardType.DARK, CardType.COLORLESS],
-      damage: 50,
-      text: ''
-    }];
+  public attacks = [{
+    name: 'Darkness Fang',
+    cost: [D, C],
+    damage: 50,
+    text: ''
+  }];
 
+  public regulationMark = 'E';
   public set: string = 'BST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '96';
-
   public name: string = 'Houndoom';
-
   public fullName: string = 'Houndoom BST';
 
   public readonly SINGLE_STRIKE_ROAR_MARKER = 'SINGLE_STRIKE_ROAR_MARKER';
@@ -70,6 +55,17 @@ export class Houndoom extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
+      if (player.marker.hasMarker(this.SINGLE_STRIKE_ROAR_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (!card.tags.includes(CardTag.SINGLE_STRIKE)) {
+          blocked2.push(target);
+        }
+      });
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -77,9 +73,10 @@ export class Houndoom extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Single Strike Energy' },
-        { allowCancel: true, min: 0, max: 1 }
+        { allowCancel: false, min: 0, max: 1, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
+        ABILITY_USED(player, this);
         // cancelled by user
         if (transfers.length === 0) {
           SHUFFLE_DECK(store, state, player);
