@@ -12,8 +12,6 @@ export class Hapu extends TrainerCard {
 
   public set: string = 'UNM';
 
-  public tags = [CardTag.ANCIENT];
-
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '200';
