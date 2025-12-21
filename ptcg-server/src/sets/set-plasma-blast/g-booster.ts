@@ -14,7 +14,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   const player = effect.player;
   const opponent = effect.opponent;
 
-  if (player.active.getPokemonCard()?.name !== 'Genesect EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
+  if (player.active.getPokemonCard()?.name !== 'Genesect-EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
 
   if (effect.damage > 0) {
     opponent.active.damage += effect.damage;

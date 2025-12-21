@@ -33,7 +33,7 @@ export class HoopaEX extends PokemonCard {
   public set: string = 'AOR';
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Hoopa EX';
+  public name: string = 'Hoopa-EX';
   public fullName: string = 'Hoopa EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

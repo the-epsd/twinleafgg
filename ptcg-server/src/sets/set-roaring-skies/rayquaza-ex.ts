@@ -29,7 +29,7 @@ export class RayquazaEx extends PokemonCard {
   ];
 
   public set: string = 'ROS';
-  public name: string = 'Rayquaza EX';
+  public name: string = 'Rayquaza-EX';
   public fullName: string = 'Rayquaza EX ROS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';

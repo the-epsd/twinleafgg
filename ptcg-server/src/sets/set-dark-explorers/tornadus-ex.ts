@@ -79,7 +79,7 @@ export class TornadusEx extends PokemonCard {
 
   public set: string = 'DEX';
 
-  public name: string = 'Tornadus EX';
+  public name: string = 'Tornadus-EX';
 
   public fullName: string = 'Tornadus EX DEX';
 

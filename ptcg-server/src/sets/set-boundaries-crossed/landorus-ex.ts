@@ -34,7 +34,7 @@ export class LandorusEx extends PokemonCard {
   public set: string = 'BCR';
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Landorus EX';
+  public name: string = 'Landorus-EX';
   public fullName: string = 'Landorus EX BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

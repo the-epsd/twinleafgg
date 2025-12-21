@@ -16,7 +16,7 @@ export class MRayquazaEX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
 
-  public evolvesFrom = 'Rayquaza EX';
+  public evolvesFrom = 'Rayquaza-EX';
 
   public cardType: CardType = CardType.DRAGON;
 
@@ -43,7 +43,7 @@ export class MRayquazaEX extends PokemonCard {
 
   public set: string = 'ROS';
 
-  public name: string = 'M Rayquaza EX';
+  public name: string = 'M Rayquaza-EX';
 
   public fullName: string = 'M Rayquaza EX ROS';
 

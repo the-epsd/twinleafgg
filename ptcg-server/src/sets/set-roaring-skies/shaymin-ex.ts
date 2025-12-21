@@ -40,7 +40,7 @@ export class ShayminEx extends PokemonCard {
 
   public set: string = 'ROS';
 
-  public name: string = 'Shaymin EX';
+  public name: string = 'Shaymin-EX';
 
   public fullName: string = 'Shaymin EX ROS';
 

@@ -39,7 +39,7 @@ export class WailordEx extends PokemonCard {
 
   public set: string = 'PRC';
 
-  public name: string = 'Wailord EX';
+  public name: string = 'Wailord-EX';
 
   public fullName: string = 'Wailord EX PRC';
 
