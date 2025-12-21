@@ -117,6 +117,8 @@ export class Player {
 
   // Taken prize cards ("taken" means "moved to the player's hand")
   prizesTaken: number = 0;
+  prizesTakenThisTurn: number = 0;
+  prizesTakenLastTurn: number = 0;
 
   // Game statistics tracking
   gameStats: GameStats = {
