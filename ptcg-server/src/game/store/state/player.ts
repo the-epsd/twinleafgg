@@ -1,5 +1,5 @@
 import { GameError } from '../../game-error';
-import { GameMessage, GameLog } from '../../game-message';
+import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
@@ -279,15 +279,6 @@ export class Player {
 
         // Keep existing boolean for backwards compatibility
         activePokemon.movedToActiveThisTurn = true;
-
-        // Add logging if store and state are available
-        if (store && state) {
-          store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, {
-            name: this.name,
-            active: activePokemon.name,
-            benched: temp.getPokemonCard()?.name || 'Unknown'
-          });
-        }
       }
     }
   }
