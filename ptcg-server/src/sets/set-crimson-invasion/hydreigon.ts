@@ -5,7 +5,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 import { ABILITY_USED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Hydreigon extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Zweilous';
   public cardType: CardType = D;
   public hp: number = 160;
