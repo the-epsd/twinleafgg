@@ -27,6 +27,7 @@ import { PikachuVUNIONTopLeft } from './pikachu-v-union-tl';
 import { PikachuVUNIONTopRight } from './pikachu-v-union-tr';
 import { ProfessorBurnet } from './professor-burnett';
 import { Scorbunny } from './scorbunny';
+import { Scorbunny2 } from './scorbunny2';
 import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
@@ -60,6 +61,7 @@ export const setSwordAndShieldPromos: Card[] = [
   new ProfessorBurnet(),
   new Manaphy(),
   new Scorbunny(),
+  new Scorbunny2(),
   new Tepig(),
   new VenusaurV(),
   new VenusaurVMAX(),
