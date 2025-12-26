@@ -66,9 +66,9 @@ export class UnfairStamp extends TrainerCard {
   public fullName: string = 'Unfair Stamp TWM';
 
   public text: string =
-    'You can play this card only if one of your Pokémon was Knocked Out during your opponent\'s last turn.' +
-    '' +
-    'Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 2 cards.';
+    `You can play this card only if one of your Pokémon was Knocked Out during your opponent\'s last turn.
+
+Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 2 cards.`;
 
   public readonly UNFAIR_STAMP_MARKER = 'UNFAIR_STAMP_MARKER';
 
