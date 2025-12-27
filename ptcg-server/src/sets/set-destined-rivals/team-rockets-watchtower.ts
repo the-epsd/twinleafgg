@@ -19,7 +19,7 @@ export class TeamRocketsWatchtower extends TrainerCard {
   public setNumber: string = '180';
 
   public text: string =
-    'Both players\' [C] Pokemon have no Abilities.';
+    '[C] Pokémon in play (both yours and your opponent\'s) have no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
