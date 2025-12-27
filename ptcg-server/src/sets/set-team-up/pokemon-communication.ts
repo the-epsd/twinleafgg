@@ -83,7 +83,7 @@ export class PokemonCommunication extends TrainerCard {
 
   public set: string = 'TEU';
 
-  public name: string = 'Pokemon Communication';
+  public name: string = 'Pokémon Communication';
 
   public fullName: string = 'Pokemon Communication TEU';
 
