@@ -23,7 +23,7 @@ export class ProfessorTurosScenario extends TrainerCard {
   public fullName: string = 'Professor Turo\'s Scenario PAR';
 
   public text: string =
-    'Put 1 of your Pokémon into your hand. (Discard all attached cards.)';
+    'Put 1 of your Pokémon in play into your hand. (Discard all cards attached to that Pokémon.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

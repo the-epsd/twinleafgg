@@ -84,9 +84,9 @@ export class UltraBall extends TrainerCard {
   public fullName: string = 'Ultra Ball SVI';
 
   public text: string =
-    'Discard 2 cards from your hand. (If you can\'t discard 2 cards, you ' +
-    'can\'t play this card.) Search your deck for a Pokemon, reveal it, and ' +
-    'put it into your hand. Shuffle your deck afterward.';
+    `You can use this card only if you discard 2 other cards from your hand.
+
+Search your deck for a Pokemon, reveal it, and put it into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

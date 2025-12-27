@@ -43,7 +43,7 @@ export class LilliesDetermination extends TrainerCard {
   public name: string = 'Lillie\'s Determination';
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Lillie\'s Determination M1L';
-  public text: string = 'Shuffle your hand into your deck. Then, draw 6 cards. If you have 6 prize cards remaining, draw 8 cards instead.';
+  public text: string = 'Shuffle your hand into your deck. Then, draw 6 cards. If you have exactly 6 Prize cards remaining, draw 8 cards instead.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
