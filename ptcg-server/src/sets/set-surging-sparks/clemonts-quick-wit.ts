@@ -13,20 +13,13 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class ClemontsQuickWit extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'SSP';
-
   public setNumber = '167';
-
   public cardImage = 'assets/cardback.png';
-
   public regulationMark: string = 'H';
-
   public name: string = 'Clemont\'s Quick Wit';
-
   public fullName: string = 'Clemont\'s Quick Wit SSP';
-
-  public text: string = 'Heal 60 damage from each of your L Pokemon.';
+  public text: string = 'Heal 60 damage from each of your [L] Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

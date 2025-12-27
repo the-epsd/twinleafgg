@@ -51,18 +51,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class CherishBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'UNM';
-
   public setNumber: string = '191';
-  
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Cherish Ball';
-
   public fullName: string = 'Cherish Ball UNM';
-
-  public text: string = 'Search your deck for a Pokemon-GX, reveal it, and put it into your hand. Then, shuffle your deck.';
+  public text: string = 'Search your deck for a Pokémon-GX, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

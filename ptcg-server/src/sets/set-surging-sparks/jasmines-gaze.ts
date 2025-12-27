@@ -12,21 +12,14 @@ import { Player } from '../../game';
 export class JasminesGaze extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'SSP';
-
   public setNumber = '178';
-
   public cardImage = 'assets/cardback.png';
-
   public regulationMark: string = 'H';
-
   public name: string = 'Jasmine\'s Gaze';
-
   public fullName: string = 'Jasmine\'s Gaze SSP';
-
-  public text: string = 'During your opponent\'s next turn, all of your Pokemon take 30 less damage ' +
-    'from attacks from your opponent\'s Pokemon (after applying Weakness and Resistance). ' +
+  public text: string = 'During your opponent\'s next turn, all of your Pokémon take 30 less damage ' +
+    'from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). ' +
     '(This includes new Pokemon that come into play.)';
 
   private readonly JASMINES_GAZE_MARKER = 'JASMINES_GAZE_MARKER';

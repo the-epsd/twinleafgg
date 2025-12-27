@@ -87,7 +87,7 @@ export class Hilda extends TrainerCard {
   public setNumber: string = '84';
   public name: string = 'Hilda';
   public fullName: string = 'Hilda SV11W';
-  public text: string = 'Search your deck for 1 Evolution Pokemon and 1 Energy card, reveal them, and put them into your hand. Then shuffle your deck.';
+  public text: string = 'Search your deck for an Evolution Pokémon and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
