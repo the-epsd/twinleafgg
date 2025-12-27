@@ -72,10 +72,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
+  align-items: stretch;
 }
 
 .ptcg-prompt-actions {
@@ -83,15 +83,34 @@
   background-color: rgb(10, 12, 16);
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: clamp(8px, 2vw, 16px);
   width: 100%;
   position: relative;
   z-index: 200;
+  min-height: fit-content;
+
+  section {
+    display: flex;
+    align-items: center;
+  }
 
   button {
     min-width: clamp(80px, 15vw, 120px);
     height: clamp(36px, 5vh, 48px);
     font-size: clamp(0.8rem, 2vw, 1rem);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .ptcg-card-info-reveal-cards {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
   }
 }
 
@@ -160,18 +179,24 @@
   padding: clamp(1vh, 2vw, 2vh);
   position: relative;
   overflow: visible;
+  box-sizing: border-box;
 
   &.setup-game {
     height: clamp(25vh, 35vh, 40vh);
   }
 
   .cards-carousel {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 100%;
-    width: min(90vw, 1200px);
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
   }
 
   ptcg-card {
@@ -293,7 +318,6 @@ ptcg-card {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     height: auto;
     min-height: auto;
 
