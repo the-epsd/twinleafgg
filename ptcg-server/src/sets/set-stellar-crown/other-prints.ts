@@ -1,4 +1,5 @@
 import { Venusaurex } from "../set-pokemon-151/venusaur-ex";
+import { Applin as ApplinPRE } from '../set-prismatic-evolution/applin';
 import { Blastoiseex } from "../set-pokemon-151/blastoise-ex";
 import { Yamask } from "../set-paradox-rift/yamask";
 import { Raboot as RabootSCR27 } from "../set-stellar-crown/raboot";
@@ -41,6 +42,13 @@ import { Lacey } from './lacey';
 import { Terapagosex } from './terapagos-ex';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { BraveryCharm } from '../set-paldea-evolved/bravery-charm';
+
+// Ordinary reprints
+export class Applin extends ApplinPRE {
+  public set = 'SCR';
+  public setNumber = '12';
+  public fullName = 'Applin SCR 12'
+}
 
 // Illustration Rares
 export class BulbasaurIR extends Bulbasaur {
