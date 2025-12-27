@@ -108,6 +108,6 @@ export class PromptComponent implements OnChanges {
   }
 
   public isFullScreenPrompt(): boolean {
-    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'WaitPrompt';
+    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'WaitPrompt' || this.prompt?.type === 'Choose prize';
   }
 }

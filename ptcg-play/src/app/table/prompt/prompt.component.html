@@ -25,8 +25,6 @@
           [prompt]="prompt"></ptcg-prompt-choose-cards>
         <ptcg-prompt-choose-energy *ngSwitchCase="'Choose energy'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-choose-energy>
-        <ptcg-prompt-choose-prize *ngSwitchCase="'Choose prize'" [gameState]="gameState"
-          [prompt]="prompt"></ptcg-prompt-choose-prize>
         <ptcg-prompt-game-over *ngSwitchCase="'Game over'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-game-over>
         <ptcg-prompt-invite-player *ngSwitchCase="'Invite player'" [gameState]="gameState"
@@ -67,5 +65,10 @@
 <!-- Always render the choose-pokemon prompt if it's the current prompt -->
 <ptcg-prompt-choose-pokemon *ngIf="prompt?.type === 'Choose pokemon'" [gameState]="gameState" [prompt]="prompt">
 </ptcg-prompt-choose-pokemon>
+
+<!-- Always render the choose-prize prompt if it's the current prompt and not minimized -->
+<ptcg-prompt-choose-prize *ngIf="prompt?.type === 'Choose prize' && !minimized" [gameState]="gameState"
+  [prompt]="prompt">
+</ptcg-prompt-choose-prize>
 
 <ptcg-prompt-wait *ngIf="prompt?.type === 'WaitPrompt'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-wait>
