@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   ClientInfo, GameState, State, CardTarget, StateLog, Replay,
-  Base64, StateSerializer, PlayerStats
+  Base64, StateSerializer, PlayerStats, GamePhase
 } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -40,14 +40,28 @@ export class GameService {
 
   public join(gameId: number): Observable<GameState> {
     this.boardInteractionService.endBoardSelection();
-    // Set the game ID for reconnection tracking
-    this.socketService.setGameId(gameId);
 
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
         .subscribe((gameState: GameState) => {
           this.appendGameState(gameState);
+
+          // Only set game ID for reconnection tracking if the user is actually a player
+          // Check if the user's client ID is in the game's clientIds array
+          // and verify they are in the players array (not just a spectator)
+          const localGameState = this.sessionService.session.gameStates.find(
+            g => g.gameId === gameId && g.deleted === false
+          );
+          if (localGameState) {
+            const clientId = this.sessionService.session.clientId;
+            const isPlayer = localGameState.state.players.some(p => p.id === clientId);
+            if (isPlayer) {
+              // User is a player, set game ID for reconnection tracking
+              this.socketService.setGameId(gameId);
+            }
+          }
+
           observer.next(gameState);
         }, (error: any) => {
           observer.error(error);
@@ -290,6 +304,11 @@ export class GameService {
       };
       this.sessionService.set({ gameStates });
       this.boardInteractionService.updateGameLogs(logs);
+
+      // Clear game ID for reconnection tracking if game has finished
+      if (state.phase === GamePhase.FINISHED) {
+        this.socketService.clearGameId();
+      }
     }
   }
 

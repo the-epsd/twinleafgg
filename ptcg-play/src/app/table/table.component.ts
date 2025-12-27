@@ -106,10 +106,8 @@ export class TableComponent implements OnInit, OnDestroy {
           this.showSandboxPanel = false;
         }
 
-        // Set the game ID in the socket service for reconnection tracking
-        if (this.gameState && this.gameState.gameId) {
-          this.gameService.socketService.setGameId(this.gameState.gameId);
-        }
+        // Note: We no longer set game ID here when viewing games
+        // Game ID should only be set when actively joining as a player, not when spectating
 
         this.updatePlayers(this.gameState, clientId);
         this.updateCanUndo();
@@ -147,6 +145,12 @@ export class TableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Make sure selection state is cleared when leaving the table view
     this.boardInteractionService.endBoardSelection();
+
+    // Clear game ID when navigating away from the table
+    // This prevents reconnection attempts when user is no longer viewing the game
+    if (this.gameState && this.gameState.gameId) {
+      this.gameService.socketService.clearGameId();
+    }
   }
 
   public play() {
