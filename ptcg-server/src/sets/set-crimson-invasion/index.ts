@@ -8,6 +8,7 @@ import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
 import { GuzzlordGX } from './guzzlord-gx';
 import { Haunter } from './haunter';
+import { Hydreigon } from './hydreigon';
 import { KartanaGX } from './kartana-gx';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
@@ -34,6 +35,7 @@ export const setCrimsonInvasion: Card[] = [
   new Salandit(),
   new Salazzle(),
   new Haunter(),
+  new Hydreigon(),
   new SilvallyGXCIN(),
   new CounterCatcherCIN(),
   new BuzzwoleGX2CIN(),

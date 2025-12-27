@@ -18,7 +18,7 @@ import { StonjournerVMAX as StonjournerVMAXSSH116 } from "../set-sword-and-shiel
 import { AirBalloon as AirBalloonSSH156 } from "../set-sword-and-shield/air-balloon";
 import { MetalSaucer as MetalSaucerSSH170 } from "../set-sword-and-shield/metal-saucer";
 import { OrdinaryRod as OrdinaryRodSSH171 } from "../set-sword-and-shield/ordinary-rod";
-import { QuickBall as QuickBallMD86 } from "../set-majestic-dawn/quick-ball";
+import { QuickBall as QuickBallSSH179 } from "../set-sword-and-shield/quick-ball";
 import { GreatBall } from '../set-paldea-evolved/great-ball';
 import { Marnie } from './marnie';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
@@ -187,8 +187,8 @@ export class OrdinaryRod2SSH extends OrdinaryRodSSH171 {
   public set = 'SSH';
 }
 
-export class QuickBall2SSH extends QuickBallMD86 {
+export class QuickBall2SSH extends QuickBallSSH179 {
   public setNumber = '216';
-  public fullName: string = 'Quick Ball2 SSH';
+  public fullName: string = 'Quick Ball SSH 216';
   public set = 'SSH';
 }

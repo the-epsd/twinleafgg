@@ -567,6 +567,7 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
   });
 }
 
+// Made this so that we can easily change behavior for older formats in the future
 export function CLEAN_UP_SUPPORTER(effect: TrainerEffect, player: Player) {
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }

@@ -76,7 +76,7 @@ export class TapuLele extends PokemonCard {
 
   public set: string = 'SMP';
 
-  public setNumber = 'SM45';
+  public setNumber = '45';
 
   public cardImage = 'assets/cardback.png';
 

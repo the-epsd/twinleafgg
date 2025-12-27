@@ -35,7 +35,7 @@ export class GoopGasAttack extends TrainerCard {
     }
 
     if (effect instanceof PowerEffect && HAS_MARKER(this.GOOP_GAS_MARKER, effect.player, this)
-      && effect.power.powerType === PowerType.POKEMON_POWER) {
+      && (effect.power.powerType === PowerType.POKEMON_POWER || effect.power.powerType === PowerType.POKEBODY || effect.power.powerType === PowerType.POKEPOWER)) {
 
       throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
