@@ -11,11 +11,13 @@ import { ArceusLvX3 } from './arceus-lv-x-3';
 import { ArceusMetal } from './arceus-metal';
 import { ArceusPsychic } from './arceus-psychic';
 import { ArceusWater } from './arceus-water';
+import { BeginningDoor } from './beginning-door';
 import { ExpertBelt } from './expert-belt';
 import { Gengar } from './gengar';
 import { Spiritomb } from './spiritomb';
 
 export const setArceus: Card[] = [
+  new BeginningDoor(),
   new ExpertBelt(),
   new Arceus(),
   new ArceusMetal(),

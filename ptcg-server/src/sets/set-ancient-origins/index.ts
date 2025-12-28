@@ -8,9 +8,11 @@ import { Cottonee } from './cottonee';
 import { EcoArm } from './eco-arm';
 import { Eevee } from './eevee';
 import { FadedTown } from './faded-town';
+import { Flareon } from './flareon';
 import { GiratinaEX } from './giratina-ex';
 import { HexManiac } from './hex-maniac';
 import { HoopaEX } from './hoopa-ex';
+import { Jolteon } from './jolteon';
 import { Unown } from './unown';
 import { Vaporeon } from './vaporeon';
 import { Vespiquen } from './vespiquen';
@@ -28,9 +30,11 @@ export const setAncientOrigins: Card[] = [
   new EcoArm(),
   new Eevee(),
   new FadedTown(),
+  new Flareon(),
   new GiratinaEX(),
   new HexManiac(),
   new HoopaEX(),
+  new Jolteon(),
   new Unown(),
   new Vaporeon(),
   new Vileplume(),

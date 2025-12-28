@@ -108,6 +108,34 @@ export class PokemonCardList extends CardList {
     return pokemonCard.stage === stage;
   }
 
+  public isEvolved(): boolean {
+    const pokemons = this.getPokemons();
+    const pokemonCard = this.getPokemonCard();
+
+    // Single Pokémon (not evolved)
+    if (pokemons.length === 1) {
+      return false;
+    }
+
+    // LEGEND cards are not considered evolved
+    if (pokemonCard?.stage === Stage.LEGEND) {
+      return false;
+    }
+
+    // VUNION cards are not considered evolved
+    if (pokemonCard?.stage === Stage.VUNION) {
+      return false;
+    }
+
+    // LV_X placed on a Basic Pokémon is not considered evolved
+    if (pokemonCard?.stage === Stage.LV_X && pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
+      return false;
+    }
+
+    // Otherwise, it's evolved
+    return true;
+  }
+
   clearAttackEffects(): void {
     this.marker.markers = [];
   }
