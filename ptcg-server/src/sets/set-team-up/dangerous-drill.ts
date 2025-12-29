@@ -55,7 +55,7 @@ export class DangerousDrill extends TrainerCard {
 
       let specialEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
@@ -136,7 +136,7 @@ export class DangerousDrill extends TrainerCard {
 
       const specialEnergyBlocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
           return;
         } else {
           specialEnergyBlocked.push(target);

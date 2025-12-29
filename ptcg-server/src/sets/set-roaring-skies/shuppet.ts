@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { GameMessage } from '../../game/game-message';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
@@ -20,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   let hasPokemonWithEnergy = false;
   const blocked: CardTarget[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+    if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
       hasPokemonWithEnergy = true;
     } else {
       blocked.push(target);
@@ -52,8 +51,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
-    target,
-    { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+    target.energies,
+    { energyType: EnergyType.SPECIAL },
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];

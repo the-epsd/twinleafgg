@@ -94,7 +94,7 @@ export class Arcanineex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // See if there is holon energy attached
-      const hasReactEnergy = player.active.cards.some(card => card.name === 'React Energy');
+      const hasReactEnergy = player.active.energies.cards.some(card => card.name === 'React Energy');
 
       const options: { message: GameMessage, action: () => void }[] = [];
 
@@ -144,9 +144,9 @@ export class Arcanineex extends PokemonCard {
           {
             allowCancel: false,
           }), choice => {
-          const option = options[choice];
-          option.action();
-        });
+            const option = options[choice];
+            option.action();
+          });
       }
     }
 

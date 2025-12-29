@@ -16,7 +16,7 @@ export class ArticunoGX extends PokemonCard {
   public cardType: CardType = W;
   public hp: number = 170;
   public weakness = [{ type: M }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Legendary Ascent',
@@ -26,14 +26,14 @@ export class ArticunoGX extends PokemonCard {
   public attacks = [
     {
       name: 'Ice Wing',
-      cost: [ W, W, C ],
+      cost: [W, W, C],
       damage: 130,
       text: ''
     },
 
     {
       name: 'Cold Crush-GX',
-      cost: [ W ],
+      cost: [W],
       damage: 0,
       gxAttack: true,
       text: 'Discard all Energy from both Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
@@ -89,7 +89,7 @@ export class ArticunoGX extends PokemonCard {
               return;
             }
             blockedTo.push(target);
-            if (cardList.cards.some(c => c instanceof EnergyCard && c.name === 'Water Energy')) {
+            if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.name === 'Water Energy')) {
               hasEnergyOnBench = true;
             }
           });

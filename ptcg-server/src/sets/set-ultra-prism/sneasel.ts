@@ -15,7 +15,7 @@ export class Sneasel extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -46,7 +46,7 @@ export class Sneasel extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      
+
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
       ], heads => {
@@ -62,17 +62,17 @@ export class Sneasel extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Opponent has no energy cards attached
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard) && !opponent.bench.some(c => c.cards.some(c => c instanceof EnergyCard))) {
+      if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard) && !opponent.bench.some(c => c.energies.cards.some(c => c instanceof EnergyCard))) {
         return state;
       }
 
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (!cardList.cards.some(c => c instanceof EnergyCard)) {
+        if (!cardList.energies.cards.some(c => c instanceof EnergyCard)) {
           blocked.push(target);
         }
       });
-      
+
       let targets: PokemonCardList[] = [];
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -99,7 +99,7 @@ export class Sneasel extends PokemonCard {
         });
       });
     }
-    
+
     return state;
   }
 }

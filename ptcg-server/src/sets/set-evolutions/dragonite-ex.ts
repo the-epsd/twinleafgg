@@ -105,7 +105,7 @@ export class DragoniteEX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard)) {
         return state;
       }
 

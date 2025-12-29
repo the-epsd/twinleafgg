@@ -47,8 +47,8 @@ export class ChienPao extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-        
-      if (IS_ABILITY_BLOCKED(store, state, effect.player, this)){ return state; }
+
+      if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) { return state; }
 
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
@@ -70,10 +70,10 @@ export class ChienPao extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.energies.cards.some(c => c instanceof EnergyCard)) {
         return state;
       }
 

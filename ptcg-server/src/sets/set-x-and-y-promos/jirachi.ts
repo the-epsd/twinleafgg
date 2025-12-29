@@ -1,6 +1,6 @@
 // ptcg-server\src\sets\set-base-set\Jirachi.ts
 
-import { StoreLike, State, StateUtils, GameMessage, Card, PlayerType, PokemonCardList, CardTarget, EnergyCard, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, Card, PlayerType, PokemonCardList, CardTarget, ChooseCardsPrompt } from '../../game';
 import { CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
@@ -58,7 +58,7 @@ export class Jirachi extends PokemonCard {
       let hasPokemonWithEnergy = false;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
           hasPokemonWithEnergy = true;
         } else {
           blocked.push(target);

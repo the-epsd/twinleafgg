@@ -42,7 +42,7 @@ export class Garchomp extends PokemonCard {
         return state;
       }
 
-      if (effect.source.cards.some(card => card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL)) {
+      if (effect.source.energies.cards.some(card => card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL)) {
         return state;
       }
 

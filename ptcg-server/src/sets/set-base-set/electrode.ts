@@ -1,6 +1,7 @@
 import { GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { CardType, EnergyType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { EnergyCard } from '../../game/store/card/energy-card';
 import { Power, PowerType } from '../../game/store/card/pokemon-types';
 import { checkState } from '../../game/store/effect-reducers/check-effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -12,7 +13,7 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class Electrode extends PokemonCard {
+export class Electrode extends PokemonCard implements EnergyCard {
 
   public name = 'Electrode';
 
@@ -56,7 +57,13 @@ export class Electrode extends PokemonCard {
 
   // Which energies this provides when attached as an energy
   public provides: CardType[] = [];
+  public energyType = EnergyType.SPECIAL;
   public chosenEnergyType: CardType | undefined;
+  // EnergyCard interface properties
+  public text: string = '';
+  public isBlocked = false;
+  public blendedEnergies: CardType[] = [];
+  public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -122,26 +129,22 @@ export class Electrode extends PokemonCard {
             return;
           }
 
-          // Moving it onto the pokemon
+          // Moving it onto the pokemon - first to main cards array, then to energies
           effect.preventDefault = true;
-          player.discard.moveCardTo(this, targets[0]);
-
-          // Reposition it to be with energy cards (at the beginning of the card list)
-          targets[0].cards.unshift(targets[0].cards.splice(targets[0].cards.length - 1, 1)[0]);
-
-          // Register this card as energy in the PokemonCardList
-          targets[0].addPokemonAsEnergy(this);
+          const cardList = StateUtils.findCardList(state, this);
+          if (cardList) {
+            cardList.moveCardTo(this, targets[0]);
+            if (!targets[0].energies.cards.includes(this)) {
+              targets[0].energies.cards.push(this);
+            }
+          }
         });
       });
     }
 
     // Provide energy when attached as energy and included in CheckProvidedEnergyEffect
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      // Check if this card is registered as an energy card in the PokemonCardList
-      const pokemonList = effect.source;
-      if (pokemonList.energyCards.includes(this)) {
-        effect.energyMap.push({ card: this, provides: this.provides });
-      }
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.energies.cards.includes(this)) {
+      effect.energyMap.push({ card: this, provides: this.provides });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -99,7 +99,7 @@ export class Drifblim extends PokemonCard {
 
       let hasPokemonWithEnergy = false;
 
-      if (activePokemonCard && activeCardList.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
+      if (activePokemonCard && activeCardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
         hasPokemonWithEnergy = true;
       }
 

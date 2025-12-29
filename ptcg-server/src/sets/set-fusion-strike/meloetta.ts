@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, EnergyCard } from '../../game';
+import { StoreLike, State, PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -53,7 +53,7 @@ export class Meloetta extends PokemonCard {
 
       let energyCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
           checkProvidedEnergyEffect.energyMap.forEach(em => {
             energyCount += em.provides.filter(cardType => {
               return em.card.tags.includes(CardTag.FUSION_STRIKE);

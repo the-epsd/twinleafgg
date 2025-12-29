@@ -71,7 +71,7 @@ export class SwoopTeleporter extends TrainerCard {
 
           // Discard the pokemon
           target[0].cards.forEach(c => {
-            if (c instanceof PokemonCard && !target[0].energyCards.includes(c)) {
+            if (c instanceof PokemonCard && !target[0].energies.cards.includes(c)) {
               MOVE_CARD_TO(state, c, player.discard);
             }
           });

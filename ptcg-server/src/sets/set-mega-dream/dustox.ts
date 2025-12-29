@@ -66,7 +66,7 @@ export class Dustox extends PokemonCard {
       }
 
       // Check if opponent's active has energy cards
-      const hasEnergy = opponent.active.cards.some(card => card.superType === SuperType.ENERGY);
+      const hasEnergy = opponent.active.energies.cards.some(card => card.superType === SuperType.ENERGY);
       if (!hasEnergy) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }

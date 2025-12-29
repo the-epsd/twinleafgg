@@ -32,7 +32,7 @@ export class HolonEnergyFF extends EnergyCard {
       && !IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.opponent, this, effect.target)) {
 
       console.log('Holon Energy FF effect');
-      if (effect.target.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Fire Energy')) {
+      if (effect.target.energies.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Fire Energy')) {
         console.log('Holon Energy FF effect & fire energy detected');
         effect.ignoreWeakness = true;
       }
@@ -44,14 +44,14 @@ export class HolonEnergyFF extends EnergyCard {
       && !effect.source.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)
       && !IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
 
-      if (effect.source.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy')) {
+      if (effect.source.energies.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy')) {
         effect.ignoreResistance = true;
       }
     }
 
     if (effect instanceof CheckPokemonStatsEffect
       && effect.target.cards.includes(this)
-      && effect.target.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Fire Energy')) {
+      && effect.target.energies.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Fire Energy')) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, player);
       if (!IS_SPECIAL_ENERGY_BLOCKED(store, state, opponent, this, effect.target)) {

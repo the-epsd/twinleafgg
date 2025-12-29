@@ -41,7 +41,7 @@ export class PokeParksMudkip extends PokemonCard {
           const player = effect.player;
           const opponent = effect.opponent;
           // If defending Pokemon has no energy cards attached, return early
-          if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+          if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard)) {
             return state;
           }
 

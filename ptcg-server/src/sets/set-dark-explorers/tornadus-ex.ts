@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, Card, EnergyCard, CoinFlipPrompt,
-  ChooseCardsPrompt } from '../../game';
+import {
+  StoreLike, State, StateUtils, Card, EnergyCard, CoinFlipPrompt,
+  ChooseCardsPrompt
+} from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -12,7 +14,7 @@ function* usePowerBlast(next: Function, store: StoreLike, state: State,
   const player = effect.player;
 
   // Active Pokemon has no energy cards attached
-  if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+  if (!player.active.energies.cards.some(c => c instanceof EnergyCard)) {
     return state;
   }
 
@@ -48,7 +50,7 @@ function* usePowerBlast(next: Function, store: StoreLike, state: State,
 
 export class TornadusEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -60,18 +62,18 @@ export class TornadusEx extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Blow Through',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'If there is any Stadium card in play, this attack does 30 ' +
         'more damage.'
     }, {
       name: 'Power Blast',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
       text: 'Flip a coin. If tails, discard an Energy attached to this Pokemon.'
     },

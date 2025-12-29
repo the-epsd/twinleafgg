@@ -5,8 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList, EnergyCard} from '../../game';
+import {
+  PlayerType, SlotType, CardTarget, GameError, GameMessage,
+  PokemonCardList, EnergyCard
+} from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -15,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: CardTarget[] = [];
   let hasPokemonWithDamage: boolean = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.damage === 0 || !cardList.cards.some(c => c instanceof EnergyCard && c.name === 'Grass Energy')) {
+    if (cardList.damage === 0 || !cardList.energies.cards.some(c => c instanceof EnergyCard && c.name === 'Grass Energy')) {
       blocked.push(target);
     } else {
       hasPokemonWithDamage = true;
@@ -46,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false, blocked }
   ), results => {
     targets = results || [];
@@ -61,7 +63,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Discard trainer only when user selected a Pokemon
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   // Heal Pokemon
   const healEffect = new HealEffect(player, target, 80);

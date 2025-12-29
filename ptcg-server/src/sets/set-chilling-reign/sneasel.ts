@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardTag, CardType, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { PokemonCard, Stage, CardTag, CardType, Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -48,7 +48,8 @@ export class Sneasel extends PokemonCard {
         if (result === true) {
 
           // Defending Pokemon has no energy cards attached
-          if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+          // Check if any card in energies array has energyType property (works for both EnergyCard and Pokemon-as-energy)
+          if (!opponent.active.energies.cards.some(c => (c as any).energyType !== undefined)) {
             return state;
           }
 
@@ -56,8 +57,8 @@ export class Sneasel extends PokemonCard {
           return store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
+            opponent.active.energies,
+            {},
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             card = selected[0];

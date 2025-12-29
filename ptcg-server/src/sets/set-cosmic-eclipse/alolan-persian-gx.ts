@@ -49,7 +49,7 @@ export class AlolanPersianGX extends PokemonCard {
 
       const isTagTeam = sourceCard?.tags.includes(CardTag.TAG_TEAM);
       const isUltraBeast = sourceCard?.tags.includes(CardTag.ULTRA_BEAST);
-      const hasSpecialEnergy = effect.source.cards.some(energy => energy.energyType === EnergyType.SPECIAL);
+      const hasSpecialEnergy = effect.source.energies.cards.some(energy => energy.energyType === EnergyType.SPECIAL);
 
       if (pokemonCard !== this) {
         return state;

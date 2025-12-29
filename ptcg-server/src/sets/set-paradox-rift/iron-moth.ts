@@ -79,7 +79,7 @@ export class IronMoth extends PokemonCard {
             return;
           }
           blockedTo.push(target);
-          if (cardList.cards.some(c => c instanceof EnergyCard)) {
+          if (cardList.energies.cards.some(c => c instanceof EnergyCard)) {
             hasEnergyOnBench = true;
           }
         });

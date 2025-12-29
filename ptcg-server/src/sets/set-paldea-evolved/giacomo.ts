@@ -36,7 +36,7 @@ export class Giacomo extends TrainerCard {
       let hasPokemonWithEnergy = false;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
           hasPokemonWithEnergy = true;
           oppSpecialPokemon++;
         } else {
