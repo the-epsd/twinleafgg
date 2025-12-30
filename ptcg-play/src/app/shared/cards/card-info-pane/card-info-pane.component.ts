@@ -79,15 +79,17 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     "N's",
     "Hop's",
     "Team Rocket's",
-    // "Misty's",
-    // "Brock's",
-    // "Blaine's",
-    // "Erika's",
-    // "Giovanni's",
-    // "Lt. Surge's",
-    // "Rocket's",
-    // "Sabrina's",
-    // "Koga's"
+    "Lillie's",
+    "Larry's",
+    "Misty's",
+    "Brock's",
+    "Blaine's",
+    "Erika's",
+    "Giovanni's",
+    "Lt. Surge's",
+    "Rocket's",
+    "Sabrina's",
+    "Koga's"
   ];
 
   parseCardName(name: string): { prefix: string | null, rest: string } {

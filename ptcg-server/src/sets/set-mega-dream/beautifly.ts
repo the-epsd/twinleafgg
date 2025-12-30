@@ -27,7 +27,7 @@ export class Beautifly extends PokemonCard {
     {
       name: 'Energy Straw',
       cost: [G],
-      damage: 0,
+      damage: 80,
       damageCalculation: 'x',
       text: 'Your opponent reveals their hand, and this attack does 80 damage for each Energy card you find there.'
     }

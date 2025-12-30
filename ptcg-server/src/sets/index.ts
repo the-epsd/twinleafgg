@@ -179,10 +179,10 @@ export * from './set-mega-evolution-promos';
 export * from './set-mega-evolution';
 export * from './set-phantasmal-flames';
 export * from './set-mega-dream';
+export * from './set-perfect-order';
 
 //TEST
 export * from './set-test';
-
 
 //Sort Later
 export * from './set-legends-awakened';

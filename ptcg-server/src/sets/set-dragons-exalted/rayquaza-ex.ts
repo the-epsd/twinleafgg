@@ -35,7 +35,7 @@ export class RayquazaEx extends PokemonCard {
   ];
 
   public set: string = 'DRX';
-  public name: string = 'Rayquaza EX';
+  public name: string = 'Rayquaza-EX';
   public fullName: string = 'Rayquaza EX DRX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';

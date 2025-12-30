@@ -5,7 +5,6 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPromp
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,14 +34,7 @@ export class Giratina extends PokemonCard {
   public name: string = 'Giratina';
   public fullName: string = 'Giratina LOT';
 
-  public readonly DISTORTION_DOOR_MARKER = 'DISTORTION_DOOR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.DISTORTION_DOOR_MARKER, this);
-    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
@@ -54,11 +46,6 @@ export class Giratina extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Power already used
-      if (player.marker.hasMarker(this.DISTORTION_DOOR_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
       // No open slots, throw error
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -66,9 +53,6 @@ export class Giratina extends PokemonCard {
 
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
-
-      // Add Marker
-      player.marker.addMarker(this.DISTORTION_DOOR_MARKER, this);
 
       const cards = player.discard.cards.filter(c => c === this);
       cards.forEach(card => {

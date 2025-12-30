@@ -1,7 +1,7 @@
 import { Card } from '../store/card/card';
 import { CardManager } from './card-manager';
 import { EnergyCard } from '../store/card/energy-card';
-import { EnergyType, Stage, CardType, CardTag } from '../store/card/card-types';
+import { EnergyType, Stage, CardType, CardTag, Format } from '../store/card/card-types';
 import { PokemonCard } from '../store/card/pokemon-card';
 
 export class DeckAnalyser {
@@ -20,7 +20,7 @@ export class DeckAnalyser {
     });
   }
 
-  public isValid(): boolean {
+  public isValid(format?: Format): boolean {
     const countMap: { [name: string]: number } = {};
     const prismStarCards = new Set<string>();
     let hasBasicPokemon = false;
@@ -33,7 +33,9 @@ export class DeckAnalyser {
     let arceusRuleCount = 0;
     let arceusCount = 0;
 
-    if (this.cards.length !== 60) {
+    // Pre-Release format uses 40 cards, all other formats use 60
+    const requiredDeckSize = format === Format.PRE_RELEASE ? 40 : 60;
+    if (this.cards.length !== requiredDeckSize) {
       return false;
     }
 

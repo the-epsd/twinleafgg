@@ -185,6 +185,7 @@
   "LABEL_UNLIMITED": "Illimité",
   "LABEL_ETERNAL": "Éternel",
   "LABEL_RETRO": "Rétro",
+  "LABEL_PRE_RELEASE": "Pré-Lancement",
   "LOGIN_CHANGE_SERVER": "Changer d'adresse de serveur",
   "LOGIN_CHANGE_SERVER_SUCCESS": "L'adresse du serveur a été modifiée avec succès.",
   "LOGIN_CREATE_ACCOUNT": "Créer un nouveau compte",

@@ -221,8 +221,8 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
     }
 
     // Also count Pokemon cards used as energy (count them as colorless)
-    if (this.cardList.energyCards && this.cardList.energyCards.length > 0) {
-      this.availableEnergy[CardType.COLORLESS] = (this.availableEnergy[CardType.COLORLESS] || 0) + this.cardList.energyCards.length;
+    if (this.cardList.energies && this.cardList.energies.cards && this.cardList.energies.cards.length > 0) {
+      this.availableEnergy[CardType.COLORLESS] = (this.availableEnergy[CardType.COLORLESS] || 0) + this.cardList.energies.cards.length;
     }
   }
 

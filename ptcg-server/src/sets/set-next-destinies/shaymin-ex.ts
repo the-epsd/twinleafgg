@@ -31,7 +31,7 @@ export class ShayminEX extends PokemonCard {
   public set: string = 'NXD';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
-  public name: string = 'Shaymin EX';
+  public name: string = 'Shaymin-EX';
   public fullName: string = 'Shaymin EX NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

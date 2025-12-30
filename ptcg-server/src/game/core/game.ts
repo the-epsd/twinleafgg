@@ -41,6 +41,7 @@ export class Game implements StoreHandler {
 
   // Reconnection-related properties
   private disconnectedPlayers: Map<number, DisconnectedPlayer> = new Map();
+  private disconnectionTimeouts: Map<number, NodeJS.Timeout> = new Map();
   private isPaused: boolean = false;
   private pausedAt: number = 0;
 
@@ -81,6 +82,9 @@ export class Game implements StoreHandler {
     this.store.cleanup();
     this.arbiter.cleanup();
 
+    // Clear all disconnection timeouts
+    this.clearAllDisconnectionTimeouts();
+
     // Clear disconnected players tracking
     this.disconnectedPlayers.clear();
     this.isPaused = false;
@@ -118,6 +122,11 @@ export class Game implements StoreHandler {
         c.onStateChange(this, state);
       }
     });
+
+    // Clean up all disconnection timeouts if game is finished
+    if (state.phase === GamePhase.FINISHED) {
+      this.clearAllDisconnectionTimeouts();
+    }
 
     if (state.phase !== GamePhase.FINISHED && this.timeoutRef === undefined) {
       this.startTimer();
@@ -225,6 +234,19 @@ export class Game implements StoreHandler {
       this.pauseGame();
     }
 
+    // Schedule auto-forfeit timer (15 seconds)
+    // Note: We already checked that state.phase !== FINISHED at the start of this method
+    const timeout = setTimeout(() => {
+      // Check if player is still disconnected and game is still active
+      if (this.disconnectedPlayers.has(client.id) && this.state.phase !== GamePhase.FINISHED) {
+        this.handleReconnectionTimeout(client.id);
+      }
+      // Remove timeout reference
+      this.disconnectionTimeouts.delete(client.id);
+    }, 15000); // 15 seconds
+
+    this.disconnectionTimeouts.set(client.id, timeout);
+
     // Notify other players of disconnection
     this.notifyPlayersOfDisconnection(client);
 
@@ -247,7 +269,20 @@ export class Game implements StoreHandler {
     if (state.phase === GamePhase.FINISHED) {
       // Game ended while player was disconnected
       this.disconnectedPlayers.delete(client.id);
+      // Clean up timeout if it exists
+      const timeout = this.disconnectionTimeouts.get(client.id);
+      if (timeout) {
+        clearTimeout(timeout);
+        this.disconnectionTimeouts.delete(client.id);
+      }
       return false;
+    }
+
+    // Cancel auto-forfeit timeout if player reconnects before 15 seconds
+    const timeout = this.disconnectionTimeouts.get(client.id);
+    if (timeout) {
+      clearTimeout(timeout);
+      this.disconnectionTimeouts.delete(client.id);
     }
 
     // Add client back to active clients
@@ -411,6 +446,13 @@ export class Game implements StoreHandler {
     // Remove from disconnected players
     this.disconnectedPlayers.delete(clientId);
 
+    // Remove timeout reference (should already be cleaned up, but ensure it's gone)
+    const timeout = this.disconnectionTimeouts.get(clientId);
+    if (timeout) {
+      clearTimeout(timeout);
+      this.disconnectionTimeouts.delete(clientId);
+    }
+
     // Resume game if it was paused for this player
     if (this.isPaused && disconnectedPlayer.wasActivePlayer) {
       this.resumeGame();
@@ -421,6 +463,16 @@ export class Game implements StoreHandler {
     this.store.dispatch(action);
 
     logger.log(`Player reconnection timeout - game aborted: gameId=${this.id}, playerId=${clientId}, disconnectionDuration=${Date.now() - disconnectedPlayer.disconnectedAt}`);
+  }
+
+  /**
+   * Clear all disconnection timeouts
+   */
+  private clearAllDisconnectionTimeouts(): void {
+    for (const timeout of this.disconnectionTimeouts.values()) {
+      clearTimeout(timeout);
+    }
+    this.disconnectionTimeouts.clear();
   }
 
   /**

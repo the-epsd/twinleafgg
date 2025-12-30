@@ -9,7 +9,7 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 export class Golisopodex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wimpod';
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 270;
   public weakness = [{ type: L }];
@@ -41,8 +41,8 @@ export class Golisopodex extends PokemonCard {
     // Swing and Skedaddle
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+
+      if (!player.active.energies.cards.some(c => c instanceof EnergyCard)) {
         return state;
       }
 
@@ -53,7 +53,7 @@ export class Golisopodex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS ],
+        [CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

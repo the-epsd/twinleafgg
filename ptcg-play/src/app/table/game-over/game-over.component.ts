@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Card, GameWinner, GamePhase, SuperType } from 'ptcg-server';
+import { Card, GameWinner, GamePhase, SuperType, Format } from 'ptcg-server';
 import { LocalGameState, PlayerGameStats } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
@@ -37,6 +37,8 @@ export class GameOverComponent implements OnInit {
   public opponentTopPokemon: PokemonDamageStats | null = null;
   public isPlaying = false;
   public isDeleted = false;
+  public maxPrizes = 6; // Default to 6, will be updated from game state
+  public prizeIndicators: number[] = [1, 2, 3, 4, 5, 6]; // Will be updated dynamically
   private gameId: number;
   private localId: number;
 
@@ -76,6 +78,15 @@ export class GameOverComponent implements OnInit {
 
     const state = this.gameState.state;
     const currentPlayerId = this.sessionService.session.clientId;
+    
+    // Determine max prizes from game state (6 for all formats)
+    if (state.players && state.players.length > 0 && state.players[0].prizes) {
+      this.maxPrizes = state.players[0].prizes.length;
+    } else {
+      this.maxPrizes = 6; // state.gameSettings?.format === Format.PRE_RELEASE ? 4 : 6;
+    }
+    // Generate prize indicator array dynamically
+    this.prizeIndicators = Array.from({ length: this.maxPrizes }, (_, i) => i + 1);
 
     // Determine winner
     if (this.prompt.winner !== GameWinner.DRAW) {
@@ -179,11 +190,15 @@ export class GameOverComponent implements OnInit {
 
     // Calculate prizes taken based on remaining prizes (without artificial inflation)
     if (state.players[playerIndex] && state.players[playerIndex].prizes) {
-      this.playerPrizesTaken = 6 - state.players[playerIndex].prizes.length;
+      const totalPrizes = state.players[playerIndex].prizes.length;
+      const remainingPrizes = state.players[playerIndex].prizes.filter(p => p.cards.length > 0).length;
+      this.playerPrizesTaken = totalPrizes - remainingPrizes;
     }
 
     if (state.players[opponentIndex] && state.players[opponentIndex].prizes) {
-      this.opponentPrizesTaken = 6 - state.players[opponentIndex].prizes.length;
+      const totalPrizes = state.players[opponentIndex].prizes.length;
+      const remainingPrizes = state.players[opponentIndex].prizes.filter(p => p.cards.length > 0).length;
+      this.opponentPrizesTaken = totalPrizes - remainingPrizes;
     }
 
     // Try alternate properties if available
@@ -531,12 +546,14 @@ export class GameOverComponent implements OnInit {
    */
   private validateStatistics(): void {
     try {
-      // Validate prize counts are within expected range (0-6)
-      if (this.playerPrizesTaken < 0 || this.playerPrizesTaken > 6) {
+      // Validate prize counts are within expected range (0-6 for all formats)
+      // Get total prize count from game state if available
+      const maxPrizes = this.gameState?.state?.players?.[0]?.prizes?.length || 6;
+      if (this.playerPrizesTaken < 0 || this.playerPrizesTaken > maxPrizes) {
         // Invalid player prize count
       }
 
-      if (this.opponentPrizesTaken < 0 || this.opponentPrizesTaken > 6) {
+      if (this.opponentPrizesTaken < 0 || this.opponentPrizesTaken > maxPrizes) {
         // Invalid opponent prize count
       }
 

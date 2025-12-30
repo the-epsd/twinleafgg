@@ -541,13 +541,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   }
 
   private setupEnergyCards(cardList: PokemonCardList) {
-    for (const card of cardList.cards) {
-      if (card.superType === SuperType.ENERGY || cardList.energyCards.includes(card)) {
-        if (this.energyCards.length < MAX_ENERGY_CARDS) {
-          this.energyCards.push(card);
-        } else {
-          this.moreEnergies++;
-        }
+    for (const card of cardList.energies.cards) {
+      if (this.energyCards.length < MAX_ENERGY_CARDS) {
+        this.energyCards.push(card);
+      } else {
+        this.moreEnergies++;
       }
     }
   }

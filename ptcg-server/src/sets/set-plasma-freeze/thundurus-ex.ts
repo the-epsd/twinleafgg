@@ -29,7 +29,7 @@ export class ThundurusEX extends PokemonCard {
   public set: string = 'PLF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
-  public name: string = 'Thundurus EX';
+  public name: string = 'Thundurus-EX';
   public fullName: string = 'Thundurus EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -90,7 +90,7 @@ export class ThundurusEX extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let hasPlasmaEnergy: boolean = false;
-      const defendingPokemonHasEnergy = opponent.active.cards.some(c => c instanceof EnergyCard);
+      const defendingPokemonHasEnergy = opponent.active.energies.cards.some(c => c instanceof EnergyCard);
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.name === 'Plasma Energy') {

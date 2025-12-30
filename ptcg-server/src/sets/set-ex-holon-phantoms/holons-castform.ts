@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DRAW_UP_TO_X_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
-export class HolonsCastform extends PokemonCard {
+export class HolonsCastform extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.HOLONS];
   public cardType: CardType = C;
@@ -36,6 +36,12 @@ export class HolonsCastform extends PokemonCard {
 
   // Which energies this provides when not attached as an energy
   public provides: CardType[] = [CardType.COLORLESS];
+  public energyType = EnergyType.SPECIAL;
+  // EnergyCard interface properties
+  public text: string = '';
+  public isBlocked = false;
+  public blendedEnergies: CardType[] = [];
+  public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // The Special Energy Stuff
@@ -114,33 +120,19 @@ export class HolonsCastform extends PokemonCard {
           store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: '' + cards[0].name });
           targets[0].moveCardsTo(cards, player.hand);
 
-          // Moving it onto the pokemon
+          // Moving it onto the pokemon - first to main cards array, then to energies
           effect.preventDefault = true;
           player.hand.moveCardTo(this, targets[0]);
-
-          // Reposition it to be with energy cards (at the beginning of the card list)
-          targets[0].cards.unshift(targets[0].cards.splice(targets[0].cards.length - 1, 1)[0]);
-
-          // Register this card as energy in the PokemonCardList
-          targets[0].addPokemonAsEnergy(this);
+          if (!targets[0].energies.cards.includes(this)) {
+            targets[0].energies.cards.push(this);
+          }
         });
       });
     }
 
     // Provide energy when attached as energy and included in CheckProvidedEnergyEffect
-    if (effect instanceof CheckProvidedEnergyEffect
-      && effect.source.cards.includes(this)) {
-
-      // Check if this card is registered as an energy card in the PokemonCardList
-      const pokemonList = effect.source;
-      if (pokemonList.energyCards.includes(this)) {
-        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
-      }
-    }
-
-    // Reset the flag when the card is discarded
-    if (effect instanceof DiscardCardsEffect && effect.target.cards.includes(this)) {
-      effect.target.removePokemonAsEnergy(this);
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.energies.cards.includes(this)) {
+      effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
     }
 
     // Delta Draw

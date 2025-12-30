@@ -121,17 +121,23 @@ export class Suicuneex extends PokemonCard {
 
               const source = StateUtils.getTarget(state, player, transfer.from);
               const target = StateUtils.getTarget(state, player, transfer.to);
-              source.moveCardTo(transfer.card, target);
 
               if (transfer.card instanceof PokemonCard) {
-                // Remove it from the source
-                source.removePokemonAsEnergy(transfer.card);
-
-                // Reposition it to be with energy cards (at the beginning of the card list)
-                target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
-
-                // Register this card as energy in the PokemonCardList
-                target.addPokemonAsEnergy(transfer.card);
+                // If card is in source energies, move it from there; otherwise move from main cards array
+                if (source.energies.cards.includes(transfer.card)) {
+                  source.energies.moveCardTo(transfer.card, target.energies);
+                  // Also ensure it's in target's main cards array
+                  if (!target.cards.includes(transfer.card)) {
+                    target.cards.push(transfer.card);
+                  }
+                } else {
+                  source.moveCardTo(transfer.card, target);
+                  if (!target.energies.cards.includes(transfer.card)) {
+                    target.energies.cards.push(transfer.card);
+                  }
+                }
+              } else {
+                source.moveCardTo(transfer.card, target);
               }
             }
           });

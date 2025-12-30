@@ -7,7 +7,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../..
 export class PalkiaEX extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public tags: string[] = [CardTag.POKEMON_EX];
+  public tags: string[] = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public cardType: CardType = N;
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: N }];
@@ -31,7 +31,7 @@ export class PalkiaEX extends PokemonCard {
   public set: string = 'PLB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
-  public name: string = 'Palkia EX';
+  public name: string = 'Palkia-EX';
   public fullName: string = 'Palkia EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

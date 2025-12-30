@@ -39,7 +39,7 @@ export class YveltalEx extends PokemonCard {
 
   public set: string = 'XY';
 
-  public name: string = 'Yveltal EX';
+  public name: string = 'Yveltal-EX';
 
   public fullName: string = 'Yveltal EX XY';
 

@@ -3,13 +3,14 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import {
   PowerType,
   GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike,
-  GameError
+  GameError,
+  CardTarget
 } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Toxtricity extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -55,6 +56,13 @@ export class Toxtricity extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (card.cardType !== CardType.DARK) {
+          blocked2.push(target);
+        }
+      });
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -62,15 +70,18 @@ export class Toxtricity extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-        { allowCancel: true, min: 0, max: 1 }
+        { allowCancel: true, min: 0, max: 1, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
+        ABILITY_USED(player, this);
+        player.marker.addMarker(this.BAD_BOOST_MARKER, this);
+
         // cancelled by user
         if (transfers.length === 0) {
           SHUFFLE_DECK(store, state, player);
           return;
         }
-        player.marker.addMarker(this.BAD_BOOST_MARKER, this);
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);

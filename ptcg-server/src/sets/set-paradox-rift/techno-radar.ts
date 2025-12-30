@@ -93,23 +93,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class TechnoRadar extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'G';
-
+  public tags = [CardTag.FUTURE];
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '180';
-
   public name: string = 'Techno Radar';
-
   public fullName: string = 'Techno Radar PAR';
 
   public text: string =
-    'Yau can play this card only if you discard another card from your hand. ' +
-    '' +
-    'Search your deck for up to 2 Future Pokémon, reveal them, and put it into your hand. Then, shuffle your deck.';
+    `You can play this card only if you discard another card from your hand.
+
+    Search your deck for up to 2 Future Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

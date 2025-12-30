@@ -16,37 +16,28 @@ import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class ShiningLugia extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Argent Wing',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C],
     damage: 60,
-    text: 'If your opponent\'s Active Pokémon has an Ability, this attack does 60 more damage. '
+    text: 'If your opponent\'s Active Pokémon has an Ability, this attack does 60 more damage.'
   }, {
     name: 'Aero Force',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C, C],
     damage: 130,
     text: 'Discard an Energy from this Pokémon.'
   }];
 
   public set: string = 'SMP';
-
-  public setNumber = 'SM82';
-
+  public setNumber = '82';
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Shining Lugia';
-
   public fullName: string = 'Shining Lugia SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -74,7 +65,7 @@ export class ShiningLugia extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS],
+        [C],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

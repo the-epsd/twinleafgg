@@ -270,7 +270,7 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
 
     // Modify energy
     if (mods.energyCount !== undefined) {
-      const currentEnergy = pokemon.energyCards.length;
+      const currentEnergy = pokemon.energies.cards.length;
       const diff = mods.energyCount - currentEnergy;
       if (diff > 0) {
         // Add energy
@@ -283,19 +283,19 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
         for (let i = 0; i < diff; i++) {
           const energy = cardManager.getCardByName(energyName);
           if (energy) {
-            pokemon.energyCards.push(energy);
+            pokemon.energies.cards.push(energy);
           } else {
             // Fallback to Fire Energy if specified energy not found
             const fallbackEnergy = cardManager.getCardByName('Fire Energy SVE 2');
             if (fallbackEnergy) {
-              pokemon.energyCards.push(fallbackEnergy);
+              pokemon.energies.cards.push(fallbackEnergy);
             }
           }
         }
       } else if (diff < 0) {
         // Remove energy
-        for (let i = 0; i < Math.abs(diff) && pokemon.energyCards.length > 0; i++) {
-          pokemon.energyCards.pop();
+        for (let i = 0; i < Math.abs(diff) && pokemon.energies.cards.length > 0; i++) {
+          pokemon.energies.cards.pop();
         }
       }
     }

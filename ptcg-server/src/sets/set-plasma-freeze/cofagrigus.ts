@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { CardTag, Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PutDamagePrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -10,6 +10,7 @@ export class Cofagrigus extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Yamask';
   public cardType: CardType = P;
+  public tags: string[] = [CardTag.TEAM_PLASMA];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public retreat = [C, C];

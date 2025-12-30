@@ -10,7 +10,7 @@ import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
 export class MAudinoEx extends PokemonCard {
   public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
   public stage: Stage = Stage.MEGA;
-  public evolvesFrom = 'Audino EX';
+  public evolvesFrom = 'Audino-EX';
   public cardType: CardType = C;
   public hp: number = 220;
   public weakness = [{ type: F }];

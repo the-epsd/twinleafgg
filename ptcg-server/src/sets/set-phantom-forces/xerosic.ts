@@ -1,4 +1,4 @@
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
 import { EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -51,12 +51,12 @@ export class Xerosic extends TrainerCard {
 
       let specialEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
@@ -131,14 +131,14 @@ export class Xerosic extends TrainerCard {
 
       const specialEnergyBlocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
           return;
         } else {
           specialEnergyBlocked.push(target);
         }
       });
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
           return;
         } else {
           specialEnergyBlocked.push(target);
@@ -166,8 +166,8 @@ export class Xerosic extends TrainerCard {
             state = store.prompt(state, new ChooseCardsPrompt(
               player,
               GameMessage.CHOOSE_CARD_TO_DISCARD,
-              target,
-              { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+              target.energies,
+              { energyType: EnergyType.SPECIAL },
               { min: 1, max: 1, allowCancel: false }
             ), selected => {
               cards = selected || [];

@@ -73,20 +73,45 @@ export class CardList {
       let index = this.cards.indexOf(cards[i]);
       if (index !== -1) {
         const card = this.cards.splice(index, 1);
-        // If this is a PokemonCardList with the energyCards property, remove the card from energyCards
-        if ('energyCards' in this) {
+        // If this is a PokemonCardList with the energies property, remove the card from energies
+        if ('energies' in this) {
           const pokemonList = this as any;
-          if (typeof pokemonList.removePokemonAsEnergy === 'function') {
-            pokemonList.removePokemonAsEnergy(card[0]);
+          if (pokemonList.energies && pokemonList.energies.cards) {
+            const energyIndex = pokemonList.energies.cards.indexOf(card[0]);
+            if (energyIndex !== -1) {
+              pokemonList.energies.cards.splice(energyIndex, 1);
+            }
           }
         }
         destination.cards.push(card[0]);
+        // If destination is a PokemonCardList and card is an energy card (not a Pokemon), add to energies.cards
+        if ('energies' in destination) {
+          const destPkm = destination as any;
+          if (destPkm.energies && destPkm.energies.cards) {
+            // Only add actual energy cards (superType === ENERGY), not Pokemon cards that can act as energy
+            const isEnergyCard = card[0].superType === SuperType.ENERGY;
+            if (isEnergyCard && !destPkm.energies.cards.includes(card[0])) {
+              destPkm.energies.cards.push(card[0]);
+            }
+          }
+        }
       } else if ((this as any).tools && Array.isArray((this as any).tools)) {
         // If not found in cards, check tools (for robustness)
         index = (this as any).tools.indexOf(cards[i]);
         if (index !== -1) {
           const card = (this as any).tools.splice(index, 1);
           destination.cards.push(card[0]);
+          // If destination is a PokemonCardList and card is an energy card (not a Pokemon), add to energies.cards
+          if ('energies' in destination) {
+            const destPkm = destination as any;
+            if (destPkm.energies && destPkm.energies.cards) {
+              // Only add actual energy cards (superType === ENERGY), not Pokemon cards that can act as energy
+              const isEnergyCard = card[0].superType === SuperType.ENERGY;
+              if (isEnergyCard && !destPkm.energies.cards.includes(card[0])) {
+                destPkm.energies.cards.push(card[0]);
+              }
+            }
+          }
         }
       }
     }

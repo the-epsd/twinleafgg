@@ -31,7 +31,7 @@ export class DeoxysEX extends PokemonCard {
   public set: string = 'PLF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
-  public name: string = 'Deoxys EX';
+  public name: string = 'Deoxys-EX';
   public fullName: string = 'Deoxys EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -67,7 +67,7 @@ export class DeoxysEX extends PokemonCard {
       const source = effect.source.getPokemonCard() as PokemonCard;
 
       if (state.phase === GamePhase.ATTACK &&
-        source.tags.includes(CardTag.TEAM_PLASMA) && source.name !== 'Deoxys EX' &&
+        source.tags.includes(CardTag.TEAM_PLASMA) && source.name !== 'Deoxys-EX' &&
         effect.target === opponent.active && effect.damage > 0 && !IS_ABILITY_BLOCKED(store, state, player, this)
       ) {
         effect.damage += 10;

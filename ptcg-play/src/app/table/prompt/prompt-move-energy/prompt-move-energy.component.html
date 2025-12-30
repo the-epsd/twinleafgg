@@ -13,7 +13,7 @@
     (cardDrop)="onCardDrop($event)">
   </ptcg-choose-pokemons-pane>
 
-  <ptcg-choose-cards-panes [cards]="selectedItem ? selectedItem.cardList.cards : []" [filter]="filter"
+  <ptcg-choose-cards-panes [cards]="getSelectedCards()" [filter]="filter"
     [blocked]="blocked" [singlePaneMode]="true" [noBottomPane]="true" [dragConfig]="getCardsPanesConfig()">
   </ptcg-choose-cards-panes>
 </div>

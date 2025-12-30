@@ -1,4 +1,4 @@
-import { EnergyCard, State, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -38,7 +38,7 @@ export class Scizor extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.opponent.active.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+      if (effect.opponent.active.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
         THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 50);
       }
     }

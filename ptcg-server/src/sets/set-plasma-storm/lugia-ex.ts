@@ -34,7 +34,7 @@ export class LugiaEx extends PokemonCard {
 
   public set: string = 'PLS';
 
-  public name: string = 'Lugia EX';
+  public name: string = 'Lugia-EX';
 
   public fullName: string = 'Lugia EX PLS';
 

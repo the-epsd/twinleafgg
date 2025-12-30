@@ -507,11 +507,24 @@ export function checkState(store: StoreLike, state: State, onComplete?: () => vo
 export function checkStateReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof CheckProvidedEnergyEffect) {
+    // Check regular energy cards in main cards array
     effect.source.cards.forEach(c => {
       if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
         effect.energyMap.push({ card: c, provides: c.provides });
       }
     });
+    // Check Pokemon-as-energy cards in energies CardList
+    if (effect.source instanceof PokemonCardList) {
+      effect.source.energies.cards.forEach(c => {
+        if (!effect.energyMap.some(e => e.card === c)) {
+          // For Pokemon-as-energy, the provides property is set by the card itself
+          const provides = (c as any).provides || [];
+          if (provides.length > 0) {
+            effect.energyMap.push({ card: c, provides });
+          }
+        }
+      });
+    }
     return state;
   }
   return state;

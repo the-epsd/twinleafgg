@@ -25,7 +25,7 @@ export class Dunsparce extends PokemonCard {
     name: 'Mysterious Nest',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'C Pokémon in play (both yours and your opponent\'s) have no Weakness.'
+    text: '[C] Pokémon in play (both yours and your opponent\'s) have no Weakness.'
   }];
 
   public attacks = [

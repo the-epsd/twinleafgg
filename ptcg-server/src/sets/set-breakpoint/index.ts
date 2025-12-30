@@ -4,6 +4,7 @@ import { Bayleef } from './bayleef';
 import { BurstingBalloon } from './bursting-balloon';
 import { Delinquent } from './delinquent';
 import { Drowzee } from './drowzee';
+import { EspeonEX } from './espeon-ex';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
@@ -29,6 +30,7 @@ export const setBreakpoint: Card[] = [
   new BurstingBalloon(),
   new Delinquent(),
   new Drowzee(),
+  new EspeonEX(),
   new FightingFuryBelt(),
   new Froakie(),
   new Frogadier(),

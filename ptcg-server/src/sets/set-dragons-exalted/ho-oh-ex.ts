@@ -111,7 +111,7 @@ export class HoOhEx extends PokemonCard {
 
   public set: string = 'DRX';
 
-  public name: string = 'Ho-Oh EX';
+  public name: string = 'Ho-Oh-EX';
 
   public fullName: string = 'Ho-Oh EX DRX';
 

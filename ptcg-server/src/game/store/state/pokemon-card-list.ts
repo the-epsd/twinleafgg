@@ -20,7 +20,7 @@ export class PokemonCardList extends CardList {
   public boardEffect: BoardEffect[] = [];
   public hpBonus: number = 0;
   public tools: Card[] = [];
-  public energyCards: Card[] = [];
+  public energies: CardList = new CardList();
   public stadium: Card | undefined;
   public isActivatingCard: boolean = false;
   public attacksThisTurn?: number;
@@ -68,7 +68,7 @@ export class PokemonCardList extends CardList {
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {
-      if (card.superType === SuperType.POKEMON && !this.tools.includes(card) && !this.energyCards.includes(card)) {
+      if (card.superType === SuperType.POKEMON && !this.tools.includes(card) && !this.energies.cards.includes(card)) {
         result.push(card as PokemonCard);
       } else if (card.name === 'Lillie\'s Poké Doll') {
         result.push(card as PokemonCard);
@@ -106,6 +106,34 @@ export class PokemonCardList extends CardList {
       return false;
     }
     return pokemonCard.stage === stage;
+  }
+
+  public isEvolved(): boolean {
+    const pokemons = this.getPokemons();
+    const pokemonCard = this.getPokemonCard();
+
+    // Single Pokémon (not evolved)
+    if (pokemons.length === 1) {
+      return false;
+    }
+
+    // LEGEND cards are not considered evolved
+    if (pokemonCard?.stage === Stage.LEGEND) {
+      return false;
+    }
+
+    // VUNION cards are not considered evolved
+    if (pokemonCard?.stage === Stage.VUNION) {
+      return false;
+    }
+
+    // LV_X placed on a Basic Pokémon is not considered evolved
+    if (pokemonCard?.stage === Stage.LV_X && pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
+      return false;
+    }
+
+    // Otherwise, it's evolved
+    return true;
   }
 
   clearAttackEffects(): void {
@@ -223,20 +251,6 @@ export class PokemonCardList extends CardList {
     this.boardEffect.push(sp);
   }
 
-  // Add a Pokemon card as energy
-  addPokemonAsEnergy(card: Card): void {
-    if (!this.energyCards.includes(card) && this.cards.includes(card)) {
-      this.energyCards.push(card);
-    }
-  }
-
-  // Remove a Pokemon card from energy list
-  removePokemonAsEnergy(card: Card): void {
-    const index = this.energyCards.indexOf(card);
-    if (index !== -1) {
-      this.energyCards.splice(index, 1);
-    }
-  }
 
   //Rule-Box Pokemon
 
@@ -344,9 +358,9 @@ export class PokemonCardList extends CardList {
 
   // Override the parent CardList's moveTo method to properly handle Pokemon acting as energy
   public moveTo(destination: CardList, count?: number): void {
-    // Reset Pokemon-as-energy status before moving cards
-    if (this.energyCards.length > 0) {
-      this.energyCards = [];
+    // Move energies CardList to destination before moving cards
+    if (this.energies.cards.length > 0) {
+      this.energies.moveTo(destination);
     }
 
     super.moveTo(destination, count);
@@ -357,20 +371,47 @@ export class PokemonCardList extends CardList {
       let index = this.cards.indexOf(cards[i]);
       if (index !== -1) {
         const card = this.cards.splice(index, 1);
-        // If this is a PokemonCardList with the energyCards property, remove the card from energyCards
-        if ('energyCards' in this) {
-          const pokemonList = this as any;
-          if (typeof pokemonList.removePokemonAsEnergy === 'function') {
-            pokemonList.removePokemonAsEnergy(card[0]);
-          }
+        // Remove the card from energies if it's there
+        const energyIndex = this.energies.cards.indexOf(card[0]);
+        if (energyIndex !== -1) {
+          this.energies.cards.splice(energyIndex, 1);
         }
         destination.cards.push(card[0]);
+        // If destination is a PokemonCardList and card is an energy card (not a Pokemon), add to energies.cards
+        if (destination instanceof PokemonCardList) {
+          // Only add actual energy cards (superType === ENERGY), not Pokemon cards that can act as energy
+          const isEnergyCard = card[0].superType === SuperType.ENERGY;
+          if (isEnergyCard && !destination.energies.cards.includes(card[0])) {
+            destination.energies.cards.push(card[0]);
+          }
+        }
       } else {
-        // If not found in cards, check tools
-        index = this.tools.indexOf(cards[i]);
+        // If not found in cards, check energies
+        index = this.energies.cards.indexOf(cards[i]);
         if (index !== -1) {
-          const card = this.tools.splice(index, 1);
+          const card = this.energies.cards.splice(index, 1);
           destination.cards.push(card[0]);
+          // If destination is a PokemonCardList and card came from energies, add to destination energies.cards
+          // (This handles both regular energy cards and Pokemon-as-energy cards)
+          if (destination instanceof PokemonCardList) {
+            if (!destination.energies.cards.includes(card[0])) {
+              destination.energies.cards.push(card[0]);
+            }
+          }
+        } else {
+          // If not found in cards or energies, check tools
+          index = this.tools.indexOf(cards[i]);
+          if (index !== -1) {
+            const card = this.tools.splice(index, 1);
+            destination.cards.push(card[0]);
+            // If destination is a PokemonCardList and card is an energy card, add to energies.cards
+            if (destination instanceof PokemonCardList) {
+              const isEnergyCard = card[0].superType === SuperType.ENERGY || (card[0] as any).energyType !== undefined;
+              if (isEnergyCard && !destination.energies.cards.includes(card[0])) {
+                destination.energies.cards.push(card[0]);
+              }
+            }
+          }
         }
       }
     }

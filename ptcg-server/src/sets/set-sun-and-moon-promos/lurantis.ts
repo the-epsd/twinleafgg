@@ -7,29 +7,30 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class Lurantis extends PokemonCard {
+
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Fomantis';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 100;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Sunny Day',
     powerType: PowerType.ABILITY,
-    text: 'The attacks of your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon(before applying Weakness and Resistance).'
+    text: 'The attacks of your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 
   public attacks = [{
     name: 'Solar Beam',
-    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+    cost: [G, G, C],
     damage: 80,
     text: ''
   }];
 
   public set: string = 'SMP';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'SM25';
+  public setNumber: string = '25';
   public name: string = 'Lurantis';
   public fullName: string = 'Lurantis SMP';
 

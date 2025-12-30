@@ -42,7 +42,7 @@ export class Latios extends PokemonCard {
     }
     const activePokemon = player.active.getPokemonCard();
 
-    if (activePokemon && activePokemon.name === 'M Latias EX' && activePokemon.movedToActiveThisTurn) {
+    if (activePokemon && activePokemon.name === 'M Latias-EX' && activePokemon.movedToActiveThisTurn) {
       if (!player.marker.hasMarker(this.LUSTER_ASSIST_MARKER, this)) {
 
         let hasEnergyOnBench = false;

@@ -38,7 +38,7 @@ export class Pokegear30HS extends Pokegear30 {
 
 export class PokemonCommunicationHS extends PokemonCommunication {
   public fullName = 'Pokemon Communication HS';
-  public name = 'Pokemon Communication';
+  public name = 'Pokémon Communication';
   public set = 'HS';
   public setNumber = '98';
   public text = 'Choose 1 Pokémon in your hand, show it to your opponent, and put it on top of your deck. If you do, search your deck for a Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';

@@ -20,7 +20,7 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public hp: number = 190;
+  public hp: number = 180;
 
   public weakness = [{ type: CardType.DARK }];
 

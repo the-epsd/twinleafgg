@@ -1,15 +1,761 @@
+.fullscreen-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow: hidden;
+  animation: fadeIn 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Add fade-out animation for when the prompt is hidden */
+.fullscreen-wrapper.ng-hide {
+  animation: none;
+  display: none;
+}
+
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+.fullscreen-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 10001;
+  background-color: rgba(14, 15, 19, 0.7);
+}
+
+.ptcg-prompt-title {
+  padding: clamp(0.5rem, 2vh, 1rem) clamp(1rem, 4vw, 2rem);
+  background-color: rgb(10, 12, 16);
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 200;
+
+  h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    margin: 0;
+  }
+}
+
 .ptcg-prompt-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  // padding: 2rem;
-}
-
-.ptcg-prompt-title {
-  padding: 2rem 2rem;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  align-items: stretch;
 }
 
 .ptcg-prompt-actions {
+  padding: clamp(0.5rem, 2vh, 1rem) clamp(1rem, 4vw, 2rem);
+  background-color: rgb(10, 12, 16);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px, 2vw, 16px);
+  width: 100%;
+  position: relative;
+  z-index: 200;
+  min-height: fit-content;
 
-  padding: 2rem 2rem;
+  section {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    min-width: clamp(80px, 15vw, 120px);
+    height: clamp(36px, 5vh, 48px);
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .ptcg-card-info-reveal-cards {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+  }
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.prompt-message {
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(30px, 5vh, 40px);
+  margin: 0;
+  color: #FFE0A3;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 500;
+
+  p {
+    margin: 0;
+    padding: clamp(0.25rem, 1vh, 0.5rem) clamp(1rem, 4vw, 2rem);
+    position: relative;
+    width: fit-content;
+    max-width: 90%;
+    text-align: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% + 60px);
+      height: 100%;
+      background: linear-gradient(to right,
+          transparent,
+          rgba(255, 193, 7, 0.15) 15%,
+          rgba(255, 193, 7, 0.15) 85%,
+          transparent);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      z-index: -1;
+    }
+  }
+}
+
+/* Carousel Styles */
+.carousel-container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1vh, 2vw, 2vh);
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+
+  &.setup-game {
+    height: clamp(25vh, 35vh, 40vh);
+  }
+
+  .cards-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  ptcg-card {
+    position: absolute;
+    width: clamp(100px, 11.5vw, 138px);
+    height: clamp(140px, 16.1vw, 192px);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-origin: center;
+    opacity: 1;
+  }
+
+  .card-main {
+    transform: scale(1.2);
+    z-index: 10;
+    left: calc(50% - clamp(50px, 5.75vw, 69px));
+  }
+
+  .card-side-left {
+    transform: scale(0.9);
+    z-index: 5;
+    left: calc(50% - clamp(125px, 14.375vw, 172px));
+  }
+
+  .card-side-left-back {
+    transform: scale(0.8);
+    z-index: 1;
+    left: calc(50% - clamp(165px, 19vw, 228px));
+  }
+
+  .card-side {
+    transform: scale(0.9);
+    z-index: 5;
+    left: calc(50% + clamp(25px, 2.875vw, 34px));
+  }
+
+  .card-back {
+    transform: scale(0.8);
+    z-index: 1;
+    left: calc(50% + clamp(65px, 7.5vw, 90px));
+  }
+}
+
+.visible-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.nav-button {
+  height: clamp(36px, 5vh, 48px);
+  width: clamp(36px, 5vh, 48px);
+  background: #449058;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: #4fa567;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &[disabled] {
+    background: #2c5f39;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &.prev-button {
+    left: calc(50% - clamp(230px, 23vw, 345px));
+  }
+
+  &.next-button {
+    right: calc(50% - clamp(230px, 23vw, 345px));
+  }
+}
+
+ptcg-card {
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-origin: center;
+  position: absolute;
+  opacity: 1;
+}
+
+.selected {
+  box-shadow: 0 0 15px #449058;
+  border-radius: 5px;
+}
+
+.inspect-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 50;
+}
+
+.selected-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 16px);
+  margin: clamp(10px, 2vh, 20px);
+  padding: clamp(10px, 2vh, 20px);
+  min-height: clamp(120px, 20vh, 180px);
+  position: relative;
+  z-index: 45;
+
+  &.setup-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: auto;
+
+    .setup-game-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(10px, 2vh, 20px);
+      width: auto;
+      height: auto;
+      padding: clamp(10px, 2vh, 20px);
+      margin: 0 auto;
+
+      .active-slot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        min-height: clamp(72px, 8vh, 96px);
+        margin-bottom: clamp(10px, 2vh, 20px);
+      }
+
+      .bench-slots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(5px, 1vh, 10px);
+        width: auto;
+        min-height: clamp(72px, 8vh, 96px);
+        flex-wrap: nowrap;
+      }
+
+      .card-slot {
+        width: clamp(52px, 5.75vw, 69px);
+        height: clamp(72px, 8.05vw, 96px);
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+
+        &:hover {
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        ptcg-card {
+          width: 100%;
+          height: 100%;
+          position: relative;
+        }
+      }
+    }
+  }
+
+  &.compact {
+    padding: clamp(5px, 1vh, 10px);
+    gap: clamp(5px, 1vh, 10px);
+
+    .card-slot {
+      width: clamp(100px, 11.5vw, 138px);
+      height: clamp(140px, 16.1vw, 193px);
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      ptcg-card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+    }
+  }
+}
+
+.card-slot {
+  width: clamp(100px, 11.5vw, 138px);
+  height: clamp(140px, 16.1vw, 193px);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: clamp(4px, 0.5vw, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  ptcg-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+}
+
+.selected-cards.setup-game {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  justify-content: center;
+}
+
+.selected-cards.compact {
+  padding: 10px;
+  gap: 10px;
+}
+
+.unavailable {
+  pointer-events: none;
+  filter: grayscale(85%);
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.confirm-button {
+  background-color: #449058;
+  color: white;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 200px;
+
+  &:hover {
+    background-color: #4fa567;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    background-color: #3d824e;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &:disabled {
+    background-color: #2c5f39;
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.card-exit {
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+}
+
+.ptcg-prompt-choose-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.prompt-choose-cards {
+  .prompt-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 200px;
+
+    .prompt-tabs {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+      margin-left: 16px;
+
+      .tab-button {
+        padding: 8px 16px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        font-size: 14px;
+        color: #FFE0A3;
+        border-radius: 200px;
+        transition: all 0.2s ease;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.15);
+          color: #fff;
+        }
+
+        &.active {
+          color: #fff;
+          background: #449058;
+          font-weight: 500;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+
+  .prompt-content {
+    padding: 0 16px;
+  }
+}
+
+::ng-deep {
+  .fullscreen-prompt {
+
+    .ptcg-prompt-content,
+    .mat-dialog-content,
+    .mdc-dialog__content,
+    .mat-mdc-dialog-content,
+    .mat-dialog-container,
+    .mdc-dialog__container,
+    .mdc-dialog__surface,
+    .mat-mdc-dialog-surface {
+      background: rgba(0, 0, 0, 0.7) !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+/* Animation keyframes */
+@keyframes slideDownToSelection-main {
+  0% {
+    transform: translate(0, 0) scale(1.2);
+  }
+
+  20% {
+    transform: translate(0, 0) scale(1.3);
+  }
+
+  100% {
+    transform: translate(0, 40vh) scale(0.7);
+  }
+}
+
+@keyframes slideDownToSelection-side {
+  0% {
+    transform: translate(0, 0) scale(0.9);
+  }
+
+  20% {
+    transform: translate(0, 0) scale(1.1);
+  }
+
+  100% {
+    transform: translate(-10vw, 40vh) scale(0.7);
+  }
+}
+
+@keyframes slideDownToSelection-back {
+  0% {
+    transform: translate(0, 0) scale(0.8);
+  }
+
+  20% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-20vw, 40vh) scale(0.7);
+  }
+}
+
+@keyframes slideUpFromSelection {
+  0% {
+    transform: translate(0, 0) scale(0.7);
+  }
+
+  80% {
+    transform: translate(0, -40vh) scale(1.1);
+  }
+
+  100% {
+    transform: translate(0, -40vh) scale(1);
+  }
+}
+
+.slide-down-main {
+  animation: slideDownToSelection-main 600ms ease-in-out forwards;
+  pointer-events: none;
+  z-index: 1001 !important;
+  position: relative;
+}
+
+.slide-down-side {
+  animation: slideDownToSelection-side 600ms ease-in-out forwards;
+  pointer-events: none;
+  z-index: 1001 !important;
+  position: relative;
+}
+
+.slide-down-back {
+  animation: slideDownToSelection-back 600ms ease-in-out forwards;
+  pointer-events: none;
+  z-index: 1001 !important;
+  position: relative;
+}
+
+.slide-up {
+  animation: slideUpFromSelection 600ms ease-in-out forwards;
+  z-index: 1001 !important;
+  position: relative;
+}
+
+.card-appearing {
+  animation: cardAppearing 400ms ease-out forwards;
+}
+
+@keyframes cardAppearing {
+  0% {
+    transform: scale(0.7);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Adjust existing card styles for animations */
+ptcg-card {
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-origin: center;
+  position: absolute;
+  opacity: 1;
+}
+
+:host {
+  &.setup-game {
+    .carousel-container {
+      height: 30vh;
+      padding: 2vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      position: relative;
+      width: 100%;
+    }
+
+    .cards-carousel {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: min(80vw, 1200px);
+      margin: 0 auto;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 15;
+
+      &.prev-button {
+        left: 3vw;
+      }
+
+      &.next-button {
+        right: 3vw;
+      }
+    }
+
+    ptcg-card {
+      width: min(138px, 11.5vw);
+      height: min(192px, 16.1vw);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .card-main {
+      transform: translateY(-50%) scale(1.2);
+      z-index: 10;
+      left: calc(50% - min(69px, 5.75vw));
+    }
+
+    .card-side-left {
+      transform: translateY(-50%) scale(0.9);
+      z-index: 5;
+      left: calc(50% - min(103px, 8.625vw));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+
+      &.visible {
+        opacity: 1;
+      }
+    }
+
+    .card-side {
+      transform: translateY(-50%) scale(0.9);
+      z-index: 5;
+      left: calc(50% + min(34px, 2.875vw));
+    }
+
+    .card-back {
+      transform: translateY(-50%) scale(0.8);
+      z-index: 1;
+      left: calc(50% + min(90px, 7.5vw));
+    }
+  }
 }

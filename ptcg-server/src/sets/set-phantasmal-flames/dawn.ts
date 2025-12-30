@@ -95,7 +95,7 @@ export class Dawn extends TrainerCard {
   public name: string = 'Dawn';
   public fullName: string = 'Dawn M2';
 
-  public text: string = 'Search your deck for a Basic Pokemon, a Stage 1 Evolution, and a Stage 2 Evolution, reveal them, and put them into your hand. Then, shuffle your deck.';
+  public text: string = 'Search your deck for a Basic Pokémon, a Stage 1 Pokémon, and a Stage 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

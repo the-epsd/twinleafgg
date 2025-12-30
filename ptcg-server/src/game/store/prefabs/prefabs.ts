@@ -248,6 +248,7 @@ export function TAKE_SPECIFIC_PRIZES(
         if (destination === player.hand) {
           // If the destination is the hand, we've "taken" a prize
           player.prizesTaken += 1;
+          player.prizesTakenThisTurn += 1;
           prizesTakenCount += 1;
         }
       }
@@ -566,6 +567,7 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
   });
 }
 
+// Made this so that we can easily change behavior for older formats in the future
 export function CLEAN_UP_SUPPORTER(effect: TrainerEffect, player: Player) {
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }

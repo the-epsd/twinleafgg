@@ -14,7 +14,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     if (card.tags.includes(CardTag.TAG_TEAM)) {
       tagTeamPokemonCount++;
 
-      const energyAttached = cardList.cards.some(c => {
+      const energyAttached = cardList.energies.cards.some(c => {
         return c instanceof EnergyCard;
       });
       hasEnergy = hasEnergy || energyAttached;

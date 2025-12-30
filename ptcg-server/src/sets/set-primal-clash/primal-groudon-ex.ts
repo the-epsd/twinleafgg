@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class PrimalGroudonEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
-  public evolvesFrom = 'Groudon EX';
+  public evolvesFrom = 'Groudon-EX';
   public cardType: CardType = F;
   public hp: number = 240;
   public weakness = [{ type: G }];

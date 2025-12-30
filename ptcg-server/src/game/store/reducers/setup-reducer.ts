@@ -37,13 +37,14 @@ function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: Stat
     player.hand.moveCardTo(cards[i], player.bench[i - 1]);
     player.bench[i - 1].isSecret = true;
   }
-  // Always place 6 prize cards
-  for (let i = 0; i < 6; i++) {
+  // Pre-Release format uses 4 prize cards, all other formats use 6
+  const prizeCount = state.gameSettings?.format === Format.PRE_RELEASE ? 4 : 6;
+  for (let i = 0; i < prizeCount; i++) {
     player.deck.moveTo(player.prizes[i], 1);
   }
 }
 
-// Helper: Alternative setup where players start with 13 cards and choose 6 as prizes
+// Helper: Alternative setup where players start with 13 cards and choose prizes (4 for Pre-Release, 6 otherwise)
 function* alternativeSetupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
   const player = state.players[0];
   const opponent = state.players[1];
@@ -255,22 +256,24 @@ function* alternativeSetupSinglePlayer(player: Player, chooseCardsOptions: any, 
       next();
     });
 
-  // Then, choose 6 cards from remaining hand to be prize cards
+  // Pre-Release format uses 4 prize cards, all other formats use 6
+  const prizeCount = state.gameSettings?.format === Format.PRE_RELEASE ? 4 : 6;
+  // Then, choose prize cards from remaining hand
   // We need to create a temporary hand with only the remaining cards for selection
   const remainingCards = player.hand.cards.filter(c =>
     !player.active.cards.includes(c) &&
     !player.bench.some(b => b.cards.includes(c))
   );
 
-  if (remainingCards.length >= 6) {
+  if (remainingCards.length >= prizeCount) {
     // Create a temporary hand for prize selection
     const tempHand = new CardList();
     tempHand.cards = [...remainingCards];
 
     yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_PRIZES_SETUP,
-      tempHand, {}, { min: 6, max: 6, allowCancel: false, blocked: [] }), choice => {
+      tempHand, {}, { min: prizeCount, max: prizeCount, allowCancel: false, blocked: [] }), choice => {
         // Place chosen cards as prizes
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < prizeCount; i++) {
           if (choice[i]) {
             // Find the card in the actual hand and move it to prizes
             const cardToMove = choice[i];
@@ -285,7 +288,7 @@ function* alternativeSetupSinglePlayer(player: Player, chooseCardsOptions: any, 
       });
   } else {
     // If not enough cards, place all remaining cards as prizes
-    for (let i = 0; i < Math.min(remainingCards.length, 6); i++) {
+    for (let i = 0; i < Math.min(remainingCards.length, prizeCount); i++) {
       player.hand.moveCardTo(remainingCards[i], player.prizes[i]);
       player.prizes[i].isSecret = true;
     }
@@ -523,13 +526,15 @@ function* allowExtraBenchPlacement(player: Player, chooseCardsOptions: any, stat
   }
 }
 
-function createPlayer(id: number, name: string): Player {
+function createPlayer(id: number, name: string, format?: Format): Player {
   const player = new Player();
   player.id = id;
   player.name = name;
 
-  // Empty prizes, places for 6 cards
-  for (let i = 0; i < 6; i++) {
+  // Pre-Release format uses 4 prize cards, all other formats use 6
+  const prizeCount = format === Format.PRE_RELEASE ? 4 : 6;
+  // Empty prizes, places for prize cards
+  for (let i = 0; i < prizeCount; i++) {
     const prize = new CardList();
     prize.isSecret = true;
     player.prizes.push(prize);
@@ -564,7 +569,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       }
 
       const deckAnalyser = new DeckAnalyser(action.deck);
-      if (!deckAnalyser.isValid()) {
+      if (!deckAnalyser.isValid(state.gameSettings?.format)) {
         // Safe exit for invalid deck: finish game before it starts
         store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
         state.phase = GamePhase.FINISHED;
@@ -572,7 +577,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         return state;
       }
 
-      const player = createPlayer(action.clientId, action.name);
+      const player = createPlayer(action.clientId, action.name, state.gameSettings?.format);
       player.deck = CardList.fromList(action.deck);
       player.deckId = action.deckId;
       // Attach alternate artwork map to player's lists so clients can resolve images
@@ -618,7 +623,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         throw new GameError(GameMessage.ALREADY_PLAYING);
       }
 
-      const player = createPlayer(action.clientId, action.name);
+      const player = createPlayer(action.clientId, action.name, state.gameSettings?.format);
       state.players.push(player);
 
       state = store.prompt(state, new InvitePlayerPrompt(
@@ -632,7 +637,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
           return;
         }
         const deckAnalyser = new DeckAnalyser(deck);
-        if (!deckAnalyser.isValid()) {
+        if (!deckAnalyser.isValid(state.gameSettings?.format)) {
           // Safe exit for invalid deck (invited player): end game with no winner
           store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
           const winner = GameWinner.NONE;

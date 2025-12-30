@@ -222,11 +222,11 @@ export class StateUtils {
     const cardLists: { pokemonSlot: PokemonCardList, cardList: CardList | Card[] }[] = [];
     for (const player of state.players) {
       cardLists.push({ pokemonSlot: player.active, cardList: player.active.cards });
-      cardLists.push({ pokemonSlot: player.active, cardList: player.active.energyCards });
+      cardLists.push({ pokemonSlot: player.active, cardList: player.active.energies });
       cardLists.push({ pokemonSlot: player.active, cardList: player.active.tools });
       player.bench.forEach(item => cardLists.push(
         { pokemonSlot: item, cardList: item.cards },
-        { pokemonSlot: item, cardList: item.energyCards },
+        { pokemonSlot: item, cardList: item.energies },
         { pokemonSlot: item, cardList: item.tools }
       ));
     }

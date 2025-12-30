@@ -44,6 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const maxPokemons = 1;
   const maxEnergies = 1;
@@ -62,7 +63,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(effect, player);
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -71,6 +71,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
+
+  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -92,10 +94,9 @@ export class Rosa extends TrainerCard {
   public setNumber: string = '204';
 
   public text: string =
-    'You can play this card only if 1 of your Pokemon was Knocked Out ' +
-    'during your opponent\'s last turn. Search your deck for a Pokemon, ' +
-    'a Trainer card, and a basic Energy card, reveal them, and put them ' +
-    'into your hand. Then, shuffle your deck.';
+    `You can play this card only if 1 of your Pokemon was Knocked Out during your opponent\'s last turn.
+
+Search your deck for a Pokemon, a Trainer card, and a basic Energy card, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public readonly ROSA_MARKER = 'ROSA_MARKER';
 

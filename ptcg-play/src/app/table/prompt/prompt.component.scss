@@ -81,8 +81,7 @@
   align-items: center;
   justify-content: flex-end;
 
-  // Pull the actions down to avoid their padding stacking with the dialog's padding.
-  margin-bottom: -$ptcg-prompt-padding;
+
 
   .mat-button-base+.mat-button-base,
   .mat-mdc-button-base+.mat-mdc-button-base {

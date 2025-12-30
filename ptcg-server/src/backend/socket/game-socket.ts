@@ -143,42 +143,44 @@ export class GameSocket {
         return;
       }
 
-      // Check if this user has a disconnected player in the game
-      // We need to find the disconnected player by checking if any player in the game matches this user
+      // Check if this user is a player in the game
       const userPlayer = game.state.players.find(p => p.id === this.client.user.id);
 
-      if (userPlayer) {
-        // This user is a player in the game, check if they're disconnected
-        const disconnectedPlayer = game.getDisconnectedPlayerInfo(userPlayer.id);
-
-        if (disconnectedPlayer) {
-          // User is disconnected, attempt reconnection
-          // Temporarily set client.id to match the player.id for reconnection
-          const originalClientId = this.client.id;
-          this.client.id = userPlayer.id;
-
-          const reconnected = game.handlePlayerReconnection(this.client);
-
-          if (reconnected) {
-            // Successfully reconnected to the game
-            this.cache.lastLogIdCache[game.id] = 0;
-            response('ok', CoreSocket.buildGameState(game));
-            return;
-          } else {
-            // Restore original client ID if reconnection failed
-            this.client.id = originalClientId;
-          }
-        } else {
-          // User is a player but not disconnected, they might already be connected
-          // Just return the current game state
-          this.cache.lastLogIdCache[game.id] = 0;
-          response('ok', CoreSocket.buildGameState(game));
-          return;
-        }
+      if (!userPlayer) {
+        // User is not a player in the game - they might be a spectator
+        // Don't allow rejoin for non-players
+        response('error', ApiErrorEnum.GAME_INVALID_ID);
+        return;
       }
 
-      // If user is not a player or reconnection failed, return error
-      response('error', ApiErrorEnum.GAME_INVALID_ID);
+      // User is a player, check if they're disconnected
+      const disconnectedPlayer = game.getDisconnectedPlayerInfo(userPlayer.id);
+
+      if (!disconnectedPlayer) {
+        // User is a player but not disconnected - they're already connected or never disconnected
+        // Don't allow rejoin if they're not actually disconnected
+        response('error', ApiErrorEnum.GAME_INVALID_ID);
+        return;
+      }
+
+      // User is disconnected, attempt reconnection
+      // Temporarily set client.id to match the player.id for reconnection
+      const originalClientId = this.client.id;
+      this.client.id = userPlayer.id;
+
+      const reconnected = game.handlePlayerReconnection(this.client);
+
+      if (reconnected) {
+        // Successfully reconnected to the game
+        this.cache.lastLogIdCache[game.id] = 0;
+        response('ok', CoreSocket.buildGameState(game));
+        return;
+      } else {
+        // Restore original client ID if reconnection failed
+        this.client.id = originalClientId;
+        response('error', ApiErrorEnum.GAME_INVALID_ID);
+        return;
+      }
 
     } catch (error) {
       console.error('Error in rejoinGame:', error);

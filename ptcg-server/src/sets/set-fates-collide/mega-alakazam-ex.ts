@@ -9,7 +9,7 @@ import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
 export class MAlakazamEx extends PokemonCard {
   public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
   public stage: Stage = Stage.MEGA;
-  public evolvesFrom = 'Alakazam EX';
+  public evolvesFrom = 'Alakazam-EX';
   public cardType: CardType = P;
   public hp: number = 210;
   public weakness = [{ type: P }];

@@ -6,13 +6,14 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Palafinex extends PokemonCard {
+  
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Finizen';
   public cardType: CardType = W;
   public hp: number = 340;
   public weakness = [{ type: L }];
   public retreat = [C, C];
-  public tags = [CardTag.POKEMON_EX];
+  public tags = [CardTag.POKEMON_ex];
 
   public powers = [{
     name: 'Hero\'s Spirit',

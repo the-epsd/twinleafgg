@@ -8,30 +8,34 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Wochien extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
 
   public attacks = [
-    { name: 'Hazardous Greed', cost: [CardType.GRASS, CardType.COLORLESS], damage: 20, text: 'If there are 3 or fewer cards in your deck, this attack also does 120 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)' },
-    { name: 'Entangling Whip', cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS], damage: 130, text: 'Discard the top 3 cards of your deck.' }
+    {
+      name: 'Hazardous Greed',
+      cost: [G, C],
+      damage: 20,
+      text:
+        'If there are 3 or fewer cards in your deck, this attack also ' +
+        'does 120 damage to 2 of your opponent\'s Benched Pokémon. ' +
+        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    },
+    {
+      name: 'Entangling Whip',
+      cost: [G, G, C],
+      damage: 130,
+      text: 'Discard the top 3 cards of your deck.'
+    }
   ];
 
   public set: string = 'SSP';
-
-  public name: string = 'Wo-chien';
-
+  public name: string = 'Wo-Chien';
   public fullName: string = 'Wo-chien SSP';
-
   public setNumber: string = '15';
-
   public regulationMark = 'H';
-
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

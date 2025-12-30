@@ -221,6 +221,10 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     player.supporterTurn = 0;
     player.active.attacksThisTurn = 0;
 
+    // Preserve prizes taken this turn for "last turn" tracking
+    player.prizesTakenLastTurn = player.prizesTakenThisTurn;
+    player.prizesTakenThisTurn = 0;
+
     if (player === undefined) {
       throw new GameError(GameMessage.NOT_YOUR_TURN);
     }

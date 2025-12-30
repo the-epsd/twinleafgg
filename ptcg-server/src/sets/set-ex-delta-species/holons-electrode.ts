@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
-export class HolonsElectrode extends PokemonCard {
+export class HolonsElectrode extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Holon\'s Voltorb';
   public tags = [CardTag.HOLONS];
@@ -37,6 +37,12 @@ export class HolonsElectrode extends PokemonCard {
 
   // Which energies this provides when attached as an energy
   public provides: CardType[] = [CardType.ANY, CardType.ANY];
+  public energyType = EnergyType.SPECIAL;
+  // EnergyCard interface properties
+  public text: string = '';
+  public isBlocked = false;
+  public blendedEnergies: CardType[] = [];
+  public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // The Special Energy Stuff
@@ -118,30 +124,16 @@ export class HolonsElectrode extends PokemonCard {
           // Moving it onto the pokemon
           effect.preventDefault = true;
           player.hand.moveCardTo(this, targets[0]);
-
-          // Reposition it to be with energy cards (at the beginning of the card list)
-          targets[0].cards.unshift(targets[0].cards.splice(targets[0].cards.length - 1, 1)[0]);
-
-          // Register this card as energy in the PokemonCardList
-          targets[0].addPokemonAsEnergy(this);
+          if (!targets[0].energies.cards.includes(this)) {
+            targets[0].energies.cards.push(this);
+          }
         });
       });
     }
 
     // Provide energy when attached as energy and included in CheckProvidedEnergyEffect
-    if (effect instanceof CheckProvidedEnergyEffect
-      && effect.source.cards.includes(this)) {
-
-      // Check if this card is registered as an energy card in the PokemonCardList
-      const pokemonList = effect.source;
-      if (pokemonList.energyCards.includes(this)) {
-        effect.energyMap.push({ card: this, provides: this.provides });
-      }
-    }
-
-    // Reset the flag when the card is discarded
-    if (effect instanceof DiscardCardsEffect && effect.target.cards.includes(this)) {
-      effect.target.removePokemonAsEnergy(this);
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.energies.cards.includes(this)) {
+      effect.energyMap.push({ card: this, provides: this.provides });
     }
 
     // Dazzle Blast

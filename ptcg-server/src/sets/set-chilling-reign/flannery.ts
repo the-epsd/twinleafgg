@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let hasPokemonWithEnergy = false;
   const blocked: CardTarget[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+    if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
       hasPokemonWithEnergy = true;
     } else {
       blocked.push(target);

@@ -16,7 +16,7 @@ export class PokemonCenter extends TrainerCard {
 
   public set: string = 'NXD';
 
-  public name: string = 'Pokemon Center';
+  public name: string = 'Pokémon Center';
 
   public fullName: string = 'Pokemon Center NXD';
 
@@ -26,7 +26,7 @@ export class PokemonCenter extends TrainerCard {
 
   public text: string =
     'Once during each player\'s turn, that player may heal 20 damage ' +
-    'from 1 of his or her Benched Pokemon.';
+    'from 1 of his or her Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

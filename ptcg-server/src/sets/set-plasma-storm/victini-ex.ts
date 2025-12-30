@@ -32,7 +32,7 @@ export class VictiniEX extends PokemonCard {
   public set: string = 'PLS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
-  public name: string = 'Victini EX';
+  public name: string = 'Victini-EX';
   public fullName: string = 'Victini EX PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
