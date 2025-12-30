@@ -42,23 +42,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class CounterCatcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '160';
-
   public regulationMark = 'G';
-
   public name: string = 'Counter Catcher';
-
   public fullName: string = 'Counter Catcher PAR';
 
   public text: string =
-    'You can play this card only if you have more Prize cards remaining than your opponent.' +
-    '' +
-    'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.';
+    `You can play this card only if you have more Prize Cards remaining than your opponent.
+
+Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.`;
 
   public readonly COUNTER_CATCHER_MARKER = 'COUNTER_CATCHER_MARKER';
 
