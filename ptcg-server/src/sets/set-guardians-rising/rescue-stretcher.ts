@@ -25,10 +25,10 @@ export class RescueStretcher extends TrainerCard {
   public fullName: string = 'Rescue Stretcher GRI';
 
   public text: string =
-    'Choose 1:' +
-    '' +
-    'Put a Pokémon from your discard pile into your hand.' +
-    'Shuffle 3 Pokémon from your discard pile into your deck.';
+    `Choose 1:
+
+  • Put a Pokémon from your discard pile into your hand.
+  • Shuffle 3 Pokémon from your discard pile into your deck.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
