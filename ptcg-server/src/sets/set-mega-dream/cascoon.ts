@@ -15,8 +15,8 @@ export class Cascoon extends PokemonCard {
 
   public attacks = [
     {
-      name: 'G Trading Places',
-      cost: [C],
+      name: 'Trading Places',
+      cost: [G],
       damage: 0,
       text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
     }
