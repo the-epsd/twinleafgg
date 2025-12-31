@@ -78,6 +78,12 @@ export class GameSocket {
   }
 
   public onStateChange(game: Game, state: State): void {
+    // Only send game state updates to clients that are in this game
+    // This is a defensive check - the root cause is fixed in Game.onStateChange()
+    if (!game.clients.includes(this.client)) {
+      return;
+    }
+
     if (this.core.games.indexOf(game) !== -1) {
       game.setBonusHps(state);
       state = this.stateSanitizer.sanitize(game.state, game.id);
@@ -490,8 +496,12 @@ export class GameSocket {
   }
 
   public onUndoing(game: Game, playerName: string): void {
-    this.core.emit(c => {
-      (c as SocketClient).socket.emit(`game[${game.id}]:undoing`, { playerName });
+    // Only notify clients that are actually in this game
+    game.clients.forEach(c => {
+      const socketClient = c as SocketClient;
+      if (socketClient.socket) {
+        socketClient.socket.emit(`game[${game.id}]:undoing`, { playerName });
+      }
     });
   }
 

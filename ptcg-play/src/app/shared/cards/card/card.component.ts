@@ -26,19 +26,34 @@ export class CardComponent implements OnInit, OnDestroy {
   @Input() cardList?: any;
   @Input() set card(value: Card) {
     this.data = value;
-    this.scanUrl = this.resolveScanUrl();
+    // Check if card is Unknown and skip URL generation
+    if (value && (value.fullName === 'Unknown' || value.name === 'Unknown')) {
+      this.scanUrl = ''; // Don't generate URL for Unknown cards
+    } else {
+      this.scanUrl = this.resolveScanUrl();
+    }
+  }
+
+  // Getter to check if card should be treated as cardback (either explicitly set or Unknown card)
+  get isCardback(): boolean {
+    return this.cardback || (this.data && (this.data.fullName === 'Unknown' || this.data.name === 'Unknown'));
   }
 
   @Input() set artworksContext(list: any) {
     this.cardList = list;
     if (this.data && !this.customImageUrl) {
-      this.scanUrl = this.resolveScanUrl();
+      // Check if card is Unknown and skip URL generation
+      if (this.data.fullName === 'Unknown' || this.data.name === 'Unknown') {
+        this.scanUrl = ''; // Don't generate URL for Unknown cards
+      } else {
+        this.scanUrl = this.resolveScanUrl();
+      }
     }
   }
 
   shouldShowCardName(): boolean {
-    if (!this.data || this.cardback || !this.showCardName) {
-      return false; // Don't show card name if card is secret
+    if (!this.data || this.isCardback || !this.showCardName) {
+      return false; // Don't show card name if card is secret or Unknown
     }
     return true; // Otherwise, use the showCardName input
   }
@@ -47,7 +62,7 @@ export class CardComponent implements OnInit, OnDestroy {
   getCardClass(): string {
     let classes = '';
 
-    if (!this.data || !this.data.tags || this.cardback || !this.holoEnabled) {
+    if (!this.data || !this.data.tags || this.isCardback || !this.holoEnabled) {
       return '';
     }
 

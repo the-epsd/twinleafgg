@@ -42,7 +42,10 @@ export class StateSanitizer {
       superType: SuperType.NONE,
       fullName: 'Unknown',
       name: 'Unknown',
-      id: index
+      id: index,
+      cardImage: '',  // Explicitly set to empty to prevent image URL generation
+      set: '',       // Explicitly set to empty to prevent image URL generation
+      setNumber: ''  // Explicitly set to empty to prevent image URL generation
     } as any;
   }
 

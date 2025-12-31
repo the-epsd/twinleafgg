@@ -239,6 +239,11 @@ export class CardsBaseService implements OnDestroy {
   }
 
   public getScanUrl(card: Card): string {
+    // Don't generate URLs for Unknown cards to prevent revealing opponent's deck information
+    if (!card || card.fullName === 'Unknown' || card.name === 'Unknown') {
+      return '';
+    }
+
     const fullCardIdentifier = `${card.set} ${card.setNumber}`;
     const customUrl = this.customImages[fullCardIdentifier];
     if (customUrl) {
