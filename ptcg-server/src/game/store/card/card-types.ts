@@ -46,6 +46,8 @@ export enum CardTag {
   STEVENS = 'Steven\'s',
   ETHANS = 'Ethan\'s',
   MISTYS = 'Misty\'s',
+  ERIKAS = 'Erika\'s',
+  LARRYS = 'Larry\'s',
   CYNTHIAS = 'Cynthia\'s',
   ARVENS = 'Arven\'s',
   AURAS = 'Aura\'s',
