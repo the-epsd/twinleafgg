@@ -3,7 +3,6 @@ import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
@@ -18,21 +17,19 @@ export class MegaAudinoex extends PokemonCard {
   public resistance = [];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Kaleidowaltz',
-      cost: [C],
-      damage: 0,
-      text: 'Flip 3 coins. For each heads, search your deck for 2 Basic Energy cards and attach them to your Pokemon in any way you like. Then, shuffle your deck.'
-    },
-    {
-      name: 'Ear Force',
-      cost: [C, C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'This attack does 80 more damage for each Energy attached to your opponent\'s Active Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Kaleidowaltz',
+    cost: [C],
+    damage: 0,
+    text: 'Flip 3 coins. For each heads, search your deck for 2 Basic Energy cards and attach them to your Pokemon in any way you like. Then, shuffle your deck.'
+  },
+  {
+    name: 'Ear Force',
+    cost: [C, C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'This attack does 80 more damage for each Energy attached to your opponent\'s Active Pokemon.'
+  }];
 
   public regulationMark: string = 'I';
   public set: string = 'M2a';
@@ -64,7 +61,7 @@ export class MegaAudinoex extends PokemonCard {
             PlayerType.BOTTOM_PLAYER,
             [SlotType.ACTIVE, SlotType.BENCH],
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { allowCancel: false, min: 1, max: energyToAttach }
+            { allowCancel: false, min: 0, max: energyToAttach }
           ), transfers => {
             transfers = transfers || [];
             if (transfers.length > 0) {
@@ -82,7 +79,7 @@ export class MegaAudinoex extends PokemonCard {
     }
 
     // Ear Force attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -96,4 +93,3 @@ export class MegaAudinoex extends PokemonCard {
     return state;
   }
 }
-

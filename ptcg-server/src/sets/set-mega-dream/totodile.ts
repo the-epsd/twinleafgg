@@ -40,3 +40,4 @@ export class Totodile extends PokemonCard {
 }
 
 
+

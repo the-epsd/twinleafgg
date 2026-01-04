@@ -82,5 +82,3 @@ export class Registeelex extends PokemonCard {
     return state;
   }
 }
-
-

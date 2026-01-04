@@ -56,5 +56,3 @@ export class LarrysDudunsparceex extends PokemonCard {
     return state;
   }
 }
-
-
