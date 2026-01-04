@@ -53,6 +53,12 @@ export class CoreSocket {
   }
 
   public onStateChange(game: Game, state: State): void {
+    // Only send game info updates to clients that are in this game
+    // This is a defensive check - the root cause is fixed in Game.onStateChange()
+    if (!game.clients.includes(this.client)) {
+      return;
+    }
+
     const gameInfo = CoreSocket.buildGameInfo(game);
     if (!deepCompare(gameInfo, this.cache.gameInfoCache[game.id])) {
       this.cache.gameInfoCache[game.id] = gameInfo;
