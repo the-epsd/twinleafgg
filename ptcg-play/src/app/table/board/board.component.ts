@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, SuperType } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
@@ -48,6 +48,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
   public bottomActiveHighlight$: Observable<boolean>;
   public bottomBenchTarget: DropTargetType[];
   public bottomBenchHighlight$: Observable<boolean>[];
+  public boardCardHover$: Observable<boolean>;
   public isUpsideDown: boolean = false;
   public stateUtils = StateUtils;
 
@@ -126,6 +127,31 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
 
     // Dropping
     [this.boardTarget, this.boardHighlight$] = this.initDropTarget(PlayerType.ANY, SlotType.BOARD);
+
+    // Combined observable for board card hover (active + bench)
+    // Only returns true when hovering over slots that contain cards
+    const allBoardCardHighlights = [this.bottomActiveHighlight$, ...this.bottomBenchHighlight$];
+    this.boardCardHover$ = combineLatest(allBoardCardHighlights).pipe(
+      map(highlights => {
+        // Check active slot: highlight is true AND slot has cards
+        const activeHighlight = highlights[0];
+        const activeHasCards = this.bottomPlayer?.active?.cards?.length > 0;
+        if (activeHighlight && activeHasCards) {
+          return true;
+        }
+
+        // Check bench slots: highlight is true AND slot has cards
+        for (let i = 0; i < this.bottomBenchHighlight$.length; i++) {
+          const benchHighlight = highlights[i + 1];
+          const benchHasCards = this.bottomPlayer?.bench?.[i]?.cards?.length > 0;
+          if (benchHighlight && benchHasCards) {
+            return true;
+          }
+        }
+
+        return false;
+      })
+    );
   }
 
   // Add property to track deck size
