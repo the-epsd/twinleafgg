@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zacian extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,18 +29,15 @@ export class Zacian extends PokemonCard {
   public fullName: string = 'Zacian M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent && opponent.getPrizeLeft() <= 3) {
         // Add 90 more damage if opponent has 3 or fewer Prize cards
-        const damageEffect = new DealDamageEffect(effect, 90);
-        damageEffect.target = effect.target;
-        return store.reduceEffect(state, damageEffect);
+        effect.damage += 90;
       }
     }
-
     return state;
   }
 }
