@@ -33,6 +33,7 @@ export class PokemonCardList extends CardList {
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
   public cannotUseAttacksNextTurnPending: string[] = [];
+  public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -171,11 +172,22 @@ export class PokemonCardList extends CardList {
     this.showBasicAnimation = false;
     this.triggerAttackAnimation = false;
 
-    this.removeSpecialCondition(SpecialCondition.POISONED);
-    this.removeSpecialCondition(SpecialCondition.ASLEEP);
-    this.removeSpecialCondition(SpecialCondition.BURNED);
-    this.removeSpecialCondition(SpecialCondition.CONFUSED);
-    this.removeSpecialCondition(SpecialCondition.PARALYZED);
+    // Check if we're in an evolution context (preserved conditions are set)
+    const preservedConditions = this._preservedConditionsDuringEvolution || [];
+
+    // Only remove special conditions that are not preserved
+    const conditionsToRemove = [
+      SpecialCondition.POISONED,
+      SpecialCondition.ASLEEP,
+      SpecialCondition.BURNED,
+      SpecialCondition.CONFUSED,
+      SpecialCondition.PARALYZED
+    ].filter(condition => !preservedConditions.includes(condition));
+
+    conditionsToRemove.forEach(condition => {
+      this.removeSpecialCondition(condition);
+    });
+
     this.poisonDamage = 10;
     this.burnDamage = 20;
     this.damageReductionNextTurn = 0;

@@ -5,7 +5,7 @@ import { Effect } from '../effects/effect';
 import { BoardEffect, SpecialCondition, Stage } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
-import { CheckPokemonPlayedTurnEffect } from '../effects/check-effects';
+import { CheckPokemonPlayedTurnEffect, CheckSpecialConditionRemovalEffect } from '../effects/check-effects';
 import { EvolveEffect } from '../effects/game-effects';
 
 /**
@@ -91,8 +91,17 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       const evolveEffect = new EvolveEffect(effect.player, effect.target, effect.pokemonCard);
       store.reduceEffect(state, evolveEffect);
       effect.pokemonCard.marker.markers = [];
+
+      // Check which special conditions should be preserved during evolution
+      const checkRemovalEffect = new CheckSpecialConditionRemovalEffect(effect.player, effect.target);
+      store.reduceEffect(state, checkRemovalEffect);
+      effect.target._preservedConditionsDuringEvolution = checkRemovalEffect.preservedConditions;
+
       effect.player.removePokemonEffects(effect.target);
-      effect.target.specialConditions = [];
+
+      // Clear the preserved conditions after evolution is complete
+      effect.target._preservedConditionsDuringEvolution = undefined;
+
       effect.target.marker.markers = [];
       effect.target.showBasicAnimation = false;
       effect.target.triggerEvolutionAnimation = true;
