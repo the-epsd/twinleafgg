@@ -7,7 +7,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 import { IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaDragoniteex extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dragonair';
   public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public cardType: CardType = N;

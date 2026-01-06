@@ -128,8 +128,8 @@ export class PokemonCardList extends CardList {
       return false;
     }
 
-    // LV_X placed on a Basic Pokémon is not considered evolved
-    if (pokemonCard?.stage === Stage.LV_X && pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
+    // LV_X placed on a Pokémon is not considered evolved
+    if (pokemonCard?.stage === Stage.LV_X && pokemons.length === 2) {
       return false;
     }
 

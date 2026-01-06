@@ -9,6 +9,7 @@ import { Electabuzz } from './electabuzz';
 import { Elekid } from './elekid';
 import { Flygonex } from './flygon-ex';
 import { Gardevoirex } from './gardevoir-ex';
+import { HolonEnergyWP } from './holon-energy-wp';
 import { Horsea } from './horsea';
 import { Jynx } from './jynx';
 import { Kingdraex } from './kingdra-ex';
@@ -45,6 +46,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Elekid(),
   new Flygonex(),
   new Gardevoirex(),
+  new HolonEnergyWP(),
   new Horsea(),
   new Jynx(),
   new Kingdraex(),

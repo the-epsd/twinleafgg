@@ -5,6 +5,7 @@ import { DarknessEnergySpecial } from './darkness-energy-special';
 import { Delcatty } from './delcatty';
 import { Gardevoir } from './gardevoir';
 import { Kirlia } from './kirlia';
+import { LadyOuting } from './lady-outing';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { OranBerry } from './oran-berry';
@@ -20,8 +21,10 @@ import { Blaziken } from './blaziken';
 // Other Prints
 import {
   EnergySwitchRS,
+  EnergyRemoval2RS,
   MetalEnergySpecialRS,
-  RainbowEnergyRS
+  RainbowEnergyRS,
+  SwitchRS
 } from './other-prints';
 
 export const setEXRubyAndSapphire: Card[] = [
@@ -30,6 +33,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new Delcatty(),
   new Gardevoir(),
   new Kirlia(),
+  new LadyOuting(),
   new Marshtomp(),
   new Mudkip(),
   new OranBerry(),
@@ -52,6 +56,8 @@ export const setEXRubyAndSapphire: Card[] = [
 
   // Other Prints
   new EnergySwitchRS(),
+  new EnergyRemoval2RS(),
   new MetalEnergySpecialRS(),
   new RainbowEnergyRS(),
+  new SwitchRS(),
 ]; 
