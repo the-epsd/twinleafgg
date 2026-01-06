@@ -7,6 +7,7 @@ import { Lombre } from './lombre';
 import { Lotad } from './lotad';
 import { MultiEnergy } from './multi-energy';
 import { Skitty } from './skitty';
+import { Trapinch } from './trapinch';
 import { Wailmer } from './wailmer';
 import { Wailordex } from './wailord-ex';
 import { WallysTraining } from './wallys-training';
@@ -22,6 +23,7 @@ export const setEXSandstorm: Card[] = [
   new Lotad(),
   new MultiEnergy(),
   new Skitty(),
+  new Trapinch(),
   new Wailmer(),
   new Wailordex(),
   new WallysTraining(),
