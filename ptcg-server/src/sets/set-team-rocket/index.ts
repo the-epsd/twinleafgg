@@ -5,6 +5,7 @@ import { DarkDragonite } from './dark-dragonite';
 import { DarkGloom } from './dark-gloom';
 import { DarkGolduck } from './dark-golduck';
 import { DarkVileplume } from './dark-vileplume';
+import { Digger } from './digger';
 import { Drowzee } from './drowzee';
 import { FullHealEnergy } from './full-heal-energy';
 import { GoopGasAttack } from './goop-gas-attack';
@@ -31,6 +32,7 @@ export const setTeamRocket: Card[] = [
   new DarkGloom(),
   new DarkGolduck(),
   new DarkVileplume(),
+  new Digger(),
   new Drowzee(),
   new FullHealEnergy(),
   new GoopGasAttack(),

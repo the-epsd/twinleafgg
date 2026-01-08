@@ -16,6 +16,7 @@ import { Cyclizar } from './cyclizar';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
 import { Doublade } from './doublade';
+import { Durant } from './durant';
 import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
 import { Flamigo } from './flamigo';
@@ -110,6 +111,7 @@ export const setParadoxRift: Card[] = [
   new DefianceVest(),
   new Deoxys(),
   new Doublade(),
+  new Durant(),
   new EarthenVessel(),
   new Elekid(),
   new Flamigo(),

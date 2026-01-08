@@ -13,6 +13,7 @@ import { Dewott } from './dewott';
 import { Drillbur } from './drillbur';
 import { Ducklett } from './ducklett';
 import { Duosion } from './duosion';
+import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
 import { Emboar } from './emboar';
 import { Emolga } from './emolga';
@@ -95,6 +96,7 @@ export const setSV11: Card[] = [
   new Archeops(),
   new Carracosta(),
   new Cobalion(),
+  new Durant(),
   new Genesectex(),
   new Keldeoex(),
   new Terrakion(),

@@ -17,7 +17,7 @@ export class CynthiasSpiritomb extends PokemonCard {
       name: 'Raging Curse',
       cost: [C],
       damage: 10,
-      damageCalculator: 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each damage counter on all your Benched Cynthia\'s Pokemon. Don\'t apply Weakness for this attack\'s damage.',
     }
   ];

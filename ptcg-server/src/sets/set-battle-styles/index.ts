@@ -39,6 +39,7 @@ import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
 import { Rolycoly } from './rolycoly';
 import { Salandit } from './salandit';
+import { Salazzle } from './salazzle';
 import { SingleStrikeEnergy } from './single-strike-energy';
 import { SingleStrikeStyleMustard } from './single-strike-style-mustard';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
@@ -97,6 +98,7 @@ export const setBattleStyles: Card[] = [
   new Remoraid(),
   new Rolycoly(),
   new Salandit(),
+  new Salazzle(),
   new SingleStrikeEnergy(),
   new SingleStrikeStyleMustard(),
   new SingleStrikeUrshifuV(),
