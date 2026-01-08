@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { Altariaex } from './altaria-ex';
 import { Bayleef } from './bayleef';
+import { CharizardStar } from './charizard-star';
 import { Chikorita } from './chikorita';
 import { Cloyster } from './cloyster';
 import { Copycat } from './copycat';
@@ -38,6 +39,7 @@ import { Vibrava2 } from './vibrava2';
 export const setEXDragonFrontiers: Card[] = [
   new Altariaex(),
   new Bayleef(),
+  new CharizardStar(),
   new Chikorita(),
   new Cloyster(),
   new Copycat(),

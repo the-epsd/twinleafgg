@@ -5,6 +5,7 @@ import { Gardevoirex } from './gardevoir-ex';
 import { LanettesNetSearch } from './lanettes-net-search';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
+import { Marill } from './marill';
 import { MultiEnergy } from './multi-energy';
 import { Skitty } from './skitty';
 import { Trapinch } from './trapinch';
@@ -14,6 +15,12 @@ import { WallysTraining } from './wallys-training';
 import { Wobbuffet } from './wobbuffet';
 import { Zangoose } from './zangoose';
 
+// Other Prints
+import {
+  MarillMisprint,
+  RareCandySS
+} from './other-prints';
+
 export const setEXSandstorm: Card[] = [
   new Armaldo(),
   new Dunsparce(),
@@ -21,6 +28,7 @@ export const setEXSandstorm: Card[] = [
   new LanettesNetSearch(),
   new Lombre(),
   new Lotad(),
+  new Marill(),
   new MultiEnergy(),
   new Skitty(),
   new Trapinch(),
@@ -29,4 +37,8 @@ export const setEXSandstorm: Card[] = [
   new WallysTraining(),
   new Wobbuffet(),
   new Zangoose(),
+
+  // Other Prints
+  new MarillMisprint(),
+  new RareCandySS(),
 ];

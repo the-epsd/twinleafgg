@@ -15,6 +15,7 @@ import { BeginningDoor } from './beginning-door';
 import { ExpertBelt } from './expert-belt';
 import { Gengar } from './gengar';
 import { Spiritomb } from './spiritomb';
+import { UltimateZone } from './ultimate-zone';
 
 export const setArceus: Card[] = [
   new BeginningDoor(),
@@ -32,5 +33,6 @@ export const setArceus: Card[] = [
   new ArceusLvX2(),
   new ArceusLvX3(),
   new Gengar(),
-  new Spiritomb()
+  new Spiritomb(),
+  new UltimateZone()
 ];
