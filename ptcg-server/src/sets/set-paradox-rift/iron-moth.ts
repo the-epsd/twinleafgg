@@ -1,15 +1,16 @@
-import { BoardEffect, CardTag, CardTarget, CardType, EnergyCard, EnergyType, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { BoardEffect, CardTag, CardTarget, CardType, EnergyCard, EnergyType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronMoth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 130;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
   public tags = [CardTag.FUTURE];
 
   public powers = [{
@@ -21,7 +22,7 @@ export class IronMoth extends PokemonCard {
 
   public attacks = [{
     name: 'Heat Ray',
-    cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+    cost: [R, R, C],
     damage: 120,
     text: 'During your next turn, this Pokémon can\'t use Heat Ray.'
   }];
@@ -32,9 +33,6 @@ export class IronMoth extends PokemonCard {
   public fullName: string = 'Iron Moth PAR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 
@@ -123,20 +121,11 @@ export class IronMoth extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Heat Ray')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Heat Ray');
       }
-
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
 
     return state;

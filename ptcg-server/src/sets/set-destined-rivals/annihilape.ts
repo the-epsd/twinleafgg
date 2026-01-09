@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Annihilape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -31,9 +31,6 @@ export class Annihilape extends PokemonCard {
   public name: string = 'Annihilape';
   public fullName: string = 'Annihilape DRI';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Vessel of Rage
     if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
@@ -46,12 +43,11 @@ export class Annihilape extends PokemonCard {
 
     // Impact Blow
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Impact Blow')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Impact Blow');
+      }
     }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
 
     return state;
   }

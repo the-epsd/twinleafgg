@@ -1,23 +1,22 @@
 import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect} from '../../game/store/effects/check-effects';
+import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {CONFIRMATION_PROMPT, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {HealEffect, PowerEffect} from '../../game/store/effects/game-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
-import {DISCARD_X_ENERGY_FROM_THIS_POKEMON} from '../../game/store/prefabs/costs';
-import {THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON} from '../../game/store/prefabs/attack-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class GarchompCLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Garchomp C';
   public cardType: CardType = C;
-  public tags = [ CardTag.POKEMON_LV_X, CardTag.POKEMON_SP ];
+  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 110;
   public weakness = [{ type: C }];
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [
     {
@@ -45,12 +44,9 @@ export class GarchompCLVX extends PokemonCard {
   public name: string = 'Garchomp C';
   public fullName: string = 'Garchomp C LV.X SV';
 
-  public readonly DRAGON_RUSH_MARKER = 'DRAGON_RUSH_MARKER';
-  public readonly DRAGON_RUSH_MARKER_2 = 'DRAGON_RUSH_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Healing Breath
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
       try {
@@ -65,10 +61,10 @@ export class GarchompCLVX extends PokemonCard {
       }
 
       CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result){
+        if (result) {
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-            if (card.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)){
+            if (card.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
               const healing = new HealEffect(player, card, card.damage);
               store.reduceEffect(state, healing);
             }
@@ -79,32 +75,20 @@ export class GarchompCLVX extends PokemonCard {
     }
 
     // Dragon Rush
-    if (WAS_ATTACK_USED(effect, 0, this)){
-      if (effect.player.marker.hasMarker(this.DRAGON_RUSH_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(80, effect, store, state);
-
-      effect.player.marker.addMarker(this.DRAGON_RUSH_MARKER, this);
-    }
-
-    // removing the markers for preventing the pokemon from attacking
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGON_RUSH_MARKER_2, this)) {
-      effect.player.marker.removeMarker(this.DRAGON_RUSH_MARKER, this);
-      effect.player.marker.removeMarker(this.DRAGON_RUSH_MARKER_2, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGON_RUSH_MARKER, this)) {
-      effect.player.marker.addMarker(this.DRAGON_RUSH_MARKER_2, this);
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Dragon Rush')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Dragon Rush');
+      }
     }
 
     // making sure it gets put on the active pokemon
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target !== effect.player.active){ throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
     }
-    
+
     // Trying to get all of the previous stage's attacks and powers
     if (effect instanceof CheckTableStateEffect) {
       const player = effect.player;
@@ -156,7 +140,7 @@ export class GarchompCLVX extends PokemonCard {
       }
     }
 
-    if (effect instanceof CheckPokemonPowersEffect){
+    if (effect instanceof CheckPokemonPowersEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);

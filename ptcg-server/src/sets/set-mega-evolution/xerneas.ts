@@ -2,7 +2,7 @@ import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Xerneas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,20 +31,16 @@ export class Xerneas extends PokemonCard {
   public fullName: string = 'Xerneas M1S';
   public regulationMark = 'I';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { stage: Stage.BASIC, cardType: CardType.PSYCHIC }, { min: 0, max: 3 });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, this, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, this, this);
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Bright Horns')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Bright Horns');
+      }
     }
 
     return state;

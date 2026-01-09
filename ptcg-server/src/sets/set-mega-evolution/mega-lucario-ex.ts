@@ -1,7 +1,6 @@
-import { AttachEnergyPrompt, CardTag, CardType, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, CardTag, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaLucarioex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,9 +31,6 @@ export class MegaLucarioex extends PokemonCard {
   public name: string = 'Mega Lucario ex';
   public fullName: string = 'Mega Lucario ex M1L';
 
-  public readonly MEGA_BRAVE_MARKER = 'MEGA_BRAVE_MARKER';
-  public readonly CLEAR_MEGA_BRAVE_MARKER = 'CLEAR_MEGA_BRAVE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aura Jab
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -63,24 +59,11 @@ export class MegaLucarioex extends PokemonCard {
 
     // Mega Brave
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
-      if (HAS_MARKER(this.MEGA_BRAVE_MARKER, effect.player, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
-      ADD_MARKER(this.MEGA_BRAVE_MARKER, effect.player, this);
-      effect.player.marker.addMarker(this.MEGA_BRAVE_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MEGA_BRAVE_MARKER, this)) {
-      if (!effect.player.marker.hasMarker(this.CLEAR_MEGA_BRAVE_MARKER, this)) {
-        effect.player.marker.addMarker(this.CLEAR_MEGA_BRAVE_MARKER, this);
-      } else if (effect.player.marker.hasMarker(this.CLEAR_MEGA_BRAVE_MARKER, this)) {
-        effect.player.marker.removeMarker(this.MEGA_BRAVE_MARKER, this);
-        effect.player.marker.removeMarker(this.CLEAR_MEGA_BRAVE_MARKER, this);
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Mega Brave')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Mega Brave');
       }
     }
-
     return state;
   }
 }

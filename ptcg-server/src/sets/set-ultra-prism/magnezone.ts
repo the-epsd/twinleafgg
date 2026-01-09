@@ -3,9 +3,8 @@ import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/ca
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, SlotType, StateUtils, AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magnezone extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -36,13 +35,9 @@ export class Magnezone extends PokemonCard {
   public name: string = 'Magnezone';
   public fullName: string = 'Magnezone UPR';
 
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -74,21 +69,11 @@ export class Magnezone extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Zap Cannon')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Zap Cannon');
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-
     }
 
     return state;

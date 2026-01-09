@@ -11,7 +11,7 @@ export class Charmeleon extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Steady Firebreathing',
+    name: 'Heat Blast',
     cost: [R, C],
     damage: 50,
     text: ''
