@@ -1,70 +1,42 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ninetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 120;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C];
   public evolvesFrom = 'Vulpix';
 
   public attacks = [{
     name: 'Will-O-Wisp',
-    cost: [CardType.FIRE],
+    cost: [R],
     damage: 20,
     text: ''
   },
   {
     name: 'Nine-Tailed Dance',
-    cost: [CardType.FIRE, CardType.FIRE],
+    cost: [R, R],
     damage: 0,
     text: 'Put 9 damage counters on 1 of your opponent\'s Pokémon.During your next turn, this Pokémon can\'t attack.'
   }];
 
-  public set = 'OBF';
   public regulationMark = 'G';
+  public set = 'OBF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name = 'Ninetales';
   public fullName = 'Ninetales OBF';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
 
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -81,6 +53,12 @@ export class Ninetales extends PokemonCard {
         store.reduceEffect(state, putCountersEffect);
 
       });
+    }
+
+    // Nine-Tailed Dance
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;

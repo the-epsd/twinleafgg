@@ -1,42 +1,30 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, EnergyCard, AttachEnergyPrompt } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class SolgaleoPrismStar extends PokemonCard {
-
   public tags = [CardTag.PRISM_STAR];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 160;
+  public weakness = [{ type: R }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C, C];
 
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Radiant Star',
-      cost: [CardType.METAL],
-      damage: 0,
-      text: 'For each of your opponent\'s Pokémon in play, attach a [M] Energy card from your discard pile to your Pokémon in any way you like.'
-    },
-
-    {
-      name: 'Corona Impact',
-      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL],
-      damage: 160,
-      text: 'This Pokémon can\'t attack during your next turn.'
-    },
-  ];
+  public attacks = [{
+    name: 'Radiant Star',
+    cost: [M],
+    damage: 0,
+    text: 'For each of your opponent\'s Pokémon in play, attach a [M] Energy card from your discard pile to your Pokémon in any way you like.'
+  },
+  {
+    name: 'Corona Impact',
+    cost: [M, M, M, M],
+    damage: 160,
+    text: 'This Pokémon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '89';
@@ -44,27 +32,10 @@ export class SolgaleoPrismStar extends PokemonCard {
   public name: string = 'Solgaleo Prism Star';
   public fullName: string = 'Solgaleo Prism Star FLI';
 
-  // for preventing the pokemon from attacking on the next turn
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Remove markers when the pokemon is played
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    // Prevent all attacks, including TMs
-    if (effect instanceof UseAttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
     // Radiant Star
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -103,20 +74,11 @@ export class SolgaleoPrismStar extends PokemonCard {
     }
 
     // Corona Impact
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;
   }
-
 }

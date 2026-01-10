@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, GameMessage, SuperType, SlotType, StateUtils } from '../../game';
-import { ChooseCardsPrompt, ChoosePokemonPrompt, ShuffleDeckPrompt, GameError } from '../../game';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ChooseCardsPrompt, ChoosePokemonPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useBurningCharge(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -57,35 +57,26 @@ function* useBurningCharge(next: Function, store: StoreLike, state: State,
 }
 
 export class Flareonex extends PokemonCard {
-
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Eevee';
-
   public cardType: CardType = R;
-
   public hp: number = 270;
-
   public weakness = [{ type: W }];
-
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Burning Charge',
-      cost: [R, C],
-      damage: 130,
-      text: 'Search your deck for up to 2 Basic Energy and attach them to 1 of your Pokemon. Then, shuffle your deck.'
-    },
-    {
-      name: 'Carnelian',
-      cost: [R, W, L],
-      damage: 280,
-      text: 'During your next turn, this Pokemon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Burning Charge',
+    cost: [R, C],
+    damage: 130,
+    text: 'Search your deck for up to 2 Basic Energy and attach them to 1 of your Pokemon. Then, shuffle your deck.'
+  },
+  {
+    name: 'Carnelian',
+    cost: [R, W, L],
+    damage: 280,
+    text: 'During your next turn, this Pokemon can\'t attack.'
+  }];
 
   public regulationMark: string = 'H';
   public set: string = 'PRE';
@@ -94,37 +85,17 @@ export class Flareonex extends PokemonCard {
   public name: string = 'Flareon ex';
   public fullName: string = 'Flareon ex PRE';
 
-  // for preventing the pokemon from attacking on the next turn
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Burning Charge
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
       const generator = useBurningCharge(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 
     // Carnelian
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
@@ -138,6 +109,7 @@ export class Flareonex extends PokemonCard {
 
       effect.preventDefault = true;
     }
+    
     return state;
   }
 }

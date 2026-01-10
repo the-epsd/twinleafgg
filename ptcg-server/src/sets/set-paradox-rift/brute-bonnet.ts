@@ -3,57 +3,38 @@ import { GameMessage } from '../../game/game-message';
 import { BoardEffect, CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_POISON_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class BruteBonnet extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public tags = [CardTag.ANCIENT];
-
-  public cardType: CardType = CardType.DARK;
-
+  public cardType: CardType = D;
   public hp: number = 120;
+  public weakness = [{ type: G }];
+  public retreat = [C, C, C];
 
-  public weakness = [{ type: CardType.GRASS }];
+  public powers = [{
+    name: 'Toxic Powder',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn, if this Pokémon has an Ancient Booster Energy Capsule attached, you may make both Active Pokémon Poisoned.'
+  }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public powers = [
-    {
-      name: 'Toxic Powder',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn, if this Pokémon has an Ancient Booster Energy Capsule attached, you may make both Active Pokémon Poisoned.'
-    }
-  ];
-
-  public attacks = [
-    {
-      name: 'Rampaging Hammer',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
-      damage: 120,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
-
-  public set: string = 'PAR';
+  public attacks = [{
+    name: 'Rampaging Hammer',
+    cost: [D, D, C],
+    damage: 120,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
   public regulationMark = 'G';
-
+  public set: string = 'PAR';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '123';
-
   public name: string = 'Brute Bonnet';
-
   public fullName: string = 'Brute Bonnet PAR';
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public readonly TOXIC_POWDER_MARKER = 'TOXIC_POWDER_MARKER';
 
@@ -62,19 +43,6 @@ export class BruteBonnet extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
-      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      const player = effect.player;
-      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      const player = effect.player;
-      player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
@@ -82,7 +50,7 @@ export class BruteBonnet extends PokemonCard {
       player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -114,13 +82,12 @@ export class BruteBonnet extends PokemonCard {
       });
     }
 
-    if (effect instanceof UseAttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    // Rampaging Hammer
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-    }
     return state;
   }
 }

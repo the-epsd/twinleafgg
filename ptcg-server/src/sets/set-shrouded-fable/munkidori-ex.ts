@@ -3,26 +3,17 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, PowerType } from '../../game';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-
+import { PowerType } from '../../game';
+import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Munkidoriex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public tags = [CardTag.POKEMON_ex];
-
-  public regulationMark = 'H';
-
-  public cardType: CardType = CardType.DARK;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
+  public cardType: CardType = D;
+  public weakness = [{ type: F }];
   public hp: number = 210;
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public powers = [{
     name: 'Oh No You Don\'t',
@@ -32,34 +23,19 @@ export class Munkidoriex extends PokemonCard {
 
   public attacks = [{
     name: 'Dirty Headbutt',
-    cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
+    cost: [D, D, C],
     damage: 190,
     text: 'This Pokémon can\'t use Dirty Headbutt during your next turn.'
   }];
 
+  public regulationMark = 'H';
   public set: string = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '37';
-
   public name: string = 'Munkidori ex';
-
   public fullName: string = 'Munkidori ex SFA';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
@@ -80,14 +56,14 @@ export class Munkidoriex extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    // Dirty Headbutt
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Dirty Headbutt')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Dirty Headbutt');
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
+
     return state;
   }
 }

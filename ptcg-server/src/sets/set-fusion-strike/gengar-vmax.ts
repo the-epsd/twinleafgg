@@ -1,37 +1,32 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GengarVMAX extends PokemonCard {
-
   public stage: Stage = Stage.VMAX;
-
   public tags = [CardTag.POKEMON_VMAX];
-
   public evolvesFrom = 'Gengar V';
-  public cardType: CardType = CardType.DARK;
-  public hp = 320;
-  public weakness = [{ type: CardType.FIGHTING }];
+  public cardType: CardType = D;
+  public hp: number = 320;
+  public weakness = [{ type: F }];
   public resistance = [];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Fear and Panic',
-      cost: [CardType.DARK, CardType.DARK],
-      damage: 60,
-      text: 'This attack does 60 damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
-    },
-    {
-      name: 'G-Max Swallow Up',
-      cost: [CardType.DARK, CardType.DARK, CardType.DARK],
-      damage: 250,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fear and Panic',
+    cost: [D, D],
+    damage: 60,
+    text: 'This attack does 60 damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
+  },
+  {
+    name: 'G-Max Swallow Up',
+    cost: [D, D, D],
+    damage: 250,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
   public set: string = 'FST';
 
@@ -45,22 +40,7 @@ export class GengarVMAX extends PokemonCard {
 
   public fullName: string = 'Gengar VMAX FST';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
@@ -77,16 +57,12 @@ export class GengarVMAX extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+    // G-Max Swallow Up
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
+
     return state;
   }
 }

@@ -2,7 +2,7 @@ import { PokemonCard, Stage, PowerType, StoreLike, State, ChooseCardsPrompt, Gam
 import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, ADD_MARKER, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, REPLACE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, ADD_MARKER, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, BLOCK_IF_HAS_SPECIAL_CONDITION } from '../../game/store/prefabs/prefabs';
 
 export class UxieLVX extends PokemonCard {
   public stage = Stage.LV_X;
@@ -34,8 +34,6 @@ export class UxieLVX extends PokemonCard {
   public fullName: string = 'Uxie Lv. X LA';
 
   public readonly TRADE_OFF_MARKER = 'TRADE_OFF_MARKER';
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -68,12 +66,12 @@ export class UxieLVX extends PokemonCard {
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.TRADE_OFF_MARKER, this);
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
-
+    // Zen Blade
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Zen Blade')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Zen Blade');
+      }
     }
 
     //Lv. X Stuff

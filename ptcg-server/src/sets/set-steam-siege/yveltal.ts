@@ -1,9 +1,7 @@
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CoinFlipPrompt } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { UseAttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yveltal extends PokemonCard {
@@ -33,26 +31,14 @@ export class Yveltal extends PokemonCard {
   public name: string = 'Yveltal';
   public fullName: string = 'Yveltal STS';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-          && c.provides.includes(CardType.DARK);
+          && c.provides.includes(D);
       });
 
       if (!hasEnergyInDiscard) {
@@ -79,18 +65,19 @@ export class Yveltal extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
         }
       });
-
-      if (effect instanceof UseAttackEffect && effect.source.getPokemonCard() === this) {
-        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
-      }
-
-      if (WAS_ATTACK_USED(effect, 1, this)) {
-        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      }
-
       return state;
+    }
+
+    // Darkness Blade
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      return store.prompt(state, [
+        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
+      ], result => {
+        if (!result) {
+          const player = effect.player;
+          player.active.cannotAttackNextTurnPending = true;
+        }
+      });
     }
 
     return state;

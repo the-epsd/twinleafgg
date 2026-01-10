@@ -21,7 +21,7 @@ export class MegaLucarioex extends PokemonCard {
     name: 'Mega Brave',
     cost: [F, F],
     damage: 270,
-    text: 'During your next turn, this Pokemon can\'t use Mega Brave.',
+    text: 'During your next turn, this Pokémon can\'t use Mega Brave.',
   }];
 
   public regulationMark: string = 'I';

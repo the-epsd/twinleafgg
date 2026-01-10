@@ -1,26 +1,20 @@
-import { ConfirmPrompt, GameError, GameMessage, PowerType, StateUtils } from '../..';
+import { ConfirmPrompt, GameMessage, PowerType, StateUtils } from '../..';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class Machamp extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Machoke';
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 150;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Crisis Muscles',
@@ -30,7 +24,7 @@ export class Machamp extends PokemonCard {
 
   public attacks = [{
     name: 'Strong-Arm Lariat',
-    cost: [CardType.FIGHTING, CardType.FIGHTING],
+    cost: [F, F],
     damage: 100,
     damageCalculation: '+',
     text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
@@ -48,27 +42,10 @@ export class Machamp extends PokemonCard {
 
   public fullName: string = 'Machamp LOR';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
 
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
@@ -76,7 +53,7 @@ export class Machamp extends PokemonCard {
       ), wantToUse => {
         if (wantToUse) {
           effect.damage += 100;
-          effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+          player.active.cannotAttackNextTurnPending = true;
         }
       });
     }
@@ -105,5 +82,4 @@ export class Machamp extends PokemonCard {
 
     return state;
   }
-
 }

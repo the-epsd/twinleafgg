@@ -1,11 +1,10 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, GameError } from '../../game';
+import { PowerType, StoreLike, State, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, GameMessage } from '../../game';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { GameMessage } from '../../game/game-message';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useLeParfum(next: Function, store: StoreLike, state: State,
   self: Froslass, effect: PlayPokemonEffect): IterableIterator<State> {
@@ -48,7 +47,6 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
   });
 }
 
-
 export class Froslass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Snorunt';
@@ -79,35 +77,18 @@ export class Froslass extends PokemonCard {
   public name: string = 'Froslass';
   public fullName: string = 'Froslass CRE';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const generator = useLeParfum(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
+    // Crystal Breath
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-    }
+    
     return state;
   }
 }

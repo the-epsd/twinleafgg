@@ -1,61 +1,41 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, GameError } from '../../game';
+import { StoreLike, State, GameMessage, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zacian extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType = M;
   public hp: number = 120;
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Iron Roar',
-    cost: [CardType.METAL],
+    cost: [M],
     damage: 30,
     text: 'Attach a Basic [M] Energy card from your discard pile to 1 of your Benched Pokemon.'
   },
   {
     name: 'Brave Blade',
-    cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
+    cost: [M, M, C],
     damage: 130,
     text: 'During your next turn, this Pokémon can\'t attack.'
   }];
 
-  public set: string = 'PAR';
   public regulationMark: string = 'G';
+  public set: string = 'PAR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Zacian';
   public fullName: string = 'Zacian PAR';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
       if (!hasBench) {
@@ -63,7 +43,7 @@ export class Zacian extends PokemonCard {
       }
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.provides.includes(CardType.METAL);
+        return c instanceof EnergyCard && c.provides.includes(M);
       });
 
       if (!hasEnergyInDiscard) {
@@ -72,7 +52,7 @@ export class Zacian extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
-        if (card instanceof EnergyCard && !card.provides.includes(CardType.METAL)) {
+        if (card instanceof EnergyCard && !card.provides.includes(M)) {
           blocked.push(index);
         }
       });
@@ -92,21 +72,15 @@ export class Zacian extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
         }
       });
-
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this) || effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+    // Brave Blade
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
-
+    
     return state;
   }
-
 }

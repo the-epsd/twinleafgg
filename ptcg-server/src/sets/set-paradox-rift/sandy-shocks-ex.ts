@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class SandyShocksex extends PokemonCard {
 
@@ -24,14 +24,12 @@ export class SandyShocksex extends PokemonCard {
     text: 'Once during your turn, if your opponent has 4 or fewer Prize cards remaining, you may attach a Basic [F] Energy card from your discard pile to this Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Earthen Spike',
-      cost: [F, F, C],
-      damage: 200,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Earthen Spike',
+    cost: [F, F, C],
+    damage: 200,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
   public regulationMark = 'G';
   public set: string = 'PAR';
@@ -40,8 +38,6 @@ export class SandyShocksex extends PokemonCard {
   public name: string = 'Sandy Shocks ex';
   public fullName: string = 'Sandy Shocks ex PAR';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public readonly MAGNETIC_ABSORPTION_MARKER = 'MAGNETIC_ABSORPTION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -56,29 +52,13 @@ export class SandyShocksex extends PokemonCard {
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
+    // Earthen Spike
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-    }
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const prizes = opponent.getPrizeLeft();
@@ -114,18 +94,14 @@ export class SandyShocksex extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          // const pokemonCard = target.cards[0] as PokemonCard;
-          // if (pokemonCard.cardType !== CardType.FIRE) {
-          //   throw new GameError(GameMessage.INVALID_TARGET);
-          // }
           player.discard.moveCardTo(transfer.card, target);
           player.marker.addMarker(this.MAGNETIC_ABSORPTION_MARKER, this);
         }
-
         return state;
       });
       return state;
     }
+    
     return state;
   }
 }

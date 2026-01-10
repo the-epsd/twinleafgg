@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, EnergyCard, PokemonCardList } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, StateUtils, EnergyCard, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ceruledge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -14,20 +12,18 @@ export class Ceruledge extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Blaze Curse',
-      cost: [C],
-      damage: 0,
-      text: 'Discard all Special Energy from each of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Amethyst Rage',
-      cost: [R, R, C],
-      damage: 160,
-      text: 'During your next turn, this Pokémon can\'t attack..'
-    }
-  ];
+  public attacks = [{
+    name: 'Blaze Curse',
+    cost: [C],
+    damage: 0,
+    text: 'Discard all Special Energy from each of your opponent\'s Pokémon.'
+  },
+  {
+    name: 'Amethyst Rage',
+    cost: [R, R, C],
+    damage: 160,
+    text: 'During your next turn, this Pokémon can\'t attack..'
+  }];
 
   public regulationMark = 'H';
   public set: string = 'SSP';
@@ -35,23 +31,10 @@ export class Ceruledge extends PokemonCard {
   public fullName: string = 'Ceruledge SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
-  public text: string =
-    'Discard all Special Energy from all of your opponent\'s Pokémon.';
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -74,12 +57,10 @@ export class Ceruledge extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+    // Amethyst Rage
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;

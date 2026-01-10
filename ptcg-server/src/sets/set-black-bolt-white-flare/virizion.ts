@@ -1,7 +1,6 @@
-import { PokemonCard, Stage, CardType, State, StoreLike, GameError, GameMessage } from '../../game';
+import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Virizion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,31 +29,19 @@ export class Virizion extends PokemonCard {
   public name: string = 'Virizion';
   public fullName: string = 'Virizion SV11W';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const healTime = new HealTargetEffect(effect, effect.damage);
       healTime.target = effect.player.active;
       store.reduceEffect(state, healTime);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+    // Emerald Blade
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
+    
     return state;
   }
 }

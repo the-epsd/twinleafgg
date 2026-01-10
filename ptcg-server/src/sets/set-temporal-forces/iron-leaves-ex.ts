@@ -1,26 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType, PokemonCardList, EnergyCard, CardTarget } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, GameMessage, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, PowerType, PokemonCardList, EnergyCard, CardTarget } from '../../game';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronLeavesex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
-
-  public regulationMark = 'H';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
+  public cardType: CardType = G;
   public hp: number = 220;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Rapid Vernier',
@@ -29,38 +21,21 @@ export class IronLeavesex extends PokemonCard {
     text: 'Once during your turn, when you play this Pokémon from your hand onto your Bench, you may switch this Pokémon with your Active Pokémon. If you do, you may move any number of Energy from your Benched Pokémon to this Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Prism Edge',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
-      damage: 180,
-      text: 'During your next turn, this Pokémon can\'t attack.',
-    }
-  ];
+  public attacks = [{
+    name: 'Prism Edge',
+    cost: [G, G, C],
+    damage: 180,
+    text: 'During your next turn, this Pokémon can\'t attack.',
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'TEF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '25';
-
   public name: string = 'Iron Leaves ex';
-
   public fullName: string = 'Iron Leaves ex TEF';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard == this) {
 
@@ -136,14 +111,12 @@ export class IronLeavesex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+    // Prism Edge
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
+    
     return state;
   }
 }
