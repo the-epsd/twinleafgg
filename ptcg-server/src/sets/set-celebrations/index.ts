@@ -5,6 +5,7 @@ import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
 import { Groudon } from './groudon';
 import { Kyogre } from './kyogre';
 import { Lugia } from './lugia';
+import { Lunala } from './lunala';
 import { Mew } from './mew';
 import { Reshiram } from './reshiram';
 import { Yveltal } from './yveltal';
@@ -18,6 +19,7 @@ export const setCelebrations: Card[] = [
   new Groudon(),
   new Kyogre(),
   new Lugia(),
+  new Lunala(),
   new Mew(),
   new Reshiram(),
   new Yveltal(),
