@@ -1,13 +1,9 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, PowerType, GamePhase } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerEffect, PlayerType } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PreventAttackEffect } from '../../game/store/effects/effect-of-attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { EnergyCard } from '../../game/store/card/energy-card';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase, StateUtils, PlayerType } from "../../game";
+import { PutDamageEffect } from "../../game/store/effects/attack-effects";
+import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
+import { Effect } from "../../game/store/effects/effect";
+import { PreventAttackEffect } from "../../game/store/effects/effect-of-attack-effects";
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Aurorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -78,7 +74,7 @@ export class Aurorus extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(targetOwner, effect.target);
       store.reduceEffect(state, checkEnergy);
 
-      const hasWaterEnergy = checkEnergy.energyMap.some(em => 
+      const hasWaterEnergy = checkEnergy.energyMap.some(em =>
         em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY)
       );
 
@@ -89,8 +85,6 @@ export class Aurorus extends PokemonCard {
 
     // Attack: Prevent opponent from attacking next turn
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       const preventAttackEffect = new PreventAttackEffect(effect);
       store.reduceEffect(state, preventAttackEffect);
     }
