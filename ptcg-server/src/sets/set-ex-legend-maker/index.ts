@@ -6,6 +6,7 @@ import { Banetteex } from './banette-ex';
 import { CursedStone } from './cursed-stone';
 import { Delcatty } from './delcatty';
 import { Flygonex } from './flygon-ex';
+import { FullFlame } from './full-flame';
 import { GiantStump } from './giant-stump';
 import { Girafarig } from './girafarig';
 import { Grimer } from './grimer';
@@ -39,6 +40,7 @@ export const setEXLegendMaker: Card[] = [
   new CursedStone(),
   new Delcatty(),
   new Flygonex(),
+  new FullFlame(),
   new GiantStump(),
   new Girafarig(),
   new Grimer(),

@@ -1,37 +1,35 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, TrainerCard } from '../../game';
+import { StoreLike, State, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CastformSnowyForm extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public regulationMark = 'E';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp = 70;
-  public weakness = [{ type: CardType.METAL }];
+  public weakness = [{ type: M }];
   public resistance = [];
   public retreat = [];
 
-  public powers = [
-    {
-      name: 'Weather Reading',
-      text: 'If you have 8 or more Stadium cards in your discard pile, ignore all Energy in this Pokémon\'s attack costs.',
-      powerType: PowerType.ABILITY,
-      useWhenInPlay: false,
-    }
-  ];
+  public powers = [{
+    name: 'Weather Reading',
+    text: 'If you have 8 or more Stadium cards in your discard pile, ignore all Energy in this Pokémon\'s attack costs.',
+    powerType: PowerType.ABILITY,
+    useWhenInPlay: false,
+  }];
 
   public attacks = [{
     name: 'Frosty Typhoon',
-    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+    cost: [W, W, C],
     damage: 120,
     text: 'During your next turn, this Pokémon can\'t use Frosty Typhoon.'
   }];
 
+  public regulationMark = 'E';
   public set: string = 'CRE';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
@@ -45,35 +43,15 @@ export class CastformSnowyForm extends PokemonCard {
     return stadiumsInDiscard >= 8 ? 2 : 0;
   }
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Frosty Typhoon')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Frosty Typhoon');
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-
     }
 
-    if (effect instanceof CheckAttackCostEffect) {
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const stadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (<TrainerCard>c).trainerType === TrainerType.STADIUM).length;
 

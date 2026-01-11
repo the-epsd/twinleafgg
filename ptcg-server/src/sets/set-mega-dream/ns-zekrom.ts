@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 
 export class NsZekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,8 +36,26 @@ export class NsZekrom extends PokemonCard {
   public fullName: string = 'N\'s Zekrom M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Rampage Thunder - prevent attack next turn
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    // Shred
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const opponent = effect.opponent;
+
+      effect.ignoreResistance = true;
+      const applyWeakness = new ApplyWeaknessEffect(effect, 70);
+      store.reduceEffect(state, applyWeakness);
+      const damage = applyWeakness.damage;
+
+      effect.damage = 0;
+
+      if (damage > 0) {
+        opponent.active.damage += damage;
+        const afterDamage = new AfterDamageEffect(effect, damage);
+        state = store.reduceEffect(state, afterDamage);
+      }
+    }
+
+    // Rampage Thunder
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       player.active.cannotAttackNextTurnPending = true;
     }

@@ -1,26 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Latiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
   public tags = [CardTag.POKEMON_ex];
-
+  public cardType: CardType = P;
   public hp: number = 210;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Skyline',
@@ -28,40 +20,21 @@ export class Latiasex extends PokemonCard {
     text: 'Your Basic Pokémon have no Retreat Cost.'
   }];
 
-  public attacks = [
-    {
-      name: 'Infinity Blade',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
-      damage: 200,
-      text: 'This Pokémon can\'t attack during your next turn.'
-    },
-  ];
-
-  public set: string = 'SSP';
+  public attacks = [{
+    name: 'Infinity Blade',
+    cost: [P, P, C],
+    damage: 200,
+    text: 'This Pokémon can\'t attack during your next turn.'
+  }];
 
   public regulationMark: string = 'H';
-
+  public set: string = 'SSP';
   public setNumber: string = '76';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Latias ex';
-
   public fullName: string = 'Latias ex SSP';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
 
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
@@ -90,14 +63,12 @@ export class Latiasex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+    // Infinity Blade
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
+    
     return state;
   }
 }

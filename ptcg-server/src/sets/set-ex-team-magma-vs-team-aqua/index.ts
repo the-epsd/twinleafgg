@@ -9,6 +9,7 @@ import { Raikouex } from './raikou-ex';
 import { Sceptileex } from './sceptile-ex';
 import { Suicuneex } from './suicune-ex';
 import { TeamAquaBall } from './team-aqua-ball';
+import { TeamAquaConspirator } from './team-aqua-conspirator';
 import { TeamAquaHideout } from './team-aqua-hideout';
 import { TeamAquasCacnea } from './team-aquas-cacnea';
 import { TeamAquasCacturne } from './team-aquas-cacturne';
@@ -42,6 +43,7 @@ export const setEXTeamMagmaVsTeamAqua: Card[] = [
   new Sceptileex(),
   new Suicuneex(),
   new TeamAquaBall(),
+  new TeamAquaConspirator(),
   new TeamAquaHideout(),
   new TeamAquasCacnea(),
   new TeamAquasCacturne(),

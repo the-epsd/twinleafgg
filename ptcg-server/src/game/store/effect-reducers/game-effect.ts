@@ -485,10 +485,6 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     });
     effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
     effect.target.pokemonPlayedTurn = state.turn;
-    // effect.target.clearEffects();
-    // Apply the removePokemonEffects method from the Player class
-    // effect.player.removePokemonEffects(effect.target);
-    effect.target.specialConditions = [];
     effect.target.marker.markers = [];
   }
 

@@ -2,27 +2,20 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State,
-  GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PokemonCardList, PlayerType
+  GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, PokemonCardList, PlayerType,
+  GameError
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Miraidonex extends PokemonCard {
-
-  public regulationMark = 'G';
-
-  public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public tags = [CardTag.POKEMON_ex];
+  public cardType: CardType = L;
   public hp: number = 220;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Tandem Unit',
@@ -33,29 +26,21 @@ export class Miraidonex extends PokemonCard {
       'Then, shuffle your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Photon Blaster',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 220,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Photon Blaster',
+    cost: [L, L, C],
+    damage: 220,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
-
+  public regulationMark = 'G';
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '81';
-
   public name: string = 'Miraidon ex';
-
   public fullName: string = 'Miraidon ex SVI';
 
   public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -64,25 +49,13 @@ export class Miraidonex extends PokemonCard {
       player.marker.removeMarker(this.TANDEM_UNIT_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    // Photon Blaster
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-    }
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -132,6 +105,7 @@ export class Miraidonex extends PokemonCard {
         });
       });
     }
+    
     return state;
   }
 }

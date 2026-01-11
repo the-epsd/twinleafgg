@@ -19,6 +19,7 @@ import { Oddish } from './oddish';
 import { Onix } from './onix';
 import { Pineco } from './pineco';
 import { PokemonReversal } from './pokemon-reversal';
+import { Porygon2 } from './porygon2';
 import { ProfessorElmsTrainingMethod } from './professors-elm-training-method';
 import { Scyther } from './scyther';
 import { Scizorex } from './scizor-ex';
@@ -65,6 +66,7 @@ export const setEXUnseenForces: Card[] = [
   new Onix(),
   new Pineco(),
   new PokemonReversal(),
+  new Porygon2(),
   new ProfessorElmsTrainingMethod(),
   new Scyther(),
   new Scizorex(),

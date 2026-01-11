@@ -1,73 +1,42 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HopsZacianex extends PokemonCard {
-
-  public tags = [CardTag.HOPS, CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.BASIC;
-
+  public tags = [CardTag.HOPS, CardTag.POKEMON_ex];
   public cardType: CardType = M;
-
   public hp: number = 230;
-
   public retreat = [C, C];
-
   public weakness = [{ type: R }];
-
   public resistance = [{ type: G, value: -30 }];
 
-  public attacks = [
-    {
-      name: 'Insta-Strike',
-      cost: [C],
-      damage: 30,
-      text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
+  public attacks = [{
+    name: 'Insta-Strike',
+    cost: [C],
+    damage: 30,
+    text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  },
 
-    {
-      name: 'Brave Slash',
-      cost: [M, M, M, C],
-      damage: 240,
-      text: 'During your next turn, this Pokémon can\'t use Brave Slash.'
-    },
-
-  ];
+  {
+    name: 'Brave Slash',
+    cost: [M, M, M, C],
+    damage: 240,
+    text: 'During your next turn, this Pokémon can\'t use Brave Slash.'
+  }];
 
   public regulationMark = 'I';
-
   public cardImage: string = 'assets/cardback.png';
-
   public set: string = 'JTG';
-
   public setNumber = '111';
-
   public name: string = 'Hop\'s Zacian ex';
-
   public fullName: string = 'Hop\'s Zacian ex JTG';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -94,15 +63,11 @@ export class HopsZacianex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Brave Slash')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Brave Slash');
       }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
     return state;
   }

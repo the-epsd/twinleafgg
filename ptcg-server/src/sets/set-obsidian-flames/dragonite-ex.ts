@@ -3,88 +3,56 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { GameError, StateUtils } from '../../game';
+import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Dragoniteex extends PokemonCard {
-
-  public regulationMark = 'G';
-
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-
   public stage: Stage = Stage.STAGE_2;
-
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public evolvesFrom = 'Dragonair';
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 330;
-
   public weakness = [];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Wing Attack',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 70,
     text: ''
-  }, {
+  },
+  {
     name: 'Mighty Meteor',
-    cost: [CardType.WATER, CardType.LIGHTNING],
+    cost: [W, L],
     damage: 140,
     damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 140 more damage.' +
       'If tails, during your next turn, this Pokémon can\'t attack.'
   }];
 
+  public regulationMark = 'G';
   public set: string = 'OBF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '159';
-
   public name: string = 'Dragonite ex';
-
   public fullName: string = 'Dragonite ex OBF';
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
 
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
 
         if (!result) {
-          effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+          player.active.cannotAttackNextTurnPending = true;
         }
 
         if (result) {
@@ -104,6 +72,7 @@ export class Dragoniteex extends PokemonCard {
 
       effect.preventDefault = true;
     }
+    
     return state;
   }
 }

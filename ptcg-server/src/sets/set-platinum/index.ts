@@ -6,6 +6,7 @@ import { CrobatG } from './crobat-g';
 import { Delcatty } from './delcatty';
 import { Dialga } from './dialga';
 import { GalacticHQ } from './galactic-hq';
+import { LevelMax } from './level-max';
 import { LookersInvestigation } from './lookers-investigation';
 import { PokeTurn } from './poke-turn';
 import { PokemonRescue } from './pokemon-rescue';
@@ -31,6 +32,7 @@ export const setPlatinum: Card[] = [
   new Delcatty(),
   new Dialga(),
   new GalacticHQ(),
+  new LevelMax(),
   new LookersInvestigation(),
   new PokeTurn(),
   new PokemonRescue(),

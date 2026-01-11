@@ -1,24 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PowerType, State, StoreLike, TrainerCard } from '../../game';
+import { PowerType, State, StoreLike, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Crabominable extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Crabrawler';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 160;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Food Prep',
@@ -27,30 +21,20 @@ export class Crabominable extends PokemonCard {
     text: 'Attacks used by this Pokémon cost [C] less for each Kofu card in your discard pile.'
   }];
 
-  public attacks = [
-    {
-      name: 'Haymaker',
-      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 250,
-      text: 'During your next turn, this Pokémon can\'t use Haymaker.'
-    }
+  public attacks = [{
+    name: 'Haymaker',
+    cost: [W, C, C, C, C],
+    damage: 250,
+    text: 'During your next turn, this Pokémon can\'t use Haymaker.'
+  }
   ];
 
-  public set: string = 'SCR';
-
-  public name: string = 'Crabominable';
-
-  public fullName: string = 'Crabominable SCR';
-
-  public setNumber: string = '42';
-
   public regulationMark = 'H';
-
+  public set: string = 'SCR';
+  public name: string = 'Crabominable';
+  public fullName: string = 'Crabominable SCR';
+  public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
-
-
-  public readonly HAYMAKER_MARKER_1 = 'HAYMAKER_MARKER_1';
-  public readonly HAYMAKER_MARKER_2 = 'HAYMAKER_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Food Prep
@@ -81,26 +65,12 @@ export class Crabominable extends PokemonCard {
       return state;
     }
 
-
     // Haymaker
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-
-      if (player.marker.hasMarker(this.HAYMAKER_MARKER_1, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Haymaker')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Haymaker');
       }
-
-      player.marker.addMarker(this.HAYMAKER_MARKER_1, this);
-    }
-
-    // doing end of turn things with the markers
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.HAYMAKER_MARKER_2, this)) {
-      effect.player.marker.removeMarker(this.HAYMAKER_MARKER_1, this);
-      effect.player.marker.removeMarker(this.HAYMAKER_MARKER_2, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.HAYMAKER_MARKER_1, this)) {
-      effect.player.marker.addMarker(this.HAYMAKER_MARKER_2, this);
     }
 
     return state;

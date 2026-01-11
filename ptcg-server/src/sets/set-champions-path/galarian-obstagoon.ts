@@ -1,7 +1,6 @@
 import {
   ChooseCardsPrompt,
   GameError, PlayerType,
-  PokemonCardList,
   PowerType,
   ShowCardsPrompt,
   State,
@@ -12,23 +11,18 @@ import { GameLog, GameMessage } from '../../game/game-message';
 import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianObstagoon extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
-  public cardType: CardType = CardType.DARK;
-
+  public evolvesFrom = 'Galarian Linoone';
+  public cardType: CardType = D;
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Wicked Ruler',
@@ -37,48 +31,28 @@ export class GalarianObstagoon extends PokemonCard {
     text: 'Once during your turn, you may have your opponent discard cards from their hand until they have 4 cards in their hand.'
   }];
 
-  public attacks = [
-    {
-      name: 'Knuckle Impact',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 180,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Knuckle Impact',
+    cost: [C, C, C],
+    damage: 180,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
+  public regulationMark = 'D';
   public set: string = 'CPA';
-
   public name: string = 'Galarian Obstagoon';
-
   public fullName: string = 'Galarian Obstagoon CPA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '37';
-
-  public evolvesFrom = 'Galarian Linoone';
 
   public readonly WICKED_RULER_MARKER = 'WICKED_RULER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-      effect.player.active.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-      effect.player.active.marker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
-      effect.player.active.marker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
+    // Knuckle Impact
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -86,7 +60,7 @@ export class GalarianObstagoon extends PokemonCard {
       player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const handSize = opponent.hand.cards.length;
@@ -110,7 +84,6 @@ export class GalarianObstagoon extends PokemonCard {
       } catch {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
 
       return store.prompt(state, new ChooseCardsPrompt(
         opponent,
@@ -151,5 +124,4 @@ export class GalarianObstagoon extends PokemonCard {
 
     return state;
   }
-
 }

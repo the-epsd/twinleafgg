@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Meditite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -25,16 +25,12 @@ export class Meditite extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
-  public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
-
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Spirited Headbutt')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Spirited Headbutt');
+      }
     }
 
     return state;

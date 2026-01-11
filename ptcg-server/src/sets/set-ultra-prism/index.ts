@@ -2,6 +2,7 @@ import { CosmoemUPR, PalPadUPR, UnidentifiedFossilUPR, GlaceonGX2UPR, DawnWingsN
 import { Card } from '../../game/store/card/card';
 import { Bastiodon } from './bastiodon';
 import { Cynthia } from './cynthia';
+import { CyrusPrismStar } from './cyrus-prism-star';
 import { DawnWingsNecrozmaGX } from './dawn-wings-necrozma-gx';
 import { DialgaGX } from './dialga-gx';
 import { DuskManeNecrozmaGX } from './dusk-mane-necrozma-gx';
@@ -14,6 +15,7 @@ import { GlaceonGX } from './glaceon-gx';
 import { Honchkrow } from './honchkrow';
 import { Lillie } from './lillie';
 import { Lucario } from './lucario';
+import { Luxio } from './luxio';
 import { LunalaPrismStar } from './lunala-prism-star';
 import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
@@ -28,6 +30,7 @@ import { PokemonFanClub } from './pokemon-fan-club';
 import { Riolu } from './riolu';
 import { Roselia } from './roselia';
 import { Shiinotic } from './shiinotic';
+import { Shinx } from './shinx';
 import { SilvallyGX } from './silvally-gx';
 import { Sneasel } from './sneasel';
 import { SolgaleoPrismStar } from './solgaleo-prism-star';
@@ -57,6 +60,7 @@ export const setUltraPrism: Card[] = [
   new Lillie(),
   new Lucario(),
   new LunalaPrismStar(),
+  new Luxio(),
   new Magnemite(),
   new Magnezone(),
   new Mars(),
@@ -82,6 +86,7 @@ export const setUltraPrism: Card[] = [
   new SuperBoostEnergy(),
   new TypeNull(),
   new SilvallyGX(),
+  new Shinx(),
   new CosmoemUPR(),
   new PalPadUPR(),
   new UnidentifiedFossilUPR(),
@@ -105,6 +110,7 @@ export const setUltraPrism: Card[] = [
   new UnitEnergyGRW2UPR(),
   new UnitEnergyLPM2UPR(),
   new Cynthia2UPR(),
+  new CyrusPrismStar(),
   new EscapeBoard2UPR(),
   new Lillie2UPR(),
   new Volkner2UPR(),

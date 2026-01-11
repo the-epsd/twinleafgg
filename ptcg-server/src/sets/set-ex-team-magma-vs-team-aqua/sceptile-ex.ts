@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 import { PlayerType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -46,8 +46,6 @@ export class Sceptileex extends PokemonCard {
   public fullName: string = 'Sceptile ex MA';
 
   public readonly POISON_RING_MARKER: string = 'POISON_RING_MARKER';
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -59,7 +57,7 @@ export class Sceptileex extends PokemonCard {
         store.reduceEffect(state, checkProvidedEnergyEffect);
 
         const energyMap = checkProvidedEnergyEffect.energyMap;
-        const hasGrassEnergy = StateUtils.checkEnoughEnergy(energyMap, [CardType.GRASS]);
+        const hasGrassEnergy = StateUtils.checkEnoughEnergy(energyMap, [G]);
 
         if (hasGrassEnergy) {
           const healEffect = new HealEffect(player, cardList, 40);
@@ -76,13 +74,14 @@ export class Sceptileex extends PokemonCard {
     BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
+    // Slashing Strike
     if (WAS_ATTACK_USED(effect, 2, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Slashing Strike')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Slashing Strike');
+      }
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
     return state;
   }
 }

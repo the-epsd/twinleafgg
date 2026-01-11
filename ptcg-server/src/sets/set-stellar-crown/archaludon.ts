@@ -1,10 +1,10 @@
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Archaludon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -34,9 +34,6 @@ export class Archaludon extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public name = 'Archaludon';
   public fullName = 'Archaludon SCR';
-
-  private readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  private readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect) {
@@ -76,17 +73,10 @@ export class Archaludon extends PokemonCard {
       }
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
-
-    if (effect instanceof AttackEffect) {
-      if (HAS_MARKER(this.ATTACK_USED_MARKER, effect.player, this) || HAS_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
+    // Iron Blaster
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;

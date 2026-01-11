@@ -412,6 +412,11 @@ ptcg-board-prizes {
   width: 91.2px;
   transform: translate(15%, -55%);
   pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.ptcg-card-preview.scale-down {
+  transform: translate(15%, -55%) scale(0.6);
 }
 
 .coin-flip-container {

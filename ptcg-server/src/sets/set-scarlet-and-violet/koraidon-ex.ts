@@ -2,28 +2,21 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State,
-  GameMessage, GameError, PlayerType, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils,
-  CardTarget
+  GameMessage, PlayerType, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils,
+  CardTarget,
+  GameError
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Koraidonex extends PokemonCard {
-
-  public regulationMark = 'G';
-
   public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 230;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Dino Cry',
@@ -32,49 +25,28 @@ export class Koraidonex extends PokemonCard {
     text: 'Once during your turn, you may attach up to 2 Basic [F] Energy cards from your discard pile to your Basic [F] Pokémon in any way you like. If you use this Ability, your turn ends.'
   }];
 
-  public attacks = [
-    {
-      name: 'Wild Impact',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
-      damage: 220,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wild Impact',
+    cost: [F, F, C],
+    damage: 220,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
+  public regulationMark = 'G';
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '125';
-
   public name: string = 'Koraidon ex';
-
   public fullName: string = 'Koraidon ex SVI';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    // Wild Impact
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-    }
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -134,6 +106,7 @@ export class Koraidonex extends PokemonCard {
       store.reduceEffect(state, endTurnEffect);
       return state;
     }
+    
     return state;
   }
 }

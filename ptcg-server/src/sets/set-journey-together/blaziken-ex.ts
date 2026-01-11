@@ -1,22 +1,16 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, EnergyType, PlayerType, SlotType, StateUtils, SuperType, EnergyCard, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Blazikenex extends PokemonCard {
-
   public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Combusken';
-
   public cardType: CardType = R;
-
   public hp: number = 320;
-
   public weakness = [{ type: W }];
-
   public retreat = [C, C];
 
   public powers = [{
@@ -26,30 +20,21 @@ export class Blazikenex extends PokemonCard {
     text: 'Once during your turn, you may attach a Basic Energy card from your discard pile to 1 of your Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Burning Assault',
-      cost: [R, C],
-      damage: 200,
-      text: 'During your next turn, this Pokemon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Burning Assault',
+    cost: [R, C],
+    damage: 200,
+    text: 'During your next turn, this Pokemon can\'t attack.'
+  }];
 
   public regulationMark = 'H';
-
   public set: string = 'JTG';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '24';
-
   public name: string = 'Blaziken ex';
-
   public fullName: string = 'Blaziken ex JTG';
 
   public readonly OVERFLOWING_SPIRIT_MARKER = 'OVERFLOWING_SPIRIT_MARKER';
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -104,26 +89,12 @@ export class Blazikenex extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
+    // Burning Assault
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-    }
+    
     return state;
   }
 }

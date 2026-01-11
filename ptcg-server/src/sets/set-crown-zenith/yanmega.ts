@@ -1,29 +1,29 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, GameMessage, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yanmega extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Yanma';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 130;
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
   public attacks = [{
     name: 'Shoot Through',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 20,
-    text: ' This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) '
+    text: 'This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Jet Wing',
-    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+    cost: [G, G, C],
     damage: 160,
-    text: ' During your next turn, this Pokémon can\'t attack.'
+    text: 'During your next turn, this Pokémon can\'t attack.'
   }];
 
   public set: string = 'CRZ';
@@ -33,21 +33,7 @@ export class Yanmega extends PokemonCard {
   public name: string = 'Yanmega';
   public setNumber: string = '9';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -75,17 +61,11 @@ export class Yanmega extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+    // Jet Wing
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
-
 
     return state;
   }

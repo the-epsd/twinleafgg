@@ -27,6 +27,7 @@ function hasRuleBox(card: PokemonCard): boolean {
 
 export class PokePad extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+  public regulationMark = 'J';
   public set: string = 'MC';
   public setNumber: string = '662';
   public cardImage: string = 'assets/cardback.png';

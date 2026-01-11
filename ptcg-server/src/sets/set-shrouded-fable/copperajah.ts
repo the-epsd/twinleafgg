@@ -2,25 +2,18 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { ConfirmPrompt, GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Copperajah extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Cufant';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 200;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Massive Body',
@@ -28,44 +21,24 @@ export class Copperajah extends PokemonCard {
     text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Stadium cards from their hand.'
   }];
 
-  public attacks = [
-    {
-      name: 'Nasal Lariat',
-      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      damage: 130,
-      damageCalculation: '+',
-      text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nasal Lariat',
+    cost: [M, M, M, C],
+    damage: 130,
+    damageCalculation: '+',
+    text: 'You may do 100 more damage. If you do, during your next turn, this Pokémon can\'t attack.'
+  }];
 
   public regulationMark: string = 'H';
-
   public set: string = 'SFA';
-
   public name: string = 'Copperajah';
-
   public fullName: string = 'Copperajah SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '42';
-
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public readonly OPPONENT_CANNOT_PLAY_STADIUMS_MARKER = 'OPPONENT_CANNOT_PLAY_STADIUMS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
 
     if (effect instanceof PlayStadiumEffect) {
       const player = effect.player;
@@ -88,25 +61,20 @@ export class Copperajah extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-
-      // Check marker
-      if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
 
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-
           effect.damage += 100;
-          effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+          player.active.cannotAttackNextTurnPending = true;
         }
       });
     }
+
     return state;
   }
 }

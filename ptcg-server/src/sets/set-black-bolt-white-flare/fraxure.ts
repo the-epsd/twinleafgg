@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Fraxure extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,24 +35,11 @@ export class Fraxure extends PokemonCard {
   public name: string = 'Fraxure';
   public fullName: string = 'Fraxure SV11B';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Remove marker at end of turn (pattern from Radiant Charizard)
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-    // Prevent attacking if marker is present
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+    // Boundless Power
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
     return state;
   }

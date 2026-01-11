@@ -1,8 +1,9 @@
-import { CardTag, CardType, PokemonCard, Stage, PowerType, State, StateUtils, StoreLike, SuperType, DiscardEnergyPrompt, GameMessage, GameError, PlayerType, SlotType, BoardEffect } from '../../game';
+import { CardTag, CardType, PokemonCard, Stage, PowerType, State, StoreLike, GameMessage, GameError, PlayerType, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaDragoniteex extends PokemonCard {
@@ -87,32 +88,7 @@ export class MegaDragoniteex extends PokemonCard {
 
     // Ryuno Glide attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      // Check if this Pokémon has at least 2 energy attached
-      const energyCount = player.active.cards.filter(card =>
-        card.superType === SuperType.ENERGY
-      ).length;
-
-      if (energyCount >= 2) {
-        state = store.prompt(state, new DiscardEnergyPrompt(
-          player.id,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE],
-          { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 2, max: 2 }
-        ), transfers => {
-          transfers = transfers || [];
-          if (transfers.length === 0) {
-            return state;
-          }
-          for (const transfer of transfers) {
-            const source = StateUtils.getTarget(state, player, transfer.from);
-            source.moveCardTo(transfer.card, player.discard);
-          }
-        });
-      }
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
 
     return state;

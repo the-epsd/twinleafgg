@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType, PowerType, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, AFTER_ATTACK, BLOCK_EFFECT_IF_MARKER, CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class RocketsScytherex extends PokemonCard {
@@ -39,9 +39,6 @@ export class RocketsScytherex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Dual Armor
@@ -63,15 +60,6 @@ export class RocketsScytherex extends PokemonCard {
       });
     }
 
-    // Slashing Strike
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
-    }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
-
     if (AFTER_ATTACK(effect, 0, this)) {
       CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
@@ -80,7 +68,14 @@ export class RocketsScytherex extends PokemonCard {
       }, GameMessage.WANT_TO_SWITCH_POKEMON);
     }
 
+    // Slashing Strike
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Slashing Strike')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Slashing Strike');
+      }
+    }
+
     return state;
   }
-
 }

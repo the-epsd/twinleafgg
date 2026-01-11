@@ -35,6 +35,7 @@ import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Mimikyu } from './mimikyu';
 import { Moltres } from './moltres';
+import { Muk } from './muk';
 import { Ninetales } from './ninetales';
 import { Poochyena } from './poochyena';
 import { Ponyta } from './ponyta';
@@ -94,6 +95,7 @@ export const setTeamUp: Card[] = [
   new MetalGoggles(),
   new Mimikyu(),
   new Moltres(),
+  new Muk(),
   new Ninetales(),
   new Poochyena(),
   new Ponyta(),

@@ -1,68 +1,44 @@
-import { GameError, GameMessage, PokemonCardList, State, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Doublade extends PokemonCard {
-
-  public regulationMark = 'G';
-
   public stage: Stage = Stage.STAGE_1;
-
-  public cardType: CardType = CardType.METAL;
-
-  public hp: number = 90;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
   public evolvesFrom: string = 'Honedge';
+  public cardType: CardType = M;
+  public hp: number = 90;
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Slash',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 20,
     text: ''
   }, {
     name: 'Slashing Strike',
-    cost: [CardType.METAL, CardType.COLORLESS],
+    cost: [M, C],
     damage: 80,
-    text: ''
+    text: 'During your next turn, this Pokémon can\'t use Slashing Strike.'
   }];
 
+  public regulationMark = 'G';
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '132';
-
   public name: string = 'Doublade';
-
   public fullName: string = 'Doublade PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-      effect.player.active.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-      effect.player.active.marker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Check marker
-      if (effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    // Slashing Strike
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Slashing Strike')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Slashing Strike');
       }
-
-      effect.player.active.marker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
     }
 
     return state;

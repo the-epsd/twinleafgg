@@ -4,7 +4,7 @@ import { StoreLike, State, Attack, StateUtils, ChooseAttackPrompt, GameMessage, 
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, BLOCK_EFFECT_IF_MARKER, COIN_FLIP_PROMPT, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MistysPoliwag extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,23 +34,20 @@ export class MistysPoliwag extends PokemonCard {
   public setNumber: string = '89';
 
   public DISABLED_ATTACK: Attack | undefined;
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // Bubbles
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result) {
-          ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+          const player = effect.player;
+          if (!player.active.cannotUseAttacksNextTurnPending.includes('Bubbles')) {
+            player.active.cannotUseAttacksNextTurnPending.push('Bubbles');
+          }
         }
       });
     }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;

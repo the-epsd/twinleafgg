@@ -1,12 +1,9 @@
 import { PokemonCard } from '../../game';
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class StevensMetang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,32 +29,13 @@ export class StevensMetang extends PokemonCard {
   public name: string = 'Steven\'s Metang';
   public fullName: string = 'Steven\'s Metang DRI';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
+    // Metal Slash
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-    }
+    
     return state;
   }
-
 }

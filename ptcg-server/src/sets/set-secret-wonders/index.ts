@@ -8,6 +8,7 @@ import { Hoppip } from './hoppip';
 import { Kirlia } from './kirlia';
 import { Mew } from './mew';
 import { Minun } from './minun';
+import { Murkrow } from './murkrow';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Plusle } from './plusle';
@@ -23,6 +24,7 @@ export const setSecretWonders: Card[] = [
   new Gallade(),
   new Mew(),
   new Minun(),
+  new Murkrow(),
   new Pidgeotto(),
   new Pidgey(),
   new Plusle(),

@@ -6,26 +6,20 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CardTag } from '../../game/store/card/card-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GenesectV extends PokemonCard {
-
   public tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
-
   public regulationMark = 'E';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 190;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Fusion Strike System',
@@ -36,14 +30,12 @@ export class GenesectV extends PokemonCard {
       'Pokémon in play.'
   }];
 
-  public attacks = [
-    {
-      name: 'Techno Blast',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      damage: 210,
-      text: 'During your next turn, this Pokémon can\'t attack. '
-    }
-  ];
+  public attacks = [{
+    name: 'Techno Blast',
+    cost: [M, M, C],
+    damage: 210,
+    text: 'During your next turn, this Pokémon can\'t attack.'
+  }];
 
   public set: string = 'FST';
 
@@ -55,35 +47,14 @@ export class GenesectV extends PokemonCard {
 
   public fullName: string = 'Genesect V FST';
 
-
   public readonly FUSION_STRIKE_SYSTEM_MARKER = 'FUSION_STRIKE_SYSTEM_MARKER';
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(_store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+    // Techno Blast
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      player.active.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      player.active.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      const player = effect.player;
-      player.active.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      // Check marker
-      if (player.active.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      player.active.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

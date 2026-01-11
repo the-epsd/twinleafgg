@@ -26,6 +26,7 @@ import { KarateBelt } from './karate-belt';
 import { KeldeoGX } from './keldeo-gx';
 import { Leavanny } from './leavanny';
 import { Lickilicky } from './lickilicky';
+import { MawileGX } from './mawile-gx';
 import { Meditite } from './meditite';
 import { MewtwoMewGX } from './mewtwo-and-mew-gx';
 import { Munchlax } from './munchlax';
@@ -92,6 +93,7 @@ export const setUnifiedMinds: Card[] = [
   new Jynx(),
   new KarateBelt(),
   new KeldeoGX(),
+  new MawileGX(),
   new Magnemite(),
   new Leavanny(),
   new Lickilicky(),

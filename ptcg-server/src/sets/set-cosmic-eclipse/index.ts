@@ -72,6 +72,7 @@ import { OricorioGX } from './oricorio-gx';
 import { DragoniumZDragonClaw } from './dragonium-z';
 import { Gloom } from './gloom';
 import { Oddish } from './oddish';
+import { Vibrava } from './vibrava';
 import { VileplumeGX } from './vileplume-gx';
 import { MegaLopunnyJigglypuffGX } from './mega-lopuny-and-jigglypuff-gx';
 import { VenusaurSnivyGX } from './venusaur-and-snivy-gx';
@@ -154,6 +155,7 @@ export const setCosmicEclipse: Card[] = [
   new Tangrowth(),
   new TogepiCleffaIgglybuffGX(),
   new UltraNecrozma(),
+  new Vibrava(),
   new VileplumeGX(),
   new Weezing(),
   new Wishiwashi(),

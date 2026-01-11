@@ -8,6 +8,11 @@
       <mat-label translate>LABEL_JSON_URL</mat-label>
       <input matInput [placeholder]="'LABEL_JSON_URL' | translate" name="jsonUrl" [(ngModel)]="jsonUrl" required>
     </mat-form-field>
+
+    <mat-form-field *ngIf="isAdmin$ | async">
+      <mat-label translate>LABEL_NIGHTLY_IMAGES_URL</mat-label>
+      <input matInput [placeholder]="'LABEL_NIGHTLY_IMAGES_URL' | translate" name="nightlyImagesJsonUrl" [(ngModel)]="nightlyImagesJsonUrl">
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 
@@ -20,5 +25,8 @@
   </button>
   <button mat-raised-button (click)="changeCardImages()" [disabled]="form.invalid">
     {{ 'BUTTON_SAVE' | translate }}
+  </button>
+  <button *ngIf="isAdmin$ | async" mat-raised-button (click)="setNightlyImages()" [disabled]="!nightlyImagesJsonUrl">
+    {{ 'BUTTON_SAVE_NIGHTLY_IMAGES' | translate }}
   </button>
 </mat-dialog-actions>

@@ -878,12 +878,11 @@ export function BLOCK_IF_HAS_SPECIAL_CONDITION(player: Player, source: Card) {
 }
 
 export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card) {
-  if (player.active.getPokemonCard() === source &&
-    player.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
-    player.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
-    player.active.specialConditions.includes(SpecialCondition.PARALYZED)) {
+  // "any Pokemon Power on any Pokemon that says it stops working if the Pokemon is Paralyzed, Asleep, or Confused, 
+  // now should ALSO include Poisoned, or Burned as well." - (Jan 17, 2002 WotC Chat, Q1278 & Q1284)
+  // I was unaware of this errata when I originally made this and BLOCK_IF_HAS_SPECIAL_CONDITION, so I updated it to do the same thing. 
+  if (player.active.getPokemonCard() === source && player.active.specialConditions.length > 0)
     throw new GameError(GameMessage.CANNOT_USE_POWER);
-  }
 }
 
 //#region Special Conditions

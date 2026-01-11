@@ -101,6 +101,12 @@ $ptcg-energy-card-offset: 13%;
     }
   }
 
+  // ==================== HOVER EFFECT ====================
+  &:not(.empty):not(.selectable):not(.selected):not(.evolution-animation):not(.play-basic-animation):not(.attack-animation):hover {
+    transform: scale(1.1);
+    z-index: 40;
+  }
+
   // ==================== ENERGY CARDS ====================
   .ptcg-energy-cards {
     ptcg-card {

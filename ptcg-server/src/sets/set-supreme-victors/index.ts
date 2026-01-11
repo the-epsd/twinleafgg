@@ -4,6 +4,7 @@ import { Bulbasaur } from './bulbasaur';
 import { GarchompC } from './garchomp-c';
 import { GarchompCLVX } from './garchomp-c-lv-x';
 import { Gible } from './gible';
+import { Honchkrow } from './honchkrow';
 import { Ivysaur } from './ivysaur';
 import { MrMime } from './mr-mime';
 import { PalmersContribution } from './palmers-contribution';
@@ -19,6 +20,7 @@ export const setSupremeVictors: Card[] = [
   new GarchompC(),
   new GarchompCLVX(),
   new Gible(),
+  new Honchkrow(),
   new Ivysaur(),
   new MrMime(),
   new PalmersContribution(),

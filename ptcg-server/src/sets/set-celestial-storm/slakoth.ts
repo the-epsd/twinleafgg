@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, GameError } from '../../game';
+import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slakoth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,23 +31,9 @@ export class Slakoth extends PokemonCard {
   public name: string = 'Slakoth';
   public fullName: string = 'Slakoth CES';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
       ], heads => {
@@ -57,18 +43,10 @@ export class Slakoth extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
-
+    // Slack Off
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
 
       const healEffect = new HealEffect(player, player.active, player.active.damage);
       state = store.reduceEffect(state, healEffect);

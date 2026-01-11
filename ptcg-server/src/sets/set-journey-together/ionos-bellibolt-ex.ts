@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IonosBelliboltex extends PokemonCard {
 
@@ -91,29 +91,10 @@ export class IonosBelliboltex extends PokemonCard {
       return state;
     }
 
-    // Cannot attack next turn
-    if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
-      if (effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
     // Thunderous Bolt
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Check marker
-      if (effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;

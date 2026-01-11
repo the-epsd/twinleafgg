@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { Altariaex } from './altaria-ex';
 import { Bayleef } from './bayleef';
+import { CharizardStar } from './charizard-star';
 import { Chikorita } from './chikorita';
 import { Cloyster } from './cloyster';
 import { Copycat } from './copycat';
@@ -9,6 +10,7 @@ import { Electabuzz } from './electabuzz';
 import { Elekid } from './elekid';
 import { Flygonex } from './flygon-ex';
 import { Gardevoirex } from './gardevoir-ex';
+import { HolonEnergyWP } from './holon-energy-wp';
 import { Horsea } from './horsea';
 import { Jynx } from './jynx';
 import { Kingdraex } from './kingdra-ex';
@@ -37,6 +39,7 @@ import { Vibrava2 } from './vibrava2';
 export const setEXDragonFrontiers: Card[] = [
   new Altariaex(),
   new Bayleef(),
+  new CharizardStar(),
   new Chikorita(),
   new Cloyster(),
   new Copycat(),
@@ -45,6 +48,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Elekid(),
   new Flygonex(),
   new Gardevoirex(),
+  new HolonEnergyWP(),
   new Horsea(),
   new Jynx(),
   new Kingdraex(),

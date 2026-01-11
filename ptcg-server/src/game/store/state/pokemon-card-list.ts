@@ -33,6 +33,7 @@ export class PokemonCardList extends CardList {
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
   public cannotUseAttacksNextTurnPending: string[] = [];
+  public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -127,8 +128,8 @@ export class PokemonCardList extends CardList {
       return false;
     }
 
-    // LV_X placed on a Basic Pokémon is not considered evolved
-    if (pokemonCard?.stage === Stage.LV_X && pokemons.length === 2 && pokemons.some(p => p.stage === Stage.BASIC)) {
+    // LV_X placed on a Pokémon is not considered evolved
+    if (pokemonCard?.stage === Stage.LV_X && pokemons.length === 2) {
       return false;
     }
 
@@ -171,11 +172,22 @@ export class PokemonCardList extends CardList {
     this.showBasicAnimation = false;
     this.triggerAttackAnimation = false;
 
-    this.removeSpecialCondition(SpecialCondition.POISONED);
-    this.removeSpecialCondition(SpecialCondition.ASLEEP);
-    this.removeSpecialCondition(SpecialCondition.BURNED);
-    this.removeSpecialCondition(SpecialCondition.CONFUSED);
-    this.removeSpecialCondition(SpecialCondition.PARALYZED);
+    // Check if we're in an evolution context (preserved conditions are set)
+    const preservedConditions = this._preservedConditionsDuringEvolution || [];
+
+    // Only remove special conditions that are not preserved
+    const conditionsToRemove = [
+      SpecialCondition.POISONED,
+      SpecialCondition.ASLEEP,
+      SpecialCondition.BURNED,
+      SpecialCondition.CONFUSED,
+      SpecialCondition.PARALYZED
+    ].filter(condition => !preservedConditions.includes(condition));
+
+    conditionsToRemove.forEach(condition => {
+      this.removeSpecialCondition(condition);
+    });
+
     this.poisonDamage = 10;
     this.burnDamage = 20;
     this.damageReductionNextTurn = 0;
@@ -255,7 +267,7 @@ export class PokemonCardList extends CardList {
   //Rule-Box Pokemon
 
   hasRuleBox(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK) || c.tags.includes(CardTag.POKEMON_SV_MEGA));
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK) || c.tags.includes(CardTag.POKEMON_SV_MEGA) || c.tags.includes(CardTag.LEGEND) || c.tags.includes(CardTag.POKEMON_LV_X) || c.tags.includes(CardTag.POKEMON_VUNION) || c.tags.includes(CardTag.TAG_TEAM) || c.tags.includes(CardTag.MEGA));
   }
 
   vPokemon(): boolean {

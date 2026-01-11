@@ -22,7 +22,8 @@ export enum CheckEffects {
   CHECK_POKEMON_PLAYED_TURN_EFFECT = 'CHECK_POKEMON_PLAYED_TURN_EFFECT',
   CHECK_TABLE_STATE_EFFECT = 'CHECK_TABLE_STATE_EFFECT',
   ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT',
-  CHECK_PRIZES_DESTINATION_EFFECT = 'CHECK_PRIZES_DESTINATION_EFFECT'
+  CHECK_PRIZES_DESTINATION_EFFECT = 'CHECK_PRIZES_DESTINATION_EFFECT',
+  CHECK_SPECIAL_CONDITION_REMOVAL_EFFECT = 'CHECK_SPECIAL_CONDITION_REMOVAL_EFFECT'
 }
 
 export class CheckPokemonPowersEffect implements Effect {
@@ -227,5 +228,18 @@ export class CheckPrizesDestinationEffect implements Effect {
   constructor(player: Player, destination: CardList) {
     this.player = player;
     this.destination = destination;
+  }
+}
+
+export class CheckSpecialConditionRemovalEffect implements Effect {
+  readonly type: string = CheckEffects.CHECK_SPECIAL_CONDITION_REMOVAL_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public target: PokemonCardList;
+  public preservedConditions: SpecialCondition[] = [];
+
+  constructor(player: Player, target: PokemonCardList) {
+    this.player = player;
+    this.target = target;
   }
 }
