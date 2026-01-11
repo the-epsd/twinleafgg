@@ -7,6 +7,22 @@
   position: relative;
 }
 
+// Mobile Overlay
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9998;
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
+}
+
 .gaming-toolbar {
   display: flex;
   align-items: center;
@@ -38,12 +54,52 @@
   }
 }
 
+// Left Section - Mobile Hamburger Button
+.toolbar-left-mobile {
+  display: none;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: 1024px) {
+    display: flex;
+  }
+
+  // Hide hamburger button section when menu is open
+  @media (max-width: 1024px) {
+    .gaming-toolbar.menu-open & {
+      display: none;
+    }
+  }
+
+  .mobile-menu-button {
+    color: #e2e8f0;
+    background: transparent;
+    border: 1px solid rgba(68, 144, 88, 0.3);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #449058;
+      border-color: rgba(68, 144, 88, 0.6);
+      background: rgba(68, 144, 88, 0.1);
+    }
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
 // Left Section - Logo
 .toolbar-left {
   display: flex;
   align-items: center;
   position: relative;
   z-index: 2;
+  transition: all 0.3s ease;
 
   .logo-section {
     display: flex;
@@ -55,6 +111,15 @@
       filter: drop-shadow(0 0 6px rgba(68, 144, 88, 0.3));
     }
   }
+
+  // Center logo on mobile (both when menu is open and closed)
+  @media (max-width: 1024px) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 // Center Section - Main Navigation
@@ -65,6 +130,11 @@
   justify-content: center;
   position: relative;
   z-index: 2;
+
+  // Hide center section on mobile
+  @media (max-width: 1024px) {
+    display: none;
+  }
 
   .main-navigation {
     display: flex;
@@ -92,6 +162,7 @@
       }
     }
   }
+
 }
 
 // Right Section - User Info
@@ -254,6 +325,188 @@
   }
 }
 
+// Mobile Side Menu - Styled like online players menu
+.mobile-side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 432px;
+  height: 100vh;
+  transform: translateX(-100%);
+  z-index: 9999;
+  transition: transform 0.3s ease;
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
+
+  &.menu-open {
+    transform: translateX(0);
+  }
+
+  // Background styling matching online players menu
+  background: linear-gradient(135deg, rgba(10, 10, 20, 0.95) 0%, rgba(5, 10, 25, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 215, 0, 0.3);
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.98) 0%, rgba(5, 10, 25, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    border-right: 1px solid rgba(255, 215, 0, 0.3);
+    height: 64px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    .sidebar-title {
+      color: #ffd700;
+      font-weight: 600;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .close-sidebar {
+      color: #ffd700;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+
+      &:hover {
+        background: rgba(255, 215, 0, 0.2);
+        border-color: rgba(255, 215, 0, 0.6);
+      }
+    }
+  }
+
+  .sidebar-content {
+    width: 100%;
+    height: calc(100vh - 64px);
+    padding: 1.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 3px;
+
+      &:hover {
+        background: rgba(255, 215, 0, 0.5);
+      }
+    }
+  }
+
+  .sidebar-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 215, 0, 0.1);
+      color: #ffd700;
+    }
+
+    &.active {
+      color: #449058;
+      background: rgba(68, 144, 88, 0.1);
+    }
+
+    &.battle-pass-item {
+      color: #fbbf24;
+
+      &:hover {
+        color: #fbbf24;
+        background: rgba(251, 191, 36, 0.1);
+      }
+
+      &.active {
+        color: #fbbf24;
+        background: rgba(251, 191, 36, 0.1);
+      }
+    }
+
+    &.tables-item {
+      padding: 0;
+
+      .tables-menu-button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        color: #e2e8f0;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: 'Urbanist', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+          background: rgba(255, 215, 0, 0.1);
+          color: #ffd700;
+        }
+
+        mat-icon {
+          margin-left: auto;
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+
+        .notification-badge {
+          position: absolute;
+          right: 40px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
 // Badge Styling
 ::ng-deep .mat-badge-content {
   background: #ef4444;
@@ -284,6 +537,14 @@
   }
 }
 
+// Tablet and Mobile - Layout adjustments
+@media (max-width: 1024px) {
+  // Ensure right section stays on the right
+  .toolbar-right {
+    margin-left: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .gaming-toolbar {
     padding: 0 12px;
@@ -294,50 +555,10 @@
       height: 28px;
     }
   }
-
-  .toolbar-center {
-    .main-navigation {
-      gap: 16px;
-    }
-  }
-
-  .nav-item {
-    padding: 4px 8px;
-    font-size: 12px;
-
-    .nav-text {
-      display: none;
-    }
-
-    &::before {
-      content: attr(data-label);
-      font-size: 10px;
-    }
-  }
 }
 
 @media (max-width: 480px) {
   .gaming-toolbar {
     padding: 0 8px;
-  }
-
-  .toolbar-center {
-    .main-navigation {
-      gap: 12px;
-    }
-  }
-
-  .nav-item {
-    padding: 4px 6px;
-    font-size: 11px;
-
-    .nav-text {
-      display: none;
-    }
-
-    &::before {
-      content: attr(data-label);
-      font-size: 10px;
-    }
   }
 }

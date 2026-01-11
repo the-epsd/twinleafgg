@@ -35,6 +35,7 @@ export class ToolbarComponent implements OnInit {
   public tableBadgeContent$: Observable<string>;
   public tableBadgeColor$: Observable<string>;
   public isAdmin$: Observable<boolean>;
+  public menuOpen = false;
 
   apiUrl = environment.apiUrl;
 
@@ -170,6 +171,14 @@ export class ToolbarComponent implements OnInit {
 
   public onLogoClick() {
     this.logoClick.emit();
+  }
+
+  public toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  public closeMenu(): void {
+    this.menuOpen = false;
   }
 
   async closeGame(gameState: LocalGameState) {

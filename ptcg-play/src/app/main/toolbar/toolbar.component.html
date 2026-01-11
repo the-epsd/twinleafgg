@@ -1,4 +1,58 @@
-<div class="gaming-toolbar">
+<div class="gaming-toolbar" [class.menu-open]="menuOpen">
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" *ngIf="menuOpen" (click)="closeMenu()"></div>
+
+  <!-- Mobile Side Menu -->
+  <div class="mobile-side-menu" [class.menu-open]="menuOpen" *ngIf="loggedUser">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Menu</span>
+      <button class="close-sidebar" (click)="closeMenu()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="sidebar-content">
+      <a class="sidebar-menu-item" routerLink="/games" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MAIN_GAMES' | translate }}
+      </a>
+      <a class="sidebar-menu-item" routerLink="/deck" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MAIN_DECKS' | translate }}
+      </a>
+      <a class="sidebar-menu-item" routerLink="/spectate" routerLinkActive="active" (click)="closeMenu()">
+        SPECTATE
+      </a>
+      <a class="sidebar-menu-item" routerLink="/replays" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MAIN_REPLAYS' | translate }}
+      </a>
+      <a class="sidebar-menu-item" routerLink="/friends" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin$ | async">
+        FRIENDS
+      </a>
+      <a class="sidebar-menu-item" routerLink="/ranking" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MAIN_RANKING' | translate }}
+      </a>
+      <a class="sidebar-menu-item" routerLink="/message" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MAIN_MESSAGES' | translate }}
+      </a>
+      <a class="sidebar-menu-item battle-pass-item" routerLink="/battle-pass" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin$ | async">
+        BATTLE PASS
+      </a>
+      <div class="sidebar-menu-item tables-item" *ngIf="(gameStates$ | async)?.length > 0">
+        <button mat-button [matMenuTriggerFor]="gamesMenu" class="tables-menu-button">
+          {{ 'MAIN_TABLES' | translate }}
+          <mat-icon>arrow_drop_down</mat-icon>
+          <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
+            [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left Section - Hamburger Menu Button (Mobile) -->
+  <div class="toolbar-left-mobile">
+    <button mat-icon-button class="mobile-menu-button" (click)="toggleMenu()" *ngIf="loggedUser">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
   <!-- Left Section - Logo -->
   <div class="toolbar-left">
     <div class="logo-section">
@@ -8,6 +62,7 @@
 
   <!-- Center Section - Main Navigation -->
   <div class="toolbar-center">
+    <!-- Desktop Navigation -->
     <nav class="main-navigation">
       <a routerLink="/games" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_GAMES' | translate }}</span>
