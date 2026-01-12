@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, GameError, GameMessage, PokemonCardList } from '../../game';
+import { PlayerType, SlotType, GameError, GameMessage, PokemonCardList, Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false }
   ), results => {
     targets = results || [];
@@ -59,6 +59,14 @@ export class Switch extends TrainerCard {
 
   public text: string =
     'Switch your Active Pokemon with 1 of your Benched Pokemon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasBench = player.bench.some(b => b.cards.length > 0);
+    if (!hasBench) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, PlayerType, StateUtils, GameError, GameMessage, DamageMap } from '../../game';
+import { TrainerCard, TrainerType, StoreLike, State, PlayerType, StateUtils, GameError, GameMessage, DamageMap, Player } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -21,6 +21,32 @@ export class PicnicBasket extends TrainerCard {
 
   public text: string =
     'Heal 30 damage from each Pokémon (both yours and your opponent\'s).';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+
+    // Check if any Pokémon have damage
+    let hasDamagedPokemon = false;
+    const damagedPokemon: DamageMap[] = [];
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+      if (cardList.damage > 0) {
+        hasDamagedPokemon = true;
+        damagedPokemon.push({ target, damage: cardList.damage });
+      }
+    });
+
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+      if (cardList.damage > 0) {
+        hasDamagedPokemon = true;
+        damagedPokemon.push({ target, damage: cardList.damage });
+      }
+    });
+
+    if (!hasDamagedPokemon) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

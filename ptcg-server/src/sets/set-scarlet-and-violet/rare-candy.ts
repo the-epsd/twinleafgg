@@ -15,6 +15,7 @@ import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { Player } from '../../game';
 
 function isMatchingStage2(stage1: PokemonCard[], basic: PokemonCard, stage2: PokemonCard): boolean {
   for (const card of stage1) {
@@ -141,6 +142,80 @@ export class RareCandy extends TrainerCard {
     'your hand that evolves from that Pokemon, put that card onto the Basic ' +
     'Pokemon to evolve it. You can\'t use this card during your first turn ' +
     'or on a Basic Pokemon that was put into play this turn.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    try {
+      // First check if player has any Stage 2 cards in hand
+      if (!player || !player.hand || !player.hand.cards) {
+        return false;
+      }
+
+      const stage2 = player.hand.cards.filter(c => {
+        return c instanceof PokemonCard && c.stage === Stage.STAGE_2;
+      }) as PokemonCard[];
+
+      if (stage2.length === 0) {
+        return false;
+      }
+
+      // Look through all known cards to find out if it's a valid Stage 2
+      const cm = CardManager.getInstance();
+      if (!cm) {
+        return false;
+      }
+
+      const stage1 = cm.getAllCards().filter(c => {
+        return c instanceof PokemonCard && c.stage === Stage.STAGE_1;
+      }) as PokemonCard[];
+
+      // Check if there's a basic Pokemon in play that:
+      // 1. Has been in play for at least 1 previous turn (not played this turn)
+      // 2. Has a matching Stage 2 in hand
+      let hasValidBasicPokemon = false;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        // Only check basic Pokemon
+        if (!card || card.stage !== Stage.BASIC) {
+          return;
+        }
+
+        // Check if this basic Pokemon has a matching Stage 2 in hand
+        try {
+          const hasMatchingStage2 = stage2.some(s => {
+            try {
+              return isMatchingStage2(stage1, card, s);
+            } catch {
+              return false;
+            }
+          });
+          if (!hasMatchingStage2) {
+            return;
+          }
+        } catch {
+          return;
+        }
+
+        // Check if this Pokemon was played before this turn (at least 1 previous turn)
+        try {
+          const playedTurnEffect = new CheckPokemonPlayedTurnEffect(player, list);
+          store.reduceEffect(state, playedTurnEffect);
+          if (playedTurnEffect.pokemonPlayedTurn < state.turn) {
+            hasValidBasicPokemon = true;
+            return;
+          }
+        } catch {
+          // If we can't determine when the Pokemon was played, treat it as not valid
+          return;
+        }
+      });
+
+      // Return true only if we found a valid basic Pokemon with matching Stage 2
+      return hasValidBasicPokemon;
+    } catch (error) {
+      // If any error occurs, the card is not playable
+      return false;
+    }
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

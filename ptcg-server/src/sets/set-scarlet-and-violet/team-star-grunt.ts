@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StateUtils, EnergyCard, CardList, ChooseCardsPrompt } from '../../game';
+import { StateUtils, EnergyCard, CardList, ChooseCardsPrompt, Player } from '../../game';
 
 export class TeamStarGrunt extends TrainerCard {
 
@@ -26,6 +26,20 @@ export class TeamStarGrunt extends TrainerCard {
 
   public text: string =
     'Put an Energy attached to your opponent\'s Active Pokémon on top of their deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const supporterTurn = player.supporterTurn;
+
+    if (supporterTurn > 0) {
+      return false;
+    }
+
+    if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

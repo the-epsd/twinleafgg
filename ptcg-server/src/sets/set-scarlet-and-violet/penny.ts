@@ -7,7 +7,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { GameError, PokemonCard } from '../../game';
+import { GameError, Player, PokemonCard } from '../../game';
 import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class Penny extends TrainerCard {
 
@@ -27,6 +27,28 @@ export class Penny extends TrainerCard {
 
   public text: string =
     'Put 1 of your Basic Pokémon and all attached cards into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+
+    if (supporterTurn > 0) {
+      return false;
+    }
+
+    let hasBasicPokemon: boolean = false;
+
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+      if (card.stage === Stage.BASIC) {
+        hasBasicPokemon = true;
+        return;
+      }
+    });
+
+    if (!hasBasicPokemon) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
