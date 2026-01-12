@@ -26,7 +26,7 @@ export class MegaManectricEx extends PokemonCard {
     cost: [L, L, L],
     damage: 200,
     damageCalculation: '+',
-    text: 'You may discard all Energy attached to this Pokémon. If you do, this attack does 130 more damage.'
+    text: 'You may discard all Energy from this Pokémon and have this attack do 130 more damage.'
   }];
 
   public set: string = 'MEG';

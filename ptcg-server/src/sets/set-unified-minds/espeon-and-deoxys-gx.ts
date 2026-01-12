@@ -1,6 +1,6 @@
-import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
 
@@ -58,12 +58,18 @@ export class EspeonDeoxysGX extends PokemonCard {
 
       let counters = 10;
 
-      const extraEffectCost: CardType[] = [P, C, C, C, C, C];
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const checkCost = new CheckAttackCostEffect(player, this.attacks[1]);
+      state = store.reduceEffect(state, checkCost);
 
-      if (meetsExtraEffectCost) {
+      // Check attached energy
+      const checkEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkEnergy);
+
+      // Count total attached energy
+      const totalEnergy = checkEnergy.energyMap.length;
+      const attackCost = checkCost.cost.length;
+      const extraEnergy = totalEnergy - attackCost;
+      if (extraEnergy >= 3) {
         counters = 20;
       }
 

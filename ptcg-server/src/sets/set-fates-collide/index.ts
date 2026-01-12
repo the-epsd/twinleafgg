@@ -3,6 +3,7 @@ import { AlakazamEx } from './alakazam-ex';
 import { AlakazamSpiritLink } from './alakazam-spirit-link';
 import { AudinoEx } from './audino-ex';
 import { AudinoSpiritLink } from './audino-spirit-link';
+import { BronzongBREAK } from './bronzong-break';
 import { Deerling } from './deerling';
 import { Diglett } from './diglett';
 import { EnergyPouch } from './energy-pouch';
@@ -18,6 +19,7 @@ import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 import { Whismur } from './whismur';
 
 export const setFatesCollide: Card[] = [
+  new BronzongBREAK(),
   new Deerling(),
   new Diglett(),
   new EnergyPouch(),

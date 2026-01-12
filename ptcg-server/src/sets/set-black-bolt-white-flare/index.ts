@@ -5,6 +5,7 @@ import { AntiquePlumeFossil } from './antique-plume-fossil';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Axew } from './axew';
+import { Karrablast } from './karrablast';
 import { BraveBangle } from './brave-bangle';
 import { Carracosta } from './carracosta';
 import { Cobalion } from './cobalion';
@@ -47,6 +48,7 @@ import { Samurott } from './samurott';
 import { Seismitoad } from './seismitoad';
 import { Serperiorex } from './serperior-ex';
 import { Servine } from './servine';
+import { Shelmet } from './shelmet';
 import { Snivy } from './snivy';
 import { Solosis } from './solosis';
 import { Swadloon } from './swadloon';
@@ -92,7 +94,8 @@ export const setSV11: Card[] = [
   new Swadloon(),
   new Duosion(),
   new Reuniclus(),
-
+  new Shelmet(),
+  new Karrablast(),
   new AntiquePlumeFossil(),
   new Archen(),
   new Archeops(),

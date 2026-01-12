@@ -25,11 +25,13 @@ import { Ludicolo } from './ludicolo';
 import { MegaCharizardXex } from './mega-charizard-x-ex';
 import { MegaDiancieex } from './mega-diancie-ex';
 import { MegaGengarex } from './mega-gengar-ex';
+import { MegaHeracrossex } from './mega-heracross-ex';
 import { MegaLopunnyex } from './mega-lopunny-ex';
 import { MegaSharpedoex } from './mega-sharpedo-ex';
 import { Moltres } from './moltres';
 import { Oricorioex } from './oricorio-ex';
 import { PaldeanTauros } from './paldean-tauros';
+import { PunkHelmet } from './punk-helmet';
 import { Reshiram } from './reshiram';
 import { Rotomex } from './rotom-ex';
 import { Sableye } from './sableye';
@@ -67,12 +69,14 @@ export const setPhantasmalFlames: Card[] = [
   new MegaCharizardXex(),
   new MegaDiancieex(),
   new MegaGengarex(),
+  new MegaHeracrossex(),
   new MegaLopunnyex(),
   new MegaSharpedoex(),
   new Moltres(),
   new Oricorioex(),
   new PaldeanTauros(),
   new Reshiram(),
+  new PunkHelmet(),
   new Rotomex(),
   new Sableye(),
   new SacredCharm(),
