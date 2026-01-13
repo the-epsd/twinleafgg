@@ -59,7 +59,7 @@
   display: none;
   align-items: center;
   position: relative;
-  z-index: 2;
+  z-index: 100;
 
   @media (max-width: 1024px) {
     display: flex;
@@ -78,6 +78,13 @@
     border: 1px solid rgba(68, 144, 88, 0.3);
     border-radius: 6px;
     transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       color: #449058;

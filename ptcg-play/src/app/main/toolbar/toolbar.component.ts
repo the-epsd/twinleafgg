@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../api/services/game.service';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GamePhase } from 'ptcg-server';
+import { ToolbarService } from '../../shared/services/toolbar.service';
 
 @UntilDestroy()
 @Component({
@@ -46,7 +47,8 @@ export class ToolbarComponent implements OnInit {
     private dialog: MatDialog,
     private alertService: AlertService,
     private translate: TranslateService,
-    private gameService: GameService
+    private gameService: GameService,
+    private toolbarService: ToolbarService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
       map(gameStates => gameStates.filter(gameState => {
@@ -153,6 +155,10 @@ export class ToolbarComponent implements OnInit {
     this.loggedUser$
       .pipe(untilDestroyed(this))
       .subscribe(user => this.loggedUser = user);
+
+    this.toolbarService.closeMenu$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.closeMenu());
   }
 
   public openSettingsDialog() {

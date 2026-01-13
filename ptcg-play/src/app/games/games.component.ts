@@ -21,6 +21,7 @@ import { GameService } from '../api/services/game.service';
 import { FriendsService } from '../api/services/friends.service';
 import { Format } from 'ptcg-server';
 import { ReconnectionDialogComponent } from '../shared/components/reconnection-dialog/reconnection-dialog.component';
+import { ToolbarService } from '../shared/services/toolbar.service';
 
 @UntilDestroy()
 @Component({
@@ -51,7 +52,8 @@ export class GamesComponent implements OnInit, OnDestroy {
     private router: Router,
     private profileService: ProfileService,
     private gameService: GameService,
-    private friendsService: FriendsService
+    private friendsService: FriendsService,
+    private toolbarService: ToolbarService
   ) {
     this.games$ = this.sessionService.get(session => session.games);
   }
@@ -65,6 +67,8 @@ export class GamesComponent implements OnInit, OnDestroy {
   }
 
   public toggleSidebar(): void {
+    // Close toolbar menu if it's open
+    this.toolbarService.closeMenu();
     this.sidebarOpen = !this.sidebarOpen;
   }
 
