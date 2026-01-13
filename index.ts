@@ -1,108 +1,146 @@
-import { GalarianWeezingRCL, BossOrdersRCL, FullHealRCL, PokeBallRCL, SkylaRCL, SoniaRCL, ToolScrapperRCL, DragapultV2RCL, BossOrders2RCL, Sonia2RCL, DragapultVMAX2RCL, BossOrders3RCL, Sonia3RCL, FrosmothRCL, GalarianPerrserker2RCL, BigCharmRCL, ScoopUpNet2RCL, ToolScrapper2RCL, TwinEnergy2RCL } from './other-prints';
+import { CrushingHammerSSH, EnergyRetrievalSSH, EnergySearchSSH, EnergySwitchPKSSH, LumBerrySSH, PalPadSSH, Pokegear30HSSSH, PokemonCatcherSSH, PotionSSH, RareCandySSH, VitalityBandSSH, StonjournerV2SSH, ZacianV2SSH, CramorantV2SSH, Bede2SSH, ProfessorsResearch2SSH, StonjournerVMAX2SSH, Bede3SSH, ProfessorsResearch3SSH, ZacianV3SSH, AirBalloon2SSH, MetalSaucer2SSH, OrdinaryRod2SSH, QuickBall2SSH } from './other-prints';
 import { Card } from '../../game/store/card/card';
-import { Aegislash } from './aegislash';
-import { Applin } from './applin';
-import { Arrokuda } from './arrokuda';
-import { Barraskewda } from './barraskewda';
-import { BurningScarf } from './burning-scarf';
-import { Butterfree } from './butterfree';
-import { CapaciousBucket } from './capacious-bucket';
-import { CaptureEnergy } from './capture-energy';
-import { Caterpie } from './caterpie';
-import { Coalossal } from './coalossal';
-import { CursedShovel } from './cursed-shovel';
-import { Dan } from './dan';
-import { Dragapult } from './dragapult';
-import { DragapultV } from './dragapult-v';
-import { DragapultVMAX } from './dragapult-vmax';
-import { Duraludon } from './duraludon';
-import { Electivire } from './electivire';
-import { Flapple } from './flapple';
-import { Falinks } from './falinks';
-import { FalinksV } from './falinks-v';
-import { GalarMine } from './galar-mine';
-import { GalarianMeowth } from './galarian-meowth';
-import { GalarianRunerigus } from './galarian-runerigus';
-import { GalarianYamask } from './galarian-yamask';
-import { Garbodor } from './garbodor';
-import { Honedge } from './honedge';
-import { HorrorPsychicEnergy } from './horror-psychic-energy';
-import { Metapod } from './metapod';
+import { AirBalloon } from './air-balloon';
+import { AuroraEnergy } from './aurora-energy';
+import { Baltoy } from './baltoy';
+import { Bede } from './bede';
+import { BigCharm } from './big-charm';
+import { Centiskorch } from './centiskorch';
+import { Cinccino } from './cinccino';
+import { Cinderace } from './cinderace';
+import { Copperajah } from './copperajah';
+import { CramorantV } from './cramorant-v';
+import { Drizzile } from './drizzile';
+import { EvolutionIncense } from './evolution-incense';
+import { Ferroseed } from './ferroseed';
+import { Frosmoth } from './frosmoth';
+import { GalarianZigzagoon } from './galarian-zigzagoon';
+import { GalarianPerrserker } from './galarian_perrserker';
+import { GiantHearth } from './giant-hearth';
+import { Gossifleur } from './gossifleur';
+import { Hop } from './hop';
+import { HyperPotion } from './hyper-potion';
+import { Inteleon } from './inteleon';
+import { LuckyEgg } from './lucky-egg';
+import { Maractus } from './maractus';
+import { Marnie } from './marnie';
+import { MetalSaucer } from './metal-saucer';
 import { Morpeko } from './morpeko';
-import { Natu } from './natu';
-import { Palpitoad } from './palpitoad';
-import { ScoopUpNet } from './scoop-up-net';
-import { SpeedLightningEnergy } from './speed-lightning-energy';
-import { TrainingCourt } from './training-court';
-import { TwinEnergy } from './twin-energy';
-import { Vulpix } from './vulpix';
+import { Oranguru } from './oranguru';
+import { OrdinaryRod } from './ordinary-rod';
+import { QuickBall } from './quick-ball';
+import { Raboot } from './raboot';
+import { Rookidee } from './rookidee';
+import { Sizzlipede } from './sizzlipede';
+import { Snom } from './snom';
+import { Sobble } from './sobble';
+import { StonjournerV } from './stonjourner-v';
+import { StonjournerVMAX } from './stonjourner-vmax';
+import { Sudowoodo } from './sudowoodo';
+import { Switch } from './switch';
+import { Toxicroak } from './toxicroak';
+import { Welder } from './welder';
+import { ZacianV } from './zacian-v';
 
-// other prints
+// Other prints
 import {
-  EldegossVRCL,
-  EldegossVRCLFullArt,
-  TurffieldStadiumRCL,
+  GreatBallSSH,
+  MarnieSSH,
+  MarnieSSH2,
+  ProfessorsResearchSSH
 } from './other-prints';
 
-export const setRebelClash: Card[] = [
-  new Aegislash(),
-  new Applin(),
-  new Arrokuda(),
-  new Barraskewda(),
-  new BurningScarf(),
-  new Butterfree(),
-  new CapaciousBucket(),
-  new CaptureEnergy(),
-  new Caterpie(),
-  new Coalossal(),
-  new CursedShovel(),
-  new Dan(),
-  new Dragapult(),
-  new DragapultV(),
-  new DragapultVMAX(),
-  new Duraludon(),
-  new Electivire(),
-  new Flapple(),
-  new Falinks(),
-  new FalinksV(),
-  new GalarMine(),
-  new GalarianMeowth(),
-  new GalarianRunerigus(),
-  new GalarianYamask(),
-  new Garbodor(),
-  new Honedge(),
-  new HorrorPsychicEnergy(),
-  new Metapod(),
-  new Morpeko(),
-  new Natu(),
-  new Palpitoad(),
-  new ScoopUpNet(),
-  new SpeedLightningEnergy(),
-  new TrainingCourt(),
-  new TwinEnergy(),
-  new Vulpix(),
+import {
+  GrassEnergy,
+  FireEnergy,
+  WaterEnergy,
+  LightningEnergy,
+  PsychicEnergy,
+  FightingEnergy,
+  DarknessEnergy,
+  MetalEnergy
+} from './basic-energies';
 
-  // other prints
-  new EldegossVRCL(),
-  new EldegossVRCLFullArt(),
-  new TurffieldStadiumRCL(),
-  new GalarianWeezingRCL(),
-  new BossOrdersRCL(),
-  new FullHealRCL(),
-  new PokeBallRCL(),
-  new SkylaRCL(),
-  new SoniaRCL(),
-  new ToolScrapperRCL(),
-  new DragapultV2RCL(),
-  new BossOrders2RCL(),
-  new Sonia2RCL(),
-  new DragapultVMAX2RCL(),
-  new BossOrders3RCL(),
-  new Sonia3RCL(),
-  new FrosmothRCL(),
-  new GalarianPerrserker2RCL(),
-  new BigCharmRCL(),
-  new ScoopUpNet2RCL(),
-  new ToolScrapper2RCL(),
-  new TwinEnergy2RCL(),
+export const setSwordAndShield: Card[] = [
+  new AirBalloon(),
+  new AuroraEnergy(),
+  new Bede(),
+  new Centiskorch(),
+  new Cinccino(),
+  new Cinderace(),
+  new Copperajah(),
+  new CramorantV(),
+  new Drizzile(),
+  new EvolutionIncense(),
+  new Ferroseed(),
+  new Frosmoth(),
+  new GalarianPerrserker(),
+  new GalarianZigzagoon(),
+  new GiantHearth(),
+  new Gossifleur(),
+  new Hop(),
+  new HyperPotion(),
+  new Inteleon(),
+  new LuckyEgg(),
+  new Maractus(),
+  new Marnie(),
+  new MetalSaucer(),
+  new Morpeko(),
+  new Sizzlipede(),
+  new Snom(),
+  new Sobble(),
+  new Oranguru(),
+  new OrdinaryRod(),
+  new QuickBall(),
+  new Raboot(),
+  new Rookidee(),
+  new StonjournerV(),
+  new StonjournerVMAX(),
+  new Sudowoodo(),
+  new Switch(),
+  new Toxicroak(),
+  new Welder(),
+  new ZacianV(),
+  new Baltoy(),
+  new BigCharm(),
+
+  // Other prints
+  new GreatBallSSH(),
+  new MarnieSSH(),
+  new MarnieSSH2(),
+  new ProfessorsResearchSSH(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
+  new CrushingHammerSSH(),
+  new EnergyRetrievalSSH(),
+  new EnergySearchSSH(),
+  new EnergySwitchPKSSH(),
+  new LumBerrySSH(),
+  new PalPadSSH(),
+  new Pokegear30HSSSH(),
+  new PokemonCatcherSSH(),
+  new PotionSSH(),
+  new RareCandySSH(),
+  new VitalityBandSSH(),
+  new StonjournerV2SSH(),
+  new ZacianV2SSH(),
+  new CramorantV2SSH(),
+  new Bede2SSH(),
+  new ProfessorsResearch2SSH(),
+  new StonjournerVMAX2SSH(),
+  new Bede3SSH(),
+  new ProfessorsResearch3SSH(),
+  new ZacianV3SSH(),
+  new AirBalloon2SSH(),
+  new MetalSaucer2SSH(),
+  new OrdinaryRod2SSH(),
+  new QuickBall2SSH(),
 ];
