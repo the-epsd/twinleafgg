@@ -20,6 +20,7 @@ import { PalkiaG } from './palkia-g';
 import { PalkiaGLVX } from './palkia-g-lv-x';
 import { DialgaG } from './dialga-g';
 import { DialgaGLVX } from './dialga-g-lv-x';
+import { TeamGalacticsInventionG101EnergyGain } from './team-galactics-invention-g-101-energy-gain';
 import { Vulpix } from './vulpix';
 
 // Other prints
@@ -47,6 +48,7 @@ export const setPlatinum: Card[] = [
   new DialgaG(),
   new DialgaGLVX(),
   new Vulpix(),
+  new TeamGalacticsInventionG101EnergyGain(),
 
   // Other prints
   new RainbowEnergyPL(),

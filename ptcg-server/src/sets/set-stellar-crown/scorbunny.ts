@@ -1,6 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Scorbunny extends PokemonCard {
@@ -16,7 +17,7 @@ export class Scorbunny extends PokemonCard {
     cost: [CardType.COLORLESS],
     damage: 10,
     damageCalculation: '+',
-    text: 'Flip a coin. If heads, this attack does 10 more damage.'
+    text: 'Flip a coin. If heads, this attack does 10 more damage.',
   }];
 
   public set: string = 'SCR';
@@ -26,12 +27,13 @@ export class Scorbunny extends PokemonCard {
   public fullName: string = 'Scorbunny SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), flipResult => {
-        if (flipResult) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const coinFlipEffect = new CoinFlipEffect(effect.player, (result: boolean) => {
+        if (result) {
           effect.damage += 10;
         }
       });
+      return store.reduceEffect(state, coinFlipEffect);
     }
     return state;
   }

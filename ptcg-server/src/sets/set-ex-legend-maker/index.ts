@@ -32,6 +32,9 @@ import { Voltorb } from './voltorb';
 import { Wobbuffet } from './wobbuffet';
 import { Wynaut } from './wynaut';
 
+// Other Prints
+import { ChinchouLM } from './other-prints';
+
 export const setEXLegendMaker: Card[] = [
   new Anorith(),
   new Arcanineex(),
@@ -65,4 +68,7 @@ export const setEXLegendMaker: Card[] = [
   new Voltorb(),
   new Wobbuffet(),
   new Wynaut(),
+
+  // Other Prints
+  new ChinchouLM(),
 ];

@@ -35,21 +35,30 @@ export class Jigglypuff extends PokemonCard {
         const player = effect.player;
         let headsCount = 0;
 
-        const flipUntilTails = () => {
+        const flipUntilTails = (s: State): State => {
           const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
+            // This callback executes after the WaitPrompt completes (6 seconds later)
+            // Each coin flip waits for its animation before the callback executes
+            // This ensures sequential execution: flip -> wait -> callback -> next flip (if heads)
             if (result) {
               // Heads - increment count and flip again
               headsCount++;
-              flipUntilTails();
+              // Recursive call - this will create a new CoinFlipEffect with its own WaitPrompt
+              // The state 's' here is the one from when this flip was initiated
+              // Each recursive call properly chains the state through store.reduceEffect
+              flipUntilTails(s);
             } else {
               // Tails - calculate final damage
+              // All coin flips have completed, attack can proceed
               effect.damage = 20 * headsCount;
             }
           });
-          store.reduceEffect(state, coinFlipEffect);
+          // Return the state with the prompt added
+          // This state will be used when the prompt resolves and the callback executes
+          return store.reduceEffect(s, coinFlipEffect);
         };
 
-        flipUntilTails();
+        return flipUntilTails(state);
       }
       return state;
     }

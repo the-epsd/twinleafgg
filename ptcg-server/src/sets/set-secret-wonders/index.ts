@@ -15,6 +15,7 @@ import { Plusle } from './plusle';
 import { Ralts } from './ralts';
 import { RoseannesResearch } from './roseannes-research';
 import { Skiploom } from './skiploom';
+import { Trapinch } from './trapinch';
 
 // Other Prints
 import { NightMaintenanceSW } from './other-prints';
@@ -35,6 +36,7 @@ export const setSecretWonders: Card[] = [
   new Hoppip(),
   new RoseannesResearch(),
   new Skiploom(),
+  new Trapinch(),
 
   // Other Prints
   new NightMaintenanceSW(),

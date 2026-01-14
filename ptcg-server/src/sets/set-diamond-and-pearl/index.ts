@@ -3,6 +3,7 @@ import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy } from './basic-energies';
 import { Chimchar } from './chimchar';
 import { Cleffa } from './cleffa';
+import { Dusknoir } from './dusknoir';
 import { Empoleon } from './empoleon';
 import { Haunter } from './haunter';
 import { Infernape } from './infernape';
@@ -21,6 +22,7 @@ import { SwitchDP } from './other-prints';
 export const setDiamondAndPearl: Card[] = [
   new Chimchar(),
   new Cleffa(),
+  new Dusknoir(),
   new Empoleon(),
   new Haunter(),
   new Infernape(),

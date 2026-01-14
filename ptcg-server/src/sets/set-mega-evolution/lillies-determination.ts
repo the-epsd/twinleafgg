@@ -6,6 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError, GameMessage } from '../../game';
+import { Player } from '../../game/store/state/player';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: LilliesDetermination, effect: TrainerEffect): IterableIterator<State> {
@@ -44,6 +45,16 @@ export class LilliesDetermination extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Lillie\'s Determination M1L';
   public text: string = 'Shuffle your hand into your deck. Then, draw 6 cards. If you have exactly 6 Prize cards remaining, draw 8 cards instead.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Check if supporter already played this turn
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    // No other restrictions - card can be played
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -8,12 +8,16 @@ import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { StateUtils, ShowCardsPrompt } from '../../game';
+import { StateUtils, ShowCardsPrompt, GameError, Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let coinResult = false;
+
+  if (player.deck.cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
@@ -23,18 +27,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  if (coinResult) { 
+  if (coinResult) {
     let cards: any[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
-      player, 
-      GameMessage.CHOOSE_CARD_TO_HAND, 
-      player.deck, 
-      { superType: SuperType.POKEMON }, 
-      { min: 0, max: 1, allowCancel: false }), 
-    (selected: any[]) => {
-      cards = selected || [];
-      next();
-    });
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.POKEMON },
+      { min: 0, max: 1, allowCancel: false }),
+      (selected: any[]) => {
+        cards = selected || [];
+        next();
+      });
 
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.deck);
@@ -61,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class Pokeball extends TrainerCard {
 
   public regulationMark = 'G';
-  
+
   public trainerType = TrainerType.ITEM;
 
   public set = 'SVI';
@@ -76,12 +80,18 @@ export class Pokeball extends TrainerCard {
 
   public text: string = 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
-    }                
+    }
     return state;
   }
 }                         

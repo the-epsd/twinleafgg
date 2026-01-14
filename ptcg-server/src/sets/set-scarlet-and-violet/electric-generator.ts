@@ -4,7 +4,7 @@ import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/c
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CardList, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt, ShowCardsPrompt, GameError, CardTarget } from '../../game';
+import { CardList, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt, ShowCardsPrompt, GameError, CardTarget, Player } from '../../game';
 
 export class ElectricGenerator extends TrainerCard {
 
@@ -24,6 +24,26 @@ export class ElectricGenerator extends TrainerCard {
 
   public text: string =
     'Look at the top 5 cards of your deck and attach up to 2 Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    let lightningPokemonOnBench = false;
+
+    player.bench.forEach(benchSpot => {
+      const card = benchSpot.getPokemonCard();
+      if (card && card.cardType === CardType.LIGHTNING) {
+        lightningPokemonOnBench = true;
+      }
+    });
+
+    if (!lightningPokemonOnBench) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

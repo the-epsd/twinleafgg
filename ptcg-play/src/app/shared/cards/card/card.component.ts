@@ -24,6 +24,7 @@ export class CardComponent implements OnInit, OnDestroy {
   // Optional overlay image URL (e.g., selected artwork) applied on top of base image
   @Input() customArtworkUrl?: string;
   @Input() cardList?: any;
+  @Input() isPlayable: boolean = false;
   @Input() set card(value: Card) {
     this.data = value;
     // Check if card is Unknown and skip URL generation

@@ -1,6 +1,7 @@
 @use 'sass:math';
 @import '../../../theme/variables.scss';
 
+// ==================== CSS VARIABLES ====================
 :root {
   --card-scale: 1;
   --sidebar-width: 400px;
@@ -9,9 +10,7 @@
   --padding-normal: 2vmin;
 }
 
-$board-min-width: calc((4 + #{$ptcg-bench-slots}) * (var(--card-size) + #{map-get($padding, small)}));
-$board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, medium)});
-
+// ==================== BASE CONTAINER STYLES ====================
 :host {
   transform: translateY(0%);
   display: flex;
@@ -38,9 +37,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   -webkit-perspective: 55em;
   -moz-perspective: 55em;
   min-width: 990px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+  margin-top: 1%;
 }
 
 .responsive-board {
@@ -59,10 +56,10 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   }
 }
 
+// ==================== BOARD LAYOUT AND GRID ====================
 .ptcg-board-container {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  // grid-gap: 40px;
   margin: 0 auto;
   width: 75%;
   height: 100%;
@@ -70,9 +67,9 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   transform-style: preserve-3d;
   will-change: transform;
   backface-visibility: hidden;
-  // transform: translate3d(0, 0, 0);
   transition: transform 0.5s ease;
-  // position: relative;
+  position: relative;
+  overflow: hidden;
 
   @media (min-aspect-ratio: 4/3) {
     transform: rotateX(15deg) translate3d(0, 0, 0);
@@ -96,23 +93,15 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   grid-template-areas:
     "prizes stadium active supporter deck"
     "prizes bench bench bench discard";
-  // padding: 20px 0;
+  position: relative;
+  z-index: 1;
 
   &.upside-down {
     transform: rotate(180deg);
   }
 }
 
-.ptcg-board-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.ptcg-board-player {
-  position: relative;
-  z-index: 1;
-}
-
+// ==================== BOARD DIV OVERLAYS ====================
 #bottom_div,
 #top_div {
   position: absolute;
@@ -180,53 +169,13 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   border-color: var(--border-color);
 }
 
-@keyframes glowRed {
-  0% {
-    --border-color: rgb(145, 48, 48, 1);
-  }
-
-  100% {
-    --border-color: rgb(145, 48, 48, 1);
-  }
-}
-
-@keyframes glowBlue {
-  0% {
-    --border-color: rgb(34, 67, 112, 1);
-  }
-
-  100% {
-    --border-color: rgb(34, 67, 112, 1);
-  }
-}
-
-@keyframes spin {
-  0% {
-    --rotate: 0deg;
-  }
-
-  100% {
-    --rotate: 360deg;
-  }
-}
-
-@keyframes borderRotate {
-  from {
-    background-position: 0% center;
-  }
-
-  to {
-    background-position: 200% center;
-  }
-}
-
+// ==================== BOARD ROW AND CARD AREAS ====================
 .ptcg-board-row {
   align-items: center;
   display: flex;
   flex-direction: row;
   height: 100%;
   justify-content: space-evenly;
-  // margin-bottom: 20px;
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
@@ -237,6 +186,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 }
 
 .ptcg-board-active {
+  grid-area: active;
+  transform-origin: center bottom;
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
@@ -247,6 +198,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 }
 
 .ptcg-board-bench {
+  grid-area: bench;
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
@@ -256,12 +208,9 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   }
 }
 
-.ptcg-board-supporter,
-.ptcg-board-stadium,
-.ptcg-board-deck,
-.ptcg-board-prizes,
-.ptcg-board-discard,
-.lost-zone {
+.ptcg-board-supporter {
+  grid-area: supporter;
+  align-self: start;
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
@@ -271,24 +220,109 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   }
 }
 
-.ptcg-board-drop-target>ptcg-board-card {
-  display: block;
-  width: calc(100% * var(--card-scale));
+.ptcg-board-stadium {
+  grid-area: stadium;
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
 }
 
-ptcg-board-card.draggable {
-  touch-action: none;
+.ptcg-board-deck {
+  grid-area: deck;
+  align-self: center;
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+
+  .deck-container {
+    grid-area: deck;
+    align-self: center;
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+
+    .deck-card {
+      grid-area: deck;
+      align-self: center;
+      width: calc(var(--card-size) * 1.15 * var(--card-scale));
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    }
+  }
+}
+
+.ptcg-board-prizes {
+  grid-area: prizes;
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
 }
 
 ptcg-board-prizes {
   grid-area: prizes;
 }
 
-.ptcg-board-active {
-  grid-area: active;
-  transform-origin: center bottom;
+.ptcg-board-discard {
+  grid-area: discard;
+  align-self: center;
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+
+  .discard-container {
+    grid-area: discard;
+    align-self: center;
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+
+    .discard-card {
+      grid-area: discard;
+      align-self: center;
+      width: calc(var(--card-size) * 1.15 * var(--card-scale));
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    }
+  }
 }
 
+.lost-zone {
+  grid-area: stadium;
+  transform: rotate(-90deg);
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+}
+
+// ==================== DROP TARGETS AND DRAGGABLE ====================
+.ptcg-board-drop-target {
+  >ptcg-board-card {
+    display: block;
+    width: calc(100% * var(--card-scale));
+  }
+}
+
+ptcg-board-card.draggable {
+  touch-action: none;
+}
+
+// ==================== DECK AND DISCARD CONTAINERS ====================
 .deck-container {
   grid-area: deck;
   align-self: start;
@@ -311,41 +345,50 @@ ptcg-board-prizes {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 4px;
 
   .discard-card {
     position: absolute;
     top: 0;
     left: 0;
   }
-
-  border: 1px solid rgba(255, 255, 255, 0.125);
-  padding: 4px;
 }
 
-.ptcg-board-supporter {
-  grid-area: supporter;
-  align-self: start;
+.deck-card,
+.discard-card {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.ptcg-board-deck {
-  grid-area: deck;
-  align-self: center;
+// ==================== STADIUM CARD ====================
+.stadium-card {
+  align-self: flex-start;
+  margin-top: -48px;
+  width: calc(var(--card-size) * 1.15 * var(--card-scale));
+  height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
 
-  .deck-container {
-    grid-area: deck;
-    align-self: center;
-    width: calc(var(--card-size) * 1.15 * var(--card-scale));
-    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
-
-    .deck-card {
-      grid-area: deck;
-      align-self: center;
-      width: calc(var(--card-size) * 1.15 * var(--card-scale));
-      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
-    }
+  &.stadium-card-down {
+    transform: rotate(180deg);
   }
 }
 
+// ==================== CARD PREVIEW ====================
+.ptcg-card-preview {
+  border-radius: $card-border-radius;
+  position: absolute;
+  width: 91.2px;
+  transform: translate(15%, -55%);
+  pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.ptcg-card-preview.scale-down {
+  transform: translate(15%, -55%) scale(0.6);
+}
+
+// ==================== CARD COUNT ====================
 .card-count {
   position: absolute;
   bottom: -22px;
@@ -362,63 +405,7 @@ ptcg-board-prizes {
   border-radius: 6px;
 }
 
-.ptcg-board-bench {
-  grid-area: bench;
-}
-
-.ptcg-board-discard {
-  grid-area: discard;
-  align-self: center;
-
-  .discard-container {
-    grid-area: discard;
-    align-self: center;
-    width: calc(var(--card-size) * 1.15 * var(--card-scale));
-    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
-
-    .discard-card {
-      grid-area: discard;
-      align-self: center;
-      width: calc(var(--card-size) * 1.15 * var(--card-scale));
-      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
-    }
-  }
-}
-
-.ptcg-board-stadium {
-  grid-area: stadium;
-}
-
-.lost-zone {
-  grid-area: stadium;
-  // align-self: start;
-  transform: rotate(-90deg);
-}
-
-.stadium-card {
-  align-self: flex-start;
-  margin-top: -48px;
-  width: calc(var(--card-size) * 1.15 * var(--card-scale));
-  height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
-
-  &.stadium-card-down {
-    transform: rotate(180deg);
-  }
-}
-
-.ptcg-card-preview {
-  border-radius: $card-border-radius;
-  position: absolute;
-  width: 91.2px;
-  transform: translate(15%, -55%);
-  pointer-events: none;
-  transition: transform 0.2s ease-in-out;
-}
-
-.ptcg-card-preview.scale-down {
-  transform: translate(15%, -55%) scale(0.6);
-}
-
+// ==================== COIN FLIP AND BACKGROUND ====================
 .coin-flip-container {
   position: absolute;
   top: 50%;
@@ -452,6 +439,7 @@ ptcg-board-prizes {
   margin: 0 auto;
 }
 
+// ==================== MARKERS ====================
 .marker-container {
   position: absolute;
   display: flex;
@@ -463,18 +451,15 @@ ptcg-board-prizes {
 
 .top-markers {
   left: 37%;
-}
-
-.bottom-markers {
-  right: 37%;
-}
-
-.top-markers {
 
   .vstar-marker,
   .gx-marker {
     transform: rotate(180deg);
   }
+}
+
+.bottom-markers {
+  right: 37%;
 }
 
 .vstar-marker,
@@ -503,21 +488,7 @@ ptcg-board-prizes {
   }
 }
 
-.top-markers {
-
-  .vstar-marker,
-  .gx-marker {
-    transform: rotate(180deg);
-  }
-}
-
-.deck-card,
-.discard-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
+// ==================== HIGHLIGHTED POKEMON ====================
 ptcg-board-card.highlighted-pokemon {
   transition: all 0.3s ease;
   transform: scale(1.05);

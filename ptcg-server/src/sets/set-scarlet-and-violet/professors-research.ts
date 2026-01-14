@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
+import { Player } from '../../game';
 
 export class ProfessorsResearch extends TrainerCard {
 
@@ -26,6 +27,17 @@ export class ProfessorsResearch extends TrainerCard {
 
   public text: string =
     'Discard your hand and draw 7 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

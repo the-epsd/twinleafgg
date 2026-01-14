@@ -8,7 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { ShowCardsPrompt, StateUtils } from '../../game';
+import { Player, ShowCardsPrompt, StateUtils } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -78,6 +78,20 @@ export class EnergyRetrieval extends TrainerCard {
 
   public text: string =
     'Put 2 basic Energy cards from your discard pile into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Player has no Basic Energy in the discard pile
+    let basicEnergyCards = 0;
+    player.discard.cards.forEach(c => {
+      if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+        basicEnergyCards++;
+      }
+    });
+    if (basicEnergyCards === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

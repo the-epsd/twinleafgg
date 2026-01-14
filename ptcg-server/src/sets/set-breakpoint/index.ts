@@ -16,6 +16,7 @@ import { Kricketot } from './kricketot';
 import { ManaphyEX } from './manaphy-ex';
 import { MaxElixir } from './max-elixir';
 import { Phantump } from './phantump';
+import { PuzzleOfTime } from './puzzle-of-time';
 import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
@@ -39,6 +40,7 @@ export const setBreakpoint: Card[] = [
   new Kricketot(),
   new MaxElixir(),
   new Phantump(),
+  new PuzzleOfTime(),
   new ReverseValley(),
   new SplashEnergy(),
   new Staryu(),
@@ -50,6 +52,8 @@ export const setBreakpoint: Card[] = [
   new Garbodor(),
   new GreninjaBREAK(),
   new TrevenantBREAK(),
+
+  // other prints
   new GreatBallBKP(),
   new MaxPotionBKP(),
   new PokemonCatcherBKP(),

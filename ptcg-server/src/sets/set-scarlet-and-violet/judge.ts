@@ -6,7 +6,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { GameError, GameMessage } from '../../game';
+import { GameError, GameMessage, Player } from '../../game';
 
 export class Judge extends TrainerCard {
 
@@ -26,6 +26,14 @@ export class Judge extends TrainerCard {
 
   public text: string =
     'Each player shuffles their hand into their deck and draws 4 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -11,7 +11,7 @@ export class TeamAquaConspirator extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '82';
+  public setNumber: string = '77';
   public name: string = 'Team Aqua Conspirator';
   public fullName: string = 'Team Aqua Conspirator MA';
 

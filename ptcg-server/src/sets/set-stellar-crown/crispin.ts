@@ -67,7 +67,7 @@ export class Crispin extends TrainerCard {
         if (cardList.cards.length === 2) {
           state = store.prompt(state, new AttachEnergyPrompt(
             player.id,
-            GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+            GameMessage.ATTACH_ENERGY_CARDS,
             cardList,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH, SlotType.ACTIVE],

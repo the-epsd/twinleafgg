@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { GameError, GameMessage } from '../../game';
+import { GameError, GameMessage, Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Youngster, effect: TrainerEffect): IterableIterator<State> {
@@ -56,6 +56,17 @@ export class Youngster extends TrainerCard {
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 5 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.length === 0 && player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -7,7 +7,8 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
   PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList
+  PokemonCardList,
+  Player
 } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
@@ -74,6 +75,20 @@ export class Potion extends TrainerCard {
 
   public text: string =
     'Heal 30 damage from 1 of your Pokemon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let hasPokemonWithDamage: boolean = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+      if (cardList.damage !== 0) {
+        hasPokemonWithDamage = true;
+      }
+    });
+
+    if (hasPokemonWithDamage === false) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

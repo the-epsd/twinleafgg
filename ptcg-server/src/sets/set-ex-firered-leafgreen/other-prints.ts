@@ -1,6 +1,20 @@
+import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
+import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { VsSeeker } from '../set-phantom-forces/vs-seeker';
 import { Switch } from '../set-scarlet-and-violet/switch';
+
+export class EnergyRemoval2RG extends EnergyRemoval2 {
+  public fullName = 'Energy Removal 2 RG';
+  public set = 'RG';
+  public setNumber = '89';
+}
+
+export class MultiEnergyRG extends MultiEnergy {
+  public fullName = 'Multi Energy RG';
+  public set = 'RG';
+  public setNumber = '103';
+}
 
 export class PokemonReversalRG extends PokemonReversal {
   public fullName = 'Pokémon Reversal RG';
@@ -9,7 +23,7 @@ export class PokemonReversalRG extends PokemonReversal {
   public text = 'Flip a coin. If heads, choose 1 of your opponent\'s Benched Pokémon and switch it with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.';
 }
 
-export class VsSeekerFL extends VsSeeker {
+export class VsSeekerRG extends VsSeeker {
   public fullName = 'VS Seeker RG';
   public set = 'RG';
   public setNumber = '100';

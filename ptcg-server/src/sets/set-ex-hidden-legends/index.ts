@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AncientTechnicalMachineRock } from './ancient-technical-machine-rock';
 import { AncientTomb } from './ancient-tomb';
 import { Bellossom } from './bellossom';
+import { Chinchou } from './chinchou';
 import { Clamperl } from './clamperl';
 import { Corsola } from './corsola';
 import { DesertRuins } from './desert-ruins';
@@ -23,10 +24,17 @@ import { Rhyhorn } from './rhyhorn';
 import { Rhydon } from './rhydon';
 import { Vulpix } from './vulpix';
 
+// Other Prints
+import {
+  BeldumHL,
+  StevensAdviceHL
+} from './other-prints';
+
 export const setEXHiddenLegends: Card[] = [
   new AncientTechnicalMachineRock(),
   new AncientTomb(),
   new Bellossom(),
+  new Chinchou(),
   new Clamperl(),
   new Corsola(),
   new DesertRuins(),
@@ -47,4 +55,8 @@ export const setEXHiddenLegends: Card[] = [
   new Rhyhorn(),
   new Rhydon(),
   new Vulpix(),
+
+  // Other Prints
+  new BeldumHL(),
+  new StevensAdviceHL(),
 ];

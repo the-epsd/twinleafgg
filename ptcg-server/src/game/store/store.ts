@@ -10,7 +10,7 @@ import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
 import { ReorderHandAction, ReorderBenchAction } from './actions/reorder-actions';
 import { ResolvePromptAction } from './actions/resolve-prompt-action';
-import { State } from './state/state';
+import { State, GamePhase } from './state/state';
 import { StateLog, StateLogParam } from './state/state-log';
 import { StoreHandler } from './store-handler';
 import { StoreLike } from './store-like';
@@ -49,6 +49,8 @@ export class Store implements StoreLike {
   private promptItems: PromptItem[] = [];
   private waitItems: (() => void)[] = [];
   private logId: number = 0;
+  // Flag to prevent nested playability calculations
+  private calculatingPlayability: boolean = false;
 
   constructor(private handler: StoreHandler) { }
 
@@ -129,6 +131,10 @@ export class Store implements StoreLike {
     state = gameReducer(this, state, effect);
     state = attackReducer(this, state, effect);
     state = checkStateReducer(this, state, effect);
+
+    // Calculate playability after all effects are processed
+    // The calculatingPlayability flag prevents nested calls during playability checks
+    state = this.calculatePlayability(state);
 
     return state;
   }
@@ -261,6 +267,9 @@ export class Store implements StoreLike {
       if (this.promptItems.length === 0) {
         state = checkState(this, state);
       }
+
+      // Calculate playability before state change
+      state = this.calculatePlayability(state);
     } catch (storeError) {
       // Illegal action
       this.state = stateBackup;
@@ -269,6 +278,84 @@ export class Store implements StoreLike {
     }
 
     this.handler.onStateChange(state);
+    return state;
+  }
+
+  private calculatePlayability(state: State): State {
+    // Prevent nested calls - if we're already calculating playability, skip
+    if (this.calculatingPlayability) {
+      return state;
+    }
+
+    // Skip playability calculation during setup and other non-play phases
+    // Only calculate starting from Turn 1 (skip Turn 0 which is setup)
+    if (state.phase !== GamePhase.PLAYER_TURN || state.turn < 1) {
+      // Clear playability for all players when not in player turn or during setup
+      for (const player of state.players) {
+        player.playableCardIds = [];
+      }
+      return state;
+    }
+
+    // Skip if players aren't set up yet
+    if (!state.players || state.players.length === 0) {
+      return state;
+    }
+
+    // Set flag to prevent nested calls
+    this.calculatingPlayability = true;
+
+    // Track prompts before playability check to clean up any created during checks
+    const promptItemsBefore = this.promptItems.length;
+    const waitItemsBefore = this.waitItems.length;
+
+    try {
+      const { CAN_PLAY_CARD } = require('./prefabs/prefabs');
+
+      for (const player of state.players) {
+        // Clear previous playability
+        player.playableCardIds = [];
+
+        // Only calculate for the active player
+        if (state.players[state.activePlayer]?.id !== player.id) {
+          continue;
+        }
+
+        // Check each card in hand
+        for (const card of player.hand.cards) {
+          try {
+            // Skip cards without valid IDs (shouldn't happen, but safety check)
+            if (card.id === undefined || card.id === -1) {
+              continue;
+            }
+
+            if (CAN_PLAY_CARD(this, state, player, card)) {
+              player.playableCardIds.push(card.id);
+            }
+          } catch (error) {
+            // If check fails, card is not playable - silently continue
+          }
+        }
+      }
+    } catch (error) {
+      // If playability calculation fails entirely, just clear all and continue
+      // This prevents setup from breaking
+      for (const player of state.players) {
+        player.playableCardIds = [];
+      }
+    } finally {
+      // Clean up any prompts or wait items that were created during playability checks
+      // These are fake prompts from testing card playability and should not interfere with real game prompts
+      if (this.promptItems.length > promptItemsBefore) {
+        this.promptItems.splice(promptItemsBefore, this.promptItems.length - promptItemsBefore);
+      }
+      if (this.waitItems.length > waitItemsBefore) {
+        this.waitItems.splice(waitItemsBefore, this.waitItems.length - waitItemsBefore);
+      }
+      // Always clear the flag, even if an error occurred
+      this.calculatingPlayability = false;
+    }
+
     return state;
   }
 

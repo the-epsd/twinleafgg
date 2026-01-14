@@ -9,6 +9,11 @@ export interface BasicEntranceAnimationEvent {
   index?: number;
 }
 
+export interface CoinFlipAnimationEvent {
+  playerId: number;
+  result: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,6 +66,9 @@ export class BoardInteractionService {
 
   private attackAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
   public attackAnimation$ = this.attackAnimationSubject.asObservable();
+
+  private coinFlipAnimationSubject = new Subject<CoinFlipAnimationEvent>();
+  public coinFlipAnimation$ = this.coinFlipAnimationSubject.asObservable();
 
   constructor() { }
 
@@ -235,5 +243,9 @@ export class BoardInteractionService {
 
   public triggerAttackAnimation(event: BasicEntranceAnimationEvent) {
     this.attackAnimationSubject.next(event);
+  }
+
+  public triggerCoinFlipAnimation(result: boolean, playerId: number) {
+    this.coinFlipAnimationSubject.next({ result, playerId });
   }
 } 

@@ -173,3 +173,9 @@ $holo-types: (
     background-position: 0% 0%
   }
 }
+
+.ptcg-card.playable {
+  border: 2px solid #4ade80; // green-400
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+  border-radius: 6px;
+}

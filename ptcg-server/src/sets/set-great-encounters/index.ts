@@ -1,6 +1,7 @@
 import { LeftoversGE } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Baltoy } from './baltoy';
+import { Beedrill } from './beedrill';
 import { Buizel } from './buizel';
 import { Claydol } from './claydol';
 import { DialgaLVX } from './dialga-lv-x';
@@ -18,6 +19,7 @@ import { Weedle } from './weedle';
 import { RareCandyGE } from './other-prints';
 
 export const setGreatEncounters: Card[] = [
+  new Beedrill(),
   new Buizel(),
   new Floatzel(),
   new Baltoy(),
