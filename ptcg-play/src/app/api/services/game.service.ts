@@ -270,6 +270,9 @@ export class GameService {
     this.socketService.on(`game[${id}]:attack`, (data: { playerId: number, cardId: number | string, slot: string, index?: number }) => {
       this.boardInteractionService.triggerAttackAnimation(data);
     });
+    this.socketService.on(`game[${id}]:coinFlip`, (data: { playerId: number, result: boolean }) => {
+      this.boardInteractionService.triggerCoinFlipAnimation(data.result, data.playerId);
+    });
   }
 
   private stopListening(id: number) {
@@ -282,6 +285,7 @@ export class GameService {
     this.socketService.off(`game[${id}]:playBasicAnimation`);
     this.socketService.off(`game[${id}]:evolution`);
     this.socketService.off(`game[${id}]:attack`);
+    this.socketService.off(`game[${id}]:coinFlip`);
   }
 
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {

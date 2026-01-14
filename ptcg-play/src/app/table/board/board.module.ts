@@ -8,6 +8,7 @@ import { BoardCardComponent } from './board-card/board-card.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CardsModule } from 'src/app/shared/cards/cards.module';
 import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-selection-overlay.component';
+import { VisualCoinFlipComponent } from './visual-coin-flip/visual-coin-flip.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-
     BoardPrizesComponent,
     BoardDeckComponent,
     BoardCardComponent,
-    BoardSelectionOverlayComponent
+    BoardSelectionOverlayComponent,
+    VisualCoinFlipComponent
   ],
   exports: [
     BoardComponent,
