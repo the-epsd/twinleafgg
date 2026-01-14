@@ -11,6 +11,12 @@ import { Reshiram } from './reshiram';
 import { Yveltal } from './yveltal';
 import { ZacianV } from './zacian-v';
 
+// Other Prints
+import {
+  ProfessorsResearchCEL,
+  ProfessorsResearchCELFA
+} from './other-prints';
+
 export const setCelebrations: Card[] = [
 
   new Dialga(),
@@ -24,4 +30,8 @@ export const setCelebrations: Card[] = [
   new Reshiram(),
   new Yveltal(),
   new ZacianV(),
+
+  // Other Prints
+  new ProfessorsResearchCEL(),
+  new ProfessorsResearchCELFA(),
 ];

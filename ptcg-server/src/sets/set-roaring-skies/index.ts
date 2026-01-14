@@ -4,6 +4,7 @@ import { Articuno } from './articuno';
 import { Beautifly } from './beautifly';
 import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Dustox } from './dustox';
+import { MegaTurbo } from './mega-turbo';
 import { MRayquazaEX } from './m-rayquaza-ex';
 import { MRayquazaEx } from './mega-rayquaza-ex';
 import { Natu } from './natu';
@@ -31,6 +32,7 @@ export const setRoaringSkies: Card[] = [
   new Beautifly(),
   new DoubleDragonEnergy(),
   new Dustox(),
+  new MegaTurbo(),
   new MRayquazaEX(),
   new Natu(),
   new Reshiram(),

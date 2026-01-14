@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.deck,
     {},
-    { min: 0, max: 3, allowCancel: false }
+    { min: 1, max: 3, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
