@@ -111,6 +111,8 @@ describe('Core Reconnection Integration', () => {
 
       expect(core.clients).not.toContain(mockClient);
       expect(mockClient.games).not.toContain(game);
+      expect(core.games).toContain(game);
+      expect(game.isPlayerDisconnected(mockClient.id)).toBe(true);
     });
 
     it('should handle error when client not found', async () => {
@@ -120,7 +122,7 @@ describe('Core Reconnection Integration', () => {
         await core.disconnect(mockClient, 'test');
       } catch (error) {
         errorThrown = true;
-        expect(error.message).toContain('ERROR_CLIENT_NOT_CONNECTED');
+        expect((error as Error).message).toContain('ERROR_CLIENT_NOT_CONNECTED');
       }
       expect(errorThrown).toBe(true);
     });

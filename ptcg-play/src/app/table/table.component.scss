@@ -28,7 +28,7 @@
 ptcg-board {
   flex: 1 1 auto;
   overflow: hidden;
-  margin-top: -2%;
+  margin-top: -5%;
   margin-bottom: -2%;
 }
 
@@ -58,15 +58,15 @@ ptcg-hand {
   background: #1a1a1a;
   border-left: 1px solid #333;
   transition: transform 0.3s ease-in-out;
-  
+
   &.collapsed {
     transform: translateX(calc(100% - 40px));
-    
+
     .sandbox-toggle {
       border-radius: 4px 0 0 4px;
     }
   }
-  
+
   .sandbox-toggle {
     position: absolute;
     left: -40px;
@@ -84,11 +84,11 @@ ptcg-hand {
     cursor: pointer;
     z-index: 10;
     transition: background 0.2s;
-    
+
     &:hover {
       background: #3d3d3d;
     }
-    
+
     mat-icon {
       color: #e0e0e0;
       font-size: 24px;

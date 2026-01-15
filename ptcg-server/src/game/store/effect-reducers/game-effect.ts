@@ -589,14 +589,37 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const result = Math.random() < 0.5;
     (effect as CoinFlipEffect).result = result;
 
-    // Log the coin flip result
-    const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-    store.log(state, gameMessage, { name: (effect as CoinFlipEffect).player.name });
+    const player = (effect as CoinFlipEffect).player;
 
-    // Call callback if provided
-    if ((effect as CoinFlipEffect).callback) {
-      (effect as CoinFlipEffect).callback!(result);
+    // Emit coin flip animation event
+    const game = (store as any).handler;
+    if (game && game.core && typeof game.core.emit === 'function') {
+      game.core.emit((c: any) => {
+        if (typeof c.socket !== 'undefined') {
+          c.socket.emit(`game[${game.id}]:coinFlip`, {
+            playerId: player.id,
+            result: result
+          });
+        }
+      });
     }
+
+    // Wait for animation to complete (6 seconds)
+    // Capture the state that will be available in the callback
+    const stateForCallback = state;
+    state = store.prompt(state, new WaitPrompt(player.id, 1000, 'Coin flip animation'), () => {
+      // Animation complete, continue with game logic
+      // Log the coin flip result
+      const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
+      store.log(stateForCallback, gameMessage, { name: player.name });
+
+      // Call callback if provided
+      // The callback executes after the WaitPrompt completes
+      // Store the state in the effect so the callback can access it if needed
+      if ((effect as CoinFlipEffect).callback) {
+        (effect as CoinFlipEffect).callback!(result);
+      }
+    });
 
     return state;
   }

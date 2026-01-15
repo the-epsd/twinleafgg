@@ -10,6 +10,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { MoveEnergyPrompt, CardTransfer } from '../../game/store/prompts/move-energy-prompt';
 import { StateUtils } from '../../game/store/state-utils';
+import { Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -72,6 +73,24 @@ export class EnergySwitch extends TrainerCard {
 
   public text: string =
     'Move a basic Energy from 1 of your Pokemon to another of your Pokemon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Player has no Basic Energy in the discard pile
+    let hasBasicEnergy = false;
+    let pokemonCount = 0;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      pokemonCount += 1;
+      const basicEnergyAttached = cardList.cards.some(c => {
+        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+      });
+      hasBasicEnergy = hasBasicEnergy || basicEnergyAttached;
+    });
+
+    if (!hasBasicEnergy || pokemonCount <= 1) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -120,6 +120,9 @@ export class Player {
   prizesTakenThisTurn: number = 0;
   prizesTakenLastTurn: number = 0;
 
+  // Track which card IDs in hand are playable (stored as array for serialization)
+  playableCardIds: number[] = [];
+
   // Game statistics tracking
   gameStats: GameStats = {
     prizesTakenCount: 0,

@@ -8,42 +8,6 @@
   width: 100%;
   height: 100vh;
   position: relative;
-  transition: background 0.5s ease;
-
-  &::before {
-    content: '';
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: var(--background-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    z-index: -1;
-  }
-
-  &::after {
-    content: '';
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
-    z-index: -1;
-  }
-
-  &.format-selected::before {
-    opacity: 0.3;
-  }
-
-  &.format-hovered::before {
-    opacity: 0.3;
-  }
 }
 
 .lobby-content {

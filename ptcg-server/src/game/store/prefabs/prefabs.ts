@@ -1,6 +1,7 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
-import { TrainerEffect } from '../effects/play-card-effects';
-import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { TrainerEffect, AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
+import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { GamePhase } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -8,7 +9,6 @@ import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
-import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
 import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -1145,6 +1145,243 @@ export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: 
     } catch (error) {
       return false;
     }
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * Validates if a trainer card can be played under current game conditions
+ * Dynamically checks by attempting to execute the card's logic and catching GameError
+ * @param store The store instance
+ * @param state The current game state
+ * @param player The player attempting to play the card
+ * @param trainerCard The trainer card to validate
+ * @returns true if the card can be played, false otherwise
+ */
+export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Player, trainerCard: TrainerCard): boolean {
+  try {
+    // Only check during player's turn
+    if (state.phase !== GamePhase.PLAYER_TURN || state.players[state.activePlayer].id !== player.id) {
+      return false;
+    }
+
+    // Check basic trainer type restrictions first (fast path)
+    switch (trainerCard.trainerType) {
+      case TrainerType.SUPPORTER:
+        // Can't play supporter on turn 1 unless card allows it
+        if (state.turn === 1 && !trainerCard.firstTurn) {
+          return false;
+        }
+        // Can't play supporter if one already played this turn
+        // Check supporterTurn (incremented when supporter is played) and supporter.cards (card in play area)
+        if (player.supporterTurn > 0) {
+          return false;
+        }
+        break;
+      case TrainerType.STADIUM:
+        // Can't play stadium if one already played this turn
+        if (player.stadiumPlayedTurn === state.turn) {
+          return false;
+        }
+        // Can't play same stadium already in play
+        const stadium = StateUtils.getStadiumCard(state);
+        if (stadium && stadium.name === trainerCard.name) {
+          return false;
+        }
+        break;
+      case TrainerType.TOOL:
+        // Tools need a Pokemon target - basic check only
+        const hasPokemon = player.active.cards.length > 0 || player.bench.some(b => b.cards.length > 0);
+        if (!hasPokemon) {
+          return false;
+        }
+        break;
+      // Items have no basic restrictions beyond being in player's turn
+    }
+
+    // Check for Item/Tool blocking effects directly (no cloning needed)
+    if (trainerCard.trainerType === TrainerType.ITEM) {
+      // Check for marker-based blocks (Budew, etc.)
+      if (player.marker.hasMarker('OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER')) {
+        return false;
+      }
+
+      // Check for ability-based blocks (Jellicent ex, etc.)
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentActive = opponent.active.getPokemonCard();
+      if (opponentActive && opponentActive.name === 'Jellicent ex') {
+        // Check if ability is blocked
+        if (!IS_ABILITY_BLOCKED(store, state, opponent, opponentActive)) {
+          return false; // Blocked by ability
+        }
+      }
+
+      // Check for ATTACK_EFFECT_ITEM_LOCK marker
+      if (player.marker.hasMarker(player.ATTACK_EFFECT_ITEM_LOCK)) {
+        return false;
+      }
+    }
+
+    if (trainerCard.trainerType === TrainerType.TOOL) {
+      // Check for ability-based blocks (Jellicent ex, etc.)
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentActive = opponent.active.getPokemonCard();
+      if (opponentActive && opponentActive.name === 'Jellicent ex') {
+        // Check if ability is blocked
+        if (!IS_ABILITY_BLOCKED(store, state, opponent, opponentActive)) {
+          return false; // Blocked by ability
+        }
+      }
+
+      // Check for ATTACK_EFFECT_TOOL_LOCK marker
+      if (player.marker.hasMarker(player.ATTACK_EFFECT_TOOL_LOCK)) {
+        return false;
+      }
+    }
+
+    // Rely on canPlay method for card-specific validation
+    if (trainerCard.canPlay) {
+      const canPlayResult = trainerCard.canPlay(store, state, player);
+      if (canPlayResult !== undefined) {
+        return canPlayResult; // Use canPlay result
+      }
+    }
+
+    // If canPlay is not implemented or returns undefined, don't show as playable
+    // We can't validate card-specific requirements without canPlay, so err on the side of caution
+    return false;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * Validates if an energy card can be played under current game conditions
+ * NOTE: This only checks basic conditions, not card-specific requirements
+ * @param store The store instance
+ * @param state The current game state
+ * @param player The player attempting to play the card
+ * @param energyCard The energy card to validate
+ * @returns true if the card can be played, false otherwise
+ */
+export function CAN_PLAY_ENERGY_CARD(store: StoreLike, state: State, player: Player, energyCard: EnergyCard): boolean {
+  try {
+    // Only check during player's turn
+    if (state.phase !== GamePhase.PLAYER_TURN || state.players[state.activePlayer].id !== player.id) {
+      return false;
+    }
+
+    // Check if player has any Pokemon in play to attach energy to
+    const hasActivePokemon = player.active.cards.length > 0;
+    const hasBenchPokemon = player.bench.some(bench => bench.cards.length > 0);
+
+    if (!hasActivePokemon && !hasBenchPokemon) {
+      return false;
+    }
+
+    // Check if energy was already played this turn (unless unlimited)
+    if (!player.usedDragonsWish && !state.rules.unlimitedEnergyAttachments) {
+      if (player.energyPlayedTurn === state.turn) {
+        return false;
+      }
+    }
+
+    // Basic validation passed - return true
+    // Card-specific requirements will be validated when actually playing
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * Validates if a pokemon card can be played under current game conditions
+ * Checks basic conditions and evolution requirements
+ * @param store The store instance
+ * @param state The current game state
+ * @param player The player attempting to play the card
+ * @param pokemonCard The pokemon card to validate
+ * @returns true if the card can be played, false otherwise
+ */
+export function CAN_PLAY_POKEMON_CARD(store: StoreLike, state: State, player: Player, pokemonCard: PokemonCard): boolean {
+  try {
+    // Only check during player's turn
+    if (state.phase !== GamePhase.PLAYER_TURN || state.players[state.activePlayer].id !== player.id) {
+      return false;
+    }
+
+    // Check if there's space on bench (max 5 bench Pokemon)
+    const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+    if (benchCount >= 5 && pokemonCard.stage === Stage.BASIC) {
+      return false;
+    }
+
+    // For evolution cards, check if base Pokemon is in play AND can be evolved
+    if (pokemonCard.stage !== Stage.BASIC) {
+      // Check active Pokemon
+      const activePokemon = player.active.getPokemonCard();
+      let canEvolveActive = false;
+      if (activePokemon) {
+        const matchesEvolution = activePokemon.name === pokemonCard.evolvesFrom ||
+          activePokemon.evolvesTo.includes(pokemonCard.name) ||
+          activePokemon.evolvesToStage.includes(pokemonCard.stage);
+        if (matchesEvolution) {
+          // Check if Pokemon was played this turn (can't evolve if played this turn)
+          if (player.active.pokemonPlayedTurn < state.turn) {
+            canEvolveActive = true;
+          }
+        }
+      }
+
+      // Check bench Pokemon
+      let canEvolveBench = false;
+      for (const bench of player.bench) {
+        const benchPokemon = bench.getPokemonCard();
+        if (benchPokemon) {
+          const matchesEvolution = benchPokemon.name === pokemonCard.evolvesFrom ||
+            benchPokemon.evolvesTo.includes(pokemonCard.name) ||
+            benchPokemon.evolvesToStage.includes(pokemonCard.stage);
+          if (matchesEvolution) {
+            // Check if Pokemon was played this turn (can't evolve if played this turn)
+            if (bench.pokemonPlayedTurn < state.turn) {
+              canEvolveBench = true;
+              break;
+            }
+          }
+        }
+      }
+
+      if (!canEvolveActive && !canEvolveBench) {
+        return false;
+      }
+    }
+
+    // Basic validation passed
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * Universal function to check if any card can be played
+ * @param store The store instance
+ * @param state The current game state
+ * @param player The player attempting to play the card
+ * @param card The card to validate
+ * @returns true if the card can be played, false otherwise
+ */
+export function CAN_PLAY_CARD(store: StoreLike, state: State, player: Player, card: Card): boolean {
+  try {
+    if (card instanceof TrainerCard) {
+      return CAN_PLAY_TRAINER_CARD(store, state, player, card);
+    } else if (card instanceof EnergyCard) {
+      return CAN_PLAY_ENERGY_CARD(store, state, player, card);
+    } else if (card instanceof PokemonCard) {
+      return CAN_PLAY_POKEMON_CARD(store, state, player, card);
+    }
+    return false;
   } catch (error) {
     return false;
   }

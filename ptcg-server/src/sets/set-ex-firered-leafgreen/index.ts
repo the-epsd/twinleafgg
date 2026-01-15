@@ -22,9 +22,12 @@ import { Voltorb } from './voltorb';
 import { Wartortle } from './wartortle';
 
 // Other prints
-import { PokemonReversalRG } from './other-prints';
-import { SwitchRG } from './other-prints';
-import { VsSeekerFL } from './other-prints';
+import {
+  EnergyRemoval2RG,
+  PokemonReversalRG,
+  SwitchRG,
+  VsSeekerRG,
+} from './other-prints';
 
 export const setEXFireRedLeafGreen: Card[] = [
   new BillsMaintenance(),
@@ -50,7 +53,8 @@ export const setEXFireRedLeafGreen: Card[] = [
   new Wartortle(),
 
   // Other prints
+  new EnergyRemoval2RG(),
   new PokemonReversalRG(),
   new SwitchRG(),
-  new VsSeekerFL(),
+  new VsSeekerRG(),
 ];

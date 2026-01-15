@@ -205,6 +205,47 @@ export class Profile extends Controller {
     }
   }
 
+  @Get('/nightlyImagesUrl')
+  @AuthToken()
+  public async onGetNightlyImagesUrl(req: Request, res: Response) {
+    const userId: number = req.body.userId;
+    const user = await User.findOne(userId);
+    if (user === undefined) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
+      return;
+    }
+    res.send({ ok: true, jsonUrl: user.nightlyImagesJsonUrl || '' });
+  }
+
+  @Post('/setNightlyImagesUrl')
+  @AuthToken()
+  @Validate({
+    jsonUrl: check().isString()
+  })
+  public async onSetNightlyImagesUrl(req: Request, res: Response) {
+    const adminId: number = req.body.userId;
+    const admin = await User.findOne(adminId);
+
+    if (!admin || admin.roleId !== 4) {
+      res.status(403);
+      res.send({ error: ApiErrorEnum.AUTH_INVALID_PERMISSIONS });
+      return;
+    }
+
+    const body: { jsonUrl: string } = req.body;
+
+    try {
+      // Update all users with the same nightly images URL
+      await User.update({}, { nightlyImagesJsonUrl: body.jsonUrl || '' });
+      res.send({ ok: true });
+    } catch (error) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.SERVER_ERROR });
+      return;
+    }
+  }
+
   @Post('/updateRole')
   @AuthToken()
   @Validate({

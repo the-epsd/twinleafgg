@@ -10,6 +10,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Miriam, effect: TrainerEffect): IterableIterator<State> {
@@ -84,6 +85,27 @@ export class Miriam extends TrainerCard {
 
   public text: string =
     'Shuffle up to 5 Pokémon from your discard pile into your deck. If you shuffled any cards into your deck in this way, draw 3 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+      return false;
+    }
+
+    let pokemonsInDiscard: number = 0;
+    player.discard.cards.forEach((c, index) => {
+      const isPokemon = c instanceof PokemonCard;
+      if (isPokemon) {
+        pokemonsInDiscard += 1;
+      }
+    });
+
+    // Player does not have correct cards in discard
+    if (pokemonsInDiscard === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

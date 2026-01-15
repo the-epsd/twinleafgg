@@ -2,6 +2,7 @@ import { CosmoemUPR, PalPadUPR, UnidentifiedFossilUPR, GlaceonGX2UPR, DawnWingsN
 import { Card } from '../../game/store/card/card';
 import { Bastiodon } from './bastiodon';
 import { Cynthia } from './cynthia';
+import { CyrusPrismStar } from './cyrus-prism-star';
 import { DawnWingsNecrozmaGX } from './dawn-wings-necrozma-gx';
 import { DialgaGX } from './dialga-gx';
 import { DuskManeNecrozmaGX } from './dusk-mane-necrozma-gx';
@@ -109,6 +110,7 @@ export const setUltraPrism: Card[] = [
   new UnitEnergyGRW2UPR(),
   new UnitEnergyLPM2UPR(),
   new Cynthia2UPR(),
+  new CyrusPrismStar(),
   new EscapeBoard2UPR(),
   new Lillie2UPR(),
   new Volkner2UPR(),

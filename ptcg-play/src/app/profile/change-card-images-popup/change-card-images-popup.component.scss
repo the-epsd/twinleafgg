@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 80vh;
+  background: #1b202b;
+  overflow: hidden;
+  font-family: 'Urbanist', sans-serif;
+  position: relative;
+  height: 100%;
+}
+
+// Header Section
+.change-images-header {
+  position: relative;
+  min-height: 80px;
+  background: #1b202b;
+  border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+
+  .header-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 24px;
+  }
+}
+
+.title-section {
+  text-align: center;
+
+  .change-images-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: 'Urbanist', sans-serif;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+}
+
+// Main Content
+.change-images-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  position: relative;
+  max-height: calc(90vh - 200px);
+  min-height: 200px;
+  scroll-behavior: auto;
+
+  .loading-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  .hint-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+}
+
+.images-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+// Form Sections
+.form-section {
+  .section-header {
+    margin-bottom: 1.5rem;
+
+    .section-title {
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .form-field-container {
+    .modern-form-field {
+      width: 100%;
+
+      ::ng-deep .mat-form-field-wrapper {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(69, 144, 88, 0.3);
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+      }
+
+      ::ng-deep .mat-form-field-underline {
+        display: none;
+      }
+
+      ::ng-deep .mat-form-field-ripple {
+        display: none;
+      }
+
+      ::ng-deep .mat-form-field-infix {
+        border: none;
+        padding: 0;
+        min-height: auto;
+        width: 100%;
+      }
+
+      ::ng-deep .mat-form-field-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+      }
+
+      ::ng-deep input.mat-input-element {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+        width: 100%;
+      }
+
+      ::ng-deep .mat-form-field-label-wrapper {
+        top: 0;
+        padding-top: 0;
+      }
+
+      // Fix label positioning when there's a value
+      &.mat-form-field-should-float {
+        ::ng-deep .mat-form-field-label-wrapper {
+          top: -1.25em;
+        }
+      }
+
+      // Hide placeholder when label is floating or when there's a value
+      &.mat-form-field-should-float,
+      &.mat-form-field-has-value {
+        ::ng-deep input::placeholder {
+          opacity: 0;
+        }
+      }
+
+      // Ensure proper spacing for floating label
+      ::ng-deep .mat-form-field-label {
+        position: absolute;
+        top: 1.25em;
+        left: 0;
+        transition: all 0.3s ease;
+      }
+
+      &.mat-form-field-should-float {
+        ::ng-deep .mat-form-field-label {
+          top: -0.5em;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+// Action Buttons
+.change-images-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #1b202b;
+  border-top: 1px solid rgba(69, 144, 88, 0.3);
+  flex-shrink: 0;
+
+  .action-buttons-left,
+  .action-buttons-right {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .action-button {
+    min-width: 140px;
+    height: 48px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &.cancel-button {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+      border: none;
+
+      &:hover:not([disabled]) {
+        background: linear-gradient(135deg, #e53935, #c62828);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+      }
+    }
+
+    &.confirm-button {
+      background: linear-gradient(135deg, #459058, #3d7a4a);
+      color: white;
+      border: none;
+
+      &:hover:not([disabled]) {
+        background: linear-gradient(135deg, #3d7a4a, #2e5a3a);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(69, 144, 88, 0.3);
+      }
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      background: linear-gradient(135deg, #9e9e9e, #757575);
+
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  :host {
+    max-height: 95vh;
+  }
+
+  .change-images-header {
+    min-height: 60px;
+
+    .header-content {
+      padding: 15px 20px;
+    }
+  }
+
+  .title-section {
+    .change-images-title {
+      font-size: 24px;
+    }
+  }
+
+  .change-images-content {
+    padding: 1.5rem;
+    max-height: calc(95vh - 220px);
+  }
+
+  .change-images-actions {
+    padding: 0.75rem;
+    flex-direction: column;
+
+    .action-buttons-left,
+    .action-buttons-right {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .action-button {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    max-height: 98vh;
+  }
+
+  .change-images-content {
+    padding: 1rem;
+  }
+}

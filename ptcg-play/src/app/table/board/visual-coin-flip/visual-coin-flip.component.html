@@ -1,0 +1,21 @@
+<div class="coin-flip-overlay" *ngIf="coinState !== 'hidden'">
+  <div class="coin-flip-container">
+    <div class="world">
+      <div class="floor" [class.anim]="coinState === 'flipping' || coinState === 'heads' || coinState === 'tails'">
+        <div class="line" *ngFor="let i of floorLines"
+          [class.anim]="coinState === 'flipping' || coinState === 'heads' || coinState === 'tails'"></div>
+      </div>
+      <div class="coin-wrapper">
+        <div class="coin" [@coinFlip]="coinState" [class.anim]="coinState === 'flipping'"
+          [style.--flips]="flipRotation">
+          <div class="edge">
+            <div class="segment" *ngFor="let i of edgeSegments"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="result-text" [@resultText]="resultTextState" [class]="resultClass">
+      {{ resultText }}
+    </div>
+  </div>
+</div>

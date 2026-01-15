@@ -4,6 +4,7 @@ import { AlolanExeggutor } from './alolan-exeggutor';
 import { BeastEnergy } from './beast-energy-prism-star';
 import { BeastRing } from './beast-ring';
 import { Buzzwole } from './buzzwole';
+import { CrasherWake } from './crasher-wake';
 import { DialgaGX } from './dialga-gx';
 import { DianciePrismStar } from './diancie-prism-star';
 import { Diantha } from './diantha';
@@ -51,6 +52,7 @@ export const setForbiddenLight: Card[] = [
   new BeastEnergy(),
   new BeastRing(),
   new Buzzwole(),
+  new CrasherWake(),
   new DianciePrismStar(),
   new Diantha(),
   new Espurr(),

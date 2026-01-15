@@ -2,6 +2,7 @@ import { EnergySwitchPKSF, GreatBallSF, PotionSF, SwitchSF, CharmanderSF, Charme
 import { Card } from '../../game/store/card/card';
 import { Combee } from './combee';
 import { Dusclops } from './dusclops';
+import { Dusclops2 } from './dusclops2';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar';
 import { Gyarados } from './gyarados';
@@ -27,6 +28,7 @@ import {
 export const setStormfront: Card[] = [
   new Combee(),
   new Dusclops(),
+  new Dusclops2(),
   new Gengar(),
   new Gyarados(),
   new Haunter(),

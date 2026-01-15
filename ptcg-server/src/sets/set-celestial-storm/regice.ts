@@ -21,7 +21,7 @@ export class Regice extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
-    name: 'Icy Body',
+    name: 'Icy Barrier',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Stadium cards from their hand.'
   }];
@@ -62,7 +62,7 @@ export class Regice extends PokemonCard {
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
-          name: 'Icy Body',
+          name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
         }, this);

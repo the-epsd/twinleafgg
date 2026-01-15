@@ -5,10 +5,17 @@ import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
 import { Groudon } from './groudon';
 import { Kyogre } from './kyogre';
 import { Lugia } from './lugia';
+import { Lunala } from './lunala';
 import { Mew } from './mew';
 import { Reshiram } from './reshiram';
 import { Yveltal } from './yveltal';
 import { ZacianV } from './zacian-v';
+
+// Other Prints
+import {
+  ProfessorsResearchCEL,
+  ProfessorsResearchCELFA
+} from './other-prints';
 
 export const setCelebrations: Card[] = [
 
@@ -18,8 +25,13 @@ export const setCelebrations: Card[] = [
   new Groudon(),
   new Kyogre(),
   new Lugia(),
+  new Lunala(),
   new Mew(),
   new Reshiram(),
   new Yveltal(),
   new ZacianV(),
+
+  // Other Prints
+  new ProfessorsResearchCEL(),
+  new ProfessorsResearchCELFA(),
 ];

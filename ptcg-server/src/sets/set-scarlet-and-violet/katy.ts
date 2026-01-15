@@ -6,7 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { GameError, GameMessage } from '../../game';
+import { GameError, GameMessage, Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Katy, effect: TrainerEffect): IterableIterator<State> {
@@ -18,6 +18,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  if (player.hand.cards.length === 0 && player.deck.cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -59,6 +63,20 @@ export class Katy extends TrainerCard {
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 8 cards. Your turn ends.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+
+    if (supporterTurn > 0) {
+      return false;
+    }
+
+    if (player.hand.cards.length === 0 && player.deck.cards.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -131,6 +131,17 @@ export class HandComponent implements OnChanges {
     this.cardsBaseService.showCardInfo({ card, allowReveal, facedown });
   }
 
+  public isCardPlayable(card: Card): boolean {
+    // Never show playability for opponent's cards
+    if (this.isOpponent) {
+      return false;
+    }
+    if (!this.player || !this.player.playableCardIds) {
+      return false;
+    }
+    return this.player.playableCardIds.includes(card.id);
+  }
+
   public onCardClick(card: Card, index: number) {
     if (!this.isOwner || this.isDeleted) {
       return this.showCardInfo(card);

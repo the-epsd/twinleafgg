@@ -49,9 +49,11 @@ import { Ninjask } from './ninjask';
 import { Numel } from './numel';
 import { Onix } from './onix';
 import { PowerProtein } from './power-protein';
+import { Raboot } from './raboot';
 import { Ralts } from './ralts';
 import { Repel } from './repel';
 import { Riolu } from './riolu';
+import { Scorbunny } from './scorbunny';
 import { Snover } from './snover';
 import { Sobble } from './sobble';
 import { Solrock } from './solrock';
@@ -112,9 +114,11 @@ export const setMegaEvolution: Card[] = [
   new Numel(),
   new Onix(),
   new PowerProtein(),
+  new Raboot(),
   new Ralts(),
   new Repel(),
   new Riolu(),
+  new Scorbunny(),
   new Snover(),
   new Sobble(),
   new Solrock(),

@@ -1,7 +1,7 @@
-import { CardTag, CardType, DiscardEnergyPrompt, EnergyCard, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, SpecialCondition } from '../../game';
+import { CardTag, CardType, GameMessage, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class MegaEelektrossex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -23,7 +23,7 @@ export class MegaEelektrossex extends PokemonCard {
     name: 'Disaster Shock',
     cost: [L, L, L],
     damage: 190,
-    text: 'You may discard 2 [L] Energy from this Pokemon. If you do, your opponent\'s Active Pokemon is now Paralyzed.'
+    text: 'You may discard 2 [L] Energy from this Pokemon and make your opponent\'s Active Pokemon Paralyzed.'
   }];
 
   public regulationMark: string = 'I';
@@ -46,48 +46,12 @@ export class MegaEelektrossex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check how many Lightning energy cards are attached to this Pokemon
-      const lightningEnergyCount = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.provides.includes(CardType.LIGHTNING)
-      ).length;
-
-      // If player has at least 2 Lightning energy, offer to discard
-      if (lightningEnergyCount >= 2) {
-        return store.prompt(state, new DiscardEnergyPrompt(
-          player.id,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE], // Only from active Pokemon (this Pokemon)
-          { superType: SuperType.ENERGY },
-          { min: 0, max: 2, allowCancel: false }
-        ), transfers => {
-          if (transfers === null || transfers.length === 0) {
-            // Player chose not to discard, just do damage
-            return state;
-          }
-
-          // Validate that all selected energy provides Lightning energy
-          const validLightningEnergy = transfers.filter(transfer => {
-            const energyCard = transfer.card;
-            return energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.LIGHTNING);
-          });
-
-          // Only proceed if exactly 2 Lightning energy were selected
-          if (validLightningEnergy.length === 2) {
-            // Discard the selected energy cards
-            for (const transfer of validLightningEnergy) {
-              const source = StateUtils.getTarget(state, player, transfer.from);
-              source.moveCardTo(transfer.card, player.discard);
-            }
-
-            // Apply Paralyzed status to opponent's Active Pokemon
-            const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
-            specialConditionEffect.target = opponent.active;
-            store.reduceEffect(state, specialConditionEffect);
-          }
-          // If player selected less than 2 or non-Lightning energy, nothing happens (no discard, no paralysis)
-        });
-      }
+      CONFIRMATION_PROMPT(store, state, player, result => {
+        if (result) {
+          DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, L);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        }
+      }, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK);
     }
 
     return state;

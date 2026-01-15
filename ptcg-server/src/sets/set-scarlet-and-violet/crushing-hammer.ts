@@ -7,7 +7,8 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
   PlayerType, SlotType, CoinFlipPrompt, StateUtils, CardTarget,
-  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card
+  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card,
+  Player
 } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -97,6 +98,23 @@ export class CrushingHammer extends TrainerCard {
   public text: string =
     'Flip a coin. If heads, discard an Energy attached to 1 of your ' +
     'opponent\'s Pokemon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+
+    let hasPokemonWithEnergy = false;
+
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+      if (cardList.energies.cards.length > 0) {
+        hasPokemonWithEnergy = true;
+      }
+    });
+
+    if (!hasPokemonWithEnergy) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

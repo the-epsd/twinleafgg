@@ -1,24 +1,71 @@
-<h2 mat-dialog-title translate>PROFILE_CHANGE_CARD_IMAGES_TITLE</h2>
+<!-- Header Section -->
+<div class="change-images-header">
+  <div class="header-content">
+    <div class="title-section">
+      <h2 class="change-images-title" translate>PROFILE_CHANGE_CARD_IMAGES_TITLE</h2>
+    </div>
+  </div>
+</div>
 
-<mat-dialog-content>
-  <p translate>PROFILE_CHANGE_CARD_IMAGES_HINT</p>
+<!-- Main Content -->
+<div class="change-images-content">
+  <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate" class="loading-bar"></mat-progress-bar>
 
-  <form #form="ngForm" autocomplete="off">
-    <mat-form-field>
-      <mat-label translate>LABEL_JSON_URL</mat-label>
-      <input matInput [placeholder]="'LABEL_JSON_URL' | translate" name="jsonUrl" [(ngModel)]="jsonUrl" required>
-    </mat-form-field>
+  <!-- <p class="hint-text" translate>PROFILE_CHANGE_CARD_IMAGES_HINT</p> -->
+
+  <form #form="ngForm" autocomplete="off" class="images-form">
+    <!-- Card Images Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <h3 class="section-title" translate>PROFILE_CARD_IMAGES_SECTION</h3>
+        <div class="section-description" translate>PROFILE_CARD_IMAGES_DESCRIPTION</div>
+      </div>
+
+      <div class="form-field-container">
+        <mat-form-field class="modern-form-field">
+          <!-- <mat-label translate>LABEL_JSON_URL</mat-label> -->
+          <input matInput name="jsonUrl" [(ngModel)]="jsonUrl"
+            [disabled]="loading" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Nightly Images Section (Admin Only) -->
+    <div class="form-section" *ngIf="isAdmin$ | async">
+      <div class="section-header">
+        <h3 class="section-title" translate>PROFILE_NIGHTLY_IMAGES_SECTION</h3>
+        <div class="section-description" translate>PROFILE_NIGHTLY_IMAGES_DESCRIPTION</div>
+      </div>
+
+      <div class="form-field-container">
+        <mat-form-field class="modern-form-field">
+          <!-- <mat-label translate>LABEL_NIGHTLY_IMAGES_URL</mat-label> -->
+          <input matInput name="nightlyImagesJsonUrl"
+            [(ngModel)]="nightlyImagesJsonUrl" [disabled]="loading">
+        </mat-form-field>
+      </div>
+    </div>
   </form>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions>
-  <button mat-raised-button color="warn" (click)="resetCardImages()">
-    {{ 'PROMPT_RESET' | translate }}
-  </button>
-  <button mat-raised-button mat-dialog-close>
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button (click)="changeCardImages()" [disabled]="form.invalid">
-    {{ 'BUTTON_SAVE' | translate }}
-  </button>
-</mat-dialog-actions>
+<!-- Action Buttons -->
+<div class="change-images-actions">
+  <div class="action-buttons-left">
+    <button mat-raised-button color="warn" class="action-button" (click)="resetCardImages()" [disabled]="loading">
+      {{ 'PROMPT_RESET' | translate }}
+    </button>
+    <button mat-raised-button class="action-button cancel-button" mat-dialog-close [disabled]="loading">
+      {{ 'BUTTON_CANCEL' | translate }}
+    </button>
+  </div>
+  <div class="action-buttons-right">
+    <button mat-raised-button class="action-button confirm-button" (click)="changeCardImages()"
+      [disabled]="loading || form.invalid">
+      {{ 'BUTTON_SAVE' | translate }}
+    </button>
+    <button *ngIf="isAdmin$ | async" mat-raised-button class="action-button confirm-button" (click)="setNightlyImages()"
+      [disabled]="loading || !nightlyImagesJsonUrl">
+      {{ 'BUTTON_SAVE_NIGHTLY_IMAGES' | translate }}
+    </button>
+  </div>
+</div>

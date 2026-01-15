@@ -149,18 +149,14 @@ export class GameSocket {
         return;
       }
 
-      // Check if this user is a player in the game
-      const userPlayer = game.state.players.find(p => p.id === this.client.user.id);
-
-      if (!userPlayer) {
-        // User is not a player in the game - they might be a spectator
-        // Don't allow rejoin for non-players
+      const playerId = game.getPlayerIdForUser(this.client.user.id);
+      if (!playerId) {
         response('error', ApiErrorEnum.GAME_INVALID_ID);
         return;
       }
 
       // User is a player, check if they're disconnected
-      const disconnectedPlayer = game.getDisconnectedPlayerInfo(userPlayer.id);
+      const disconnectedPlayer = game.getDisconnectedPlayerInfo(playerId);
 
       if (!disconnectedPlayer) {
         // User is a player but not disconnected - they're already connected or never disconnected
@@ -170,20 +166,21 @@ export class GameSocket {
       }
 
       // User is disconnected, attempt reconnection
-      // Temporarily set client.id to match the player.id for reconnection
-      const originalClientId = this.client.id;
-      this.client.id = userPlayer.id;
+      if (this.client.id !== playerId) {
+        this.client.id = playerId;
+      }
 
       const reconnected = game.handlePlayerReconnection(this.client);
 
       if (reconnected) {
         // Successfully reconnected to the game
         this.cache.lastLogIdCache[game.id] = 0;
+        if (!this.client.games.includes(game)) {
+          this.client.games.push(game);
+        }
         response('ok', CoreSocket.buildGameState(game));
         return;
       } else {
-        // Restore original client ID if reconnection failed
-        this.client.id = originalClientId;
         response('error', ApiErrorEnum.GAME_INVALID_ID);
         return;
       }

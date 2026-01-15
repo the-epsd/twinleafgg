@@ -12,6 +12,7 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { Player } from '../../game/store/state/player';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: UltraBall, effect: TrainerEffect): IterableIterator<State> {
@@ -87,6 +88,21 @@ export class UltraBall extends TrainerCard {
     `You can use this card only if you discard 2 other cards from your hand.
 
 Search your deck for a Pokemon, reveal it, and put it into your hand. Then, shuffle your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Check if player has at least 2 other cards in hand (excluding Ultra Ball)
+    const otherCards = player.hand.cards.filter(c => c !== this);
+    if (otherCards.length < 2) {
+      return false;
+    }
+
+    // Check if deck has cards
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
