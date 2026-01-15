@@ -122,7 +122,7 @@ describe('Core Reconnection Integration', () => {
         await core.disconnect(mockClient, 'test');
       } catch (error) {
         errorThrown = true;
-        expect(error.message).toContain('ERROR_CLIENT_NOT_CONNECTED');
+        expect((error as Error).message).toContain('ERROR_CLIENT_NOT_CONNECTED');
       }
       expect(errorThrown).toBe(true);
     });
