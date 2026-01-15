@@ -1,8 +1,6 @@
-<div class="matchmaking-lobby" [class.format-selected]="selectedFormat && !isFormatAnimating"
-  [class.format-hovered]="hoveredFormat"
+<div class="matchmaking-lobby"
   [class.format-standard]="selectedFormat === Format.STANDARD || hoveredFormat === Format.STANDARD"
-  [class.format-standard-nightly]="selectedFormat === Format.STANDARD_NIGHTLY || hoveredFormat === Format.STANDARD_NIGHTLY"
-  [style.--background-image]="getBackgroundImage()">
+  [class.format-standard-nightly]="selectedFormat === Format.STANDARD_NIGHTLY || hoveredFormat === Format.STANDARD_NIGHTLY">
   <div class="lobby-content">
     <!-- Format Selection - Central Layout -->
     <div class="format-navigation-container">

@@ -86,7 +86,8 @@ export class ProfileComponent implements OnInit {
 
   openChangeCardImagesDialog(): void {
     this.dialog.open(ChangeCardImagesPopupComponent, {
-      width: '350px'
+      width: '600px',
+      maxWidth: '90vw'
     });
   }
 

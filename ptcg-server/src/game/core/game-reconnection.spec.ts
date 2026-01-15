@@ -305,6 +305,12 @@ describe('Game Reconnection', () => {
       game.handlePlayerReconnection(client1 as any);
       expect(game.isPausedForDisconnection()).toBe(false);
     });
+
+    it('should map user IDs to player IDs for reconnection', () => {
+      game.registerPlayer(client1 as any);
+
+      expect(game.getPlayerIdForUser(client1.user.id)).toBe(client1.id);
+    });
   });
 
   describe('cleanup', () => {

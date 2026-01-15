@@ -8,6 +8,7 @@ import { Honchkrow } from './honchkrow';
 import { Ivysaur } from './ivysaur';
 import { MrMime } from './mr-mime';
 import { PalmersContribution } from './palmers-contribution';
+import { Relicanth } from './relicanth';
 import { StaraptorFB } from './staraptor-fb';
 import { StaraptorFBLVX } from './staraptor-fb-lv-x';
 
@@ -24,6 +25,7 @@ export const setSupremeVictors: Card[] = [
   new Ivysaur(),
   new MrMime(),
   new PalmersContribution(),
+  new Relicanth(),
   new StaraptorFB(),
   new StaraptorFBLVX(),
 

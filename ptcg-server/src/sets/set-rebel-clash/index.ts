@@ -41,6 +41,8 @@ import {
   EldegossVRCLFullArt,
   TurffieldStadiumRCL,
 } from './other-prints';
+import { Falinks } from './falinks';
+import { FalinksV } from './falinks-v';
 
 export const setRebelClash: Card[] = [
   new Aegislash(),
@@ -60,6 +62,8 @@ export const setRebelClash: Card[] = [
   new DragapultVMAX(),
   new Duraludon(),
   new Electivire(),
+  new Falinks(),
+  new FalinksV(),
   new Flapple(),
   new GalarMine(),
   new GalarianMeowth(),

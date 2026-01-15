@@ -11,6 +11,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game';
+import { Player } from '../../game/store/state/player';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Arven, effect: TrainerEffect): IterableIterator<State> {
@@ -19,9 +20,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
 
   const supporterTurn = player.supporterTurn;
-  
+
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
+  if (player.deck.cards.length === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -29,12 +34,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   // Count tools and items separately
-  let tools = 0; 
+  let tools = 0;
   let items = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
-      tools += 1; 
+      tools += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
       items += 1;
     } else {
@@ -47,23 +52,23 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxItems = Math.min(items, 1);
 
   // Total max is sum of max for each 
-  const count = maxTools + maxItems; 
+  const count = maxTools + maxItems;
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 0, max: count, allowCancel: false, blocked, maxTools, maxItems }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -101,6 +106,19 @@ export class Arven extends TrainerCard {
   public text: string =
     'Search your deck for an Item card and a Pokémon Tool card, reveal them, and put them into your hand. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Check if supporter already played this turn
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    // No other restrictions - card can be played
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

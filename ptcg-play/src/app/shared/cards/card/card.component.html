@@ -1,4 +1,4 @@
-<div class="ptcg-card" *ngIf="data" [class.cardback]="isCardback">
+<div class="ptcg-card" *ngIf="data" [class.cardback]="isCardback" [class.playable]="isPlayable && !isCardback">
   <span class="card-name" *ngIf="showCardName && !isCardback">{{data.name}}</span>
   <div class="card-container" [ngClass]="getCardClass()">
     <img class="ptcg-card-scan base-image" [src]="customImageUrl || scanUrl" alt="Card Image" draggable="false">

@@ -10,7 +10,7 @@ export class MegaLopunnyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Buneary';
   public cardType: CardType = C;
-  public tags = [CardTag.POKEMON_ex];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 330;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -19,9 +19,9 @@ export class MegaLopunnyex extends PokemonCard {
     name: 'Gale Thrust',
     cost: [C],
     damage: 60,
-    text: 'If this Pokemon was on your Bench this turn, this attack does 170 more damage.'
+    text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 170 more damage.'
   }, {
-    name: 'Spike Hopper',
+    name: 'Spiky Hopper',
     cost: [C, C],
     damage: 160,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'

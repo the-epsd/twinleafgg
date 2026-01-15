@@ -57,7 +57,9 @@ export class Core {
   }
 
   public async connect(client: Client): Promise<Client> {
-    client.id = generateId(this.clients);
+    if (client.id === 0 || this.clients.some(c => c.id === client.id)) {
+      client.id = generateId(this.clients);
+    }
     client.core = this;
     client.games = [];
 
@@ -79,8 +81,21 @@ export class Core {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
 
-    // Leave all games
-    client.games.forEach(game => this.leaveGame(client, game));
+    // Handle disconnection for all games without removing them
+    client.games.forEach(game => {
+      const isPlayer = game.state.players.some(player => player.id === client.id);
+      if (isPlayer) {
+        game.handlePlayerDisconnection(client);
+        return;
+      }
+
+      const gameClientIndex = game.clients.indexOf(client);
+      if (gameClientIndex !== -1) {
+        game.clients.splice(gameClientIndex, 1);
+        this.emit(c => c.onGameLeave(game, client));
+      }
+    });
+    client.games = [];
 
     // Remove client from core
     this.clients.splice(index, 1);
@@ -202,6 +217,7 @@ export class Core {
       this.emit(c => c.onGameJoin(game, client));
       client.games.push(game);
       game.clients.push(client);
+      game.registerPlayer(client);
     }
   }
 

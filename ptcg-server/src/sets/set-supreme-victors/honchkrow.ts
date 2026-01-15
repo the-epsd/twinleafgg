@@ -74,13 +74,17 @@ export class Honchkrow extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      if (opponent.discard.cards.filter(card => card instanceof PokemonCard && card.stage === Stage.BASIC).length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_BASIC_POKEMON_TO_BENCH,
         opponent.discard,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: true }
+        { min: 1, max: 1, allowCancel: false }
       ), selected => {
         cards = selected || [];
 

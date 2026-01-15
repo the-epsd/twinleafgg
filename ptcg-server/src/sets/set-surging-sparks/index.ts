@@ -24,6 +24,7 @@ import { CherishCarrier } from './cherish-carrier';
 import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
 import { ClemontsQuickWit } from './clemonts-quick-wit';
+import { Clobbopus } from './clobbopus';
 import { Cofagrigus } from './cofagrigus';
 import { Crocalor } from './crocalor';
 import { Cyclizarex } from './cyclizar-ex';
@@ -43,6 +44,7 @@ import { Espurr } from './espurr';
 import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
+import { Flittle } from './flittle';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
 import { Gastrodon } from './gastrodon';
@@ -50,6 +52,7 @@ import { ArchaludonexFA, ArchaludonexSIR, CounterGainUR, CyranoFA, FeebasIR, Hyd
 import { Gimmighoul } from './gimmighoul';
 import { Gholdengo } from './gholdengo';
 import { GougingFire } from './gouging-fire';
+import { Grapploct } from './grapploct';
 import { GravityMountain } from './gravity-mountain';
 import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
@@ -201,6 +204,9 @@ export const setSurgingSparks: Card[] = [
   new EnergySearchPro(),
   new Surfer(),
   new GougingFire(),
+  new Grapploct(),
+  new Clobbopus(),
+  new Flittle(),
   new AlolanDiglett(),
   new AlolanDugtrio(),
   new AmuletofHope(),

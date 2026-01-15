@@ -22,6 +22,7 @@ export class CardsBaseService implements OnDestroy {
   private names: string[] = [];
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
+  private nightlyImages: { [key: string]: string } = {};
   private favoriteCards: { [cardName: string]: string } = {};
 
   private overridesChangedSubject = new Subject<string>();
@@ -29,6 +30,7 @@ export class CardsBaseService implements OnDestroy {
   private globalArtworksMap: { [code: string]: string } = {};
   private favoritesSubscription: Subscription | null = null;
   private cardImagesSubscription: Subscription | null = null;
+  private nightlyImagesSubscription: Subscription | null = null;
 
   constructor(
     private apiService: ApiService,
@@ -41,8 +43,10 @@ export class CardsBaseService implements OnDestroy {
     this.cardManager = CardManager.getInstance();
     this.loadCustomImages();
     this.loadFavoriteCards();
+    this.loadNightlyImages();
     this.setupFavoritesSubscription();
     this.setupCardImagesSubscription();
+    this.setupNightlyImagesSubscription();
   }
 
   public loadCardsInfo(cardsInfo: CardsInfo) {
@@ -203,6 +207,75 @@ export class CardsBaseService implements OnDestroy {
     });
   }
 
+  private loadNightlyImages(): void {
+    if (this.isAuthenticated()) {
+      this.loadNightlyImagesFromAPI();
+    } else {
+      const storedImages = localStorage.getItem('nightlyCardImages');
+      if (storedImages) {
+        this.nightlyImages = JSON.parse(storedImages);
+      }
+    }
+  }
+
+  private loadNightlyImagesFromAPI(): void {
+    this.profileService.getNightlyImagesUrl().pipe(
+      catchError(() => {
+        // If API fails, fall back to localStorage
+        const storedImages = localStorage.getItem('nightlyCardImages');
+        if (storedImages) {
+          this.nightlyImages = JSON.parse(storedImages);
+        }
+        return of({ ok: false, jsonUrl: '' });
+      }),
+      switchMap(response => {
+        const jsonUrl = response.jsonUrl;
+        if (jsonUrl && jsonUrl.trim()) {
+          // Fetch and parse the JSON from the URL
+          return this.http.get(jsonUrl).pipe(
+            map((json: any) => {
+              this.nightlyImages = json;
+              // Also save to localStorage as backup
+              localStorage.setItem('nightlyCardImages', JSON.stringify(this.nightlyImages));
+              return json;
+            }),
+            catchError(() => {
+              // If fetching JSON fails, try localStorage
+              const storedImages = localStorage.getItem('nightlyCardImages');
+              if (storedImages) {
+                this.nightlyImages = JSON.parse(storedImages);
+              }
+              return of({});
+            })
+          );
+        } else {
+          // No URL saved, try localStorage
+          const storedImages = localStorage.getItem('nightlyCardImages');
+          if (storedImages) {
+            this.nightlyImages = JSON.parse(storedImages);
+          }
+          return of({});
+        }
+      })
+    ).subscribe();
+  }
+
+  private setupNightlyImagesSubscription(): void {
+    // Subscribe to session changes to reload nightly images when user logs in
+    this.nightlyImagesSubscription = this.sessionService.get(s => s.loggedUserId).subscribe(userId => {
+      if (userId && this.isAuthenticated()) {
+        this.loadNightlyImagesFromAPI();
+      } else {
+        // User logged out, clear API images and use localStorage
+        this.nightlyImages = {};
+        const storedImages = localStorage.getItem('nightlyCardImages');
+        if (storedImages) {
+          this.nightlyImages = JSON.parse(storedImages);
+        }
+      }
+    });
+  }
+
   private loadFavoritesFromAPI(): void {
     this.favoritesService.getFavorites().pipe(
       catchError(() => {
@@ -245,11 +318,18 @@ export class CardsBaseService implements OnDestroy {
     }
 
     const fullCardIdentifier = `${card.set} ${card.setNumber}`;
+    // Check nightly images first (supplements custom images)
+    const nightlyUrl = this.nightlyImages[fullCardIdentifier];
+    if (nightlyUrl) {
+      return nightlyUrl;
+    }
+    // Then check custom images
     const customUrl = this.customImages[fullCardIdentifier];
     if (customUrl) {
       return customUrl;
     }
 
+    // Fall back to default
     const config = this.sessionService.session.config;
     const scansUrl = config && config.scansUrl || '';
     return scansUrl
@@ -308,6 +388,36 @@ export class CardsBaseService implements OnDestroy {
         map((json: any) => {
           this.customImages = json;
           localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
+        }),
+      );
+    }
+  }
+
+  public setNightlyImagesUrl(jsonUrl: string): Observable<void> {
+    // First save the URL to API (admin-only), then fetch and parse the JSON
+    if (this.isAuthenticated()) {
+      return this.profileService.setNightlyImagesUrl(jsonUrl).pipe(
+        switchMap(() => {
+          // Fetch and parse the JSON from the URL
+          return this.http.get(jsonUrl).pipe(
+            map((json: any) => {
+              this.nightlyImages = json;
+              // Also save to localStorage as backup
+              localStorage.setItem('nightlyCardImages', JSON.stringify(this.nightlyImages));
+            }),
+            catchError((error) => {
+              // If fetching JSON fails, throw the error
+              throw error;
+            })
+          );
+        })
+      );
+    } else {
+      // Not authenticated, use localStorage
+      return this.http.get(jsonUrl).pipe(
+        map((json: any) => {
+          this.nightlyImages = json;
+          localStorage.setItem('nightlyCardImages', JSON.stringify(this.nightlyImages));
         }),
       );
     }
@@ -421,6 +531,9 @@ export class CardsBaseService implements OnDestroy {
     }
     if (this.cardImagesSubscription) {
       this.cardImagesSubscription.unsubscribe();
+    }
+    if (this.nightlyImagesSubscription) {
+      this.nightlyImagesSubscription.unsubscribe();
     }
   }
 

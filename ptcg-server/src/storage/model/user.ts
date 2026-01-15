@@ -42,6 +42,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   public cardImagesJsonUrl: string = '';
 
+  @Column({ nullable: true })
+  public nightlyImagesJsonUrl: string = '';
+
   @OneToMany(type => Deck, deck => deck.user)
   decks!: Deck[];
 

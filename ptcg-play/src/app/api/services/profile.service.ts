@@ -42,6 +42,14 @@ export class ProfileService {
     return this.api.post<Response>('/v1/profile/setCardImagesUrl', { jsonUrl });
   }
 
+  public getNightlyImagesUrl() {
+    return this.api.get<{ ok: boolean; jsonUrl: string }>('/v1/profile/nightlyImagesUrl');
+  }
+
+  public setNightlyImagesUrl(jsonUrl: string) {
+    return this.api.post<Response>('/v1/profile/setNightlyImagesUrl', { jsonUrl });
+  }
+
   public updateUserRole(targetUserId: number, roleId: number) {
     return this.api.post<Response>('/v1/profile/updateRole', { targetUserId, roleId });
   }

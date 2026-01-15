@@ -20,6 +20,7 @@ $ptcg-hand-max-margin: map-get($padding, normal);
   gap: 10px;
   transition: all 200ms ease;
 
+
   ptcg-card {
     flex: 0 0 auto;
     width: 88px;
@@ -101,6 +102,7 @@ ptcg-card {
   // ptcg-hand.opponent ptcg-card {
   //   width: 80px;
   // }
+
 
   ptcg-card {
     width: 88px;

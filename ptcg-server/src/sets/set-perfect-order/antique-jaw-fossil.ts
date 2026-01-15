@@ -1,0 +1,119 @@
+import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+
+export class AntiqueJawFossil extends TrainerCard {
+  public trainerType = TrainerType.ITEM;
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = CardType.COLORLESS;
+  public cardTypez: CardType = CardType.COLORLESS;
+  public movedToActiveThisTurn = false;
+  public pokemonType = PokemonType.NORMAL;
+  public evolvesFrom = '';
+  public cardTag = [];
+  public tools = [];
+  public evolvesTo = [];
+  public evolvesToStage = [];
+  public archetype = [];
+  public hp: number = 60;
+  public weakness = [];
+  public retreat = [];
+  public resistance = [];
+  public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
+  public maxTools: number = 0;
+
+  public powers: Power[] = [{
+    name: 'Antique Jaw Fossil',
+    text: `You may play this card as a 60 HP Basic [C] Pokemon. This Pokemon can't be affected by Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
+    useWhenInPlay: true,
+    exemptFromAbilityLock: true,
+    isFossil: true,
+    powerType: PowerType.TRAINER_ABILITY
+  },
+  {
+    name: 'Imitating Jaw',
+    powerType: PowerType.ABILITY,
+    isFossil: true,
+    text: 'If this Pokemon is your Active Pokemon, attacks from your opponent\'s Active Pokemon do 30 less damage (before applying Weakness and Resistance).'
+  }];
+
+  public regulationMark = 'J';
+  public set: string = 'M3';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '68';
+  public name: string = 'Antique Jaw Fossil';
+  public fullName: string = 'Antique Jaw Fossil M3';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Discard from play
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Antique Jaw Fossil' });
+      const cardList = StateUtils.findCardList(state, this);
+      cardList.moveCardTo(this, player.discard);
+    }
+
+    // Play as Pokemon
+    if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
+      const player = effect.player;
+      const emptySlots = player.bench.filter(b => b.cards.length === 0);
+      if (emptySlots.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      const playPokemonEffect = new PlayPokemonEffect(player, this as unknown as PokemonCard, emptySlots[0]);
+      store.reduceEffect(state, playPokemonEffect);
+    }
+
+    // Prevent retreat
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
+      throw new GameError(GameMessage.CANNOT_RETREAT);
+    }
+
+    // Prevent special conditions
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
+      effect.preventDefault = true;
+    }
+
+    // Reduce damage by 30 when active
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      const pokemonCard = effect.target.getPokemonCard();
+      if (pokemonCard !== this) {
+        return state;
+      }
+
+      // It's not an attack
+      if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      const player = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Only reduce damage if this is active and opponent's active is attacking
+      if (effect.target !== player.active || effect.source !== opponent.active) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      effect.damage = Math.max(0, effect.damage - 30);
+    }
+
+    return state;
+  }
+}

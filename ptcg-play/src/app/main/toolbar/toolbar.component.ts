@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../api/services/game.service';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GamePhase } from 'ptcg-server';
+import { ToolbarService } from '../../shared/services/toolbar.service';
 
 @UntilDestroy()
 @Component({
@@ -35,6 +36,7 @@ export class ToolbarComponent implements OnInit {
   public tableBadgeContent$: Observable<string>;
   public tableBadgeColor$: Observable<string>;
   public isAdmin$: Observable<boolean>;
+  public menuOpen = false;
 
   apiUrl = environment.apiUrl;
 
@@ -45,7 +47,8 @@ export class ToolbarComponent implements OnInit {
     private dialog: MatDialog,
     private alertService: AlertService,
     private translate: TranslateService,
-    private gameService: GameService
+    private gameService: GameService,
+    private toolbarService: ToolbarService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
       map(gameStates => gameStates.filter(gameState => {
@@ -152,6 +155,10 @@ export class ToolbarComponent implements OnInit {
     this.loggedUser$
       .pipe(untilDestroyed(this))
       .subscribe(user => this.loggedUser = user);
+
+    this.toolbarService.closeMenu$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.closeMenu());
   }
 
   public openSettingsDialog() {
@@ -170,6 +177,14 @@ export class ToolbarComponent implements OnInit {
 
   public onLogoClick() {
     this.logoClick.emit();
+  }
+
+  public toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  public closeMenu(): void {
+    this.menuOpen = false;
   }
 
   async closeGame(gameState: LocalGameState) {

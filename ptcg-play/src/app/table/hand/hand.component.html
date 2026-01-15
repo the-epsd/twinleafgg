@@ -7,8 +7,14 @@
             #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true" [card]="context.data.card"
             [artworksContext]="player?.hand" (click)="onCardClick(context.data.card, context.index)"
             [class.draggable]="!gameState.deleted && player?.id === clientId" [ptcgCardPlaceholder]="render.isDragging$"
-            [class.cardback]="isFaceDown">
+            [class.cardback]="isFaceDown" [isPlayable]="isCardPlayable(context.data.card)">
           </ptcg-card>
+          <!-- <ptcg-card [style.margin]="calculateContainerMargin()" [dndSortableRender]="context"
+            #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true" [card]="context.data.card"
+            [artworksContext]="player?.hand" (click)="onCardClick(context.data.card, context.index)"
+            [class.draggable]="!gameState.deleted && player?.id === clientId" [ptcgCardPlaceholder]="render.isDragging$"
+            [class.cardback]="isFaceDown">
+          </ptcg-card> -->
         </ng-template>
       </dnd-sortable-list>
     </div>
