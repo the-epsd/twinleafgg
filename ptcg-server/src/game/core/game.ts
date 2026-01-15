@@ -10,6 +10,7 @@ import { State, GamePhase } from '../store/state/state';
 import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-action';
+import { AddPlayerAction } from '../store/actions/add-player-action';
 import { Format } from '../store/card/card-types';
 import { CheckHpEffect } from '../store/effects/check-effects';
 import { deepClone } from '../../utils/utils';
@@ -44,6 +45,7 @@ export class Game implements StoreHandler {
   private disconnectionTimeouts: Map<number, NodeJS.Timeout> = new Map();
   private isPaused: boolean = false;
   private pausedAt: number = 0;
+  private userIdToPlayerId: Map<number, number> = new Map();
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
@@ -88,6 +90,7 @@ export class Game implements StoreHandler {
     // Clear disconnected players tracking
     this.disconnectedPlayers.clear();
     this.isPaused = false;
+    this.userIdToPlayerId.clear();
   }
 
   public setBonusHps(state: State): void {
@@ -175,6 +178,10 @@ export class Game implements StoreHandler {
       const clientRoleId = client.user?.roleId;
       state = this.store.dispatch(action, clientRoleId);
       state = this.updateInvalidMoves(state, client.id, false);
+
+      if (action instanceof AddPlayerAction) {
+        this.registerPlayer(client);
+      }
     } catch (error) {
       state = this.updateInvalidMoves(state, client.id, true);
       throw error;
@@ -197,6 +204,23 @@ export class Game implements StoreHandler {
       // Instead of immediately aborting, handle as disconnection for reconnection system
       this.handlePlayerDisconnection(client);
     }
+  }
+
+  public registerPlayer(client: Client): void {
+    if (!client.user) {
+      return;
+    }
+
+    const player = this.state.players.find(p => p.id === client.id);
+    if (!player) {
+      return;
+    }
+
+    this.userIdToPlayerId.set(client.user.id, player.id);
+  }
+
+  public getPlayerIdForUser(userId: number): number | undefined {
+    return this.userIdToPlayerId.get(userId);
   }
 
   /**
