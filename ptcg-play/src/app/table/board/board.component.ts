@@ -79,6 +79,15 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     return null;
   }
 
+  // Get sleeve image path from deck CardList
+  get topPlayerDeckSleeveImagePath(): string | undefined {
+    return (this.topPlayer?.deck as any)?.sleeveImagePath;
+  }
+
+  get bottomPlayerDeckSleeveImagePath(): string | undefined {
+    return (this.bottomPlayer?.deck as any)?.sleeveImagePath;
+  }
+
   // Determine who owns the active stadium
   get stadiumOwner(): boolean {
     if (!this.stadiumCard) return false;

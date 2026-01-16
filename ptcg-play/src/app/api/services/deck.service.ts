@@ -50,7 +50,8 @@ export class DeckService {
     cards: string[],
     manualArchetype1?: Archetype,
     manualArchetype2?: Archetype,
-    artworks?: { code: string; artworkId?: number }[]
+    artworks?: { code: string; artworkId?: number }[],
+    sleeveIdentifier?: string
   ) {
     return this.api.post<DeckResponse>('/v1/decks/save', {
       id: deckId,
@@ -58,7 +59,8 @@ export class DeckService {
       cards,
       manualArchetype1,
       manualArchetype2,
-      ...(artworks ? { artworks } : {})
+      ...(artworks ? { artworks } : {}),
+      ...(sleeveIdentifier ? { sleeveIdentifier } : {})
     });
   }
 

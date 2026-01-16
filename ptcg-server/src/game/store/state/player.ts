@@ -15,6 +15,8 @@ export class Player {
 
   deckId?: number;
 
+  sleeveImagePath?: string;
+
   deck: CardList = new CardList();
 
   hand: CardList = new CardList();

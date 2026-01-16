@@ -35,6 +35,7 @@ export class PromptChooseCardsComponent implements OnChanges {
         this.cardbackMap[i] = true;
       });
     }
+    this.cardbackUrl = this.cardsBaseService.getSleeveUrl((this.cards as any)?.sleeveImagePath);
 
     // Initialize card items
     this.initializeCardItems();
@@ -52,6 +53,7 @@ export class PromptChooseCardsComponent implements OnChanges {
   public isSecret: boolean;
   public revealed = false;
   public cardbackMap: { [index: number]: boolean } = {};
+  public cardbackUrl?: string;
   public promptValue: ChooseCardsPrompt;
 
   public currentTab = 'Valid';
@@ -128,6 +130,7 @@ export class PromptChooseCardsComponent implements OnChanges {
         this.cardbackMap[i] = true;
       });
     }
+    this.cardbackUrl = this.cardsBaseService.getSleeveUrl((this.cards as any)?.sleeveImagePath);
 
     // Initialize card items
     this.initializeCardItems();

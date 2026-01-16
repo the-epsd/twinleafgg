@@ -38,6 +38,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   @Output() deckChange = new EventEmitter<Deck>();
 
+  @Output() sleeveSelect = new EventEmitter<void>();
+
   @Input() selected: CardType[] = [];
 
   @Input() isThemeDeck: boolean = false;
@@ -262,6 +264,11 @@ export class DeckEditToolbarComponent implements OnDestroy {
   public onSave() {
     if (this.disabled) return;
     this.save.emit();
+  }
+
+  public onSleeveSelect() {
+    if (this.disabled) return;
+    this.sleeveSelect.emit();
   }
 
   public onSearch(value: string) {

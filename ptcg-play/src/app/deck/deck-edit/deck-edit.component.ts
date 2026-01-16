@@ -17,6 +17,10 @@ import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, Trai
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 import { ArtworksService } from 'src/app/api/services/artworks.service';
 import { CardArtwork } from 'src/app/api/interfaces/cards.interface';
+import { SleeveService } from 'src/app/api/services/sleeve.service';
+import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { SleeveSelectPopupComponent } from '../sleeve-select-popup/sleeve-select-popup.component';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 
@@ -37,12 +41,16 @@ export class DeckEditComponent implements OnInit {
   public isThemeDeck = false;
   public selectedArtworks: { code: string; artworkId?: number }[] = [];
   public unlockedArtworks: CardArtwork[] = [];
+  public sleeves: SleeveInfo[] = [];
+  public selectedSleeveIdentifier?: string;
 
   constructor(
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
     private deckService: DeckService,
     private artworksService: ArtworksService,
+    private sleeveService: SleeveService,
+    private dialog: MatDialog,
     // private fileDownloadService: FileDownloadService,
     private route: ActivatedRoute,
     private router: Router,
@@ -60,6 +68,12 @@ export class DeckEditComponent implements OnInit {
         this.unlockedArtworks = resp.artworks || [];
       }, () => { this.unlockedArtworks = []; });
 
+    this.sleeveService.getList()
+      .pipe(untilDestroyed(this))
+      .subscribe(resp => {
+        this.sleeves = resp.sleeves || [];
+      }, () => { this.sleeves = []; });
+
     this.route.paramMap.pipe(
       switchMap(paramMap => {
         this.loading = true;
@@ -74,6 +88,7 @@ export class DeckEditComponent implements OnInit {
         this.deckItems = this.loadDeckItems(response.deck.cards);
         // Load artworks if present
         this.selectedArtworks = response.deck.artworks || [];
+        this.selectedSleeveIdentifier = response.deck.sleeveIdentifier || undefined;
         // Detect theme deck
         this.isThemeDeck = Array.isArray(this.deck.format) && this.deck.format.includes(Format['THEME']);
       }, async () => {
@@ -532,7 +547,8 @@ export class DeckEditComponent implements OnInit {
       items,
       this.deck.manualArchetype1 as Archetype,
       this.deck.manualArchetype2 as Archetype,
-      this.selectedArtworks
+      this.selectedArtworks,
+      this.selectedSleeveIdentifier
     ).pipe(
       finalize(() => { this.loading = false; }),
       untilDestroyed(this)
@@ -564,6 +580,28 @@ export class DeckEditComponent implements OnInit {
     this.selectedArtworks = next;
     // Save immediately for real-time persistence
     this.saveDeck();
+  }
+
+  public openSleeveSelector() {
+    if (this.isThemeDeck || this.loading || !this.deck) {
+      return;
+    }
+    const dialogRef = this.dialog.open(SleeveSelectPopupComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      data: {
+        sleeves: this.sleeves,
+        selectedIdentifier: this.selectedSleeveIdentifier
+      }
+    });
+    dialogRef.afterClosed().pipe(untilDestroyed(this)).subscribe(result => {
+      if (result === undefined) {
+        return;
+      }
+      this.selectedSleeveIdentifier = result || undefined;
+      this.deck.sleeveIdentifier = this.selectedSleeveIdentifier;
+      this.saveDeck();
+    });
   }
 
   public getSelectedArtworkId(cardFullName: string): number | null {

@@ -135,6 +135,7 @@ export class Login extends Controller {
       defaultPageSize: config.backend.defaultPageSize,
       scansUrl: config.sets.scansUrl,
       avatarsUrl: config.backend.avatarsUrl,
+      sleevesUrl: config.backend.sleevesUrl,
       avatarFileSize: config.backend.avatarFileSize,
       avatarMinSize: config.backend.avatarMinSize,
       avatarMaxSize: config.backend.avatarMaxSize,

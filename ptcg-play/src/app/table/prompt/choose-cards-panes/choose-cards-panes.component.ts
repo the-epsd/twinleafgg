@@ -26,6 +26,7 @@ export class ChooseCardsPanesComponent implements OnChanges, OnInit {
   @Input() cardbackMap: { [index: number]: boolean } = {};
   @Input() topCardbackMap: { [index: number]: boolean } = {};
   @Input() bottomCardbackMap: { [index: number]: boolean } = {};
+  @Input() cardbackUrl?: string;
   @Input() singlePaneMode = false;
   @Output() changeCards = new EventEmitter<number[]>();
   @Input() promptValue: ChooseCardsPrompt;

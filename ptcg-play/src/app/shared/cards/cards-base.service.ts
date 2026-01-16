@@ -338,6 +338,19 @@ export class CardsBaseService implements OnDestroy {
       .replace('{name}', card.fullName);
   }
 
+  public getSleeveUrl(imagePath?: string): string | undefined {
+    if (!imagePath) {
+      return undefined;
+    }
+    const config = this.sessionService.session.config;
+    const sleevesUrl = config && config.sleevesUrl || '';
+    if (!sleevesUrl) {
+      return undefined;
+    }
+    const apiUrl = this.apiService.getApiUrl();
+    return apiUrl + sleevesUrl.replace('{path}', imagePath);
+  }
+
   public setGlobalArtworksMap(map: { [code: string]: string } | undefined): void {
     this.globalArtworksMap = map || {};
   }

@@ -68,6 +68,7 @@
         <div class="deck-container" style="position: relative;">
           <ng-container *ngFor="let card of topPlayer?.deck?.cards; let idx = index">
             <ptcg-board-card [cardList]="{ cards: [card] }" [owner]="topPlayer" class="deck-card"
+              [sleeveImagePath]="topPlayerDeckSleeveImagePath"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'" [isFaceDown]="true">
             </ptcg-board-card>
           </ng-container>
@@ -168,6 +169,7 @@
         <div class="deck-container" style="position: relative;">
           <ng-container *ngFor="let card of bottomPlayer?.deck?.cards; let idx = index">
             <ptcg-board-card [cardList]="{ cards: [card] }" [owner]="bottomPlayer" class="deck-card"
+              [sleeveImagePath]="bottomPlayerDeckSleeveImagePath"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'" [isFaceDown]="true">
             </ptcg-board-card>
           </ng-container>

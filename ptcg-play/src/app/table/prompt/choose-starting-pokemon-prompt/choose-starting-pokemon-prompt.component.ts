@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ChooseCardsPrompt, CardList, Card } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
+import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 
 @Component({
@@ -26,6 +27,7 @@ export class ChooseStartingPokemonPromptComponent {
         this.cardbackMap[i] = true;
       });
     }
+    this.cardbackUrl = this.cardsBaseService.getSleeveUrl((this.cards as any)?.sleeveImagePath);
   }
 
   @Input() gameState: LocalGameState;
@@ -40,11 +42,13 @@ export class ChooseStartingPokemonPromptComponent {
   public isSecret: boolean;
   public revealed = false;
   public cardbackMap: { [index: number]: boolean } = {};
+  public cardbackUrl?: string;
   private promptValue: ChooseCardsPrompt;
   private result: number[] = [];
 
   constructor(
-    private gameService: GameService
+    private gameService: GameService,
+    private cardsBaseService: CardsBaseService
   ) { }
 
   public minimize() {

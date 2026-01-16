@@ -104,8 +104,8 @@ export class SocketService {
     this.socket.on('disconnect', (reason) => this.handleDisconnect(reason));
   }
 
-  public joinMatchmakingQueue(format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number): Observable<any> {
-    return this.emit('matchmaking:join', { format, deck, artworks, deckId }).pipe(
+  public joinMatchmakingQueue(format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string): Observable<any> {
+    return this.emit('matchmaking:join', { format, deck, artworks, deckId, sleeveImagePath }).pipe(
       timeout(5000),
       retry(1),
       catchError((error) => {

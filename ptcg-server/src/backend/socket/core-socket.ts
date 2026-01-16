@@ -100,7 +100,7 @@ export class CoreSocket {
     response('ok', this.buildCoreInfo());
   }
 
-  private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number },
+  private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string },
     response: Response<GameState>): void {
     // Validate that only admins can enable sandbox mode
     if (params.gameSettings.sandboxMode && this.client.user.roleId !== 4) {
@@ -119,7 +119,7 @@ export class CoreSocket {
       }
     }
 
-    const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited, params.deckId);
+    const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited, params.deckId, undefined, params.sleeveImagePath);
     response('ok', CoreSocket.buildGameState(game));
   }
 

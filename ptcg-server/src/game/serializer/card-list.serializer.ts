@@ -30,6 +30,9 @@ export class CardListSerializer implements Serializer<CardList> {
     if ((cardList as any).artworksMap) {
       data.artworksMap = (cardList as any).artworksMap;
     }
+    if ((cardList as any).sleeveImagePath) {
+      data.sleeveImagePath = (cardList as any).sleeveImagePath;
+    }
 
     return {
       ...data,

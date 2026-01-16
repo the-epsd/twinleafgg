@@ -14,6 +14,8 @@ export interface DeckListEntry {
   manualArchetype1?: Archetype;
   manualArchetype2?: Archetype;
   artworks?: { code: string; artworkId?: number }[];
+  sleeveIdentifier?: string;
+  sleeveImagePath?: string;
 }
 
 export interface DeckListResponse extends Response {
@@ -31,6 +33,8 @@ export interface Deck {
   manualArchetype1?: Archetype;
   manualArchetype2?: Archetype;
   artworks?: { code: string; artworkId?: number }[];
+  sleeveIdentifier?: string;
+  sleeveImagePath?: string;
 }
 
 export interface DeckResponse extends Response {

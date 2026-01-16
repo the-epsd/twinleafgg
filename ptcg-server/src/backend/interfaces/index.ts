@@ -8,3 +8,4 @@ export * from './rank.enum';
 export * from './ranking.interface';
 export * from './reconnection.interface';
 export * from './replay.interface';
+export * from './sleeve.interface';

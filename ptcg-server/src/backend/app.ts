@@ -25,6 +25,7 @@ import {
   ResetPassword,
   BattlePass,
   Artworks,
+  Sleeves,
   MemoryHealthController,
 } from './controllers';
 
@@ -81,6 +82,7 @@ export class App {
       app.use('/scans', express.static(config.sets.scansDir));
     }
     app.use('/avatars', express.static(config.backend.avatarsDir));
+    app.use('/sleeves', express.static(config.backend.sleevesDir));
 
     // API routes
     define('/v1/avatars', Avatars);
@@ -97,6 +99,7 @@ export class App {
     define('/v1/resetPassword', ResetPassword);
     define('/v1/battlepass', BattlePass);
     define('/v1/artworks', Artworks);
+    define('/v1/sleeves', Sleeves);
     define('/v1/memory', MemoryHealthController);
 
     app.use((err: any, req: any, res: any, next: any) => {
