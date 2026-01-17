@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { Player } from '../../game/store/state/player';
 
 export class JumboIce extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -17,13 +18,35 @@ export class JumboIce extends TrainerCard {
   public setNumber: string = '91';
   public text: string = 'Heal 80 damage from your Active Pokémon that has 3 or more Energy attached.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const activePokemon = player.active.getPokemonCard();
+
+    // Must have an active Pokemon
+    if (!activePokemon) {
+      return false;
+    }
+
+    // Must have damage on it
+    if (player.active.damage === 0) {
+      return false;
+    }
+
+    // Must have 3 or more Energy attached
+    const energyCount = player.active.energies.cards.length;
+    if (energyCount < 3) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const activePokemon = player.active.getPokemonCard();
 
-      if (activePokemon) {
+      if (activePokemon && player.active.damage > 0) {
         // Check if the Pokemon has 3 or more Energy attached
         const checkEnergy = new CheckProvidedEnergyEffect(player);
         store.reduceEffect(state, checkEnergy);
@@ -33,6 +56,7 @@ export class JumboIce extends TrainerCard {
           store.reduceEffect(state, healEffect);
         }
       }
+      player.supporter.moveCardTo(this, player.discard);
     }
 
     return state;
