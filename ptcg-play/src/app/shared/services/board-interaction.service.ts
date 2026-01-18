@@ -70,6 +70,9 @@ export class BoardInteractionService {
   private coinFlipAnimationSubject = new Subject<CoinFlipAnimationEvent>();
   public coinFlipAnimation$ = this.coinFlipAnimationSubject.asObservable();
 
+  private coinFlipCancelSubject = new Subject<void>();
+  public coinFlipCancel$ = this.coinFlipCancelSubject.asObservable();
+
   constructor() { }
 
   /**
@@ -247,5 +250,9 @@ export class BoardInteractionService {
 
   public triggerCoinFlipAnimation(result: boolean, playerId: number) {
     this.coinFlipAnimationSubject.next({ result, playerId });
+  }
+
+  public cancelCoinFlipAnimation() {
+    this.coinFlipCancelSubject.next();
   }
 } 

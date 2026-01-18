@@ -83,7 +83,7 @@ export class SocketService {
 
     this.socket = io(apiUrl, {
       autoConnect: false,
-      reconnection: true,
+      reconnection: false,
       // More resilient reconnection/backoff settings for flaky networks
       reconnectionAttempts: Infinity,
       reconnectionDelay: 1000,
@@ -104,8 +104,8 @@ export class SocketService {
     this.socket.on('disconnect', (reason) => this.handleDisconnect(reason));
   }
 
-  public joinMatchmakingQueue(format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number): Observable<any> {
-    return this.emit('matchmaking:join', { format, deck, artworks, deckId }).pipe(
+  public joinMatchmakingQueue(format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string): Observable<any> {
+    return this.emit('matchmaking:join', { format, deck, artworks, deckId, sleeveImagePath }).pipe(
       timeout(5000),
       retry(1),
       catchError((error) => {
@@ -131,6 +131,7 @@ export class SocketService {
     }
 
     (this.socket.io.opts.query as any).token = authToken;
+    this.setReconnectionFlag(false);
     this.socket.connect();
     this.enabled = true;
   }
@@ -139,6 +140,7 @@ export class SocketService {
     this.off();
     this.stopAutoReconnection();
     this.resetReconnectionStatus();
+    this.setReconnectionFlag(false);
     this.socket.disconnect();
     this.enabled = false;
     this.wasConnectedBefore = false;
@@ -233,6 +235,7 @@ export class SocketService {
 
       this.stopAutoReconnection();
       this.resetReconnectionStatus();
+      this.setReconnectionFlag(true);
 
       const connectHandler = () => {
         this.socket.off('connect', connectHandler);
@@ -308,6 +311,7 @@ export class SocketService {
       lastDisconnectTime: Date.now()
     };
 
+    this.setReconnectionFlag(true);
     this.updateReconnectionStatus();
     this.attemptReconnection();
   }
@@ -377,6 +381,7 @@ export class SocketService {
   private handleSuccessfulReconnection(): void {
     this.stopAutoReconnection();
     this.resetReconnectionStatus();
+    this.setReconnectionFlag(false);
 
     this.reconnectionEventSubject.next({
       type: 'success'
@@ -475,6 +480,16 @@ export class SocketService {
       this.reconnectionTimer = undefined;
     }
     this.stopReconnection$.next();
+  }
+
+  private setReconnectionFlag(isReconnecting: boolean): void {
+    const query = this.socket.io.opts.query as any;
+    if (isReconnecting) {
+      query.reconnection = 'true';
+      return;
+    }
+
+    delete query.reconnection;
   }
 
   private resetReconnectionStatus(): void {

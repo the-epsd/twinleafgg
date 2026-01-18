@@ -78,7 +78,10 @@ export class PromptInvitePlayerComponent implements OnInit {
       .subscribe({
         next: deckResponse => {
           const deck = deckResponse.deck.cards;
-          this.gameService.resolvePrompt(gameId, id, deck);
+          this.gameService.resolvePrompt(gameId, id, {
+            deck,
+            sleeveImagePath: deckResponse.deck.sleeveImagePath
+          });
         },
         error: (error: ApiError) => {
           this.alertService.toast(error.message);

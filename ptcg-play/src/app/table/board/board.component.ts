@@ -79,6 +79,15 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     return null;
   }
 
+  // Get sleeve image path from deck CardList
+  get topPlayerDeckSleeveImagePath(): string | undefined {
+    return (this.topPlayer?.deck as any)?.sleeveImagePath;
+  }
+
+  get bottomPlayerDeckSleeveImagePath(): string | undefined {
+    return (this.bottomPlayer?.deck as any)?.sleeveImagePath;
+  }
+
   // Determine who owns the active stadium
   get stadiumOwner(): boolean {
     if (!this.stadiumCard) return false;
@@ -159,6 +168,37 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
   public discardSize: number = 0;
 
   ngOnChanges(changes: SimpleChanges) {
+    // Cancel coin flip animation only on meaningful state changes
+    if (changes.gameState && changes.gameState.previousValue) {
+      const previousState: LocalGameState = changes.gameState.previousValue;
+      const currentState: LocalGameState = changes.gameState.currentValue;
+
+      // Check if it's a different game
+      const differentGame = previousState.localId !== currentState.localId;
+      
+      // Check if active player changed
+      const activePlayerChanged = previousState.state?.activePlayer !== currentState.state?.activePlayer;
+
+      // Get prompts (excluding resolved ones)
+      const previousPrompts = previousState.state?.prompts?.filter(p => p.result === undefined) || [];
+      const currentPrompts = currentState.state?.prompts?.filter(p => p.result === undefined) || [];
+
+      // Check if a new non-WaitPrompt prompt appeared
+      const previousNonWaitPrompts = previousPrompts.filter(p => p.type !== 'WaitPrompt');
+      const currentNonWaitPrompts = currentPrompts.filter(p => p.type !== 'WaitPrompt');
+      const newNonWaitPrompt = currentNonWaitPrompts.length > previousNonWaitPrompts.length ||
+        currentNonWaitPrompts.some(p => !previousNonWaitPrompts.find(prev => prev.id === p.id));
+
+      // Check if prompts went from having prompts to empty (but not just WaitPrompt resolving)
+      const promptsCleared = previousPrompts.length > 0 && currentPrompts.length === 0 &&
+        previousPrompts.some(p => p.type !== 'WaitPrompt');
+
+      // Only cancel on meaningful state changes
+      if (differentGame || activePlayerChanged || newNonWaitPrompt || promptsCleared) {
+        this.boardInteractionService.cancelCoinFlipAnimation();
+      }
+    }
+
     if (this.player) {
       this.deck = this.player.deck;
       this.discard = this.player.discard;

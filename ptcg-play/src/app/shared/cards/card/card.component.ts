@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Card, CardTag } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
@@ -21,6 +21,7 @@ export class CardComponent implements OnInit, OnDestroy {
   @Input() cardback = false;
   @Input() placeholder = false;
   @Input() customImageUrl: string;
+  @Input() cardbackUrl?: string;
   // Optional overlay image URL (e.g., selected artwork) applied on top of base image
   @Input() customArtworkUrl?: string;
   @Input() cardList?: any;
@@ -198,6 +199,15 @@ export class CardComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService) {
     settingsService.holoEnabled$.subscribe(enabled => this.holoEnabled = enabled);
     settingsService.showCardName$.subscribe(enabled => this.showCardName = enabled);
+  }
+
+  @Input() set cardbackImageUrl(url: string | undefined) {
+    this.cardbackUrl = url;
+  }
+
+  @HostBinding('style.--cardback-url')
+  get cardbackCssVar(): string | null {
+    return this.cardbackUrl ? `url(${this.cardbackUrl})` : null;
   }
 
   private resolveScanUrl(): string {

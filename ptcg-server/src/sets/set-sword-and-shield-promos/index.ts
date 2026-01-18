@@ -44,6 +44,7 @@ import {
   MarnieSWSH,
   MarnieSWSH2,
   ProfessorsResearchSWSH,
+  HisuianSamurottSWSH,
   ZeraoraVMAXSWSH,
   ZeraoraVSTARSWSH,
   ZeraoraVSWSH
@@ -101,6 +102,7 @@ export const setSwordAndShieldPromos: Card[] = [
   new MarnieSWSH(),
   new MarnieSWSH2(),
   new ProfessorsResearchSWSH(),
+  new HisuianSamurottSWSH(),
   new ZeraoraVSWSH(),
   new ZeraoraVMAXSWSH(),
   new ZeraoraVSTARSWSH(),

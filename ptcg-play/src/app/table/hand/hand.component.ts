@@ -54,6 +54,7 @@ export class HandComponent implements OnChanges {
   public cards: Card[] = [];
   public isFaceDown: boolean;
   public isDeleted: boolean;
+  public cardbackUrl?: string;
   public handSpec: SortableSpec<HandItem>;
   public list: HandItem[] = [];
   public tempList: HandItem[] = [];
@@ -113,6 +114,7 @@ export class HandComponent implements OnChanges {
       this.cards = hand.cards;
       this.list = this.buildHandList(hand);
       this.tempList = this.list;
+      this.cardbackUrl = this.cardsBaseService.getSleeveUrl((hand as any).sleeveImagePath);
 
       // Show hands for admins only when they are observers
       const isPlaying = this.gameState.state.players.some(p => p.id === this.clientId);

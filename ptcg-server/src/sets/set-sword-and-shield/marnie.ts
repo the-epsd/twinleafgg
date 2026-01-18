@@ -6,6 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { CardList, GameError, GameMessage } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 
 export class Marnie extends TrainerCard {
@@ -53,14 +54,21 @@ export class Marnie extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardsTo(cards, deckBottom);
-      opponent.hand.moveTo(opponentDeckBottom);
+      const playerMoveEffect = new MoveCardsEffect(player.hand, deckBottom, { cards, sourceCard: this });
+      state = store.reduceEffect(state, playerMoveEffect);
+
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponentDeckBottom, { sourceCard: this });
+      state = store.reduceEffect(state, opponentMoveEffect);
 
       deckBottom.moveTo(player.deck);
       opponentDeckBottom.moveTo(opponent.deck);
 
       player.deck.moveTo(player.hand, Math.min(5, player.deck.cards.length));
-      opponent.deck.moveTo(opponent.hand, Math.min(4, opponent.deck.cards.length));
+
+      // Check if moving cards from opponent's hand was prevented
+      if (!opponentMoveEffect.preventDefault) {
+        opponent.deck.moveTo(opponent.hand, Math.min(4, opponent.deck.cards.length));
+      }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 

@@ -39,7 +39,7 @@ export class MatchmakingSocket {
     });
   }
 
-  public joinQueue(params: { format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number }, response: Response<void>): void {
+  public joinQueue(params: { format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string }, response: Response<void>): void {
     if (!params || !params.format || !Array.isArray(params.deck) || params.deck.length === 0) {
       response('error', ApiErrorEnum.INVALID_FORMAT);
       return;
@@ -51,7 +51,8 @@ export class MatchmakingSocket {
       params.format,
       params.deck,
       params.artworks,
-      params.deckId
+      params.deckId,
+      params.sleeveImagePath
     );
     response('ok');
   }

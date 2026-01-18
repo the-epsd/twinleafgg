@@ -1,13 +1,13 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Roxanne, effect: TrainerEffect): IterableIterator<State> {
@@ -33,22 +33,23 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: self });
-  MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: self });
+  const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: effect.trainerCard });
+  state = store.reduceEffect(state, playerMoveEffect);
 
-  yield store.prompt(state, [
-    new ShuffleDeckPrompt(player.id),
-    new ShuffleDeckPrompt(opponent.id)
-  ], deckOrder => {
-    player.deck.applyOrder(deckOrder[0]);
-    opponent.deck.applyOrder(deckOrder[1]);
+  const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: effect.trainerCard });
+  state = store.reduceEffect(state, opponentMoveEffect);
 
-    DRAW_CARDS(player, 6);
+  // opponent shuffle and draw
+  if (!opponentMoveEffect.preventDefault) {
+    SHUFFLE_DECK(store, state, opponent);
     DRAW_CARDS(opponent, 2);
+  }
 
-    CLEAN_UP_SUPPORTER(effect, player);
+  // player shuffle and draw
+  SHUFFLE_DECK(store, state, player);
+  DRAW_CARDS(player, 6);
 
-  });
+  CLEAN_UP_SUPPORTER(effect, player);
 }
 
 export class Roxanne extends TrainerCard {

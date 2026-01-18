@@ -8,6 +8,7 @@ import { Kingdra } from './kingdra';
 import { PokemonCirculator } from './pokemon-circulator';
 import { Seadra } from './seadra';
 import { Shaymin } from './shaymin';
+import { Vulpix } from './vulpix';
 import { Zubat } from './zubat';
 
 // Other prints
@@ -26,6 +27,7 @@ export const setUnleashed: Card[] = [
   new PokemonCirculator(),
   new Seadra(),
   new Shaymin(),
+  new Vulpix(),
   new Zubat(),
 
   // Other prints

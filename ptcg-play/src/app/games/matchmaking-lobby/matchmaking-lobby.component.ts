@@ -218,27 +218,23 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   }
 
   // Helper method to get background image for selected format
-  getBackgroundImage(): string {
-    // Use hovered format if available, otherwise use selected format
-    const activeFormat = this.hoveredFormat || this.selectedFormat;
+  // getBackgroundImage(): string {
+  //   const activeFormat = this.hoveredFormat || this.selectedFormat;
 
-    if (!activeFormat) {
-      return 'none';
-    }
+  //   if (!activeFormat) {
+  //     return 'none';
+  //   }
 
-    // Return specific background for Standard format
-    if (activeFormat === Format.STANDARD) {
-      return 'url("")';
-    }
+  //   if (activeFormat === Format.STANDARD) {
+  //     return 'url("")';
+  //   }
 
-    if (activeFormat === Format.STANDARD_NIGHTLY) {
-      return 'url("")';
-    }
+  //   if (activeFormat === Format.STANDARD_NIGHTLY) {
+  //     return 'url("")';
+  //   }
 
-    // You can customize this to return different background images based on format
-    // For now, using a generic background
-    return 'url("")';
-  }
+  //   return 'url("")';
+  // }
 
   // Helper method to get deck for a specific format
   getDeckForFormat(format: Format): DeckListEntry | undefined {
@@ -426,7 +422,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
     // Pass artworks selection if available on the deck
     const artworks = (deck as any).artworks as { code: string; artworkId?: number }[] | undefined;
-    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards, artworks, this.deckId)
+    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards, artworks, this.deckId, deck.sleeveImagePath)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {

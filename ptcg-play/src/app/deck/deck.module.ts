@@ -23,6 +23,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ArtworksForPipe } from './artworks-for.pipe';
 import { ArchetypeSelectPopupComponent } from './archetype-select-popup/archetype-select-popup.component';
 import { DeckStatsComponent } from './deck-stats/deck-stats.component';
+import { SleeveSelectPopupComponent } from './sleeve-select-popup/sleeve-select-popup.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { DeckStatsComponent } from './deck-stats/deck-stats.component';
   ],
   entryComponents: [
     ImportDeckPopupComponent,
-    ArchetypeSelectPopupComponent
+    ArchetypeSelectPopupComponent,
+    SleeveSelectPopupComponent
   ],
   declarations: [
     DeckCardComponent,
@@ -55,7 +57,8 @@ import { DeckStatsComponent } from './deck-stats/deck-stats.component';
     DeckCardDialogComponent,
     ArtworksForPipe,
     ArchetypeSelectPopupComponent,
-    DeckStatsComponent
+    DeckStatsComponent,
+    SleeveSelectPopupComponent
   ]
 })
 export class DeckModule { }

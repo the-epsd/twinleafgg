@@ -27,6 +27,7 @@ import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianOverqwil } from './hisuian-overqwil';
 import { HisuianQwilfish } from './hisuian-qwilfish';
 import { HisuianQwilfish2 } from './hisuian-qwilfish2';
+import { HisuianSamurott } from './hisuian-samurott';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
 import { Irida } from './irida';
@@ -102,6 +103,7 @@ export const setAstralRadiance: Card[] = [
   new HisuianOverqwil(),
   new HisuianQwilfish(),
   new HisuianQwilfish2(),
+  new HisuianSamurott(),
   new HisuianSamurottV(),
   new HisuianSamurottVSTAR(),
   new Irida(),

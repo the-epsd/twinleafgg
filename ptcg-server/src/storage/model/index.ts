@@ -7,5 +7,6 @@ export * from './friend-request';
 export * from './match';
 export * from './message';
 export * from './replay';
+export * from './sleeve';
 export * from './user';
 export * from './user-favorite-card';

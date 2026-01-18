@@ -23,7 +23,8 @@
     <!-- Top Pane - Carousel -->
     <div class="ptcg-prompt-content">
       <div class="carousel-container" (wheel)="onWheel($event)">
-        <button mat-icon-button class="nav-button prev-button" (click)="previousCards()" [disabled]="currentIndex === 0">
+        <button mat-icon-button class="nav-button prev-button" (click)="previousCards()"
+          [disabled]="currentIndex === 0">
           <mat-icon>chevron_left</mat-icon>
         </button>
 
@@ -37,8 +38,8 @@
                 'card-back': !card.isLeftSide && (currentIndex > 1 ? i === 4 : currentIndex > 0 ? i === 3 : i === 2),
                 'card-exit': !card.isLeftSide && i > (currentIndex > 1 ? 4 : currentIndex > 0 ? 3 : 2),
                 'unavailable': !filterMap[card.card.fullName]
-              }" (click)="toggleCardSelection(card, $event)" (mouseenter)="card.showButtons = true"
-              (mouseleave)="card.showButtons = false">
+              }" [cardbackUrl]="cardbackUrl" (click)="toggleCardSelection(card, $event)"
+              (mouseenter)="card.showButtons = true" (mouseleave)="card.showButtons = false">
 
               <button mat-mini-fab color="primary"
                 *ngIf="card.showButtons && !cardbackMap[card.index] && !promptValue?.options?.isSecret && filterMap[card.card.fullName]"
@@ -69,7 +70,8 @@
             <div class="card-slot">
               <ptcg-card *ngIf="selectedCards[0]" class="card-slot" [card]="selectedCards[0].card"
                 [ngClass]="{'cardback': revealed === false && cardbackMap[selectedCards[0].originalIndex]}"
-                [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[0], $event)">
+                [isSecret]="promptValue?.options?.isSecret" [cardbackUrl]="cardbackUrl"
+                (click)="toggleCardSelection(selectedCards[0], $event)">
               </ptcg-card>
             </div>
           </div>
@@ -77,7 +79,8 @@
             <div class="card-slot" *ngFor="let i of [1,2,3,4,5]">
               <ptcg-card *ngIf="selectedCards[i]" class="card-slot" [card]="selectedCards[i].card"
                 [ngClass]="{'cardback': revealed === false && cardbackMap[selectedCards[i].originalIndex]}"
-                [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[i], $event)">
+                [isSecret]="promptValue?.options?.isSecret" [cardbackUrl]="cardbackUrl"
+                (click)="toggleCardSelection(selectedCards[i], $event)">
               </ptcg-card>
             </div>
           </div>
@@ -87,7 +90,8 @@
         <div class="card-slot" *ngFor="let i of getSlotArray()">
           <ptcg-card *ngIf="selectedCards[i]" class="card-slot" [card]="selectedCards[i].card"
             [ngClass]="{'cardback': revealed === false && cardbackMap[selectedCards[i].originalIndex]}"
-            [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[i], $event)">
+            [isSecret]="promptValue?.options?.isSecret" [cardbackUrl]="cardbackUrl"
+            (click)="toggleCardSelection(selectedCards[i], $event)">
           </ptcg-card>
         </div>
       </ng-template>

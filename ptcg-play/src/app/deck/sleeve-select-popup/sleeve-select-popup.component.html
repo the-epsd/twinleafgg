@@ -1,0 +1,18 @@
+<div class="ptcg-sleeve-select-popup">
+  <h2 class="popup-title">Select Sleeves</h2>
+
+  <div class="sleeve-grid">
+    <button class="sleeve-card none-option" [class.selected]="!data.selectedIdentifier"
+      (click)="selectSleeve(undefined)">
+      <div class="sleeve-preview none-preview"></div>
+      <div class="sleeve-name">Default Cardback</div>
+    </button>
+
+    <button class="sleeve-card" *ngFor="let sleeve of data.sleeves"
+      [class.selected]="sleeve.identifier === data.selectedIdentifier" (click)="selectSleeve(sleeve.identifier)">
+      <div class="sleeve-preview" [style.backgroundImage]="sleeve.imageUrl ? 'url(' + sleeve.imageUrl + ')' : null">
+      </div>
+      <div class="sleeve-name">{{ sleeve.name }}</div>
+    </button>
+  </div>
+</div>

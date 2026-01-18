@@ -607,7 +607,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     // Wait for animation to complete (6 seconds)
     // Capture the state that will be available in the callback
     const stateForCallback = state;
-    state = store.prompt(state, new WaitPrompt(player.id, 1000, 'Coin flip animation'), () => {
+    state = store.prompt(state, new WaitPrompt(player.id, 2000, 'Coin flip animation'), () => {
       // Animation complete, continue with game logic
       // Log the coin flip result
       const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;

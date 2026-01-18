@@ -2,7 +2,8 @@
   <div class="ptcg-deck-edit">
     <ptcg-deck-edit-toolbar *ngIf="deck" [disabled]="isThemeDeck || loading" [deck]="deck"
       (filterChange)="toolbarFilter = $event" (save)="saveDeck()" (import)="importFromClipboard()"
-      (export)="exportDeck()" (clearDeck)="clearDeck()" [isThemeDeck]="isThemeDeck">
+      (export)="exportDeck()" (clearDeck)="clearDeck()" (sleeveSelect)="openSleeveSelector()"
+      [isThemeDeck]="isThemeDeck">
     </ptcg-deck-edit-toolbar>
 
     <ptcg-deck-edit-panes [toolbarFilter]="toolbarFilter" [(deckItems)]="deckItems" [disabled]="isThemeDeck || loading"

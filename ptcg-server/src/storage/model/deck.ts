@@ -10,7 +10,7 @@ export class Deck extends BaseEntity {
   public id!: number;
 
   @ManyToOne(type => User, user => user.decks)
-    user: User = new User();
+  user: User = new User();
 
   @Column()
   public name: string = '';
@@ -32,5 +32,8 @@ export class Deck extends BaseEntity {
 
   @Column({ type: 'text', nullable: true })
   public artworks?: string;
+
+  @Column({ nullable: true })
+  public sleeveIdentifier?: string;
 
 }

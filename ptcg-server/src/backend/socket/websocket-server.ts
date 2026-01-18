@@ -41,6 +41,10 @@ export class WebSocketServer {
 
       try {
         const socketClient = new SocketClient(user, this.core, server, socket);
+        const reconnectionTarget = this.findReconnectionTarget(user.id);
+        if ((socket as any).isReconnectionAttempt && reconnectionTarget) {
+          socketClient.id = reconnectionTarget.playerId;
+        }
 
         // Simple connection - just connect to core
         await this.core.connect(socketClient);
@@ -48,6 +52,11 @@ export class WebSocketServer {
 
         socket.on('disconnect', async (reason) => {
           try {
+            try {
+              await this.core.getReconnectionManager().handleDisconnection(socketClient, String(reason));
+            } catch (error) {
+              logger.log(`[Socket] Error preserving disconnection state: ${error}`);
+            }
             // Simple disconnection - just disconnect from core
             await this.core.disconnect(socketClient, String(reason));
             socketClient.dispose();
@@ -75,6 +84,17 @@ export class WebSocketServer {
    */
   public getReconnectionManager(): ReconnectionManager {
     return this.reconnectionManager;
+  }
+
+  private findReconnectionTarget(userId: number): { gameId: number; playerId: number } | undefined {
+    for (const game of this.core.games) {
+      const playerId = game.getPlayerIdForUser(userId);
+      if (playerId && game.isPlayerDisconnected(playerId)) {
+        return { gameId: game.id, playerId };
+      }
+    }
+
+    return undefined;
   }
 
   /**

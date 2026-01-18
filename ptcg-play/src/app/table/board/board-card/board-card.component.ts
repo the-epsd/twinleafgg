@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, HostBinding } from '@angular/core';
 import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag, Stage, PokemonCard } from 'ptcg-server';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Subscription } from 'rxjs';
 import { BoardCardAnimationHelper, AnimationState } from './board-card-animations.helper';
+import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -81,6 +82,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public boardEffect: BoardEffect[] = [];
   public BoardEffect = BoardEffect;
   public hasImprisonMarker = false;
+  @Input() sleeveImagePath?: string;
+
+  get cardbackUrl(): string | undefined {
+    return this.resolveSleeveCardbackUrl();
+  }
 
   // Selection state for the card during board interaction mode
   public isSelectable = false;
@@ -129,9 +135,24 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private boardInteractionService: BoardInteractionService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private cardsBaseService: CardsBaseService
   ) {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
+  }
+
+  @HostBinding('style.--cardback-url')
+  get cardbackCssVar(): string | null {
+    return this.cardbackUrl ? `url(${this.cardbackUrl})` : null;
+  }
+
+  private resolveSleeveCardbackUrl(): string | undefined {
+    if (this.sleeveImagePath) {
+      return this.cardsBaseService.getSleeveUrl(this.sleeveImagePath);
+    }
+    const list: any = this._cardList;
+    const sleeveImagePath = list?.sleeveImagePath as string | undefined;
+    return this.cardsBaseService.getSleeveUrl(sleeveImagePath);
   }
 
   public resolveArtUrlFor(card: Card | undefined): string | undefined {

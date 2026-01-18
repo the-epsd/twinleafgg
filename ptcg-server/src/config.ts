@@ -8,6 +8,8 @@ export const config = {
     defaultPageSize: 50,
     avatarsDir: '',
     avatarsUrl: '/avatars/{name}',
+    sleevesDir: 'sleeves',
+    sleevesUrl: '/sleeves/{path}',
     avatarFileSize: 256 * 1024,
     avatarMinSize: 64,
     avatarMaxSize: 512,

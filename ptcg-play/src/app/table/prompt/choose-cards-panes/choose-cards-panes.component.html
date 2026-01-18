@@ -57,10 +57,10 @@
     'unavailable': !filterMap[context.data.card.fullName],
     'cardback': topCardbackMap[context.data.index],
     'selected': isCardSelected(context.data.card)
-  }" [dndSortableRender]="context" #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true"
-          [ptcgCardPlaceholder]="render.isDragging$" [card]="context.data.card" [showDetailButtons]="true"
-          (click)="toggleCardSelection(context.data.card)" (mouseenter)="context.data.showButtons = true"
-          (mouseleave)="context.data.showButtons = false">
+  }" [cardbackUrl]="cardbackUrl" [dndSortableRender]="context" #render="dndSortableRender" [dragSource]="render.source"
+          [noHTML5Preview]="true" [ptcgCardPlaceholder]="render.isDragging$" [card]="context.data.card"
+          [showDetailButtons]="true" (click)="toggleCardSelection(context.data.card)"
+          (mouseenter)="context.data.showButtons = true" (mouseleave)="context.data.showButtons = false">
           <button mat-mini-fab color="primary" *ngIf="context.data.showButtons && 
          showDetailButtons && 
          !cardbackMap[context.data.index] && 
@@ -83,7 +83,8 @@
   <div class="card-slot" *ngFor="let i of getSlotArray()">
     <ptcg-card *ngIf="selectedCards[i]" class="card-slot" [card]="selectedCards[i]"
       [ngClass]="{'cardback': bottomCardbackMap[selectedCards[i].originalIndex]}"
-      [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[i])">
+      [isSecret]="promptValue?.options?.isSecret" [cardbackUrl]="cardbackUrl"
+      (click)="toggleCardSelection(selectedCards[i])">
     </ptcg-card>
   </div>
 </div>

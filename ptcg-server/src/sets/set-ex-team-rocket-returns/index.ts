@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { Azumarill } from './azumarill';
 import { DarkAmpharos } from './dark-ampharos';
 import { DarkDragonair } from './dark-dragonair';
 import { DarkDragonite } from './dark-dragonite';
@@ -10,6 +11,7 @@ import { DarkSteelix } from './dark-steelix';
 import { DarkTyranitar } from './dark-tyranitar';
 import { DarkTyranitar2 } from './dark-tyrantiar-2';
 import { Dratini } from './dratini';
+import { Hoppip } from './hoppip';
 import { Larvitar } from './larvitar';
 import { Magmar } from './magmar';
 import { Onix } from './onix';
@@ -25,11 +27,14 @@ import { RocketsSneaselex } from './rockets-sneasel-ex';
 import { RocketsSuicuneex } from './rockets-suicune-ex';
 import { RocketsWobbuffet } from './rockets-wobbuffet';
 import { Seadra } from './seadra';
+import { Skiploom } from './skiploom';
+import { Spinarak } from './spinarak';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
 import { Voltorb } from './voltorb';
 
 export const setEXTeamRocketReturns: Card[] = [
+  new Azumarill(),
   new DarkAmpharos(),
   new DarkDragonair(),
   new DarkDragonite(),
@@ -41,6 +46,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new DarkTyranitar(),
   new DarkTyranitar2(),
   new Dratini(),
+  new Hoppip(),
   new Larvitar(),
   new Magmar(),
   new Onix(),
@@ -56,6 +62,8 @@ export const setEXTeamRocketReturns: Card[] = [
   new RocketsSuicuneex(),
   new RocketsWobbuffet(),
   new Seadra(),
+  new Skiploom(),
+  new Spinarak(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
   new Voltorb(),

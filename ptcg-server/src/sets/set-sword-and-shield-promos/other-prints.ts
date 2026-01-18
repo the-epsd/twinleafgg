@@ -4,6 +4,7 @@ import { Charizard } from '../set-vivid-voltage/charizard';
 import { Kirlia } from '../set-silver-tempest/kirlia';
 import { Marnie } from '../set-sword-and-shield/marnie';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { HisuianSamurott } from '../set-astral-radiance/hisuian-samurott';
 import { ZeraoraV } from '../set-crown-zenith/zeraora-v';
 import { ZeraoraVMAX } from '../set-crown-zenith/zeraora-vmax';
 import { ZeraoraVSTAR } from '../set-crown-zenith/zeraora-vstar';
@@ -48,6 +49,12 @@ export class MarnieSWSH2 extends Marnie {
   public fullName = 'Marnie SWSH 121';
   public set = 'SWSH';
   public setNumber = '121';
+}
+
+export class HisuianSamurottSWSH extends HisuianSamurott {
+  public fullName = 'Hisuian Samurott SWSH';
+  public set = 'SWSH';
+  public setNumber = '207';
 }
 
 export class ZeraoraVSWSH extends ZeraoraV {

@@ -17,6 +17,7 @@
     "coverage": "npm test && nyc report -r html",
     "postcompile": "cp -r src/storage/battle-pass-seasons dist/storage/ && cp -r src/storage/battle-pass-seasons output/storage/",
     "copy:avatars": "node -e \"require('fs').cpSync('./avatars', './dist/avatars', {recursive: true});\"",
+    "copy:sleeves": "node -e \"require('fs').cpSync('./sleeves', './dist/sleeves', {recursive: true});\"",
     "start:prod": "node --expose-gc --max-old-space-size=2048 --optimize-for-size start.js"
   },
   "author": "",
