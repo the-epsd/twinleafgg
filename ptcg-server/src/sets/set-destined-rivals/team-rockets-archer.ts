@@ -7,10 +7,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect, MoveCardsEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsArcher extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -61,23 +60,23 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
 
       const cards = player.hand.cards.filter(c => c !== this);
 
-      // Shuffle hands into decks
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: this });
-      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
+      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: this });
+      state = store.reduceEffect(state, playerMoveEffect);
 
-      return store.prompt(state, [
-        new ShuffleDeckPrompt(player.id),
-        new ShuffleDeckPrompt(opponent.id)
-      ], deckOrder => {
-        player.deck.applyOrder(deckOrder[0]);
-        opponent.deck.applyOrder(deckOrder[1]);
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: this });
+      state = store.reduceEffect(state, opponentMoveEffect);
 
-        // Draw new hands
-        DRAW_CARDS(player, 5);
+      // opponent shuffle and draw
+      if (!opponentMoveEffect.preventDefault) {
+        SHUFFLE_DECK(store, state, opponent);
         DRAW_CARDS(opponent, 3);
+      }
 
-        CLEAN_UP_SUPPORTER(effect, player);
-      });
+      // player shuffle and draw
+      SHUFFLE_DECK(store, state, player);
+      DRAW_CARDS(player, 5);
+
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     // Track when a Team Rocket's Pokemon is knocked out

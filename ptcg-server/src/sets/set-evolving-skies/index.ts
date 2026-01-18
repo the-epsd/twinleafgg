@@ -26,6 +26,7 @@ import { LeafeonV } from './leafeon-v';
 import { LeafeonVMAX } from './leafeon-vmax';
 import { Mareep } from './mareep';
 import { MedichamV } from './medicham-v';
+//import { Milotic } from './milotic'; //not yet ready
 import { Pumpkaboo } from './pumpkaboo';
 import { Raihan } from './raihan';
 import { RayquazaV } from './rayquaza-v';
@@ -83,6 +84,7 @@ export const setEvolvingSkies: Card[] = [
   new LeafeonVMAX(),
   new Mareep(),
   new MedichamV(),
+  //new Milotic(), //not yet ready
   new Pumpkaboo(),
   new Raihan(),
   new RayquazaV(),

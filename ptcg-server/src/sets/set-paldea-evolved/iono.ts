@@ -6,22 +6,16 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { CardList, GameError, GameMessage, Player } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 
 export class Iono extends TrainerCard {
-
   public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'PAL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '185';
-
   public name: string = 'Iono';
-
   public fullName: string = 'Iono PAL';
 
   public text: string =
@@ -64,14 +58,22 @@ export class Iono extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardsTo(cards, deckBottom);
-      opponent.hand.moveTo(opponentDeckBottom);
+      const playerMoveEffect = new MoveCardsEffect(player.hand, deckBottom, { cards, sourceCard: this });
+      state = store.reduceEffect(state, playerMoveEffect);
+
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponentDeckBottom, { sourceCard: this });
+      state = store.reduceEffect(state, opponentMoveEffect);
 
       deckBottom.moveTo(player.deck);
       opponentDeckBottom.moveTo(opponent.deck);
 
       player.deck.moveTo(player.hand, player.getPrizeLeft());
-      opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
+
+      // Check if moving cards from opponent's hand was prevented
+
+      if (!opponentMoveEffect.preventDefault) {
+        opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
+      }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 

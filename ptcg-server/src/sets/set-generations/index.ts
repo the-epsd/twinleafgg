@@ -4,6 +4,7 @@ import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, F
 import { Charmeleon } from './charmeleon';
 import { JolteonEX } from './jolteon-ex';
 import { MaxRevive } from './max-revive';
+import { Meowstic } from './meowstic';
 import { MeowsticEX } from './meowstic-ex';
 import { RedCard } from './red-card';
 import { Revitalizer } from './revitalizer';
@@ -12,6 +13,7 @@ import { TeamFlareGrunt } from './team-flare-grunt';
 export const setGenerations: Card[] = [
   new JolteonEX(),
   new MaxRevive(),
+  new Meowstic(),
   new MeowsticEX(),
   new RedCard(),
   new Revitalizer(),

@@ -80,7 +80,7 @@ export class Trumbeak extends PokemonCard {
           deckTop.moveTo(opponent.deck, 1);
         }
         if (cards) {
-          deckTop.moveCardsTo(cards, opponent.discard);
+          deckTop.moveCardsTo(cards, opponent.lostzone);
         }
       });
 

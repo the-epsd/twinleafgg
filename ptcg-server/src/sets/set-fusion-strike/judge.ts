@@ -1,12 +1,14 @@
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { GameMessage } from '../../game/game-message';
+import { GameError } from '../../game';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
+import { DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Judge extends TrainerCard {
 
@@ -28,27 +30,44 @@ export class Judge extends TrainerCard {
     'Each player shuffles their hand into their deck and draws 4 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
+
       const cards = player.hand.cards.filter(c => c !== this);
 
-      MOVE_CARDS(store, state, player.hand, player.deck, { sourceCard: this });
+      if (cards.length === 0 && player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
-      player.hand.moveCardsTo(cards, player.deck);
-      opponent.hand.moveTo(opponent.deck);
+      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: this });
+      state = store.reduceEffect(state, playerMoveEffect);
 
-      store.prompt(state, [
-        new ShuffleDeckPrompt(player.id),
-        new ShuffleDeckPrompt(opponent.id)
-      ], deckOrder => {
-        player.deck.applyOrder(deckOrder[0]);
-        opponent.deck.applyOrder(deckOrder[1]);
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: this });
+      state = store.reduceEffect(state, opponentMoveEffect);
 
-        player.deck.moveTo(player.hand, 4);
-        opponent.deck.moveTo(opponent.hand, 4);
-      });
+      // opponent shuffle and draw
+      if (!opponentMoveEffect.preventDefault) {
+        SHUFFLE_DECK(store, state, opponent);
+        DRAW_CARDS(opponent, 4);
+      }
+
+      // player shuffle and draw
+      SHUFFLE_DECK(store, state, player);
+      DRAW_CARDS(player, 4);
+
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
     return state;

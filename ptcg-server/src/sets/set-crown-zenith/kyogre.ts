@@ -57,7 +57,7 @@ export class Kyogre extends PokemonCard {
 
       state = store.prompt(state, new ChooseEnergyPrompt(
         player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        GameMessage.CHOOSE_ENERGIES_TO_HAND,
         checkProvidedEnergy.energyMap,
         [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
         { allowCancel: false }

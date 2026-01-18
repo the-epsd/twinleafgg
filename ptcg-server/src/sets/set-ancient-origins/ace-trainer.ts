@@ -1,13 +1,13 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 export class AceTrainer extends TrainerCard {
 
@@ -35,21 +35,24 @@ export class AceTrainer extends TrainerCard {
       }
 
       const cards = player.hand.cards.filter(c => c !== this);
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: this });
-      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
 
-      store.prompt(state, [
-        new ShuffleDeckPrompt(player.id),
-        new ShuffleDeckPrompt(opponent.id)
-      ], deckOrder => {
-        player.deck.applyOrder(deckOrder[0]);
-        opponent.deck.applyOrder(deckOrder[1]);
+      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: this });
+      state = store.reduceEffect(state, playerMoveEffect);
 
-        DRAW_CARDS(player, 6);
-        DRAW_CARDS(opponent, 3);
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: this });
+      state = store.reduceEffect(state, opponentMoveEffect);
 
-        CLEAN_UP_SUPPORTER(effect, player);
-      });
+      // opponent shuffle and draw
+      if (!opponentMoveEffect.preventDefault) {
+        SHUFFLE_DECK(store, state, opponent);
+        DRAW_CARDS(opponent, 4);
+      }
+
+      // player shuffle and draw
+      SHUFFLE_DECK(store, state, player);
+      DRAW_CARDS(player, 4);
+
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;

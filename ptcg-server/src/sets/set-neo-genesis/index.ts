@@ -4,6 +4,7 @@ import { Cleffa } from './cleffa';
 import { DarknessEnergySpecial } from './darkness-energy-special';
 import { DoubleGust } from './double-gust';
 import { Hoothoot } from './hoothoot';
+import { Hoppip } from './hoppip';
 import { Mary } from './mary';
 import { Noctowl } from './noctowl';
 import { Pichu } from './pichu';
@@ -25,6 +26,7 @@ export const setNeoGenesis: Card[] = [
   new DarknessEnergySpecial(),
   new DoubleGust(),
   new Hoothoot(),
+  new Hoppip(),
   new Mary(),
   new Noctowl(),
   new Pichu(),

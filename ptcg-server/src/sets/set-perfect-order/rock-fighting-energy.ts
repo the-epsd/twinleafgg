@@ -2,7 +2,6 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import {
-  CheckPokemonTypeEffect,
   CheckProvidedEnergyEffect
 } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -28,12 +27,7 @@ export class RockFightingEnergy extends EnergyCard {
 
     // Provide energy when attached to Fighting Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
-      store.reduceEffect(state, checkPokemonType);
-
-      if (checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
-        effect.energyMap.push({ card: this, provides: [CardType.FIGHTING] });
-      }
+      effect.energyMap.push({ card: this, provides: [CardType.FIGHTING] });
     }
 
     // Prevent effects of attacks
