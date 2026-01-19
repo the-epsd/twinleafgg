@@ -298,13 +298,13 @@ export class Decks extends Controller {
     const userId: number = req.body.userId;
     const deckId: number = parseInt(req.params.deckId, 10);
 
-    const statsLogLabel = `[Decks:onStats] deckId=${deckId}`;
-    console.time(statsLogLabel);
+    // const statsLogLabel = `[Decks:onStats] deckId=${deckId}`;
+    // console.time(statsLogLabel);
 
     // Verify deck belongs to user
     const deck = await Deck.findOne(deckId, { relations: ['user'] });
     if (deck === undefined || deck.user.id !== userId) {
-      console.timeEnd(statsLogLabel);
+      // console.timeEnd(statsLogLabel);
       res.send({ error: ApiErrorEnum.DECK_INVALID });
       return;
     }
@@ -314,7 +314,7 @@ export class Decks extends Controller {
     const replayLimit = replayLimitParam ? Math.max(1, Math.min(parseInt(replayLimitParam, 10) || 0, 500)) : 100;
 
     // Get all matches where this deck was used
-    const dbStart = Date.now();
+    // const dbStart = Date.now();
     const matches = await Match.find({
       where: [
         { player1DeckId: deckId },
@@ -323,8 +323,8 @@ export class Decks extends Controller {
       relations: ['player1', 'player2'],
       order: { created: 'DESC' }
     });
-    const dbDuration = Date.now() - dbStart;
-    console.log(`${statsLogLabel} DB query took ${dbDuration}ms, matches: ${matches.length}`);
+    // const dbDuration = Date.now() - dbStart;
+    // console.log(`${statsLogLabel} DB query took ${dbDuration}ms, matches: ${matches.length}`);
 
     let totalGames = 0;
     let wins = 0;
@@ -339,7 +339,7 @@ export class Decks extends Controller {
       won: boolean;
     }> = [];
 
-    const processStart = Date.now();
+    // const processStart = Date.now();
     // Aggregate matchup stats using a simple loop (fast in practice),
     // which is sufficient given the indexed match lookup and replay limits.
     matches.forEach((match, index) => {
@@ -398,8 +398,8 @@ export class Decks extends Controller {
         });
       }
     });
-    const processDuration = Date.now() - processStart;
-    console.log(`${statsLogLabel} processing took ${processDuration}ms`);
+    // const processDuration = Date.now() - processStart;
+    // console.log(`${statsLogLabel} processing took ${processDuration}ms`);
 
     // Convert matchup map to array with win rates
     const matchups = Object.entries(matchupMap).map(([archetype, stats]) => ({
@@ -424,7 +424,7 @@ export class Decks extends Controller {
       replayLimit,
       totalReplays: matches.length
     });
-    console.timeEnd(statsLogLabel);
+    // console.timeEnd(statsLogLabel);
   }
 
   @Post('/backfill-secondary-archetypes')
@@ -453,7 +453,7 @@ export class Decks extends Controller {
             needsUpdate = true;
           }
         } catch (error) {
-          console.error('[Decks] Error loading deck for backfill:', error);
+          // console.error('[Decks] Error loading deck for backfill:', error);
         }
       }
 
@@ -466,7 +466,7 @@ export class Decks extends Controller {
             needsUpdate = true;
           }
         } catch (error) {
-          console.error('[Decks] Error loading deck for backfill:', error);
+          // console.error('[Decks] Error loading deck for backfill:', error);
         }
       }
 
