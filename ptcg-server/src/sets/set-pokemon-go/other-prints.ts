@@ -1,10 +1,11 @@
-import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";
+
 import { ConkeldurrV as ConkeldurrVPGO40 } from "../set-pokemon-go/conkeldurr-v";
 import { SlakingV as SlakingVPGO58 } from "../set-pokemon-go/slaking-v";
 import { ProfessorsResearch } from "../set-scarlet-and-violet/professors-research";
 import { ProfessorsResearch as ProfessorsResearchSVI189 } from "../set-scarlet-and-violet/professors-research";
 import { LureModule as LureModulePGO67 } from "../set-pokemon-go/lure-module";
 import { RadiantCharizard } from '../set-crown-zenith/radiant-charizard';
+import { RareCandy } from "../set-scarlet-and-violet/rare-candy";
 
 export class RadiantCharizardPGO extends RadiantCharizard {
   public fullName = 'Radiant Charizard PGO';
@@ -12,6 +13,7 @@ export class RadiantCharizardPGO extends RadiantCharizard {
   public setNumber = '11';
 }
 export class RareCandyPGO extends RareCandy {
+  public regulationMark = 'F';
   public setNumber = '69';
   public fullName: string = 'Rare Candy PGO';
   public set = 'PGO';
