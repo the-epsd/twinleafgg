@@ -55,8 +55,8 @@ export class App {
       instance.init();
     };
 
-    // Calculate limit: base + avatar size (4x) + replay size (1.5x for base64 encoding overhead)
-    app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 + config.backend.replayFileSize * 2 }));
+    // Calculate limit: base + avatar size (4x) + replay size (4x for base64 encoding overhead)
+    app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 + config.backend.replayFileSize * 4 }));
     app.use(cors());
 
     // Health check endpoint - must be first route
