@@ -16,6 +16,7 @@ import { Ralts } from './ralts';
 import { Giratina } from './giratina';
 import { GiratinaLVX } from './giratina-lv-x';
 import { Kirlia } from './kirlia';
+import { Mareep } from './mareep';
 import { PalkiaG } from './palkia-g';
 import { PalkiaGLVX } from './palkia-g-lv-x';
 import { DialgaG } from './dialga-g';
@@ -43,6 +44,7 @@ export const setPlatinum: Card[] = [
   new Giratina(),
   new GiratinaLVX(),
   new Kirlia(),
+  new Mareep(),
   new PalkiaG(),
   new PalkiaGLVX(),
   new DialgaG(),

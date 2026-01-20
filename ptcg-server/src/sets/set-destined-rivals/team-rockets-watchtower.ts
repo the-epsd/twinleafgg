@@ -8,7 +8,7 @@ import { TrainerType, CardType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
-import { PowerType } from '../../game';
+import { PokemonCardList, PowerType } from '../../game';
 
 export class TeamRocketsWatchtower extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -25,12 +25,13 @@ export class TeamRocketsWatchtower extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (!targetPokemon) {
         return state;
       }
 
-      if (targetPokemon.cardType === CardType.COLORLESS) {
+      const targetCardList = StateUtils.findCardList(state, targetPokemon);
+      if (targetPokemon.cardType === CardType.COLORLESS && targetCardList instanceof PokemonCardList) {
         // Filter out all abilities
         effect.powers = effect.powers.filter(power =>
           power.powerType !== PowerType.ABILITY

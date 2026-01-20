@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage, Player
 import { Effect } from '../../game/store/effects/effect';
 import { DAMAGE_OPPONENT_POKEMON, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class TeamRocketsArbok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -49,7 +50,10 @@ export class TeamRocketsArbok extends PokemonCard {
 
       if (IS_ABILITY_BLOCKED(store, state, opponent, this)) { return state; }
 
-      if (pokemonCard.powers.length > 0 && pokemonCard.powers[0].powerType === PowerType.ABILITY && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)) {
+      const powersEffect = new CheckPokemonPowersEffect(player, effect.pokemonCard);
+      state = store.reduceEffect(state, powersEffect);
+
+      if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY) && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
     }

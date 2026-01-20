@@ -65,8 +65,8 @@ export class FlutterMane extends PokemonCard {
       }
 
       // Only filter opponent's Active Pokemon abilities
-      const targetOwner = StateUtils.findOwner(state, effect.target);
-      if (targetOwner === owner || effect.target !== opponent.active) {
+      const targetOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, effect.target));
+      if (targetOwner === owner || StateUtils.findCardList(state, effect.target) !== opponent.active) {
         return state;
       }
 

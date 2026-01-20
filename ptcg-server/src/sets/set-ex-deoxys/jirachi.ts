@@ -42,10 +42,10 @@ export class Jirachi extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const targetCardList = opponent.active;
+      const targetPokemon = opponent.active.getPokemonCard();
 
-      if (targetCardList.getPokemonCard()) {
-        const powersEffect = new CheckPokemonPowersEffect(opponent, targetCardList);
+      if (targetPokemon) {
+        const powersEffect = new CheckPokemonPowersEffect(opponent, targetPokemon);
         state = store.reduceEffect(state, powersEffect);
         if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY)) {
           effect.damage += 30;

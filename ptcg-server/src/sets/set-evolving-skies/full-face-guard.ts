@@ -44,7 +44,7 @@ export class FullFaceGuard extends TrainerCard {
       const player = StateUtils.findOwner(state, effect.target);
       if (sourceCard) {
         // Check if source Pokemon has no abilities using CheckPokemonPowersEffect
-        const powersEffect = new CheckPokemonPowersEffect(effect.player, effect.source);
+        const powersEffect = new CheckPokemonPowersEffect(effect.player, sourceCard);
         state = store.reduceEffect(state, powersEffect);
         const hasAbilities = powersEffect.powers.some(power => power.powerType === PowerType.ABILITY);
 

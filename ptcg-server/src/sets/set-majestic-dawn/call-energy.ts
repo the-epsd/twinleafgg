@@ -1,4 +1,4 @@
-import { GameError, GameMessage, PlayerType, PowerType } from '../../game';
+import { GameError, GameMessage, PlayerType, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
@@ -28,7 +28,8 @@ export class CallEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
+    if (effect instanceof CheckPokemonPowersEffect && StateUtils.findCardList(state, effect.target) instanceof PokemonCardList &&
+      StateUtils.findCardList(state, effect.target).cards.includes(this) &&
       !effect.powers.find(p => p.name === this.powers[0].name)) {
       effect.powers.push(this.powers[0]);
     }

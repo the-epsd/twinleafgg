@@ -32,7 +32,7 @@ export class SilentLab extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (!targetPokemon) {
         return state;
       }

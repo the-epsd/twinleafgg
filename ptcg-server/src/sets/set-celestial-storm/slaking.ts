@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
@@ -47,7 +47,11 @@ export class Slaking extends PokemonCard {
       }
 
       // Only filter opponent's Pokemon abilities
-      const targetOwner = StateUtils.findOwner(state, effect.target);
+      const targetCardList = StateUtils.findCardList(state, effect.target);
+      if (!(targetCardList instanceof PokemonCardList)) {
+        return state;
+      }
+      const targetOwner = StateUtils.findOwner(state, targetCardList);
       if (targetOwner === owner) {
         return state;
       }

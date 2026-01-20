@@ -56,9 +56,9 @@ export class Minun extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const pokemonWithPokeBodies: PokemonCardList[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (cardList.getPokemonCard()) {
-          const powersEffect = new CheckPokemonPowersEffect(opponent, cardList);
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
           state = store.reduceEffect(state, powersEffect);
           if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY)) {
             pokemonWithPokeBodies.push(cardList);

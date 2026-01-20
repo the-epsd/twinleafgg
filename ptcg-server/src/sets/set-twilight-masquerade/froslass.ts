@@ -80,7 +80,7 @@ export class Froslass extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card.name !== 'Froslass') {
-            const powersEffect = new CheckPokemonPowersEffect(player, cardList);
+            const powersEffect = new CheckPokemonPowersEffect(player, card);
             state = store.reduceEffect(state, powersEffect);
             if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
               cardList.damage += (10 * numberOfFroslass);
@@ -90,7 +90,7 @@ export class Froslass extends PokemonCard {
 
         opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card.name !== 'Froslass') {
-            const powersEffect = new CheckPokemonPowersEffect(opponent, cardList);
+            const powersEffect = new CheckPokemonPowersEffect(opponent, card);
             state = store.reduceEffect(state, powersEffect);
             if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
               cardList.damage += (10 * numberOfFroslass);

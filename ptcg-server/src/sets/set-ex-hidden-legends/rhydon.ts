@@ -77,10 +77,10 @@ export class Rhydon extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const opponentActiveCardList = opponent.active;
+      const opponentActivePokemon = opponent.active.getPokemonCard();
 
-      if (opponentActiveCardList.getPokemonCard()) {
-        const powersEffect = new CheckPokemonPowersEffect(opponent, opponentActiveCardList);
+      if (opponentActivePokemon) {
+        const powersEffect = new CheckPokemonPowersEffect(opponent, opponentActivePokemon);
         state = store.reduceEffect(state, powersEffect);
         if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY || power.powerType === PowerType.POKEPOWER)) {
           THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 20);

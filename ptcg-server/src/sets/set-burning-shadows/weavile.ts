@@ -53,9 +53,9 @@ export class Weavile extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Calculate damage for opponent's Pokemon
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (cardList.getPokemonCard()) {
-          const powersEffect = new CheckPokemonPowersEffect(opponent, cardList);
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
           state = store.reduceEffect(state, powersEffect);
           if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
             const damageEffect = new PutDamageEffect(effect, 60);
@@ -66,9 +66,9 @@ export class Weavile extends PokemonCard {
       });
 
       // Calculate damage for player's Pokemon
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (cardList.getPokemonCard()) {
-          const powersEffect = new CheckPokemonPowersEffect(player, cardList);
+          const powersEffect = new CheckPokemonPowersEffect(player, card);
           state = store.reduceEffect(state, powersEffect);
           if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
             const damageEffect = new PutDamageEffect(effect, 60);

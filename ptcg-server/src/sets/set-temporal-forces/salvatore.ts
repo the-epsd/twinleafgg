@@ -8,8 +8,9 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
+import { CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, PowerType } from '../../game';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -53,8 +54,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Blocking pokemon cards, that cannot be valid evolutions
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && !evolutionNames.includes(card.name) && card.powers.length === 0) {
-      blocked.push(index);
+    if (card instanceof PokemonCard && !evolutionNames.includes(card.name)) {
+      const powersEffect = new CheckPokemonPowersEffect(player, card);
+      state = store.reduceEffect(state, powersEffect);
+      if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+        blocked.push(index);
+      }
     }
   });
 

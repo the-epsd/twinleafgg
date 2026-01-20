@@ -7,8 +7,9 @@ import { AttackEffect, EvolveEffect } from '../../game/store/effects/game-effect
 import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { GameError } from '../../game';
+import { GameError, PowerType } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class Chimecho extends PokemonCard {
 
@@ -50,16 +51,20 @@ export class Chimecho extends PokemonCard {
       opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
     }
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard.powers.length > 0) {
+    if (effect instanceof PlayPokemonEffect) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
+      const powersEffect = new CheckPokemonPowersEffect(player, effect.pokemonCard);
+      state = store.reduceEffect(state, powersEffect);
+      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this) && powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
-    if (effect instanceof EvolveEffect && effect.pokemonCard.powers.length > 0) {
+    if (effect instanceof EvolveEffect) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
+      const powersEffect = new CheckPokemonPowersEffect(player, effect.pokemonCard);
+      state = store.reduceEffect(state, powersEffect);
+      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this) && powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }

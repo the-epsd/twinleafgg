@@ -6,7 +6,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TingLuex extends PokemonCard {
@@ -60,13 +60,15 @@ export class TingLuex extends PokemonCard {
         return state;
       }
 
+      const targetCardList = StateUtils.findCardList(state, effect.target);
+
       // Only filter opponent's Pokemon
-      const targetOwner = StateUtils.findOwner(state, effect.target);
+      const targetOwner = StateUtils.findOwner(state, targetCardList);
       if (targetOwner === player) {
         return state;
       }
 
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (!targetPokemon) {
         return state;
       }
@@ -77,7 +79,7 @@ export class TingLuex extends PokemonCard {
       }
 
       // Only filter if Pokemon has damage counters
-      if (effect.target.damage > 0) {
+      if (targetCardList instanceof PokemonCardList && targetCardList.damage > 0) {
         // Filter out all abilities except Cursed Land
         effect.powers = effect.powers.filter(power =>
           power.powerType !== PowerType.ABILITY || power.name === 'Cursed Land'

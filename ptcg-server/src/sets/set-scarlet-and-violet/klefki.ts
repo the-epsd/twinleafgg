@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { GameError, GameMessage, StateUtils } from '../../game';
+import { GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';
 
 export class Klefki extends PokemonCard {
 
@@ -61,8 +61,14 @@ export class Klefki extends PokemonCard {
       }
 
       // Get the target Pokemon card
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (!targetPokemon) {
+        return state;
+      }
+
+      // only remove abilities from Pokemon in play
+      const targetCardList = StateUtils.findCardList(state, targetPokemon);
+      if (!(targetCardList instanceof PokemonCardList)) {
         return state;
       }
 

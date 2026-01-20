@@ -6,7 +6,7 @@ import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, PowerType } from '../../game';
+import { GameError, GameMessage, PokemonCardList, PowerType } from '../../game';
 
 export class PathToThePeak extends TrainerCard {
 
@@ -29,8 +29,14 @@ export class PathToThePeak extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (!targetPokemon) {
+        return state;
+      }
+
+      // Check if target is in play
+      const targetCardList = StateUtils.findCardList(state, targetPokemon);
+      if (!(targetCardList instanceof PokemonCardList)) {
         return state;
       }
 

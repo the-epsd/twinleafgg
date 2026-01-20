@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class Hoopa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,6 +17,7 @@ export class Hoopa extends PokemonCard {
     name: 'Evil Admonition',
     cost: [CardType.COLORLESS],
     damage: 10,
+    damageCalculation: '+',
     text: 'This attack does 20 more damage for each of your opponent\'s Pokémon that has an Ability.'
   },
   {
@@ -38,13 +39,19 @@ export class Hoopa extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const vPokemons = benchPokemon.filter(card => card.powers.length && !IS_ABILITY_BLOCKED(store, state, opponent, card));
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.powers.length && !IS_ABILITY_BLOCKED(store, state, opponent, opponentActive))
-        vPokemons.push(opponentActive);
-      const vPokes = vPokemons.length;
-      effect.damage += vPokes * 20;
+      let pokemonWithUsableAbilities = 0;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (cardList.getPokemonCard()) {
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
+          state = store.reduceEffect(state, powersEffect);
+          if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+            pokemonWithUsableAbilities++;
+          }
+        }
+      });
+
+      effect.damage += pokemonWithUsableAbilities * 20;
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

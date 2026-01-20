@@ -3,7 +3,6 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
@@ -57,36 +56,6 @@ export class Ursaring extends PokemonCard {
 
       if (opponent.active.getPokemonCard() === this) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    // Block Poké-Powers from basics when active
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
-        return state;
-      }
-
-      // Only filter opponent's Basic Pokémon
-      const targetOwner = StateUtils.findOwner(state, effect.target);
-      if (targetOwner === player) {
-        return state;
-      }
-
-      if (opponent.active.getPokemonCard() === this) {
-        const targetPokemon = effect.target.getPokemonCard();
-        if (targetPokemon) {
-          const cardList = effect.target;
-          const isBasic = cardList instanceof PokemonCardList && (cardList.getPokemons().length === 1 || targetPokemon.tags.includes(CardTag.LEGEND));
-          if (isBasic) {
-            // Filter out Poké Powers
-            effect.powers = effect.powers.filter(power =>
-              power.powerType !== PowerType.POKEPOWER
-            );
-          }
-        }
       }
     }
 

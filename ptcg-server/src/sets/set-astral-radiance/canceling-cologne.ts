@@ -63,7 +63,7 @@ export class CancelingCologne extends TrainerCard {
       // Check if Canceling Cologne marker is active
       if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
         // Check if the target is the opponent's active Pokemon
-        if (effect.target === opponent.active) {
+        if (effect.target === opponent.active.getPokemonCard()) {
           // Filter out all abilities
           effect.powers = effect.powers.filter(power =>
             power.powerType !== PowerType.ABILITY

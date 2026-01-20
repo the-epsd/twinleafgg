@@ -63,7 +63,7 @@ export class Medichamex extends PokemonCard {
         return state;
       }
 
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (!targetPokemon) {
         return state;
       }

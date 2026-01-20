@@ -27,9 +27,8 @@ export class CursedStone extends TrainerCard {
 
       // idk why this hits both player's pokemon, it might be getting confused as to what the player specified is so it defaults to both, but hey, it works, so i don't care.
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const pokemon = cardList.getPokemonCard();
-        if (pokemon) {
-          const powersEffect = new CheckPokemonPowersEffect(player, cardList);
+        if (card) {
+          const powersEffect = new CheckPokemonPowersEffect(player, card);
           state = store.reduceEffect(state, powersEffect);
           if (powersEffect.powers.some(power => power.powerType === PowerType.POKEPOWER)) {
             cardList.damage += (10);

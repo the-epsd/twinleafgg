@@ -100,7 +100,7 @@ export class AlolanMuk extends PokemonCard {
       });
 
       if (playerHasAlolanMukInPlay || opponentHasAlolanMukInPlay) {
-        const targetPokemon = effect.target.getPokemonCard();
+        const targetPokemon = effect.target;
         if (targetPokemon && targetPokemon.stage === Stage.BASIC) {
           // Filter out all abilities
           effect.powers = effect.powers.filter(power =>

@@ -1,6 +1,7 @@
-import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, MegaCharizardXex4PFL } from './other-prints';
+import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL } from './other-prints';
 import { Card } from '../../game';
 import { BattleColosseum } from './battle-colosseum';
+import { Blowtorch } from './blowtorch';
 import { Bronzong } from './bronzong';
 import { Bronzor } from './bronzor';
 import { Buneary } from './buneary';
@@ -45,6 +46,7 @@ import { Zacian } from './zacian';
 
 export const setPhantasmalFlames: Card[] = [
   new BattleColosseum(),
+  new Blowtorch(),
   new Bronzong(),
   new Bronzor(),
   new Buneary(),
@@ -107,5 +109,6 @@ export const setPhantasmalFlames: Card[] = [
   new MegaSharpedoex3PFL(),
   new MegaLopunnyex3PFL(),
   new Dawn3PFL(),
+  new Blowtorch2PFL(),
   new MegaCharizardXex4PFL(),
 ];

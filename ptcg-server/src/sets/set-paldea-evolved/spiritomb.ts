@@ -8,7 +8,7 @@ import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { PlayerType, StateUtils } from '../../game';
+import { PlayerType, PokemonCardList, StateUtils } from '../../game';
 
 export class Spiritomb extends PokemonCard {
 
@@ -74,8 +74,13 @@ export class Spiritomb extends PokemonCard {
         }
       });
 
+      const targetCardList = StateUtils.findCardList(state, effect.target);
+      if (!(targetCardList instanceof PokemonCardList)) {
+        return state;
+      }
+
       if (isSpiritombInPlay) {
-        const targetPokemon = effect.target.getPokemonCard();
+        const targetPokemon = effect.target;
         if (targetPokemon && targetPokemon.stage === Stage.BASIC && ruleBoxTags.some(tag => targetPokemon.tags.includes(tag))) {
           // Try reducing ability for each player  
           try {

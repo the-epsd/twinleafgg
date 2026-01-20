@@ -103,7 +103,8 @@ export class Greninja extends PokemonCard {
       // Check if Shadow Stitching marker is active on opponent
       if (opponent.marker.hasMarker(this.CLEAR_SHADOW_STITCHING_MARKER, this)) {
         // Check if the target belongs to the opponent
-        const targetOwner = StateUtils.findOwner(state, effect.target);
+        const targetCardList = StateUtils.findCardList(state, effect.target);
+        const targetOwner = StateUtils.findOwner(state, targetCardList);
         if (targetOwner === opponent) {
           // Filter out all abilities
           effect.powers = effect.powers.filter(power =>

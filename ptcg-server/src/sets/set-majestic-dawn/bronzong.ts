@@ -53,11 +53,11 @@ export class Bronzong extends PokemonCard {
         return state;
       }
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const pokemon = cardList.getPokemonCard();
 
         if (pokemon) {
-          const powersEffect = new CheckPokemonPowersEffect(opponent, cardList);
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
           state = store.reduceEffect(state, powersEffect);
           if (powersEffect.powers.some(p => p.powerType === PowerType.POKEPOWER)) {
             cardList.damage += 10;

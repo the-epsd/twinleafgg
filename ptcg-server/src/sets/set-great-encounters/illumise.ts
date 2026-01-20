@@ -68,8 +68,9 @@ export class Illumise extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActiveCardList = opponent.active;
 
-      if (opponentActiveCardList.getPokemonCard()) {
-        const powersEffect = new CheckPokemonPowersEffect(opponent, opponentActiveCardList);
+      const opponentActivePokemon = opponentActiveCardList.getPokemonCard();
+      if (opponentActivePokemon) {
+        const powersEffect = new CheckPokemonPowersEffect(opponent, opponentActivePokemon);
         state = store.reduceEffect(state, powersEffect);
         if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY)) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);

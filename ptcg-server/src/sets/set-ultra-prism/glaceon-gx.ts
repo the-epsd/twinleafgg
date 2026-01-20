@@ -81,12 +81,12 @@ export class GlaceonGX extends PokemonCard {
       }
 
       // Only filter opponent's Pokemon
-      const targetOwner = StateUtils.findOwner(state, effect.target);
+      const targetOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, effect.target));
       if (targetOwner === player) {
         return state;
       }
 
-      const targetPokemon = effect.target.getPokemonCard();
+      const targetPokemon = effect.target;
       if (targetPokemon && (targetPokemon.tags.includes(CardTag.POKEMON_GX) || targetPokemon.tags.includes(CardTag.POKEMON_EX))) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {

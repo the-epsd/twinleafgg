@@ -54,12 +54,15 @@ export class Ditto extends PokemonCard {
     }
 
     // Handle Power checks
-    if (effect instanceof CheckPokemonPowersEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof CheckPokemonPowersEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const opponentPowers = new CheckPokemonPowersEffect(player, opponent.active);
-      // Logic to copy opponent's powers to Ditto's powers
-      this.powers = [...opponentPowers.powers]; // Example of copying powers
+      const opponentPokemon = opponent.active.getPokemonCard();
+      if (opponentPokemon) {
+        const opponentPowers = new CheckPokemonPowersEffect(player, opponentPokemon);
+        // Logic to copy opponent's powers to Ditto's powers
+        this.powers = [...opponentPowers.powers]; // Example of copying powers
+      }
     }
 
     return state; // Return the updated state

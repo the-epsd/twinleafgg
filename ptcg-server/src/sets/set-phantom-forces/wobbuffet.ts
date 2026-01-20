@@ -67,7 +67,7 @@ export class Wobbuffet extends PokemonCard {
         return state;
       }
 
-      let cardTypes = [effect.target.getPokemonCard()?.cardType].filter(Boolean) as CardType[];
+      let cardTypes = [effect.target.cardType].filter(Boolean) as CardType[];
 
       const cardList = effect.target;
       if (cardList instanceof PokemonCardList) {
