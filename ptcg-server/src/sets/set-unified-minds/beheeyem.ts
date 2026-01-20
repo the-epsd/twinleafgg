@@ -3,7 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, AFTER_ATTACK, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../game/store/prefabs/attack-effects';
 
 export class Beheeyem extends PokemonCard {
@@ -45,7 +45,6 @@ export class Beheeyem extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       ADD_MARKER(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, opponent, this);
-      SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
     }
 
     if (effect instanceof PlayItemEffect) {
@@ -53,6 +52,10 @@ export class Beheeyem extends PokemonCard {
       if (HAS_MARKER(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
+    }
+
+    if (AFTER_ATTACK(effect, 1, this)) {
+      SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);

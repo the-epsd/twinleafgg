@@ -3,6 +3,7 @@ import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AttackEffect } from '../effects/game-effects';
+import { AfterAttackEffect } from '../effects/game-phase-effects';
 import { COIN_FLIP_PROMPT } from './prefabs';
 
 
@@ -76,9 +77,9 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
       { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min, max, allowCancel: false }
     )], selected => {
-    const cards = selected || [];
-    player.discard.moveCardsTo(cards, player.hand);
-  });
+      const cards = selected || [];
+      player.discard.moveCardsTo(cards, player.hand);
+    });
 }
 
 export function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(
@@ -159,7 +160,7 @@ export function PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(
 export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
   store: StoreLike,
   state: State,
-  effect: AttackEffect) {
+  effect: AttackEffect | AfterAttackEffect) {
   const player = effect.player;
 
   player.active.moveTo(player.deck);

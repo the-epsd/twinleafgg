@@ -1,5 +1,6 @@
 import { BlastoisePLB, CaitlinPLB, EnergyRetrievalPLB, PlumeFossilPLB, PokemonCatcherPLB, RareCandyPLB, PlasmaEnergyPLB, VirizionEX2PLB, GenesectEX2PLB, JirachiEX2PLB, PalkiaEX2PLB, ExeggcutePLB, DusknoirPLB, RareCandy2PLB } from './other-prints';
 import { Card } from '../../game/store/card/card';
+import { Cradily } from './cradily';
 import { Archen } from './archen';
 import { Drifblim } from './drifblim';
 import { Drifloon } from './drifloon';
@@ -27,6 +28,7 @@ import {
 
 export const setPlasmaBlast: Card[] = [
   new Archen(),
+  new Cradily(),
   new Drifblim(),
   new Drifloon(),
   new GBooster(),
