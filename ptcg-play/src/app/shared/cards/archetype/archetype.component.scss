@@ -210,10 +210,6 @@
   //   background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/xatu.png);
   // }
 
-
-
-
-
   &[archetype="regidrago"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/regidrago.png);
@@ -224,20 +220,19 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/ceruledge.png);
   }
 
-
-
   &[archetype="klawf"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/klawf.png);
   }
 
-
-
-
-
   &[archetype="feraligatr"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/feraligatr.png);
+  }
+
+  &[archetype="mega-feraligatr"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/feraligatr-mega.png);
   }
 
   &[archetype="blissey"] {
@@ -540,6 +535,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/clefable.png);
   }
 
+  &[archetype="mega-clefable"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/clefable-mega.png);
+  }
+
   &[archetype="vulpix"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/vulpix.png);
@@ -763,6 +763,11 @@
   &[archetype="victreebel"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/victreebel.png);
+  }
+
+  &[archetype="mega-victreebel"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/victreebel-mega.png);
   }
 
   &[archetype="tentacool"] {
@@ -1105,6 +1110,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/starmie.png);
   }
 
+  &[archetype="mega-starmie"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/starmie-mega.png);
+  }
+
   &[archetype="mr-mime"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/mr-mime.png);
@@ -1285,6 +1295,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/dragonite.png);
   }
 
+  &[archetype="mega-dragonite"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/dragonite-mega.png);
+  }
+
   &[archetype="mewtwo"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/mewtwo.png);
@@ -1318,6 +1333,11 @@
   &[archetype="meganium"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/meganium.png);
+  }
+
+  &[archetype="mega-meganium"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/meganium-mega.png);
   }
 
   &[archetype="cyndaquil"] {
@@ -1678,6 +1698,11 @@
   &[archetype="skarmory"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/skarmory.png);
+  }
+
+  &[archetype="mega-skarmory"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/skarmory-mega.png);
   }
 
   &[archetype="houndour"] {
@@ -2395,6 +2420,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chimecho.png);
   }
 
+  &[archetype="mega-chimecho"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chimecho-mega.png);
+  }
+
   &[archetype="absol"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/absol.png);
@@ -2403,6 +2433,11 @@
   &[archetype="mega-absol"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/absol-mega.png);
+  }
+
+  &[archetype="mega-absol-z"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/absol-mega-z.png);
   }
 
   &[archetype="snorunt"] {
@@ -2650,6 +2685,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/staraptor.png);
   }
 
+  &[archetype="mega-staraptor"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/staraptor-mega.png);
+  }
+
   &[archetype="bidoof"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/bidoof.png);
@@ -2885,6 +2925,16 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/garchomp.png);
   }
 
+  &[archetype="mega-garchomp"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/garchomp-mega.png);
+  }
+
+  &[archetype="garchomp-mega-z"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/garchomp-mega-z.png);
+  }
+
   &[archetype="munchlax"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/munchlax.png);
@@ -2903,6 +2953,11 @@
   &[archetype="mega-lucario"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/lucario-mega.png);
+  }
+
+  &[archetype="lucario-mega-z"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/lucario-mega-z.png);
   }
 
   &[archetype="hippopotas"] {
@@ -3060,6 +3115,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/froslass.png);
   }
 
+  &[archetype="mega-froslass"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/froslass-mega.png);
+  }
+
   &[archetype="rotom"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/rotom.png);
@@ -3095,6 +3155,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/heatran.png);
   }
 
+  &[archetype="mega-heatran"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/heatran-mega.png);
+  }
+
   &[archetype="regigigas"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/regigigas.png);
@@ -3123,6 +3188,11 @@
   &[archetype="darkrai"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/darkrai.png);
+  }
+
+  &[archetype="mega-darkrai"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/darkrai-mega.png);
   }
 
   &[archetype="shaymin"] {
@@ -3168,6 +3238,11 @@
   &[archetype="emboar"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/emboar.png);
+  }
+
+  &[archetype="mega-emboar"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/emboar-mega.png);
   }
 
   &[archetype="oshawott"] {
@@ -3320,6 +3395,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/excadrill.png);
   }
 
+  &[archetype="mega-excadrill"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/excadrill-mega.png);
+  }
+
   &[archetype="audino"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/audino.png);
@@ -3395,6 +3475,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/scolipede.png);
   }
 
+  &[archetype="mega-scolipede"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/scolipede-mega.png);
+  }
+
   &[archetype="cottonee"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/cottonee.png);
@@ -3468,6 +3553,11 @@
   &[archetype="scrafty"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/scrafty.png);
+  }
+
+  &[archetype="mega-scrafty"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/scrafty-mega.png);
   }
 
   &[archetype="sigilyph"] {
@@ -3695,9 +3785,9 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/eelektross.png);
   }
 
-  &[archetype="eelektross"] {
+  &[archetype="mega-eelektross"] {
     background-size: contain;
-    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/eelektross.png);
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/eelektross-mega.png);
   }
 
   &[archetype="elgyem"] {
@@ -3723,6 +3813,11 @@
   &[archetype="chandelure"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chandelure.png);
+  }
+
+  &[archetype="mega-chandelure"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chandelure-mega.png);
   }
 
   &[archetype="axew"] {
@@ -3795,10 +3890,9 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/golurk.png);
   }
 
-  // ... existing code ...
-  &[archetype="golurk"] {
+  &[archetype="mega-golurk"] {
     background-size: contain;
-    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/golurk.png);
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/golurk-mega.png);
   }
 
   &[archetype="pawniard"] {
@@ -3956,6 +4050,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chesnaught.png);
   }
 
+  &[archetype="mega-chesnaught"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chesnaught-mega.png);
+  }
+
   &[archetype="fennekin"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/fennekin.png);
@@ -3971,6 +4070,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/delphox.png);
   }
 
+  &[archetype="mega-delphox"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/delphox-mega.png);
+  }
+
   &[archetype="froakie"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/froakie.png);
@@ -3984,6 +4088,11 @@
   &[archetype="greninja"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/greninja.png);
+  }
+
+  &[archetype="mega-greninja"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/greninja-mega.png);
   }
 
   &[archetype="bunnelby"] {
@@ -4036,6 +4145,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/pyroar.png);
   }
 
+  &[archetype="mega-pyroar"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/pyroar-mega.png);
+  }
+
   &[archetype="flabebe"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/flabebe.png);
@@ -4044,6 +4158,11 @@
   &[archetype="floette"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/floette.png);
+  }
+
+  &[archetype="mega-floette"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/floette-mega.png);
   }
 
   &[archetype="florges"] {
@@ -4084,6 +4203,11 @@
   &[archetype="meowstic"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/meowstic.png);
+  }
+
+  &[archetype="mega-meowstic"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/meowstic-mega.png);
   }
 
   &[archetype="honedge"] {
@@ -4131,6 +4255,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/malamar.png);
   }
 
+  &[archetype="mega-malamar"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/malamar-mega.png);
+  }
+
   &[archetype="binacle"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/binacle.png);
@@ -4141,6 +4270,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/barbaracle.png);
   }
 
+  &[archetype="mega-barbaracle"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/barbaracle-mega.png);
+  }
+
   &[archetype="skrelp"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/skrelp.png);
@@ -4149,6 +4283,11 @@
   &[archetype="dragalge"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/dragalge.png);
+  }
+
+  &[archetype="mega-dragalge"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/dragalge-mega.png);
   }
 
   &[archetype="clauncher"] {
@@ -4199,6 +4338,11 @@
   &[archetype="hawlucha"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/hawlucha.png);
+  }
+
+  &[archetype="mega-hawlucha"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/hawlucha-mega.png);
   }
 
   &[archetype="dedenne"] {
@@ -4284,6 +4428,11 @@
   &[archetype="zygarde"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/zygarde.png);
+  }
+
+  &[archetype="mega-zygarde"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/zygarde-mega.png);
   }
 
   &[archetype="diancie"] {
@@ -4394,6 +4543,11 @@
   &[archetype="crabominable"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/crabominable.png);
+  }
+
+  &[archetype="mega-crabominable"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/crabominable-mega.png);
   }
 
   &[archetype="oricorio"] {
@@ -4591,6 +4745,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/drampa.png);
   }
 
+  &[archetype="mega-drampa"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/drampa-mega.png);
+  }
+
   &[archetype="dhelmise"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/dhelmise.png);
@@ -4696,6 +4855,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/magearna.png);
   }
 
+  &[archetype="mega-magearna"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/magearna-mega.png);
+  }
+
   &[archetype="marshadow"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/marshadow.png);
@@ -4724,6 +4888,11 @@
   &[archetype="zeraora"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/zeraora.png);
+  }
+
+  &[archetype="mega-zeraora"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/zeraora-mega.png);
   }
 
   &[archetype="meltan"] {
@@ -5039,6 +5208,11 @@
   &[archetype="falinks"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/falinks.png);
+  }
+
+  &[archetype="mega-falinks"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/falinks-mega.png);
   }
 
   &[archetype="pincurchin"] {
@@ -5436,6 +5610,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/scovillain.png);
   }
 
+  &[archetype="mega-scovillain"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/scovillain-mega.png);
+  }
+
   &[archetype="rellor"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/rellor.png);
@@ -5526,6 +5705,11 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/glimmora.png);
   }
 
+  &[archetype="mega-glimmora"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/glimmora-mega.png);
+  }
+
   &[archetype="greavard"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/greavard.png);
@@ -5564,6 +5748,11 @@
   &[archetype="tatsugiri"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/tatsugiri.png);
+  }
+
+  &[archetype="mega-tatsugiri"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/tatsugiri-mega.png);
   }
 
   &[archetype="annihilape"] {
@@ -5659,6 +5848,11 @@
   &[archetype="baxcalibur"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/baxcalibur.png);
+  }
+
+  &[archetype="mega-baxcalibur"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/baxcalibur-mega.png);
   }
 
   &[archetype="gimmighoul"] {
