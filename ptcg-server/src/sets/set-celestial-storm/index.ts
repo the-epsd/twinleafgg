@@ -19,6 +19,7 @@ import { Lanturn } from './lanturn';
 import { LastChancePotion } from './last-chance-potion';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
+import { MrMimeGX } from './mr-mime-gx';
 import { Mudkip } from './mudkip';
 import { Nuzleaf } from './nuzleaf';
 import { Oricorio } from './oricorio';
@@ -67,6 +68,7 @@ export const setCelestialStorm: Card[] = [
   new LastChancePotion(),
   new Magcargo(),
   new Marshtomp(),
+  new MrMimeGX(),
   new Mudkip(),
   new Nuzleaf(),
   new Oricorio(),

@@ -8,6 +8,8 @@ import { Electrodeex } from './electrode-ex';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
 import { GreatBall } from './great-ball';
+import { MrMimeex } from './mr-mime-ex';
+import { MrMimeex2 } from './mr-mime-ex2';
 import { Nidoqueen } from './nidoqueen';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
@@ -39,6 +41,8 @@ export const setEXFireRedLeafGreen: Card[] = [
   new Exeggcute(),
   new Exeggutor(),
   new GreatBall(),
+  new MrMimeex(),
+  new MrMimeex2(),
   new Nidoqueen(),
   new NidoranFemale(),
   new Nidorina(),

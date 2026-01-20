@@ -30,6 +30,9 @@ import { Slugma } from './slugma';
 import { SpaceCenter } from './space-center';
 import { Weezing } from './weezing';
 
+// Other prints
+import { BalloonBerryDX, LadyOutingDX } from './other-prints';
+
 export const setEXDeoxys: Card[] = [
   new Altaria(),
   new Camerupt(),
@@ -61,4 +64,8 @@ export const setEXDeoxys: Card[] = [
   new Slugma(),
   new SpaceCenter(),
   new Weezing(),
+
+  // Other prints
+  new BalloonBerryDX(),
+  new LadyOutingDX(),
 ];

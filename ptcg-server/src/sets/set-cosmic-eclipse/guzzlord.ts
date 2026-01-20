@@ -59,12 +59,6 @@ export class Guzzlord extends PokemonCard {
         return state;
       }
 
-      // Guzzy wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
       // Check if the attack that caused the KnockOutEffect is "Red Banquet"
       if (this.usedRedBanquet === true) {
         if (effect.prizeCount > 0) {

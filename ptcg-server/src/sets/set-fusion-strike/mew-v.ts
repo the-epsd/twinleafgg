@@ -3,6 +3,7 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { StoreLike, State, ShuffleDeckPrompt, GameMessage, ConfirmPrompt, AttachEnergyPrompt, SlotType, StateUtils, PlayerType, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class MewV extends PokemonCard {
 
@@ -83,7 +84,7 @@ export class MewV extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ConfirmPrompt(

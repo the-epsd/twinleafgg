@@ -4,9 +4,11 @@ import { Ariados } from './ariados';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Corsola } from './corsola';
+import { Cyndaquil } from './cyndaquil';
 import { Espeonex } from './espeon-ex';
 import { FluffyBerry } from './fluffy-berry';
 import { Forretress } from './forretress';
+import { Gligar } from './gligar';
 import { Hitmonlee } from './hitmonlee';
 import { Hitmontop } from './hitmontop';
 import { Houndoom } from './houndoom';
@@ -51,9 +53,11 @@ export const setEXUnseenForces: Card[] = [
   new Bayleef(),
   new Chikorita(),
   new Corsola(),
+  new Cyndaquil(),
   new Espeonex(),
   new FluffyBerry(),
   new Forretress(),
+  new Gligar(),
   new Hitmonlee(),
   new Hitmontop(),
   new Houndoom(),

@@ -77,7 +77,7 @@ export class CrobatV extends PokemonCard {
         return state;
       }
 
-      if (player.hand.cards.length >= 6) {
+      if (player.hand.cards.length > 6) {
         return state;
       }
 
