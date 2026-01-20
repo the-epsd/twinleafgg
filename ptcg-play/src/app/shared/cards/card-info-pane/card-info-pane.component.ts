@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag, PokemonCard } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag, PokemonCard, Player } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -46,6 +46,7 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   @Input() facedown: boolean;
   @Input() cardList: PokemonCardList;
   @Input() options: CardInfoPaneOptions = {};
+  @Input() players: Player[] = [];
   @Output() action = new EventEmitter<CardInfoPaneAction>();
   @Output() cardSwap = new EventEmitter<{ originalCard: Card, replacementCard: Card }>();
 
@@ -142,6 +143,19 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     }
   }
 
+  private isKlefkiActive(): boolean {
+    if (!this.players || this.players.length === 0) {
+      return false;
+    }
+    for (const player of this.players) {
+      const activePokemon = player?.active?.getPokemonCard?.();
+      if (activePokemon && activePokemon.name === 'Klefki') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private buildEnabledAbilities(): { [name: string]: boolean } {
     const enabledAbilities: { [name: string]: boolean } = {};
 
@@ -156,6 +170,10 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
         return enabledAbilities; // Return empty object - no abilities enabled
       }
 
+      const pokemonCard = this.card as PokemonCard;
+      const isBasicPokemon = pokemonCard.stage === Stage.BASIC;
+      const klefkiActive = this.isKlefkiActive();
+
       // Check if we're viewing a specific card from the evolution chain
       const isViewingSpecificCard = this.cardList && this.cardList.cards && this.cardList.cards.includes(this.card);
 
@@ -166,7 +184,14 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
           if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
             || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
             || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
-            enabledAbilities[power.name] = true;
+            // If Klefki is active and this is a Basic Pokemon, only allow Mischievous Lock ability
+            if (klefkiActive && isBasicPokemon && power.useWhenInPlay && power.powerType === PowerType.ABILITY) {
+              if (power.name === 'Mischievous Lock') {
+                enabledAbilities[power.name] = true;
+              }
+            } else {
+              enabledAbilities[power.name] = true;
+            }
           }
         });
         return enabledAbilities;
@@ -177,7 +202,14 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
         if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
           || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
           || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
-          enabledAbilities[power.name] = true;
+          // If Klefki is active and this is a Basic Pokemon, only allow Mischievous Lock ability
+          if (klefkiActive && isBasicPokemon && power.useWhenInPlay && power.powerType === PowerType.ABILITY) {
+            if (power.name === 'Mischievous Lock') {
+              enabledAbilities[power.name] = true;
+            }
+          } else {
+            enabledAbilities[power.name] = true;
+          }
         }
       });
       return enabledAbilities;

@@ -5,7 +5,7 @@ import { PowerType, StoreLike, State, GameMessage, PlayerType, GameError, StateU
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect, CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class Greninja extends PokemonCard {
 
@@ -96,6 +96,23 @@ export class Greninja extends PokemonCard {
     }
 
     // the shadow ability blocking
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Check if Shadow Stitching marker is active on opponent
+      if (opponent.marker.hasMarker(this.CLEAR_SHADOW_STITCHING_MARKER, this)) {
+        // Check if the target belongs to the opponent
+        const targetOwner = StateUtils.findOwner(state, effect.target);
+        if (targetOwner === opponent) {
+          // Filter out all abilities
+          effect.powers = effect.powers.filter(power =>
+            power.powerType !== PowerType.ABILITY
+          );
+        }
+      }
+    }
+
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
 

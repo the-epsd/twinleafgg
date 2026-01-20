@@ -3,6 +3,7 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, PlayerType, PokemonCardList, ChooseCardsPrompt } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
@@ -44,6 +45,49 @@ export class Solrock extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Block Poké-Powers from basics when active
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const thisCardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, thisCardList);
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
+        return state;
+      }
+
+      let isLunatoneInPlay = false;
+      let isThisInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.name === 'Lunatone') {
+          isLunatoneInPlay = true;
+        }
+        if (card === this) {
+          isThisInPlay = true;
+        }
+      });
+
+      if (isLunatoneInPlay && isThisInPlay) {
+        const targetPokemon = effect.target.getPokemonCard();
+        if (targetPokemon) {
+          let cardTypes = [targetPokemon.cardType];
+          const cardList = effect.target;
+          if (cardList instanceof PokemonCardList) {
+            const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+            store.reduceEffect(state, checkPokemonType);
+            cardTypes = checkPokemonType.cardTypes;
+          }
+
+          // We are blocking the powers from colorless Pokemon (excluding ex)
+          if (cardTypes.includes(CardType.COLORLESS) && !targetPokemon.tags.includes(CardTag.POKEMON_ex)) {
+            // Filter out Poké Powers
+            effect.powers = effect.powers.filter(power =>
+              power.powerType !== PowerType.POKEPOWER
+            );
+          }
+        }
+      }
+    }
+
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
       const player = effect.player;
       const thisCardList = StateUtils.findCardList(state, this);

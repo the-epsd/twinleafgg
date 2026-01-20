@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, PokemonCard, PokemonCardList, Attack, Power, CardType, EnergyCard } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, PokemonCard, PokemonCardList, Attack, Power, CardType, EnergyCard, Player } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -30,6 +30,7 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
   @Input() facedown: boolean;
   @Input() options: PokemonCardInfoPaneOptions = {};
   @Input() player: any; // Player object from the game state
+  @Input() players: Player[] = [];
   @Output() action = new EventEmitter<PokemonCardInfoPaneAction>();
 
   public enabledAbilities: { [name: string]: boolean } = {};
@@ -385,15 +386,39 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
     }
   }
 
+  private isKlefkiActive(): boolean {
+    if (!this.players || this.players.length === 0) {
+      return false;
+    }
+    for (const player of this.players) {
+      const activePokemon = player?.active?.getPokemonCard?.();
+      if (activePokemon && activePokemon.name === 'Klefki') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private buildEnabledAbilities(): { [name: string]: boolean } {
     const enabledAbilities: { [name: string]: boolean } = {};
     const powers = this.getDisplayPowers();
 
+    const mainCard = this.getMainCard() as PokemonCard;
+    const isBasicPokemon = mainCard && mainCard.stage === Stage.BASIC;
+    const klefkiActive = this.isKlefkiActive();
+
     powers.forEach(power => {
-      if ((this.options.enableAbility.useWhenInPlay && power.useWhenInPlay)
-        || (this.options.enableAbility.useFromDiscard && power.useFromDiscard)
-        || (this.options.enableAbility.useFromHand && power.useFromHand)) {
-        enabledAbilities[power.name] = true;
+      if ((this.options.enableAbility?.useWhenInPlay && power.useWhenInPlay)
+        || (this.options.enableAbility?.useFromDiscard && power.useFromDiscard)
+        || (this.options.enableAbility?.useFromHand && power.useFromHand)) {
+        // If Klefki is active and this is a Basic Pokemon, only allow Mischievous Lock ability
+        if (klefkiActive && isBasicPokemon && power.useWhenInPlay && power.powerType === PowerType.ABILITY) {
+          if (power.name === 'Mischievous Lock') {
+            enabledAbilities[power.name] = true;
+          }
+        } else {
+          enabledAbilities[power.name] = true;
+        }
       }
     });
 

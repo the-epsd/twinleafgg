@@ -7,6 +7,8 @@ import { StateUtils } from '../..';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { PowerType } from '../../game/store/card/pokemon-types';
 import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class CancelingCologne extends TrainerCard {
@@ -52,6 +54,22 @@ export class CancelingCologne extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       CLEAN_UP_SUPPORTER(effect, player);
+    }
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Check if Canceling Cologne marker is active
+      if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
+        // Check if the target is the opponent's active Pokemon
+        if (effect.target === opponent.active) {
+          // Filter out all abilities
+          effect.powers = effect.powers.filter(power =>
+            power.powerType !== PowerType.ABILITY
+          );
+        }
+      }
     }
 
     if (effect instanceof PowerEffect && !effect.power.exemptFromAbilityLock) {

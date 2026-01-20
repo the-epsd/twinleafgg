@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
 
@@ -65,9 +66,14 @@ export class Illumise extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.powers.some(power => power.powerType === PowerType.POKEBODY)) {
-        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+      const opponentActiveCardList = opponent.active;
+
+      if (opponentActiveCardList.getPokemonCard()) {
+        const powersEffect = new CheckPokemonPowersEffect(opponent, opponentActiveCardList);
+        state = store.reduceEffect(state, powersEffect);
+        if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY)) {
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+        }
       }
     }
 

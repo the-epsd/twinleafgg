@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ADD_POISON_TO_PLAYER_ACTIVE, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class Mukex extends PokemonCard {
@@ -47,6 +48,26 @@ export class Mukex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Toxic Gas
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Muk ex is not active Pokemon
+      if (player.active.getPokemonCard() !== this
+        && opponent.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      // Filter out all Poké Powers and Poké Bodies except Toxic Gas
+      effect.powers = effect.powers.filter(power =>
+        (power.powerType !== PowerType.POKEPOWER && power.powerType !== PowerType.POKEBODY) || power.name === 'Toxic Gas'
+      );
+    }
+
     if (effect instanceof PowerEffect && (effect.power.powerType === PowerType.POKEPOWER || effect.power.powerType === PowerType.POKEBODY) && effect.power.name !== 'Toxic Gas') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

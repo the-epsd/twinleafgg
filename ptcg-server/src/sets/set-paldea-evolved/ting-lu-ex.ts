@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -49,11 +50,46 @@ export class TingLuex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Ting-Lu ex is not active Pokemon
+      if (player.active.getPokemonCard() !== this
+        && opponent.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      // Only filter opponent's Pokemon
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      if (targetOwner === player) {
+        return state;
+      }
+
+      const targetPokemon = effect.target.getPokemonCard();
+      if (!targetPokemon) {
+        return state;
+      }
+
+      // We are not blocking the Abilities from Pokémon ex
+      if (targetPokemon.tags.includes(CardTag.POKEMON_ex)) {
+        return state;
+      }
+
+      // Only filter if Pokemon has damage counters
+      if (effect.target.damage > 0) {
+        // Filter out all abilities except Cursed Land
+        effect.powers = effect.powers.filter(power =>
+          power.powerType !== PowerType.ABILITY || power.name === 'Cursed Land'
+        );
+      }
+    }
+
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Cursed Land') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Klefki is not active Pokemon
+      // Ting-Lu ex is not active Pokemon
       if (player.active.getPokemonCard() !== this
         && opponent.active.getPokemonCard() !== this) {
         return state;

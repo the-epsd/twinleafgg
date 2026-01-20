@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 
 export class Scizor extends PokemonCard {
@@ -39,50 +39,23 @@ export class Scizor extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       let pokemonWithUsableAbilities = 0;
-
-      // Check active Pokemon
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.powers.length > 0) {
-        // Check if the ability is actually usable
-        if (this.hasActuallyUsableAbility(store, state, opponent, opponentActive)) {
-          pokemonWithUsableAbilities++;
-        }
-      }
-
-      // Check bench Pokemon
-      opponent.bench.forEach(benchSlot => {
-        if (benchSlot.cards.length > 0) {
-          const benchPokemon = benchSlot.getPokemonCard();
-          if (benchPokemon && benchPokemon.powers.length > 0) {
-            // Check if the ability is actually usable
-            if (this.hasActuallyUsableAbility(store, state, opponent, benchPokemon)) {
-              pokemonWithUsableAbilities++;
-            }
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard()) {
+          const powersEffect = new CheckPokemonPowersEffect(opponent, cardList);
+          state = store.reduceEffect(state, powersEffect);
+          if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+            pokemonWithUsableAbilities++;
           }
         }
       });
 
       effect.damage += pokemonWithUsableAbilities * 50;
-
       return state;
     }
     return state;
-  }
-
-  private hasActuallyUsableAbility(store: StoreLike, state: State, player: any, pokemon: PokemonCard): boolean {
-    for (const power of pokemon.powers) {
-      if (power.powerType === PowerType.ABILITY) {
-        if (!IS_ABILITY_BLOCKED(store, state, player, pokemon) || power.exemptFromAbilityLock || power.exemptFromInitialize || power.abilityLock) {
-          return true;
-        }
-      }
-    }
-
-    return false;
   }
 }

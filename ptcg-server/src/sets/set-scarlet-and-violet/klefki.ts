@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError, GameMessage, StateUtils } from '../../game';
 
@@ -48,6 +49,33 @@ export class Klefki extends PokemonCard {
   public fullName: string = 'Klefki SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Klefki is not active Pokemon
+      if (player.active.getPokemonCard() !== this
+        && opponent.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      // Get the target Pokemon card
+      const targetPokemon = effect.target.getPokemonCard();
+      if (!targetPokemon) {
+        return state;
+      }
+
+      // We are not removing abilities from Non-Basic Pokemon
+      if (targetPokemon.stage !== Stage.BASIC) {
+        return state;
+      }
+
+      // Filter out abilities (except Mischievous Lock) from Basic Pokemon
+      effect.powers = effect.powers.filter(power =>
+        power.powerType !== PowerType.ABILITY || power.name === 'Mischievous Lock'
+      );
+    }
 
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
       const player = effect.player;

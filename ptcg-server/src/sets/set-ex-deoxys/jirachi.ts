@@ -4,6 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
@@ -41,10 +42,14 @@ export class Jirachi extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const target = opponent.active.getPokemonCard();
+      const targetCardList = opponent.active;
 
-      if (target !== undefined && target.powers.some(power => power.powerType === PowerType.POKEBODY)) {
-        effect.damage += 30;
+      if (targetCardList.getPokemonCard()) {
+        const powersEffect = new CheckPokemonPowersEffect(opponent, targetCardList);
+        state = store.reduceEffect(state, powersEffect);
+        if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY)) {
+          effect.damage += 30;
+        }
       }
     }
 

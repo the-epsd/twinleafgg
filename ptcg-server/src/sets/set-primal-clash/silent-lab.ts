@@ -7,6 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, Stage } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { PowerType } from '../../game';
 
@@ -29,6 +30,25 @@ export class SilentLab extends TrainerCard {
     'and in each player\'s discard pile has no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
+      const targetPokemon = effect.target.getPokemonCard();
+      if (!targetPokemon) {
+        return state;
+      }
+
+      const cardList = effect.target;
+      const isBasic = cardList instanceof PokemonCardList
+        ? cardList.isStage(Stage.BASIC)
+        : targetPokemon.stage === Stage.BASIC;
+
+      if (isBasic) {
+        // Filter out all abilities
+        effect.powers = effect.powers.filter(power =>
+          power.powerType !== PowerType.ABILITY
+        );
+      }
+    }
 
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;

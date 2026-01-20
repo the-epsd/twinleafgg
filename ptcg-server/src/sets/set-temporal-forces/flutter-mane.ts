@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { GameError, GameMessage, SlotType, StateUtils } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -50,6 +51,30 @@ export class FlutterMane extends PokemonCard {
   public fullName: string = 'Flutter Mane TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      // Only proceed if Flutter Mane is in the Active spot
+      if (owner.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      // Only filter opponent's Active Pokemon abilities
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      if (targetOwner === owner || effect.target !== opponent.active) {
+        return state;
+      }
+
+      // Filter out all abilities except Midnight Fluttering
+      effect.powers = effect.powers.filter(power =>
+        power.powerType !== PowerType.ABILITY || power.name === 'Midnight Fluttering'
+      );
+    }
 
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Midnight Fluttering') {
       const player = effect.player;

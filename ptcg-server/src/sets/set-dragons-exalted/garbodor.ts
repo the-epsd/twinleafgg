@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
@@ -51,6 +52,32 @@ export class Garbodor extends PokemonCard {
   public setNumber: string = '54';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isGarbodorWithToolInPlay = false;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tools.length > 0) {
+          isGarbodorWithToolInPlay = true;
+        }
+      });
+
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tools.length > 0) {
+          isGarbodorWithToolInPlay = true;
+        }
+      });
+
+      if (isGarbodorWithToolInPlay) {
+        // Filter out all abilities except Garbotoxin
+        effect.powers = effect.powers.filter(power =>
+          power.powerType !== PowerType.ABILITY || power.name === 'Garbotoxin'
+        );
+      }
+    }
 
     if (effect instanceof PowerEffect
       && effect.power.powerType === PowerType.ABILITY

@@ -5,7 +5,7 @@ import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
@@ -80,6 +80,34 @@ export class AlolanMuk extends PokemonCard {
           });
         }
       });
+    }
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let playerHasAlolanMukInPlay = false;
+      let opponentHasAlolanMukInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          playerHasAlolanMukInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          opponentHasAlolanMukInPlay = true;
+        }
+      });
+
+      if (playerHasAlolanMukInPlay || opponentHasAlolanMukInPlay) {
+        const targetPokemon = effect.target.getPokemonCard();
+        if (targetPokemon && targetPokemon.stage === Stage.BASIC) {
+          // Filter out all abilities
+          effect.powers = effect.powers.filter(power =>
+            power.powerType !== PowerType.ABILITY
+          );
+        }
+      }
     }
 
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Power of Alchemy') {

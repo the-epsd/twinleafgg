@@ -4,6 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
@@ -36,10 +37,30 @@ export class Slaking extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      // Slaking is not active Pokemon
+      if (owner.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      // Only filter opponent's Pokemon abilities
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      if (targetOwner === owner) {
+        return state;
+      }
+
+      // Filter out all abilities except Lazy
+      effect.powers = effect.powers.filter(power =>
+        power.powerType !== PowerType.ABILITY || power.name === 'Lazy'
+      );
+    }
+
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
