@@ -44,12 +44,10 @@ export class ForestSealStone extends TrainerCard {
 
     if (effect instanceof CheckPokemonPowersEffect && effect.target.tools.includes(this) &&
       !effect.powers.find(p => p.name === this.powers[0].name)) {
-      const hasValidCard = effect.target.cards.some(card =>
-        card.tags.some(tag =>
-          tag === CardTag.POKEMON_V ||
-          tag === CardTag.POKEMON_VSTAR ||
-          tag === CardTag.POKEMON_VMAX
-        )
+      const hasValidCard = effect.target.tags.some(tag =>
+        tag === CardTag.POKEMON_V ||
+        tag === CardTag.POKEMON_VSTAR ||
+        tag === CardTag.POKEMON_VMAX
       );
 
       if (!hasValidCard) {

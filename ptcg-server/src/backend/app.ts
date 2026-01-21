@@ -28,6 +28,7 @@ import {
   Sleeves,
   MemoryHealthController,
 } from './controllers';
+import { ApiErrorEnum } from './common/errors';
 
 export class App {
 
@@ -54,7 +55,8 @@ export class App {
       instance.init();
     };
 
-    app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 }));
+    // Calculate limit: base + avatar size (4x) + replay size (4x for base64 encoding overhead)
+    app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 + config.backend.replayFileSize * 4 }));
     app.use(cors());
 
     // Health check endpoint - must be first route
@@ -109,6 +111,20 @@ export class App {
         (err.code === 'ECONNRESET') ||
         (err.status === 400 && err.message === 'request aborted')
       )) {
+        return;
+      }
+
+      // Handle payload too large errors
+      if (err && (
+        err.status === 413 ||
+        err.statusCode === 413 ||
+        err.type === 'entity.too.large' ||
+        (err.message && err.message.includes('too large'))
+      )) {
+        console.error('[HTTP Error] PayloadTooLargeError:', err.message);
+        if (!res.headersSent) {
+          res.status(413).json({ error: ApiErrorEnum.PAYLOAD_TOO_LARGE });
+        }
         return;
       }
 

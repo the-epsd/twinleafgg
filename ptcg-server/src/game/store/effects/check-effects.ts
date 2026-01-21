@@ -30,14 +30,13 @@ export class CheckPokemonPowersEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_POKEMON_POWERS_EFFECT;
   public preventDefault = false;
   public player: Player;
-  public target: PokemonCardList;
+  public target: PokemonCard;
   public powers: Power[];
 
-  constructor(player: Player, target: PokemonCardList) {
+  constructor(player: Player, target: PokemonCard) {
     this.player = player;
     this.target = target;
-    const pokemonCard = target.getPokemonCard();
-    this.powers = pokemonCard ? pokemonCard.powers : [];
+    this.powers = target.powers;
   }
 }
 

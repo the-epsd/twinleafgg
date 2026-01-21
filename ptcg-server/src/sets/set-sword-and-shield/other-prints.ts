@@ -5,7 +5,7 @@ import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
 import { LumBerry } from "../set-ex-emerald/lum-berry";
 import { PalPad } from "../set-scarlet-and-violet/pal-pad";
 import { Pokegear30HS } from "../set-heartgold-and-soulsilver/other-prints";
-import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { PokemonCatcher } from "../set-scarlet-and-violet/pokemon-catcher";
 import { Potion } from "../set-base-set/potion";
 import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";
 import { VitalityBand } from "../set-scarlet-and-violet/vitality-band";

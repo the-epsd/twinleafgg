@@ -3,6 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -42,6 +43,55 @@ export class Muk extends PokemonCard {
   public fullName: string = 'Muk FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      // Check if Muk is affected by special conditions
+      if (cardList && (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        cardList.specialConditions.includes(SpecialCondition.PARALYZED))) {
+        return state;
+      }
+
+      // Check if any Muk in play has special conditions
+      let mukHasSpecialCondition = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
+          mukHasSpecialCondition = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
+          mukHasSpecialCondition = true;
+        }
+      });
+
+      if (mukHasSpecialCondition) {
+        return state;
+      }
+
+      let isMukInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isMukInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isMukInPlay = true;
+        }
+      });
+
+      if (isMukInPlay) {
+        // Filter out all Pokémon Powers except Toxic Gas
+        effect.powers = effect.powers.filter(power =>
+          power.powerType !== PowerType.POKEMON_POWER || power.name === 'Toxic Gas'
+        );
+      }
+    }
 
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEMON_POWER && effect.power.name !== 'Toxic Gas') {
       const player = effect.player;

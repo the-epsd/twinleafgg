@@ -66,7 +66,6 @@ export class Trumbeak extends PokemonCard {
 
       const deckTop = new CardList();
       opponent.deck.moveTo(deckTop, 1);
-      console.log(deckTop);
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,

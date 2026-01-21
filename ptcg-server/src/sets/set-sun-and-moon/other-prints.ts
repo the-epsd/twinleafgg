@@ -3,7 +3,7 @@ import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
 import { GreatBall } from "../set-ex-firered-leafgreen/great-ball";
 import { Lillie } from "../set-ultra-prism/lillie";
 import { PokeBall } from "../set-jungle/pokeball";
-import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { PokemonCatcher } from "../set-scarlet-and-violet/pokemon-catcher";
 import { Potion } from "../set-base-set/potion";
 import { Switch } from "../set-base-set/switch";
 import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";

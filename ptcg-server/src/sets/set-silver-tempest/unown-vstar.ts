@@ -67,7 +67,7 @@ export class UnownVSTAR extends PokemonCard {
       player.usedVSTAR = true;
     }
 
-    if (effect instanceof CheckPokemonPowersEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof CheckPokemonPowersEffect && effect.target === this) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);

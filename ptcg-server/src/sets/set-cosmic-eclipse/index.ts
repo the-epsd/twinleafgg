@@ -32,6 +32,7 @@ import { Koffing } from './koffing';
 import { Kyogre } from './kyogre';
 import { LanasFishingRod } from './lanas-fishing-rod';
 import { Lanturn } from './lanturn';
+import { Lileep } from './lileep';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { Magneton } from './magneton';
@@ -119,6 +120,7 @@ export const setCosmicEclipse: Card[] = [
   new Kyogre(),
   new LanasFishingRod(),
   new Lanturn(),
+  new Lileep(),
   new LilliesFullForce(),
   new LilliesPokeDoll(),
   new Lillipup(),

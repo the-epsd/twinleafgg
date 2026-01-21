@@ -5,6 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { PowerType, StateUtils } from '../../game';
 
 export class SacredCharm extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -22,10 +24,15 @@ export class SacredCharm extends TrainerCard {
       const sourcePokemon = effect.source;
 
       // Check if the source Pokemon has any abilities
-      if (sourcePokemon instanceof PokemonCard && sourcePokemon.powers.length > 0) {
-        effect.damage -= 30;
-        if (effect.damage < 0) {
-          effect.damage = 0;
+      if (sourcePokemon instanceof PokemonCard) {
+        const player = StateUtils.findOwner(state, sourcePokemon);
+        const powersEffect = new CheckPokemonPowersEffect(player, sourcePokemon);
+        state = store.reduceEffect(state, powersEffect);
+        if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+          effect.damage -= 30;
+          if (effect.damage < 0) {
+            effect.damage = 0;
+          }
         }
       }
     }

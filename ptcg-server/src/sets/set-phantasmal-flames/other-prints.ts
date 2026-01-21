@@ -8,6 +8,7 @@ import { Rotomex as RotomexPFL29 } from "../set-phantasmal-flames/rotom-ex";
 import { MegaSharpedoex as MegaSharpedoexPFL61 } from "../set-phantasmal-flames/mega-sharpedo-ex";
 import { MegaLopunnyex as MegaLopunnyexPFL84 } from "../set-phantasmal-flames/mega-lopunny-ex";
 import { BattleColosseum as BattleColosseumPFL85 } from "../set-phantasmal-flames/battle-colosseum";
+import { Blowtorch as BlowtorchPFL86 } from "../set-phantasmal-flames/blowtorch";
 import { Dawn as DawnPFL87 } from "../set-phantasmal-flames/dawn";
 import { Firebreather as FirebreatherPFL89 } from "../set-phantasmal-flames/firebreather";
 import { GrimsleysGambit as GrimsleysGambitPFL90 } from "../set-phantasmal-flames/grimsleys-gambit";
@@ -71,6 +72,12 @@ export class MegaLopunnyex2PFL extends MegaLopunnyexPFL84 {
 export class BattleColosseum2PFL extends BattleColosseumPFL85 {
   public setNumber = '116';
   public fullName: string = 'Battle Colosseum2 PFL';
+  public set = 'PFL';
+}
+
+export class Blowtorch2PFL extends BlowtorchPFL86 {
+  public setNumber = '117';
+  public fullName: string = 'Blowtorch2 PFL';
   public set = 'PFL';
 }
 

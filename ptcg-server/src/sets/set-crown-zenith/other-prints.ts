@@ -24,7 +24,7 @@ import { Hop } from "../set-sword-and-shield/hop";
 import { Leon } from "../set-vivid-voltage/leon";
 import { Nessa } from "../set-vivid-voltage/nessa";
 import { PokeBall } from "../set-jungle/pokeball";
-import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { PokemonCatcher } from "../set-scarlet-and-violet/pokemon-catcher";
 import { Potion } from "../set-base-set/potion";
 import { Raihan } from "../set-evolving-skies/raihan";
 import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";

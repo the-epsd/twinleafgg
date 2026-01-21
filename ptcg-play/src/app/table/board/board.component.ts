@@ -175,7 +175,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
 
       // Check if it's a different game
       const differentGame = previousState.localId !== currentState.localId;
-      
+
       // Check if active player changed
       const activePlayerChanged = previousState.state?.activePlayer !== currentState.state?.activePlayer;
 
@@ -417,7 +417,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
       this.handleSelectionModeCardClick(card, cardList);
     } else {
       // Normal card click behavior
-      this.cardsBaseService.showCardInfo({ card, cardList });
+      this.cardsBaseService.showCardInfo({ card, cardList, players: [this.topPlayer, this.bottomPlayer].filter(p => p) });
     }
   }
 
@@ -477,7 +477,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   public onCardListClick(card: Card, cardList: CardList) {
-    this.cardsBaseService.showCardInfoList({ card, cardList });
+    this.cardsBaseService.showCardInfoList({ card, cardList, players: [this.topPlayer, this.bottomPlayer].filter(p => p) });
   }
 
   public onPrizeClick(player: Player, prize: CardList) {
@@ -488,13 +488,13 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     const card = prize.cards[0];
     const facedown = prize.isSecret || (!prize.isPublic && !owner);
     const allowReveal = facedown && !!this.gameState.replay;
-    this.cardsBaseService.showCardInfo({ card, allowReveal, facedown });
+    this.cardsBaseService.showCardInfo({ card, allowReveal, facedown, players: [this.topPlayer, this.bottomPlayer].filter(p => p) });
   }
 
   public onDeckClick(card: Card, cardList: CardList) {
     const facedown = true;
     const allowReveal = !!this.gameState.replay;
-    this.cardsBaseService.showCardInfoList({ card, cardList, allowReveal, facedown });
+    this.cardsBaseService.showCardInfoList({ card, cardList, allowReveal, facedown, players: [this.topPlayer, this.bottomPlayer].filter(p => p) });
   }
 
   public onDiscardClick(card: Card, cardList: CardList) {
@@ -509,7 +509,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     const slot = SlotType.DISCARD;
 
     const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
-    this.cardsBaseService.showCardInfoList({ card, cardList, options })
+    this.cardsBaseService.showCardInfoList({ card, cardList, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
           return;
@@ -558,7 +558,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     const target: CardTarget = { player, slot, index: 0 };
 
     const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
-    this.cardsBaseService.showCardInfo({ card, cardList, options })
+    this.cardsBaseService.showCardInfo({ card, cardList, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
           return;
@@ -609,7 +609,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
       enableBenchAttack: hasUseOnBenchAttack
     };
 
-    this.cardsBaseService.showCardInfo({ card, cardList, options })
+    this.cardsBaseService.showCardInfo({ card, cardList, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
           return;
@@ -636,7 +636,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     const options = { enableTrainer: true };
-    this.cardsBaseService.showCardInfo({ card, cardList: this.stadiumCard, options })
+    this.cardsBaseService.showCardInfo({ card, cardList: this.stadiumCard, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
           return;
@@ -661,7 +661,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     const target: CardTarget = { player, slot, index };
 
     const options = { enableAbility: { useFromHand: true }, enableAttack: false };
-    this.cardsBaseService.showCardInfo({ card, cardList, options })
+    this.cardsBaseService.showCardInfo({ card, cardList, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
           return;
@@ -686,7 +686,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     const slot = SlotType.LOSTZONE;
 
     const options = { enableAbility: { useFromDiscard: false }, enableAttack: false };
-    this.cardsBaseService.showCardInfoList({ card, cardList, options })
+    this.cardsBaseService.showCardInfoList({ card, cardList, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
           return;

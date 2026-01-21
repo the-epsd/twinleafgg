@@ -1,6 +1,6 @@
 import { GreatBall } from "../set-ex-firered-leafgreen/great-ball";
 import { MaxPotion } from "../set-emerging-powers/max-potion";
-import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { PokemonCatcher } from "../set-scarlet-and-violet/pokemon-catcher";
 import { Potion } from "../set-base-set/potion";
 import { ProfessorSycamoreXY } from "../set-x-and-y/other-prints";
 import { ManaphyEX as ManaphyEXBKP32 } from "../set-breakpoint/manaphy-ex";

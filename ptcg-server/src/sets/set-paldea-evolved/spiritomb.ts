@@ -4,10 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { PlayerType, StateUtils } from '../../game';
+import { PlayerType, PokemonCardList, StateUtils } from '../../game';
 
 export class Spiritomb extends PokemonCard {
 
@@ -50,6 +51,51 @@ export class Spiritomb extends PokemonCard {
   public fullName: string = 'Spiritomb PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const ruleBoxTags = [
+        CardTag.POKEMON_V,
+        CardTag.POKEMON_VSTAR,
+        CardTag.POKEMON_VMAX
+      ];
+
+      let isSpiritombInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isSpiritombInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isSpiritombInPlay = true;
+        }
+      });
+
+      const targetCardList = StateUtils.findCardList(state, effect.target);
+      if (!(targetCardList instanceof PokemonCardList)) {
+        return state;
+      }
+
+      if (isSpiritombInPlay) {
+        const targetPokemon = effect.target;
+        if (targetPokemon && targetPokemon.stage === Stage.BASIC && ruleBoxTags.some(tag => targetPokemon.tags.includes(tag))) {
+          // Try reducing ability for each player  
+          try {
+            const powerEffect = new PowerEffect(player, this.powers[0], this);
+            store.reduceEffect(state, powerEffect);
+          } catch {
+            return state;
+          }
+          // Filter out all abilities
+          effect.powers = effect.powers.filter(power =>
+            power.powerType !== PowerType.ABILITY
+          );
+        }
+      }
+    }
 
     if (effect instanceof PowerEffect
       && effect.power.powerType === PowerType.ABILITY

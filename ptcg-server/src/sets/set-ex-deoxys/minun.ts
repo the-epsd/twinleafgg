@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, PowerType, StateUtils, PokemonCardList } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, PowerType, StateUtils, PokemonCardList, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { BLOCK_IF_DISCARD_EMPTY, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
@@ -54,47 +55,21 @@ export class Minun extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let benchPokemon: PokemonCardList[] = [];
-      const pokemonWithAbilities: PokemonCardList[] = [];
-      const opponentActive = opponent.active.getPokemonCard();
-
-      const stubPowerEffectForActive = new PowerEffect(opponent, {
-        name: 'test',
-        powerType: PowerType.POKEBODY,
-        text: ''
-      }, opponent.active.getPokemonCard()!);
-
-      try {
-        store.reduceEffect(state, stubPowerEffectForActive);
-
-        if (opponentActive && opponentActive.powers.length) {
-          pokemonWithAbilities.push(opponent.active);
+      const pokemonWithPokeBodies: PokemonCardList[] = [];
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (cardList.getPokemonCard()) {
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
+          state = store.reduceEffect(state, powersEffect);
+          if (powersEffect.powers.some(power => power.powerType === PowerType.POKEBODY)) {
+            pokemonWithPokeBodies.push(cardList);
+          }
         }
-      } catch {
-        // no abilities in active
-      }
-
-      if (opponent.bench.some(b => b.cards.length > 0)) {
-        const stubPowerEffectForBench = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: ''
-        }, opponent.bench.filter(b => b.cards.length > 0)[0].getPokemonCard()!);
-
-        try {
-          store.reduceEffect(state, stubPowerEffectForBench);
-
-          benchPokemon = opponent.bench.map(b => b).filter(card => card !== undefined) as PokemonCardList[];
-          pokemonWithAbilities.push(...benchPokemon.filter(card => card.getPokemonCard()?.powers.length));
-        } catch {
-          // no abilities on bench
-        }
-      }
+      });
 
       effect.ignoreWeakness = true;
       effect.ignoreResistance = true;
 
-      pokemonWithAbilities.forEach(target => {
+      pokemonWithPokeBodies.forEach(target => {
         const damageEffect = new PutDamageEffect(effect, 20);
         damageEffect.target = target;
         store.reduceEffect(state, damageEffect);

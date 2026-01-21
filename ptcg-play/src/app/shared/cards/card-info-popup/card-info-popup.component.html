@@ -4,7 +4,7 @@
 </h2>
 
 <mat-dialog-content>
-  <ptcg-card-info-pane [card]="card" [cardList]="cardList" [facedown]="facedown" [options]="options"
+  <ptcg-card-info-pane [card]="card" [cardList]="cardList" [facedown]="facedown" [options]="options" [players]="players"
     (action)="close($event)" (cardSwap)="onCardSwap($event)">
   </ptcg-card-info-pane>
 </mat-dialog-content>

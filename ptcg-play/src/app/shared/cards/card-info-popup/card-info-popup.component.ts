@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Card, CardList } from 'ptcg-server';
+import { Card, CardList, Player } from 'ptcg-server';
 import { CardInfoPaneOptions, CardInfoPaneAction } from '../card-info-pane/card-info-pane.component';
 import { CardListPopupComponent, CardListPopupData } from '../card-list-popup/card-list-popup.component';
 
@@ -10,6 +10,7 @@ export interface CardInfoPopupData {
   options?: CardInfoPaneOptions;
   allowReveal?: boolean;
   facedown?: boolean;
+  players?: Player[];
 }
 
 @Component({
@@ -24,6 +25,7 @@ export class CardInfoPopupComponent {
   public facedown: boolean;
   public allowReveal: boolean;
   public options: CardInfoPaneOptions;
+  public players: Player[];
   private data: CardInfoPopupData;
 
   constructor(
@@ -37,6 +39,7 @@ export class CardInfoPopupComponent {
     this.facedown = data.facedown;
     this.allowReveal = data.allowReveal;
     this.options = data.options || {};
+    this.players = data.players || [];
   }
 
   public async showCardList(): Promise<void> {

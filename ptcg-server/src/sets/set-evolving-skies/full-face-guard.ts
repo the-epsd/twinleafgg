@@ -5,6 +5,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { PowerType } from '../../game/store/card/pokemon-types';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class FullFaceGuard extends TrainerCard {
@@ -40,15 +42,19 @@ export class FullFaceGuard extends TrainerCard {
       }
 
       const player = StateUtils.findOwner(state, effect.target);
-      if (sourceCard && sourceCard.powers.length === 0) {
+      if (sourceCard) {
+        // Check if source Pokemon has no abilities using CheckPokemonPowersEffect
+        const powersEffect = new CheckPokemonPowersEffect(effect.player, sourceCard);
+        state = store.reduceEffect(state, powersEffect);
+        const hasAbilities = powersEffect.powers.some(power => power.powerType === PowerType.ABILITY);
 
-        // Check if damage target is owned by this card's owner 
-        const targetPlayer = StateUtils.findOwner(state, effect.target);
-        if (targetPlayer === player) {
-          effect.reduceDamage(20);
+        if (!hasAbilities) {
+          // Check if damage target is owned by this card's owner 
+          const targetPlayer = StateUtils.findOwner(state, effect.target);
+          if (targetPlayer === player) {
+            effect.reduceDamage(20);
+          }
         }
-
-        return state;
       }
       return state;
     }

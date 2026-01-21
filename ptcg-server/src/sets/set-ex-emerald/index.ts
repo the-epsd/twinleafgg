@@ -7,6 +7,16 @@ import { Meditite } from './meditite';
 import { ProfessorBirch } from './professor-birch';
 import { Scott } from './scott';
 
+// Other prints
+import {
+  DarknessEnergySpecialEM,
+  DoubleRainbowEnergyEM,
+  MetalEnergySpecialEM,
+  MultiEnergyEM,
+  RareCandyEM,
+  WallysTrainingEM,
+} from './other-prints';
+
 export const setEXEmerald: Card[] = [
   new Feebas(),
   new LumBerry(),
@@ -14,6 +24,14 @@ export const setEXEmerald: Card[] = [
   new Meditite(),
   new ProfessorBirch(),
   new Scott(),
+
+  // Other prints
+  new DarknessEnergySpecialEM(),
+  new DoubleRainbowEnergyEM(),
+  new MetalEnergySpecialEM(),
+  new MultiEnergyEM(),
+  new RareCandyEM(),
+  new WallysTrainingEM(),
 
   // Basic energies
   new GrassEnergy(),

@@ -5,6 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { State } from '../../game/store/state/state';
@@ -51,6 +52,51 @@ export class Medichamex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Wise Aura Poké-Body
+    if (effect instanceof CheckPokemonPowersEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Medicham ex is not active Pokemon
+      const playerHasMedicham = player.active.getPokemonCard() === this;
+      const opponentHasMedicham = opponent.active.getPokemonCard() === this;
+      if (!playerHasMedicham && !opponentHasMedicham) {
+        return state;
+      }
+
+      const targetPokemon = effect.target;
+      if (!targetPokemon) {
+        return state;
+      }
+
+      // Check if the Pokemon is a Pokemon-ex
+      if (targetPokemon.tags.includes(CardTag.POKEMON_ex)) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+
+      // Check if we can apply the Ability lock to target Pokemon
+      const cardList = effect.target;
+      if (cardList instanceof PokemonCardList) {
+        const canApplyAbility = new EffectOfAbilityEffect(playerHasMedicham ? player : opponent, this.powers[0], this, cardList);
+        store.reduceEffect(state, canApplyAbility);
+        if (!canApplyAbility.target) {
+          return state;
+        }
+      }
+
+      // Filter out Poké Powers
+      effect.powers = effect.powers.filter(power =>
+        power.powerType !== PowerType.POKEPOWER
+      );
+    }
+
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && effect.power.name !== 'Wise Aura') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -1,9 +1,9 @@
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PowerType, State, StateUtils, StoreLike, PlayerType } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Weavile extends PokemonCard {
@@ -52,89 +52,32 @@ export class Weavile extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // calculate damage for opponent
-      const opponentActive = opponent.active.getPokemonCard();
-
-      const stubPowerEffectForActive = new PowerEffect(opponent, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, opponent.active.getPokemonCard()!);
-
-      try {
-        store.reduceEffect(state, stubPowerEffectForActive);
-
-        if (opponentActive && opponentActive.powers.length) {
-          effect.damage = 60;
-        }
-      } catch {
-        // no abilities in active
-      }
-
-      if (opponent.bench.some(b => b.cards.length > 0)) {
-        const stubPowerEffectForBench = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, opponent.bench.filter(b => b.cards.length > 0)[0].getPokemonCard()!);
-
-        try {
-          store.reduceEffect(state, stubPowerEffectForBench);
-
-          const benched = opponent.bench.filter(b => b.cards.length > 0);
-
-          benched.forEach(target => {
+      // Calculate damage for opponent's Pokemon
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (cardList.getPokemonCard()) {
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
+          state = store.reduceEffect(state, powersEffect);
+          if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
             const damageEffect = new PutDamageEffect(effect, 60);
-            damageEffect.target = target;
+            damageEffect.target = cardList;
             store.reduceEffect(state, damageEffect);
-          });
-        } catch {
-          // no abilities on bench
+          }
         }
-      }
+      });
 
-      // calculate damage for player
-      const active = player.active.getPokemonCard();
-
-      const stubPowerEffectForMyActive = new PowerEffect(player, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, player.active.getPokemonCard()!);
-
-      try {
-        store.reduceEffect(state, stubPowerEffectForMyActive);
-
-        if (active && active.powers.length) {
-          const damageEffect = new PutDamageEffect(effect, 60);
-          damageEffect.target = player.active;
-          store.reduceEffect(state, damageEffect);
+      // Calculate damage for player's Pokemon
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (cardList.getPokemonCard()) {
+          const powersEffect = new CheckPokemonPowersEffect(player, card);
+          state = store.reduceEffect(state, powersEffect);
+          if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+            const damageEffect = new PutDamageEffect(effect, 60);
+            damageEffect.target = cardList;
+            store.reduceEffect(state, damageEffect);
+          }
         }
-      } catch {
-        // no abilities in active
-      }
+      });
 
-      if (player.bench.some(b => b.cards.length > 0)) {
-        const stubForBench = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, player.bench.filter(b => b.cards.length > 0)[0].getPokemonCard()!);
-
-        try {
-          store.reduceEffect(state, stubForBench);
-
-          const myBenched = player.bench.filter(b => b.cards.length > 0);
-
-          myBenched.forEach(target => {
-            const benchDamageEffect = new PutDamageEffect(effect, 60);
-            benchDamageEffect.target = target;
-            store.reduceEffect(state, benchDamageEffect);
-          });
-        } catch {
-          // no abilities on bench
-        }
-      }
       return state;
     }
     return state;

@@ -2,7 +2,7 @@ import { Blastoise } from "../set-boundaries-crossed/blastoise";
 import { Caitlin } from "../set-chilling-reign/caitlin";
 import { EnergyRetrieval } from "../set-base-set/energy-retrieval";
 import { PlumeFossil } from "../set-noble-victories/plume-fossil";
-import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { PokemonCatcher } from "../set-scarlet-and-violet/pokemon-catcher";
 import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";
 import { PlasmaEnergy } from "../set-plasma-storm/plasma-energy";
 import { VirizionEX as VirizionEXPLB9 } from "../set-plasma-blast/virizion-ex";

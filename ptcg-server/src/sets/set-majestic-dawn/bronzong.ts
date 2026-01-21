@@ -3,6 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ADD_MARKER, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -52,11 +53,15 @@ export class Bronzong extends PokemonCard {
         return state;
       }
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const pokemon = cardList.getPokemonCard();
 
-        if (pokemon && pokemon.powers.some(p => p.powerType === PowerType.POKEPOWER)) {
-          cardList.damage += 10;
+        if (pokemon) {
+          const powersEffect = new CheckPokemonPowersEffect(opponent, card);
+          state = store.reduceEffect(state, powersEffect);
+          if (powersEffect.powers.some(p => p.powerType === PowerType.POKEPOWER)) {
+            cardList.damage += 10;
+          }
         }
       });
     }

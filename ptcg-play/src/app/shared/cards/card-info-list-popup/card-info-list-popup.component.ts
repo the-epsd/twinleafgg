@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Card, CardList, SuperType } from 'ptcg-server';
+import { Card, CardList, SuperType, Player } from 'ptcg-server';
 import { CardInfoPaneOptions, CardInfoPaneAction } from '../card-info-pane/card-info-pane.component';
 import { CardInfoPopupData, CardInfoPopupComponent } from '../card-info-popup/card-info-popup.component';
 
@@ -17,6 +17,7 @@ export class CardInfoListPopupComponent {
   public facedown: boolean;
   public allowReveal: boolean;
   public options: CardInfoPaneOptions;
+  public players: Player[];
   public sortDiscards: boolean = false;
   private originalDiscard: Card[] = [];
 
@@ -30,6 +31,7 @@ export class CardInfoListPopupComponent {
     this.allowReveal = data.allowReveal;
     this.facedown = data.facedown;
     this.options = data.options;
+    this.players = data.players || [];
     this.originalDiscard = this.cardList.cards.slice(); // Clone discard pile
   }
 
@@ -39,7 +41,8 @@ export class CardInfoListPopupComponent {
     const data: CardInfoPopupData = {
       card,
       facedown: this.facedown,
-      options: this.options
+      options: this.options,
+      players: this.players
     };
 
     const dialog = this.dialog.open(CardInfoPopupComponent, {

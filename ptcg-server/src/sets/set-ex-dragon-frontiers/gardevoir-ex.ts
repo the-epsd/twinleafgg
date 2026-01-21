@@ -4,6 +4,7 @@ import { Card, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, MoveEner
 import { Effect } from '../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Gardevoirex extends PokemonCard {
@@ -70,6 +71,16 @@ export class Gardevoirex extends PokemonCard {
         return state;
       });
     }
+    if (effect instanceof CheckPokemonPowersEffect) {
+      // Check if the target has an Imprison marker
+      if (HAS_MARKER(this.IMPRISON_MARKER, effect.target, this)) {
+        // Filter out all Poké Powers and Poké Bodies
+        effect.powers = effect.powers.filter(power =>
+          power.powerType !== PowerType.POKEPOWER && power.powerType !== PowerType.POKEBODY
+        );
+      }
+    }
+
     if (effect instanceof PowerEffect
       && (effect.power.powerType === PowerType.POKEPOWER || effect.power.powerType === PowerType.POKEBODY)) {
       // Find the PokemonCardList that contains effect.card (probably a better way to do this tbh)

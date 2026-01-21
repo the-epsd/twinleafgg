@@ -9,8 +9,7 @@ import {
   TrainerCard,
   GameMessage
 } from '../../game';
-import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, CONFIRMATION_PROMPT, MOVE_CARDS, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, AFTER_ATTACK, CONFIRMATION_PROMPT, MOVE_CARDS, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class LumineonV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -79,7 +78,7 @@ export class LumineonV extends PokemonCard {
       }, GameMessage.WANT_TO_USE_ABILITY);
     }
 
-    if (effect instanceof AfterAttackEffect && effect.attack === this.attacks[0]) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const pokemons = player.active.getPokemons();
       const otherCards = player.active.cards.filter(card =>

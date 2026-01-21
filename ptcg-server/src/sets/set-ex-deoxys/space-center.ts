@@ -7,6 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { PowerType } from '../../game';
 
@@ -22,6 +23,25 @@ export class SpaceCenter extends TrainerCard {
     'Ignore Poké-Bodies for all Basic Pokémon in play (both yours and your opponent\'s) (excluding Pokémon-ex and Pokémon that has an owner in its name).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
+      const targetPokemon = effect.target;
+      if (!targetPokemon) {
+        return state;
+      }
+
+      const cardList = effect.target;
+      // ex era ruling is that this should mean unevolved
+      const isBasic = cardList instanceof PokemonCardList && (cardList.getPokemons().length === 1 || targetPokemon.tags.includes(CardTag.LEGEND));
+
+      // Also should not block owner pokemon, but thats a future me problem
+      if (isBasic && !targetPokemon.tags.includes(CardTag.POKEMON_ex)) {
+        // Filter out Poké Bodies
+        effect.powers = effect.powers.filter(power =>
+          power.powerType !== PowerType.POKEBODY
+        );
+      }
+    }
 
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;

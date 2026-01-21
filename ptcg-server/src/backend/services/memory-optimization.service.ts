@@ -207,15 +207,49 @@ export class MemoryOptimizationService {
    */
   private async clearCaches(): Promise<void> {
     try {
-      // Clear require cache for non-essential modules
-      const cacheKeys = Object.keys(require.cache);
-      const nonEssentialModules = cacheKeys.filter(key =>
-        key.includes('node_modules') &&
-        !key.includes('core') &&
-        !key.includes('essential')
-      );
+      // Critical modules that must never be cleared from require cache
+      // These modules maintain stateful connections or are dependencies of core infrastructure
+      const criticalModulePatterns = [
+        // TypeORM and its dependencies
+        'typeorm',
+        'js-yaml', // Used by TypeORM internally
+        'reflect-metadata', // Required by TypeORM
+        // Database drivers
+        'mysql2',
+        'sqlite3',
+        // Core server dependencies
+        'express',
+        'socket.io',
+        // Application source code
+        '/src/',
+        '/dist/',
+        // Additional critical patterns
+        'core',
+        'essential'
+      ];
 
-      nonEssentialModules.forEach(key => {
+      // Check if a module path matches any critical pattern
+      const isCriticalModule = (modulePath: string): boolean => {
+        return criticalModulePatterns.some(pattern =>
+          modulePath.includes(pattern)
+        );
+      };
+
+      // Clear require cache for non-essential modules only
+      const cacheKeys = Object.keys(require.cache);
+      const safeToClearModules = cacheKeys.filter(key => {
+        // Only clear node_modules, not application code
+        if (!key.includes('node_modules')) {
+          return false;
+        }
+        // Never clear critical modules
+        if (isCriticalModule(key)) {
+          return false;
+        }
+        return true;
+      });
+
+      safeToClearModules.forEach(key => {
         delete require.cache[key];
       });
 
@@ -223,7 +257,11 @@ export class MemoryOptimizationService {
         level: LogLevel.DEBUG,
         category: 'memory-optimization',
         message: 'Cleared require cache',
-        data: { clearedModules: nonEssentialModules.length }
+        data: {
+          clearedModules: safeToClearModules.length,
+          totalCachedModules: cacheKeys.length,
+          protectedModules: cacheKeys.length - safeToClearModules.length
+        }
       });
 
     } catch (error) {

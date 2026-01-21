@@ -134,7 +134,12 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         if (action.target.slot === SlotType.ACTIVE || action.target.slot === SlotType.BENCH) {
           const target = StateUtils.getTarget(state, player, action.target);
 
-          const powersEffect = new CheckPokemonPowersEffect(player, target);
+          const targetPokemon = target.getPokemonCard();
+          if (!targetPokemon) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+
+          const powersEffect = new CheckPokemonPowersEffect(player, targetPokemon);
           state = store.reduceEffect(state, powersEffect);
 
           power = [...pokemonCard.powers, ...powersEffect.powers].find(a => a.name === action.name);
