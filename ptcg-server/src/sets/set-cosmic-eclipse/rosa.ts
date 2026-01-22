@@ -94,9 +94,9 @@ export class Rosa extends TrainerCard {
   public setNumber: string = '204';
 
   public text: string =
-    `You can play this card only if 1 of your Pokemon was Knocked Out during your opponent\'s last turn.
+    `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.
 
-Search your deck for a Pokemon, a Trainer card, and a basic Energy card, reveal them, and put them into your hand. Then, shuffle your deck.`;
+Search your deck for a Pokémon, a Trainer card, and a basic Energy card, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public readonly ROSA_MARKER = 'ROSA_MARKER';
 
