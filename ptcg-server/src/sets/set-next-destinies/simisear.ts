@@ -1,0 +1,58 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
+
+export class Simisear extends PokemonCard {
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Pansear';
+  public cardType: CardType = R;
+  public hp: number = 90;
+  public weakness = [{ type: W }];
+  public retreat = [C];
+
+  public attacks = [
+    {
+      name: 'Collect',
+      cost: [R],
+      damage: 0,
+      text: 'Draw 3 cards.'
+    },
+    {
+      name: 'Stadium Burn',
+      cost: [R, C],
+      damage: 30,
+      damageCalculation: '+',
+      text: 'If there is any Stadium card in play, this attack does 30 more damage and the Defending Pokemon is now Burned.'
+    }
+  ];
+
+  public set: string = 'NXD';
+  public setNumber: string = '16';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Simisear';
+  public fullName: string = 'Simisear NXD';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Collect - draw 3 cards
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      DRAW_CARDS(player, 3);
+    }
+
+    // Stadium Burn - bonus damage and burn if stadium in play
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      // Check if there's a stadium in play
+      const stadiumCard = StateUtils.getStadiumCard(state);
+
+      if (stadiumCard !== undefined) {
+        effect.damage += 30;
+        YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+      }
+    }
+
+    return state;
+  }
+}
