@@ -1,82 +1,80 @@
-import { YveltalXY, XerneasXY, GreatBallXY, MaxReviveXY, RedCardXY, TeamFlareGruntXY, RainbowEnergyPLXY, YveltalEx2XY, XerneasEX2XY } from './other-prints';
 import { Card } from '../../game/store/card/card';
-import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy, FairyEnergy } from './basic-energies';
-import { Aromatisse } from './aromatisse';
-import { Braixen } from './braixen';
-import { Cassius } from './cassius';
-import { Delphox } from './delphox';
-import { DoubleColorlessEnergy } from './double-colorless-energy';
-import { Evosoda } from './evosoda';
-import { FairyGarden } from './fairy-garden';
-import { Fennekin } from './fennekin';
-import { Greninja } from './greninja';
-import { MuscleBand } from './muscle-band';
-import { MvenusarEx } from './m-venusaur-ex';
-import { Phantump } from './phantump';
-import { Pikachu } from './pikachu';
-import { ProfessorsLetter } from './professors-letter';
-import { Pumpkaboo } from './pumpkaboo';
-import { Raichu } from './raichu';
-import { RollerSkates } from './roller-skates';
-import { ShadowCircle } from './shadow-circle';
-import { Shauna } from './shauna';
-import { Spritzee } from './spritzee';
-import { SuperPotion } from './super-potion';
-import { Trevenant } from './trevenant';
-import { Voltorb } from './voltorb';
-import { XerneasEX } from './xerneas-ex';
-import { YveltalEx } from './yveltal-ex';
+import { Arctozolt } from './arctozolt';
+import { BigParasol } from './big-parasol';
+import { BillowingSmoke } from './billowing-smoke';
+import { BirdKeeper } from './bird-keeper';
+import { Bunnelby } from './bunnelby';
+import { CapeOfToughness } from './cape-of-toughness';
+import { Combusken } from './combusken';
+import { CrobatV } from './crobat-v';
+import { Dedenne } from './dedenne';
+import { Ducklett } from './ducklett';
+import { EternatusV } from './eternatus-v';
+import { EternatusVMAX } from './eternatus-vmax';
+import { GalarianMrMime } from './galarian-mr-mime';
+import { GalarianMrRime } from './galarian-mr-rime';
+import { Golisopod } from './golisopod';
+import { HeatFireEnergy } from './heat-fire-energy';
+import { HidingDarknessEnergy } from './hiding-darkness-energy';
+import { Hydreigon } from './hydreigon';
+import { Kangaskhan } from './kangaskhan';
+import { Klang } from './klang';
+import { Lugia } from './lugia';
+import { Polteageist } from './polteageist';
+import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
+import { Purrloin } from './purrloin';
+import { RareFossil } from './rare-fossil';
+import { RoseTower } from './rose-tower';
+import { Rowlet } from './rowlet';
+import { Sinistea } from './sinistea';
+import { Starly } from './starly';
+import { Swanna } from './swanna';
+import { TapuKoko } from './tapu-koko';
+import { Teddiursa } from './teddiursa';
+import { Ursaring } from './ursaring';
+import { VikavoltV } from './vikavolt-v';
+import { YellHorn } from './yell-horn';
 
-// Other Prints
-import { ProfessorSycamoreXY } from './other-prints';
+// Other prints
+import { CrobatVDAA } from './other-prints';
 
-export const setXY: Card[] = [
-  new Aromatisse(),
-  new Braixen(),
-  new Cassius(),
-  new Delphox(),
-  new DoubleColorlessEnergy(),
-  new Evosoda(),
-  new FairyGarden(),
-  new Fennekin(),
-  new Greninja(),
-  new MuscleBand(),
-  new MvenusarEx(),
-  new Phantump(),
-  new Pikachu(),
-  new ProfessorsLetter(),
-  new Pumpkaboo(),
-  new Raichu(),
-  new RollerSkates(),
-  new ShadowCircle(),
-  new Shauna(),
-  new Spritzee(),
-  new SuperPotion(),
-  new Trevenant(),
-  new Voltorb(),
-  new XerneasEX(),
-  new YveltalEx(),
+export const setDarknessAblaze: Card[] = [
+  new Arctozolt(),
+  new BigParasol(),
+  new BillowingSmoke(),
+  new BirdKeeper(),
+  new Bunnelby(),
+  new CapeOfToughness(),
+  new CrobatV(),
+  new Combusken(),
+  new Dedenne(),
+  new Ducklett(),
+  new EternatusV(),
+  new EternatusVMAX(),
+  new GalarianMrMime(),
+  new GalarianMrRime(),
+  new Golisopod(),
+  new HeatFireEnergy(),
+  new HidingDarknessEnergy(),
+  new Kangaskhan(),
+  new Klang(),
+  new Lugia(),
+  new Polteageist(),
+  new PowerfulColorlessEnergy(),
+  new Purrloin(),
+  new RareFossil(),
+  new RoseTower(),
+  new Rowlet(),
+  new Sinistea(),
+  new Starly(),
+  new Swanna(),
+  new TapuKoko(),
+  new Teddiursa(),
+  new Ursaring(),
+  new YellHorn(),
+  new Hydreigon(),
+  new VikavoltV(),
 
-  // Other Prints
-  new ProfessorSycamoreXY(),
-
-  // Basic energies
-  new GrassEnergy(),
-  new FireEnergy(),
-  new WaterEnergy(),
-  new LightningEnergy(),
-  new PsychicEnergy(),
-  new FightingEnergy(),
-  new DarknessEnergy(),
-  new MetalEnergy(),
-  new FairyEnergy(),
-  new YveltalXY(),
-  new XerneasXY(),
-  new GreatBallXY(),
-  new MaxReviveXY(),
-  new RedCardXY(),
-  new TeamFlareGruntXY(),
-  new RainbowEnergyPLXY(),
-  new YveltalEx2XY(),
-  new XerneasEX2XY(),
+  // Other prints
+  new CrobatVDAA(),
 ];
