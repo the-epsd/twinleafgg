@@ -1,64 +1,114 @@
-import { YveltalXY, XerneasXY, GreatBallXY, MaxReviveXY, RedCardXY, TeamFlareGruntXY, RainbowEnergyPLXY, YveltalEx2XY, XerneasEX2XY } from './other-prints';
+import { CrushingHammerSSH, EnergyRetrievalSSH, EnergySearchSSH, EnergySwitchPKSSH, LumBerrySSH, PalPadSSH, Pokegear30HSSSH, PokemonCatcherSSH, PotionSSH, RareCandySSH, VitalityBandSSH, StonjournerV2SSH, ZacianV2SSH, CramorantV2SSH, Bede2SSH, ProfessorsResearch2SSH, StonjournerVMAX2SSH, Bede3SSH, ProfessorsResearch3SSH, ZacianV3SSH, AirBalloon2SSH, MetalSaucer2SSH, OrdinaryRod2SSH, QuickBall2SSH } from './other-prints';
 import { Card } from '../../game/store/card/card';
-import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy, FairyEnergy } from './basic-energies';
-import { Aromatisse } from './aromatisse';
-import { Braixen } from './braixen';
-import { Cassius } from './cassius';
-import { Delphox } from './delphox';
-import { DoubleColorlessEnergy } from './double-colorless-energy';
-import { Evosoda } from './evosoda';
-import { FairyGarden } from './fairy-garden';
-import { Fennekin } from './fennekin';
-import { Greninja } from './greninja';
-import { MuscleBand } from './muscle-band';
-import { MvenusarEx } from './m-venusaur-ex';
-import { Phantump } from './phantump';
-import { Pikachu } from './pikachu';
-import { ProfessorsLetter } from './professors-letter';
-import { Pumpkaboo } from './pumpkaboo';
-import { Raichu } from './raichu';
-import { RollerSkates } from './roller-skates';
-import { ShadowCircle } from './shadow-circle';
-import { Shauna } from './shauna';
-import { Spritzee } from './spritzee';
-import { SuperPotion } from './super-potion';
-import { Trevenant } from './trevenant';
-import { Voltorb } from './voltorb';
-import { XerneasEX } from './xerneas-ex';
-import { YveltalEx } from './yveltal-ex';
+import { AirBalloon } from './air-balloon';
+import { AuroraEnergy } from './aurora-energy';
+import { Baltoy } from './baltoy';
+import { Bede } from './bede';
+import { BigCharm } from './big-charm';
+import { Centiskorch } from './centiskorch';
+import { Cinccino } from './cinccino';
+import { Cinderace } from './cinderace';
+import { Copperajah } from './copperajah';
+import { CramorantV } from './cramorant-v';
+import { Drizzile } from './drizzile';
+import { EvolutionIncense } from './evolution-incense';
+import { Ferroseed } from './ferroseed';
+import { Frosmoth } from './frosmoth';
+import { GalarianZigzagoon } from './galarian-zigzagoon';
+import { GalarianPerrserker } from './galarian_perrserker';
+import { GiantHearth } from './giant-hearth';
+import { Gossifleur } from './gossifleur';
+import { Hop } from './hop';
+import { HyperPotion } from './hyper-potion';
+import { Inteleon } from './inteleon';
+import { LuckyEgg } from './lucky-egg';
+import { Maractus } from './maractus';
+import { Marnie } from './marnie';
+import { MetalSaucer } from './metal-saucer';
+import { Morpeko } from './morpeko';
+import { Oranguru } from './oranguru';
+import { OrdinaryRod } from './ordinary-rod';
+import { QuickBall } from './quick-ball';
+import { Raboot } from './raboot';
+import { Rookidee } from './rookidee';
+import { Sizzlipede } from './sizzlipede';
+import { Snom } from './snom';
+import { Sobble } from './sobble';
+import { StonjournerV } from './stonjourner-v';
+import { StonjournerVMAX } from './stonjourner-vmax';
+import { Sudowoodo } from './sudowoodo';
+import { Switch } from './switch';
+import { Toxicroak } from './toxicroak';
+import { Welder } from './welder';
+import { ZacianV } from './zacian-v';
 
-// Other Prints
-import { ProfessorSycamoreXY } from './other-prints';
+// Other prints
+import {
+  GreatBallSSH,
+  MarnieSSH,
+  MarnieSSH2,
+  ProfessorsResearchSSH
+} from './other-prints';
 
-export const setXY: Card[] = [
-  new Aromatisse(),
-  new Braixen(),
-  new Cassius(),
-  new Delphox(),
-  new DoubleColorlessEnergy(),
-  new Evosoda(),
-  new FairyGarden(),
-  new Fennekin(),
-  new Greninja(),
-  new MuscleBand(),
-  new MvenusarEx(),
-  new Phantump(),
-  new Pikachu(),
-  new ProfessorsLetter(),
-  new Pumpkaboo(),
-  new Raichu(),
-  new RollerSkates(),
-  new ShadowCircle(),
-  new Shauna(),
-  new Spritzee(),
-  new SuperPotion(),
-  new Trevenant(),
-  new Voltorb(),
-  new XerneasEX(),
-  new YveltalEx(),
+import {
+  GrassEnergy,
+  FireEnergy,
+  WaterEnergy,
+  LightningEnergy,
+  PsychicEnergy,
+  FightingEnergy,
+  DarknessEnergy,
+  MetalEnergy
+} from './basic-energies';
 
-  // Other Prints
-  new ProfessorSycamoreXY(),
+export const setSwordAndShield: Card[] = [
+  new AirBalloon(),
+  new AuroraEnergy(),
+  new Bede(),
+  new Centiskorch(),
+  new Cinccino(),
+  new Cinderace(),
+  new Copperajah(),
+  new CramorantV(),
+  new Drizzile(),
+  new EvolutionIncense(),
+  new Ferroseed(),
+  new Frosmoth(),
+  new GalarianPerrserker(),
+  new GalarianZigzagoon(),
+  new GiantHearth(),
+  new Gossifleur(),
+  new Hop(),
+  new HyperPotion(),
+  new Inteleon(),
+  new LuckyEgg(),
+  new Maractus(),
+  new Marnie(),
+  new MetalSaucer(),
+  new Morpeko(),
+  new Sizzlipede(),
+  new Snom(),
+  new Sobble(),
+  new Oranguru(),
+  new OrdinaryRod(),
+  new QuickBall(),
+  new Raboot(),
+  new Rookidee(),
+  new StonjournerV(),
+  new StonjournerVMAX(),
+  new Sudowoodo(),
+  new Switch(),
+  new Toxicroak(),
+  new Welder(),
+  new ZacianV(),
+  new Baltoy(),
+  new BigCharm(),
+
+  // Other prints
+  new GreatBallSSH(),
+  new MarnieSSH(),
+  new MarnieSSH2(),
+  new ProfessorsResearchSSH(),
 
   // Basic energies
   new GrassEnergy(),
@@ -69,14 +119,28 @@ export const setXY: Card[] = [
   new FightingEnergy(),
   new DarknessEnergy(),
   new MetalEnergy(),
-  new FairyEnergy(),
-  new YveltalXY(),
-  new XerneasXY(),
-  new GreatBallXY(),
-  new MaxReviveXY(),
-  new RedCardXY(),
-  new TeamFlareGruntXY(),
-  new RainbowEnergyPLXY(),
-  new YveltalEx2XY(),
-  new XerneasEX2XY(),
+  new CrushingHammerSSH(),
+  new EnergyRetrievalSSH(),
+  new EnergySearchSSH(),
+  new EnergySwitchPKSSH(),
+  new LumBerrySSH(),
+  new PalPadSSH(),
+  new Pokegear30HSSSH(),
+  new PokemonCatcherSSH(),
+  new PotionSSH(),
+  new RareCandySSH(),
+  new VitalityBandSSH(),
+  new StonjournerV2SSH(),
+  new ZacianV2SSH(),
+  new CramorantV2SSH(),
+  new Bede2SSH(),
+  new ProfessorsResearch2SSH(),
+  new StonjournerVMAX2SSH(),
+  new Bede3SSH(),
+  new ProfessorsResearch3SSH(),
+  new ZacianV3SSH(),
+  new AirBalloon2SSH(),
+  new MetalSaucer2SSH(),
+  new OrdinaryRod2SSH(),
+  new QuickBall2SSH(),
 ];
