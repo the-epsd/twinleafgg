@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Ferrothorn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,6 +38,8 @@ export class Ferrothorn extends PokemonCard {
   public name: string = 'Ferrothorn';
   public fullName: string = 'Ferrothorn EPO';
 
+  public usedGyroBall = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 3, results => {
@@ -46,7 +49,13 @@ export class Ferrothorn extends PokemonCard {
       });
     }
 
+    // Gyro Ball - set flag when attack is used
     if (WAS_ATTACK_USED(effect, 1, this)) {
+      this.usedGyroBall = true;
+    }
+
+    // Gyro Ball - switch both Pokemon after damage is dealt
+    if (effect instanceof AfterAttackEffect && this.usedGyroBall) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -89,6 +98,11 @@ export class Ferrothorn extends PokemonCard {
           opponent.switchPokemon(opponentTarget);
         });
       }
+    }
+
+    // Clean up Gyro Ball flag at end of turn
+    if (effect instanceof EndTurnEffect && this.usedGyroBall) {
+      this.usedGyroBall = false;
     }
 
     return state;
