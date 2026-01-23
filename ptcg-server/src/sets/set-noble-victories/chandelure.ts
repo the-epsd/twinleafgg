@@ -14,7 +14,8 @@ import { PutDamagePrompt } from '../../game/store/prompts/put-damage-prompt';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import {GameError} from '../../game/game-error';
+import { GameError } from '../../game/game-error';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class Chandelure extends PokemonCard {
@@ -57,23 +58,27 @@ export class Chandelure extends PokemonCard {
 
   public setNumber: string = '60';
 
-  public readonly CURSED_SHADOW_MAREKER = 'CURSED_SHADOW_MAREKER';
+  public readonly CURSED_SHADOW_MARKER = 'CURSED_SHADOW_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.CURSED_SHADOW_MAREKER, this);
+      player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       if (!player.active.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.CURSED_SHADOW_MAREKER, this)) {
+      if (player.marker.hasMarker(this.CURSED_SHADOW_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -102,7 +107,7 @@ export class Chandelure extends PokemonCard {
         if (results.length === 0) {
           return;
         }
-        player.marker.addMarker(this.CURSED_SHADOW_MAREKER, this);
+        player.marker.addMarker(this.CURSED_SHADOW_MARKER, this);
         for (const result of results) {
           const target = StateUtils.getTarget(state, player, result.target);
           target.damage += result.damage;
@@ -119,7 +124,7 @@ export class Chandelure extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.CURSED_SHADOW_MAREKER, this);
+      effect.player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
     }
 
     return state;
