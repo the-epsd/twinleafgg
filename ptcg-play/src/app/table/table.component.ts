@@ -40,6 +40,8 @@ export class TableComponent implements OnInit, OnDestroy {
   public canUndoBackend = false;
   public showSandboxPanel = false;
   public sandboxSidebarCollapsed: boolean = false;
+  public use3dBoard: boolean = false;
+  public webglSupported: boolean = true;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
@@ -90,6 +92,11 @@ export class TableComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Ensure any active board selection is cleared when table initializes
     this.boardInteractionService.endBoardSelection();
+
+    // Check WebGL support - always default to 2D board
+    this.webglSupported = this.checkWebGLSupport();
+    // Always default to 2D board (false) - user can toggle to 3D if desired
+    this.use3dBoard = false;
 
     this.route.paramMap
       .pipe(
@@ -291,5 +298,31 @@ export class TableComponent implements OnInit, OnDestroy {
 
   toggleSandboxSidebar() {
     this.sandboxSidebarCollapsed = !this.sandboxSidebarCollapsed;
+  }
+
+  public toggle3dBoard() {
+    this.use3dBoard = !this.use3dBoard;
+    this.save3dBoardPreference(this.use3dBoard);
+  }
+
+  private checkWebGLSupport(): boolean {
+    try {
+      const canvas = document.createElement('canvas');
+      return !!(
+        window.WebGLRenderingContext &&
+        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private get3dBoardPreference(): boolean {
+    const stored = localStorage.getItem('ptcg-use-3d-board');
+    return stored === 'true';
+  }
+
+  private save3dBoardPreference(use3d: boolean): void {
+    localStorage.setItem('ptcg-use-3d-board', use3d.toString());
   }
 }

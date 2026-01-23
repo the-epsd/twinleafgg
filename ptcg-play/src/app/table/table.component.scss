@@ -25,7 +25,8 @@
   overflow: hidden;
 }
 
-ptcg-board {
+ptcg-board,
+ptcg-board-3d {
   flex: 1 1 auto;
   overflow: hidden;
   margin-top: -5%;
@@ -40,6 +41,27 @@ ptcg-hand {
 
 .opp-hand {
   margin-bottom: 1%;
+}
+
+.board-toggle {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  backdrop-filter: blur(5px);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .sandbox-sidebar-container {
