@@ -1,0 +1,97 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { StoreLike, State, EnergyCard, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { StateUtils } from '../../game/store/state-utils';
+
+export class Accelgor extends PokemonCard {
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Shelmet';
+  public cardType: CardType = G;
+  public hp: number = 90;
+  public weakness = [{ type: R }];
+  public retreat = [];
+
+  public attacks = [
+    {
+      name: 'Acid Spray',
+      cost: [G],
+      damage: 20,
+      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
+    },
+    {
+      name: 'Deck and Cover',
+      cost: [C, C],
+      damage: 50,
+      text: 'The Defending Pokemon is now Paralyzed and Poisoned. Shuffle this Pokemon and all cards attached to it into your deck.'
+    }
+  ];
+
+  public set: string = 'NVI';
+  public setNumber: string = '12';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Accelgor';
+  public fullName: string = 'Accelgor NVI';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Acid Spray - flip to discard opponent's energy
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      return COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          const oppEnergy = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          if (oppEnergy.length === 0) {
+            return;
+          }
+
+          if (oppEnergy.length === 1) {
+            opponent.active.moveCardTo(oppEnergy[0], opponent.discard);
+            return;
+          }
+
+          store.prompt(state, new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            opponent.active,
+            { superType: SuperType.ENERGY },
+            { min: 1, max: 1, allowCancel: false }
+          ), selected => {
+            if (selected && selected.length > 0) {
+              opponent.active.moveCardTo(selected[0], opponent.discard);
+            }
+          });
+        }
+      });
+    }
+
+    // Deck and Cover - paralyze, poison, shuffle self into deck
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+
+      // Apply special conditions
+      const addSpecialCondition = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.PARALYZED,
+        SpecialCondition.POISONED
+      ]);
+      store.reduceEffect(state, addSpecialCondition);
+
+      // Shuffle this Pokemon and all attached cards into deck
+      const cardList = player.active;
+      const cardsToShuffle = cardList.cards.slice();
+      cardsToShuffle.forEach(card => {
+        cardList.moveCardTo(card, player.deck);
+      });
+      cardList.clearEffects();
+
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+      });
+    }
+
+    return state;
+  }
+}
