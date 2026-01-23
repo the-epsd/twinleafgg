@@ -28,6 +28,7 @@ import { YveltalEx } from './yveltal-ex';
 
 // Other Prints
 import { ProfessorSycamoreXY } from './other-prints';
+import { MVenusaurEX } from './m-venusaur-ex';
 
 export const setXY: Card[] = [
   new Aromatisse(),
@@ -39,6 +40,7 @@ export const setXY: Card[] = [
   new FairyGarden(),
   new Fennekin(),
   new Greninja(),
+  new MVenusaurEX(),
   new MuscleBand(),
   new Phantump(),
   new Pikachu(),

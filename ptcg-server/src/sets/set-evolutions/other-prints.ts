@@ -22,6 +22,7 @@ import { BrocksGrit as BrocksGritEVO74 } from "../set-evolutions/brocks-grit";
 import { HereComesTeamRocket } from "../set-team-rocket/here-comes-team-rocket";
 import { Pokedex } from '../set-black-and-white/pokedex';
 import { DarknessEnergy } from '../set-scarlet-and-violet-energy/darkness-energy';
+import { MVenusaurEX } from "../set-x-and-y/m-venusaur-ex";
 
 export class PokedexEVO extends Pokedex {
   public set = 'EVO';
@@ -163,5 +164,17 @@ export class BrocksGrit2EVO extends BrocksGritEVO74 {
 export class HereComesTeamRocketEVO extends HereComesTeamRocket {
   public setNumber = '113';
   public fullName: string = 'Here Comes Team Rocket! EVO';
+  public set = 'EVO';
+}
+
+export class MVenusaurEXEVO extends MVenusaurEX {
+  public setNumber = '2';
+  public fullName: string = 'M Venusaur-EX EVO';
+  public set = 'EVO';
+}
+
+export class MVenusaurEXEVOSR extends MVenusaurEX {
+  public setNumber = '100';
+  public fullName: string = 'M Venusaur-EX SR EVO';
   public set = 'EVO';
 }

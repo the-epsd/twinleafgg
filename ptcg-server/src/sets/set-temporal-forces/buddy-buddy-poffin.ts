@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, ShuffleDeckPrompt, PokemonCard, GameLog } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, ShuffleDeckPrompt, PokemonCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -56,7 +56,6 @@ export class BuddyBuddyPoffin extends TrainerCard {
         cards.forEach((card, index) => {
           const playPokemonFromDeckEffect = new PlayPokemonFromDeckEffect(player, card as any, openSlots[index]);
           store.reduceEffect(state, playPokemonFromDeckEffect);
-          store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
         });
 
         player.supporter.moveCardTo(this, player.discard);
