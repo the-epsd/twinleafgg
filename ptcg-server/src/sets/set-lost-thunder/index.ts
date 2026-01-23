@@ -59,6 +59,7 @@ import { SpellTag } from './spell-tag';
 import { ThunderMountainPrismStar } from './thunder-mountain-prism-star';
 import { Treecko } from './treecko';
 import { Trumbeak } from './trumbeak';
+import { UnownDAMAGE } from './unown-damage';
 import { UnownHAND } from './unown-hand';
 import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
@@ -124,6 +125,7 @@ export const setLostThunder: Card[] = [
   new ThunderMountainPrismStar(),
   new Treecko(),
   new Trumbeak(),
+  new UnownDAMAGE(),
   new UnownHAND(),
   new WhiteKyurem(),
   new Wurmple(),

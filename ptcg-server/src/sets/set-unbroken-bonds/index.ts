@@ -41,6 +41,7 @@ import { PorygonZ } from './porygon-z';
 import { Porygon2 } from './porygon2';
 import { PowerPlant } from './power-plant';
 import { Pyukumuku } from './pyukumuku';
+import { RedsChallenge } from './reds-challenge';
 import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 import { Salazzle } from './salazzle';
 import { Seel } from './seel';
@@ -97,6 +98,7 @@ export const setUnbrokenBonds: Card[] = [
   new PorygonZ(),
   new PowerPlant(),
   new Pyukumuku(),
+  new RedsChallenge(),
   new ReshiramCharizardGX(),
   new Salazzle(),
   new Seel(),

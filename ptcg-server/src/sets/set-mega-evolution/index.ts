@@ -58,6 +58,7 @@ import { Snover } from './snover';
 import { Sobble } from './sobble';
 import { Solrock } from './solrock';
 import { Steelix } from './steelix';
+import { StrangeTimepiece } from './strange-timepiece';
 import { SurfingBeach } from './surfing-beach';
 import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
@@ -123,6 +124,7 @@ export const setMegaEvolution: Card[] = [
   new Sobble(),
   new Solrock(),
   new Steelix(),
+  new StrangeTimepiece(),
   new SurfingBeach(),
   new WallysCompassion(),
   new Xerneas(),
