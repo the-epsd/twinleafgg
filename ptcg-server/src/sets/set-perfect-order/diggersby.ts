@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PlayerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, PlayerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Diggersby extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

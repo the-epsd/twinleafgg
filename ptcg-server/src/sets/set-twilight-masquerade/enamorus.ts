@@ -14,18 +14,18 @@ export class Enamorus extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-      name: 'Heart Sign',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Love Resonance',
-      cost: [P, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'If any of your Pokémon in play are the same type as any of your opponent\'s Pokémon in play, this attack does 120 more damage.'
-    }];
+    name: 'Heart Sign',
+    cost: [C],
+    damage: 30,
+    text: ''
+  },
+  {
+    name: 'Love Resonance',
+    cost: [P, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'If any of your Pokémon in play are the same type as any of your opponent\'s Pokémon in play, this attack does 120 more damage.'
+  }];
 
   public regulationMark = 'H';
   public set: string = 'TWM';

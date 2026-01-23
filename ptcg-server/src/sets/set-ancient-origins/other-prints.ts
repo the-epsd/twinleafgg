@@ -1,10 +1,10 @@
-import { EnergyRecycler } from "../set-battle-styles/energy-recycler";
-import { LuckyHelmet } from "../set-twilight-masquerade/lucky-helmet";
-import { Lysandre } from "../set-flashfire/lysandre";
-import { HoopaEX as HoopaEXAOR36 } from "../set-ancient-origins/hoopa-ex";
-import { GiratinaEX as GiratinaEXAOR57 } from "../set-ancient-origins/giratina-ex";
-import { EnergyRetrieval } from "../set-scarlet-and-violet/energy-retrieval";
-import { HexManiac as HexManiacAOR75 } from "../set-ancient-origins/hex-maniac";
+import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
+import { LuckyHelmet } from '../set-twilight-masquerade/lucky-helmet';
+import { Lysandre } from '../set-flashfire/lysandre';
+import { HoopaEX as HoopaEXAOR36 } from '../set-ancient-origins/hoopa-ex';
+import { GiratinaEX as GiratinaEXAOR57 } from '../set-ancient-origins/giratina-ex';
+import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
+import { HexManiac as HexManiacAOR75 } from '../set-ancient-origins/hex-maniac';
 import { LevelBall } from '../set-next-destinies/level-ball';
 import { TrainersMail } from '../set-roaring-skies/trainers-mail';
 

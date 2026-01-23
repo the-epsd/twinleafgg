@@ -1,8 +1,8 @@
-import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, PlayerType, CardType, ChoosePokemonPrompt, SlotType, Player } from "../../game";
-import { CheckPokemonTypeEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { HealEffect } from "../../game/store/effects/game-effects";
-import { TrainerEffect } from "../../game/store/effects/play-card-effects";
+import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, PlayerType, CardType, ChoosePokemonPrompt, SlotType, Player } from '../../game';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class Jacinthe extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;

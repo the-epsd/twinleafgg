@@ -1,10 +1,10 @@
-import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
-import { GreatBall } from "../set-ex-firered-leafgreen/great-ball";
-import { Potion } from "../set-base-set/potion";
-import { Switch } from "../set-base-set/switch";
-import { Charmander } from "../set-base-set/charmander";
-import { Charmeleon } from "../set-base-set/charmeleon";
-import { Charizard } from "../set-base-set/charizard";
+import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
+import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
+import { Potion } from '../set-base-set/potion';
+import { Switch } from '../set-base-set/switch';
+import { Charmander } from '../set-base-set/charmander';
+import { Charmeleon } from '../set-base-set/charmeleon';
+import { Charizard } from '../set-base-set/charizard';
 import { CycloneEnergy } from '../set-ex-power-keepers/cyclone-energy';
 import { PremierBall } from '../set-great-encounters/premier-ball';
 import { WarpEnergy } from '../set-shining-legends/warp-energy';

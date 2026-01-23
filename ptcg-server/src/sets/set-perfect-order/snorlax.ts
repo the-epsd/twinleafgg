@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, EnergyType, SuperType, SpecialCondition } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { CoinFlipEffect } from "../../game/store/effects/play-card-effects";
-import { EnergyCard } from "../../game/store/card/energy-card";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, EnergyType, SuperType, SpecialCondition } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { EnergyCard } from '../../game/store/card/energy-card';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;

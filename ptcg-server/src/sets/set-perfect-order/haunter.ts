@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { PutCountersEffect } from "../../game/store/effects/attack-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

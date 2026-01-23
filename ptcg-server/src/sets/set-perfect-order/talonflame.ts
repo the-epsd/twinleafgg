@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { CoinFlipEffect } from "../../game/store/effects/play-card-effects";
-import { WAS_POWER_USED, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Talonflame extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

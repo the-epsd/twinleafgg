@@ -1,5 +1,5 @@
-import { StevensAdvice } from "../set-ex-power-keepers/stevens-advice";
-import { Beldum } from "../set-nintendo-promos/beldum";
+import { StevensAdvice } from '../set-ex-power-keepers/stevens-advice';
+import { Beldum } from '../set-nintendo-promos/beldum';
 
 export class StevensAdviceHL extends StevensAdvice {
   public setNumber = '92';

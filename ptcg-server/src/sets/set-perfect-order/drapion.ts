@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, ADD_POISON_TO_PLAYER_ACTIVE, ADD_PARALYZED_TO_PLAYER_ACTIVE } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, ADD_POISON_TO_PLAYER_ACTIVE, ADD_PARALYZED_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
 
 export class Drapion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

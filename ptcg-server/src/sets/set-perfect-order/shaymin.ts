@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, AttachEnergyPrompt, GameMessage, ShuffleDeckPrompt, StateUtils, PlayerType, SlotType, SuperType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, AttachEnergyPrompt, GameMessage, ShuffleDeckPrompt, StateUtils, PlayerType, SlotType, SuperType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -1,8 +1,8 @@
-import { Chimchar } from "../set-diamond-and-pearl/chimchar";
-import { Piplup } from "../set-diamond-and-pearl/piplup";
-import { GiratinaLVX } from "../set-platinum/giratina-lv-x";
-import { GarchompCLVX } from "../set-supreme-victors/garchomp-c-lv-x";
-import { ArceusLvX2 as ArceusLvX2AR95 } from "../set-arceus/arceus-lv-x-2";
+import { Chimchar } from '../set-diamond-and-pearl/chimchar';
+import { Piplup } from '../set-diamond-and-pearl/piplup';
+import { GiratinaLVX } from '../set-platinum/giratina-lv-x';
+import { GarchompCLVX } from '../set-supreme-victors/garchomp-c-lv-x';
+import { ArceusLvX2 as ArceusLvX2AR95 } from '../set-arceus/arceus-lv-x-2';
 import { DialgaLVX } from '../set-great-encounters/dialga-lv-x';
 import { MewtwoLVX } from '../set-legends-awakened/mewtwo-lv-x';
 

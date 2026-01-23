@@ -1,5 +1,5 @@
-import { BalloonBerry } from "../set-ex-dragon/balloon-berry";
-import { LadyOuting } from "../set-ex-ruby-and-sapphire/lady-outing";
+import { BalloonBerry } from '../set-ex-dragon/balloon-berry';
+import { LadyOuting } from '../set-ex-ruby-and-sapphire/lady-outing';
 
 export class BalloonBerryDX extends BalloonBerry {
   public setNumber = '84';

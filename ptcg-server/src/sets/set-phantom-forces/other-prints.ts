@@ -1,14 +1,14 @@
-import { EnhancedHammer } from "../set-twilight-masquerade/enhanced-hammer";
-import { ProfessorSycamoreXY } from "../set-x-and-y/other-prints";
-import { RollerSkates } from "../set-x-and-y/roller-skates";
-import { Shauna } from "../set-x-and-y/shauna";
-import { DoubleColorlessEnergy } from "../set-base-set/double-colorless-energy";
-import { GengarEx as GengarExPHF34 } from "../set-phantom-forces/gengar-ex";
-import { AZ as AZPHF91 } from "../set-phantom-forces/az";
-import { LysandresTrumpCard as LysandresTrumpCardPHF99 } from "../set-phantom-forces/lysandres-trump-card";
-import { Xerosic as XerosicPHF110 } from "../set-phantom-forces/xerosic";
-import { MGengarEx as MGengarExPHF35 } from "../set-phantom-forces/mega-gengar-ex";
-import { AegislashEX as AegislashEXPHF65 } from "../set-phantom-forces/aegislash-ex";
+import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
+import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
+import { RollerSkates } from '../set-x-and-y/roller-skates';
+import { Shauna } from '../set-x-and-y/shauna';
+import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
+import { GengarEx as GengarExPHF34 } from '../set-phantom-forces/gengar-ex';
+import { AZ as AZPHF91 } from '../set-phantom-forces/az';
+import { LysandresTrumpCard as LysandresTrumpCardPHF99 } from '../set-phantom-forces/lysandres-trump-card';
+import { Xerosic as XerosicPHF110 } from '../set-phantom-forces/xerosic';
+import { MGengarEx as MGengarExPHF35 } from '../set-phantom-forces/mega-gengar-ex';
+import { AegislashEX as AegislashEXPHF65 } from '../set-phantom-forces/aegislash-ex';
 import { AegislashEX } from './aegislash-ex';
 
 export class AegislashEXPHF extends AegislashEX {

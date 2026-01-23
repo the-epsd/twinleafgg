@@ -1,9 +1,9 @@
-import { Venusaurex } from "../set-pokemon-151/venusaur-ex";
+import { Venusaurex } from '../set-pokemon-151/venusaur-ex';
 
-import { Blastoiseex } from "../set-pokemon-151/blastoise-ex";
-import { Yamask } from "../set-paradox-rift/yamask";
-import { Crabominable as CrabominableSCR42 } from "../set-stellar-crown/crabominable";
-import { Gulpin as GulpinSCR91 } from "../set-stellar-crown/gulpin";
+import { Blastoiseex } from '../set-pokemon-151/blastoise-ex';
+import { Yamask } from '../set-paradox-rift/yamask';
+import { Crabominable as CrabominableSCR42 } from '../set-stellar-crown/crabominable';
+import { Gulpin as GulpinSCR91 } from '../set-stellar-crown/gulpin';
 import { Bulbasaur } from '../set-pokemon-151/bulbasaur';
 import { Squirtle } from '../set-pokemon-151/squirtle';
 import { Raboot } from './raboot';
@@ -25,13 +25,13 @@ import { Lacey } from './lacey';
 import { Terapagosex } from './terapagos-ex';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
 import { BraveryCharm } from '../set-paldea-evolved/bravery-charm';
-import { ApplinPRE } from "../set-prismatic-evolution/alt-arts";
+import { ApplinPRE } from '../set-prismatic-evolution/alt-arts';
 
 // Ordinary reprints
 export class Applin extends ApplinPRE {
   public set = 'SCR';
   public setNumber = '12';
-  public fullName = 'Applin SCR 12'
+  public fullName = 'Applin SCR 12';
 }
 
 // Illustration Rares

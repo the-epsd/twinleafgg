@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { PokemonCard as PokemonCardType } from "../../game/store/card/pokemon-card";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PokemonCard as PokemonCardType } from '../../game/store/card/pokemon-card';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Fletchling extends PokemonCard {
   public stage: Stage = Stage.BASIC;

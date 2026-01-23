@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, StateUtils, SuperType, DiscardEnergyPrompt, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTag } from "../../../game";
-import { DealDamageEffect } from "../../../game/store/effects/attack-effects";
-import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, StateUtils, SuperType, DiscardEnergyPrompt, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTag } from '../../../game';
+import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 
 export class LarrysStaraptor extends PokemonCard {

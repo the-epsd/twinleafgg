@@ -79,7 +79,7 @@ export class Dusknoir extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON((5 + effect.opponent.prizesTaken), store, state, effect)
+      PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON((5 + effect.opponent.prizesTaken), store, state, effect);
     }
 
     return state;

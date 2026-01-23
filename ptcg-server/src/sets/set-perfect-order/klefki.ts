@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseAttackPrompt, GameMessage, GameError, GameLog, Attack } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { AFTER_ATTACK } from "../../game/store/prefabs/prefabs";
-import { PokemonCardList } from "../../game/store/state/pokemon-card-list";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseAttackPrompt, GameMessage, GameError, GameLog, Attack } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
+import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 export class Klefki extends PokemonCard {
   public stage: Stage = Stage.BASIC;

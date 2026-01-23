@@ -1,7 +1,7 @@
-import { DuskBall } from "../set-surging-sparks/dusk-ball";
-import { QuickBall } from "../set-majestic-dawn/quick-ball";
-import { DarknessEnergySpecial } from "../set-neo-genesis/darkness-energy-special";
-import { MetalEnergyN1 } from "../set-neo-genesis/other-prints";
+import { DuskBall } from '../set-surging-sparks/dusk-ball';
+import { QuickBall } from '../set-majestic-dawn/quick-ball';
+import { DarknessEnergySpecial } from '../set-neo-genesis/darkness-energy-special';
+import { MetalEnergyN1 } from '../set-neo-genesis/other-prints';
 import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { SuperRod } from '../set-noble-victories/super-rod';
 

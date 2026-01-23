@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, TrainerCard, TrainerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED, MOVE_CARDS } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, TrainerCard, TrainerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Hippowdon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

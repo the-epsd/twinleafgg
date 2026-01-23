@@ -1,5 +1,5 @@
 import { Marill } from './marill';
-import { RareCandy } from "../set-ex-holon-phantoms/rare-candy";
+import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 
 // This was a misprint with the wrong retreat cost, but officially ruled to be playable as having the 0 retreat
 export class MarillMisprint extends Marill {

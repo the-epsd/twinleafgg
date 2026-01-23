@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, MoveEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, SuperType } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { ABILITY_USED, WAS_ATTACK_USED, WAS_POWER_USED } from "../../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, MoveEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, SuperType } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import { ABILITY_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 
 export class Azumarillex extends PokemonCard {

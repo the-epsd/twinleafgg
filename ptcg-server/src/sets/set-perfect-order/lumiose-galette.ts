@@ -1,7 +1,7 @@
-import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, Player } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { HealEffect } from "../../game/store/effects/game-effects";
-import { TrainerEffect } from "../../game/store/effects/play-card-effects";
+import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, Player } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class LumioseGalette extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;

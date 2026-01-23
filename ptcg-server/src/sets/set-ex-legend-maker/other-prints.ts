@@ -1,4 +1,4 @@
-import { Chinchou } from "../set-ex-hidden-legends/chinchou";
+import { Chinchou } from '../set-ex-hidden-legends/chinchou';
 
 export class ChinchouLM extends Chinchou {
   public setNumber = '50';

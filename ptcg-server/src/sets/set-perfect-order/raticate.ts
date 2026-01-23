@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, PlayerType, SuperType, TrainerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, PlayerType, SuperType, TrainerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Raticate extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

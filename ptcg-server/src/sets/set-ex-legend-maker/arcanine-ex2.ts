@@ -144,9 +144,9 @@ export class Arcanineex extends PokemonCard {
           {
             allowCancel: false,
           }), choice => {
-            const option = options[choice];
-            option.action();
-          });
+          const option = options[choice];
+          option.action();
+        });
       }
     }
 

@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Skorupi extends PokemonCard {
   public stage: Stage = Stage.BASIC;

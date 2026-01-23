@@ -1,9 +1,9 @@
-import { DuskBall } from "../set-surging-sparks/dusk-ball";
-import { PokeBall } from "../set-jungle/pokeball";
-import { SuperScoopUp } from "../set-diamond-and-pearl/super-scoop-up";
-import { EnergySearch } from "../set-fossil/energy-search";
-import { DarknessEnergySpecial } from "../set-neo-genesis/darkness-energy-special";
-import { MetalEnergyN1 } from "../set-neo-genesis/other-prints";
+import { DuskBall } from '../set-surging-sparks/dusk-ball';
+import { PokeBall } from '../set-jungle/pokeball';
+import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { EnergySearch } from '../set-fossil/energy-search';
+import { DarknessEnergySpecial } from '../set-neo-genesis/darkness-energy-special';
+import { MetalEnergyN1 } from '../set-neo-genesis/other-prints';
 import { EscapeRope } from '../set-plasma-storm/escape-rope';
 
 export class WarpPointMD extends EscapeRope {
