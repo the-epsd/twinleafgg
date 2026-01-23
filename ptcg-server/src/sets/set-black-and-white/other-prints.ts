@@ -1,12 +1,12 @@
-import { EnergySearch } from "../set-fossil/energy-search";
-import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
-import { FullHeal } from "../set-base-set/full-heal";
-import { PokeBall } from "../set-jungle/pokeball";
-import { PokemonCommunicationHS } from "../set-heartgold-and-soulsilver/other-prints";
-import { Potion } from "../set-base-set/potion";
-import { SuperScoopUp } from "../set-diamond-and-pearl/super-scoop-up";
-import { Reshiram as ReshiramBLW26 } from "../set-black-and-white/reshiram";
-import { Zekrom as ZekromBLW47 } from "../set-black-and-white/zekrom";
+import { EnergySearch } from '../set-fossil/energy-search';
+import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
+import { FullHeal } from '../set-base-set/full-heal';
+import { PokeBall } from '../set-jungle/pokeball';
+import { PokemonCommunicationHS } from '../set-heartgold-and-soulsilver/other-prints';
+import { Potion } from '../set-base-set/potion';
+import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { Reshiram as ReshiramBLW26 } from '../set-black-and-white/reshiram';
+import { Zekrom as ZekromBLW47 } from '../set-black-and-white/zekrom';
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { Switch } from '../set-scarlet-and-violet/switch';
 
