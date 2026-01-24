@@ -12,13 +12,13 @@ export class MegaSharpedoex extends PokemonCard {
   public retreat = [];
 
   public attacks = [{
-    name: 'Greedy Fangs',
+    name: 'Greedy Fang',
     cost: [D],
     damage: 70,
     text: 'Draw 2 cards.',
   },
   {
-    name: 'Hungry Jaw',
+    name: 'Hungry Jaws',
     cost: [D, D],
     damage: 120,
     damageCalculation: '+',

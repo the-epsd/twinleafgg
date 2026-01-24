@@ -54,23 +54,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class MirageGate extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'LOR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '163';
-
   public regulationMark = 'F';
-
   public name: string = 'Mirage Gate';
-
   public fullName: string = 'Mirage Gate LOR';
 
   public text: string =
-    'You can use this card only if you have 7 or more cards in the Lost Zone.' +
-    '' +
-    'Search your deck for up to 2 basic Energy cards of different types and attach them to your Pokémon in any way you like. Then, shuffle your deck.';
+    `You can use this card only if you have 7 or more cards in the Lost Zone. 
+
+Search your deck for up to 2 basic Energy cards of different types and attach them to your Pokémon in any way you like. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

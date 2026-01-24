@@ -11,22 +11,12 @@ import { ToolEffect } from '../../game/store/effects/play-card-effects';
 export class ForestSealStone extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public set: string = 'SIT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '156';
-
   public regulationMark = 'F';
-
   public name: string = 'Forest Seal Stone';
-
   public fullName: string = 'Forest Seal Stone SIT';
-
-  public useWhenAttached = true;
-
-  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
   public powers = [
     {
@@ -34,11 +24,14 @@ export class ForestSealStone extends TrainerCard {
       powerType: PowerType.ABILITY,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      text: 'The Pokémon V this card is attached to can use the VSTAR Power on this card.' +
-        '' +
-        'During your turn, you may search your deck for a card and put it into your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR Power in a game.) '
+      text: `The Pokémon V this card is attached to can use the VSTAR Power on this card. 
+
+During your turn, you may search your deck for a card and put it into your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR Power in a game.)`
     }
   ];
+
+  public useWhenAttached = true;
+  public readonly VSTAR_MARKER = 'VSTAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
