@@ -585,11 +585,24 @@ export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: S
     player, GameMessage.CHOOSE_CARD_TO_HAND, player.discard, filter, options,
   ), selected => {
     const cards = selected || [];
-    cards.forEach(card => {
-      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-    });
-    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-    MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard, sourceEffect });
+
+    if (cards.length === 0) {
+      return state;
+    }
+
+    // Create the move effect and reduce it to check if it will be prevented
+    const moveEffect = new MoveCardsEffect(player.discard, player.hand, { cards, sourceCard, sourceEffect });
+    state = store.reduceEffect(state, moveEffect);
+
+    // Only log and show cards if the move wasn't prevented
+    if (!moveEffect.preventDefault) {
+      cards.forEach(card => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+      });
+      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    }
+
+    return state;
   });
 }
 
@@ -1137,7 +1150,7 @@ export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: 
   try {
     // Store original supporterTurn value if bypassing
     const originalSupporterTurn = bypassSupporterTurn ? player.supporterTurn : undefined;
-    
+
     // Temporarily set supporterTurn to 0 if bypassing the check
     if (bypassSupporterTurn) {
       player.supporterTurn = 0;

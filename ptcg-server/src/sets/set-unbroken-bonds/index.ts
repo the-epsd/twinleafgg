@@ -6,6 +6,7 @@ import { Blacephalon } from './blacephalon';
 import { Charjabug } from './charjabug';
 import { Cleffa } from './cleffa';
 import { DedenneGX } from './dedenne-gx';
+import { DevolutionSprayZ } from './devolution-spray-z';
 import { Dewgong } from './dewgong';
 import { DuskStone } from './dusk-stone';
 import { ElectromagneticRadar } from './electromagnetic-radar';
@@ -68,6 +69,7 @@ export const setUnbrokenBonds: Card[] = [
   new Charjabug(),
   new Cleffa(),
   new DedenneGX(),
+  new DevolutionSprayZ(),
   new Dewgong(),
   new DuskStone(),
   new ElectromagneticRadar(),
