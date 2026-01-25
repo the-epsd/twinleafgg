@@ -1,6 +1,7 @@
 import {
   BoxGeometry,
   MeshStandardMaterial,
+  MeshBasicMaterial,
   Mesh,
   Texture,
   Group,
@@ -8,11 +9,16 @@ import {
   Vector3
 } from 'three';
 
+// Outline border thickness (in card units)
+const OUTLINE_THICKNESS = 0.15;
+
 export class Board3dCard {
   private group: Group;
   private cardMesh: Mesh;
+  private outlineMesh: Mesh | null = null;
   private static cardGeometry: BoxGeometry;
   private static edgeMaterial: MeshStandardMaterial;
+  private static outlineGeometry: BoxGeometry;
 
   constructor(
     frontTexture: Texture,
@@ -49,13 +55,17 @@ export class Board3dCard {
         map: frontTexture,
         roughness: 0.4,
         metalness: 0.1,
-        side: DoubleSide
+        side: DoubleSide,
+        transparent: true,
+        alphaTest: 0.1  // Discard pixels with alpha < 0.1 for cleaner edges
       }),
       new MeshStandardMaterial({  // Back face (card back)
         map: backTexture,
         roughness: 0.4,
         metalness: 0.1,
-        side: DoubleSide
+        side: DoubleSide,
+        transparent: true,
+        alphaTest: 0.1
       })
     ];
 
@@ -111,11 +121,55 @@ export class Board3dCard {
     materials[4].emissiveIntensity = intensity;
   }
 
+  /**
+   * Show or hide a colored outline around the card
+   */
+  public setOutline(visible: boolean, color: number = 0x4ade80): void {
+    if (visible) {
+      if (!this.outlineMesh) {
+        // Create outline geometry if not exists (slightly larger than card)
+        if (!Board3dCard.outlineGeometry) {
+          Board3dCard.outlineGeometry = new BoxGeometry(
+            2.5 + OUTLINE_THICKNESS * 2,
+            3.5 + OUTLINE_THICKNESS * 2,
+            0.01
+          );
+        }
+
+        // Create outline material with the specified color
+        const outlineMaterial = new MeshBasicMaterial({
+          color: color,
+          side: DoubleSide
+        });
+
+        this.outlineMesh = new Mesh(Board3dCard.outlineGeometry, outlineMaterial);
+        // Position slightly behind the card
+        this.outlineMesh.position.z = 0.02;
+        this.outlineMesh.rotation.x = -Math.PI / 2;
+
+        this.group.add(this.outlineMesh);
+      } else {
+        // Update color if outline already exists
+        (this.outlineMesh.material as MeshBasicMaterial).color.setHex(color);
+        this.outlineMesh.visible = true;
+      }
+    } else if (this.outlineMesh) {
+      this.outlineMesh.visible = false;
+    }
+  }
+
   public dispose(): void {
     // Dispose of dynamic materials (not shared ones)
     const materials = this.cardMesh.material as MeshStandardMaterial[];
     materials[4].dispose();
     materials[5].dispose();
+
+    // Dispose outline mesh if exists
+    if (this.outlineMesh) {
+      (this.outlineMesh.material as MeshBasicMaterial).dispose();
+      this.group.remove(this.outlineMesh);
+      this.outlineMesh = null;
+    }
 
     if (this.group.parent) {
       this.group.parent.remove(this.group);
@@ -128,6 +182,9 @@ export class Board3dCard {
     }
     if (Board3dCard.edgeMaterial) {
       Board3dCard.edgeMaterial.dispose();
+    }
+    if (Board3dCard.outlineGeometry) {
+      Board3dCard.outlineGeometry.dispose();
     }
   }
 }

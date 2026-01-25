@@ -25,7 +25,8 @@ import {
   sRGBEncoding,
   ACESFilmicToneMapping,
   Vector3,
-  Vector2
+  Vector2,
+  RepeatWrapping
 } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
@@ -38,9 +39,12 @@ import { Board3dAnimationService } from '../services/board-3d-animation.service'
 import { Board3dInteractionService } from '../services/board-3d-interaction.service';
 import { Board3dHandService } from '../services/board-3d-hand.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
-import { Player, CardList } from 'ptcg-server';
+import { Player, CardList, Card, SlotType, PlayerType, CardTarget } from 'ptcg-server';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
+import { CardInfoPaneOptions } from '../../../shared/cards/card-info-pane/card-info-pane.component';
 import { GameService } from '../../../api/services/game.service';
+import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { Object3D } from 'three';
 
 @UntilDestroy()
 @Component({
@@ -79,6 +83,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   private needsRender: boolean = true;
   private currentHoveredCard: any = null;
   private hasInitializedHand: boolean = false;
+  private resizeObserver: ResizeObserver | null = null;
+
+  // Player perspective - true when viewing from opposite side (like 2D board's isUpsideDown)
+  private isUpsideDown: boolean = false;
 
   constructor(
     private ngZone: NgZone,
@@ -88,7 +96,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     private interactionService: Board3dInteractionService,
     private handService: Board3dHandService,
     private cardsBaseService: CardsBaseService,
-    private gameService: GameService
+    private gameService: GameService,
+    private boardInteractionService: BoardInteractionService
   ) { }
 
   ngOnInit(): void {
@@ -97,15 +106,19 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.initCamera();
     this.initRenderer();
     this.initLights();
-    this.createBoard();
+    this.createBoardAsync();
     this.createGlowingEdges();
     this.initPostProcessing();
 
     // Initialize hand service
     this.scene.add(this.handService.getHandGroup());
 
-    // Create drop zone indicators
-    this.interactionService.createDropZoneIndicators(this.scene);
+    // Create drop zone indicators (async) with actual bench sizes
+    const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
+    const topBenchSize = this.topPlayer?.bench?.length ?? 5;
+    this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(() => {
+      this.markDirty();
+    });
 
     // Sync initial game state if available
     if (this.gameState) {
@@ -124,9 +137,27 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     } else {
       console.log('[Board3D] Hand data NOT available at init, will sync on first change');
     }
+
+    // Subscribe to selection mode changes for ChoosePokemonPrompt etc.
+    this.boardInteractionService.selectionMode$.pipe(
+      untilDestroyed(this)
+    ).subscribe(() => {
+      this.updateSelectionVisuals();
+    });
+
+    this.boardInteractionService.selectedTargets$.pipe(
+      untilDestroyed(this)
+    ).subscribe(() => {
+      this.updateSelectionVisuals();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // Update perspective when player assignment changes
+    if ((changes.topPlayer || changes.bottomPlayer || changes.clientId) && this.camera) {
+      this.updatePerspective();
+    }
+
     // Sync game state when it changes
     if (changes.gameState && !changes.gameState.firstChange && this.scene) {
       this.syncGameState();
@@ -163,8 +194,14 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Add event listeners
     this.addEventListeners();
 
-    // Handle window resize
-    window.addEventListener('resize', this.onWindowResize.bind(this));
+    // Use ResizeObserver for container-based responsiveness
+    const container = this.canvasRef.nativeElement.parentElement;
+    if (container) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.onContainerResize();
+      });
+      this.resizeObserver.observe(container);
+    }
   }
 
   ngOnDestroy(): void {
@@ -176,6 +213,11 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Kill any active animations
     this.animationService.killAllAnimations();
 
+    // Clean up service state to prevent stale references on mode switch
+    this.stateSync.dispose(this.scene);
+    this.handService.dispose(this.scene);
+    this.interactionService.dispose(this.scene);
+
     // Clean up resources
     this.disposeScene();
     this.renderer?.dispose();
@@ -183,7 +225,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Remove event listeners
     this.removeEventListeners();
-    window.removeEventListener('resize', this.onWindowResize.bind(this));
+
+    // Clean up ResizeObserver
+    this.resizeObserver?.disconnect();
   }
 
   private initScene(): void {
@@ -194,9 +238,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     const canvas = this.canvasRef.nativeElement;
     const aspect = canvas.clientWidth / canvas.clientHeight;
 
-    this.camera = new PerspectiveCamera(45, aspect, 0.1, 1000);
-    this.camera.position.set(0, 25, 40);
-    this.camera.lookAt(0, -7, 0);  // Look higher up to show board in upper portion
+    // Calculate initial perspective
+    this.isUpsideDown = this.topPlayer?.id === this.clientId;
+    const zMultiplier = this.isUpsideDown ? -1 : 1;
+
+    this.camera = new PerspectiveCamera(37.5, aspect, 0.1, 2000);
+    this.camera.position.set(0, 25, 40 * zMultiplier);
+    this.camera.lookAt(0, 0, 12);  // Center of board
   }
 
   private initRenderer(): void {
@@ -223,7 +271,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   private initLights(): void {
     // Ambient base light
-    this.ambientLight = new AmbientLight(0xffffff, 0.3);
+    this.ambientLight = new AmbientLight(0xffffff, 1);
     this.scene.add(this.ambientLight);
 
     // Main directional light with shadows
@@ -265,21 +313,27 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.scene.add(this.topGlow);
   }
 
-  private createBoard(): void {
+  private async createBoardAsync(): Promise<void> {
     // Create board surface geometry
     const boardGeometry = new PlaneGeometry(50, 50);
 
-    // Board material with sandy/beige color
+    // Load black grid texture
+    const boardTexture = await this.assetLoader.loadBoardGridTexture();
+
+    // Board material with black grid texture
     const boardMaterial = new MeshStandardMaterial({
-      color: 0xd4c5a9,
+      map: boardTexture,
+      color: 0xffffff, // White color to show texture properly
       roughness: 1,
       metalness: 0.00
     });
 
     this.boardMesh = new Mesh(boardGeometry, boardMaterial);
     this.boardMesh.rotation.x = -Math.PI / 2; // Make it horizontal
+    this.boardMesh.position.z = 12;
     this.boardMesh.receiveShadow = false;
     this.scene.add(this.boardMesh);
+    this.markDirty();
   }
 
   private createGlowingEdges(): void {
@@ -316,27 +370,55 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     }
   };
 
-  private onWindowResize(): void {
+  private onContainerResize(): void {
     const canvas = this.canvasRef.nativeElement;
-    const aspect = canvas.clientWidth / canvas.clientHeight;
+    const container = canvas.parentElement;
+    if (!container) return;
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    if (width === 0 || height === 0) return;
+
+    const aspect = width / height;
 
     this.camera.aspect = aspect;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    this.composer.setSize(canvas.clientWidth, canvas.clientHeight);
+    this.renderer.setSize(width, height);
+    this.composer.setSize(width, height);
 
-    // Adjust camera for narrow screens
-    if (aspect < 1.5) {
-      this.camera.position.y = 30;
-      this.camera.position.z = 50;
+    // Flip Z based on player perspective (like 2D board's isUpsideDown)
+    const zMultiplier = this.isUpsideDown ? -1 : 1;
+
+    // Adjust camera for different aspect ratios
+    // Camera must be at Z > 18 to see hand cards (hand is at Z=18)
+    if (aspect < 1.2) {
+      // Portrait/narrow - zoom out more
+      this.camera.position.set(0, 35, 45 * zMultiplier);
+    } else if (aspect < 1.5) {
+      // Slightly narrow
+      this.camera.position.set(0, 30, 40 * zMultiplier);
     } else {
-      this.camera.position.y = 25;
-      this.camera.position.z = 40;
+      // Wide/normal
+      this.camera.position.set(0, 40, 35 * zMultiplier);
     }
 
-    this.camera.lookAt(0, 8, 0);  // Look higher up to show board in upper portion
+    this.camera.lookAt(0, 0, 18);  // Center of board
     this.markDirty();
+  }
+
+  /**
+   * Update player perspective - determines if we're viewing from the opposite side
+   * Mirrors the 2D board's isUpsideDown logic
+   */
+  private updatePerspective(): void {
+    const wasUpsideDown = this.isUpsideDown;
+    this.isUpsideDown = this.topPlayer?.id === this.clientId;
+
+    // Only update camera if perspective changed
+    if (wasUpsideDown !== this.isUpsideDown) {
+      this.onContainerResize();
+    }
   }
 
   private disposeScene(): void {
@@ -373,11 +455,53 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
           this.scene,
           this.clientId
         );
+
+        // Update drop zone occupied states
+        this.updateDropZoneOccupancy();
+
+        // Update drop zones if bench size changed
+        this.updateDropZonesForBenchSize();
+
         this.markDirty();
       } catch (error) {
         console.error('Failed to sync 3D board state:', error);
       }
     });
+  }
+
+  /**
+   * Update drop zones if bench size has changed
+   */
+  private updateDropZonesForBenchSize(): void {
+    const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
+    const topBenchSize = this.topPlayer?.bench?.length ?? 5;
+
+    // Recreate drop zones with updated bench sizes
+    this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(() => {
+      this.markDirty();
+    });
+  }
+
+  private updateDropZoneOccupancy(): void {
+    // Use the correctly assigned bottomPlayer and topPlayer from inputs
+    // (these are already assigned correctly by parent component based on clientId)
+    const bottom = this.bottomPlayer;
+    const top = this.topPlayer;
+
+    // Bottom player occupancy
+    const bottomActive = bottom?.active?.cards?.length > 0;
+    const bottomBench = bottom?.bench?.map(slot => slot?.cards?.length > 0) ?? [];
+
+    // Top player occupancy
+    const topActive = top?.active?.cards?.length > 0;
+    const topBench = top?.bench?.map(slot => slot?.cards?.length > 0) ?? [];
+
+    this.interactionService.updateOccupiedZones(
+      bottomActive,
+      bottomBench,
+      topActive,
+      topBench
+    );
   }
 
   private syncHand(): void {
@@ -389,6 +513,12 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       clientId: this.clientId
     });
 
+    // Skip sync if user is currently dragging a card to prevent destroying the dragged card
+    if (this.interactionService.getIsDragging()) {
+      console.log('[Board3D] Skipping hand sync - drag in progress');
+      return;
+    }
+
     if (!this.bottomPlayerHand || !this.bottomPlayer) {
       console.log('[Board3D] syncHand() aborted - missing data');
       return;
@@ -397,15 +527,18 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.ngZone.runOutsideAngular(async () => {
       try {
         const isOwner = this.bottomPlayer.id === this.clientId;
+        const playableCardIds = this.bottomPlayer.playableCardIds;
         console.log('[Board3D] Calling handService.updateHand:', {
           isOwner,
-          handSize: this.bottomPlayerHand.cards.length
+          handSize: this.bottomPlayerHand.cards.length,
+          playableCount: playableCardIds?.length ?? 0
         });
 
         await this.handService.updateHand(
           this.bottomPlayerHand,
           isOwner,
-          this.scene
+          this.scene,
+          playableCardIds
         );
 
         console.log('[Board3D] Hand sync completed successfully');
@@ -456,8 +589,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.ngZone.runOutsideAngular(() => {
       const canvas = this.canvasRef.nativeElement;
 
-      if (this.interactionService.getIsDragging()) {
-        // Dragging
+      // Call onMouseMoveDrag when dragging OR when there's a pending drag (waiting for threshold)
+      if (this.interactionService.getIsDragging() || this.interactionService.hasPendingDrag()) {
+        // Dragging or pending drag
         this.interactionService.onMouseMoveDrag(
           event,
           this.camera,
@@ -474,11 +608,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         );
 
         if (hoveredCard !== this.currentHoveredCard) {
-          if (this.currentHoveredCard) {
-            this.animationService.unhoverCard(this.currentHoveredCard);
-          }
+          // Update cursor for UX feedback (no hover animations)
           if (hoveredCard) {
-            this.animationService.hoverCard(hoveredCard);
             canvas.style.cursor = hoveredCard.userData.isHandCard ? 'grab' : 'pointer';
           } else {
             canvas.style.cursor = 'default';
@@ -502,15 +633,26 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       );
 
       if (result) {
-        // Card dropped on valid zone - send play action
-        this.gameService.playCardAction(
-          this.gameState.gameId,
-          result.handIndex,
-          result.zone
-        );
+        if (result.action === 'click' && result.clickedCard) {
+          // Card was clicked - show info pane
+          this.onCardClicked(result.clickedCard);
+        } else if (result.action === 'playCard' && result.handIndex !== undefined) {
+          // Card dropped on valid zone - send play action
+          this.gameService.playCardAction(
+            this.gameState.gameId,
+            result.handIndex,
+            result.zone
+          );
 
-        // Remove card from hand visually (will re-sync on state update)
-        this.handService.removeCard(result.handIndex);
+          // Remove card from hand visually (will re-sync on state update)
+          this.handService.removeCard(result.handIndex);
+        } else if (result.action === 'retreat' && result.benchIndex !== undefined) {
+          // Retreat action (Active <-> Bench swap)
+          this.gameService.retreatAction(
+            this.gameState.gameId,
+            result.benchIndex
+          );
+        }
       }
 
       canvas.style.cursor = 'default';
@@ -523,4 +665,131 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.currentHoveredCard = null;
     this.markDirty();
   };
+
+  /**
+   * Update selection visuals for all cards based on BoardInteractionService state
+   */
+  private updateSelectionVisuals(): void {
+    const isSelectionMode = this.boardInteractionService.isSelectionActive();
+
+    // Update board cards via stateSync
+    this.stateSync.updateSelectionState(
+      isSelectionMode,
+      this.boardInteractionService
+    );
+
+    // Update hand cards
+    this.updateHandSelectionVisuals(isSelectionMode);
+
+    this.markDirty();
+  }
+
+  /**
+   * Update selection visuals for hand cards
+   */
+  private updateHandSelectionVisuals(isSelectionMode: boolean): void {
+    const handGroup = this.handService.getHandGroup();
+    handGroup.children.forEach((cardGroup, index) => {
+      const card3d = this.handService.getCardAtIndex(index);
+      if (!card3d) return;
+
+      const cardData = cardGroup.userData.cardData;
+      if (!cardData) return;
+
+      // Create target for this hand card
+      const target: CardTarget = {
+        player: PlayerType.BOTTOM_PLAYER,
+        slot: SlotType.HAND,
+        index
+      };
+
+      if (isSelectionMode) {
+        const isEligible = this.boardInteractionService.isTargetEligible(target);
+        const isSelected = this.boardInteractionService.isTargetSelected(target);
+
+        if (isSelected) {
+          card3d.setOutline(true, 0x4ade80); // Green for selected
+        } else if (isEligible) {
+          card3d.setOutline(true, 0xffffff); // White for selectable
+        } else {
+          card3d.setOutline(false);
+        }
+      } else {
+        // Reset to playable card state when not in selection mode
+        const isPlayable = this.bottomPlayer?.playableCardIds?.includes(cardData.id);
+        card3d.setOutline(isPlayable, 0x4ade80);
+      }
+    });
+  }
+
+  /**
+   * Handle card click to show info pane with clickable abilities/attacks
+   */
+  private onCardClicked(cardObject: Object3D): void {
+    const cardData = cardObject.userData.cardData as Card;
+    const cardList = cardObject.userData.cardList;
+    const cardTarget = cardObject.userData.cardTarget as CardTarget;
+    const isHandCard = cardObject.userData.isHandCard;
+
+    if (!cardData) return;
+
+    // Check if we're in selection mode (for ChoosePokemonPrompt etc.)
+    if (this.boardInteractionService.isSelectionActive()) {
+      // Build target for selection
+      const target: CardTarget = cardTarget || {
+        player: PlayerType.BOTTOM_PLAYER,
+        slot: isHandCard ? SlotType.HAND : SlotType.ACTIVE,
+        index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0
+      };
+
+      // Toggle selection if target is eligible
+      if (this.boardInteractionService.isTargetEligible(target)) {
+        this.boardInteractionService.toggleTarget(target);
+      }
+      return; // Don't show info pane in selection mode
+    }
+
+    // Normal click behavior - show info pane
+    // Determine options based on card location
+    let options: CardInfoPaneOptions = {};
+
+    if (isHandCard) {
+      // Hand cards: enable abilities with useFromHand (like Luxray's Swelling Flash)
+      options = { enableAbility: { useFromHand: true }, enableAttack: false };
+    } else if (cardTarget) {
+      if (cardTarget.slot === SlotType.ACTIVE) {
+        // Active Pokemon: enable abilities (useWhenInPlay) and attacks
+        options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
+      } else if (cardTarget.slot === SlotType.BENCH) {
+        // Bench Pokemon: enable abilities (useWhenInPlay), no attacks
+        options = { enableAbility: { useWhenInPlay: true }, enableAttack: false };
+      }
+    }
+
+    // Get players for targeting
+    const players = [this.topPlayer, this.bottomPlayer].filter(p => p);
+
+    this.cardsBaseService.showCardInfo({
+      card: cardData,
+      cardList: cardList,
+      options,
+      players
+    }).then(result => {
+      if (!result) return;
+      const gameId = this.gameState.gameId;
+
+      // For hand cards, use HAND slot with the card's hand index
+      const target = cardTarget || {
+        player: PlayerType.BOTTOM_PLAYER,
+        slot: isHandCard ? SlotType.HAND : SlotType.ACTIVE,
+        index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0
+      };
+
+      if (result.ability) {
+        this.gameService.ability(gameId, result.ability, target);
+      } else if (result.attack) {
+        this.gameService.attack(gameId, result.attack);
+      }
+    });
+  }
 }

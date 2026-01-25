@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CardList, Card } from 'ptcg-server';
 import { Vector3, Scene, Group, Camera } from 'three';
+import gsap from 'gsap';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -10,10 +11,10 @@ export class Board3dHandService {
   private handCards: Map<number, Board3dCard> = new Map();
   private handGroup: Group;
 
-  // Hand positioning (straight row)
-  private cardSpacing = 3;           // Space between cards
-  private handDistance = 25;         // Distance from camera (Z position)
-  private handHeight = 1;          // Height in world space (raised above board to avoid clipping)
+  // Hand positioning (straight row) - positioned where old bench used to be
+  private cardSpacing = 3.5;         // Space between cards (card width is ~2.75 with scale)
+  private handDistance = 30;         // Z position (where old bench used to be)
+  private handHeight = 0.1;          // Height in world space (just above board)
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
@@ -21,8 +22,8 @@ export class Board3dHandService {
   ) {
     this.handGroup = new Group();
     this.handGroup.position.set(0, this.handHeight, this.handDistance);
-    // Ensure hand group has no rotation - cards should be flat like the deck
-    this.handGroup.rotation.set(0.75, 0, 0);
+    // Cards flat on board surface (no tilt)
+    this.handGroup.rotation.set(0, 0, 0);
   }
 
   /**
@@ -31,12 +32,14 @@ export class Board3dHandService {
   async updateHand(
     hand: CardList,
     isOwner: boolean,
-    scene: Scene
+    scene: Scene,
+    playableCardIds?: number[]
   ): Promise<void> {
     console.log('[Board3dHandService] updateHand called:', {
       handSize: hand?.cards?.length,
       isOwner,
-      hasScene: !!scene
+      hasScene: !!scene,
+      playableCount: playableCardIds?.length ?? 0
     });
 
     const cards = hand.cards;
@@ -48,7 +51,8 @@ export class Board3dHandService {
     // Create new cards in arc formation
     console.log('[Board3dHandService] Creating new hand cards in arc formation');
     for (let i = 0; i < cards.length; i++) {
-      await this.createHandCard(cards[i], i, cards.length, isOwner);
+      const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
+      await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable);
     }
 
     console.log('[Board3dHandService] Hand update completed:', {
@@ -64,7 +68,8 @@ export class Board3dHandService {
     card: Card,
     index: number,
     totalCards: number,
-    isOwner: boolean
+    isOwner: boolean,
+    isPlayable?: boolean
   ): Promise<void> {
     // Calculate position in straight line
     const position = this.calculateCardPosition(index, totalCards);
@@ -100,6 +105,11 @@ export class Board3dHandService {
     cardGroup.userData.isHandCard = true;
     cardGroup.userData.handIndex = index;
     cardGroup.userData.cardData = card;
+
+    // Add green outline for playable cards (matches 2D board's green-400 color)
+    if (isPlayable) {
+      cardMesh.setOutline(true, 0x4ade80);
+    }
 
     this.handGroup.add(cardMesh.getGroup());
     this.handCards.set(index, cardMesh);
@@ -139,7 +149,48 @@ export class Board3dHandService {
       this.handGroup.remove(card.getGroup());
       card.dispose();
       this.handCards.delete(index);
+
+      // Reposition remaining cards to re-center the hand
+      this.repositionRemainingCards();
     }
+  }
+
+  /**
+   * Reposition remaining cards after one is removed
+   */
+  private repositionRemainingCards(): void {
+    const cards = Array.from(this.handCards.entries());
+    const totalCards = cards.length;
+
+    if (totalCards === 0) return;
+
+    // Sort by current index to maintain order
+    cards.sort((a, b) => a[0] - b[0]);
+
+    // Animate each card to its new position and update indices
+    const newMap = new Map<number, Board3dCard>();
+    cards.forEach(([oldIndex, card], newIndex) => {
+      const newPosition = this.calculateCardPosition(newIndex, totalCards);
+      const cardGroup = card.getGroup();
+
+      // Animate to new position
+      gsap.to(cardGroup.position, {
+        x: newPosition.x,
+        y: newPosition.y,
+        z: newPosition.z,
+        duration: 0.2,
+        ease: 'power2.out'
+      });
+
+      // Update the hand index in userData
+      cardGroup.userData.handIndex = newIndex;
+
+      // Add to new map with new index
+      newMap.set(newIndex, card);
+    });
+
+    // Replace the old map with the new one
+    this.handCards = newMap;
   }
 
   /**
@@ -157,10 +208,15 @@ export class Board3dHandService {
   }
 
   /**
-   * Dispose all resources
+   * Dispose all resources and reset for next use
    */
   dispose(scene: Scene): void {
     this.clearHand();
     scene.remove(this.handGroup);
+
+    // Recreate handGroup for next component instance
+    this.handGroup = new Group();
+    this.handGroup.position.set(0, this.handHeight, this.handDistance);
+    this.handGroup.rotation.set(0, 0, 0);
   }
 }

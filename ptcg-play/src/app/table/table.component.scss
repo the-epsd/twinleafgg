@@ -25,12 +25,17 @@
   overflow: hidden;
 }
 
-ptcg-board,
-ptcg-board-3d {
+ptcg-board {
   flex: 1 1 auto;
   overflow: hidden;
   margin-top: -5%;
   margin-bottom: -2%;
+}
+
+ptcg-board-3d {
+  flex: 1 1 auto;
+  overflow: hidden;
+  // No negative margins - hands are rendered inside the 3D scene
 }
 
 ptcg-hand {

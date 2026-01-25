@@ -289,6 +289,101 @@ export class Board3dAnimationService {
   }
 
   /**
+   * Snap card to drop zone with bounce effect
+   */
+  snapToZone(card: Object3D, targetPosition: { x: number; y: number; z: number }): Promise<void> {
+    return new Promise(resolve => {
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          this.removeAnimation(timeline);
+          resolve();
+        }
+      });
+
+      timeline
+        // Move to target with slight overshoot on Y
+        .to(card.position, {
+          x: targetPosition.x,
+          y: targetPosition.y + 0.5,
+          z: targetPosition.z,
+          duration: 0.25,
+          ease: 'power2.out'
+        })
+        // Settle to final position with bounce
+        .to(card.position, {
+          y: targetPosition.y,
+          duration: 0.15,
+          ease: 'bounce.out'
+        })
+        // Scale back to normal
+        .to(card.scale, {
+          x: 1, y: 1, z: 1,
+          duration: 0.2,
+          ease: 'power2.out'
+        }, '<')
+        // Fix rotation
+        .to(card.rotation, {
+          x: 0,
+          duration: 0.2
+        }, '<');
+
+      this.activeAnimations.push(timeline);
+    });
+  }
+
+  /**
+   * Invalid drop feedback - shake and return
+   */
+  invalidDropFeedback(card: Object3D, originalPosition: { x: number; y: number; z: number }): Promise<void> {
+    return new Promise(resolve => {
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          this.removeAnimation(timeline);
+          resolve();
+        }
+      });
+
+      timeline
+        // Shake left
+        .to(card.position, {
+          x: card.position.x - 0.5,
+          duration: 0.05
+        })
+        // Shake right
+        .to(card.position, {
+          x: card.position.x + 1,
+          duration: 0.1
+        })
+        // Shake left
+        .to(card.position, {
+          x: card.position.x - 0.5,
+          duration: 0.1
+        })
+        // Return to original position
+        .to(card.position, {
+          x: originalPosition.x,
+          y: originalPosition.y,
+          z: originalPosition.z,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+        // Scale back to normal
+        .to(card.scale, {
+          x: 1, y: 1, z: 1,
+          duration: 0.3,
+          ease: 'power2.out'
+        }, '<')
+        // Fix rotation
+        .to(card.rotation, {
+          x: 0,
+          duration: 0.3
+        }, '<');
+
+      this.activeAnimations.push(timeline);
+    });
+  }
+
+  /**
    * Check if any animations are currently active
    */
   hasActiveAnimations(): boolean {

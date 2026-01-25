@@ -30,7 +30,8 @@ import { Board3dModule } from './board-3d.module';
   exports: [
     BoardComponent,
     BoardCardComponent,
-    Board3dModule
+    Board3dModule,
+    BoardSelectionOverlayComponent
   ]
 })
 export class BoardModule { }
