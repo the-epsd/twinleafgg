@@ -562,9 +562,8 @@ export class Board3dInteractionService {
       // Calculate target world position
       const targetWorldPos = intersection.add(this.dragOffset);
 
-      // Clamp position to board bounds (in world space)
-      targetWorldPos.x = Math.max(-22, Math.min(22, targetWorldPos.x));
-      targetWorldPos.z = Math.max(-22, Math.min(22, targetWorldPos.z));
+      // Allow dragging anywhere - don't clamp to board bounds
+      // This allows cards to be dragged to hand area (z=30) and anywhere else
 
       // Maintain lifted height to prevent clipping when rotated
       // Card is ~3.5 units tall, max rotation ~0.3 radians
@@ -617,7 +616,37 @@ export class Board3dInteractionService {
       // Highlight drop zones using world position
       const worldPos = new Vector3();
       this.draggedCard.getWorldPosition(worldPos);
-      this.highlightNearestDropZone(worldPos, scene);
+      
+      // Check if card is over hand area
+      const isOverHand = this.isOverHandArea(worldPos);
+      
+      // Provide visual feedback when over hand area (slight scale increase)
+      if (isOverHand && this.currentDragContext?.source === 'hand') {
+        gsap.to(this.draggedCard.scale, {
+          x: 1.05,
+          y: 1.05,
+          z: 1.05,
+          duration: 0.15,
+          ease: 'power2.out'
+        });
+      } else {
+        // Reset scale when not over hand area
+        gsap.to(this.draggedCard.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.15,
+          ease: 'power2.out'
+        });
+      }
+      
+      // Only highlight drop zones if not over hand area
+      if (!isOverHand) {
+        this.highlightNearestDropZone(worldPos, scene);
+      } else {
+        // Hide drop zones when over hand area
+        this.hideAllDropZones();
+      }
     }
   }
 
@@ -674,12 +703,27 @@ export class Board3dInteractionService {
       };
     }
 
-    // Find valid drop zone using world position
+    // Get world position for checks
     const worldPos = new Vector3();
     this.draggedCard.getWorldPosition(worldPos);
-    const dropZone = this.findValidDropZone(worldPos);
-
+    
+    // Check if card is over hand area first (priority over drop zones)
+    const isOverHand = this.isOverHandArea(worldPos);
+    
     let result: DropResult | null = null;
+    
+    // If over hand area and card came from hand, return to hand
+    if (isOverHand && this.currentDragContext?.source === 'hand') {
+      this.returnCardToHand(this.draggedCard);
+      this.resetDragState();
+      this.hideAllDropZones();
+      this.mouseDownCard = null;
+      return null; // No action needed, card returned to hand
+    }
+    
+    // Otherwise, check for valid drop zone
+    const dropZone = this.findValidDropZone(worldPos);
+    
     if (dropZone) {
       const config = dropZone.getConfig();
       const zone = this.configToCardTarget(config);
@@ -757,6 +801,23 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Check if card position is over the hand area
+   */
+  private isOverHandArea(position: Vector3): boolean {
+    // Hand is centered at (0, 0.1, 30)
+    // Hand cards span approximately -20 to 20 on X axis
+    // Hand is at z = 30, with some tolerance
+    const handCenterZ = 30;
+    const handTolerance = 5; // Allow some tolerance for easier targeting
+    const handMinX = -25; // Extended bounds for easier targeting
+    const handMaxX = 25;
+    
+    return position.x >= handMinX && 
+           position.x <= handMaxX && 
+           Math.abs(position.z - handCenterZ) < handTolerance;
+  }
+
+  /**
    * Find valid drop zone under card position
    */
   private findValidDropZone(position: Vector3): Board3dDropZone | null {
@@ -781,29 +842,37 @@ export class Board3dInteractionService {
   }
 
   /**
-   * Return card to original hand position
+   * Return card to original hand position with smooth animation
    */
   private returnCardToHand(card: Object3D): void {
+    // Kill any existing animations to prevent conflicts
+    gsap.killTweensOf(card.position);
+    gsap.killTweensOf(card.rotation);
+    gsap.killTweensOf(card.scale);
+    
+    // Smoothly animate position back
     gsap.to(card.position, {
       x: this.draggedCardOriginalPosition.x,
       y: this.draggedCardOriginalPosition.y,
       z: this.draggedCardOriginalPosition.z,
-      duration: 0.3,
+      duration: 0.4,
       ease: 'power2.out'
     });
 
+    // Smoothly animate rotation back
     gsap.to(card.rotation, {
       x: this.draggedCardOriginalRotation.x,
       y: this.draggedCardOriginalRotation.y,
       z: this.draggedCardOriginalRotation.z,
-      duration: 0.3,
+      duration: 0.4,
       ease: 'power2.out'
     });
 
+    // Smoothly reset scale
     gsap.to(card.scale, {
       x: 1, y: 1, z: 1,
-      duration: 0.3,
-      ease: 'power2.in'
+      duration: 0.4,
+      ease: 'power2.out'
     });
   }
 
@@ -966,7 +1035,8 @@ export class Board3dInteractionService {
     for (const zone of this.dropZones) {
       zone.hide();
     }
-    this.currentDragContext = null;
+    // Don't clear currentDragContext here - it's needed for drop zone validation
+    // It will be cleared in resetDragState() when drag actually ends
   }
 
   /**

@@ -170,7 +170,9 @@ export class Board3dStateSyncService {
         ZONE_POSITIONS.stadium,
         true, // Always visible
         0,    // No rotation (horizontal orientation)
-        scene
+        scene,
+        undefined, // No cardTarget
+        1.5  // Same scale as Active Pokemon
       );
     } else {
       this.removeCard('shared_stadium', scene);
@@ -192,6 +194,7 @@ export class Board3dStateSyncService {
 
     // Active Pokemon - 1.5x larger
     if (player.active && player.active.cards.length > 0) {
+      const sleeveImagePath = this.getSleeveImagePath(player.active, player);
       await this.updateCard(
         player.active,
         `${playerPrefix}_active`,
@@ -200,7 +203,8 @@ export class Board3dStateSyncService {
         rotation,
         scene,
         { player: playerType, slot: SlotType.ACTIVE, index: 0 },
-        1.5
+        1.5,
+        sleeveImagePath
       );
     } else {
       this.removeCard(`${playerPrefix}_active`, scene);
@@ -229,6 +233,7 @@ export class Board3dStateSyncService {
       const cardId = `${playerPrefix}_bench_${i}`;
 
       if (benchCard && benchCard.cards.length > 0) {
+        const sleeveImagePath = this.getSleeveImagePath(benchCard, player);
         await this.updateCard(
           benchCard,
           cardId,
@@ -237,7 +242,8 @@ export class Board3dStateSyncService {
           rotation,
           scene,
           { player: playerType, slot: SlotType.BENCH, index: i },
-          1.0
+          1.0,
+          sleeveImagePath
         );
       } else {
         this.removeCard(cardId, scene);
@@ -284,6 +290,15 @@ export class Board3dStateSyncService {
         player
       );
     }
+  }
+
+  /**
+   * Extract sleeve image path from CardList with fallback to player's sleeve
+   */
+  private getSleeveImagePath(cardList: CardList | undefined, player: Player): string | undefined {
+    const cardListSleeve = (cardList as any)?.sleeveImagePath;
+    const playerSleeve = (player as any)?.sleeveImagePath;
+    return cardListSleeve || playerSleeve;
   }
 
   /**
