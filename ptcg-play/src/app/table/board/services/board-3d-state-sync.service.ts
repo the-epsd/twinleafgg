@@ -14,7 +14,7 @@ import { BoardInteractionService } from '../../../shared/services/board-interact
 // Layout: Stadium shared at center-left, Active near center, Bench behind Active
 const ZONE_POSITIONS = {
   // Shared stadium position (single slot between both players)
-  stadium: new Vector3(-10, 0.1, 15),
+  stadium: new Vector3(-10, 0.1, 14),
 
   bottomPlayer: {
     active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
@@ -113,6 +113,7 @@ export class Board3dStateSyncService {
   private cardsMap: Map<string, Board3dCard> = new Map();
   private cardOverlays: Map<string, CardOverlays> = new Map();
   private deckStacks: Map<string, InstancedMesh> = new Map();
+  private discardStacks: Map<string, InstancedMesh> = new Map();
   private energyTextureCache: Map<string, Texture> = new Map();
 
   constructor(
@@ -174,6 +175,12 @@ export class Board3dStateSyncService {
         undefined, // No cardTarget
         1.5  // Same scale as Active Pokemon
       );
+      
+      // Mark stadium card for click detection
+      const stadiumCardMesh = this.cardsMap.get('shared_stadium');
+      if (stadiumCardMesh) {
+        stadiumCardMesh.getGroup().userData.isStadium = true;
+      }
     } else {
       this.removeCard('shared_stadium', scene);
     }
@@ -258,22 +265,31 @@ export class Board3dStateSyncService {
         ZONE_POSITIONS[position].deck,
         rotation,
         scene,
-        (player.deck as any)?.sleeveImagePath
+        (player.deck as any)?.sleeveImagePath,
+        player.deck
       );
     }
 
-    // Discard pile (show top card)
+    // Discard pile (stacked with latest on top)
     if (player.discard && player.discard.cards.length > 0) {
-      await this.updateCard(
+      await this.updateDiscardStack(
         player.discard,
         `${playerPrefix}_discard`,
         ZONE_POSITIONS[position].discard,
-        true, // Always visible
         rotation,
         scene
       );
     } else {
-      this.removeCard(`${playerPrefix}_discard`, scene);
+      // Remove discard stack and top card
+      const discardStackId = `${playerPrefix}_discard`;
+      const oldStack = this.discardStacks.get(discardStackId);
+      if (oldStack) {
+        scene.remove(oldStack);
+        oldStack.geometry.dispose();
+        (oldStack.material as MeshStandardMaterial).dispose();
+        this.discardStacks.delete(discardStackId);
+      }
+      this.removeCard(`${discardStackId}_top`, scene);
     }
 
     // Stadium is now shared - synced separately in syncState()
@@ -553,7 +569,7 @@ export class Board3dStateSyncService {
 
     for (let i = 0; i < tools.length; i++) {
       const tool = tools[i];
-      
+
       // Check for custom tool icon first
       let toolTexture: Texture;
       const customIconPath = customToolIcons[tool.name];
@@ -613,7 +629,8 @@ export class Board3dStateSyncService {
     position: Vector3,
     rotation: number,
     scene: Scene,
-    sleeveImagePath?: string
+    sleeveImagePath?: string,
+    deckCardList?: CardList
   ): Promise<void> {
     // Remove old stack if it exists
     const oldStack = this.deckStacks.get(stackId);
@@ -621,6 +638,13 @@ export class Board3dStateSyncService {
       scene.remove(oldStack);
       oldStack.geometry.dispose();
       (oldStack.material as MeshStandardMaterial).dispose();
+    }
+
+    // Remove old top card if it exists
+    const oldTopCard = this.cardsMap.get(`${stackId}_top`);
+    if (oldTopCard) {
+      scene.remove(oldTopCard.getGroup());
+      this.cardsMap.delete(`${stackId}_top`);
     }
 
     // Load sleeve texture if available, otherwise use cardback
@@ -671,6 +695,137 @@ export class Board3dStateSyncService {
 
     scene.add(instancedMesh);
     this.deckStacks.set(stackId, instancedMesh);
+
+    // Create clickable top card overlay (face-down)
+    if (cardCount > 0 && deckCardList) {
+      const topCardId = `${stackId}_top`;
+      const topCard = deckCardList.cards[deckCardList.cards.length - 1]; // Latest card
+      const topCardList = new CardList();
+      topCardList.cards = [topCard];
+      topCardList.isPublic = deckCardList.isPublic;
+      topCardList.isSecret = deckCardList.isSecret;
+
+      await this.updateCard(
+        topCardList,
+        topCardId,
+        new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
+        false, // Not owner - ensures face-down
+        rotation,
+        scene,
+        undefined, // No cardTarget
+        1.0,
+        sleeveImagePath
+      );
+
+      // Mark top card as deck for click detection
+      const topCardMesh = this.cardsMap.get(topCardId);
+      if (topCardMesh) {
+        topCardMesh.getGroup().userData.isDeck = true;
+        topCardMesh.getGroup().userData.cardList = deckCardList;
+      }
+    }
+  }
+
+  /**
+   * Update or create a discard stack using instanced rendering
+   * Latest card (last in array) is shown on top as a regular clickable card
+   */
+  private async updateDiscardStack(
+    discard: CardList,
+    stackId: string,
+    position: Vector3,
+    rotation: number,
+    scene: Scene
+  ): Promise<void> {
+    // Remove old stack if it exists
+    const oldStack = this.discardStacks.get(stackId);
+    if (oldStack) {
+      scene.remove(oldStack);
+      oldStack.geometry.dispose();
+      (oldStack.material as MeshStandardMaterial).dispose();
+    }
+
+    // Remove old top card if it exists
+    const oldTopCard = this.cardsMap.get(`${stackId}_top`);
+    if (oldTopCard) {
+      scene.remove(oldTopCard.getGroup());
+      this.cardsMap.delete(`${stackId}_top`);
+    }
+
+    const cardCount = discard.cards.length;
+    if (cardCount === 0) {
+      return;
+    }
+
+    // Latest card (last in array) is the top card - render as regular clickable card
+    const topCard = discard.cards[cardCount - 1];
+    const topCardId = `${stackId}_top`;
+
+    // Create top card as regular card for clickability
+    const topCardList = new CardList();
+    topCardList.cards = [topCard];
+    topCardList.isPublic = discard.isPublic;
+    topCardList.isSecret = discard.isSecret;
+
+    await this.updateCard(
+      topCardList,
+      topCardId,
+      new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
+      true, // Always visible
+      rotation,
+      scene,
+      undefined, // No cardTarget
+      1.0,
+      undefined // No sleeve for discard
+    );
+
+    // Mark top card as discard for click detection
+    const topCardMesh = this.cardsMap.get(topCardId);
+    if (topCardMesh) {
+      topCardMesh.getGroup().userData.isDiscard = true;
+      topCardMesh.getGroup().userData.cardList = discard;
+    }
+
+    // Remaining cards (if any) as instanced stack underneath
+    if (cardCount > 1) {
+      const remainingCount = cardCount - 1;
+      const cardBackTexture = await this.assetLoader.loadCardBack();
+      const geometry = new Board3dCard(
+        cardBackTexture,
+        cardBackTexture,
+        new Vector3(0, 0, 0),
+        rotation,
+        1.0
+      ).getMesh().geometry;
+
+      const instancedMesh = new InstancedMesh(
+        geometry,
+        new MeshStandardMaterial({ map: cardBackTexture }),
+        Math.min(remainingCount, 60) // Max 60 instances
+      );
+
+      // Position and rotate each card in the stack
+      const rotationRad = (rotation * Math.PI) / 180;
+      const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, 0));
+
+      for (let i = 0; i < remainingCount && i < 60; i++) {
+        const matrix = new Matrix4();
+        const pos = new Vector3(
+          position.x,
+          position.y + (i * 0.01), // Stack height
+          position.z
+        );
+        // Compose matrix from position, rotation, and scale
+        matrix.compose(pos, quaternion, new Vector3(1, 1, 1));
+        instancedMesh.setMatrixAt(i, matrix);
+      }
+
+      instancedMesh.instanceMatrix.needsUpdate = true;
+      instancedMesh.castShadow = true;
+
+      scene.add(instancedMesh);
+      this.discardStacks.set(stackId, instancedMesh);
+    }
   }
 
   /**
@@ -733,6 +888,12 @@ export class Board3dStateSyncService {
           1.0, // Normal scale
           sleeveImagePath
         );
+
+        // Mark prize card for click detection
+        const prizeCardMesh = this.cardsMap.get(prizeId);
+        if (prizeCardMesh) {
+          prizeCardMesh.getGroup().userData.isPrize = true;
+        }
       } else {
         // Remove empty prize slot
         this.removeCard(prizeId, scene);
@@ -829,6 +990,13 @@ export class Board3dStateSyncService {
       (stack.material as MeshStandardMaterial).dispose();
     });
     this.deckStacks.clear();
+
+    this.discardStacks.forEach(stack => {
+      scene.remove(stack);
+      stack.geometry.dispose();
+      (stack.material as MeshStandardMaterial).dispose();
+    });
+    this.discardStacks.clear();
 
     // Clean up energy texture cache
     this.energyTextureCache.forEach(texture => {

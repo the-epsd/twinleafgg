@@ -39,7 +39,7 @@ import { Board3dAnimationService } from '../services/board-3d-animation.service'
 import { Board3dInteractionService } from '../services/board-3d-interaction.service';
 import { Board3dHandService } from '../services/board-3d-hand.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
-import { Player, CardList, Card, SlotType, PlayerType, CardTarget } from 'ptcg-server';
+import { Player, CardList, Card, SlotType, PlayerType, CardTarget, SuperType } from 'ptcg-server';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { CardInfoPaneOptions } from '../../../shared/cards/card-info-pane/card-info-pane.component';
 import { GameService } from '../../../api/services/game.service';
@@ -756,6 +756,128 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     const cardList = cardObject.userData.cardList;
     const cardTarget = cardObject.userData.cardTarget as CardTarget;
     const isHandCard = cardObject.userData.isHandCard;
+    const isDiscard = cardObject.userData.isDiscard;
+    const isDeck = cardObject.userData.isDeck;
+    const isPrize = cardObject.userData.isPrize;
+
+    // Handle discard pile click
+    if (isDiscard && cardList) {
+      const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+      const isDeleted = this.gameState.deleted;
+
+      if (!isBottomOwner || isDeleted) {
+        // Show card list without ability options
+        this.cardsBaseService.showCardInfoList({
+          card: cardData,
+          cardList: cardList,
+          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        });
+        return;
+      }
+
+      const player = PlayerType.BOTTOM_PLAYER;
+      const slot = SlotType.DISCARD;
+      const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
+      
+      this.cardsBaseService.showCardInfoList({
+        card: cardData,
+        cardList: cardList,
+        options,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+      }).then(result => {
+        if (!result) {
+          return;
+        }
+        const gameId = this.gameState.gameId;
+        const index = cardList.cards.indexOf(result.card);
+        const target: CardTarget = { player, slot, index };
+
+        // Use ability from the card
+        if (result.ability) {
+          if (result.card.superType === SuperType.TRAINER) {
+            this.gameService.trainerAbility(gameId, result.ability, target);
+          } else if (result.card.superType === SuperType.ENERGY) {
+            this.gameService.energyAbility(gameId, result.ability, target);
+          } else {
+            this.gameService.ability(gameId, result.ability, target);
+          }
+        }
+      });
+      return;
+    }
+
+    // Handle deck click
+    if (isDeck) {
+      // Find the deck CardList from the player
+      const deckCardList = this.bottomPlayer?.deck || this.topPlayer?.deck;
+      if (deckCardList) {
+        const facedown = true;
+        const allowReveal = !!this.gameState.replay;
+        this.cardsBaseService.showCardInfoList({
+          card: cardData,
+          cardList: deckCardList,
+          allowReveal,
+          facedown,
+          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        });
+      }
+      return;
+    }
+
+    // Handle prize click
+    if (isPrize && cardList) {
+      const owner = (this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
+                    (this.topPlayer && this.topPlayer.id === this.clientId);
+      if (cardList.cards.length === 0) {
+        return;
+      }
+      const card = cardList.cards[0];
+      const facedown = cardList.isSecret || (!cardList.isPublic && !owner);
+      const allowReveal = facedown && !!this.gameState.replay;
+      this.cardsBaseService.showCardInfo({
+        card,
+        allowReveal,
+        facedown,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+      });
+      return;
+    }
+
+    // Handle Stadium click
+    const isStadium = cardObject.userData.isStadium === true || cardObject.userData.cardId === 'shared_stadium';
+    if (isStadium && cardList) {
+      const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+      const isDeleted = this.gameState.deleted;
+
+      if (!isBottomOwner || isDeleted) {
+        // Show normal card info without trainer options
+        this.cardsBaseService.showCardInfo({
+          card: cardData,
+          cardList: cardList,
+          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        });
+        return;
+      }
+
+      // Owner can activate stadium effect
+      const options = { enableTrainer: true };
+      this.cardsBaseService.showCardInfo({
+        card: cardData,
+        cardList: cardList,
+        options,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+      }).then(result => {
+        if (!result) {
+          return;
+        }
+
+        // Use stadium card effect
+        if (result.trainer) {
+          this.gameService.stadium(this.gameState.gameId);
+        }
+      });
+      return;
+    }
 
     if (!cardData) return;
 

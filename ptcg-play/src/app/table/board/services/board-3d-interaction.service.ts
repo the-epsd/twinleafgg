@@ -120,6 +120,7 @@ export class Board3dInteractionService {
   private draggedCardHandIndex: number = -1;
   private draggedCardOriginalPosition: Vector3 = new Vector3();
   private draggedCardOriginalRotation: Euler = new Euler();
+  private draggedCardOriginalScale: Vector3 = new Vector3();
   private dragPlane: Plane = new Plane(new Vector3(0, 1, 0), 0);
   private dragOffset: Vector3 = new Vector3();
   private previousDragPosition: Vector3 = new Vector3();
@@ -452,9 +453,10 @@ export class Board3dInteractionService {
     this.draggedCard = card;
     this.draggedCardHandIndex = card.userData.handIndex;
 
-    // Store original position/rotation
+    // Store original position/rotation/scale
     this.draggedCardOriginalPosition.copy(card.position);
     this.draggedCardOriginalRotation.copy(card.rotation);
+    this.draggedCardOriginalScale.copy(card.scale);
 
     // Create horizontal drag plane at elevated level (Y=2.0) to prevent clipping
     // This matches the minimum height we enforce during drag
@@ -592,9 +594,12 @@ export class Board3dInteractionService {
       // Normalize velocity for consistent rotation strength
       const velocityMagnitude = this.dragVelocity.length();
       if (velocityMagnitude > 0.01) {
-        // Scale factor for rotation intensity (adjust for feel)
-        const rotationScale = 0.3;
-        const maxRotation = 0.3; // Max rotation in radians (~17 degrees)
+        // Check if this is a hand card for enhanced physics
+        const isHandCard = this.draggedCard?.userData?.isHandCard === true;
+        
+        // Scale factor for rotation intensity (double for hand cards)
+        const rotationScale = isHandCard ? 0.6 : 0.3;
+        const maxRotation = isHandCard ? 0.6 : 0.3; // Max rotation in radians (~34 degrees for hand, ~17 for board)
 
         // Calculate rotation based on drag direction
         // X rotation (pitch): tilt up/down based on Z velocity (forward/back)
@@ -868,9 +873,11 @@ export class Board3dInteractionService {
       ease: 'power2.out'
     });
 
-    // Smoothly reset scale
+    // Smoothly reset scale to original
     gsap.to(card.scale, {
-      x: 1, y: 1, z: 1,
+      x: this.draggedCardOriginalScale.x,
+      y: this.draggedCardOriginalScale.y,
+      z: this.draggedCardOriginalScale.z,
       duration: 0.4,
       ease: 'power2.out'
     });
