@@ -153,12 +153,12 @@ export class Board3dHandService {
   private clearHand(scene?: Scene): void {
     this.handCards.forEach(card => {
       const cardGroup = card.getGroup();
-      
+
       // Kill all animations before disposing
       gsap.killTweensOf(cardGroup.position);
       gsap.killTweensOf(cardGroup.rotation);
       gsap.killTweensOf(cardGroup.scale);
-      
+
       // Check if card is actually in handGroup before removing
       if (cardGroup.parent === this.handGroup) {
         this.handGroup.remove(cardGroup);
@@ -166,7 +166,7 @@ export class Board3dHandService {
         // Card might have been moved (e.g., during drag) - remove from scene directly
         scene.remove(cardGroup);
       }
-      
+
       card.dispose();
     });
     this.handCards.clear();
@@ -179,17 +179,17 @@ export class Board3dHandService {
     const card = this.handCards.get(index);
     if (card) {
       const cardGroup = card.getGroup();
-      
+
       // Kill animations before removing
       gsap.killTweensOf(cardGroup.position);
       gsap.killTweensOf(cardGroup.rotation);
       gsap.killTweensOf(cardGroup.scale);
-      
+
       // Check if card is actually in handGroup before removing
       if (cardGroup.parent === this.handGroup) {
         this.handGroup.remove(cardGroup);
       }
-      
+
       card.dispose();
       this.handCards.delete(index);
 
@@ -214,17 +214,17 @@ export class Board3dHandService {
     const newMap = new Map<number, Board3dCard>();
     cards.forEach(([oldIndex, card], newIndex) => {
       const cardGroup = card.getGroup();
-      
+
       // Ensure card is still in handGroup before repositioning
       if (cardGroup.parent !== this.handGroup) {
         // Skip cards that are not in handGroup (e.g., being dragged)
         newMap.set(newIndex, card);
         return;
       }
-      
+
       // Kill existing animations before starting new ones
       gsap.killTweensOf(cardGroup.position);
-      
+
       const newPosition = this.calculateCardPosition(newIndex, totalCards);
 
       // Animate to new position

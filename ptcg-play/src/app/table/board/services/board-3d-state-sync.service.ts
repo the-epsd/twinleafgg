@@ -177,7 +177,7 @@ export class Board3dStateSyncService {
         undefined, // No cardTarget
         1.5  // Same scale as Active Pokemon
       );
-      
+
       // Mark stadium card for click detection
       const stadiumCardMesh = this.cardsMap.get('shared_stadium');
       if (stadiumCardMesh) {
@@ -413,9 +413,9 @@ export class Board3dStateSyncService {
       this.cardsMap.set(cardId, cardMesh);
 
       // Animate Basic Pokemon played to bench
-      if (cardTarget?.slot === SlotType.BENCH && 
-          mainCard.superType === SuperType.POKEMON && 
-          (mainCard as PokemonCard).stage === Stage.BASIC) {
+      if (cardTarget?.slot === SlotType.BENCH &&
+        mainCard.superType === SuperType.POKEMON &&
+        (mainCard as PokemonCard).stage === Stage.BASIC) {
         await this.animationService.playBasicAnimation(cardMesh.getGroup());
       }
     }
