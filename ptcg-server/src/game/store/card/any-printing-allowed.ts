@@ -52,5 +52,6 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Tool Scrapper',
   'Double Colorless Energy',
   'Lady',
-  'Max Potion'
+  'Max Potion',
+  'Pokédex'
 ]; 

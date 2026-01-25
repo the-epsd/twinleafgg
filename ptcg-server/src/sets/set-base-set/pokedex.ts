@@ -12,7 +12,7 @@ export class Pokedex extends TrainerCard {
 
   public set: string = 'BS'; // Replace with the appropriate set abbreviation
 
-  public name: string = 'Pokedex';
+  public name: string = 'Pokedéx';
 
   public fullName: string = 'Pokedex BS'; // Replace with the appropriate set abbreviation
 
