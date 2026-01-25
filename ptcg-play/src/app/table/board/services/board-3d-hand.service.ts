@@ -10,6 +10,7 @@ import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 export class Board3dHandService {
   private handCards: Map<number, Board3dCard> = new Map();
   private handGroup: Group;
+  private isUpdating: boolean = false;
 
   // Hand positioning (straight row) - positioned where old bench used to be
   private cardSpacing = 3.5;         // Space between cards (card width is ~2.75 with scale)
@@ -35,30 +36,47 @@ export class Board3dHandService {
     scene: Scene,
     playableCardIds?: number[]
   ): Promise<void> {
-    console.log('[Board3dHandService] updateHand called:', {
-      handSize: hand?.cards?.length,
-      isOwner,
-      hasScene: !!scene,
-      playableCount: playableCardIds?.length ?? 0
-    });
-
-    const cards = hand.cards;
-
-    // Clear old cards
-    console.log('[Board3dHandService] Clearing old hand cards:', this.handCards.size);
-    this.clearHand();
-
-    // Create new cards in arc formation
-    console.log('[Board3dHandService] Creating new hand cards in arc formation');
-    for (let i = 0; i < cards.length; i++) {
-      const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
-      await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable);
+    // Prevent concurrent updates
+    if (this.isUpdating) {
+      console.log('[Board3dHandService] updateHand skipped - already updating');
+      return;
     }
 
-    console.log('[Board3dHandService] Hand update completed:', {
-      totalCardsCreated: this.handCards.size,
-      handGroupChildren: this.handGroup.children.length
-    });
+    this.isUpdating = true;
+
+    try {
+      console.log('[Board3dHandService] updateHand called:', {
+        handSize: hand?.cards?.length,
+        isOwner,
+        hasScene: !!scene,
+        playableCount: playableCardIds?.length ?? 0
+      });
+
+      const cards = hand.cards;
+
+      // Ensure handGroup is in scene before operations
+      if (!scene.children.includes(this.handGroup)) {
+        scene.add(this.handGroup);
+      }
+
+      // Clear old cards (kills animations and properly disposes)
+      console.log('[Board3dHandService] Clearing old hand cards:', this.handCards.size);
+      this.clearHand(scene);
+
+      // Create new cards in arc formation
+      console.log('[Board3dHandService] Creating new hand cards in arc formation');
+      for (let i = 0; i < cards.length; i++) {
+        const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
+        await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable);
+      }
+
+      console.log('[Board3dHandService] Hand update completed:', {
+        totalCardsCreated: this.handCards.size,
+        handGroupChildren: this.handGroup.children.length
+      });
+    } finally {
+      this.isUpdating = false;
+    }
   }
 
   /**
@@ -132,9 +150,23 @@ export class Board3dHandService {
   /**
    * Clear all hand cards
    */
-  private clearHand(): void {
+  private clearHand(scene?: Scene): void {
     this.handCards.forEach(card => {
-      this.handGroup.remove(card.getGroup());
+      const cardGroup = card.getGroup();
+      
+      // Kill all animations before disposing
+      gsap.killTweensOf(cardGroup.position);
+      gsap.killTweensOf(cardGroup.rotation);
+      gsap.killTweensOf(cardGroup.scale);
+      
+      // Check if card is actually in handGroup before removing
+      if (cardGroup.parent === this.handGroup) {
+        this.handGroup.remove(cardGroup);
+      } else if (scene && cardGroup.parent) {
+        // Card might have been moved (e.g., during drag) - remove from scene directly
+        scene.remove(cardGroup);
+      }
+      
       card.dispose();
     });
     this.handCards.clear();
@@ -146,7 +178,18 @@ export class Board3dHandService {
   removeCard(index: number): void {
     const card = this.handCards.get(index);
     if (card) {
-      this.handGroup.remove(card.getGroup());
+      const cardGroup = card.getGroup();
+      
+      // Kill animations before removing
+      gsap.killTweensOf(cardGroup.position);
+      gsap.killTweensOf(cardGroup.rotation);
+      gsap.killTweensOf(cardGroup.scale);
+      
+      // Check if card is actually in handGroup before removing
+      if (cardGroup.parent === this.handGroup) {
+        this.handGroup.remove(cardGroup);
+      }
+      
       card.dispose();
       this.handCards.delete(index);
 
@@ -170,8 +213,19 @@ export class Board3dHandService {
     // Animate each card to its new position and update indices
     const newMap = new Map<number, Board3dCard>();
     cards.forEach(([oldIndex, card], newIndex) => {
-      const newPosition = this.calculateCardPosition(newIndex, totalCards);
       const cardGroup = card.getGroup();
+      
+      // Ensure card is still in handGroup before repositioning
+      if (cardGroup.parent !== this.handGroup) {
+        // Skip cards that are not in handGroup (e.g., being dragged)
+        newMap.set(newIndex, card);
+        return;
+      }
+      
+      // Kill existing animations before starting new ones
+      gsap.killTweensOf(cardGroup.position);
+      
+      const newPosition = this.calculateCardPosition(newIndex, totalCards);
 
       // Animate to new position
       gsap.to(cardGroup.position, {
@@ -211,12 +265,15 @@ export class Board3dHandService {
    * Dispose all resources and reset for next use
    */
   dispose(scene: Scene): void {
-    this.clearHand();
-    scene.remove(this.handGroup);
+    this.clearHand(scene);
+    if (scene.children.includes(this.handGroup)) {
+      scene.remove(this.handGroup);
+    }
 
     // Recreate handGroup for next component instance
     this.handGroup = new Group();
     this.handGroup.position.set(0, this.handHeight, this.handDistance);
     this.handGroup.rotation.set(0, 0, 0);
+    this.isUpdating = false;
   }
 }

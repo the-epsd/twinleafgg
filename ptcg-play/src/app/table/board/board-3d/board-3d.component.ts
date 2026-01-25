@@ -550,6 +550,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       return;
     }
 
+    // Ensure handService is ready (handGroup exists and is in scene)
+    const handGroup = this.handService.getHandGroup();
+    if (!handGroup || !this.scene.children.includes(handGroup)) {
+      console.log('[Board3D] Hand group not in scene, adding it');
+      this.scene.add(handGroup);
+    }
+
     this.ngZone.runOutsideAngular(async () => {
       try {
         const isOwner = this.bottomPlayer.id === this.clientId;

@@ -855,6 +855,40 @@ export class Board3dInteractionService {
     gsap.killTweensOf(card.rotation);
     gsap.killTweensOf(card.scale);
     
+    // Check if this is a hand card and verify it's still valid
+    // If card was removed from handGroup during updateHand(), it might be disposed
+    // In that case, the hand will be re-synced and this card will be recreated
+    if (card.userData.isHandCard) {
+      // Check if card is still in the scene (not disposed)
+      if (!card.parent) {
+        // Card has no parent - it was likely removed/disposed
+        // Don't animate, let updateHand() handle recreation
+        return;
+      }
+      
+      // Traverse up parent chain to verify card is still connected
+      let currentParent: Object3D | null = card.parent;
+      let depth = 0;
+      const maxDepth = 10; // Safety limit
+      
+      while (currentParent && depth < maxDepth) {
+        // Check if we've reached the scene root or handGroup-like structure
+        // HandGroup is typically at z=30 and contains multiple cards
+        if (currentParent.type === 'Scene' || 
+            (Math.abs(currentParent.position.z - 30) < 1 && currentParent.children.length > 3)) {
+          break;
+        }
+        currentParent = currentParent.parent;
+        depth++;
+      }
+      
+      // If card is orphaned (no valid parent chain), skip animation
+      // The hand will be re-synced and card will be recreated
+      if (!currentParent || depth >= maxDepth) {
+        return;
+      }
+    }
+    
     // Smoothly animate position back
     gsap.to(card.position, {
       x: this.draggedCardOriginalPosition.x,

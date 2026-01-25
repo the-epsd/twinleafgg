@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Player, CardList, CardTarget, PlayerType, SlotType, PokemonCardList, CardTag, SuperType, Card } from 'ptcg-server';
+import { Player, CardList, CardTarget, PlayerType, SlotType, PokemonCardList, CardTag, SuperType, Card, Stage, PokemonCard } from 'ptcg-server';
 import { Vector3, Scene, Group, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Euler, Texture } from 'three';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
@@ -9,6 +9,7 @@ import { Board3dMarker } from '../board-3d/board-3d-marker';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { Board3dAnimationService } from './board-3d-animation.service';
 
 // Zone positions in 3D world space
 // Layout: Stadium shared at center-left, Active near center, Bench behind Active
@@ -118,7 +119,8 @@ export class Board3dStateSyncService {
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
-    private cardsBaseService: CardsBaseService
+    private cardsBaseService: CardsBaseService,
+    private animationService: Board3dAnimationService
   ) { }
 
   /**
@@ -409,6 +411,13 @@ export class Board3dStateSyncService {
 
       scene.add(cardMesh.getGroup());
       this.cardsMap.set(cardId, cardMesh);
+
+      // Animate Basic Pokemon played to bench
+      if (cardTarget?.slot === SlotType.BENCH && 
+          mainCard.superType === SuperType.POKEMON && 
+          (mainCard as PokemonCard).stage === Stage.BASIC) {
+        await this.animationService.playBasicAnimation(cardMesh.getGroup());
+      }
     }
 
     // Update overlays for PokemonCardList
