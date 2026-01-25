@@ -3,41 +3,33 @@ import {
   MeshBasicMaterial,
   Mesh,
   Texture,
-  CanvasTexture,
   Group,
   DoubleSide
 } from 'three';
 import { SpecialCondition } from 'ptcg-server';
+import { Board3dAssetLoaderService } from '../services/board-3d-asset-loader.service';
 
-const MARKER_SIZE = 0.8;
-const MARKER_SPACING = 0.9;
+const MARKER_SIZE = 0.875; // 25% of card height (card is ~3.5 units tall, so 25% = 0.875 units)
+const MARKER_VERTICAL_SPACING = 0.525; // 15% of card height (0.15 * 3.5 = 0.525 units)
 
-// Marker colors for different conditions
-const CONDITION_COLORS: { [key: number]: string } = {
-  [SpecialCondition.POISONED]: '#9b59b6',    // Purple
-  [SpecialCondition.BURNED]: '#e74c3c',      // Red/Orange
-  [SpecialCondition.ASLEEP]: '#3498db',      // Blue
-  [SpecialCondition.CONFUSED]: '#f39c12',    // Yellow/Orange
-  [SpecialCondition.PARALYZED]: '#f1c40f',   // Yellow
-};
-
-// Marker labels for different conditions
-const CONDITION_LABELS: { [key: number]: string } = {
-  [SpecialCondition.POISONED]: 'PSN',
-  [SpecialCondition.BURNED]: 'BRN',
-  [SpecialCondition.ASLEEP]: 'SLP',
-  [SpecialCondition.CONFUSED]: 'CNF',
-  [SpecialCondition.PARALYZED]: 'PAR',
+// Map SpecialCondition to marker image filenames
+const CONDITION_MARKER_NAMES: { [key: number]: string } = {
+  [SpecialCondition.POISONED]: 'poison-marker',
+  [SpecialCondition.PARALYZED]: 'paralyzed-marker',
+  [SpecialCondition.CONFUSED]: 'confused-marker',
+  [SpecialCondition.ASLEEP]: 'asleep-marker',
+  [SpecialCondition.BURNED]: 'burned-marker',
 };
 
 export class Board3dMarker {
   private group: Group;
   private markerMeshes: Mesh[] = [];
   private static geometry: PlaneGeometry;
-  private textureCache: Map<number, CanvasTexture> = new Map();
+  private assetLoader: Board3dAssetLoaderService;
 
-  constructor() {
+  constructor(assetLoader: Board3dAssetLoaderService) {
     this.group = new Group();
+    this.assetLoader = assetLoader;
 
     // Initialize shared geometry if not already created
     if (!Board3dMarker.geometry) {
@@ -48,7 +40,7 @@ export class Board3dMarker {
   /**
    * Update markers from special conditions array
    */
-  updateConditions(conditions: SpecialCondition[]): void {
+  async updateConditions(conditions: SpecialCondition[]): Promise<void> {
     // Clear existing meshes
     this.clear();
 
@@ -56,23 +48,24 @@ export class Board3dMarker {
       return;
     }
 
-    const totalWidth = (conditions.length - 1) * MARKER_SPACING;
-    const startX = -totalWidth / 2;
+    // Filter to only conditions we have marker images for
+    const validConditions = conditions.filter(c => CONDITION_MARKER_NAMES[c] !== undefined);
 
-    for (let i = 0; i < conditions.length; i++) {
-      const condition = conditions[i];
+    // Load textures for all markers
+    const texturePromises = validConditions.map(condition => {
+      const markerName = CONDITION_MARKER_NAMES[condition];
+      return this.assetLoader.loadMarkerTexture(markerName);
+    });
 
-      // Skip conditions we don't have visuals for
-      if (!CONDITION_COLORS[condition]) {
-        continue;
-      }
+    const textures = await Promise.all(texturePromises);
 
-      // Get or create texture for this condition
-      let texture = this.textureCache.get(condition);
-      if (!texture) {
-        texture = this.createMarkerTexture(condition);
-        this.textureCache.set(condition, texture);
-      }
+    // Position markers on right side, stacked vertically
+    // Base position: top: 20% = ~0.7 units from top, right: 0 = ~1.25 units from center
+    const baseX = 1.25; // Right side of card
+    const baseZ = -0.7; // 20% from top (card top is at ~-1.75, so 20% down = -0.7)
+
+    for (let i = 0; i < validConditions.length; i++) {
+      const texture = textures[i];
 
       const material = new MeshBasicMaterial({
         map: texture,
@@ -83,11 +76,11 @@ export class Board3dMarker {
 
       const mesh = new Mesh(Board3dMarker.geometry, material);
 
-      // Position in a row at the left side of the card
+      // Stack vertically with 15% increments (0.525 units per marker)
       mesh.position.set(
-        -1.5,           // Left of card
-        0.1,            // Slightly above ground
-        startX + (i * MARKER_SPACING)
+        baseX,           // Right side of card
+        0.1,             // Slightly above ground
+        baseZ + (i * MARKER_VERTICAL_SPACING) // Stack vertically
       );
 
       // Rotate to face up
@@ -98,43 +91,6 @@ export class Board3dMarker {
     }
   }
 
-  /**
-   * Create a canvas texture for a condition marker
-   */
-  private createMarkerTexture(condition: SpecialCondition): CanvasTexture {
-    const canvas = document.createElement('canvas');
-    canvas.width = 64;
-    canvas.height = 64;
-    const ctx = canvas.getContext('2d')!;
-
-    const color = CONDITION_COLORS[condition] || '#888888';
-    const label = CONDITION_LABELS[condition] || '?';
-
-    // Draw background circle
-    ctx.beginPath();
-    ctx.arc(32, 32, 28, 0, Math.PI * 2);
-    ctx.fillStyle = color;
-    ctx.fill();
-
-    // Draw border
-    ctx.beginPath();
-    ctx.arc(32, 32, 28, 0, Math.PI * 2);
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Draw label
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 18px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(label, 32, 34);
-
-    const texture = new CanvasTexture(canvas);
-    texture.needsUpdate = true;
-
-    return texture;
-  }
 
   /**
    * Clear all marker meshes
@@ -159,9 +115,6 @@ export class Board3dMarker {
    */
   dispose(): void {
     this.clear();
-    // Dispose cached textures
-    this.textureCache.forEach(texture => texture.dispose());
-    this.textureCache.clear();
   }
 
   /**

@@ -27,22 +27,22 @@ export interface DragContext {
 // Layout: Stadium shared at center-left, Active near center, Bench behind Active
 const ZONE_POSITIONS = {
   // Shared stadium position (single slot between both players)
-  stadium: new Vector3(-10, 0.1, 13),
+  stadium: new Vector3(-10, 0.1, 14),
 
   bottomPlayer: {
-    active: new Vector3(0, 0.1, 16),      // Moved closer to center (was Z=12)
-    supporter: new Vector3(6, 0.1, 16),   // Beside Active, to the right
+    active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
+    supporter: new Vector3(6, 0.1, 18),   // Beside Active, to the right
     bench: [
-      new Vector3(-8, 0.1, 22),          // Moved to where Active was (was Z=18)
-      new Vector3(-4, 0.1, 22),
-      new Vector3(0, 0.1, 22),
-      new Vector3(4, 0.1, 22),
-      new Vector3(8, 0.1, 22),
-      new Vector3(12, 0.1, 22),
-      new Vector3(16, 0.1, 22),
-      new Vector3(20, 0.1, 22),
+      new Vector3(-8, 0.1, 24),          // Moved to where Active was (was Z=18)
+      new Vector3(-4, 0.1, 24),
+      new Vector3(0, 0.1, 24),
+      new Vector3(4, 0.1, 24),
+      new Vector3(8, 0.1, 24),
+      new Vector3(12, 0.1, 24),
+      new Vector3(16, 0.1, 24),
+      new Vector3(20, 0.1, 24),
     ],
-    board: new Vector3(0, 0.1, 14)  // General trainer area - covers most of player's side
+    board: new Vector3(0, 0.1, 16)  // General trainer area - covers most of player's side
   },
   topPlayer: {
     active: new Vector3(0, 0.1, 10),     // Moved closer to center (was Z=-12)
@@ -67,14 +67,14 @@ const SNAP_DISTANCE = 3.5;
 // These extend further left/right than the current shifted positions
 const ORIGINAL_BENCH_POSITIONS = {
   bottomPlayer: [
-    new Vector3(-12, 0.1, 20),
-    new Vector3(-8, 0.1, 20),
-    new Vector3(-4, 0.1, 20),
-    new Vector3(0, 0.1, 20),
-    new Vector3(4, 0.1, 20),
-    new Vector3(8, 0.1, 20),
-    new Vector3(12, 0.1, 20),
-    new Vector3(16, 0.1, 20),
+    new Vector3(-12, 0.1, 22),
+    new Vector3(-8, 0.1, 22),
+    new Vector3(-4, 0.1, 22),
+    new Vector3(0, 0.1, 22),
+    new Vector3(4, 0.1, 22),
+    new Vector3(8, 0.1, 22),
+    new Vector3(12, 0.1, 22),
+    new Vector3(16, 0.1, 22),
   ],
   topPlayer: [
     new Vector3(12, 0.1, -4),

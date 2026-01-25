@@ -47,6 +47,36 @@ export class Board3dAssetLoaderService {
   }
 
   /**
+   * Load a custom tool icon texture
+   */
+  async loadToolIconTexture(iconPath: string): Promise<Texture> {
+    // Check Three.js texture cache first
+    if (this.textureCache.has(iconPath)) {
+      return this.textureCache.get(iconPath)!;
+    }
+
+    try {
+      // Use imgcache.js to get cached image URL
+      const cachedUrl = await this.imageCacheService.fetchFromCache(iconPath).toPromise();
+
+      // Load texture with Three.js
+      const texture = await this.textureLoader.loadAsync(cachedUrl);
+
+      // Configure texture
+      texture.encoding = sRGBEncoding;
+      texture.anisotropy = 16; // High quality filtering
+      texture.flipY = true; // Fix texture orientation
+
+      // Cache and return
+      this.textureCache.set(iconPath, texture);
+      return texture;
+    } catch (error) {
+      console.error('Failed to load tool icon texture:', iconPath, error);
+      throw error; // Let caller handle fallback
+    }
+  }
+
+  /**
    * Load a sleeve texture using the existing image cache service
    */
   async loadSleeveTexture(sleeveUrl: string): Promise<Texture> {
@@ -156,6 +186,32 @@ export class Board3dAssetLoaderService {
       return texture;
     } catch (error) {
       console.error('Failed to load board grid texture:', error);
+      return this.createFallbackTexture();
+    }
+  }
+
+  /**
+   * Load the twinleaf board center texture
+   */
+  async loadBoardCenterTexture(): Promise<Texture> {
+    const centerUrl = 'assets/twinleaf-board-center.png';
+
+    if (this.textureCache.has(centerUrl)) {
+      return this.textureCache.get(centerUrl)!;
+    }
+
+    try {
+      const cachedUrl = await this.imageCacheService.fetchFromCache(centerUrl).toPromise();
+
+      const texture = await this.textureLoader.loadAsync(cachedUrl);
+      texture.encoding = sRGBEncoding;
+      texture.anisotropy = 16;
+      texture.flipY = false; // Don't flip for board texture
+
+      this.textureCache.set(centerUrl, texture);
+      return texture;
+    } catch (error) {
+      console.error('Failed to load board center texture:', error);
       return this.createFallbackTexture();
     }
   }

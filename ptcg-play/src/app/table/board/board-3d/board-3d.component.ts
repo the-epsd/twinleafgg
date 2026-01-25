@@ -77,6 +77,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   // Board elements
   private boardMesh!: Mesh;
+  private boardCenterOverlay!: Mesh;
   private edgeGlow!: Board3dEdgeGlow;
 
   private animationFrameId: number = 0;
@@ -333,6 +334,31 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.boardMesh.position.z = 12;
     this.boardMesh.receiveShadow = false;
     this.scene.add(this.boardMesh);
+
+    // Add twinleaf board center overlay
+    const centerTexture = await this.assetLoader.loadBoardCenterTexture();
+    // Make it 75% smaller, then another 25% smaller: 50 * 0.25 * 0.75 = 9.375
+    const centerGeometry = new PlaneGeometry(9.375, 9.375);
+    const centerMaterial = new MeshStandardMaterial({
+      map: centerTexture,
+      color: 0xffffff,
+      roughness: 1,
+      metalness: 0.00,
+      transparent: true,
+      opacity: 1.0,
+      depthWrite: false // Prevent z-fighting with board texture
+    });
+
+    this.boardCenterOverlay = new Mesh(centerGeometry, centerMaterial);
+    this.boardCenterOverlay.rotation.x = -Math.PI / 2; // Make it horizontal
+    this.boardCenterOverlay.rotation.z = Math.PI; // Rotate 180 degrees
+    // Mirror horizontally by scaling X axis negatively
+    this.boardCenterOverlay.scale.x = -1;
+    // Move down 2 units and increase offset to prevent z-fighting
+    this.boardCenterOverlay.position.z = 14.1; // Board is at z=12, so 14.1 = 2 units down + 0.1 offset
+    this.boardCenterOverlay.receiveShadow = false;
+    this.scene.add(this.boardCenterOverlay);
+
     this.markDirty();
   }
 

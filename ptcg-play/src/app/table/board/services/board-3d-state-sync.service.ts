@@ -14,25 +14,25 @@ import { BoardInteractionService } from '../../../shared/services/board-interact
 // Layout: Stadium shared at center-left, Active near center, Bench behind Active
 const ZONE_POSITIONS = {
   // Shared stadium position (single slot between both players)
-  stadium: new Vector3(-10, 0.1, 13),
+  stadium: new Vector3(-10, 0.1, 15),
 
   bottomPlayer: {
-    active: new Vector3(0, 0.1, 16),      // Moved closer to center (was Z=12)
-    supporter: new Vector3(6, 0.1, 16),   // Beside Active, to the right
+    active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
+    supporter: new Vector3(6, 0.1, 18),   // Beside Active, to the right
     bench: [
-      new Vector3(-8, 0.1, 22),          // Moved to where Active was (was Z=18)
-      new Vector3(-4, 0.1, 22),
-      new Vector3(0, 0.1, 22),
-      new Vector3(4, 0.1, 22),
-      new Vector3(8, 0.1, 22),
-      new Vector3(12, 0.1, 22),
-      new Vector3(16, 0.1, 22),
-      new Vector3(20, 0.1, 22),
+      new Vector3(-8, 0.1, 24),          // Moved to where Active was (was Z=18)
+      new Vector3(-4, 0.1, 24),
+      new Vector3(0, 0.1, 24),
+      new Vector3(4, 0.1, 24),
+      new Vector3(8, 0.1, 24),
+      new Vector3(12, 0.1, 24),
+      new Vector3(16, 0.1, 24),
+      new Vector3(20, 0.1, 24),
     ],
-    prizes: new Vector3(-18, 0.1, 18),
-    deck: new Vector3(20, 0.1, 16),
-    discard: new Vector3(20, 0.1, 22),
-    lostZone: new Vector3(-10, 0.1, 16),
+    prizes: new Vector3(-18, 0.1, 20),
+    deck: new Vector3(20, 0.1, 18),
+    discard: new Vector3(20, 0.1, 24),
+    lostZone: new Vector3(-10, 0.1, 18),
   },
   topPlayer: {
     active: new Vector3(0, 0.1, 10),     // Moved closer to center (was Z=-12)
@@ -58,14 +58,14 @@ const ZONE_POSITIONS = {
 // These extend further left/right than the current shifted positions
 const ORIGINAL_BENCH_POSITIONS = {
   bottomPlayer: [
-    new Vector3(-12, 0.1, 20),
-    new Vector3(-8, 0.1, 20),
-    new Vector3(-4, 0.1, 20),
-    new Vector3(0, 0.1, 20),
-    new Vector3(4, 0.1, 20),
-    new Vector3(8, 0.1, 20),
-    new Vector3(12, 0.1, 20),
-    new Vector3(16, 0.1, 20),
+    new Vector3(-12, 0.1, 22),
+    new Vector3(-8, 0.1, 22),
+    new Vector3(-4, 0.1, 22),
+    new Vector3(0, 0.1, 22),
+    new Vector3(4, 0.1, 22),
+    new Vector3(8, 0.1, 22),
+    new Vector3(12, 0.1, 22),
+    new Vector3(16, 0.1, 22),
   ],
   topPlayer: [
     new Vector3(12, 0.1, -4),
@@ -406,7 +406,7 @@ export class Board3dStateSyncService {
       overlays = {
         energySprite: new Board3dEnergySprite(),
         damageCounter: new Board3dDamageCounter(),
-        marker: new Board3dMarker(),
+        marker: new Board3dMarker(this.assetLoader),
         toolCards: []
       };
       this.cardOverlays.set(cardId, overlays);
@@ -428,7 +428,7 @@ export class Board3dStateSyncService {
     overlays.damageCounter.updateDamage(cardList.damage);
 
     // Update special condition markers
-    overlays.marker.updateConditions(cardList.specialConditions);
+    await overlays.marker.updateConditions(cardList.specialConditions);
 
     // Update BREAK card overlay
     await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene);
@@ -518,20 +518,51 @@ export class Board3dStateSyncService {
     }
     overlays.toolCards = [];
 
+    if (tools.length === 0) {
+      return;
+    }
+
     // Create new tool card overlays
     const backTexture = await this.assetLoader.loadCardBack();
 
+    // Custom tool icon mapping (matching 2D board logic)
+    const customToolIcons: { [key: string]: string } = {
+      'Vitality Band': 'assets/tools/vitality-band.png',
+      'Bravery Charm': 'assets/tools/bravery-charm.png',
+    };
+
+    // Base position: left: -5px ≈ -0.2 units, top: 20% ≈ 0.7 units from top
+    const baseX = -0.2; // Left side of card
+    const baseZ = -0.7; // 20% from top (card top is at ~-1.75, so 20% down = -0.7)
+    const verticalSpacing = 0.3; // 15px offset ≈ 0.3 units in 3D space
+
     for (let i = 0; i < tools.length; i++) {
       const tool = tools[i];
-      const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-      const toolFrontTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+      
+      // Check for custom tool icon first
+      let toolTexture: Texture;
+      const customIconPath = customToolIcons[tool.name];
+      if (customIconPath) {
+        // Load custom tool icon
+        try {
+          toolTexture = await this.assetLoader.loadToolIconTexture(customIconPath);
+        } catch (error) {
+          // Fall back to card texture if custom icon fails
+          const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
+          toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+        }
+      } else {
+        // Use regular card texture
+        const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
+        toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+      }
 
       const toolCardMesh = new Board3dCard(
-        toolFrontTexture,
+        toolTexture,
         backTexture,
-        new Vector3(1.8, 0.02 + (i * 0.02), 0), // Right side of main card
+        new Vector3(baseX, 0.02 + (i * 0.01), baseZ + (i * verticalSpacing)), // Left side, stacked vertically
         0,
-        0.4 // Smaller scale
+        0.33 // Scale to match 33px width (card is ~2.5 units wide, so 33px ≈ 0.33 units)
       );
 
       mainCardMesh.getGroup().add(toolCardMesh.getGroup());
