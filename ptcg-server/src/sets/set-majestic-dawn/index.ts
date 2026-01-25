@@ -2,6 +2,7 @@ import { DuskBallMD, PokeBallMD, SuperScoopUpMD, EnergySearchMD, DarknessEnergyS
 import { Card } from '../../game/store/card/card';
 import { Bronzong } from './bronzong';
 import { Bronzor } from './bronzor';
+import { Buneary } from './buneary';
 import { CallEnergy } from './call-energy';
 import { Chatot } from './chatot';
 import { Croagunk } from './croagunk';
@@ -21,6 +22,7 @@ import { WarpPointMD } from './other-prints';
 export const setMajesticDawn: Card[] = [
   new Bronzong(),
   new Bronzor(),
+  new Buneary(),
   new CallEnergy(),
   new Chatot(),
   new Croagunk(),

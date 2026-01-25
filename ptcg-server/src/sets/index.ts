@@ -50,6 +50,7 @@ export * from './set-nintendo-promos';
 export * from './set-pop-series-2';
 export * from './set-pop-series-4';
 export * from './set-pop-series-5';
+export * from './set-pop-series-8';
 
 //Japan Promos ex-era
 export * from './set-pcg-l-promotional-cards';
