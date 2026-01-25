@@ -25,11 +25,11 @@ export class Buneary extends PokemonCard {
     text: 'Remove 1 damage counter from each of your Benched Pokémon.'
   }];
 
-  public set: string = 'P8';
+  public set: string = 'MD';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '16';
-  public name: string = 'Riolu';
-  public fullName: string = 'Riolu P8';
+  public setNumber: string = '53';
+  public name: string = 'Buneary';
+  public fullName: string = 'Buneary MD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
