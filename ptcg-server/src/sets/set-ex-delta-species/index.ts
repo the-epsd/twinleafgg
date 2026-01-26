@@ -4,8 +4,10 @@ import { Bagon2 } from './bagon2';
 import { Beldum } from './beldum';
 import { Ditto } from './ditto';
 import { Dragonair } from './dragonair';
+import { Dragonair2 } from './dragonair2';
 import { Dragonite } from './dragonite';
 import { Dratini } from './dratini';
+import { Dratini2 } from './dratini2';
 import { Eevee } from './eevee';
 import { Eevee2 } from './eevee2';
 import { Flareonex } from './flareon-ex';
@@ -25,6 +27,7 @@ import { HolonsVoltorb } from './holons-voltorb';
 import { Jolteonex } from './jolteon-ex';
 import { Kirlia } from './kirlia';
 import { Larvitar } from './larvitar';
+import { Magnemite } from './magnemite';
 import { Meowth } from './meowth';
 import { Metagross } from './metagross';
 import { Metang } from './metang';
@@ -47,8 +50,10 @@ export const setEXDeltaSpecies: Card[] = [
   new Beldum(),
   new Ditto(),
   new Dragonair(),
+  new Dragonair2(),
   new Dragonite(),
   new Dratini(),
+  new Dratini2(),
   new Eevee(),
   new Eevee2(),
   new Flareonex(),
@@ -68,6 +73,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Jolteonex(),
   new Kirlia(),
   new Larvitar(),
+  new Magnemite(),
   new Meowth(),
   new Metagross(),
   new Metang(),

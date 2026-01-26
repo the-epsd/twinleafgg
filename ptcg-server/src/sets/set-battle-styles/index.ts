@@ -4,6 +4,7 @@ import { Bellsprout } from './bellsprout';
 import { Blipbug } from './blipbug';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
+import { CampingGear } from './camping-gear';
 import { Carkol } from './carkol';
 import { Carnivine } from './carnivine';
 import { Cherrim } from './cherrim';
@@ -64,6 +65,7 @@ export const setBattleStyles: Card[] = [
   new Blipbug(),
   new Bronzong(),
   new Bruno(),
+  new CampingGear(),
   new Carkol(),
   new Carnivine(),
   new Cherrim(),
