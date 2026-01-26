@@ -16,14 +16,14 @@ export class Carracosta extends PokemonCard {
   public powers = [{
     name: 'Mighty Shell',
     powerType: PowerType.ABILITY,
-    text: 'Prevent all damage and effects done to this Pokémon by attacks from your opponent\'s Pokemon that have any Special Energy attached to them.'
+    text: 'Prevent all damage from and effects of attacks done to this Pokémon by your opponent\'s Pokémon that have any Special Energy attached.'
   }];
 
   public attacks = [{
     name: 'Bite Down',
     cost: [W, C, C],
-    damage: 0,
-    text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+    damage: 150,
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat. '
   }];
 
   public regulationMark = 'I';
