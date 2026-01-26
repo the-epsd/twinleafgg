@@ -1,11 +1,12 @@
 
-import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike, TrainerCard } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike, TrainerCard, StateUtils } from '../../game';
 
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 
 export class ForestSealStone extends TrainerCard {
@@ -42,27 +43,31 @@ export class ForestSealStone extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect && effect.target.tools.includes(this) &&
+    if (effect instanceof CheckPokemonPowersEffect &&
       !effect.powers.find(p => p.name === this.powers[0].name)) {
-      const hasValidCard = effect.target.tags.some(tag =>
-        tag === CardTag.POKEMON_V ||
-        tag === CardTag.POKEMON_VSTAR ||
-        tag === CardTag.POKEMON_VMAX
-      );
+      // Find the PokemonCardList that contains the target PokemonCard
+      const cardList = StateUtils.findCardList(state, effect.target);
+      if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
+        const hasValidCard = effect.target.tags.some(tag =>
+          tag === CardTag.POKEMON_V ||
+          tag === CardTag.POKEMON_VSTAR ||
+          tag === CardTag.POKEMON_VMAX
+        );
 
-      if (!hasValidCard) {
-        return state;
+        if (!hasValidCard) {
+          return state;
+        }
+
+        // Try to reduce ToolEffect, to check if something is blocking the tool from working
+        try {
+          const stub = new ToolEffect(effect.player, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+
+        effect.powers.push(this.powers[0]);
       }
-
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      effect.powers.push(this.powers[0]);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

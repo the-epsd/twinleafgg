@@ -5,6 +5,7 @@ import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -42,18 +43,21 @@ export class SkySealStone extends TrainerCard {
 
     // Add ability to card if attached to a V
     if (effect instanceof CheckPokemonPowersEffect
-      && effect.target.tools.includes(this)
       && !effect.powers.find(p => p.name === this.powers[0].name)) {
-      const hasValidCard = effect.target.tags.some(tag =>
-        tag === CardTag.POKEMON_V ||
-        tag === CardTag.POKEMON_VSTAR ||
-        tag === CardTag.POKEMON_VMAX
-      );
-      if (!hasValidCard) {
-        return state;
-      }
+      // Find the PokemonCardList that contains the target PokemonCard
+      const cardList = StateUtils.findCardList(state, effect.target);
+      if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
+        const hasValidCard = effect.target.tags.some(tag =>
+          tag === CardTag.POKEMON_V ||
+          tag === CardTag.POKEMON_VSTAR ||
+          tag === CardTag.POKEMON_VMAX
+        );
+        if (!hasValidCard) {
+          return state;
+        }
 
-      effect.powers.push(this.powers[0]);
+        effect.powers.push(this.powers[0]);
+      }
       return state;
     }
 
