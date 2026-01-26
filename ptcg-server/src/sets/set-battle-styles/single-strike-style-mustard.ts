@@ -29,9 +29,9 @@ export class SingleStrikeStyleMustard extends TrainerCard {
   public fullName: string = 'Single Strike Style Mustard BST';
 
   public text: string =
-    'You can play this card only when it is the last card in your hand. ' +
-    '' +
-    'Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, shuffle your deck. If you searched your deck in this way, draw 5 cards.';
+    `You can play this card only when it is the last card in your hand.
+
+Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, shuffle your deck. If you searched your deck in this way, draw 5 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

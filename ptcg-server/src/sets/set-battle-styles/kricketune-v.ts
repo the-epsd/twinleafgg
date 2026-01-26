@@ -32,7 +32,7 @@ export class KricketuneV extends PokemonCard {
     name: 'Exciting Stage',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, , you may draw cards until you have ' +
+    text: 'Once during your turn, you may draw cards until you have ' +
       '3 cards in your hand. If this Pokémon is in the Active Spot, ' +
       'you may draw cards until you have 4 cards in your hand ' +
       'instead. You can\'t use more than 1 Exciting Stage Ability ' +
@@ -44,8 +44,7 @@ export class KricketuneV extends PokemonCard {
       name: 'X-Scissor',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'Flip a coin. If heads, this attack does 80 more damage.' +
-        ''
+      text: 'Flip a coin. If heads, this attack does 80 more damage.'
     }
   ];
 

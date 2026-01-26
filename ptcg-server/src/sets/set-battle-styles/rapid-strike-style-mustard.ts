@@ -28,9 +28,9 @@ export class RapidStrikeStyleMustard extends TrainerCard {
   public fullName: string = 'Rapid Strike Style Mustard BST';
 
   public text: string =
-    'You can play this card only when it is the last card in your hand. ' +
-    '' +
-    'Put a Rapid Strike Pokémon from your discard pile onto your Bench. If you do, draw 5 cards.';
+    `You can play this card only when it is the last card in your hand.
+
+Put a Rapid Strike Pokémon from your discard pile onto your Bench. If you do, draw 5 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

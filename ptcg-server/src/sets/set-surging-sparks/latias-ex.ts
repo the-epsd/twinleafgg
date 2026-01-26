@@ -15,16 +15,16 @@ export class Latiasex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Skyline',
+    name: 'Skyliner',
     powerType: PowerType.ABILITY,
-    text: 'Your Basic Pokémon have no Retreat Cost.'
+    text: 'Your Basic Pokémon in play have no Retreat Cost.'
   }];
 
   public attacks = [{
-    name: 'Infinity Blade',
+    name: 'Eon Blade',
     cost: [P, P, C],
     damage: 200,
-    text: 'This Pokémon can\'t attack during your next turn.'
+    text: 'During your next turn, this Pokémon can\'t attack.'
   }];
 
   public regulationMark: string = 'H';

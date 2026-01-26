@@ -14,16 +14,16 @@ export class MegaAbsolex extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Doom Period',
+    name: 'Terminal Period',
     cost: [D, C],
     damage: 0,
     text: 'If your opponent\'s Active Pokémon has exactly 6 damage counters on it, that Pokémon is Knocked Out.'
   },
   {
-    name: 'Cruel Claw',
+    name: 'Claw of Darkness',
     cost: [D, D, C],
     damage: 200,
-    text: 'Your opponent reveals their hand. Discard a card you find there.'
+    text: 'Your opponent reveals their hand, and you discard a card you find there.'
   }];
 
   public set: string = 'MEG';

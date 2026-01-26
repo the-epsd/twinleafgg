@@ -15,17 +15,17 @@ export class MegaMawileEx extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Doom Period',
+    name: 'Gobble Down',
     cost: [M, M],
     damage: 80,
     damageCalculation: 'x',
     text: 'This attack does 80 damage for each Prize card you have taken.'
   },
   {
-    name: 'Big Bite',
+    name: 'Huge Bite',
     cost: [M, M, C],
     damage: 260,
-    text: 'If your opponent\'s Active Pokémon already has any damage counters on it before this attack does damage, this attack does 30 damage instead.'
+    text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack\'s base damage is 30.'
   }];
 
   public set: string = 'MEG';
