@@ -202,6 +202,27 @@ ptcg-hand {
   }
 }
 
+.overlay-replay-controls {
+  position: absolute;
+  top: calc(50% - 120px);
+  right: 20px;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 300px;
+  max-width: 320px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+
+  ::ng-deep ptcg-replay-controls {
+    display: block;
+    width: 100%;
+  }
+}
+
 .overlay-game-logs {
   position: absolute;
   top: calc(50% + 80px);

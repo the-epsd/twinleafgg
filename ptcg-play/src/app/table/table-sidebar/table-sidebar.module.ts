@@ -35,7 +35,8 @@ import { PlayerTimeComponent } from './player-time/player-time.component';
     TableSidebarComponent,
     PlayerBarComponent,
     PlayerActionsComponent,
-    GameLogsComponent
+    GameLogsComponent,
+    ReplayControlsComponent
   ]
 })
 export class TableSidebarModule { }

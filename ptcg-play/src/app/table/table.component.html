@@ -96,13 +96,18 @@
           </ptcg-player-bar>
         </div>
 
+        <!-- Replay controls - above player actions, right side -->
+        <div class="overlay-replay-controls" *ngIf="gameState?.replay">
+          <ptcg-replay-controls [gameState]="gameState"></ptcg-replay-controls>
+        </div>
+
         <!-- End turn/leave button - far right, vertically centered -->
         <div class="overlay-player-actions">
           <ptcg-player-actions [gameState]="gameState" [clientId]="clientId" (join)="play()">
           </ptcg-player-actions>
         </div>
 
-        <!-- Game logs - below button, right side -->
+        <!-- Game logs - below replay controls, right side -->
         <div class="overlay-game-logs">
           <ptcg-game-logs [gameState]="gameState" [overlayMode]="true"></ptcg-game-logs>
         </div>
