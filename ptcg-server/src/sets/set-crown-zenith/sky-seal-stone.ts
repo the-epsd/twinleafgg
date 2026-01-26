@@ -11,18 +11,14 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class SkySealStone extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public set: string = 'CRZ';
-
   public setNumber: string = '143';
-
   public regulationMark: string = 'F';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Sky Seal Stone';
-
   public fullName: string = 'Sky Seal Stone CRZ';
+
+  public text: string = 'The Pokémon V this card is attached to can use the VSTAR Power on this card.'
 
   public extraPrizes = false;
 
@@ -32,9 +28,7 @@ export class SkySealStone extends TrainerCard {
       powerType: PowerType.ABILITY,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      text: 'The Pokémon V this card is attached to can use the VSTAR Power on this card.' +
-        '' +
-        'During your turn, you may use this Ability. During this turn, if your opponent\'s Active Pokémon VSTAR or Active Pokémon VMAX is Knocked Out by damage from an attack from your Basic Pokémon V, take 1 more Prize card. (You can\'t use more than 1 VSTAR Power in a game.) '
+      text: 'During your turn, you may use this Ability. During this turn, if your opponent\'s Active Pokémon VSTAR or Active Pokémon VMAX is Knocked Out by damage from an attack from your Basic Pokémon V, take 1 more Prize card. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];
 

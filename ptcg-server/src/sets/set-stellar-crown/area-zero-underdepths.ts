@@ -8,23 +8,17 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 export class AreaZeroUnderdepths extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public set: string = 'SCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '131';
-
   public regulationMark = 'H';
-
   public name: string = 'Area Zero Underdepths';
-
   public fullName: string = 'Area Zero Underdepths SCR';
 
   public text =
-    'Each player who has any Tera Pokémon in play can have up to 8 Pokémon on their Bench.' +
-    '' +
-    'If a player no longer has any Tera Pokémon in play, that player discards Pokémon from their Bench until they have 5. When this card leaves play, both players discard Pokémon from their Bench until they have 5, and the player who played this card discards first.';
+    `Each player who has any Tera Pokémon in play can have up to 8 Pokémon on their Bench.
+
+If a player no longer has any Tera Pokémon in play, that player discards Pokémon from their Bench until they have 5. When this card leaves play, both players discard Pokémon from their Bench until they have 5, and the player who played this card discards first.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {

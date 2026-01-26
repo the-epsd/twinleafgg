@@ -86,22 +86,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class CustomCatcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'LOT';
-
   public name: string = 'Custom Catcher';
-
   public fullName: string = 'Custom Catcher LOT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '171';
 
   public text: string =
-    'You may play 2 Custom Catcher cards at once.' +
-    '' +
-    '• If you played 1 card, draw cards until you have 3 cards in your hand.' +
-    '• If you played 2 cards, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. (This effect works one time for 2 cards.)';
+    `You may play 2 Custom Catcher cards at once.
+
+  • If you played 1 card, draw cards until you have 3 cards in your hand.
+  • If you played 2 cards, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. (This effect works one time for 2 cards.)`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
