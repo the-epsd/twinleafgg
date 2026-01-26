@@ -316,7 +316,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   private async createBoardAsync(): Promise<void> {
     // Create board surface geometry
-    const boardGeometry = new PlaneGeometry(50, 50);
+    const boardGeometry = new PlaneGeometry(70, 50);
 
     // Load black grid texture
     const boardTexture = await this.assetLoader.loadBoardGridTexture();
@@ -785,7 +785,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       const player = PlayerType.BOTTOM_PLAYER;
       const slot = SlotType.DISCARD;
       const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
-      
+
       this.cardsBaseService.showCardInfoList({
         card: cardData,
         cardList: cardList,
@@ -834,7 +834,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Handle prize click
     if (isPrize && cardList) {
       const owner = (this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
-                    (this.topPlayer && this.topPlayer.id === this.clientId);
+        (this.topPlayer && this.topPlayer.id === this.clientId);
       if (cardList.cards.length === 0) {
         return;
       }
