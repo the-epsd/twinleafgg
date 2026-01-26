@@ -18,15 +18,15 @@ export class ForestSealStone extends TrainerCard {
   public name: string = 'Forest Seal Stone';
   public fullName: string = 'Forest Seal Stone SIT';
 
+  public text: string = 'The Pokémon V this card is attached to can use the VSTAR Power on this card.';
+
   public powers = [
     {
       name: 'Star Alchemy',
       powerType: PowerType.ABILITY,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      text: `The Pokémon V this card is attached to can use the VSTAR Power on this card. 
-
-During your turn, you may search your deck for a card and put it into your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR Power in a game.)`
+      text: 'During your turn, you may search your deck for a card and put it into your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];
 
