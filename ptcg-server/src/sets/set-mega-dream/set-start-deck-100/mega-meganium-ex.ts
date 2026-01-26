@@ -40,7 +40,7 @@ export class MegaMeganiumex extends PokemonCard {
         if (card.superType === SuperType.ENERGY) {
           // Check if it's a Grass energy
           const energyCard = card as any;
-          if (energyCard.energyType === 'G' || energyCard.provides?.includes('G') || energyCard.provides?.includes(CardType.ANY)) {
+          if (energyCard.energyType === CardType.GRASS || energyCard.provides?.includes(CardType.GRASS) || energyCard.provides?.includes(CardType.ANY)) {
             grassEnergyCount++;
           }
         }
