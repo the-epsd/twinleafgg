@@ -10,24 +10,17 @@ import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class RegenerativeEnergy extends EnergyCard {
 
   public regulationMark = 'F';
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'SIT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '168';
-
   public name = 'Regenerative Energy';
-
   public fullName = 'Regenerative Energy SIT';
 
-  public text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
-    '' +
-    'Whenever you play a Pokémon from your hand to evolve the Pokémon V this card is attached to, heal 100 damage from that Pokémon.';
+  public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
+
+Whenever you play a Pokémon from your hand to evolve the Pokémon V this card is attached to, heal 100 damage from that Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

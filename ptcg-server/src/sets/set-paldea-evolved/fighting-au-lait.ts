@@ -59,23 +59,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class FightingAuLait extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'G';
-
   public set: string = 'PAL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '181';
-
   public name: string = 'Fighting Au Lait';
-
   public fullName: string = 'Fighting Au Lait PAL';
 
   public text: string =
-    'You can use this card only if you have more Prize cards remaining than your opponent.' +
-    '' +
-    'Heal 60 damage from 1 of your Pokémon.';
+    `You can use this card only if you have more Prize cards remaining than your opponent.
+
+Heal 60 damage from 1 of your Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -27,9 +27,9 @@ export class LuckyEnergy extends EnergyCard {
   public fullName = 'Lucky Energy CRE';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [C] Energy. ' +
-    '' +
-    'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw a card.';
+    `As long as this card is attached to a Pokémon, it provides [C] Energy. 
+
+If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw a card.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

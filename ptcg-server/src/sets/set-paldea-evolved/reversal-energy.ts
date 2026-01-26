@@ -11,25 +11,18 @@ import { StoreLike } from '../../game/store/store-like';
 export class ReversalEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'PAL';
-
   public regulationMark = 'G';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '192';
-
   public name = 'Reversal Energy';
-
   public fullName = 'Reversal Energy PAL';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
-    '' +
-    'If you have more Prize cards remaining than your opponent, and if this card is attached to an Evolution Pokémon that doesn\'t have a Rule Box (Pokémon ex, Pokémon V, etc. have Rule Boxes), this card provides every type of Energy but provides only 3 Energy at a time.';
+    `As long as this card is attached to a Pokémon, it provides [C] Energy.
+
+If you have more Prize cards remaining than your opponent, and if this card is attached to an Evolution Pokémon that doesn\'t have a Rule Box (Pokémon ex, Pokémon V, etc. have Rule Boxes), this card provides every type of Energy but provides only 3 Energy at a time.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

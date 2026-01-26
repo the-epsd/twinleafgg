@@ -9,24 +9,17 @@ import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class TherapeuticEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'PAL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '193';
-
   public regulationMark = 'G';
-
   public name = 'Therapeutic Energy';
-
   public fullName = 'Therapeutic Energy PAL';
 
-  public text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
-    '' +
-    'The Pokémon this card is attached to recovers from being Asleep, Confused, or Paralyzed and can\'t be affected by those Special Conditions.';
+  public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
+
+The Pokémon this card is attached to recovers from being Asleep, Confused, or Paralyzed and can\'t be affected by those Special Conditions.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

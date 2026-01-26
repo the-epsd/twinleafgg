@@ -78,24 +78,18 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
 export class OrdinaryRod extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'SSH';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '171';
-
   public regulationMark = 'D';
-
   public name: string = 'Ordinary Rod';
-
   public fullName: string = 'Ordinary Rod SSH';
 
   public text: string =
-    'Choose 1 or both:' +
-    '' +
-    'Shuffle up to 2 Pokémon from your discard pile into your deck.' +
-    'Shuffle up to 2 basic Energy cards from your discard pile into your deck.';
+    `Choose 1 or both:
+
+  • Shuffle up to 2 Pokémon from your discard pile into your deck.
+  • Shuffle up to 2 basic Energy cards from your discard pile into your deck.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
