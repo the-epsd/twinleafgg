@@ -89,6 +89,27 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   // Player perspective - true when viewing from opposite side (like 2D board's isUpsideDown)
   private isUpsideDown: boolean = false;
 
+  // FPS tracking
+  public fps: number = 0;
+  private frameCount: number = 0;
+  private lastFpsUpdate: number = 0;
+  private frameTimes: number[] = [];
+  private lastFrameTime: number = 0;
+
+  // Diagnostic stats
+  public triangles: number = 0;
+  public drawCalls: number = 0;
+  public objectCount: number = 0;
+  public geometries: number = 0;
+  public textures: number = 0;
+  private lastStats: {
+    triangles: number;
+    drawCalls: number;
+    objectCount: number;
+    geometries: number;
+    textures: number;
+  } = { triangles: 0, drawCalls: 0, objectCount: 0, geometries: 0, textures: 0 };
+
   constructor(
     private ngZone: NgZone,
     private assetLoader: Board3dAssetLoaderService,
@@ -187,6 +208,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   }
 
   ngAfterViewInit(): void {
+    // Initialize FPS tracking
+    this.lastFrameTime = performance.now();
+    this.lastFpsUpdate = performance.now();
+
     // Start render loop outside Angular zone
     this.ngZone.runOutsideAngular(() => {
       this.animate();
@@ -389,10 +414,59 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
+    // Calculate FPS
+    const currentTime = performance.now();
+    const deltaTime = currentTime - this.lastFrameTime;
+    this.lastFrameTime = currentTime;
+
+    // Store frame time (limit to last 60 frames for averaging)
+    this.frameTimes.push(deltaTime);
+    if (this.frameTimes.length > 60) {
+      this.frameTimes.shift();
+    }
+
     // Render if scene changed or animations are active
-    if (this.needsRender || this.animationService.hasActiveAnimations()) {
+    const didRender = this.needsRender || this.animationService.hasActiveAnimations();
+    if (didRender) {
       this.composer.render();
       this.needsRender = false;
+      
+      // Read renderer statistics immediately after rendering (before auto-reset)
+      const renderInfo = this.renderer.info.render;
+      const memoryInfo = this.renderer.info.memory;
+      
+      // Count objects in scene
+      let objectCount = 0;
+      this.scene.traverse(() => {
+        objectCount++;
+      });
+      
+      // Store stats for display update
+      this.lastStats = {
+        triangles: renderInfo.triangles || 0,
+        drawCalls: renderInfo.calls || 0,
+        objectCount: objectCount,
+        geometries: memoryInfo.geometries || 0,
+        textures: memoryInfo.textures || 0
+      };
+    }
+
+    // Update FPS and diagnostic stats display every second
+    if (currentTime - this.lastFpsUpdate >= 1000) {
+      const averageFrameTime = this.frameTimes.reduce((a, b) => a + b, 0) / this.frameTimes.length;
+      const calculatedFps = Math.round(1000 / averageFrameTime);
+      
+      // Update all stats (run in Angular zone for change detection)
+      this.ngZone.run(() => {
+        this.fps = calculatedFps;
+        this.triangles = this.lastStats.triangles;
+        this.drawCalls = this.lastStats.drawCalls;
+        this.objectCount = this.lastStats.objectCount;
+        this.geometries = this.lastStats.geometries;
+        this.textures = this.lastStats.textures;
+      });
+      
+      this.lastFpsUpdate = currentTime;
     }
   };
 

@@ -39,7 +39,7 @@ const STATE_COLORS = {
 };
 
 // Base opacity for zones with texture (always visible)
-const TEXTURE_BASE_OPACITY = 0.3;
+const TEXTURE_BASE_OPACITY = 0.01;
 
 export class Board3dDropZone {
   private mesh: Mesh;
