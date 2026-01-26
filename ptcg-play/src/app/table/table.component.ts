@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Player, GamePhase, Card, Format, GameWinner } from 'ptcg-server';
+import { Player, GamePhase, Card, Format, GameWinner, ReplayPlayer, PlayerStats } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -42,6 +42,12 @@ export class TableComponent implements OnInit, OnDestroy {
   public sandboxSidebarCollapsed: boolean = false;
   public use3dBoard: boolean = false;
   public webglSupported: boolean = true;
+  public bottomReplayPlayer: ReplayPlayer | undefined;
+  public topReplayPlayer: ReplayPlayer | undefined;
+  public bottomPlayerStats: PlayerStats | undefined;
+  public topPlayerStats: PlayerStats | undefined;
+  public isTopPlayerActive: boolean;
+  public isBottomPlayerActive: boolean;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
@@ -251,6 +257,9 @@ export class TableComponent implements OnInit, OnDestroy {
       this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
     }
 
+    // Update player stats and active states for floating overlays
+    this.updatePlayerStatsAndActiveStates(gameState);
+
     // Do not set any global artworks map; overlays must come from the correct card list context
     this.cardsBaseService.setGlobalArtworksMap({});
 
@@ -261,6 +270,89 @@ export class TableComponent implements OnInit, OnDestroy {
     } else {
       this.showGameOver = false;
     }
+  }
+
+  private updatePlayerStatsAndActiveStates(gameState: LocalGameState) {
+    if (!gameState || !gameState.state) {
+      this.isTopPlayerActive = false;
+      this.isBottomPlayerActive = false;
+      this.bottomReplayPlayer = undefined;
+      this.topReplayPlayer = undefined;
+      this.bottomPlayerStats = undefined;
+      this.topPlayerStats = undefined;
+      return;
+    }
+
+    const state = gameState.state;
+
+    // Update active states
+    this.isTopPlayerActive = this.isPlayerActive(state, this.topPlayer);
+    this.isBottomPlayerActive = this.isPlayerActive(state, this.bottomPlayer);
+
+    // Update player stats
+    this.topPlayerStats = this.getPlayerStats(gameState, this.topPlayer);
+    this.bottomPlayerStats = this.getPlayerStats(gameState, this.bottomPlayer);
+
+    // Update replay players
+    this.bottomReplayPlayer = undefined;
+    this.topReplayPlayer = undefined;
+
+    if (gameState.replay !== undefined) {
+      this.bottomReplayPlayer = this.isFirstPlayer(state, this.bottomPlayer)
+        ? gameState.replay.player1
+        : gameState.replay.player2;
+
+      this.topReplayPlayer = this.isFirstPlayer(state, this.topPlayer)
+        ? gameState.replay.player1
+        : gameState.replay.player2;
+    }
+
+    // Refresh player stats if needed
+    const topPlayerId = this.topPlayer && this.topPlayer.id;
+    const bottomPlayerId = this.bottomPlayer && this.bottomPlayer.id;
+    const gameOrPlayerHasChanged = this.gameId !== gameState.localId
+      || (this.topPlayerStats && this.topPlayerStats.clientId !== topPlayerId)
+      || (this.bottomPlayerStats && this.bottomPlayerStats.clientId !== bottomPlayerId);
+
+    if (!gameState.deleted && gameOrPlayerHasChanged) {
+      this.refreshPlayerStats(gameState);
+    }
+  }
+
+  private isPlayerActive(state: any, player: Player): boolean {
+    if (!state || !player || !state.players[state.activePlayer]) {
+      return false;
+    }
+    return player.id === state.players[state.activePlayer].id;
+  }
+
+  private isFirstPlayer(state: any, player: Player): boolean {
+    if (!state || !player || state.players.length === 0) {
+      return false;
+    }
+    return player.id === state.players[0].id;
+  }
+
+  private getPlayerStats(gameState: LocalGameState, player: Player): PlayerStats | undefined {
+    if (!player || !gameState.playerStats) {
+      return undefined;
+    }
+    return gameState.playerStats.find(p => p.clientId === player.id);
+  }
+
+  private refreshPlayerStats(gameState: LocalGameState) {
+    this.gameService.getPlayerStats(gameState.gameId).pipe(
+      untilDestroyed(this)
+    ).subscribe({
+      next: response => {
+        const gameStates = this.sessionService.session.gameStates.slice();
+        const index = gameStates.findIndex(g => g.localId === gameState.localId);
+        if (index !== -1) {
+          gameStates[index] = { ...gameStates[index], playerStats: response.playerStats };
+          this.sessionService.set({ gameStates });
+        }
+      }
+    });
   }
 
   private updateCanUndo() {

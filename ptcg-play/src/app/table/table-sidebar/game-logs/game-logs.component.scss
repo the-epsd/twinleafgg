@@ -100,3 +100,56 @@
 ::ng-deep .ptcg-opponent {
   background-color: rgba(255, 0, 0, 0.1);
 }
+
+// Overlay mode - pill-style messages
+.ptcg-game-logs-overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  align-items: flex-start;
+}
+
+.log-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 100%;
+  word-wrap: break-word;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  .log-pill-name {
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .log-pill-message {
+    flex: 1;
+    word-break: break-word;
+  }
+
+  // Player name color classes
+  &.ptcg-player-active .log-pill-name,
+  .log-pill-name.ptcg-player-active {
+    color: #4a9eff;
+  }
+
+  &.ptcg-player-opponent .log-pill-name,
+  .log-pill-name.ptcg-player-opponent {
+    color: #ff6b6b;
+  }
+
+  &.ptcg-system .log-pill-name,
+  .log-pill-name.ptcg-system {
+    color: #999;
+  }
+}

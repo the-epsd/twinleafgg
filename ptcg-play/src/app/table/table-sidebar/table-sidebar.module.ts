@@ -32,7 +32,10 @@ import { PlayerTimeComponent } from './player-time/player-time.component';
     ChooseAvatarPopupComponent
   ],
   exports: [
-    TableSidebarComponent
+    TableSidebarComponent,
+    PlayerBarComponent,
+    PlayerActionsComponent,
+    GameLogsComponent
   ]
 })
 export class TableSidebarModule { }

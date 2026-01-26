@@ -3,7 +3,8 @@
 </video> -->
 
 <ptcg-sidebar-container [class.has-sandbox]="showSandboxPanel && gameState && gameState.state && gameState.gameId"
-  [class.sandbox-collapsed]="sandboxSidebarCollapsed">
+  [class.sandbox-collapsed]="sandboxSidebarCollapsed"
+  [class.hide-sidebar-3d]="use3dBoard && webglSupported">
 
   <!-- Sandbox Control Panel (Admin only, Sandbox mode only) - Beside sidebar -->
   <div class="sandbox-sidebar-container" *ngIf="showSandboxPanel && gameState && gameState.state && gameState.gameId">
@@ -18,7 +19,7 @@
   </div>
 
   <!-- Table sidebar -->
-  <ptcg-sidebar>
+  <ptcg-sidebar *ngIf="!use3dBoard || !webglSupported">
     <ptcg-table-sidebar [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer"
       [bottomPlayer]="bottomPlayer" (join)="play()">
     </ptcg-table-sidebar>
@@ -76,6 +77,36 @@
       <!-- Game Over screen -->
       <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">
       </ptcg-game-over>
+
+      <!-- Floating UI Overlays for 3D Board -->
+      <div class="board-3d-overlays" *ngIf="use3dBoard && webglSupported && gameState">
+        <!-- Opponent info - top-left -->
+        <div class="overlay-opponent-info">
+          <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" 
+            [player]="topPlayer" [replayPlayer]="topReplayPlayer"
+            [playerStats]="topPlayerStats" [active]="isTopPlayerActive">
+          </ptcg-player-bar>
+        </div>
+
+        <!-- Player info - bottom-right -->
+        <div class="overlay-player-info">
+          <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" 
+            [player]="bottomPlayer" [replayPlayer]="bottomReplayPlayer"
+            [playerStats]="bottomPlayerStats" [active]="isBottomPlayerActive">
+          </ptcg-player-bar>
+        </div>
+
+        <!-- End turn/leave button - far right, vertically centered -->
+        <div class="overlay-player-actions">
+          <ptcg-player-actions [gameState]="gameState" [clientId]="clientId" (join)="play()">
+          </ptcg-player-actions>
+        </div>
+
+        <!-- Game logs - below button, right side -->
+        <div class="overlay-game-logs">
+          <ptcg-game-logs [gameState]="gameState" [overlayMode]="true"></ptcg-game-logs>
+        </div>
+      </div>
     </div>
   </ptcg-content>
 
