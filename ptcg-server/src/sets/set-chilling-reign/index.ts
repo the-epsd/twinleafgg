@@ -46,6 +46,7 @@ import { Peonia } from './peonia';
 import { Peony } from './peony';
 import { Porygon2 } from './porygon2';
 import { Ralts } from './ralts';
+import { RapidStrikeUrshifu } from './rapid-strike-urshifu';
 import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
 import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
@@ -105,6 +106,7 @@ export const setChillingReign: Card[] = [
   new Peony(),
   new Porygon2(),
   new Ralts(),
+  new RapidStrikeUrshifu(),
   new ShadowRiderCalyrexV(),
   new ShadowRiderCalyrexVMAX(),
   new Snorunt(),

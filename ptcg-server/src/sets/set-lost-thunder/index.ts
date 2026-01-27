@@ -47,6 +47,7 @@ import { ProfessorElmLecture } from './professor-elms-lecture';
 import { Raikou } from './raikou';
 import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
+import { Sableye } from './sableye';
 import { Shedinja } from './shedinja';
 import { Shuckle } from './shuckle';
 import { ShuckleGX } from './shuckle-gx';
@@ -113,6 +114,7 @@ export const setLostThunder: Card[] = [
   new Raikou(),
   new Ralts(),
   new Ribombee(),
+  new Sableye(),
   new Shedinja(),
   new Shuckle(),
   new ShuckleGX(),

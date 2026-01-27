@@ -413,7 +413,7 @@ export class Gloria2BRS extends GloriaBRS141 {
 }
 
 export class SingleStrikeStyleMustardBRS extends SingleStrikeStyleMustard {
-  public setNumber = 'TG27';
+  public setNumber = 'TG28';
   public fullName: string = 'Single Strike Style Mustard BRS';
   public set = 'BRS';
 }

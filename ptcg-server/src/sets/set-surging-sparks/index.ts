@@ -74,6 +74,7 @@ import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Ninetales } from './ninetales';
+import { PaldeanTauros } from './paldean-tauros';
 import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
 import { Pansear } from './pansear';
@@ -186,6 +187,7 @@ export const setSurgingSparks: Card[] = [
   new Sylveonex(),
   new LisiasAppeal(),
   new Sandygast(),
+  new PaldeanTauros(),
   new Palossandex(),
   new Capsakid(),
   new Shroodle(),
