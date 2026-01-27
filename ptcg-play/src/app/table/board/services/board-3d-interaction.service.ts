@@ -294,7 +294,7 @@ export class Board3dInteractionService {
 
       // Active to Bench
       if (originalTarget.slot === SlotType.ACTIVE && config.type === DropZoneType.BENCH) {
-        return !isOccupied;
+        return true; // Can always switch to bench (will swap)
       }
       // Bench to Active
       if (originalTarget.slot === SlotType.BENCH && config.type === DropZoneType.ACTIVE) {

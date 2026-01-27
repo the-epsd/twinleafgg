@@ -315,13 +315,6 @@ export class Board3dStateSyncService {
 
       scene.add(cardMesh.getGroup());
       this.cardsMap.set(cardId, cardMesh);
-
-      // Animate Basic Pokemon played to bench
-      if (cardTarget?.slot === SlotType.BENCH &&
-        mainCard.superType === SuperType.POKEMON &&
-        (mainCard as PokemonCard).stage === Stage.BASIC) {
-        await this.animationService.playBasicAnimation(cardMesh.getGroup());
-      }
     }
 
     // Update overlays for PokemonCardList

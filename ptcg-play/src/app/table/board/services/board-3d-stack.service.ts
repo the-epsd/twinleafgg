@@ -23,6 +23,7 @@ export type GetCardByIdCallback = (cardId: string) => any;
 
 @Injectable()
 export class Board3dStackService {
+  private static readonly STACK_HEIGHT_INCREMENT = 0.015; // Vertical spacing between cards in stack
   private deckStacks: Map<string, InstancedMesh> = new Map();
   private discardStacks: Map<string, InstancedMesh> = new Map();
 
@@ -89,7 +90,7 @@ export class Board3dStackService {
       const matrix = new Matrix4();
       const pos = new Vector3(
         position.x,
-        position.y + (i * 0.01), // Stack height
+        position.y + (i * Board3dStackService.STACK_HEIGHT_INCREMENT), // Stack height
         position.z
       );
       // Compose matrix from position, rotation, and scale
@@ -115,7 +116,7 @@ export class Board3dStackService {
       await updateCardCallback(
         topCardList,
         topCardId,
-        new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
+        new Vector3(position.x, position.y + ((cardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT), position.z),
         false, // Not owner - ensures face-down
         rotation,
         scene,
@@ -166,7 +167,7 @@ export class Board3dStackService {
     await updateCardCallback(
       topCardList,
       topCardId,
-      new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
+      new Vector3(position.x, position.y + ((cardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT), position.z),
       true, // Always visible
       rotation,
       scene,
@@ -208,7 +209,7 @@ export class Board3dStackService {
         const matrix = new Matrix4();
         const pos = new Vector3(
           position.x,
-          position.y + (i * 0.01), // Stack height
+          position.y + (i * Board3dStackService.STACK_HEIGHT_INCREMENT), // Stack height
           position.z
         );
         // Compose matrix from position, rotation, and scale
