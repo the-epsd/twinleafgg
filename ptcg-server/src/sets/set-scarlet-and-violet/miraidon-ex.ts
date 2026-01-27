@@ -22,7 +22,7 @@ export class Miraidonex extends PokemonCard {
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may search your deck for up ' +
-      'to 2 Basic L Pokémon and put them onto your Bench. ' +
+      'to 2 Basic [L] Pokémon and put them onto your Bench. ' +
       'Then, shuffle your deck.'
   }];
 

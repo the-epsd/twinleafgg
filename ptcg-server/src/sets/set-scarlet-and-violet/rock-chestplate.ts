@@ -10,21 +10,15 @@ import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class RockChestplate extends TrainerCard {
 
   public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '192';
-
   public name = 'Rock Chestplate';
-
   public fullName = 'Rock Chestplate SVI';
 
   public text =
-    'The F Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';
+    'The [F] Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reduce damage by 30

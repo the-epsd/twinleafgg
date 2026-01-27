@@ -6,17 +6,17 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Treecko extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C];
   public evolvesInto = 'Grovyle';
 
   public attacks = [{
     name: 'Find a Friend',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 0,
-    text: 'Search your deck for a G Pokemon, reveal it, and put it into your hand. Then, shuffle the deck.'
+    text: 'Search your deck for a [G] Pokémon, reveal it, and put it into your hand. Then, shuffle the deck.'
   }];
 
   public setNumber: string = '20';

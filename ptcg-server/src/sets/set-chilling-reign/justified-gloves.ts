@@ -11,21 +11,15 @@ import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class JustifiedGloves extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public regulationMark = 'F';
-
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '143';
-
   public name: string = 'Justified Gloves';
-
   public fullName: string = 'Justified Gloves CRE 143';
 
   public text: string =
-    'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active P Pokémon (before applying Weakness and Resistance).';
+    'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active [D] Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
