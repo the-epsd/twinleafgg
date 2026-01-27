@@ -754,7 +754,13 @@ export class Board3dInteractionService {
           };
         }
       } else {
-        // Play card from hand - use current index from userData (may have changed during drag)
+        // Play card from hand - return to hand immediately for responsive feedback
+        // (like 2D board behavior - card animates back right away)
+        if (this.draggedCard) {
+          this.returnCardToHand(this.draggedCard);
+        }
+        
+        // Use current index from userData (may have changed during drag)
         result = {
           action: 'playCard',
           handIndex: this.draggedCard?.userData?.handIndex ?? this.draggedCardHandIndex,

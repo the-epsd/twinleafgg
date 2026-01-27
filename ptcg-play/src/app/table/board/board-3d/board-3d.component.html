@@ -7,5 +7,11 @@
     <div class="stat-line">{{ objectCount }} Objects</div>
     <div class="stat-line">{{ geometries }} Geometries</div>
     <div class="stat-line">{{ textures }} Textures</div>
+    <div class="stat-line wireframe-toggle">
+      <label>
+        <input type="checkbox" [(ngModel)]="showWireframes" (change)="toggleWireframes()">
+        Wireframes
+      </label>
+    </div>
   </div>
 </div>

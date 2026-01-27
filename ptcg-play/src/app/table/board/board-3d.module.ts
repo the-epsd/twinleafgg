@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Board3dComponent } from './board-3d/board-3d.component';
 import { Board3dAssetLoaderService } from './services/board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './services/board-3d-state-sync.service';
@@ -12,7 +13,8 @@ import { Board3dHandService } from './services/board-3d-hand.service';
     Board3dComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   providers: [
     Board3dAssetLoaderService,

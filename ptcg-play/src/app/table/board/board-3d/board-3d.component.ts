@@ -26,7 +26,11 @@ import {
   ACESFilmicToneMapping,
   Vector3,
   Vector2,
-  RepeatWrapping
+  RepeatWrapping,
+  Group,
+  EdgesGeometry,
+  LineSegments,
+  LineBasicMaterial
 } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
@@ -43,7 +47,7 @@ import { Player, CardList, Card, SlotType, PlayerType, CardTarget, SuperType } f
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { CardInfoPaneOptions } from '../../../shared/cards/card-info-pane/card-info-pane.component';
 import { GameService } from '../../../api/services/game.service';
-import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { BasicEntranceAnimationEvent, BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Object3D } from 'three';
 
 @UntilDestroy()
@@ -110,6 +114,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     textures: number;
   } = { triangles: 0, drawCalls: 0, objectCount: 0, geometries: 0, textures: 0 };
 
+  // Wireframe overlay
+  public showWireframes: boolean = false;
+  private wireframeGroup!: Group;
+
   constructor(
     private ngZone: NgZone,
     private assetLoader: Board3dAssetLoaderService,
@@ -131,6 +139,11 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.createBoardAsync();
     this.createGlowingEdges();
     this.initPostProcessing();
+
+    // Initialize wireframe group
+    this.wireframeGroup = new Group();
+    this.wireframeGroup.name = 'wireframeOverlay';
+    this.scene.add(this.wireframeGroup);
 
     // Initialize hand service
     this.scene.add(this.handService.getHandGroup());
@@ -171,6 +184,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       untilDestroyed(this)
     ).subscribe(() => {
       this.updateSelectionVisuals();
+    });
+
+    // Subscribe to attack animation events
+    this.boardInteractionService.attackAnimation$.pipe(
+      untilDestroyed(this)
+    ).subscribe((event) => {
+      this.handleAttackAnimation(event);
     });
   }
 
@@ -238,6 +258,12 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Kill any active animations
     this.animationService.killAllAnimations();
+
+    // Clean up wireframes
+    this.removeWireframes();
+    if (this.wireframeGroup) {
+      this.scene.remove(this.wireframeGroup);
+    }
 
     // Clean up service state to prevent stale references on mode switch
     this.stateSync.dispose(this.scene);
@@ -430,17 +456,17 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     if (didRender) {
       this.composer.render();
       this.needsRender = false;
-      
+
       // Read renderer statistics immediately after rendering (before auto-reset)
       const renderInfo = this.renderer.info.render;
       const memoryInfo = this.renderer.info.memory;
-      
+
       // Count objects in scene
       let objectCount = 0;
       this.scene.traverse(() => {
         objectCount++;
       });
-      
+
       // Store stats for display update
       this.lastStats = {
         triangles: renderInfo.triangles || 0,
@@ -455,7 +481,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     if (currentTime - this.lastFpsUpdate >= 1000) {
       const averageFrameTime = this.frameTimes.reduce((a, b) => a + b, 0) / this.frameTimes.length;
       const calculatedFps = Math.round(1000 / averageFrameTime);
-      
+
       // Update all stats (run in Angular zone for change detection)
       this.ngZone.run(() => {
         this.fps = calculatedFps;
@@ -465,7 +491,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         this.geometries = this.lastStats.geometries;
         this.textures = this.lastStats.textures;
       });
-      
+
       this.lastFpsUpdate = currentTime;
     }
   };
@@ -544,6 +570,134 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   public markDirty(): void {
     this.needsRender = true;
+  }
+
+  public toggleWireframes(): void {
+    if (this.showWireframes) {
+      this.createWireframes();
+    } else {
+      this.removeWireframes();
+    }
+    this.markDirty();
+  }
+
+  private createWireframes(): void {
+    // Clear any existing wireframes first
+    this.removeWireframes();
+
+    // Traverse the scene and create wireframes for all meshes
+    this.scene.traverse((object: any) => {
+      // Skip the wireframe group itself
+      if (object === this.wireframeGroup) {
+        return;
+      }
+      
+      // Create wireframes for all meshes with geometry
+      if (object instanceof Mesh && object.geometry) {
+        try {
+          // Create edges geometry with threshold angle (15 degrees)
+          const edgesGeometry = new EdgesGeometry(object.geometry, 15);
+          
+          // Create line material with bright color for visibility
+          const lineMaterial = new LineBasicMaterial({
+            color: 0x00ffff, // Cyan color
+            linewidth: 1
+          });
+
+          // Create line segments
+          const wireframe = new LineSegments(edgesGeometry, lineMaterial);
+          
+          // Copy position, rotation, and scale from original mesh
+          wireframe.position.copy(object.position);
+          wireframe.rotation.copy(object.rotation);
+          wireframe.scale.copy(object.scale);
+          
+          // Set render order to ensure wireframes render on top
+          wireframe.renderOrder = 1000;
+          
+          // Store reference to original mesh for tracking and cleanup
+          wireframe.userData.originalMesh = object;
+          wireframe.userData.isWireframe = true;
+          
+          // Add wireframe to the same parent as the original mesh
+          // This ensures wireframes follow the same transform hierarchy
+          if (object.parent) {
+            object.parent.add(wireframe);
+          } else {
+            this.wireframeGroup.add(wireframe);
+          }
+          
+          // Also add to wireframeGroup for easier tracking and cleanup
+          // (but don't add as child, just track it)
+          if (!this.wireframeGroup.children.includes(wireframe)) {
+            // Store reference in wireframeGroup's userData for tracking
+            if (!this.wireframeGroup.userData.wireframes) {
+              this.wireframeGroup.userData.wireframes = [];
+            }
+            this.wireframeGroup.userData.wireframes.push(wireframe);
+          }
+        } catch (error) {
+          // Skip geometries that can't create edges (e.g., some custom geometries)
+          console.warn('Failed to create wireframe for mesh:', object, error);
+        }
+      }
+    });
+  }
+
+  private removeWireframes(): void {
+    // Remove all wireframes from the scene
+    const objectsToRemove: LineSegments[] = [];
+    
+    // Find all wireframes by traversing the scene
+    this.scene.traverse((object: any) => {
+      if (object instanceof LineSegments && object.userData.isWireframe) {
+        objectsToRemove.push(object);
+      }
+    });
+
+    // Also check wireframeGroup's tracked wireframes
+    if (this.wireframeGroup.userData.wireframes) {
+      this.wireframeGroup.userData.wireframes.forEach((wireframe: LineSegments) => {
+        if (!objectsToRemove.includes(wireframe)) {
+          objectsToRemove.push(wireframe);
+        }
+      });
+    }
+
+    // Dispose and remove all wireframes
+    objectsToRemove.forEach((wireframe) => {
+      // Dispose geometry and material
+      if (wireframe.geometry) {
+        wireframe.geometry.dispose();
+      }
+      if (wireframe.material) {
+        (wireframe.material as LineBasicMaterial).dispose();
+      }
+      
+      // Remove from parent
+      if (wireframe.parent) {
+        wireframe.parent.remove(wireframe);
+      }
+    });
+
+    // Clear wireframe group children
+    while (this.wireframeGroup.children.length > 0) {
+      const child = this.wireframeGroup.children[0];
+      if (child instanceof LineSegments) {
+        if (child.geometry) {
+          child.geometry.dispose();
+        }
+        if (child.material) {
+          (child.material as LineBasicMaterial).dispose();
+        }
+      }
+      this.wireframeGroup.remove(child);
+    }
+
+    // Clear tracked wireframes
+    if (this.wireframeGroup.userData.wireframes) {
+      this.wireframeGroup.userData.wireframes = [];
+    }
   }
 
   private syncGameState(): void {
@@ -751,8 +905,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
             result.zone
           );
 
-          // Remove card from hand visually (will re-sync on state update)
-          this.handService.removeCard(result.handIndex);
+          // Card will be removed from hand when state sync confirms successful play
+          // If play fails, card remains in hand (correct behavior)
         } else if (result.action === 'retreat' && result.benchIndex !== undefined) {
           // Retreat action (Active <-> Bench swap)
           this.gameService.retreatAction(
@@ -827,6 +981,68 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         card3d.setOutline(isPlayable, 0x4ade80);
       }
     });
+  }
+
+  /**
+   * Handle attack animation event
+   */
+  private handleAttackAnimation(event: BasicEntranceAnimationEvent): void {
+    // Determine attacker position based on playerId
+    const isBottomPlayer = this.bottomPlayer?.id === event.playerId;
+    const isTopPlayer = this.topPlayer?.id === event.playerId;
+
+    if (!isBottomPlayer && !isTopPlayer) {
+      // Player not found, skip animation
+      return;
+    }
+
+    const attackerPosition = isBottomPlayer ? 'bottomPlayer' : 'topPlayer';
+    const defenderPosition = isBottomPlayer ? 'topPlayer' : 'bottomPlayer';
+
+    // Construct attacker card ID
+    // Active cards: ${position}_${playerId}_active (no index)
+    // Bench cards: ${position}_${playerId}_bench_${index} (with index)
+    const slot = event.slot || 'active';
+    const index = event.index ?? 0;
+    const attackerCardId = slot === 'active'
+      ? `${attackerPosition}_${event.playerId}_active`
+      : `${attackerPosition}_${event.playerId}_bench_${index}`;
+
+    // Construct defender card ID (always opponent's active Pokemon - no index)
+    const defenderPlayerId = isBottomPlayer ? this.topPlayer?.id : this.bottomPlayer?.id;
+    if (!defenderPlayerId) {
+      // No opponent found, skip animation
+      return;
+    }
+    const defenderCardId = `${defenderPosition}_${defenderPlayerId}_active`;
+
+    // Get attacker and defender cards
+    const attackerCard = this.stateSync.getCardById(attackerCardId);
+    const defenderCard = this.stateSync.getCardById(defenderCardId);
+
+    // Debug logging
+    console.log('[Board3D] Attack animation event:', {
+      event,
+      attackerCardId,
+      defenderCardId,
+      attackerFound: !!attackerCard,
+      defenderFound: !!defenderCard
+    });
+
+    // Only animate if both cards exist
+    if (attackerCard && defenderCard) {
+      this.animationService.attackAnimation(
+        attackerCard.getGroup(),
+        defenderCard.getGroup()
+      );
+    } else {
+      console.warn('[Board3D] Attack animation skipped - cards not found:', {
+        attackerCardId,
+        defenderCardId,
+        attackerFound: !!attackerCard,
+        defenderFound: !!defenderCard
+      });
+    }
   }
 
   /**

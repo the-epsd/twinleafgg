@@ -3,7 +3,14 @@
 :host {
   display: flex;
   flex-direction: column;
+  min-height: 0;
+}
 
+.ptcg-game-logs-standard {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .private-log {
@@ -27,10 +34,13 @@
 
 .ptcg-game-logs-content {
   flex: 1 1 auto;
+  min-height: 0;
   overflow: auto;
 
   ul {
-    height: 0;
+    height: auto;
+    padding: 0;
+    margin: 0;
     list-style-type: none;
   }
 
