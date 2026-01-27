@@ -6,15 +6,15 @@ import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { GameError, GameMessage, PlayerType } from '../../game';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { EnergyMap } from '../../game/store/prompts/choose-energy-prompt';
-import { CardList } from '../../game/store/state/card-list';
-import { Card } from '../../game/store/card/card';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsEnergy extends EnergyCard {
 
-  public provides: CardType[] = [CardType.COLORLESS];
+  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+
+  public blendedEnergies: CardType[] = [CardType.PSYCHIC, CardType.DARK];
+
+  public blendedEnergyCount: number = 2;
 
   public tags: CardTag[] = [CardTag.TEAM_ROCKET];
 
@@ -33,64 +33,8 @@ export class TeamRocketsEnergy extends EnergyCard {
   public fullName = 'Team Rocket\'s Energy DRI';
 
   public text = `This card can only be attached to a Team Rocket's Pokémon. If this card is attached to anything other than a Team Rocket's Pokémon, discard this card.
-  
+
   While this card is attached to a Pokémon, this card provides 2 in any combination of [P] and [D] Energy`;
-
-  private getExistingEnergy(source: CardList): EnergyMap[] {
-    return source.cards
-      .filter((card: Card) => card instanceof EnergyCard && card !== this)
-      .map((card: Card) => ({
-        card: card as EnergyCard,
-        provides: (card as EnergyCard).provides
-      }));
-  }
-
-  private countEnergyType(energy: EnergyMap[], type: CardType): number {
-    return energy.reduce((count, e) => {
-      return count + e.provides.filter(p => p === type).length;
-    }, 0);
-  }
-
-  private getEnergyToProvide(attackCost: CardType[], existingEnergy: EnergyMap[]): CardType[] {
-    const needsPsychic = attackCost.includes(CardType.PSYCHIC);
-    const needsDark = attackCost.includes(CardType.DARK);
-
-    if (!needsPsychic && !needsDark) {
-      return [CardType.COLORLESS, CardType.COLORLESS];
-    }
-
-    const psychicCount = this.countEnergyType(existingEnergy, CardType.PSYCHIC);
-    const darkCount = this.countEnergyType(existingEnergy, CardType.DARK);
-    const requiredPsychic = attackCost.filter(c => c === CardType.PSYCHIC).length;
-    const requiredDark = attackCost.filter(c => c === CardType.DARK).length;
-
-    const hasEnoughPsychic = !needsPsychic || psychicCount >= requiredPsychic;
-    const hasEnoughDark = !needsDark || darkCount >= requiredDark;
-
-    if (hasEnoughPsychic && hasEnoughDark) {
-      return [CardType.COLORLESS, CardType.COLORLESS];
-    }
-
-    if (needsPsychic && needsDark) {
-      if (!hasEnoughPsychic && !hasEnoughDark) {
-        return [CardType.PSYCHIC, CardType.DARK];
-      }
-      if (!hasEnoughPsychic) {
-        return [CardType.PSYCHIC, CardType.PSYCHIC];
-      }
-      return [CardType.DARK, CardType.DARK];
-    }
-
-    if (needsPsychic && !hasEnoughPsychic) {
-      return [CardType.PSYCHIC, CardType.PSYCHIC];
-    }
-
-    if (needsDark && !hasEnoughDark) {
-      return [CardType.DARK, CardType.DARK];
-    }
-
-    return [CardType.COLORLESS, CardType.COLORLESS];
-  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prevent attaching to non Team Rocket's Pokemon
@@ -124,18 +68,9 @@ export class TeamRocketsEnergy extends EnergyCard {
         return state;
       }
 
-      const pokemonCard = effect.source.getPokemonCard();
-      if (!pokemonCard || !(pokemonCard instanceof PokemonCard)) {
-        return state;
-      }
-
-      const attackCost = pokemonCard.attacks[0]?.cost || [];
-      const existingEnergy = this.getExistingEnergy(effect.source);
-      const energyToProvide = this.getEnergyToProvide(attackCost, existingEnergy);
-
       effect.energyMap.push({
         card: this,
-        provides: energyToProvide
+        provides: [CardType.COLORLESS, CardType.COLORLESS]
       });
     }
     return state;

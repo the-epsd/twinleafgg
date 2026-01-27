@@ -55,33 +55,13 @@ export class StateUtils {
     const blendProvides: CardType[][] = [];
     const blendCards: EnergyMap[] = [];
 
-    // Collect blend/unit energies and their possible provides
-    energy.forEach((energyMap, index) => {
-      const card = energyMap.card;
-      if (card instanceof EnergyCard) {
-        let blendTypes: CardType[] | undefined;
-        switch (card.name) {
-          case 'Blend Energy WLFM':
-            blendTypes = [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL];
-            break;
-          case 'Blend Energy GRPD':
-            blendTypes = [CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK];
-            break;
-          case 'Unit Energy GRW':
-            blendTypes = [CardType.GRASS, CardType.FIRE, CardType.WATER];
-            break;
-          case 'Unit Energy LPM':
-            blendTypes = [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL];
-            break;
-          case 'Unit Energy FDY':
-            blendTypes = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];
-            break;
-          case 'Dark Metal Energy':
-            blendTypes = [CardType.DARK, CardType.METAL];
-            break;
-        }
-        if (blendTypes) {
-          blendProvides.push(blendTypes);
+    // Collect blend/unit energies and their possible provides using card properties
+    energy.forEach((energyMap) => {
+      const card = energyMap.card as EnergyCard;
+      if (card.blendedEnergies && card.blendedEnergies.length > 0) {
+        const count = card.blendedEnergyCount || 1;
+        for (let i = 0; i < count; i++) {
+          blendProvides.push([...card.blendedEnergies]);
           blendCards.push(energyMap);
         }
       }
