@@ -2,6 +2,7 @@ import { SizzlipedeCPA, PurrloinCPA, BedeCPA, FullHealCPA, GreatBallCPA, HopCPA,
 import { Card } from '../../game/store/card/card';
 import { EldegossV } from './eldegoss-v';
 import { GalarianObstagoon } from './galarian-obstagoon';
+import { HyperPotion } from './hyper-potion';
 import { Nickit } from './nickit';
 import { Piers } from './piers';
 import { RotomPhone } from './rotom-phone';
@@ -15,6 +16,7 @@ import { MarnieCPA } from './other-prints';
 export const setChampionsPath: Card[] = [
   new EldegossV(),
   new GalarianObstagoon(),
+  new HyperPotion(),
   new Nickit(),
   new Piers(),
   new RotomPhone(),
