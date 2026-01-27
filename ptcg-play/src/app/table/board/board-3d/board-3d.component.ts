@@ -154,8 +154,11 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       this.updatePerspective();
     }
 
-    // Sync game state when it changes
-    if (changes.gameState && !changes.gameState.firstChange && this.scene) {
+    // Sync game state when it changes or when players change (for replay/spectator switchSide)
+    const gameStateChanged = changes.gameState && !changes.gameState.firstChange;
+    const playersChanged = (changes.topPlayer || changes.bottomPlayer) && this.scene;
+    
+    if ((gameStateChanged || playersChanged) && this.scene) {
       this.syncGameState();
     }
 
@@ -438,10 +441,14 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Run state sync outside Angular zone for better performance
     this.ngZone.runOutsideAngular(async () => {
       try {
+        // Pass topPlayer and bottomPlayer to syncState so it uses the swapped players
+        // when switchSide is true in replay/spectator mode
         await this.stateSync.syncState(
           this.gameState,
           this.scene,
-          this.clientId
+          this.clientId,
+          this.topPlayer,
+          this.bottomPlayer
         );
 
         // Update drop zone occupied states
