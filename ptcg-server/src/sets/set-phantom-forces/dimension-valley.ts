@@ -12,19 +12,14 @@ import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../game/store/
 export class DimensionValley extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public set: string = 'PHF';
-
   public name: string = 'Dimension Valley';
-
   public fullName: string = 'Dimension Valley PHF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '93';
 
   public text: string =
-    'Each P Pokemon\'s attacks (both yours and your opponent\'s) cost C less.';
+    'Each [P] Pokémon\'s attacks (both yours and your opponent\'s) cost [C] less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckAttackCostEffect && StateUtils.getStadiumCard(state) === this) {

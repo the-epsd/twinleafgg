@@ -90,21 +90,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Irida extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'F';
-
   public set: string = 'ASR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '147';
-
   public name: string = 'Irida';
-
   public fullName: string = 'Irida ASR';
 
   public text: string =
-    'Search your deck for a W Pokemon and an Item ' +
+    'Search your deck for a [W] Pokémon and an Item ' +
     'card, reveal them, and put them into your hand. ' +
     'Then, shuffle your deck.';
 

@@ -14,39 +14,31 @@ import { StoreLike } from '../../game/store/store-like';
 export class Wobbuffet extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 110;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Bide Barricade',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokemon is your Active Pokemon, each Pokemon in ' +
       'play, in each player\'s hand, and in each player\'s discard pile has ' +
-      'no Abilities (except for P Pokemon).'
+      'no Abilities (except for [P] Pokémon).'
   }];
 
   public attacks = [{
     name: 'Psychic Assault',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, C],
     damage: 10,
     text: 'This attack does 10 more damage for each damage counter on ' +
       'your opponent\'s Active Pokemon.'
   }];
 
   public set: string = 'PHF';
-
   public name: string = 'Wobbuffet';
-
   public fullName: string = 'Wobbuffet PHF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '36';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

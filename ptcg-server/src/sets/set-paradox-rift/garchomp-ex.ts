@@ -32,7 +32,7 @@ export class Garchompex extends PokemonCard {
       name: 'Hydro Lander',
       cost: [CardType.FIGHTING],
       damage: 160,
-      text: 'You may attach up to 3 Basic F Energy from your discard pile to your Benched Pokémon in any way you like.'
+      text: 'You may attach up to 3 Basic [F] Energy from your discard pile to your Benched Pokémon in any way you like.'
     },
     {
       name: 'Sonic Dive',
