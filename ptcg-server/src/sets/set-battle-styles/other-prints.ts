@@ -140,7 +140,7 @@ export class KorrinasFocus2BST extends KorrinasFocusBST128 {
 }
 
 export class SingleStrikeStyleMustard2BST extends SingleStrikeStyleMustardBST132 {
-  public setNumber = '162';
+  public setNumber = '163';
   public fullName: string = 'Single Strike Style Mustard2 BST';
   public set = 'BST';
 }
@@ -206,7 +206,7 @@ export class KorrinasFocus3BST extends KorrinasFocusBST128 {
 }
 
 export class SingleStrikeStyleMustard3BST extends SingleStrikeStyleMustardBST132 {
-  public setNumber = '176';
+  public setNumber = '177';
   public fullName: string = 'Single Strike Style Mustard3 BST';
   public set = 'BST';
 }

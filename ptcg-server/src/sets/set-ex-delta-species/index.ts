@@ -42,7 +42,7 @@ import { Shelgon } from './shelgon';
 import { Shelgon2 } from './shelgon2';
 import { Vaporeonex } from './vaporeon-ex';
 
-import { SuperScoopUpDS } from './other-prints';
+import { SuperScoopUpDS, DarknessEnergySpecialDS, GreatBallDS, MetalEnergySpecialDS, DualBallDS } from './other-prints';
 
 export const setEXDeltaSpecies: Card[] = [
   new Bagon(),
@@ -88,5 +88,10 @@ export const setEXDeltaSpecies: Card[] = [
   new Shelgon2(),
   new Vaporeonex(),
 
+  // Other Prints
+  new DarknessEnergySpecialDS(),
+  new GreatBallDS(),
+  new MetalEnergySpecialDS(),
+  new DualBallDS(),
   new SuperScoopUpDS(),
 ];

@@ -4,6 +4,7 @@ import { AetherParadiseConvserationArea } from './aether-paradise-conservation-a
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
+import { Carvanha } from './carvanha';
 import { ChoiceBand } from './choice-band';
 import { Dhelmise } from './dhelmise';
 import { DrampaGX } from './drampa-gx';
@@ -17,6 +18,7 @@ import { Mimikyu } from './mimikyu';
 import { Oricorio } from './oricorio';
 import { Oricorio2 } from './oricorio-2';
 import { RescueStretcher } from './rescue-stretcher';
+import { Sharpedo } from './sharpedo';
 import { Sudowoodo } from './sudowoodo';
 import { SylveonGX } from './sylveon-gx';
 import { TapuKokoGX } from './tapu-koko-gx';
@@ -42,6 +44,7 @@ export const setGuardiansRising: Card[] = [
   new AlolanNinetalesGX(),
   new AquaPatch(),
   new BrookletHill(),
+  new Carvanha(),
   new ChoiceBand(),
   new Dhelmise(),
   new DrampaGX(),
@@ -55,6 +58,7 @@ export const setGuardiansRising: Card[] = [
   new Oricorio(),
   new Oricorio2(),
   new RescueStretcher(),
+  new Sharpedo(),
   new Sudowoodo(),
   new SylveonGX(),
   new TapuLeleGX(),

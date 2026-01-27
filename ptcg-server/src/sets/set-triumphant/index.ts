@@ -19,6 +19,7 @@ import { Porygon2 } from './porygon2';
 import { PorygonZ } from './porygon-z';
 import { RescueEnergy } from './rescue-energy';
 import { Seeker } from './seeker';
+import { Shuppet } from './shuppet';
 import { Spiritomb } from './spiritomb';
 import { Twins } from './twins';
 import { Unown } from './unown';
@@ -46,6 +47,7 @@ export const setTriumphant: Card[] = [
   new PorygonZ(),
   new RescueEnergy(),
   new Seeker(),
+  new Shuppet(),
   new Spiritomb(),
   new Twins(),
   new Unown(),

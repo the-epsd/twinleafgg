@@ -39,9 +39,11 @@ import { Melmetal } from './melmetal';
 import { Meltan } from './meltan';
 import { Milcery } from './milcery';
 import { Noctowl } from './noctowl';
+import { Ponyta } from './ponyta';
 import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
+import { Rapidash } from './rapidash';
 import { Salandit } from './salandit';
 import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
@@ -93,9 +95,11 @@ export const setStellarCrown: Card[] = [
   new Melmetal(),
   new Meltan(),
   new Noctowl(),
+  new Ponyta(),
   // new Orthwormex(),
   new Raboot(),
   new RagingBolt(),
+  new Rapidash(),
   new Salandit(),
   new Salazzle(),
   new Scorbunny(),
