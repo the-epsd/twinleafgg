@@ -7,43 +7,34 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 export class Magneton extends PokemonCard {
 
   public regulationMark = 'H';
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Magnemite';
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Overvolt Discharge',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach up to 3 Basic Energy cards from your discard pile to your L Pokémon in any way you like. If you use this Ability, this Pokémon is Knocked Out.'
+    knocksOutSelf: true,
+    text: 'Once during your turn, you may attach up to 3 Basic Energy cards from your discard pile to your [L] Pokémon in any way you like. If you use this Ability, this Pokémon is Knocked Out.'
   }];
 
   public attacks = [
     {
       name: 'Electric Ball',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [L, C],
       damage: 40,
       text: ''
     }
   ];
 
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '59';
-
   public name: string = 'Magneton';
-
   public fullName: string = 'Magneton SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
