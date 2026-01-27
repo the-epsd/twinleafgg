@@ -38,20 +38,12 @@ export class Board3dHandService {
   ): Promise<void> {
     // Prevent concurrent updates
     if (this.isUpdating) {
-      console.log('[Board3dHandService] updateHand skipped - already updating');
       return;
     }
 
     this.isUpdating = true;
 
     try {
-      console.log('[Board3dHandService] updateHand called:', {
-        handSize: hand?.cards?.length,
-        isOwner,
-        hasScene: !!scene,
-        playableCount: playableCardIds?.length ?? 0
-      });
-
       const cards = hand.cards;
 
       // Ensure handGroup is in scene before operations
@@ -60,20 +52,13 @@ export class Board3dHandService {
       }
 
       // Clear old cards (kills animations and properly disposes)
-      console.log('[Board3dHandService] Clearing old hand cards:', this.handCards.size);
       this.clearHand(scene);
 
       // Create new cards in arc formation
-      console.log('[Board3dHandService] Creating new hand cards in arc formation');
       for (let i = 0; i < cards.length; i++) {
         const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
         await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable);
       }
-
-      console.log('[Board3dHandService] Hand update completed:', {
-        totalCardsCreated: this.handCards.size,
-        handGroupChildren: this.handGroup.children.length
-      });
     } finally {
       this.isUpdating = false;
     }

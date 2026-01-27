@@ -162,15 +162,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Sync initial hand if available
     if (this.bottomPlayerHand) {
-      console.log('[Board3D] Hand data available at init, syncing:', {
-        handSize: this.bottomPlayerHand.cards?.length,
-        bottomPlayerId: this.bottomPlayer?.id,
-        clientId: this.clientId
-      });
       this.syncHand();
       this.hasInitializedHand = true;
-    } else {
-      console.log('[Board3D] Hand data NOT available at init, will sync on first change');
     }
 
     // Subscribe to selection mode changes for ChoosePokemonPrompt etc.
@@ -209,14 +202,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     if (changes.bottomPlayerHand && this.scene) {
       const isFirstChange = changes.bottomPlayerHand.firstChange;
       const shouldSync = !isFirstChange || (isFirstChange && !this.hasInitializedHand);
-
-      console.log('[Board3D] Hand change detected:', {
-        isFirstChange,
-        hasInitializedHand: this.hasInitializedHand,
-        shouldSync,
-        handSize: this.bottomPlayerHand?.cards?.length,
-        previousHandSize: changes.bottomPlayerHand.previousValue?.cards?.length
-      });
 
       if (shouldSync) {
         this.syncHand();
@@ -759,29 +744,18 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   }
 
   private syncHand(): void {
-    console.log('[Board3D] syncHand() called:', {
-      hasBottomPlayerHand: !!this.bottomPlayerHand,
-      hasBottomPlayer: !!this.bottomPlayer,
-      handSize: this.bottomPlayerHand?.cards?.length,
-      bottomPlayerId: this.bottomPlayer?.id,
-      clientId: this.clientId
-    });
-
     // Skip sync if user is currently dragging a card to prevent destroying the dragged card
     if (this.interactionService.getIsDragging()) {
-      console.log('[Board3D] Skipping hand sync - drag in progress');
       return;
     }
 
     if (!this.bottomPlayerHand || !this.bottomPlayer) {
-      console.log('[Board3D] syncHand() aborted - missing data');
       return;
     }
 
     // Ensure handService is ready (handGroup exists and is in scene)
     const handGroup = this.handService.getHandGroup();
     if (!handGroup || !this.scene.children.includes(handGroup)) {
-      console.log('[Board3D] Hand group not in scene, adding it');
       this.scene.add(handGroup);
     }
 
@@ -789,11 +763,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       try {
         const isOwner = this.bottomPlayer.id === this.clientId;
         const playableCardIds = this.bottomPlayer.playableCardIds;
-        console.log('[Board3D] Calling handService.updateHand:', {
-          isOwner,
-          handSize: this.bottomPlayerHand.cards.length,
-          playableCount: playableCardIds?.length ?? 0
-        });
 
         await this.handService.updateHand(
           this.bottomPlayerHand,
@@ -802,7 +771,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
           playableCardIds
         );
 
-        console.log('[Board3D] Hand sync completed successfully');
         this.markDirty();
       } catch (error) {
         console.error('[Board3D] Failed to sync 3D hand:', error);
@@ -1019,15 +987,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Get attacker and defender cards
     const attackerCard = this.stateSync.getCardById(attackerCardId);
     const defenderCard = this.stateSync.getCardById(defenderCardId);
-
-    // Debug logging
-    console.log('[Board3D] Attack animation event:', {
-      event,
-      attackerCardId,
-      defenderCardId,
-      attackerFound: !!attackerCard,
-      defenderFound: !!defenderCard
-    });
 
     // Only animate if both cards exist
     if (attackerCard && defenderCard) {
