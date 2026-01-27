@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: CardTarget[] = [];
   let hasMegaPokemon = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (card.tags.includes(CardTag.MEGA) && card.tags.includes(CardTag.POKEMON_ex) && cardList.damage > 0) {
+    if (card.tags.includes(CardTag.POKEMON_SV_MEGA) && card.tags.includes(CardTag.POKEMON_ex) && cardList.damage > 0) {
       hasMegaPokemon = true;
     } else {
       blocked.push(target);
