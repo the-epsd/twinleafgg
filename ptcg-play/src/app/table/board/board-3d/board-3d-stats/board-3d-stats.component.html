@@ -1,0 +1,14 @@
+<div class="fps-counter">
+  <div class="stat-line">{{ stats.fps }} FPS</div>
+  <div class="stat-line">{{ stats.triangles }} Triangles</div>
+  <div class="stat-line">{{ stats.drawCalls }} Draw Calls</div>
+  <div class="stat-line">{{ stats.objectCount }} Objects</div>
+  <div class="stat-line">{{ stats.geometries }} Geometries</div>
+  <div class="stat-line">{{ stats.textures }} Textures</div>
+  <div class="stat-line wireframe-toggle">
+    <label>
+      <input type="checkbox" [(ngModel)]="showWireframes" (change)="toggleWireframes()">
+      Wireframes
+    </label>
+  </div>
+</div>

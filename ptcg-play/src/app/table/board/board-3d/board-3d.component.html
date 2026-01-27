@@ -1,17 +1,8 @@
 <div class="board-3d-container">
   <canvas #canvas class="board-3d-canvas"></canvas>
-  <div class="fps-counter">
-    <div class="stat-line">{{ fps }} FPS</div>
-    <div class="stat-line">{{ triangles }} Triangles</div>
-    <div class="stat-line">{{ drawCalls }} Draw Calls</div>
-    <div class="stat-line">{{ objectCount }} Objects</div>
-    <div class="stat-line">{{ geometries }} Geometries</div>
-    <div class="stat-line">{{ textures }} Textures</div>
-    <div class="stat-line wireframe-toggle">
-      <label>
-        <input type="checkbox" [(ngModel)]="showWireframes" (change)="toggleWireframes()">
-        Wireframes
-      </label>
-    </div>
-  </div>
+  <ptcg-board-3d-stats 
+    [scene]="scene" 
+    [renderer]="renderer"
+    (wireframeToggle)="onWireframeToggle($event)">
+  </ptcg-board-3d-stats>
 </div>

@@ -1,126 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Player, CardList, CardTarget, PlayerType, SlotType, PokemonCardList, CardTag, SuperType, Card, Stage, PokemonCard } from 'ptcg-server';
-import { Vector3, Scene, Group, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Euler, Texture } from 'three';
+import { Vector3, Scene } from 'three';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
-import { Board3dEnergySprite } from '../board-3d/board-3d-energy-sprite';
-import { Board3dDamageCounter } from '../board-3d/board-3d-damage-counter';
-import { Board3dMarker } from '../board-3d/board-3d-marker';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Board3dAnimationService } from './board-3d-animation.service';
-
-// Zone positions in 3D world space
-// Layout: Stadium shared at center-left, Active near center, Bench behind Active
-const ZONE_POSITIONS = {
-  // Shared stadium position (single slot between both players)
-  stadium: new Vector3(-10, 0.1, 14),
-
-  bottomPlayer: {
-    active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
-    supporter: new Vector3(6, 0.1, 18),   // Beside Active, to the right
-    bench: [
-      new Vector3(-8, 0.1, 24),          // Moved to where Active was (was Z=18)
-      new Vector3(-4, 0.1, 24),
-      new Vector3(0, 0.1, 24),
-      new Vector3(4, 0.1, 24),
-      new Vector3(8, 0.1, 24),
-      new Vector3(12, 0.1, 24),
-      new Vector3(16, 0.1, 24),
-      new Vector3(20, 0.1, 24),
-    ],
-    prizes: new Vector3(-18, 0.1, 20),
-    deck: new Vector3(20, 0.1, 18),
-    discard: new Vector3(20, 0.1, 24),
-    lostZone: new Vector3(-10, 0.1, 18),
-  },
-  topPlayer: {
-    active: new Vector3(0, 0.1, 10),     // Moved closer to center (was Z=-12)
-    supporter: new Vector3(-6, 0.1, 10), // Beside Active, to the left
-    bench: [
-      new Vector3(8, 0.1, 4),          // Moved to where Active was (was Z=-18)
-      new Vector3(4, 0.1, 4),
-      new Vector3(0, 0.1, 4),
-      new Vector3(-4, 0.1, 4),
-      new Vector3(-8, 0.1, 4),
-      new Vector3(-12, 0.1, 4),
-      new Vector3(-16, 0.1, 4),
-      new Vector3(-20, 0.1, 4),
-    ],
-    prizes: new Vector3(20, 0.1, 8),
-    deck: new Vector3(-18, 0.1, 8),
-    discard: new Vector3(-18, 0.1, 4),
-    lostZone: new Vector3(-10, 0.1, 10),
-  }
-};
-
-// Original bench positions (before shift) - used for 8-spot benches
-// These extend further left/right than the current shifted positions
-const ORIGINAL_BENCH_POSITIONS = {
-  bottomPlayer: [
-    new Vector3(-12, 0.1, 22),
-    new Vector3(-8, 0.1, 22),
-    new Vector3(-4, 0.1, 22),
-    new Vector3(0, 0.1, 22),
-    new Vector3(4, 0.1, 22),
-    new Vector3(8, 0.1, 22),
-    new Vector3(12, 0.1, 22),
-    new Vector3(16, 0.1, 22),
-  ],
-  topPlayer: [
-    new Vector3(12, 0.1, -4),
-    new Vector3(8, 0.1, -4),
-    new Vector3(4, 0.1, -4),
-    new Vector3(0, 0.1, -4),
-    new Vector3(-4, 0.1, -4),
-    new Vector3(-8, 0.1, -4),
-    new Vector3(-12, 0.1, -4),
-    new Vector3(-16, 0.1, -4),
-  ]
-};
-
-/**
- * Get bench positions based on bench size
- * - 5 spots: Use current shifted positions (centered, first 5)
- * - 8 spots: Use original positions (extends further left/right)
- */
-function getBenchPositions(benchSize: number, playerType: PlayerType): Vector3[] {
-  if (benchSize === 8) {
-    // Use original positions for 8-spot benches
-    return playerType === PlayerType.BOTTOM_PLAYER
-      ? ORIGINAL_BENCH_POSITIONS.bottomPlayer
-      : ORIGINAL_BENCH_POSITIONS.topPlayer;
-  } else {
-    // Use first 5 positions from current shifted array (centered)
-    const currentPositions = playerType === PlayerType.BOTTOM_PLAYER
-      ? ZONE_POSITIONS.bottomPlayer.bench
-      : ZONE_POSITIONS.topPlayer.bench;
-    return currentPositions.slice(0, benchSize);
-  }
-}
-
-// Card overlay data for tracking energies, damage, markers per card
-interface CardOverlays {
-  energySprite: Board3dEnergySprite;
-  damageCounter: Board3dDamageCounter;
-  marker: Board3dMarker;
-  breakCard?: Board3dCard;
-  toolCards: Board3dCard[];
-}
+import { Board3dCardOverlayService } from './board-3d-card-overlay.service';
+import { Board3dStackService, UpdateCardCallback, GetCardByIdCallback } from './board-3d-stack.service';
+import { Board3dPrizeService, RemoveCardCallback } from './board-3d-prize.service';
+import { ZONE_POSITIONS, getBenchPositions } from '../board-3d/board-3d-zone-positions';
 
 @Injectable()
 export class Board3dStateSyncService {
   private cardsMap: Map<string, Board3dCard> = new Map();
-  private cardOverlays: Map<string, CardOverlays> = new Map();
-  private deckStacks: Map<string, InstancedMesh> = new Map();
-  private discardStacks: Map<string, InstancedMesh> = new Map();
-  private energyTextureCache: Map<string, Texture> = new Map();
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
     private cardsBaseService: CardsBaseService,
-    private animationService: Board3dAnimationService
+    private animationService: Board3dAnimationService,
+    private overlayService: Board3dCardOverlayService,
+    private stackService: Board3dStackService,
+    private prizeService: Board3dPrizeService
   ) { }
 
   /**
@@ -165,7 +67,8 @@ export class Board3dStateSyncService {
     }
 
     // Sync shared stadium (only once - stadium is shared between both players)
-    const stadium = state.players[0]?.stadium || state.players[1]?.stadium;
+    // Find the stadium CardList that actually has cards (only one player will have cards at a time)
+    const stadium = state.players.find(p => p.stadium.cards.length > 0)?.stadium;
     if (stadium && stadium.cards.length > 0) {
       await this.updateCard(
         stadium,
@@ -261,36 +164,34 @@ export class Board3dStateSyncService {
 
     // Deck stack
     if (player.deck && player.deck.cards.length > 0) {
-      await this.updateDeckStack(
+      await this.stackService.updateDeckStack(
         `${playerPrefix}_deck`,
         player.deck.cards.length,
         ZONE_POSITIONS[position].deck,
         rotation,
         scene,
         (player.deck as any)?.sleeveImagePath,
-        player.deck
+        player.deck,
+        this.updateCard.bind(this),
+        this.getCardById.bind(this)
       );
     }
 
     // Discard pile (stacked with latest on top)
     if (player.discard && player.discard.cards.length > 0) {
-      await this.updateDiscardStack(
+      await this.stackService.updateDiscardStack(
         player.discard,
         `${playerPrefix}_discard`,
         ZONE_POSITIONS[position].discard,
         rotation,
-        scene
+        scene,
+        this.updateCard.bind(this),
+        this.getCardById.bind(this)
       );
     } else {
       // Remove discard stack and top card
       const discardStackId = `${playerPrefix}_discard`;
-      const oldStack = this.discardStacks.get(discardStackId);
-      if (oldStack) {
-        scene.remove(oldStack);
-        oldStack.geometry.dispose();
-        (oldStack.material as MeshStandardMaterial).dispose();
-        this.discardStacks.delete(discardStackId);
-      }
+      this.stackService.removeStack(discardStackId, scene, false);
       this.removeCard(`${discardStackId}_top`, scene);
     }
 
@@ -298,14 +199,17 @@ export class Board3dStateSyncService {
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
-      await this.updatePrizeStack(
+      await this.prizeService.updatePrizes(
         playerPrefix,
         player.prizes,
         ZONE_POSITIONS[position].prizes,
         isOwner,
         rotation,
         scene,
-        player
+        player,
+        this.updateCard.bind(this),
+        this.removeCard.bind(this),
+        this.getCardById.bind(this)
       );
     }
   }
@@ -422,493 +326,13 @@ export class Board3dStateSyncService {
 
     // Update overlays for PokemonCardList
     if (cardList instanceof PokemonCardList) {
-      await this.updatePokemonOverlays(cardId, cardList, cardMesh, breakCard, isFaceDown, scene);
+      await this.overlayService.updateOverlays(cardId, cardList, cardMesh, breakCard, isFaceDown, scene);
     } else {
       // Clear any existing overlays for non-Pokemon cards
-      this.clearOverlays(cardId, scene);
+      this.overlayService.clearOverlays(cardId, scene);
     }
   }
 
-  /**
-   * Update overlays for a PokemonCardList (energies, damage, conditions, BREAK, tools)
-   */
-  private async updatePokemonOverlays(
-    cardId: string,
-    cardList: PokemonCardList,
-    cardMesh: Board3dCard,
-    breakCard: Card | undefined,
-    isFaceDown: boolean,
-    scene: Scene
-  ): Promise<void> {
-    // Get or create overlay objects
-    let overlays = this.cardOverlays.get(cardId);
-    if (!overlays) {
-      overlays = {
-        energySprite: new Board3dEnergySprite(),
-        damageCounter: new Board3dDamageCounter(),
-        marker: new Board3dMarker(this.assetLoader),
-        toolCards: []
-      };
-      this.cardOverlays.set(cardId, overlays);
-
-      // Add overlay groups to card group
-      cardMesh.getGroup().add(overlays.energySprite.getGroup());
-      cardMesh.getGroup().add(overlays.damageCounter.getGroup());
-      cardMesh.getGroup().add(overlays.marker.getGroup());
-    }
-
-    // Update energies
-    if (cardList.energies && cardList.energies.cards.length > 0) {
-      await this.updateEnergyOverlay(overlays, cardList.energies.cards);
-    } else {
-      overlays.energySprite.clear();
-    }
-
-    // Update damage counter
-    overlays.damageCounter.updateDamage(cardList.damage);
-
-    // Update special condition markers
-    await overlays.marker.updateConditions(cardList.specialConditions);
-
-    // Update BREAK card overlay
-    await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene);
-
-    // Update tool cards
-    await this.updateToolOverlay(cardId, overlays, cardList.tools, cardMesh, scene);
-  }
-
-  /**
-   * Update energy overlay sprites
-   */
-  private async updateEnergyOverlay(
-    overlays: CardOverlays,
-    energyCards: Card[]
-  ): Promise<void> {
-    // Load energy textures
-    const cardBackTexture = await this.assetLoader.loadCardBack();
-
-    for (const card of energyCards) {
-      const iconPath = Board3dEnergySprite.getEnergyIconPath(card);
-      if (iconPath && !this.energyTextureCache.has(iconPath)) {
-        try {
-          const texture = await this.assetLoader.loadCardTexture(iconPath);
-          this.energyTextureCache.set(iconPath, texture);
-        } catch {
-          // Use card back as fallback
-        }
-      }
-    }
-
-    overlays.energySprite.updateEnergies(energyCards, this.energyTextureCache, cardBackTexture);
-  }
-
-  /**
-   * Update BREAK card overlay
-   */
-  private async updateBreakOverlay(
-    cardId: string,
-    overlays: CardOverlays,
-    mainCardMesh: Board3dCard,
-    breakCard: Card | undefined,
-    isFaceDown: boolean,
-    scene: Scene
-  ): Promise<void> {
-    if (breakCard && !isFaceDown) {
-      const breakScanUrl = this.cardsBaseService.getScanUrl(breakCard);
-      const [breakFrontTexture, breakBackTexture] = await Promise.all([
-        this.assetLoader.loadCardTexture(breakScanUrl),
-        this.assetLoader.loadCardBack()
-      ]);
-
-      if (!overlays.breakCard) {
-        // Create BREAK card overlay
-        overlays.breakCard = new Board3dCard(
-          breakFrontTexture,
-          breakBackTexture,
-          new Vector3(0, 0.05, 0), // Slightly above main card
-          0,
-          1.0
-        );
-        mainCardMesh.getGroup().add(overlays.breakCard.getGroup());
-      } else {
-        overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture);
-      }
-    } else if (overlays.breakCard) {
-      // Remove BREAK card overlay
-      mainCardMesh.getGroup().remove(overlays.breakCard.getGroup());
-      overlays.breakCard.dispose();
-      overlays.breakCard = undefined;
-    }
-  }
-
-  /**
-   * Update tool card overlays
-   */
-  private async updateToolOverlay(
-    cardId: string,
-    overlays: CardOverlays,
-    tools: Card[],
-    mainCardMesh: Board3dCard,
-    scene: Scene
-  ): Promise<void> {
-    // Clear existing tool cards
-    for (const toolCard of overlays.toolCards) {
-      mainCardMesh.getGroup().remove(toolCard.getGroup());
-      toolCard.dispose();
-    }
-    overlays.toolCards = [];
-
-    if (tools.length === 0) {
-      return;
-    }
-
-    // Create new tool card overlays
-    const backTexture = await this.assetLoader.loadCardBack();
-
-    // Custom tool icon mapping (matching 2D board logic)
-    const customToolIcons: { [key: string]: string } = {
-      'Vitality Band': 'assets/tools/vitality-band.png',
-      'Bravery Charm': 'assets/tools/bravery-charm.png',
-    };
-
-    // Base position: left: -5px ≈ -0.2 units, top: 20% ≈ 0.7 units from top
-    const baseX = -0.2; // Left side of card
-    const baseZ = -0.7; // 20% from top (card top is at ~-1.75, so 20% down = -0.7)
-    const verticalSpacing = 0.3; // 15px offset ≈ 0.3 units in 3D space
-
-    for (let i = 0; i < tools.length; i++) {
-      const tool = tools[i];
-
-      // Check for custom tool icon first
-      let toolTexture: Texture;
-      const customIconPath = customToolIcons[tool.name];
-      if (customIconPath) {
-        // Load custom tool icon
-        try {
-          toolTexture = await this.assetLoader.loadToolIconTexture(customIconPath);
-        } catch (error) {
-          // Fall back to card texture if custom icon fails
-          const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-          toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
-        }
-      } else {
-        // Use regular card texture
-        const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-        toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
-      }
-
-      const toolCardMesh = new Board3dCard(
-        toolTexture,
-        backTexture,
-        new Vector3(baseX, 0.02 + (i * 0.01), baseZ + (i * verticalSpacing)), // Left side, stacked vertically
-        0,
-        0.33 // Scale to match 33px width (card is ~2.5 units wide, so 33px ≈ 0.33 units)
-      );
-
-      mainCardMesh.getGroup().add(toolCardMesh.getGroup());
-      overlays.toolCards.push(toolCardMesh);
-    }
-  }
-
-  /**
-   * Clear overlays for a card
-   */
-  private clearOverlays(cardId: string, scene: Scene): void {
-    const overlays = this.cardOverlays.get(cardId);
-    if (overlays) {
-      overlays.energySprite.dispose();
-      overlays.damageCounter.dispose();
-      overlays.marker.dispose();
-      if (overlays.breakCard) {
-        overlays.breakCard.dispose();
-      }
-      for (const toolCard of overlays.toolCards) {
-        toolCard.dispose();
-      }
-      this.cardOverlays.delete(cardId);
-    }
-  }
-
-  /**
-   * Update or create a deck stack using instanced rendering
-   */
-  private async updateDeckStack(
-    stackId: string,
-    cardCount: number,
-    position: Vector3,
-    rotation: number,
-    scene: Scene,
-    sleeveImagePath?: string,
-    deckCardList?: CardList
-  ): Promise<void> {
-    // Remove old stack if it exists
-    const oldStack = this.deckStacks.get(stackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-    }
-
-    // Remove old top card if it exists
-    const oldTopCard = this.cardsMap.get(`${stackId}_top`);
-    if (oldTopCard) {
-      scene.remove(oldTopCard.getGroup());
-      this.cardsMap.delete(`${stackId}_top`);
-    }
-
-    // Load sleeve texture if available, otherwise use cardback
-    let cardBackTexture: Texture;
-    if (sleeveImagePath) {
-      const sleeveUrl = this.cardsBaseService.getSleeveUrl(sleeveImagePath);
-      if (sleeveUrl) {
-        cardBackTexture = await this.assetLoader.loadSleeveTexture(sleeveUrl);
-      } else {
-        cardBackTexture = await this.assetLoader.loadCardBack();
-      }
-    } else {
-      cardBackTexture = await this.assetLoader.loadCardBack();
-    }
-    const geometry = new Board3dCard(
-      cardBackTexture,
-      cardBackTexture,
-      new Vector3(0, 0, 0),
-      rotation,
-      1.0
-    ).getMesh().geometry;
-
-    const count = Math.min(cardCount, 60); // Max 60 instances
-    const instancedMesh = new InstancedMesh(
-      geometry,
-      new MeshStandardMaterial({ map: cardBackTexture }),
-      count
-    );
-
-    // Position and rotate each card in the stack
-    const rotationRad = (rotation * Math.PI) / 180;
-    const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, 0));
-
-    for (let i = 0; i < count; i++) {
-      const matrix = new Matrix4();
-      const pos = new Vector3(
-        position.x,
-        position.y + (i * 0.01), // Stack height
-        position.z
-      );
-      // Compose matrix from position, rotation, and scale
-      matrix.compose(pos, quaternion, new Vector3(1, 1, 1));
-      instancedMesh.setMatrixAt(i, matrix);
-    }
-
-    instancedMesh.instanceMatrix.needsUpdate = true;
-    instancedMesh.castShadow = true;
-
-    scene.add(instancedMesh);
-    this.deckStacks.set(stackId, instancedMesh);
-
-    // Create clickable top card overlay (face-down)
-    if (cardCount > 0 && deckCardList) {
-      const topCardId = `${stackId}_top`;
-      const topCard = deckCardList.cards[deckCardList.cards.length - 1]; // Latest card
-      const topCardList = new CardList();
-      topCardList.cards = [topCard];
-      topCardList.isPublic = deckCardList.isPublic;
-      topCardList.isSecret = deckCardList.isSecret;
-
-      await this.updateCard(
-        topCardList,
-        topCardId,
-        new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
-        false, // Not owner - ensures face-down
-        rotation,
-        scene,
-        undefined, // No cardTarget
-        1.0,
-        sleeveImagePath
-      );
-
-      // Mark top card as deck for click detection
-      const topCardMesh = this.cardsMap.get(topCardId);
-      if (topCardMesh) {
-        topCardMesh.getGroup().userData.isDeck = true;
-        topCardMesh.getGroup().userData.cardList = deckCardList;
-      }
-    }
-  }
-
-  /**
-   * Update or create a discard stack using instanced rendering
-   * Latest card (last in array) is shown on top as a regular clickable card
-   */
-  private async updateDiscardStack(
-    discard: CardList,
-    stackId: string,
-    position: Vector3,
-    rotation: number,
-    scene: Scene
-  ): Promise<void> {
-    // Remove old stack if it exists
-    const oldStack = this.discardStacks.get(stackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-    }
-
-    // Remove old top card if it exists
-    const oldTopCard = this.cardsMap.get(`${stackId}_top`);
-    if (oldTopCard) {
-      scene.remove(oldTopCard.getGroup());
-      this.cardsMap.delete(`${stackId}_top`);
-    }
-
-    const cardCount = discard.cards.length;
-    if (cardCount === 0) {
-      return;
-    }
-
-    // Latest card (last in array) is the top card - render as regular clickable card
-    const topCard = discard.cards[cardCount - 1];
-    const topCardId = `${stackId}_top`;
-
-    // Create top card as regular card for clickability
-    const topCardList = new CardList();
-    topCardList.cards = [topCard];
-    topCardList.isPublic = discard.isPublic;
-    topCardList.isSecret = discard.isSecret;
-
-    await this.updateCard(
-      topCardList,
-      topCardId,
-      new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
-      true, // Always visible
-      rotation,
-      scene,
-      undefined, // No cardTarget
-      1.0,
-      undefined // No sleeve for discard
-    );
-
-    // Mark top card as discard for click detection
-    const topCardMesh = this.cardsMap.get(topCardId);
-    if (topCardMesh) {
-      topCardMesh.getGroup().userData.isDiscard = true;
-      topCardMesh.getGroup().userData.cardList = discard;
-    }
-
-    // Remaining cards (if any) as instanced stack underneath
-    if (cardCount > 1) {
-      const remainingCount = cardCount - 1;
-      const cardBackTexture = await this.assetLoader.loadCardBack();
-      const geometry = new Board3dCard(
-        cardBackTexture,
-        cardBackTexture,
-        new Vector3(0, 0, 0),
-        rotation,
-        1.0
-      ).getMesh().geometry;
-
-      const instancedMesh = new InstancedMesh(
-        geometry,
-        new MeshStandardMaterial({ map: cardBackTexture }),
-        Math.min(remainingCount, 60) // Max 60 instances
-      );
-
-      // Position and rotate each card in the stack
-      const rotationRad = (rotation * Math.PI) / 180;
-      const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, 0));
-
-      for (let i = 0; i < remainingCount && i < 60; i++) {
-        const matrix = new Matrix4();
-        const pos = new Vector3(
-          position.x,
-          position.y + (i * 0.01), // Stack height
-          position.z
-        );
-        // Compose matrix from position, rotation, and scale
-        matrix.compose(pos, quaternion, new Vector3(1, 1, 1));
-        instancedMesh.setMatrixAt(i, matrix);
-      }
-
-      instancedMesh.instanceMatrix.needsUpdate = true;
-      instancedMesh.castShadow = true;
-
-      scene.add(instancedMesh);
-      this.discardStacks.set(stackId, instancedMesh);
-    }
-  }
-
-  /**
-   * Update or create prize cards in a 2x3 grid layout
-   */
-  private async updatePrizeStack(
-    playerPrefix: string,
-    prizes: CardList[],
-    basePosition: Vector3,
-    isOwner: boolean,
-    rotation: number,
-    scene: Scene,
-    player: Player
-  ): Promise<void> {
-    // Clean up old prize stack if it exists (from previous stack-based rendering)
-    const oldStackId = `${playerPrefix}_prizes`;
-    const oldStack = this.deckStacks.get(oldStackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-      this.deckStacks.delete(oldStackId);
-    }
-
-    // Ensure we have 6 prize slots
-    const prizeSlots = prizes || [];
-
-    // Get sleeve image path from player (fallback if not on individual prizes)
-    const playerSleeveImagePath = (player as any)?.sleeveImagePath;
-
-    // Loop through all 6 prize slots
-    for (let index = 0; index < 6; index++) {
-      const prizeId = `${playerPrefix}_prize_${index}`;
-      const prize = prizeSlots[index];
-
-      if (prize && prize.cards.length > 0) {
-        // Calculate grid position for this prize (2 columns, 3 rows)
-        const row = Math.floor(index / 2); // 0, 0, 1, 1, 2, 2
-        const col = index % 2; // 0, 1, 0, 1, 0, 1
-        const offsetX = (col - 0.5) * 3; // -1.25, 1.25, -1.25, 1.25, -1.25, 1.25
-        const offsetZ = (row - 1) * 4; // -4, -4, 0, 0, 4, 4
-        const gridPosition = new Vector3(
-          basePosition.x + offsetX,
-          basePosition.y,
-          basePosition.z + offsetZ
-        );
-
-        // Extract sleeve image path from prize CardList, fallback to player-level sleeve
-        const sleeveImagePath = (prize as any)?.sleeveImagePath || playerSleeveImagePath;
-
-        // Render the prize card
-        await this.updateCard(
-          prize,
-          prizeId,
-          gridPosition,
-          isOwner,
-          rotation,
-          scene,
-          undefined, // No cardTarget for prizes
-          1.0, // Normal scale
-          sleeveImagePath
-        );
-
-        // Mark prize card for click detection
-        const prizeCardMesh = this.cardsMap.get(prizeId);
-        if (prizeCardMesh) {
-          prizeCardMesh.getGroup().userData.isPrize = true;
-        }
-      } else {
-        // Remove empty prize slot
-        this.removeCard(prizeId, scene);
-      }
-    }
-  }
 
   /**
    * Remove a card from the scene
@@ -922,7 +346,7 @@ export class Board3dStateSyncService {
     }
 
     // Also clean up overlays
-    this.clearOverlays(cardId, scene);
+    this.overlayService.clearOverlays(cardId, scene);
   }
 
   /**
@@ -979,11 +403,14 @@ export class Board3dStateSyncService {
    * Dispose all resources
    */
   dispose(scene: Scene): void {
-    // Clean up all card overlays
-    this.cardOverlays.forEach((overlays, cardId) => {
-      this.clearOverlays(cardId, scene);
-    });
-    this.cardOverlays.clear();
+    // Clean up overlays
+    this.overlayService.dispose(scene);
+
+    // Clean up stacks
+    this.stackService.dispose(scene);
+
+    // Clean up prizes (minimal - uses cardsMap)
+    this.prizeService.dispose(scene);
 
     // Clean up cards
     this.cardsMap.forEach(card => {
@@ -991,26 +418,5 @@ export class Board3dStateSyncService {
       card.dispose();
     });
     this.cardsMap.clear();
-
-    // Clean up deck stacks
-    this.deckStacks.forEach(stack => {
-      scene.remove(stack);
-      stack.geometry.dispose();
-      (stack.material as MeshStandardMaterial).dispose();
-    });
-    this.deckStacks.clear();
-
-    this.discardStacks.forEach(stack => {
-      scene.remove(stack);
-      stack.geometry.dispose();
-      (stack.material as MeshStandardMaterial).dispose();
-    });
-    this.discardStacks.clear();
-
-    // Clean up energy texture cache
-    this.energyTextureCache.forEach(texture => {
-      texture.dispose();
-    });
-    this.energyTextureCache.clear();
   }
 }

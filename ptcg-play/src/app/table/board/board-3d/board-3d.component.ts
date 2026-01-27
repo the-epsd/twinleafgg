@@ -14,10 +14,6 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  AmbientLight,
-  DirectionalLight,
-  SpotLight,
-  HemisphereLight,
   PlaneGeometry,
   MeshStandardMaterial,
   Mesh,
@@ -25,16 +21,8 @@ import {
   sRGBEncoding,
   ACESFilmicToneMapping,
   Vector3,
-  Vector2,
-  RepeatWrapping,
-  Group,
-  EdgesGeometry,
-  LineSegments,
-  LineBasicMaterial
+  RepeatWrapping
 } from 'three';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Board3dEdgeGlow } from './board-3d-edge-glow';
 import { Board3dAssetLoaderService } from '../services/board-3d-asset-loader.service';
@@ -42,12 +30,15 @@ import { Board3dStateSyncService } from '../services/board-3d-state-sync.service
 import { Board3dAnimationService } from '../services/board-3d-animation.service';
 import { Board3dInteractionService } from '../services/board-3d-interaction.service';
 import { Board3dHandService } from '../services/board-3d-hand.service';
+import { Board3dWireframeService } from '../services/board-3d-wireframe.service';
+import { Board3dLightingService } from '../services/board-3d-lighting.service';
+import { Board3dPostProcessingService } from '../services/board-3d-post-processing.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { Player, CardList, Card, SlotType, PlayerType, CardTarget, SuperType } from 'ptcg-server';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { CardInfoPaneOptions } from '../../../shared/cards/card-info-pane/card-info-pane.component';
 import { GameService } from '../../../api/services/game.service';
-import { BasicEntranceAnimationEvent, BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Object3D } from 'three';
 
 @UntilDestroy()
@@ -67,17 +58,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   @Input() player: any;
   @Input() clientId: any;
 
-  private scene!: Scene;
+  public scene!: Scene; // Made public for stats component
   private camera!: PerspectiveCamera;
-  private renderer!: WebGLRenderer;
-  private composer!: EffectComposer;
-
-  // Lights
-  private ambientLight!: AmbientLight;
-  private mainLight!: DirectionalLight;
-  private hemisphereLight!: HemisphereLight;
-  private bottomGlow!: SpotLight;
-  private topGlow!: SpotLight;
+  public renderer!: WebGLRenderer; // Made public for stats component
 
   // Board elements
   private boardMesh!: Mesh;
@@ -93,30 +76,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   // Player perspective - true when viewing from opposite side (like 2D board's isUpsideDown)
   private isUpsideDown: boolean = false;
 
-  // FPS tracking
-  public fps: number = 0;
-  private frameCount: number = 0;
-  private lastFpsUpdate: number = 0;
-  private frameTimes: number[] = [];
-  private lastFrameTime: number = 0;
-
-  // Diagnostic stats
-  public triangles: number = 0;
-  public drawCalls: number = 0;
-  public objectCount: number = 0;
-  public geometries: number = 0;
-  public textures: number = 0;
-  private lastStats: {
-    triangles: number;
-    drawCalls: number;
-    objectCount: number;
-    geometries: number;
-    textures: number;
-  } = { triangles: 0, drawCalls: 0, objectCount: 0, geometries: 0, textures: 0 };
+  // Animation state caching
+  private hasActiveAnimationsCache: boolean = false;
+  private animationCheckInterval: number = 100; // Check animation state every 100ms instead of every frame
+  private lastAnimationCheck: number = 0;
 
   // Wireframe overlay
   public showWireframes: boolean = false;
-  private wireframeGroup!: Group;
 
   constructor(
     private ngZone: NgZone,
@@ -125,6 +91,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     private animationService: Board3dAnimationService,
     private interactionService: Board3dInteractionService,
     private handService: Board3dHandService,
+    private wireframeService: Board3dWireframeService,
+    private lightingService: Board3dLightingService,
+    private postProcessingService: Board3dPostProcessingService,
     private cardsBaseService: CardsBaseService,
     private gameService: GameService,
     private boardInteractionService: BoardInteractionService
@@ -135,15 +104,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.initScene();
     this.initCamera();
     this.initRenderer();
-    this.initLights();
+    this.lightingService.initialize(this.scene);
     this.createBoardAsync();
     this.createGlowingEdges();
-    this.initPostProcessing();
+    this.postProcessingService.initialize(this.renderer, this.scene, this.camera, this.canvasRef.nativeElement);
 
-    // Initialize wireframe group
-    this.wireframeGroup = new Group();
-    this.wireframeGroup.name = 'wireframeOverlay';
-    this.scene.add(this.wireframeGroup);
+    // Initialize wireframe service
+    this.wireframeService.initialize(this.scene);
 
     // Initialize hand service
     this.scene.add(this.handService.getHandGroup());
@@ -179,12 +146,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       this.updateSelectionVisuals();
     });
 
-    // Subscribe to attack animation events
-    this.boardInteractionService.attackAnimation$.pipe(
-      untilDestroyed(this)
-    ).subscribe((event) => {
-      this.handleAttackAnimation(event);
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -213,9 +174,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   }
 
   ngAfterViewInit(): void {
-    // Initialize FPS tracking
-    this.lastFrameTime = performance.now();
-    this.lastFpsUpdate = performance.now();
+    // Initialize animation check
+    this.lastAnimationCheck = performance.now();
 
     // Start render loop outside Angular zone
     this.ngZone.runOutsideAngular(() => {
@@ -245,20 +205,18 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.animationService.killAllAnimations();
 
     // Clean up wireframes
-    this.removeWireframes();
-    if (this.wireframeGroup) {
-      this.scene.remove(this.wireframeGroup);
-    }
+    this.wireframeService.dispose(this.scene);
 
     // Clean up service state to prevent stale references on mode switch
     this.stateSync.dispose(this.scene);
     this.handService.dispose(this.scene);
     this.interactionService.dispose(this.scene);
+    this.lightingService.dispose(this.scene);
+    this.postProcessingService.dispose();
 
     // Clean up resources
     this.disposeScene();
     this.renderer?.dispose();
-    this.composer?.dispose();
 
     // Remove event listeners
     this.removeEventListeners();
@@ -306,49 +264,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.renderer.toneMappingExposure = 1.2;
   }
 
-  private initLights(): void {
-    // Ambient base light
-    this.ambientLight = new AmbientLight(0xffffff, 1);
-    this.scene.add(this.ambientLight);
-
-    // Main directional light with shadows
-    this.mainLight = new DirectionalLight(0xffffff, 0.6);
-    this.mainLight.position.set(5, 20, 10);
-    this.mainLight.castShadow = true;
-
-    // Shadow camera configuration
-    this.mainLight.shadow.mapSize.width = 2048;
-    this.mainLight.shadow.mapSize.height = 2048;
-    this.mainLight.shadow.camera.left = -30;
-    this.mainLight.shadow.camera.right = 30;
-    this.mainLight.shadow.camera.top = 30;
-    this.mainLight.shadow.camera.bottom = -30;
-    this.mainLight.shadow.camera.near = 0.5;
-    this.mainLight.shadow.camera.far = 50;
-    this.mainLight.shadow.bias = -0.0001;
-
-    this.scene.add(this.mainLight);
-
-    // Hemisphere light for subtle sky/ground color difference
-    this.hemisphereLight = new HemisphereLight(0xddeeff, 0x333333, 0.3);
-    this.scene.add(this.hemisphereLight);
-
-    // Blue spotlight for active bottom player zone
-    this.bottomGlow = new SpotLight(0x0052ff, 2.0);
-    this.bottomGlow.position.set(0, 15, 15);
-    this.bottomGlow.angle = Math.PI / 5;
-    this.bottomGlow.penumbra = 0.3;
-    this.bottomGlow.castShadow = false;
-    this.scene.add(this.bottomGlow);
-
-    // Red spotlight for top player zone
-    this.topGlow = new SpotLight(0xff3333, 2.0);
-    this.topGlow.position.set(0, 15, -15);
-    this.topGlow.angle = Math.PI / 5;
-    this.topGlow.penumbra = 0.3;
-    this.topGlow.castShadow = false;
-    this.scene.add(this.topGlow);
-  }
 
   private async createBoardAsync(): Promise<void> {
     // Create board surface geometry
@@ -402,82 +317,23 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.edgeGlow = new Board3dEdgeGlow(this.scene);
   }
 
-  private initPostProcessing(): void {
-    const canvas = this.canvasRef.nativeElement;
-
-    this.composer = new EffectComposer(this.renderer);
-
-    // Add render pass
-    const renderPass = new RenderPass(this.scene, this.camera);
-    this.composer.addPass(renderPass);
-
-    // Add bloom effect for glowing edges
-    const bloomPass = new UnrealBloomPass(
-      new Vector2(canvas.clientWidth, canvas.clientHeight),
-      1.5,  // strength
-      0.4,  // radius
-      0.85  // threshold
-    );
-
-    this.composer.addPass(bloomPass);
-  }
 
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
-    // Calculate FPS
     const currentTime = performance.now();
-    const deltaTime = currentTime - this.lastFrameTime;
-    this.lastFrameTime = currentTime;
 
-    // Store frame time (limit to last 60 frames for averaging)
-    this.frameTimes.push(deltaTime);
-    if (this.frameTimes.length > 60) {
-      this.frameTimes.shift();
+    // Check animation state periodically instead of every frame
+    if (currentTime - this.lastAnimationCheck >= this.animationCheckInterval) {
+      this.hasActiveAnimationsCache = this.animationService.hasActiveAnimations();
+      this.lastAnimationCheck = currentTime;
     }
 
-    // Render if scene changed or animations are active
-    const didRender = this.needsRender || this.animationService.hasActiveAnimations();
+    // Render if scene changed or animations are active (using cached value)
+    const didRender = this.needsRender || this.hasActiveAnimationsCache;
     if (didRender) {
-      this.composer.render();
+      this.postProcessingService.render();
       this.needsRender = false;
-
-      // Read renderer statistics immediately after rendering (before auto-reset)
-      const renderInfo = this.renderer.info.render;
-      const memoryInfo = this.renderer.info.memory;
-
-      // Count objects in scene
-      let objectCount = 0;
-      this.scene.traverse(() => {
-        objectCount++;
-      });
-
-      // Store stats for display update
-      this.lastStats = {
-        triangles: renderInfo.triangles || 0,
-        drawCalls: renderInfo.calls || 0,
-        objectCount: objectCount,
-        geometries: memoryInfo.geometries || 0,
-        textures: memoryInfo.textures || 0
-      };
-    }
-
-    // Update FPS and diagnostic stats display every second
-    if (currentTime - this.lastFpsUpdate >= 1000) {
-      const averageFrameTime = this.frameTimes.reduce((a, b) => a + b, 0) / this.frameTimes.length;
-      const calculatedFps = Math.round(1000 / averageFrameTime);
-
-      // Update all stats (run in Angular zone for change detection)
-      this.ngZone.run(() => {
-        this.fps = calculatedFps;
-        this.triangles = this.lastStats.triangles;
-        this.drawCalls = this.lastStats.drawCalls;
-        this.objectCount = this.lastStats.objectCount;
-        this.geometries = this.lastStats.geometries;
-        this.textures = this.lastStats.textures;
-      });
-
-      this.lastFpsUpdate = currentTime;
     }
   };
 
@@ -496,7 +352,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
-    this.composer.setSize(width, height);
+    this.postProcessingService.setSize(width, height);
 
     // Flip Z based on player perspective (like 2D board's isUpsideDown)
     const zMultiplier = this.isUpsideDown ? -1 : 1;
@@ -554,135 +410,28 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   }
 
   public markDirty(): void {
+    // Set render flag immediately - batching happens at render level
     this.needsRender = true;
   }
 
-  public toggleWireframes(): void {
+  public onWireframeToggle(enabled: boolean): void {
+    this.showWireframes = enabled;
     if (this.showWireframes) {
-      this.createWireframes();
+      this.wireframeService.createWireframes(this.scene);
     } else {
-      this.removeWireframes();
+      this.wireframeService.removeWireframes(this.scene);
     }
     this.markDirty();
   }
 
-  private createWireframes(): void {
-    // Clear any existing wireframes first
-    this.removeWireframes();
-
-    // Traverse the scene and create wireframes for all meshes
-    this.scene.traverse((object: any) => {
-      // Skip the wireframe group itself
-      if (object === this.wireframeGroup) {
-        return;
-      }
-      
-      // Create wireframes for all meshes with geometry
-      if (object instanceof Mesh && object.geometry) {
-        try {
-          // Create edges geometry with threshold angle (15 degrees)
-          const edgesGeometry = new EdgesGeometry(object.geometry, 15);
-          
-          // Create line material with bright color for visibility
-          const lineMaterial = new LineBasicMaterial({
-            color: 0x00ffff, // Cyan color
-            linewidth: 1
-          });
-
-          // Create line segments
-          const wireframe = new LineSegments(edgesGeometry, lineMaterial);
-          
-          // Copy position, rotation, and scale from original mesh
-          wireframe.position.copy(object.position);
-          wireframe.rotation.copy(object.rotation);
-          wireframe.scale.copy(object.scale);
-          
-          // Set render order to ensure wireframes render on top
-          wireframe.renderOrder = 1000;
-          
-          // Store reference to original mesh for tracking and cleanup
-          wireframe.userData.originalMesh = object;
-          wireframe.userData.isWireframe = true;
-          
-          // Add wireframe to the same parent as the original mesh
-          // This ensures wireframes follow the same transform hierarchy
-          if (object.parent) {
-            object.parent.add(wireframe);
-          } else {
-            this.wireframeGroup.add(wireframe);
-          }
-          
-          // Also add to wireframeGroup for easier tracking and cleanup
-          // (but don't add as child, just track it)
-          if (!this.wireframeGroup.children.includes(wireframe)) {
-            // Store reference in wireframeGroup's userData for tracking
-            if (!this.wireframeGroup.userData.wireframes) {
-              this.wireframeGroup.userData.wireframes = [];
-            }
-            this.wireframeGroup.userData.wireframes.push(wireframe);
-          }
-        } catch (error) {
-          // Skip geometries that can't create edges (e.g., some custom geometries)
-          console.warn('Failed to create wireframe for mesh:', object, error);
-        }
-      }
-    });
-  }
-
-  private removeWireframes(): void {
-    // Remove all wireframes from the scene
-    const objectsToRemove: LineSegments[] = [];
-    
-    // Find all wireframes by traversing the scene
-    this.scene.traverse((object: any) => {
-      if (object instanceof LineSegments && object.userData.isWireframe) {
-        objectsToRemove.push(object);
-      }
-    });
-
-    // Also check wireframeGroup's tracked wireframes
-    if (this.wireframeGroup.userData.wireframes) {
-      this.wireframeGroup.userData.wireframes.forEach((wireframe: LineSegments) => {
-        if (!objectsToRemove.includes(wireframe)) {
-          objectsToRemove.push(wireframe);
-        }
-      });
+  public toggleWireframes(): void {
+    this.showWireframes = !this.showWireframes;
+    if (this.showWireframes) {
+      this.wireframeService.createWireframes(this.scene);
+    } else {
+      this.wireframeService.removeWireframes(this.scene);
     }
-
-    // Dispose and remove all wireframes
-    objectsToRemove.forEach((wireframe) => {
-      // Dispose geometry and material
-      if (wireframe.geometry) {
-        wireframe.geometry.dispose();
-      }
-      if (wireframe.material) {
-        (wireframe.material as LineBasicMaterial).dispose();
-      }
-      
-      // Remove from parent
-      if (wireframe.parent) {
-        wireframe.parent.remove(wireframe);
-      }
-    });
-
-    // Clear wireframe group children
-    while (this.wireframeGroup.children.length > 0) {
-      const child = this.wireframeGroup.children[0];
-      if (child instanceof LineSegments) {
-        if (child.geometry) {
-          child.geometry.dispose();
-        }
-        if (child.material) {
-          (child.material as LineBasicMaterial).dispose();
-        }
-      }
-      this.wireframeGroup.remove(child);
-    }
-
-    // Clear tracked wireframes
-    if (this.wireframeGroup.userData.wireframes) {
-      this.wireframeGroup.userData.wireframes = [];
-    }
+    this.markDirty();
   }
 
   private syncGameState(): void {
@@ -700,6 +449,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
         // Update drop zones if bench size changed
         this.updateDropZonesForBenchSize();
+
+        // Update interactive objects cache for optimized raycasting
+        this.interactionService.updateInteractiveObjects(this.scene);
 
         this.markDirty();
       } catch (error) {
@@ -770,6 +522,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
           this.scene,
           playableCardIds
         );
+
+        // Update interactive objects cache after hand update
+        this.interactionService.updateInteractiveObjects(this.scene);
 
         this.markDirty();
       } catch (error) {
@@ -949,59 +704,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         card3d.setOutline(isPlayable, 0x4ade80);
       }
     });
-  }
-
-  /**
-   * Handle attack animation event
-   */
-  private handleAttackAnimation(event: BasicEntranceAnimationEvent): void {
-    // Determine attacker position based on playerId
-    const isBottomPlayer = this.bottomPlayer?.id === event.playerId;
-    const isTopPlayer = this.topPlayer?.id === event.playerId;
-
-    if (!isBottomPlayer && !isTopPlayer) {
-      // Player not found, skip animation
-      return;
-    }
-
-    const attackerPosition = isBottomPlayer ? 'bottomPlayer' : 'topPlayer';
-    const defenderPosition = isBottomPlayer ? 'topPlayer' : 'bottomPlayer';
-
-    // Construct attacker card ID
-    // Active cards: ${position}_${playerId}_active (no index)
-    // Bench cards: ${position}_${playerId}_bench_${index} (with index)
-    const slot = event.slot || 'active';
-    const index = event.index ?? 0;
-    const attackerCardId = slot === 'active'
-      ? `${attackerPosition}_${event.playerId}_active`
-      : `${attackerPosition}_${event.playerId}_bench_${index}`;
-
-    // Construct defender card ID (always opponent's active Pokemon - no index)
-    const defenderPlayerId = isBottomPlayer ? this.topPlayer?.id : this.bottomPlayer?.id;
-    if (!defenderPlayerId) {
-      // No opponent found, skip animation
-      return;
-    }
-    const defenderCardId = `${defenderPosition}_${defenderPlayerId}_active`;
-
-    // Get attacker and defender cards
-    const attackerCard = this.stateSync.getCardById(attackerCardId);
-    const defenderCard = this.stateSync.getCardById(defenderCardId);
-
-    // Only animate if both cards exist
-    if (attackerCard && defenderCard) {
-      this.animationService.attackAnimation(
-        attackerCard.getGroup(),
-        defenderCard.getGroup()
-      );
-    } else {
-      console.warn('[Board3D] Attack animation skipped - cards not found:', {
-        attackerCardId,
-        defenderCardId,
-        attackerFound: !!attackerCard,
-        defenderFound: !!defenderCard
-      });
-    }
   }
 
   /**

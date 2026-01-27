@@ -4,6 +4,7 @@ import { PlayerType, SlotType, CardTarget, SuperType, Stage, TrainerType, Card, 
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, DropZoneState, DropZoneConfig } from '../board-3d/board-3d-drop-zone';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
+import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d/board-3d-zone-positions';
 
 export interface DropResult {
   action: 'playCard' | 'retreat' | 'click';
@@ -23,96 +24,18 @@ export interface DragContext {
   originalTarget?: CardTarget;
 }
 
-// Zone positions in 3D world space
-// Layout: Stadium shared at center-left, Active near center, Bench behind Active
-const ZONE_POSITIONS = {
-  // Shared stadium position (single slot between both players)
-  stadium: new Vector3(-10, 0.1, 14),
-
-  bottomPlayer: {
-    active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
-    supporter: new Vector3(6, 0.1, 18),   // Beside Active, to the right
-    bench: [
-      new Vector3(-8, 0.1, 24),          // Moved to where Active was (was Z=18)
-      new Vector3(-4, 0.1, 24),
-      new Vector3(0, 0.1, 24),
-      new Vector3(4, 0.1, 24),
-      new Vector3(8, 0.1, 24),
-      new Vector3(12, 0.1, 24),
-      new Vector3(16, 0.1, 24),
-      new Vector3(20, 0.1, 24),
-    ],
-    board: new Vector3(0, 0.1, 16)  // General trainer area - covers most of player's side
-  },
-  topPlayer: {
-    active: new Vector3(0, 0.1, 10),     // Moved closer to center (was Z=-12)
-    supporter: new Vector3(-6, 0.1, 10), // Beside Active, to the left
-    bench: [
-      new Vector3(8, 0.1, 4),          // Moved to where Active was (was Z=-18)
-      new Vector3(4, 0.1, 4),
-      new Vector3(0, 0.1, 4),
-      new Vector3(-4, 0.1, 4),
-      new Vector3(-8, 0.1, 4),
-      new Vector3(-12, 0.1, 4),
-      new Vector3(-16, 0.1, 4),
-      new Vector3(-20, 0.1, 4),
-    ],
-    board: new Vector3(0, 0.1, 3)
-  }
-};
-
-const SNAP_DISTANCE = 3.5;
-
-// Original bench positions (before shift) - used for 8-spot benches
-// These extend further left/right than the current shifted positions
-const ORIGINAL_BENCH_POSITIONS = {
-  bottomPlayer: [
-    new Vector3(-12, 0.1, 22),
-    new Vector3(-8, 0.1, 22),
-    new Vector3(-4, 0.1, 22),
-    new Vector3(0, 0.1, 22),
-    new Vector3(4, 0.1, 22),
-    new Vector3(8, 0.1, 22),
-    new Vector3(12, 0.1, 22),
-    new Vector3(16, 0.1, 22),
-  ],
-  topPlayer: [
-    new Vector3(12, 0.1, -4),
-    new Vector3(8, 0.1, -4),
-    new Vector3(4, 0.1, -4),
-    new Vector3(0, 0.1, -4),
-    new Vector3(-4, 0.1, -4),
-    new Vector3(-8, 0.1, -4),
-    new Vector3(-12, 0.1, -4),
-    new Vector3(-16, 0.1, -4),
-  ]
-};
-
-/**
- * Get bench positions based on bench size
- * - 5 spots: Use current shifted positions (centered, first 5)
- * - 8 spots: Use original positions (extends further left/right)
- */
-function getBenchPositions(benchSize: number, playerType: PlayerType): Vector3[] {
-  if (benchSize === 8) {
-    // Use original positions for 8-spot benches
-    return playerType === PlayerType.BOTTOM_PLAYER
-      ? ORIGINAL_BENCH_POSITIONS.bottomPlayer
-      : ORIGINAL_BENCH_POSITIONS.topPlayer;
-  } else {
-    // Use first 5 positions from current shifted array (centered)
-    const currentPositions = playerType === PlayerType.BOTTOM_PLAYER
-      ? ZONE_POSITIONS.bottomPlayer.bench
-      : ZONE_POSITIONS.topPlayer.bench;
-    return currentPositions.slice(0, benchSize);
-  }
-}
-
 @Injectable()
 export class Board3dInteractionService {
   private raycaster: Raycaster;
   private mouse: Vector2;
   private currentHoveredCard: Object3D | null = null;
+
+  // Raycasting optimization
+  private interactiveObjects: Object3D[] = []; // Cache of interactive objects for faster raycasting
+  private lastRaycastTime: number = 0;
+  private raycastThrottleMs: number = 16; // ~60fps (1000/60 ≈ 16.67ms)
+  private lastMousePosition: Vector2 = new Vector2();
+  private cachedRaycastResult: Object3D | null = null;
 
   // Drag state
   private isDragging: boolean = false;
@@ -150,7 +73,22 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Update the list of interactive objects for optimized raycasting
+   * Should be called when cards or drop zones are added/removed
+   */
+  updateInteractiveObjects(scene: Scene): void {
+    this.interactiveObjects = [];
+    scene.traverse((object: Object3D) => {
+      // Only include objects that can be interacted with
+      if (object.userData && (object.userData.isCard || object.userData.isDropZone)) {
+        this.interactiveObjects.push(object);
+      }
+    });
+  }
+
+  /**
    * Update mouse position and find card under cursor
+   * Optimized with throttling and caching
    */
   onMouseMove(
     event: MouseEvent,
@@ -162,22 +100,48 @@ export class Board3dInteractionService {
     const rect = canvas.getBoundingClientRect();
 
     // Convert to normalized device coordinates (-1 to +1)
-    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    // Check if mouse actually moved (cache result if not)
+    const mouseMoved = Math.abs(mouseX - this.lastMousePosition.x) > 0.001 ||
+                      Math.abs(mouseY - this.lastMousePosition.y) > 0.001;
+
+    if (!mouseMoved && this.cachedRaycastResult !== undefined) {
+      return this.cachedRaycastResult;
+    }
+
+    // Throttle raycasting to max 60fps
+    const currentTime = performance.now();
+    const timeSinceLastRaycast = currentTime - this.lastRaycastTime;
+    
+    if (timeSinceLastRaycast < this.raycastThrottleMs && !mouseMoved) {
+      return this.cachedRaycastResult;
+    }
+
+    this.mouse.x = mouseX;
+    this.mouse.y = mouseY;
+    this.lastMousePosition.set(mouseX, mouseY);
+    this.lastRaycastTime = currentTime;
 
     // Update raycaster
     this.raycaster.setFromCamera(this.mouse, camera);
 
-    // Find intersections with scene objects
-    const intersects = this.raycaster.intersectObjects(scene.children, true);
+    // Use cached interactive objects if available, otherwise fall back to scene traversal
+    const objectsToTest = this.interactiveObjects.length > 0 
+      ? this.interactiveObjects 
+      : scene.children;
+
+    // Find intersections with interactive objects only (much faster than entire scene)
+    const intersects = this.raycaster.intersectObjects(objectsToTest, true);
 
     if (intersects.length > 0) {
       const card = this.getCardFromIntersection(intersects[0]);
-      if (card) {
-        return card;
-      }
+      this.cachedRaycastResult = card;
+      return card;
     }
 
+    this.cachedRaycastResult = null;
     return null;
   }
 
@@ -991,6 +955,9 @@ export class Board3dInteractionService {
     });
     stadiumZone.addToScene(scene);
     this.dropZones.push(stadiumZone);
+
+    // Update interactive objects cache after creating drop zones
+    this.updateInteractiveObjects(scene);
   }
 
   /**
