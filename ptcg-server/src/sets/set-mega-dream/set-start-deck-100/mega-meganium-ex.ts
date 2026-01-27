@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { SuperType } from '../../../game';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class MegaMeganiumex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -36,15 +36,12 @@ export class MegaMeganiumex extends PokemonCard {
       const player = effect.player;
       let grassEnergyCount = 0;
 
-      player.active.energies.cards.forEach(card => {
-        if (card.superType === SuperType.ENERGY) {
-          // Check if it's a Grass energy
-          const energyCard = card as any;
-          if (energyCard.energyType === CardType.GRASS || energyCard.provides?.includes(CardType.GRASS) || energyCard.provides?.includes(CardType.ANY)) {
-            grassEnergyCount++;
-          }
-        }
-      });
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      grassEnergyCount = checkProvidedEnergy.energyMap.reduce((sum, energy) => {
+        return sum + energy.provides.filter(type => type === CardType.GRASS || type === CardType.ANY).length;
+      }, 0);
 
       effect.damage = 70 + (50 * grassEnergyCount);
     }
