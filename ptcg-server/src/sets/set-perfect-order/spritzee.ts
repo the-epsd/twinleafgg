@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { HealEffect } from "../../game/store/effects/game-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Spritzee extends PokemonCard {
   public stage: Stage = Stage.BASIC;

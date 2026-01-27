@@ -68,12 +68,6 @@ export class IronHandsex extends PokemonCard {
         return state;
       }
 
-      // Iron Hands wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
       // Check if the attack that caused the KnockOutEffect is "Amp You Very Much"
       if (this.usedAmpYouVeryMuch === true) {
         if (effect.prizeCount > 0) {

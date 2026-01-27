@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, StateUtils, PlayerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { CheckHpEffect } from "../../game/store/effects/check-effects";
-import { KnockOutEffect } from "../../game/store/effects/game-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yveltalex extends PokemonCard {
   public stage: Stage = Stage.BASIC;

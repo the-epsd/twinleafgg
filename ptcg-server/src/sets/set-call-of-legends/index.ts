@@ -3,6 +3,7 @@ import { CheerleadersCheer } from './cheerleaders-cheer';
 import { Jirachi } from './jirachi';
 import { LostRemover } from './lost-remover';
 import { LostWorld } from './lost-world';
+import { Lucario } from './lucario';
 import { MimeJr } from './mime-jr';
 import { MrMime } from './mr-mime';
 import { Pachirisu } from './pachirisu';
@@ -24,6 +25,7 @@ export const setCallOfLegends: Card[] = [
   new Jirachi(),
   new LostRemover(),
   new LostWorld(),
+  new Lucario(),
   new MimeJr(),
   new MrMime(),
   new Pachirisu(),

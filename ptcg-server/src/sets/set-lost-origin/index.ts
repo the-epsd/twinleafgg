@@ -44,6 +44,7 @@ import { Machop } from './machop';
 import { MagnezoneV } from './magnezone-v';
 import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
+import { Mimikyu } from './mimikyu';
 import { MirageGate } from './mirage-gate';
 import { MissFortuneSisters } from './miss-fortune-sisters';
 import { MrMime } from './mr-mime';
@@ -105,6 +106,7 @@ export const setLostOrigin: Card[] = [
   new Machamp(),
   new Mawile(),
   new MirageGate(),
+  new Mimikyu(),
   new PidgeotV(),
   new Pikachu(),
   new Porygon(),

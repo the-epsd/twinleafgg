@@ -585,11 +585,24 @@ export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store: StoreLike, state: S
     player, GameMessage.CHOOSE_CARD_TO_HAND, player.discard, filter, options,
   ), selected => {
     const cards = selected || [];
-    cards.forEach(card => {
-      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-    });
-    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-    MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard, sourceEffect });
+
+    if (cards.length === 0) {
+      return state;
+    }
+
+    // Create the move effect and reduce it to check if it will be prevented
+    const moveEffect = new MoveCardsEffect(player.discard, player.hand, { cards, sourceCard, sourceEffect });
+    state = store.reduceEffect(state, moveEffect);
+
+    // Only log and show cards if the move wasn't prevented
+    if (!moveEffect.preventDefault) {
+      cards.forEach(card => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+      });
+      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    }
+
+    return state;
   });
 }
 
@@ -1130,20 +1143,36 @@ export function MOVE_CARDS(
  * @param state The current game state
  * @param player The player attempting to play the card
  * @param trainerCard The supporter card to validate
+ * @param bypassSupporterTurn If true, temporarily bypasses the supporterTurn check (for abilities that copy supporters)
  * @returns true if the card can be played, false otherwise
  */
-export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: Player, trainerCard: TrainerCard): boolean {
+export function CAN_PLAY_SUPPORTER_CARD(store: StoreLike, state: State, player: Player, trainerCard: TrainerCard, bypassSupporterTurn: boolean = false): boolean {
   try {
-    // Create a temporary TrainerEffect to test if the card can be played
-    const testEffect = new TrainerEffect(player, trainerCard);
+    // Store original supporterTurn value if bypassing
+    const originalSupporterTurn = bypassSupporterTurn ? player.supporterTurn : undefined;
 
-    // Try to reduce the effect to see if it throws an error
-    // We need to catch the error to prevent the game from crashing
+    // Temporarily set supporterTurn to 0 if bypassing the check
+    if (bypassSupporterTurn) {
+      player.supporterTurn = 0;
+    }
+
     try {
-      store.reduceEffect(state, testEffect);
-      return true;
-    } catch (error) {
-      return false;
+      // Create a temporary TrainerEffect to test if the card can be played
+      const testEffect = new TrainerEffect(player, trainerCard);
+
+      // Try to reduce the effect to see if it throws an error
+      // We need to catch the error to prevent the game from crashing
+      try {
+        store.reduceEffect(state, testEffect);
+        return true;
+      } catch (error) {
+        return false;
+      }
+    } finally {
+      // Restore original supporterTurn value if we bypassed it
+      if (bypassSupporterTurn && originalSupporterTurn !== undefined) {
+        player.supporterTurn = originalSupporterTurn;
+      }
     }
   } catch (error) {
     return false;

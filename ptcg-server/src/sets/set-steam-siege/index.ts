@@ -8,6 +8,7 @@ import { GreedyDice } from './greedy-dice';
 import { MagearnaEX } from './magearna-ex';
 import { MGardevoirEx } from './mega-gardevoir-ex';
 import { Joltik } from './joltik';
+import { Klefki } from './klefki';
 import { NinjaBoy } from './ninja-boy';
 import { PokemonRanger } from './pokemon-ranger';
 import { SpecialCharge } from './special-charge';
@@ -29,6 +30,7 @@ export const setSteamSiege: Card[] = [
   new GreedyDice(),
   new MagearnaEX(),
   new Joltik(),
+  new Klefki(),
   new NinjaBoy(),
   new PokemonRanger(),
   new SpecialCharge(),

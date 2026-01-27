@@ -15,10 +15,10 @@ export class JudgeWhistle extends TrainerCard {
   public setNumber: string = '146';
 
   public text: string =
-    'Choose 1:' +
-    '' +
-    '• Draw a card.' +
-    '• Put a Judge card from your discard pile into your hand.';
+  `Choose 1:
+
+  • Draw a card.
+  • Put a Judge card from your discard pile into your hand.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

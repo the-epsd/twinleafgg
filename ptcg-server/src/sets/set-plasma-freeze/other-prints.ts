@@ -1,12 +1,12 @@
-import { PlasmaEnergy } from "../set-plasma-storm/plasma-energy";
-import { ThundurusEX as ThundurusEXPLF38 } from "../set-plasma-freeze/thundurus-ex";
-import { DeoxysEX as DeoxysEXPLF53 } from "../set-plasma-freeze/deoxys-ex";
-import { LatiasEX as LatiasEXPLF85 } from "../set-plasma-freeze/latias-ex";
-import { Ghetsis as GhetsisPLF101 } from "../set-plasma-freeze/ghetsis";
-import { Empoleon } from "../set-dark-explorers/empoleon";
-import { Sigilyph } from "../set-dragons-exalted/sigilyph";
-import { Garbodor } from "../set-dragons-exalted/garbodor";
-import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";
+import { PlasmaEnergy } from '../set-plasma-storm/plasma-energy';
+import { ThundurusEX as ThundurusEXPLF38 } from '../set-plasma-freeze/thundurus-ex';
+import { DeoxysEX as DeoxysEXPLF53 } from '../set-plasma-freeze/deoxys-ex';
+import { LatiasEX as LatiasEXPLF85 } from '../set-plasma-freeze/latias-ex';
+import { Ghetsis as GhetsisPLF101 } from '../set-plasma-freeze/ghetsis';
+import { Empoleon } from '../set-dark-explorers/empoleon';
+import { Sigilyph } from '../set-dragons-exalted/sigilyph';
+import { Garbodor } from '../set-dragons-exalted/garbodor';
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { MaxPotion } from '../set-emerging-powers/max-potion';
 import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
 

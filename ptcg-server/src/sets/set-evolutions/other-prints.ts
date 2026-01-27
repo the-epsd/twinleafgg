@@ -1,27 +1,28 @@
-import { Caterpie } from "../set-base-set/caterpie";
-import { Metapod } from "../set-base-set/metapod";
-import { Weedle } from "../set-base-set/weedle";
-import { EnergyRetrieval } from "../set-base-set/energy-retrieval";
-import { FullHeal } from "../set-base-set/full-heal";
-import { Maintenance } from "../set-base-set/maintenance";
-import { Potion } from "../set-base-set/potion";
-import { Revive } from "../set-base-set/revive";
-import { SuperPotion } from "../set-base-set/super-potion";
-import { Switch } from "../set-base-set/switch";
-import { DoubleColorlessEnergy } from "../set-base-set/double-colorless-energy";
-import { GrassEnergy } from "../set-base-set-energy/grass-energy";
-import { FireEnergy } from "../set-base-set-energy/fire-energy";
-import { WaterEnergy } from "../set-base-set-energy/water-energy";
-import { LightningEnergy } from "../set-base-set-energy/lightning-energy";
-import { PsychicEnergy } from "../set-base-set-energy/psychic-energy";
-import { FightingEnergy } from "../set-base-set-energy/fighting-energy";
-import { MetalEnergy } from "../set-diamond-and-pearl/basic-energies";
-import { FairyEnergy } from "../set-x-and-y/basic-energies";
-import { DragoniteEX as DragoniteEXEVO72 } from "../set-evolutions/dragonite-ex";
-import { BrocksGrit as BrocksGritEVO74 } from "../set-evolutions/brocks-grit";
-import { HereComesTeamRocket } from "../set-team-rocket/here-comes-team-rocket";
+import { Caterpie } from '../set-base-set/caterpie';
+import { Metapod } from '../set-base-set/metapod';
+import { Weedle } from '../set-base-set/weedle';
+import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
+import { FullHeal } from '../set-base-set/full-heal';
+import { Maintenance } from '../set-base-set/maintenance';
+import { Potion } from '../set-base-set/potion';
+import { Revive } from '../set-base-set/revive';
+import { SuperPotion } from '../set-base-set/super-potion';
+import { Switch } from '../set-base-set/switch';
+import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
+import { GrassEnergy } from '../set-base-set-energy/grass-energy';
+import { FireEnergy } from '../set-base-set-energy/fire-energy';
+import { WaterEnergy } from '../set-base-set-energy/water-energy';
+import { LightningEnergy } from '../set-base-set-energy/lightning-energy';
+import { PsychicEnergy } from '../set-base-set-energy/psychic-energy';
+import { FightingEnergy } from '../set-base-set-energy/fighting-energy';
+import { MetalEnergy } from '../set-diamond-and-pearl/basic-energies';
+import { FairyEnergy } from '../set-x-and-y/basic-energies';
+import { DragoniteEX as DragoniteEXEVO72 } from '../set-evolutions/dragonite-ex';
+import { BrocksGrit as BrocksGritEVO74 } from '../set-evolutions/brocks-grit';
+import { HereComesTeamRocket } from '../set-team-rocket/here-comes-team-rocket';
 import { Pokedex } from '../set-black-and-white/pokedex';
 import { DarknessEnergy } from '../set-scarlet-and-violet-energy/darkness-energy';
+import { MVenusaurEX } from "../set-x-and-y/m-venusaur-ex";
 
 export class PokedexEVO extends Pokedex {
   public set = 'EVO';
@@ -163,5 +164,17 @@ export class BrocksGrit2EVO extends BrocksGritEVO74 {
 export class HereComesTeamRocketEVO extends HereComesTeamRocket {
   public setNumber = '113';
   public fullName: string = 'Here Comes Team Rocket! EVO';
+  public set = 'EVO';
+}
+
+export class MVenusaurEXEVO extends MVenusaurEX {
+  public setNumber = '2';
+  public fullName: string = 'M Venusaur-EX EVO';
+  public set = 'EVO';
+}
+
+export class MVenusaurEXEVOSR extends MVenusaurEX {
+  public setNumber = '100';
+  public fullName: string = 'M Venusaur-EX SR EVO';
   public set = 'EVO';
 }

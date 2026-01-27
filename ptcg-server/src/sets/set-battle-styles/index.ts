@@ -4,6 +4,7 @@ import { Bellsprout } from './bellsprout';
 import { Blipbug } from './blipbug';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
+import { CampingGear } from './camping-gear';
 import { Carkol } from './carkol';
 import { Carnivine } from './carnivine';
 import { Cherrim } from './cherrim';
@@ -34,6 +35,7 @@ import { Orbeetle } from './orbeetle';
 import { Primeape } from './primeape';
 import { RapidStrikeEnergy } from './rapid-strike-energy';
 import { RapidStrikeScrollOfSwirls } from './rapid-strike-scroll-of-swirls';
+import { RapidStrikeStyleMustard } from './rapid-strike-style-mustard';
 import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
 import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
@@ -64,6 +66,7 @@ export const setBattleStyles: Card[] = [
   new Blipbug(),
   new Bronzong(),
   new Bruno(),
+  new CampingGear(),
   new Carkol(),
   new Carnivine(),
   new Cherrim(),
@@ -93,6 +96,7 @@ export const setBattleStyles: Card[] = [
   new Primeape(),
   new RapidStrikeEnergy(),
   new RapidStrikeScrollOfSwirls(),
+  new RapidStrikeStyleMustard(),
   new RapidStrikeUrshifuV(),
   new RapidStrikeUrshifuVMAX(),
   new Remoraid(),

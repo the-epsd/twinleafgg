@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShowCardsPrompt } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShowCardsPrompt } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Doublade extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

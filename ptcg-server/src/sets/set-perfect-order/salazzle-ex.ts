@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AfterAttackEffect } from "../../game/store/effects/game-phase-effects";
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from "../../game/store/prefabs/attack-effects";
-import { WAS_ATTACK_USED, ADD_BURN_TO_PLAYER_ACTIVE } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED, ADD_BURN_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
 
 export class Salazzleex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

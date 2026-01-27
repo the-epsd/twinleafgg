@@ -1,20 +1,20 @@
-import { FirefighterPikachu } from "../set-sun-and-moon-promos/firefighter-pikachu";
-import { PheromosaBuzzwoleGX as PheromosaBuzzwoleGXUNB1 } from "../set-unbroken-bonds/pheromosa-buzzwole-gx";
-import { ReshiramCharizardGX as ReshiramCharizardGXUNB20 } from "../set-unbroken-bonds/reshiram-and-charizard-gx";
-import { MukAlolanMukGX as MukAlolanMukGXUNB61 } from "../set-unbroken-bonds/muk-and-alolan-muk-gx";
-import { MarshadowMachampGX as MarshadowMachampGXUNB82 } from "../set-unbroken-bonds/marshadow-and-machamp-gx";
-import { GreninjaZoroarkGX as GreninjaZoroarkGXUNB107 } from "../set-unbroken-bonds/greninja-zoroark-gx";
-import { HonchkrowGX as HonchkrowGXUNB109 } from "../set-unbroken-bonds/honchkrow-gx";
-import { LucarioMelmetalGX as LucarioMelmetalGXUNB120 } from "../set-unbroken-bonds/lucario-and-melmetal-gx";
-import { GardevoirSylveonGX as GardevoirSylveonGXUNB130 } from "../set-unbroken-bonds/gardevoir-and-sylveon-gx";
-import { GreensExploration as GreensExplorationUNB175 } from "../set-unbroken-bonds/greens-exploration";
-import { Welder as WelderUNB189 } from "../set-sword-and-shield/welder";
-import { DedenneGX as DedenneGXUNB195 } from "../set-unbroken-bonds/dedenne-gx";
-import { ElectromagneticRadar as ElectromagneticRadarUNB169 } from "../set-unbroken-bonds/electromagnetic-radar";
-import { FireCrystal as FireCrystalUNB173 } from "../set-unbroken-bonds/fire-crystal";
-import { MetalCoreBarrier as MetalCoreBarrierUNB180 } from "../set-unbroken-bonds/metal-core-barrier";
-import { Pokegear30HS as Pokegear30HSHS96 } from "../set-heartgold-and-soulsilver/other-prints";
-import { TripleAccelerationEnergy as TripleAccelerationEnergyUNB190 } from "../set-unbroken-bonds/triple-acceleration-energy";
+import { FirefighterPikachu } from '../set-sun-and-moon-promos/firefighter-pikachu';
+import { PheromosaBuzzwoleGX as PheromosaBuzzwoleGXUNB1 } from '../set-unbroken-bonds/pheromosa-buzzwole-gx';
+import { ReshiramCharizardGX as ReshiramCharizardGXUNB20 } from '../set-unbroken-bonds/reshiram-and-charizard-gx';
+import { MukAlolanMukGX as MukAlolanMukGXUNB61 } from '../set-unbroken-bonds/muk-and-alolan-muk-gx';
+import { MarshadowMachampGX as MarshadowMachampGXUNB82 } from '../set-unbroken-bonds/marshadow-and-machamp-gx';
+import { GreninjaZoroarkGX as GreninjaZoroarkGXUNB107 } from '../set-unbroken-bonds/greninja-zoroark-gx';
+import { HonchkrowGX as HonchkrowGXUNB109 } from '../set-unbroken-bonds/honchkrow-gx';
+import { LucarioMelmetalGX as LucarioMelmetalGXUNB120 } from '../set-unbroken-bonds/lucario-and-melmetal-gx';
+import { GardevoirSylveonGX as GardevoirSylveonGXUNB130 } from '../set-unbroken-bonds/gardevoir-and-sylveon-gx';
+import { GreensExploration as GreensExplorationUNB175 } from '../set-unbroken-bonds/greens-exploration';
+import { Welder as WelderUNB189 } from '../set-sword-and-shield/welder';
+import { DedenneGX as DedenneGXUNB195 } from '../set-unbroken-bonds/dedenne-gx';
+import { ElectromagneticRadar as ElectromagneticRadarUNB169 } from '../set-unbroken-bonds/electromagnetic-radar';
+import { FireCrystal as FireCrystalUNB173 } from '../set-unbroken-bonds/fire-crystal';
+import { MetalCoreBarrier as MetalCoreBarrierUNB180 } from '../set-unbroken-bonds/metal-core-barrier';
+import { Pokegear30HS as Pokegear30HSHS96 } from '../set-heartgold-and-soulsilver/other-prints';
+import { TripleAccelerationEnergy as TripleAccelerationEnergyUNB190 } from '../set-unbroken-bonds/triple-acceleration-energy';
 import { DedenneGX } from './dedenne-gx';
 
 export class DedenneGXUNB extends DedenneGX {

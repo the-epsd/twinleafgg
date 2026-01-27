@@ -1,9 +1,9 @@
-import { PlusPower } from "../set-base-set/pluspower";
-import { PokeBall } from "../set-jungle/pokeball";
-import { PokedexHandy } from "../set-diamond-and-pearl/pokedex-handy";
-import { Electabuzz } from "../set-base-set/electabuzz";
-import { Hitmonchan } from "../set-base-set/hitmonchan";
-import { Scyther } from "../set-jungle/scyther";
+import { PlusPower } from '../set-base-set/pluspower';
+import { PokeBall } from '../set-jungle/pokeball';
+import { PokedexHandy } from '../set-diamond-and-pearl/pokedex-handy';
+import { Electabuzz } from '../set-base-set/electabuzz';
+import { Hitmonchan } from '../set-base-set/hitmonchan';
+import { Scyther } from '../set-jungle/scyther';
 import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 
 export class RainbowEnergyPL extends RainbowEnergy {

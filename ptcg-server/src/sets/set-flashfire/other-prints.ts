@@ -1,12 +1,12 @@
-import { PalPad } from "../set-scarlet-and-violet/pal-pad";
-import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";
-import { ToxicroakEx as ToxicroakExFLF41 } from "../set-flashfire/toxicroak-ex";
-import { KangaskhanEX as KangaskhanEXFLF78 } from "../set-flashfire/kangaskhan-ex";
-import { Lysandre as LysandreFLF90 } from "../set-flashfire/lysandre";
-import { PokemonFanClub as PokemonFanClubP49 } from "../set-pop-series-4/pokemon-fan-club";
-import { MCharizardEX as MCharizardEXFLF69 } from "../set-flashfire/m-charizard-ex";
-import { MKangaskhanEX as MKangaskhanEXFLF79 } from "../set-flashfire/m-kangaskhan-ex";
-import { Blacksmith as BlacksmithFLF88 } from "../set-flashfire/blacksmith";
+import { PalPad } from '../set-scarlet-and-violet/pal-pad';
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { ToxicroakEx as ToxicroakExFLF41 } from '../set-flashfire/toxicroak-ex';
+import { KangaskhanEX as KangaskhanEXFLF78 } from '../set-flashfire/kangaskhan-ex';
+import { Lysandre as LysandreFLF90 } from '../set-flashfire/lysandre';
+import { PokemonFanClub as PokemonFanClubP49 } from '../set-pop-series-4/pokemon-fan-club';
+import { MCharizardEX as MCharizardEXFLF69 } from '../set-flashfire/m-charizard-ex';
+import { MKangaskhanEX as MKangaskhanEXFLF79 } from '../set-flashfire/m-kangaskhan-ex';
+import { Blacksmith as BlacksmithFLF88 } from '../set-flashfire/blacksmith';
 import { PokemonFanClub } from '../set-ultra-prism/pokemon-fan-club';
 
 export class PokemonFanClubFLF extends PokemonFanClub {

@@ -1,7 +1,7 @@
-import { Gothorita } from "../set-legendary-treasures/gothorita";
-import { Gothitelle } from "../set-legendary-treasures/gothitelle";
-import { GreatBall } from "../set-ex-firered-leafgreen/great-ball";
-import { Tornadus as TornadusEPO89 } from "../set-emerging-powers/tornadus";
+import { Gothorita } from '../set-legendary-treasures/gothorita';
+import { Gothitelle } from '../set-legendary-treasures/gothitelle';
+import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
+import { Tornadus as TornadusEPO89 } from '../set-emerging-powers/tornadus';
 import { Recycle } from '../set-fossil/recycle';
 import { CrushingHammer } from '../set-scarlet-and-violet/crushing-hammer';
 

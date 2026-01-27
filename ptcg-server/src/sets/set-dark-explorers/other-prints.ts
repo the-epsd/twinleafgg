@@ -1,10 +1,10 @@
-import { Cheren } from "../set-emerging-powers/cheren";
-import { N } from "../set-fates-collide/n";
-import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";
-import { RaikouEx as RaikouExDEX38 } from "../set-dark-explorers/raikou-ex";
-import { TornadusEx as TornadusExDEX90 } from "../set-dark-explorers/tornadus-ex";
-import { Archeops } from "../set-noble-victories/archeops";
-import { PokemonCatcher } from "../set-emerging-powers/pokemon-catcher";
+import { Cheren } from '../set-emerging-powers/cheren';
+import { N } from '../set-fates-collide/n';
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { RaikouEx as RaikouExDEX38 } from '../set-dark-explorers/raikou-ex';
+import { TornadusEx as TornadusExDEX90 } from '../set-dark-explorers/tornadus-ex';
+import { Archeops } from '../set-noble-victories/archeops';
+import { PokemonCatcher } from '../set-emerging-powers/pokemon-catcher';
 import { DarkPatch } from '../set-astral-radiance/dark-patch';
 import { DarkraiEx } from './darkrai-ex';
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';

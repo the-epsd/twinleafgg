@@ -1,15 +1,15 @@
-import { EnergySearch } from "../set-fossil/energy-search";
-import { GreatBall } from "../set-ex-firered-leafgreen/great-ball";
-import { PokeBall } from "../set-jungle/pokeball";
-import { Switch } from "../set-base-set/switch";
-import { TownMap } from "../set-breakthrough/town-map";
-import { LandorusEx as LandorusExBCR89 } from "../set-boundaries-crossed/landorus-ex";
-import { Bianca } from "../set-emerging-powers/bianca";
-import { Cheren } from "../set-emerging-powers/cheren";
-import { Skyla as SkylaBCR134 } from "../set-boundaries-crossed/skyla";
-import { Terrakion } from "../set-noble-victories/terrakion";
-import { Altaria } from "../set-dragons-exalted/altaria";
-import { RockyHelmet as RockyHelmetSVI193 } from "../set-scarlet-and-violet/rocky-helmet";
+import { EnergySearch } from '../set-fossil/energy-search';
+import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
+import { PokeBall } from '../set-jungle/pokeball';
+import { Switch } from '../set-base-set/switch';
+import { TownMap } from '../set-breakthrough/town-map';
+import { LandorusEx as LandorusExBCR89 } from '../set-boundaries-crossed/landorus-ex';
+import { Bianca } from '../set-emerging-powers/bianca';
+import { Cheren } from '../set-emerging-powers/cheren';
+import { Skyla as SkylaBCR134 } from '../set-boundaries-crossed/skyla';
+import { Terrakion } from '../set-noble-victories/terrakion';
+import { Altaria } from '../set-dragons-exalted/altaria';
+import { RockyHelmet as RockyHelmetSVI193 } from '../set-scarlet-and-violet/rocky-helmet';
 import { KeldeoEx } from './keldeo-ex';
 import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
 

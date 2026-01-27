@@ -1,10 +1,10 @@
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State, StateUtils, PlayerType } from '../../game';;
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 
 
 
@@ -27,13 +27,14 @@ export class StarmieV extends PokemonCard {
   public attacks = [
     {
       name: 'Swift',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 50,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
     },
     {
       name: 'Energy Spiral',
-      cost: [CardType.WATER, CardType.WATER],
+      cost: [W, W],
       damage: 50,
       damageCalculation: 'x',
       text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
@@ -52,27 +53,11 @@ export class StarmieV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Make damage ignore weakness
-      effect.ignoreWeakness = true;
-      // Make damage ignore resistance
-      effect.ignoreResistance = true;
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const damage = 50;
-
-      if (damage > 0) {
-        opponent.active.damage += damage;
-        const afterDamage = new AfterDamageEffect(effect, damage);
-        state = store.reduceEffect(state, afterDamage);
-      }
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 50);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

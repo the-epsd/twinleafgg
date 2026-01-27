@@ -1,4 +1,4 @@
-import { Leftovers } from "../set-pokemon-151/leftovers";
+import { Leftovers } from '../set-pokemon-151/leftovers';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 
 export class RareCandyGE extends RareCandy {

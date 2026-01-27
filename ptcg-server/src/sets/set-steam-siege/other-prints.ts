@@ -1,9 +1,9 @@
-import { GardevoirSpiritLink } from "../set-primal-clash/gardevoir-spirit-link";
-import { VolcanionEX as VolcanionEXSTS26 } from "../set-steam-siege/volcanion-ex";
-import { GardevoirEx as GardevoirExSTS78 } from "../set-steam-siege/gardevoir-ex";
-import { MGardevoirEx as MGardevoirExSTS79 } from "../set-steam-siege/mega-gardevoir-ex";
-import { PokemonRanger as PokemonRangerSTS104 } from "../set-steam-siege/pokemon-ranger";
-import { ProfessorSycamoreXY } from "../set-x-and-y/other-prints";
+import { GardevoirSpiritLink } from '../set-primal-clash/gardevoir-spirit-link';
+import { VolcanionEX as VolcanionEXSTS26 } from '../set-steam-siege/volcanion-ex';
+import { GardevoirEx as GardevoirExSTS78 } from '../set-steam-siege/gardevoir-ex';
+import { MGardevoirEx as MGardevoirExSTS79 } from '../set-steam-siege/mega-gardevoir-ex';
+import { PokemonRanger as PokemonRangerSTS104 } from '../set-steam-siege/pokemon-ranger';
+import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
 import { MagearnaEX } from './magearna-ex';
 
 export class MagearnaEXSTS extends MagearnaEX {

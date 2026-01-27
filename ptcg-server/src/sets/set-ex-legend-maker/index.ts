@@ -33,7 +33,7 @@ import { Wobbuffet } from './wobbuffet';
 import { Wynaut } from './wynaut';
 
 // Other Prints
-import { ChinchouLM } from './other-prints';
+import { ChinchouLM, RainbowEnergyLM } from './other-prints';
 
 export const setEXLegendMaker: Card[] = [
   new Anorith(),
@@ -71,4 +71,5 @@ export const setEXLegendMaker: Card[] = [
 
   // Other Prints
   new ChinchouLM(),
+  new RainbowEnergyLM(),
 ];

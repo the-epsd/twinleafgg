@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard, SuperType, ChooseCardsPrompt, GameMessage } from "../../game";
-import { DiscardCardsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard, SuperType, ChooseCardsPrompt, GameMessage } from '../../game';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -35,10 +35,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.deck,
       { superType: SuperType.POKEMON },
       { min: 0, max: 1, allowCancel: false }),
-      (selected: any[]) => {
-        cards = selected || [];
-        next();
-      });
+    (selected: any[]) => {
+      cards = selected || [];
+      next();
+    });
 
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.deck);

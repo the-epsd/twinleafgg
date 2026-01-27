@@ -1,30 +1,40 @@
 import { Archetype } from 'ptcg-server';
+import { ArchetypeDetectionService } from '../archetype-detection/archetype-detection.service';
+
+// Singleton instance for static access
+let detectionServiceInstance: ArchetypeDetectionService | null = null;
 
 export class ArchetypeUtils {
+  /**
+   * Set the detection service instance for static access.
+   * Should be called once during app initialization.
+   */
+  public static setDetectionService(service: ArchetypeDetectionService): void {
+    detectionServiceInstance = service;
+  }
+
+  /**
+   * Get archetypes for a deck based on its cards.
+   * Uses the detection service if available, otherwise returns UNOWN.
+   */
   public static getArchetype(deckItems: any[], returnSingle: boolean = false): Archetype | Archetype[] {
-    if (!deckItems) {
+    if (!deckItems || deckItems.length === 0) {
       return returnSingle ? Archetype.UNOWN : [Archetype.UNOWN];
     }
 
-    // Only check for manual archetypes
-    const foundArchetypes = new Set<Archetype>();
-    let hasGardevoir = false;
-    let hasClefairy = false;
+    if (!detectionServiceInstance) {
+      return returnSingle ? Archetype.UNOWN : [Archetype.UNOWN];
+    }
 
-    deckItems.forEach(item => {
-      const cardName = item?.card?.name;
-      if (cardName) {
-        // Check for Gardevoir and Clefairy combination
-        if (cardName.includes('Gardevoir')) {
-          hasGardevoir = true;
-        }
-        if (cardName.includes('Clefairy')) {
-          hasClefairy = true;
-        }
-      }
-    });
+    const [primary, secondary] = detectionServiceInstance.getSuggestedArchetypes(deckItems);
 
-    // If no manual archetypes found, return UNOWN
-    return returnSingle ? Archetype.UNOWN : [Archetype.UNOWN];
+    if (returnSingle) {
+      return primary || Archetype.UNOWN;
+    }
+
+    const result: Archetype[] = [];
+    if (primary) result.push(primary);
+    if (secondary) result.push(secondary);
+    return result.length > 0 ? result : [Archetype.UNOWN];
   }
 }

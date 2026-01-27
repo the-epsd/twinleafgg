@@ -1,10 +1,10 @@
-import { HeavyBall } from "../set-next-destinies/heavy-ball";
-import { JudgeUL } from "../set-unleashed/other-prints";
-import { Skyla } from "../set-boundaries-crossed/skyla";
-import { SuperRod } from "../set-noble-victories/super-rod";
-import { RainbowEnergyPL } from "../set-platinum/other-prints";
-import { Brigette as BrigetteBKT134 } from "../set-breakthrough/brigette";
-import { ProfessorsLetter as ProfessorsLetterXY123 } from "../set-x-and-y/professors-letter";
+import { HeavyBall } from '../set-next-destinies/heavy-ball';
+import { JudgeUL } from '../set-unleashed/other-prints';
+import { Skyla } from '../set-boundaries-crossed/skyla';
+import { SuperRod } from '../set-noble-victories/super-rod';
+import { RainbowEnergyPL } from '../set-platinum/other-prints';
+import { Brigette as BrigetteBKT134 } from '../set-breakthrough/brigette';
+import { ProfessorsLetter as ProfessorsLetterXY123 } from '../set-x-and-y/professors-letter';
 import { Fisherman } from '../set-celestial-storm/fisherman';
 import { FloatStone } from '../set-plasma-freeze/float-stone';
 import { ProfessorsLetter } from '../set-x-and-y/professors-letter';

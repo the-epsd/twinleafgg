@@ -64,7 +64,7 @@ export class Beldum extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.player.active.damage += 10
+      effect.player.active.damage += 10;
     }
 
     return state;

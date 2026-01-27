@@ -30,7 +30,7 @@ export class AntiqueSailFossil extends TrainerCard {
 
   public powers: Power[] = [{
     name: 'Antique Sail Fossil',
-    text: `You may play this card as a 60 HP Basic [C] Pokemon. This Pokemon can't be affected by Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
+    text: 'You may play this card as a 60 HP Basic [C] Pokemon. This Pokemon can\'t be affected by Special Conditions and can\'t retreat. At any time during your turn, you may discard this card from play.',
     useWhenInPlay: true,
     exemptFromAbilityLock: true,
     isFossil: true,

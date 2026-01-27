@@ -126,7 +126,7 @@ export class MemoryMonitorService {
     averageGrowth: number;
     peakUsage: number;
     recommendation: string;
-  } {
+    } {
     if (this.memoryHistory.length < 2) {
       return {
         isIncreasing: false,
@@ -242,7 +242,7 @@ export class MemoryMonitorService {
     peakUsage: number;
     trend: string;
     recommendation: string;
-  } {
+    } {
     const current = this.getCurrentMemoryStats();
     const trend = this.getMemoryTrend();
     const peakUsage = Math.max(...this.memoryHistory.map(s => s.heapUsedMb));

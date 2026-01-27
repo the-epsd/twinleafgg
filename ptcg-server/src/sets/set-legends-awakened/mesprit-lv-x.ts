@@ -63,7 +63,7 @@ export class MespritLVX extends PokemonCard {
         }
       });
 
-      let isTrioInPlay = isMespritInPlay && isUxieInPlay && isAzelfInPlay;
+      const isTrioInPlay = isMespritInPlay && isUxieInPlay && isAzelfInPlay;
 
       if (!isTrioInPlay) {
         effect.damage = 0;

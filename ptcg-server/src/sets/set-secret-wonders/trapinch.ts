@@ -33,7 +33,7 @@ export class Trapinch extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (AFTER_ATTACK(effect, 0, this)) {
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.opponent)
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.opponent);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

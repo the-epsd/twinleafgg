@@ -12,21 +12,16 @@ import { StoreLike } from '../../game/store/store-like';
 export class GreensExploration extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '175';
-
   public name: string = 'Green\'s Exploration';
-
   public fullName: string = 'Green\'s Exploration UNB';
 
   public text: string =
-    'You can play this card only if you have no Pokémon with Abilities in play.' +
-    '' +
-    'Search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.';
+    `You can play this card only if you have no Pokémon with Abilities in play.
+
+Search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

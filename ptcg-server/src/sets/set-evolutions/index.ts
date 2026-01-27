@@ -1,4 +1,4 @@
-import { CaterpieEVO, MetapodEVO, WeedleEVO, EnergyRetrievalEVO, FullHealEVO, MaintenanceEVO, PotionEVO, ReviveEVO, SuperPotionEVO, SwitchEVO, DoubleColorlessEnergyEVO, GrassEnergyEVO, FireEnergyEVO, WaterEnergyEVO, LightningEnergyEVO, PsychicEnergyEVO, FightingEnergyEVO, MetalEnergyEVO, FairyEnergyEVO, DragoniteEX2EVO, BrocksGrit2EVO, HereComesTeamRocketEVO } from './other-prints';
+import { CaterpieEVO, MetapodEVO, WeedleEVO, EnergyRetrievalEVO, FullHealEVO, MaintenanceEVO, PotionEVO, ReviveEVO, SuperPotionEVO, SwitchEVO, DoubleColorlessEnergyEVO, GrassEnergyEVO, FireEnergyEVO, WaterEnergyEVO, LightningEnergyEVO, PsychicEnergyEVO, FightingEnergyEVO, MetalEnergyEVO, FairyEnergyEVO, DragoniteEX2EVO, BrocksGrit2EVO, HereComesTeamRocketEVO, MVenusaurEXEVO, MVenusaurEXEVOSR } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { BrocksGrit } from './brocks-grit';
 import { DarknessEnergyEVO, PokedexEVO } from './other-prints';
@@ -40,5 +40,9 @@ export const setEvolutions: Card[] = [
   new FairyEnergyEVO(),
   new DragoniteEX2EVO(),
   new BrocksGrit2EVO(),
+
+  // Other Prints
   new HereComesTeamRocketEVO(),
+  new MVenusaurEXEVO(),
+  new MVenusaurEXEVOSR(),
 ];

@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { CoinFlipEffect } from "../../game/store/effects/play-card-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Volcanion extends PokemonCard {
   public stage: Stage = Stage.BASIC;

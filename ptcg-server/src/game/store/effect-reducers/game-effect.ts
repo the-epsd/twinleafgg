@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
@@ -312,20 +312,15 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       if (effect.target.marker.hasMarker('LOST_CITY_MARKER') || card.tags.includes(CardTag.PRISM_STAR)) {
         const lostZoned = new CardList();
         const attachedCards = new CardList();
-        const tools = [...effect.target.tools];
-        const pokemonIndices = effect.target.cards.map((card, index) => index);
 
-        // Move tools to discard BEFORE clearing effects (directly)
-        for (const tool of tools) {
-          effect.target.moveCardTo(tool, effect.player.discard);
-        }
-
-        // Clear damage and effects
+        // Clear damage and effects before splitting cards
         effect.target.damage = 0;
         effect.target.clearEffects();
 
-        for (let i = pokemonIndices.length - 1; i >= 0; i--) {
-          const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
+        // Splice in reverse so indices remain valid; do NOT pre-move tools/energies
+        // or effect.target.cards shrinks and later splice(indices[i], 1) can be out of bounds
+        while (effect.target.cards.length > 0) {
+          const removedCard = effect.target.cards.splice(effect.target.cards.length - 1, 1)[0];
 
           // Handle cardlist cards (energy, tools, etc.)
           if (removedCard.cards) {
@@ -338,12 +333,16 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           }
 
           // Handle the main card
-          if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC || removedCard.tags.includes(CardTag.PRISM_STAR)) {
+          if (removedCard.superType === SuperType.POKEMON || removedCard.tags.includes(CardTag.PRISM_STAR)) {
             lostZoned.cards.push(removedCard);
           } else {
             attachedCards.cards.push(removedCard);
           }
         }
+
+        // Clear refs so the slot is fully emptied
+        effect.target.tools = [];
+        effect.target.energies.cards = [];
 
         // Move attached cards to discard
         if (attachedCards.cards.length > 0) {

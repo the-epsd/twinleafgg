@@ -1,10 +1,10 @@
-import { MewEx } from "../set-legendary-treasures/mew-ex";
-import { Trubbish } from "../set-legendary-treasures/trubbish";
-import { HoOhEx as HoOhExDRX22 } from "../set-dragons-exalted/ho-oh-ex";
-import { MewEx as MewExLTRRC24 } from "../set-legendary-treasures/mew-ex";
-import { RayquazaEx as RayquazaExDRX85 } from "../set-dragons-exalted/rayquaza-ex";
-import { Reuniclus } from "../set-black-and-white/reuniclus";
-import { Rayquaza } from "../set-dragon-vault/rayquaza";
+import { MewEx } from '../set-legendary-treasures/mew-ex';
+import { Trubbish } from '../set-legendary-treasures/trubbish';
+import { HoOhEx as HoOhExDRX22 } from '../set-dragons-exalted/ho-oh-ex';
+import { MewEx as MewExLTRRC24 } from '../set-legendary-treasures/mew-ex';
+import { RayquazaEx as RayquazaExDRX85 } from '../set-dragons-exalted/rayquaza-ex';
+import { Reuniclus } from '../set-black-and-white/reuniclus';
+import { Rayquaza } from '../set-dragon-vault/rayquaza';
 export class MewExDRX extends MewEx {
   public setNumber = '46';
   public fullName: string = 'Mew EX DRX';

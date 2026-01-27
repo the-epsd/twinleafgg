@@ -1,30 +1,30 @@
-import { ExpShare } from "../set-scarlet-and-violet/exp-share";
-import { KricketuneV as KricketuneVBST6 } from "../set-battle-styles/kricketune-v";
-import { FlappleV as FlappleVBST18 } from "../set-battle-styles/flapple-v";
-import { VictiniV as VictiniVBST21 } from "../set-battle-styles/victini-v";
-import { EmpoleonV as EmpoleonVBST40 } from "../set-battle-styles/empoleon-v";
-import { TapuKokoV as TapuKokoVBST50 } from "../set-battle-styles/tapu-koko-v";
-import { MimikyuV as MimikyuVBST62 } from "../set-battle-styles/mimikyu-v";
-import { NecrozmaV as NecrozmaVBST63 } from "../set-battle-styles/necrozma-v";
-import { SingleStrikeUrshifuV as SingleStrikeUrshifuVBST85 } from "../set-battle-styles/single-strike-urshifu-v";
-import { RapidStrikeUrshifuV as RapidStrikeUrshifuVBST87 } from "../set-battle-styles/rapid-strike-urshifu-v";
-import { TyranitarV as TyranitarVBST97 } from "../set-battle-styles/tyranitar-v";
-import { StoutlandV as StoutlandVBST117 } from "../set-battle-styles/stoutland-v";
-import { Bruno as BrunoBST121 } from "../set-battle-styles/bruno";
-import { Cheryl as CherylBST123 } from "../set-battle-styles/cheryl";
-import { KorrinasFocus as KorrinasFocusBST128 } from "../set-battle-styles/korrinas-focus";
-import { SingleStrikeStyleMustard as SingleStrikeStyleMustardBST132 } from "../set-battle-styles/single-strike-style-mustard";
-import { FlappleVMAX as FlappleVMAXBST19 } from "../set-battle-styles/flapple-vmax";
-import { VictiniVMAX as VictiniVMAXBST22 } from "../set-battle-styles/victini-vmax";
-import { TapuKokoVMAX as TapuKokoVMAXBST51 } from "../set-battle-styles/tapu-koko-vmax";
-import { SingleStrikeUrshifuVMAX as SingleStrikeUrshifuVMAXBST86 } from "../set-battle-styles/single-strike-urshifu-vmax";
-import { RapidStrikeUrshifuVMAX as RapidStrikeUrshifuVMAXBST88 } from "../set-battle-styles/rapid-strike-urshifu-vmax";
-import { Octillery as OctilleryBST37 } from "../set-battle-styles/octillery";
-import { Houndoom as HoundoomBST96 } from "../set-battle-styles/houndoom";
-import { ExpShare as ExpShareSVI174 } from "../set-scarlet-and-violet/exp-share";
-import { LevelBall as LevelBallBST129 } from "../set-battle-styles/level-ball";
-import { RapidStrikeEnergy as RapidStrikeEnergyBST140 } from "../set-battle-styles/rapid-strike-energy";
-import { SingleStrikeEnergy as SingleStrikeEnergyBST141 } from "../set-battle-styles/single-strike-energy";
+import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { KricketuneV as KricketuneVBST6 } from '../set-battle-styles/kricketune-v';
+import { FlappleV as FlappleVBST18 } from '../set-battle-styles/flapple-v';
+import { VictiniV as VictiniVBST21 } from '../set-battle-styles/victini-v';
+import { EmpoleonV as EmpoleonVBST40 } from '../set-battle-styles/empoleon-v';
+import { TapuKokoV as TapuKokoVBST50 } from '../set-battle-styles/tapu-koko-v';
+import { MimikyuV as MimikyuVBST62 } from '../set-battle-styles/mimikyu-v';
+import { NecrozmaV as NecrozmaVBST63 } from '../set-battle-styles/necrozma-v';
+import { SingleStrikeUrshifuV as SingleStrikeUrshifuVBST85 } from '../set-battle-styles/single-strike-urshifu-v';
+import { RapidStrikeUrshifuV as RapidStrikeUrshifuVBST87 } from '../set-battle-styles/rapid-strike-urshifu-v';
+import { TyranitarV as TyranitarVBST97 } from '../set-battle-styles/tyranitar-v';
+import { StoutlandV as StoutlandVBST117 } from '../set-battle-styles/stoutland-v';
+import { Bruno as BrunoBST121 } from '../set-battle-styles/bruno';
+import { Cheryl as CherylBST123 } from '../set-battle-styles/cheryl';
+import { KorrinasFocus as KorrinasFocusBST128 } from '../set-battle-styles/korrinas-focus';
+import { SingleStrikeStyleMustard as SingleStrikeStyleMustardBST132 } from '../set-battle-styles/single-strike-style-mustard';
+import { FlappleVMAX as FlappleVMAXBST19 } from '../set-battle-styles/flapple-vmax';
+import { VictiniVMAX as VictiniVMAXBST22 } from '../set-battle-styles/victini-vmax';
+import { TapuKokoVMAX as TapuKokoVMAXBST51 } from '../set-battle-styles/tapu-koko-vmax';
+import { SingleStrikeUrshifuVMAX as SingleStrikeUrshifuVMAXBST86 } from '../set-battle-styles/single-strike-urshifu-vmax';
+import { RapidStrikeUrshifuVMAX as RapidStrikeUrshifuVMAXBST88 } from '../set-battle-styles/rapid-strike-urshifu-vmax';
+import { Octillery as OctilleryBST37 } from '../set-battle-styles/octillery';
+import { Houndoom as HoundoomBST96 } from '../set-battle-styles/houndoom';
+import { ExpShare as ExpShareSVI174 } from '../set-scarlet-and-violet/exp-share';
+import { LevelBall as LevelBallBST129 } from '../set-battle-styles/level-ball';
+import { RapidStrikeEnergy as RapidStrikeEnergyBST140 } from '../set-battle-styles/rapid-strike-energy';
+import { SingleStrikeEnergy as SingleStrikeEnergyBST141 } from '../set-battle-styles/single-strike-energy';
 export class ExpShareBST extends ExpShare {
   public setNumber = '126';
   public fullName: string = 'Exp. Share BST';
@@ -140,7 +140,7 @@ export class KorrinasFocus2BST extends KorrinasFocusBST128 {
 }
 
 export class SingleStrikeStyleMustard2BST extends SingleStrikeStyleMustardBST132 {
-  public setNumber = '162';
+  public setNumber = '163';
   public fullName: string = 'Single Strike Style Mustard2 BST';
   public set = 'BST';
 }
@@ -206,7 +206,7 @@ export class KorrinasFocus3BST extends KorrinasFocusBST128 {
 }
 
 export class SingleStrikeStyleMustard3BST extends SingleStrikeStyleMustardBST132 {
-  public setNumber = '176';
+  public setNumber = '177';
   public fullName: string = 'Single Strike Style Mustard3 BST';
   public set = 'BST';
 }

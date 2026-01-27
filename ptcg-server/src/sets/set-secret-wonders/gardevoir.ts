@@ -84,7 +84,8 @@ export class Gardevoir extends PokemonCard {
       ), cards => {
         const trainerCard = cards[0] as TrainerCard;
         // Validate that the copied supporter can be played
-        if (!CAN_PLAY_SUPPORTER_CARD(store, state, player, trainerCard)) {
+        // Bypass supporterTurn check since Telepass allows playing supporters even after one was already played
+        if (!CAN_PLAY_SUPPORTER_CARD(store, state, player, trainerCard, true)) {
           return state;
         }
         return state;

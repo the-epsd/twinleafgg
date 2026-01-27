@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PokemonCardList, PlayerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-import { CoinFlipEffect } from "../../game/store/effects/play-card-effects";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PokemonCardList, PlayerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Hippopotas extends PokemonCard {
   public stage: Stage = Stage.BASIC;

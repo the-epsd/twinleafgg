@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase, StateUtils, PlayerType } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PreventAttackEffect } from "../../game/store/effects/effect-of-attack-effects";
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase, StateUtils, PlayerType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PreventAttackEffect } from '../../game/store/effects/effect-of-attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Aurorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard, GameLog, ChooseCardsPrompt, GameMessage, SuperType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard, GameLog, ChooseCardsPrompt, GameMessage, SuperType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Landorus extends PokemonCard {
   public stage: Stage = Stage.BASIC;

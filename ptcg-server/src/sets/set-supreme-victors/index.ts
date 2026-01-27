@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { Baltoy } from './baltoy';
 import { Bulbasaur } from './bulbasaur';
+import { DragoniteFB } from './dragonite-fb';
 import { GarchompC } from './garchomp-c';
 import { GarchompCLVX } from './garchomp-c-lv-x';
 import { Gible } from './gible';
@@ -18,6 +19,7 @@ import { VsSeekerSV } from './other-prints';
 export const setSupremeVictors: Card[] = [
   new Baltoy(),
   new Bulbasaur(),
+  new DragoniteFB(),
   new GarchompC(),
   new GarchompCLVX(),
   new Gible(),

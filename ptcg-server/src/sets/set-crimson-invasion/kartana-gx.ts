@@ -1,16 +1,20 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, EnergyCard, ConfirmPrompt, ShuffleDeckPrompt, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, EnergyCard, ConfirmPrompt, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect, AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../game/store/prefabs/attack-effects';
 
 export class KartanaGX extends PokemonCard {
 
   public tags = [CardTag.ULTRA_BEAST, CardTag.POKEMON_GX];
+
+  private wantsToShuffle = false;
 
   public stage: Stage = Stage.BASIC;
 
@@ -126,27 +130,29 @@ export class KartanaGX extends PokemonCard {
       });
     }
 
-    // Gale Blade
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
+    // Gale Blade - ask during attack, shuffle after
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
-        if (wantToUse) {
-          player.active.moveTo(player.deck);
-          player.active.clearEffects();
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        }
+        this.wantsToShuffle = wantToUse;
       });
     }
 
+    // Gale Blade - shuffle after attack if chosen
+    if (effect instanceof AfterAttackEffect && this.wantsToShuffle) {
+      this.wantsToShuffle = false;
+      return SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
+    }
+
+    // Clean up flag at end of turn
+    if (effect instanceof EndTurnEffect) {
+      this.wantsToShuffle = false;
+    }
+
     // Blade-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

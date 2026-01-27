@@ -21,11 +21,11 @@ export class Oricorioex extends PokemonCard {
     name: 'Excited Turbo',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, if you have any [R] Mega Evolution Pokémon ex in play, you may use this Ability. You may attach a Basic [R] Energy card from your hand to 1 of your benched [R] Pokémon.'
+    text: 'As often as you like during your turn, if you have any [R] Mega Evolution Pokémon ex in play, you may use this Ability. Attach a Basic [R] Energy card from your hand to 1 of your Benched [R] Pokémon.'
   }];
 
   public attacks = [{
-    name: 'Buster Tail',
+    name: 'Fire Wing',
     cost: [R, R, C],
     damage: 110,
     text: ''

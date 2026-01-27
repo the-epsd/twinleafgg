@@ -9,23 +9,17 @@ import { StoreLike } from '../../game/store/store-like';
 export class BeastRing extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [];
-
   public set: string = 'FLI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '102';
-
   public name: string = 'Beast Ring';
-
   public fullName: string = 'Beast Ring FLI';
 
   public text: string =
-    'You can play this card only if your opponent has exactly 3 or 4 Prize cards remaining.' +
-    '' +
-    'Search your deck for up to 2 basic Energy cards and attach them to 1 of your Ultra Beasts. Then, shuffle your deck.';
+    `You can play this card only if your opponent has exactly 3 or 4 Prize cards remaining.
+
+Search your deck for up to 2 basic Energy cards and attach them to 1 of your Ultra Beasts. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

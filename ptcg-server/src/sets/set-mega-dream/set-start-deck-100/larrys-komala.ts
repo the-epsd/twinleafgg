@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, StateUtils, SpecialCondition } from "../../../game";
-import { AddSpecialConditionsEffect } from "../../../game/store/effects/attack-effects";
-import { Effect } from "../../../game/store/effects/effect";
-import { PowerEffect } from "../../../game/store/effects/game-effects";
-import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
-import { ABILITY_USED, WAS_ATTACK_USED, DRAW_CARDS } from "../../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, StateUtils, SpecialCondition } from '../../../game';
+import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 
 export class LarrysKomala extends PokemonCard {

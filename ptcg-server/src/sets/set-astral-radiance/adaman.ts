@@ -111,9 +111,9 @@ export class Adaman extends TrainerCard {
   public fullName: string = 'Adaman ASR';
 
   public text: string =
-    'You can use this card only if you discard 2 [M] Energy cards from your hand.' +
-    '' +
-    'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.';
+    `You can use this card only if you discard 2 [M] Energy cards from your hand.
+
+Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

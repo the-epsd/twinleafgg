@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, CardTag, PlayerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect } from "../../game/store/effects/game-effects";
-import { CheckTableStateEffect } from "../../game/store/effects/check-effects";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, CardTag, PlayerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
 export class Luxio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

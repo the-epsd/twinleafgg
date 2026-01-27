@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, ConfirmPrompt } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, ConfirmPrompt } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ChienPao extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -805,7 +805,7 @@ export class ReconnectionCleanupService {
     activeOperations: number;
     isShuttingDown: boolean;
     metrics: CleanupMetrics;
-  } {
+    } {
     const lastCleanupAge = Date.now() - this.metrics.lastCleanupTime;
     const isHealthy = !this.isShuttingDown && lastCleanupAge < (this.config.cleanupIntervalMs * 2);
 

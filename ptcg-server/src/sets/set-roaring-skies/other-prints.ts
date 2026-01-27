@@ -1,13 +1,13 @@
-import { Revive } from "../set-base-set/revive";
-import { Switch } from "../set-base-set/switch";
-import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";
-import { RayquazaEx as RayquazaExROS75 } from "../set-roaring-skies/rayquaza-ex";
-import { MRayquazaEx as MRayquazaExROS76 } from "../set-roaring-skies/mega-rayquaza-ex";
-import { ShayminEx as ShayminExROS77 } from "../set-roaring-skies/shaymin-ex";
-import { Wally as WallyROS94 } from "../set-roaring-skies/wally";
-import { Winona as WinonaROS96 } from "../set-roaring-skies/winona";
-import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
-import { VsSeekerSV } from "../set-supreme-victors/other-prints";
+import { Revive } from '../set-base-set/revive';
+import { Switch } from '../set-base-set/switch';
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { RayquazaEx as RayquazaExROS75 } from '../set-roaring-skies/rayquaza-ex';
+import { MRayquazaEx as MRayquazaExROS76 } from '../set-roaring-skies/mega-rayquaza-ex';
+import { ShayminEx as ShayminExROS77 } from '../set-roaring-skies/shaymin-ex';
+import { Wally as WallyROS94 } from '../set-roaring-skies/wally';
+import { Winona as WinonaROS96 } from '../set-roaring-skies/winona';
+import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
+import { VsSeekerSV } from '../set-supreme-victors/other-prints';
 import { TrainersMail } from './trainers-mail';
 
 export class TrainersMailROS extends TrainersMail {

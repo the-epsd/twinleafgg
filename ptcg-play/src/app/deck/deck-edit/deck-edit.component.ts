@@ -21,6 +21,8 @@ import { SleeveService } from 'src/app/api/services/sleeve.service';
 import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { SleeveSelectPopupComponent } from '../sleeve-select-popup/sleeve-select-popup.component';
+import { ArchetypeDetectionService } from '../archetype-detection/archetype-detection.service';
+import { ArchetypeUtils } from '../deck-archetype-service/archetype.utils';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 
@@ -54,8 +56,12 @@ export class DeckEditComponent implements OnInit {
     // private fileDownloadService: FileDownloadService,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+    private archetypeDetectionService: ArchetypeDetectionService
+  ) {
+    // Initialize ArchetypeUtils with the detection service for static access
+    ArchetypeUtils.setDetectionService(archetypeDetectionService);
+  }
 
 
 
@@ -540,13 +546,23 @@ export class DeckEditComponent implements OnInit {
 
     const items = this.deckItems.flatMap(item => Array(item.count).fill(item.card.fullName));
 
+    // Auto-detect archetypes if none are manually set
+    let archetype1 = this.deck.manualArchetype1 as Archetype | undefined;
+    let archetype2 = this.deck.manualArchetype2 as Archetype | undefined;
+
+    if (!archetype1 && !archetype2 && this.deckItems.length > 0) {
+      const [detected1, detected2] = this.archetypeDetectionService.getSuggestedArchetypes(this.deckItems);
+      archetype1 = detected1 || undefined;
+      archetype2 = detected2 || undefined;
+    }
+
     this.loading = true;
     this.deckService.saveDeck(
       this.deck.id,
       this.deck.name,
       items,
-      this.deck.manualArchetype1 as Archetype,
-      this.deck.manualArchetype2 as Archetype,
+      archetype1,
+      archetype2,
       this.selectedArtworks,
       this.selectedSleeveIdentifier
     ).pipe(

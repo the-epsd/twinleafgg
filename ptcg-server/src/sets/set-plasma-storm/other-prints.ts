@@ -1,9 +1,9 @@
-import { Eviolite } from "../set-noble-victories/eviolite";
-import { VictiniEX as VictiniEXPLS18 } from "../set-plasma-storm/victini-ex";
-import { LugiaEx as LugiaExPLS108 } from "../set-plasma-storm/lugia-ex";
-import { Colress as ColressPLS118 } from "../set-plasma-storm/colress";
-import { Blastoise } from "../set-boundaries-crossed/blastoise";
-import { RandomReceiver } from "../set-dark-explorers/random-receiver";
+import { Eviolite } from '../set-noble-victories/eviolite';
+import { VictiniEX as VictiniEXPLS18 } from '../set-plasma-storm/victini-ex';
+import { LugiaEx as LugiaExPLS108 } from '../set-plasma-storm/lugia-ex';
+import { Colress as ColressPLS118 } from '../set-plasma-storm/colress';
+import { Blastoise } from '../set-boundaries-crossed/blastoise';
+import { RandomReceiver } from '../set-dark-explorers/random-receiver';
 import { EscapeRope } from '../set-battle-styles/escape-rope';
 
 export class EscapeRopePLS extends EscapeRope {

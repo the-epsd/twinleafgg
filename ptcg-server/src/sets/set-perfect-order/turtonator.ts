@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, SuperType, GamePhase } from "../../game";
-import { PutDamageEffect, DiscardCardsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect, AttackEffect } from "../../game/store/effects/game-effects";
-import { CoinFlipEffect } from "../../game/store/effects/play-card-effects";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, SuperType, GamePhase } from '../../game';
+import { PutDamageEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Turtonator extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -54,10 +54,12 @@ import { Ralts } from './ralts';
 import { Repel } from './repel';
 import { Riolu } from './riolu';
 import { Scorbunny } from './scorbunny';
+import { Snom } from './snom';
 import { Snover } from './snover';
 import { Sobble } from './sobble';
 import { Solrock } from './solrock';
 import { Steelix } from './steelix';
+import { StrangeTimepiece } from './strange-timepiece';
 import { SurfingBeach } from './surfing-beach';
 import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
@@ -119,10 +121,12 @@ export const setMegaEvolution: Card[] = [
   new Repel(),
   new Riolu(),
   new Scorbunny(),
+  new Snom(),
   new Snover(),
   new Sobble(),
   new Solrock(),
   new Steelix(),
+  new StrangeTimepiece(),
   new SurfingBeach(),
   new WallysCompassion(),
   new Xerneas(),

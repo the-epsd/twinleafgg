@@ -57,7 +57,7 @@ export class Mesprit extends PokemonCard {
         }
       });
 
-      let isTrioInPlay = isMespritInPlay && isUxieInPlay && isAzelfInPlay;
+      const isTrioInPlay = isMespritInPlay && isUxieInPlay && isAzelfInPlay;
 
       if (!isTrioInPlay) {
         return state;

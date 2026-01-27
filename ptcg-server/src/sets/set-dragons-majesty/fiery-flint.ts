@@ -90,21 +90,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class FieryFlint extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'DRM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '60';
-
   public name: string = 'Fiery Flint';
-
   public fullName: string = 'Fiery Flint DRM';
 
   public text: string =
-    'You can play this card only if you discard 2 other cards from your hand.' +
-    '' +
-    'Search your deck for up to 4 [R] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';
+    `You can play this card only if you discard 2 other cards from your hand.
+
+Search your deck for up to 4 [R] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

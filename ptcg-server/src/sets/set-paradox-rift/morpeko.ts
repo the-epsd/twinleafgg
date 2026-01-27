@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
@@ -86,14 +86,23 @@ export class Morpeko extends PokemonCard {
         return state;
       }
 
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+      const energy = player.active.cards.filter(card => {
+        const em = checkProvidedEnergy.energyMap.find(e => e.card === card);
+        if (!em) return true;
+        const providesDark = em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY);
+        return !providesDark;
+      });
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-        { allowCancel: false, min: 2, max: 2, sameTarget: true }
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 2, max: 2, sameTarget: true, blocked: energy.map(card => card.id) }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

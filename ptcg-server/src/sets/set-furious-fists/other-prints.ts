@@ -1,7 +1,7 @@
-import { EnergySwitchPK } from "../set-ex-power-keepers/other-prints";
-import { FullHeal } from "../set-base-set/full-heal";
-import { SeismitoadEx as SeismitoadExFFI20 } from "../set-furious-fists/seismitoad-ex";
-import { LucarioEx as LucarioExFFI54 } from "../set-furious-fists/lucario-ex";
+import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
+import { FullHeal } from '../set-base-set/full-heal';
+import { SeismitoadEx as SeismitoadExFFI20 } from '../set-furious-fists/seismitoad-ex';
+import { LucarioEx as LucarioExFFI54 } from '../set-furious-fists/lucario-ex';
 import { Korrina } from './korrina';
 import { Maintenance } from '../set-base-set/maintenance';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';

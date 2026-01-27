@@ -43,7 +43,7 @@ export class TeamGalacticsWager extends TrainerCard {
       const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { cards: opponentCards, sourceCard: this });
       state = store.reduceEffect(state, opponentMoveEffect);
 
-      SHUFFLE_DECK(store, state, player)
+      SHUFFLE_DECK(store, state, player);
 
       // Dew Guard prevents RPS and the rest of the effect fizzles (ruling from @Shutterstock)
       if (opponentMoveEffect.preventDefault) {

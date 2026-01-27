@@ -5,6 +5,11 @@
   height: 100%;
   margin-right: map-get($ptcg-size, sidebar);
   
+  // Remove margin when sidebar is hidden for 3D mode
+  &.hide-sidebar-3d {
+    margin-right: 0;
+  }
+  
   // Adjust margin when sandbox sidebar is visible
   &.has-sandbox {
     margin-right: calc(#{map-get($ptcg-size, sidebar)} + 400px);

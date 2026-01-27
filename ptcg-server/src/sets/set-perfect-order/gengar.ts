@@ -1,10 +1,10 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GameLog, Card } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DiscardCardsEffect } from "../../game/store/effects/attack-effects";
-import { CheckTableStateEffect } from "../../game/store/effects/check-effects";
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from "../../game/store/prefabs/prefabs";
-import { PokemonCard as PokemonCardType } from "../../game/store/card/pokemon-card";
-import { KnockOutEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GameLog, Card } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { PokemonCard as PokemonCardType } from '../../game/store/card/pokemon-card';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

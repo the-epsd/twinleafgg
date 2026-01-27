@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, EnergyCard, SuperType, ChooseCardsPrompt, GameMessage } from "../../game";
-import { DiscardCardsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect } from "../../game/store/effects/game-effects";
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, EnergyCard, SuperType, ChooseCardsPrompt, GameMessage } from '../../game';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaClefableex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

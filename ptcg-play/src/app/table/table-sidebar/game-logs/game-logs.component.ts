@@ -1,4 +1,5 @@
-import { Component, Input, ElementRef } from '@angular/core';
+import { Component, Input, ElementRef, OnDestroy } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CardTarget, SlotType, StateLog, StateLogParam, Player } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
@@ -15,12 +16,28 @@ interface GameLog {
   timestamp: string;
 }
 
+interface VisibleMessage {
+  log: GameLog;
+  addedAt: number;
+  fadeOutTimer?: any;
+  opacity: number;
+  state: string;
+}
+
 @Component({
   selector: 'ptcg-game-logs',
   templateUrl: './game-logs.component.html',
-  styleUrls: ['./game-logs.component.scss']
+  styleUrls: ['./game-logs.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
+      state('fading', style({ opacity: 0, transform: 'translateY(-10px)' })),
+      transition('visible => fading', animate('500ms ease-out')),
+      transition('void => visible', animate('300ms ease-in'))
+    ])
+  ]
 })
-export class GameLogsComponent {
+export class GameLogsComponent implements OnDestroy {
 
   public loading = true;
   public logs: GameLog[] = [];
@@ -28,6 +45,10 @@ export class GameLogsComponent {
   public isDeleted: boolean;
   public showScrollToBottom = false;
   private state: LocalGameState;
+  
+  @Input() overlayMode: boolean = false;
+  public visibleMessages: VisibleMessage[] = [];
+  private displayedLogIds: Set<number> = new Set();
 
   @Input() set gameState(gameState: LocalGameState) {
     if (!gameState || !gameState.state) {
@@ -36,6 +57,8 @@ export class GameLogsComponent {
     }
     if (this.state && this.state.localId !== gameState.localId) {
       this.logs = [];
+      this.displayedLogIds.clear();
+      this.visibleMessages = [];
     }
     this.state = gameState;
     this.isDeleted = gameState.deleted;
@@ -93,12 +116,35 @@ export class GameLogsComponent {
     this.scrollToBottom();
   }
 
-  public trackByFn(log: GameLog) {
-    return log.id;
+  public trackByFn(index: number, item: GameLog | VisibleMessage) {
+    if ('log' in item) {
+      return item.log.id;
+    }
+    return item.id;
+  }
+
+  public trackByVisibleMessage(index: number, item: VisibleMessage) {
+    return item.log.id;
+  }
+
+  ngOnDestroy() {
+    // Clean up all fade-out timers
+    this.visibleMessages.forEach(msg => {
+      if (msg.fadeOutTimer) {
+        clearTimeout(msg.fadeOutTimer);
+      }
+    });
+    this.visibleMessages = [];
   }
 
   private appendLogs(logs: StateLog[]) {
     if (logs.length === 0 || !this.state) {
+      return;
+    }
+
+    // Handle overlay mode differently
+    if (this.overlayMode) {
+      this.appendLogsOverlayMode(logs);
       return;
     }
 
@@ -139,6 +185,79 @@ export class GameLogsComponent {
     if (autoScroll) {
       this.scrollToBottom();
     }
+  }
+
+  private appendLogsOverlayMode(logs: StateLog[]) {
+    // delete future logs (when user rewind state in replays)
+    let maxLogId = 0;
+    logs.forEach(log => { maxLogId = Math.max(log.id, maxLogId); });
+    this.visibleMessages = this.visibleMessages.filter(msg => msg.log.id <= maxLogId);
+    // Also remove faded-out log IDs from displayedLogIds if they're beyond maxLogId
+    this.displayedLogIds.forEach(logId => {
+      if (logId > maxLogId) {
+        this.displayedLogIds.delete(logId);
+      }
+    });
+
+    // Append new logs
+    logs.forEach(log => {
+      // Check if log is already displayed (either currently visible or previously displayed)
+      const isCurrentlyVisible = this.visibleMessages.find(msg => msg.log.id === log.id) !== undefined;
+      const hasBeenDisplayed = this.displayedLogIds.has(log.id);
+      
+      if (!isCurrentlyVisible && !hasBeenDisplayed) {
+        const gameLog = this.buildGameLog(log);
+        if (gameLog !== undefined) {
+          // Mark this log ID as displayed
+          this.displayedLogIds.add(log.id);
+          
+          const visibleMessage: VisibleMessage = {
+            log: gameLog,
+            addedAt: Date.now(),
+            opacity: 1,
+            state: 'visible'
+          };
+          
+          // Limit to 3 messages - remove oldest if needed
+          if (this.visibleMessages.length >= 3) {
+            const oldest = this.visibleMessages.shift();
+            if (oldest && oldest.fadeOutTimer) {
+              clearTimeout(oldest.fadeOutTimer);
+            }
+          }
+          
+          this.visibleMessages.push(visibleMessage);
+          
+          // Schedule fade-out after 3 seconds
+          this.scheduleFadeOut(visibleMessage);
+        }
+      }
+    });
+  }
+
+  private scheduleFadeOut(msg: VisibleMessage) {
+    if (!msg) {
+      return;
+    }
+
+    // Clear any existing timer
+    if (msg.fadeOutTimer) {
+      clearTimeout(msg.fadeOutTimer);
+    }
+
+    // Set fade-out timer for 3 seconds
+    msg.fadeOutTimer = setTimeout(() => {
+      msg.state = 'fading';
+      msg.opacity = 0;
+      
+      // Remove message after fade animation completes (500ms)
+      setTimeout(() => {
+        const index = this.visibleMessages.indexOf(msg);
+        if (index !== -1) {
+          this.visibleMessages.splice(index, 1);
+        }
+      }, 500);
+    }, 3000);
   }
 
   private buildGameLog(log: StateLog): GameLog | undefined {

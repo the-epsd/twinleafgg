@@ -19,10 +19,10 @@ export class MegaLatiasex extends PokemonCard {
     name: 'Strafe',
     cost: [C],
     damage: 40,
-    text: 'You may switch this Pokémon with one of your Benched Pokémon.'
+    text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
   },
   {
-    name: 'Mirage Pulse',
+    name: 'Illusory Impulse',
     cost: [R, P, C],
     damage: 300,
     text: 'Discard all Energy from this Pokémon.'

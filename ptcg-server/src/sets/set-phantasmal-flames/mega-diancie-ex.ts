@@ -13,7 +13,7 @@ export class MegaDiancieex extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Shadow Hiding',
+    name: 'Diamond Coat',
     powerType: PowerType.ABILITY,
     text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
@@ -23,7 +23,7 @@ export class MegaDiancieex extends PokemonCard {
     cost: [P, P],
     damage: 120,
     damageCalculation: 'x',
-    text: 'You may discard up to 2 Energy from this Pokémon. If you do, this attack does 120 more damage for each card you discarded in this way.'
+    text: 'Discard up to 2 Energy cards from this Pokémon, and this attack does 120 damage for each card you discarded in this way.'
   }];
 
   public regulationMark: string = 'I';

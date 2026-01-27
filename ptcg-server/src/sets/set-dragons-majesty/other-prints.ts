@@ -1,6 +1,6 @@
-import { FieryFlint as FieryFlintDRM60 } from "../set-dragons-majesty/fiery-flint";
-import { SwitchRaft as SwitchRaftDRM62 } from "../set-dragons-majesty/switch-raft";
-import { UltraNecrozmaGX } from "../set-forbidden-light/ultra-necrozma-gx";
+import { FieryFlint as FieryFlintDRM60 } from '../set-dragons-majesty/fiery-flint';
+import { SwitchRaft as SwitchRaftDRM62 } from '../set-dragons-majesty/switch-raft';
+import { UltraNecrozmaGX } from '../set-forbidden-light/ultra-necrozma-gx';
 export class FieryFlint3DRM extends FieryFlintDRM60 {
   public setNumber = '76';
   public fullName: string = 'Fiery Flint3 DRM';
