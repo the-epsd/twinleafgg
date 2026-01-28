@@ -301,12 +301,17 @@ ptcg-board-prizes {
 .lost-zone {
   grid-area: stadium;
   transform: rotate(-90deg);
+  position: relative;
+  z-index: 2;
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
     width: calc(var(--card-size) * 1.15 * var(--card-scale));
     height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
     max-width: 100%;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
   }
 }
 
@@ -368,6 +373,8 @@ ptcg-board-card.draggable {
   margin-top: -48px;
   width: calc(var(--card-size) * 1.15 * var(--card-scale));
   height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+  position: relative;
+  z-index: 1;
 
   &.stadium-card-down {
     transform: rotate(180deg);
