@@ -97,7 +97,7 @@ export class Board3dStateSyncService {
         0,    // No rotation (horizontal orientation)
         scene,
         undefined, // No cardTarget
-        1.5  // Same scale as Active Pokemon
+        1.0  // Same scale as bench/supporter cards
       );
 
       // Mark stadium card for click detection
@@ -214,7 +214,24 @@ export class Board3dStateSyncService {
       this.removeCard(`${discardStackId}_top`, scene);
     }
 
-    // Stadium is now shared - synced separately in syncState()
+    // Lost Zone (stacked with latest on top)
+    // if (player.lostzone && player.lostzone.cards.length > 0) {
+    //   await this.stackService.updateLostZoneStack(
+    //     player.lostzone,
+    //     `${playerPrefix}_lostzone`,
+    //     ZONE_POSITIONS[position].lostZone,
+    //     rotation,
+    //     scene,
+    //     this.updateCard.bind(this),
+    //     this.getCardById.bind(this),
+    //     this.removeCard.bind(this)
+    //   );
+    // } else {
+    //   // Remove Lost Zone stack and top card
+    //   const lostZoneStackId = `${playerPrefix}_lostzone`;
+    //   this.stackService.removeLostZoneStack(lostZoneStackId, scene);
+    //   this.removeCard(`${lostZoneStackId}_top`, scene);
+    // }
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
@@ -440,7 +457,7 @@ export class Board3dStateSyncService {
     // Clean up stacks (deck/discard) for removed players or wrong positions
     // Stack IDs are formatted as: ${position}_${playerId}_deck or ${position}_${playerId}_discard
     const stacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
-    
+
     // Check deck stacks
     (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
       const parts = stackId.split('_');

@@ -722,8 +722,50 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     const cardTarget = cardObject.userData.cardTarget as CardTarget;
     const isHandCard = cardObject.userData.isHandCard;
     const isDiscard = cardObject.userData.isDiscard;
+    const isLostZone = cardObject.userData.isLostZone;
     const isDeck = cardObject.userData.isDeck;
     const isPrize = cardObject.userData.isPrize;
+
+    // Handle Lost Zone click
+    if (isLostZone && cardList) {
+      // Determine which player's Lost Zone this is
+      const isBottomLostZone = this.bottomPlayer && this.bottomPlayer.lostzone === cardList;
+      const isTopLostZone = this.topPlayer && this.topPlayer.lostzone === cardList;
+      const player = isBottomLostZone ? PlayerType.BOTTOM_PLAYER : (isTopLostZone ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER);
+      const isOwner = (isBottomLostZone && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
+                      (isTopLostZone && this.topPlayer && this.topPlayer.id === this.clientId);
+      const isDeleted = this.gameState.deleted;
+
+      if (isDeleted || !isOwner) {
+        // Show card list without ability options
+        this.cardsBaseService.showCardInfoList({
+          card: cardData,
+          cardList: cardList,
+          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        });
+        return;
+      }
+
+      const slot = SlotType.LOSTZONE;
+      const options = { enableAbility: { useFromDiscard: false }, enableAttack: false };
+
+      this.cardsBaseService.showCardInfoList({
+        card: cardData,
+        cardList: cardList,
+        options,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+      }).then(result => {
+        if (!result) {
+          return;
+        }
+        const gameId = this.gameState.gameId;
+        const index = cardList.cards.indexOf(result.card);
+        const target: CardTarget = { player, slot, index };
+        // Note: Lost Zone cards typically don't have abilities that can be used from Lost Zone
+        // but we handle the result in case future cards need this functionality
+      });
+      return;
+    }
 
     // Handle discard pile click
     if (isDiscard && cardList) {

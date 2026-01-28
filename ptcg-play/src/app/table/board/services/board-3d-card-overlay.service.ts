@@ -169,10 +169,16 @@ export class Board3dCardOverlayService {
       'Bravery Charm': 'assets/tools/bravery-charm.png',
     };
 
-    // Base position: left: -5px ≈ -0.2 units, top: 20% ≈ 0.7 units from top
-    const baseX = -0.2; // Left side of card
-    const baseZ = -0.7; // 20% from top (card top is at ~-1.75, so 20% down = -0.7)
-    const verticalSpacing = 0.3; // 15px offset ≈ 0.3 units in 3D space
+    // Position tools underneath the main card so top edge sticks out
+    // Card geometry is 2.5 x 3.5 x 0.02, rotated -90 degrees on X axis (lying flat)
+    // After rotation, card's local +Y axis (height) points in world +Z direction
+    // Main card center is at (0, 0, 0), top edge at Z = +1.75, bottom edge at Z = -1.75
+    // Position tool card below main card so its top edge (center Z + 1.75) is visible above main card bottom
+    // Y axis is depth (forward/back), positive Y = back/away from camera
+    const baseX = 0; // Center horizontally (full-size cards are wider)
+    const baseY = -0.1; // Further behind main card (positive Y = back/away from camera, makes it appear underneath)
+    const baseZ = -0.75; // Below main card (main card bottom is at Z = -1.75, so -2.0 puts tool card below with top visible)
+    const verticalSpacing = 0.05; // Small spacing between stacked tools
 
     for (let i = 0; i < tools.length; i++) {
       const tool = tools[i];
@@ -198,9 +204,9 @@ export class Board3dCardOverlayService {
       const toolCardMesh = new Board3dCard(
         toolTexture,
         backTexture,
-        new Vector3(baseX, 0.02 + (i * 0.01), baseZ + (i * verticalSpacing)), // Left side, stacked vertically
+        new Vector3(baseX, baseY + (i * 0.01), baseZ - (i * verticalSpacing)), // Below main card, stacked downward, slightly behind
         0,
-        0.33 // Scale to match 33px width (card is ~2.5 units wide, so 33px ≈ 0.33 units)
+        1.0 // Same size as main card
       );
 
       mainCardMesh.getGroup().add(toolCardMesh.getGroup());

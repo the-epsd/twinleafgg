@@ -949,8 +949,6 @@ export class Board3dInteractionService {
       position: ZONE_POSITIONS.stadium,
       player: PlayerType.BOTTOM_PLAYER, // Use bottom player for ownership, but it's shared
       index: 0,
-      width: 4.0,
-      height: 5.5,
       texture: this.slotGridTexture
     });
     stadiumZone.addToScene(scene);
