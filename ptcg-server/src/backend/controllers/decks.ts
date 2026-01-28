@@ -1160,15 +1160,43 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I';
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard (has regulation mark G, H, or I)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) => 
+          c && c.name === card.name
+        );
+        
+        // If no printings found, fall back to checking this card's regulation mark
+        if (allPrintings.length === 0) {
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+        }
+        
+        return allPrintings.some((c: any) => {
+          const rm = c.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+        });
       }
-      case Format.STANDARD_NIGHTLY:
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I' ||
-          card.regulationMark === 'J';
+      case Format.STANDARD_NIGHTLY: {
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard Nightly (has regulation mark G, H, I, or J)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) => 
+          c && c.name === card.name
+        );
+        
+        // If no printings found, fall back to checking this card's regulation mark
+        if (allPrintings.length === 0) {
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        }
+        
+        return allPrintings.some((c: any) => {
+          const rm = c.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        });
+      }
       case Format.EXPANDED: {
         // For anyPrintingAllowed cards, they are known to be legal in Expanded format
         // Just check if this specific printing is not banned
