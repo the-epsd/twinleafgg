@@ -27,11 +27,15 @@ export class Board3dStateSyncService {
 
   /**
    * Synchronize the entire game state to the 3D scene
+   * @param topPlayer Optional: When provided (e.g., in replay/spectator mode with switchSide), use this player directly for top position
+   * @param bottomPlayer Optional: When provided (e.g., in replay/spectator mode with switchSide), use this player directly for bottom position
    */
   async syncState(
     gameState: LocalGameState,
     scene: Scene,
-    currentPlayerId: number
+    currentPlayerId: number,
+    topPlayer?: Player,
+    bottomPlayer?: Player
   ): Promise<void> {
     if (!gameState || !gameState.state) {
       return;
@@ -39,29 +43,44 @@ export class Board3dStateSyncService {
 
     const state = gameState.state;
 
-    // Clear old cards that no longer exist
-    this.cleanupOldCards(state);
+    // Use provided players if available (for replay/spectator mode with switchSide)
+    // Otherwise, look up players by ID (normal gameplay)
+    let bottomPlayerToSync: Player | undefined;
+    let topPlayerToSync: Player | undefined;
 
-    // Determine which player is the current client and which is the opponent
-    const currentClientPlayer = state.players.find(p => p.id === currentPlayerId);
-    const opponentPlayer = state.players.find(p => p.id !== currentPlayerId);
+    if (topPlayer && bottomPlayer) {
+      // Use provided players directly (already swapped if switchSide is true)
+      bottomPlayerToSync = bottomPlayer;
+      topPlayerToSync = topPlayer;
+    } else {
+      // Fall back to ID lookup (normal gameplay)
+      bottomPlayerToSync = state.players.find(p => p.id === currentPlayerId);
+      topPlayerToSync = state.players.find(p => p.id !== currentPlayerId);
+    }
 
-    // Sync current client as bottomPlayer (their own view)
-    if (currentClientPlayer) {
+    // Clear old cards that no longer match the current player assignments
+    this.cleanupOldCards(state, topPlayerToSync, bottomPlayerToSync, scene);
+
+    // Sync bottomPlayer
+    if (bottomPlayerToSync) {
+      // Determine isOwner: true if this is the current client's player
+      const isOwner = bottomPlayerToSync.id === currentPlayerId;
       await this.syncPlayer(
-        currentClientPlayer,
+        bottomPlayerToSync,
         'bottomPlayer',
-        true, // isOwner is always true for current client
+        isOwner,
         scene
       );
     }
 
-    // Sync opponent as topPlayer
-    if (opponentPlayer) {
+    // Sync topPlayer
+    if (topPlayerToSync) {
+      // Determine isOwner: true if this is the current client's player
+      const isOwner = topPlayerToSync.id === currentPlayerId;
       await this.syncPlayer(
-        opponentPlayer,
+        topPlayerToSync,
         'topPlayer',
-        false, // isOwner is always false for opponent
+        isOwner,
         scene
       );
     }
@@ -78,7 +97,7 @@ export class Board3dStateSyncService {
         0,    // No rotation (horizontal orientation)
         scene,
         undefined, // No cardTarget
-        1.5  // Same scale as Active Pokemon
+        1.0  // Same scale as bench/supporter cards
       );
 
       // Mark stadium card for click detection
@@ -195,7 +214,24 @@ export class Board3dStateSyncService {
       this.removeCard(`${discardStackId}_top`, scene);
     }
 
-    // Stadium is now shared - synced separately in syncState()
+    // Lost Zone (stacked with latest on top)
+    // if (player.lostzone && player.lostzone.cards.length > 0) {
+    //   await this.stackService.updateLostZoneStack(
+    //     player.lostzone,
+    //     `${playerPrefix}_lostzone`,
+    //     ZONE_POSITIONS[position].lostZone,
+    //     rotation,
+    //     scene,
+    //     this.updateCard.bind(this),
+    //     this.getCardById.bind(this),
+    //     this.removeCard.bind(this)
+    //   );
+    // } else {
+    //   // Remove Lost Zone stack and top card
+    //   const lostZoneStackId = `${playerPrefix}_lostzone`;
+    //   this.stackService.removeLostZoneStack(lostZoneStackId, scene);
+    //   this.removeCard(`${lostZoneStackId}_top`, scene);
+    // }
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
@@ -343,12 +379,123 @@ export class Board3dStateSyncService {
   }
 
   /**
-   * Clean up cards that no longer exist in the game state
+   * Clean up cards that no longer match the current player assignments
+   * Removes cards, stacks, and prizes for players that are no longer in the current positions
    */
-  private cleanupOldCards(state: any): void {
-    // This is a simple implementation - in production, you'd want to track
-    // which cards should exist and remove ones that don't
-    // For now, we'll rely on the card IDs being unique per position
+  private cleanupOldCards(
+    state: any,
+    topPlayerToSync: Player | undefined,
+    bottomPlayerToSync: Player | undefined,
+    scene: Scene
+  ): void {
+    // Build map of expected positions for each player ID
+    // This ensures we check both player ID validity AND position correctness
+    const expectedPositions = new Map<number, 'topPlayer' | 'bottomPlayer'>();
+    if (topPlayerToSync) {
+      expectedPositions.set(topPlayerToSync.id, 'topPlayer');
+    }
+    if (bottomPlayerToSync) {
+      expectedPositions.set(bottomPlayerToSync.id, 'bottomPlayer');
+    }
+
+    // If no valid players, clear everything except stadium
+    if (expectedPositions.size === 0) {
+      // Clear all cards except stadium
+      const cardsToRemove: string[] = [];
+      this.cardsMap.forEach((card, cardId) => {
+        if (cardId !== 'shared_stadium') {
+          cardsToRemove.push(cardId);
+        }
+      });
+      cardsToRemove.forEach(cardId => this.removeCard(cardId, scene));
+
+      // Clear all stacks (no valid players, so remove everything)
+      const allStacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
+      (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
+        allStacksToRemove.push({ stackId, isDeck: true });
+      });
+      (this.stackService as any).discardStacks?.forEach((stack: any, stackId: string) => {
+        allStacksToRemove.push({ stackId, isDeck: false });
+      });
+      allStacksToRemove.forEach(({ stackId, isDeck }) => {
+        this.stackService.removeStack(stackId, scene, isDeck);
+      });
+      return;
+    }
+
+    // Remove cards that don't match current player assignments
+    // Card IDs are formatted as: ${position}_${playerId}_${slot}
+    // Examples: bottomPlayer_1_active, topPlayer_2_bench_0, bottomPlayer_1_deck
+    const cardsToRemove: string[] = [];
+    this.cardsMap.forEach((card, cardId) => {
+      // Skip stadium (it's shared)
+      if (cardId === 'shared_stadium') {
+        return;
+      }
+
+      // Extract player ID and position from card ID
+      // Format: position_playerId_slot or position_playerId_slot_index
+      const parts = cardId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          // Remove if player ID doesn't exist OR position doesn't match expected position
+          if (!expectedPosition || expectedPosition !== position) {
+            cardsToRemove.push(cardId);
+          }
+        }
+      }
+    });
+
+    // Remove cards that don't match
+    cardsToRemove.forEach(cardId => this.removeCard(cardId, scene));
+
+    // Clean up stacks (deck/discard) for removed players or wrong positions
+    // Stack IDs are formatted as: ${position}_${playerId}_deck or ${position}_${playerId}_discard
+    const stacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
+
+    // Check deck stacks
+    (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
+      const parts = stackId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          // Remove if player ID doesn't exist OR position doesn't match expected position
+          if (!expectedPosition || expectedPosition !== position) {
+            stacksToRemove.push({ stackId, isDeck: true });
+          }
+        }
+      }
+    });
+
+    // Check discard stacks
+    (this.stackService as any).discardStacks?.forEach((stack: any, stackId: string) => {
+      const parts = stackId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          // Remove if player ID doesn't exist OR position doesn't match expected position
+          if (!expectedPosition || expectedPosition !== position) {
+            stacksToRemove.push({ stackId, isDeck: false });
+          }
+        }
+      }
+    });
+
+    // Remove stacks for removed players or wrong positions
+    stacksToRemove.forEach(({ stackId, isDeck }) => {
+      this.stackService.removeStack(stackId, scene, isDeck);
+    });
   }
 
   /**

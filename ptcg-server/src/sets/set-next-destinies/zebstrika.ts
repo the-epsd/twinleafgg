@@ -27,7 +27,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Lightning Crash',
       cost: [L, L, C],
       damage: 0,
-      text: 'Discard all Lightning Energy attached to this Pokemon. This attack does 80 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Discard all [L] Energy attached to this Pokemon. This attack does 80 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
     }
   ];
 

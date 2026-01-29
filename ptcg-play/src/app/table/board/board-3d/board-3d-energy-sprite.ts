@@ -78,8 +78,10 @@ export class Board3dEnergySprite {
     this.clear();
 
     const visibleCount = Math.min(energyCards.length, MAX_VISIBLE_ENERGIES);
-    const totalWidth = (visibleCount - 1) * ENERGY_SPACING;
-    const startX = -totalWidth / 2;
+    // Card width is 2.5 units, so left edge is at X = -1.25
+    // Position first energy slightly inset from left edge
+    const cardLeftEdge = -1.25; // Card left edge
+    const startX = cardLeftEdge + 0.15; // Slight inset from left edge
 
     for (let i = 0; i < visibleCount; i++) {
       const card = energyCards[i];
@@ -102,9 +104,9 @@ export class Board3dEnergySprite {
 
       const mesh = new Mesh(Board3dEnergySprite.geometry, material);
 
-      // Position in a row below the card
+      // Position in a row below the card, starting from left edge
       mesh.position.set(
-        startX + (i * ENERGY_SPACING),
+        startX + (i * ENERGY_SPACING), // Start from left, space horizontally
         0.1, // Slightly above ground
         1.75   // Below the card (card center is at 0, card bottom is around 1.75)
       );

@@ -31,7 +31,7 @@ export class Decidueye extends PokemonCard {
       name: 'Strong Shot',
       cost: [CardType.GRASS],
       damage: 170,
-      text: 'Discard 1 Basic Grass Energy from your hand. If you can\'t, this attack does nothing.'
+      text: 'Discard 1 Basic [L] Energy from your hand. If you can\'t, this attack does nothing.'
     }
   ];
 

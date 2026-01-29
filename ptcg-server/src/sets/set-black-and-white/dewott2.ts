@@ -14,15 +14,13 @@ export class Dewott2 extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Aqua Tail',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip a coin for each Water Energy attached to this Pokemon. This attack does 10 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Aqua Tail',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip a coin for each [W] Energy attached to this Pokemon. This attack does 10 more damage for each heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

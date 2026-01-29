@@ -24,7 +24,7 @@ export class Reshiram extends PokemonCard {
       name: 'Blue Flare',
       cost: [R, R, C],
       damage: 120,
-      text: 'Discard 2 Fire Energy attached to this Pokémon.'
+      text: 'Discard 2 [R] Energy attached to this Pokémon.'
     }
   ];
 

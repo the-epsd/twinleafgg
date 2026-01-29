@@ -29,7 +29,7 @@ export class Mandibuzz extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each Darkness Energy attached to all of your Pokémon.'
+      text: 'Does 10 more damage for each [D] Energy attached to all of your Pokémon.'
     }
   ];
 

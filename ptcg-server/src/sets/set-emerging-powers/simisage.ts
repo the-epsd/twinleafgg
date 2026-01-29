@@ -19,7 +19,7 @@ export class Simisage extends PokemonCard {
       name: 'Fire\'s Power',
       cost: [C, C],
       damage: 30,
-      text: 'If this Pokémon has any Fire Energy attached to it, the Defending Pokémon is now Burned.'
+      text: 'If this Pokémon has any [R] Energy attached to it, the Defending Pokémon is now Burned.'
     },
     {
       name: 'Seed Bomb',

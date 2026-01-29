@@ -64,10 +64,12 @@ import { LarrysRufflet } from './set-start-deck-100/larrys-rufflet';
 import { LarrysBraviary } from './set-start-deck-100/larrys-braviary';
 import { LarrysKomala } from './set-start-deck-100/larrys-komala';
 import { Waitress } from './set-start-deck-100/waitress';
+import { BossOrdersASC } from './other-prints';
 
 export const setMegaDream: Card[] = [
   new AntheaAndConcordia(),
   new Beautifly(),
+  new BossOrdersASC(),
   new Cascoon(),
   new Camerupt(),
   new Canari(),

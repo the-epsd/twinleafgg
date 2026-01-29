@@ -21,7 +21,7 @@ export class Mandibuzz extends PokemonCard {
       cost: [D],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of Darkness Energy attached to all of your Pokemon.'
+      text: 'Does 20 damage times the number of [D] Energy attached to all of your Pokemon.'
     },
     {
       name: 'Punishment',

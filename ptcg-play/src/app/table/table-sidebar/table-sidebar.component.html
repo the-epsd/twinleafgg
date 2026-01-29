@@ -20,8 +20,10 @@
   <ptcg-player-actions [gameState]="gameState" [clientId]="clientId" (join)="join.next()">
   </ptcg-player-actions>
 
-  <ptcg-replay-controls *ngIf="gameState?.replay" [gameState]="gameState">
-  </ptcg-replay-controls>
+  <div class="ptcg-replay-controls-container" *ngIf="gameState?.replay">
+    <ptcg-replay-controls [gameState]="gameState">
+    </ptcg-replay-controls>
+  </div>
 
   <ptcg-game-logs [gameState]="gameState"></ptcg-game-logs>
 

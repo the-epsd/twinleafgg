@@ -25,7 +25,7 @@ export class Azumarill extends PokemonCard {
   public powers = [{
     name: 'Sparkly Bubbles',
     powerType: PowerType.ABILITY,
-    text: 'If you have a Tera Pokémon in play, this Pokémon\'s Double Edge attack can be used for 1 Psychic Energy.'
+    text: 'If you have a Tera Pokémon in play, this Pokémon\'s Double Edge attack can be used for 1 [P] Energy.'
   }];
 
   public attacks = [

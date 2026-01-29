@@ -60,6 +60,7 @@
   margin-left: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .ptcg-deck-edit-pane-secondary>.deck-content {
@@ -117,7 +118,7 @@ ptcg-deck-card.placeholder {
 }
 
 .deck-validity-container {
-  position: sticky;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -126,19 +127,29 @@ ptcg-deck-card.placeholder {
   z-index: 10;
   display: flex;
   justify-content: center;
-  margin-top: auto;
+  flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  
+  ptcg-deck-validity {
+    pointer-events: auto;
+  }
 }
 
 .deck-pane-container {
   position: relative;
   width: 100%;
-  height: 100%;
-  overflow: visible;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: visible;
   padding: 30px 20px 20px 20px; // More top padding for arrow visibility, side and bottom padding
+  padding-bottom: 80px; // Add bottom padding to prevent content from being hidden behind sticky footer
   box-sizing: border-box;
 }
 
 .evolution-arrows-overlay {
+  display: none;
   position: absolute;
   top: 0;
   left: 3px; // Shift left to account for card margins

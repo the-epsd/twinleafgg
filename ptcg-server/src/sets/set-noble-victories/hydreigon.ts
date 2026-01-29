@@ -20,7 +20,7 @@ export class Hydreigon extends PokemonCard {
   public powers = [{
     name: 'Dark Aura',
     powerType: PowerType.ABILITY,
-    text: 'Each basic Energy attached to your Pokemon provides Dark Energy instead of its usual type.'
+    text: 'Each basic Energy attached to your Pokemon provides [D] Energy instead of its usual type.'
   }];
 
   public attacks = [{

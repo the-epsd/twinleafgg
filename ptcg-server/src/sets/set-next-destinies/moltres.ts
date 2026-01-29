@@ -25,7 +25,7 @@ export class Moltres extends PokemonCard {
       name: 'Fire Blast',
       cost: [R, C, C, C],
       damage: 90,
-      text: 'Discard a Fire Energy attached to this Pokémon.'
+      text: 'Discard a [R] Energy attached to this Pokémon.'
     }
   ];
 

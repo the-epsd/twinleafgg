@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DeckItem } from 'src/app/deck/deck-card/deck-card.interface';
 import { FormatValidator } from 'src/app/util/formats-validator';
+import { CardsBaseService } from '../cards/cards-base.service';
 
 @Component({
   selector: 'ptcg-deck-validity',
@@ -13,9 +14,12 @@ import { FormatValidator } from 'src/app/util/formats-validator';
 })
 export class DeckValidityComponent {
 
+  constructor(private cardsBaseService: CardsBaseService) { }
+
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
+    { value: Format.STANDARD_MAJORS, label: 'LABEL_STANDARD_MAJORS' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.SWSH, label: 'LABEL_SWSH' },
@@ -54,7 +58,9 @@ export class DeckValidityComponent {
           cardList.push(card.card);
         }
       });
-      return FormatValidator.getValidFormatsForCardList(cardList);
+      // Get all cards from CardsBaseService to enable ANY_PRINTING_ALLOWED checks
+      const allCards = this.cardsBaseService.getCards();
+      return FormatValidator.getValidFormatsForCardList(cardList, allCards);
     })
   );
 
