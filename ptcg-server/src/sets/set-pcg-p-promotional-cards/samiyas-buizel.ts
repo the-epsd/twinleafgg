@@ -16,7 +16,7 @@ export class SamiyasBuizel extends PokemonCard {
   public powers = [{
     name: 'Aqua Lift',
     powerType: PowerType.POKEBODY,
-    text: 'If Samiya\'s Buizel has any Water Energy attached to it, the Retreat Cost for Samiya\'s Buizel is 0.'
+    text: 'If Samiya\'s Buizel has any [W] Energy attached to it, the Retreat Cost for Samiya\'s Buizel is 0.'
   }];
 
   public attacks = [{

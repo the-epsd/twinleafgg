@@ -26,7 +26,7 @@ export class Metang extends PokemonCard {
     name: 'Metal Maker',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may look at the top 4 cards of your deck and attach any number of Metal Energy you find there to your Pokémon in any way you like. Shuffle the other cards and put them at the bottom of your deck.'
+    text: 'Once during your turn, you may look at the top 4 cards of your deck and attach any number of [M] Energy you find there to your Pokémon in any way you like. Shuffle the other cards and put them at the bottom of your deck.'
   }];
 
   public attacks = [{

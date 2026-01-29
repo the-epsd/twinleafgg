@@ -25,7 +25,7 @@ export class Alomomola2 extends PokemonCard {
       cost: [C, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each Water Energy attached to this Pokemon.'
+      text: 'Does 10 more damage for each [W] Energy attached to this Pokemon.'
     }
   ];
 

@@ -19,7 +19,7 @@ export class Simisear extends PokemonCard {
       name: 'Water\'s Power',
       cost: [C, C],
       damage: 30,
-      text: 'If this Pokémon has any Water Energy attached to it, the Defending Pokémon is now Asleep.'
+      text: 'If this Pokémon has any [W] Energy attached to it, the Defending Pokémon is now Asleep.'
     },
     {
       name: 'Flamethrower',

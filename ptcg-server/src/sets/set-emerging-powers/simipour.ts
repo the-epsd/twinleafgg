@@ -19,7 +19,7 @@ export class Simipour extends PokemonCard {
       name: 'Grass\' Power',
       cost: [C, C],
       damage: 30,
-      text: 'If this Pokémon has any Grass Energy attached to it, heal 20 damage from this Pokémon.'
+      text: 'If this Pokémon has any [G] Energy attached to it, heal 20 damage from this Pokémon.'
     },
     {
       name: 'Rushing Water',
