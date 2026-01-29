@@ -156,6 +156,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   //  (attackingPokemon as any).pendingAttackTargets = [];
 
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
+  attackEffect.source = attackingPokemon;
   state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {

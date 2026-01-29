@@ -32,13 +32,15 @@ export abstract class AbstractAttackEffect {
   public source: PokemonCardList;
   public preventDefault = false;
 
-  constructor(base: AttackEffect) {
-    this.attackEffect = base;
-    this.player = base.player;
-    this.opponent = base.opponent;
-    this.attack = base.attack;
-    this.source = base.player.active;
-    this.target = base.opponent.active;
+  constructor(base: AttackEffect | AbstractAttackEffect) {
+    // Extract attackEffect if base is an AbstractAttackEffect (has attackEffect property), otherwise use base directly
+    const attackEffect = 'attackEffect' in base ? base.attackEffect : base;
+    this.attackEffect = attackEffect;
+    this.player = attackEffect.player;
+    this.opponent = attackEffect.opponent;
+    this.attack = attackEffect.attack;
+    this.source = attackEffect.source;
+    this.target = attackEffect.opponent.active;
   }
 }
 
@@ -120,7 +122,7 @@ export class PutCountersEffect extends AbstractAttackEffect implements Effect {
   public preventDefault = false;
   public damage: number;
 
-  constructor(base: AttackEffect, damage: number) {
+  constructor(base: AttackEffect | AbstractAttackEffect, damage: number) {
     super(base);
     this.damage = damage;
   }
