@@ -38,6 +38,7 @@ export class DeckComponent implements OnInit {
   public formatNameMap: { [key: number]: string } = {
     [Format.STANDARD]: 'standard',
     [Format.STANDARD_NIGHTLY]: 'standard_nightly',
+    [Format.STANDARD_MAJORS]: 'standard_majors',
     [Format.EXPANDED]: 'expanded',
     [Format.UNLIMITED]: 'unlimited',
     [Format.ETERNAL]: 'eternal',
@@ -323,6 +324,7 @@ export class DeckComponent implements OnInit {
     const formatDisplayNames = {
       'standard': this.translate.instant('FORMAT_STANDARD'),
       'standard_nightly': this.translate.instant('FORMAT_STANDARD_NIGHTLY'),
+      'standard_majors': this.translate.instant('FORMAT_STANDARD_MAJORS'),
       'expanded': this.translate.instant('FORMAT_EXPANDED'),
       'unlimited': this.translate.instant('FORMAT_UNLIMITED'),
       'eternal': this.translate.instant('FORMAT_ETERNAL'),
@@ -344,6 +346,7 @@ export class DeckComponent implements OnInit {
     const formatEnumMap: { [key: string]: Format } = {
       'standard': Format.STANDARD,
       'standard_nightly': Format.STANDARD_NIGHTLY,
+      'standard_majors': Format.STANDARD_MAJORS,
       'glc': Format.GLC,
       'expanded': Format.EXPANDED,
       'unlimited': Format.UNLIMITED,

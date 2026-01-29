@@ -878,6 +878,7 @@ const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
+  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -1024,6 +1025,8 @@ const SetReleaseDates: { [key: string]: Date } = {
   'M2a': new Date('2026-01-31'),
 };
 
+const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
+
 function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
   const cards = cardNames.map((name: string) => cardManager.getCardByName(name)).filter((c: any) => !!c);
@@ -1133,6 +1136,7 @@ function getValidFormats(card: any): number[] {
     Format.ETERNAL,
     Format.STANDARD,
     Format.STANDARD_NIGHTLY,
+    Format.STANDARD_MAJORS,
     Format.EXPANDED,
     Format.GLC,
     Format.SV,
@@ -1163,16 +1167,16 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
         // is legal in Standard (has regulation mark G, H, or I)
         const cardManager = CardManager.getInstance();
-        const allPrintings = cardManager.getAllCards().filter((c: any) => 
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
           c && c.name === card.name
         );
-        
+
         // If no printings found, fall back to checking this card's regulation mark
         if (allPrintings.length === 0) {
           const rm = card.regulationMark;
           return rm && (rm === 'G' || rm === 'H' || rm === 'I');
         }
-        
+
         return allPrintings.some((c: any) => {
           const rm = c.regulationMark;
           return rm && (rm === 'G' || rm === 'H' || rm === 'I');
@@ -1182,19 +1186,36 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
         // is legal in Standard Nightly (has regulation mark G, H, I, or J)
         const cardManager = CardManager.getInstance();
-        const allPrintings = cardManager.getAllCards().filter((c: any) => 
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
           c && c.name === card.name
         );
-        
+
         // If no printings found, fall back to checking this card's regulation mark
         if (allPrintings.length === 0) {
           const rm = card.regulationMark;
           return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
         }
-        
+
         return allPrintings.some((c: any) => {
           const rm = c.regulationMark;
           return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        });
+      }
+      case Format.STANDARD_MAJORS: {
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard Majors (is in one of the allowed sets)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's set
+        if (allPrintings.length === 0) {
+          return STANDARD_MAJORS_SETS.includes(card.set);
+        }
+
+        return allPrintings.some((c: any) => {
+          return STANDARD_MAJORS_SETS.includes(c.set);
         });
       }
       case Format.EXPANDED: {
@@ -1253,6 +1274,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.regulationMark === 'H' ||
         card.regulationMark === 'I' ||
         card.regulationMark === 'J';
+    case Format.STANDARD_MAJORS:
+      return STANDARD_MAJORS_SETS.includes(card.set);
     case Format.EXPANDED: {
       const setDate = SetReleaseDates[card.set];
       return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&

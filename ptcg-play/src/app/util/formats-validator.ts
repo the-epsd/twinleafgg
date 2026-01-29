@@ -126,6 +126,7 @@ export class FormatValidator {
       Format.ETERNAL,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
+      Format.STANDARD_MAJORS,
       Format.EXPANDED,
       Format.GLC,
       Format.SV,
@@ -159,13 +160,13 @@ export class FormatValidator {
           // If allCards is provided, check within that list; otherwise fall back to checking this card only
           if (allCards) {
             const allPrintings = allCards.filter(c => c && c.name === card.name);
-            
+
             // If no printings found, fall back to checking this card's regulation mark
             if (allPrintings.length === 0) {
               const rm = card.regulationMark;
               return rm && rm !== 'J' && (rm === 'G' || rm === 'H' || rm === 'I');
             }
-            
+
             return allPrintings.some(c => {
               const rm = c.regulationMark;
               return rm && rm !== 'J' && (rm === 'G' || rm === 'H' || rm === 'I');
@@ -183,13 +184,13 @@ export class FormatValidator {
           // is legal in Standard Nightly (has regulation mark G, H, I, or J)
           if (allCards) {
             const allPrintings = allCards.filter(c => c && c.name === card.name);
-            
+
             // If no printings found, fall back to checking this card's regulation mark
             if (allPrintings.length === 0) {
               const rm = card.regulationMark;
               return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
             }
-            
+
             return allPrintings.some(c => {
               const rm = c.regulationMark;
               return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
@@ -198,6 +199,24 @@ export class FormatValidator {
           // Fallback: check this card's regulation mark
           const rm = card.regulationMark;
           return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        }
+        case Format.STANDARD_MAJORS: {
+          // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+          // is legal in Standard Majors (is in one of the allowed sets)
+          if (allCards) {
+            const allPrintings = allCards.filter(c => c && c.name === card.name);
+
+            // If no printings found, fall back to checking this card's set
+            if (allPrintings.length === 0) {
+              return STANDARD_MAJORS_SETS.includes(card.set);
+            }
+
+            return allPrintings.some(c => {
+              return STANDARD_MAJORS_SETS.includes(c.set);
+            });
+          }
+          // Fallback: check this card's set
+          return STANDARD_MAJORS_SETS.includes(card.set);
         }
         case Format.EXPANDED: {
           // For anyPrintingAllowed cards, they are known to be legal in Expanded format
@@ -254,6 +273,8 @@ export class FormatValidator {
           card.regulationMark === 'H' ||
           card.regulationMark === 'I' ||
           card.regulationMark === 'J';
+      case Format.STANDARD_MAJORS:
+        return STANDARD_MAJORS_SETS.includes(card.set);
       case Format.EXPANDED: {
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
@@ -791,6 +812,7 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
+  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -936,3 +958,5 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'PFL': new Date('2025-11-14'),
   'M2a': new Date('2026-01-31'),
 };
+
+const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];

@@ -29,6 +29,10 @@
             [class.active]="selectedFormat === 'standard_nightly'" (click)="selectFormat('standard_nightly')">
             {{ 'FORMAT_STANDARD_NIGHTLY' | translate }}
           </button>
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('standard_majors')"
+            [class.active]="selectedFormat === 'standard_majors'" (click)="selectFormat('standard_majors')">
+            {{ 'FORMAT_STANDARD_MAJORS' | translate }}
+          </button>
           <button mat-button class="format-tab" *ngIf="!isFormatHidden('glc')" [class.active]="selectedFormat === 'glc'"
             (click)="selectFormat('glc')">
             {{ 'FORMAT_GLC' | translate }}
