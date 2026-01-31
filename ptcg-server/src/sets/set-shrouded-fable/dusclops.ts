@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Dusclops extends PokemonCard {
 
@@ -63,11 +63,8 @@ export class Dusclops extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
-          store.reduceEffect(state, damageEffect);
-          if (damageEffect.target) {
-            damageEffect.target.damage += 50;
-          }
+          const placeCountersEffect = new PlaceDamageCountersEffect(player, targets[0], 50, this);
+          state = store.reduceEffect(state, placeCountersEffect);
         }
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

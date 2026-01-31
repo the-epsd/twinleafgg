@@ -2,7 +2,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class StealthyHood extends TrainerCard {
@@ -27,6 +27,10 @@ export class StealthyHood extends TrainerCard {
       if (opponent.getPokemonInPlay().includes(effect.target) && effect.target.tools.includes(this)) {
         effect.target = undefined;
       }
+    }
+
+    if (effect instanceof PlaceDamageCountersEffect && effect.target.tools.includes(this)) {
+      effect.preventDefault = true;
     }
     return state;
   }

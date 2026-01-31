@@ -23,7 +23,8 @@ export enum GameEffects {
   MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT',
   EFFECT_OF_ABILITY_EFFECT = 'EFFECT_OF_ABILITY_EFFECT',
   SPECIAL_ENERGY_EFFECT = 'SPECIAL_ENERGY_EFFECT',
-  PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT'
+  PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
+  PLACE_DAMAGE_COUNTERS_EFFECT = 'PLACE_DAMAGE_COUNTERS_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -338,6 +339,22 @@ export class PutDamageCountersEffect extends PowerEffect implements Effect {
     this.damage = damage;
     this.source = base.card;
     this.effectOfAbility = new EffectOfAbilityEffect(base.player, base.power, base.card, base.target);
+  }
+}
+
+export class PlaceDamageCountersEffect implements Effect {
+  readonly type: string = GameEffects.PLACE_DAMAGE_COUNTERS_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public target: PokemonCardList;
+  public damage: number;
+  public source?: PokemonCard;
+
+  constructor(player: Player, target: PokemonCardList, damage: number, source?: PokemonCard) {
+    this.player = player;
+    this.target = target;
+    this.damage = damage;
+    this.source = source;
   }
 }
 
