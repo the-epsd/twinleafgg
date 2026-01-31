@@ -187,7 +187,7 @@ cardManager.defineSet(sets.setSV11);
 cardManager.defineSet(sets.setMegaEvolutionPromos);
 cardManager.defineSet(sets.setMegaEvolution);
 cardManager.defineSet(sets.setPhantasmalFlames);
-cardManager.defineSet(sets.setMegaDream);
+cardManager.defineSet(sets.setAscendedHeroes);
 cardManager.defineSet(sets.setPerfectOrder);
 
 cardManager.defineSet(sets.setTest);
