@@ -69,10 +69,10 @@ export class Board3dCardOverlayService {
     await overlays.marker.updateConditions(cardList.specialConditions);
 
     // Update BREAK card overlay
-    await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene);
+    await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene, cardList);
 
     // Update tool cards
-    await this.updateToolOverlay(cardId, overlays, cardList.tools, cardMesh, scene);
+    await this.updateToolOverlay(cardId, overlays, cardList.tools, cardMesh, scene, cardList);
   }
 
   /**
@@ -109,12 +109,28 @@ export class Board3dCardOverlayService {
     mainCardMesh: Board3dCard,
     breakCard: Card | undefined,
     isFaceDown: boolean,
-    scene: Scene
+    scene: Scene,
+    cardList?: PokemonCardList
   ): Promise<void> {
     if (breakCard && !isFaceDown) {
-      const breakScanUrl = this.cardsBaseService.getScanUrl(breakCard);
+      const breakScanUrl = this.cardsBaseService.getScanUrlFromCardList(breakCard, cardList);
+      
+      // Validate URL before loading - if empty or invalid, use cardback
+      const loadBreakTexture = async () => {
+        if (!breakScanUrl || !breakScanUrl.trim()) {
+          console.warn('Empty scanUrl for BREAK card:', breakCard?.fullName, 'set:', breakCard?.set, 'setNumber:', breakCard?.setNumber);
+          return this.assetLoader.loadCardBack();
+        }
+        try {
+          return await this.assetLoader.loadCardTexture(breakScanUrl);
+        } catch (error) {
+          console.error('Failed to load BREAK card texture:', breakScanUrl, error);
+          return this.assetLoader.loadCardBack();
+        }
+      };
+
       const [breakFrontTexture, breakBackTexture] = await Promise.all([
-        this.assetLoader.loadCardTexture(breakScanUrl),
+        loadBreakTexture(),
         this.assetLoader.loadCardBack()
       ]);
 
@@ -147,7 +163,8 @@ export class Board3dCardOverlayService {
     overlays: CardOverlays,
     tools: Card[],
     mainCardMesh: Board3dCard,
-    scene: Scene
+    scene: Scene,
+    cardList?: PokemonCardList
   ): Promise<void> {
     // Clear existing tool cards
     for (const toolCard of overlays.toolCards) {
@@ -191,14 +208,34 @@ export class Board3dCardOverlayService {
         try {
           toolTexture = await this.assetLoader.loadToolIconTexture(customIconPath);
         } catch (error) {
-          // Fall back to card texture if custom icon fails
-          const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-          toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+          // Fall back to card texture if custom icon fails (checks artworksMap for overrides first)
+          const toolScanUrl = this.cardsBaseService.getScanUrlFromCardList(tool, cardList);
+          if (!toolScanUrl || !toolScanUrl.trim()) {
+            console.warn('Empty scanUrl for tool card:', tool?.fullName, 'set:', tool?.set, 'setNumber:', tool?.setNumber);
+            toolTexture = await this.assetLoader.loadCardBack();
+          } else {
+            try {
+              toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+            } catch (textureError) {
+              console.error('Failed to load tool card texture:', toolScanUrl, textureError);
+              toolTexture = await this.assetLoader.loadCardBack();
+            }
+          }
         }
       } else {
-        // Use regular card texture
-        const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-        toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+        // Use regular card texture (checks artworksMap for overrides first, like 2D components do)
+        const toolScanUrl = this.cardsBaseService.getScanUrlFromCardList(tool, cardList);
+        if (!toolScanUrl || !toolScanUrl.trim()) {
+          console.warn('Empty scanUrl for tool card:', tool?.fullName, 'set:', tool?.set, 'setNumber:', tool?.setNumber);
+          toolTexture = await this.assetLoader.loadCardBack();
+        } else {
+          try {
+            toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
+          } catch (error) {
+            console.error('Failed to load tool card texture:', toolScanUrl, error);
+            toolTexture = await this.assetLoader.loadCardBack();
+          }
+        }
       }
 
       const toolCardMesh = new Board3dCard(

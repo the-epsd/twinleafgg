@@ -57,7 +57,7 @@ export class Board3dHandService {
       // Create new cards in arc formation
       for (let i = 0; i < cards.length; i++) {
         const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
-        await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable);
+        await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable, hand);
       }
     } finally {
       this.isUpdating = false;
@@ -72,20 +72,36 @@ export class Board3dHandService {
     index: number,
     totalCards: number,
     isOwner: boolean,
-    isPlayable?: boolean
+    isPlayable?: boolean,
+    hand?: CardList
   ): Promise<void> {
     // Calculate position in straight line
     const position = this.calculateCardPosition(index, totalCards);
     const rotation = 0; // No rotation - cards face forward
 
-    // Load texture
-    const scanUrl = this.cardsBaseService.getScanUrl(card);
+    // Load texture (checks artworksMap for overrides first, like 2D components do)
+    const scanUrl = this.cardsBaseService.getScanUrlFromCardList(card, hand);
     const isFaceDown = !isOwner;
 
+    // Validate URL before loading - if empty or invalid, use cardback
+    const loadFrontTexture = async () => {
+      if (isFaceDown) {
+        return this.assetLoader.loadCardBack();
+      }
+      if (!scanUrl || !scanUrl.trim()) {
+        console.warn('Empty scanUrl for hand card:', card?.fullName, 'set:', card?.set, 'setNumber:', card?.setNumber);
+        return this.assetLoader.loadCardBack();
+      }
+      try {
+        return await this.assetLoader.loadCardTexture(scanUrl);
+      } catch (error) {
+        console.error('Failed to load hand card texture:', scanUrl, error);
+        return this.assetLoader.loadCardBack();
+      }
+    };
+
     const [frontTexture, backTexture] = await Promise.all([
-      isFaceDown
-        ? this.assetLoader.loadCardBack()
-        : this.assetLoader.loadCardTexture(scanUrl),
+      loadFrontTexture(),
       this.assetLoader.loadCardBack()
     ]);
 

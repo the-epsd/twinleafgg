@@ -18,7 +18,6 @@ import {
   MeshStandardMaterial,
   Mesh,
   PCFSoftShadowMap,
-  sRGBEncoding,
   ACESFilmicToneMapping,
   Vector3,
   RepeatWrapping
@@ -262,7 +261,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.renderer.shadowMap.type = PCFSoftShadowMap;
 
     // Color and tone mapping
-    this.renderer.outputEncoding = sRGBEncoding;
+    this.renderer.outputColorSpace = 'srgb';
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.2;
   }

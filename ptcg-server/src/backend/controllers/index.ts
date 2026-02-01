@@ -15,3 +15,4 @@ export * from './sleeves';
 export * from './battlepass';
 export * from './artworks.controller';
 export * from './memory-health.controller';
+export * from './image-proxy.controller';

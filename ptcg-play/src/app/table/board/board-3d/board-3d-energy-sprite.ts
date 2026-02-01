@@ -11,7 +11,7 @@ import { Card, SuperType } from 'ptcg-server';
 
 const MAX_VISIBLE_ENERGIES = 8;
 const ENERGY_SPRITE_SIZE = 0.6;
-const ENERGY_SPACING = 0.7;
+const ENERGY_SPACING = 0.3;
 
 // Custom energy icon paths (matching board-card.component.ts)
 const CUSTOM_ENERGY_ICONS: { [key: string]: string } = {
