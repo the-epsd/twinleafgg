@@ -39,6 +39,7 @@ import { CardInfoPaneOptions } from '../../../shared/cards/card-info-pane/card-i
 import { GameService } from '../../../api/services/game.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Object3D } from 'three';
+import { getCameraConfig } from './board-3d-config';
 
 @UntilDestroy()
 @Component({
@@ -237,11 +238,21 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Calculate initial perspective
     this.isUpsideDown = this.topPlayer?.id === this.clientId;
-    const zMultiplier = this.isUpsideDown ? -1 : 1;
 
-    this.camera = new PerspectiveCamera(31, aspect, 0.1, 2000);
-    this.camera.position.set(0, 25, 40 * zMultiplier);
-    this.camera.lookAt(0, 0, 12);  // Center of board
+    // Get camera configuration based on aspect ratio
+    const cameraConfig = getCameraConfig(aspect, this.isUpsideDown);
+
+    this.camera = new PerspectiveCamera(cameraConfig.fov, aspect, 0.1, 2000);
+    this.camera.position.set(
+      cameraConfig.position.x,
+      cameraConfig.position.y,
+      cameraConfig.position.z
+    );
+    this.camera.lookAt(
+      cameraConfig.lookAt.x,
+      cameraConfig.lookAt.y,
+      cameraConfig.lookAt.z
+    );
   }
 
   private initRenderer(): void {
@@ -359,23 +370,21 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.renderer.setSize(width, height);
     this.postProcessingService.setSize(width, height);
 
-    // Flip Z based on player perspective (like 2D board's isUpsideDown)
-    const zMultiplier = this.isUpsideDown ? -1 : 1;
+    // Get camera configuration based on aspect ratio and perspective
+    const cameraConfig = getCameraConfig(aspect, this.isUpsideDown);
 
-    // Adjust camera for different aspect ratios
-    // Camera must be at Z > 18 to see hand cards (hand is at Z=18)
-    if (aspect < 1.2) {
-      // Portrait/narrow - zoom out more
-      this.camera.position.set(0, 35, 45 * zMultiplier);
-    } else if (aspect < 1.5) {
-      // Slightly narrow
-      this.camera.position.set(0, 30, 40 * zMultiplier);
-    } else {
-      // Wide/normal
-      this.camera.position.set(0, 47.5, 35 * zMultiplier);
-    }
+    // Update camera position and lookAt from config
+    this.camera.position.set(
+      cameraConfig.position.x,
+      cameraConfig.position.y,
+      cameraConfig.position.z
+    );
+    this.camera.lookAt(
+      cameraConfig.lookAt.x,
+      cameraConfig.lookAt.y,
+      cameraConfig.lookAt.z
+    );
 
-    this.camera.lookAt(0, 0, 18);  // Center of board
     this.markDirty();
   }
 

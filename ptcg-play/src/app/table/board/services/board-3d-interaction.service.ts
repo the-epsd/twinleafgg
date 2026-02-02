@@ -4,6 +4,8 @@ import { PlayerType, SlotType, CardTarget, SuperType, Stage, TrainerType, Card, 
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, DropZoneState, DropZoneConfig } from '../board-3d/board-3d-drop-zone';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
+import { Board3dStateSyncService } from './board-3d-state-sync.service';
+import { Board3dCard } from '../board-3d/board-3d-card';
 import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d/board-3d-zone-positions';
 
 export interface DropResult {
@@ -61,13 +63,20 @@ export class Board3dInteractionService {
   // Current drag context
   private currentDragContext: DragContext | null = null;
 
+  // Pokemon hover tracking during drag (for energy/tool cards)
+  private hoveredPokemonCard: Object3D | null = null;
+  private hoveredPokemonBoard3dCard: Board3dCard | null = null;
+
   // Drop zones
   private dropZones: Board3dDropZone[] = [];
   private occupiedZones: Set<string> = new Set();
   private slotGridTexture: Texture | null = null;
   private currentBenchSizes: { bottom: number; top: number } = { bottom: 5, top: 5 };
 
-  constructor(private assetLoader: Board3dAssetLoaderService) {
+  constructor(
+    private assetLoader: Board3dAssetLoaderService,
+    private stateSync: Board3dStateSyncService
+  ) {
     this.raycaster = new Raycaster();
     this.mouse = new Vector2();
   }
@@ -178,6 +187,18 @@ export class Board3dInteractionService {
     }
 
     return null;
+  }
+
+  /**
+   * Get Board3dCard instance from Object3D
+   * Looks up the card by cardId from userData
+   */
+  private getBoard3dCardFromObject3D(cardObject: Object3D): Board3dCard | null {
+    const cardId = cardObject.userData?.cardId;
+    if (!cardId) {
+      return null;
+    }
+    return this.stateSync.getCardById(cardId) || null;
   }
 
   /**
@@ -589,25 +610,78 @@ export class Board3dInteractionService {
       // Check if card is over hand area
       const isOverHand = this.isOverHandArea(worldPos);
       
-      // Provide visual feedback when over hand area (slight scale increase)
-      if (isOverHand && this.currentDragContext?.source === 'hand') {
-        gsap.to(this.draggedCard.scale, {
-          x: 1.05,
-          y: 1.05,
-          z: 1.05,
-          duration: 0.15,
-          ease: 'power2.out'
-        });
-      } else {
-        // Reset scale when not over hand area
-        gsap.to(this.draggedCard.scale, {
-          x: 1,
-          y: 1,
-          z: 1,
-          duration: 0.15,
-          ease: 'power2.out'
-        });
+      // Check if dragging energy or tool card over Pokemon
+      const isEnergyOrTool = this.currentDragContext && (
+        this.currentDragContext.superType === SuperType.ENERGY ||
+        this.currentDragContext.trainerType === TrainerType.TOOL
+      );
+
+      // Detect Pokemon card under dragged card (for energy/tool cards only)
+      let pokemonUnderCard: Object3D | null = null;
+      if (isEnergyOrTool && !isOverHand) {
+        // Perform raycast to find Pokemon cards
+        const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
+        for (const intersect of intersects) {
+          const card = this.getCardFromIntersection(intersect);
+          if (card && card.userData.isBoardCard && card.userData.cardTarget) {
+            const target = card.userData.cardTarget as CardTarget;
+            // Only consider ACTIVE or BENCH Pokemon cards
+            if (target.slot === SlotType.ACTIVE || target.slot === SlotType.BENCH) {
+              pokemonUnderCard = card;
+              break;
+            }
+          }
+        }
       }
+
+      // Handle Pokemon hover effects
+      if (isEnergyOrTool && pokemonUnderCard && pokemonUnderCard !== this.hoveredPokemonCard) {
+        // New Pokemon hovered - remove glow from previous Pokemon
+        if (this.hoveredPokemonBoard3dCard) {
+          this.hoveredPokemonBoard3dCard.setOutline(false);
+        }
+
+        // Add glow to new Pokemon
+        this.hoveredPokemonCard = pokemonUnderCard;
+        this.hoveredPokemonBoard3dCard = this.getBoard3dCardFromObject3D(pokemonUnderCard);
+        if (this.hoveredPokemonBoard3dCard) {
+          this.hoveredPokemonBoard3dCard.setOutline(true, 0xffd700); // Golden yellow glow
+        }
+      } else if (isEnergyOrTool && !pokemonUnderCard && this.hoveredPokemonCard) {
+        // No longer hovering over Pokemon - remove glow
+        if (this.hoveredPokemonBoard3dCard) {
+          this.hoveredPokemonBoard3dCard.setOutline(false);
+        }
+        this.hoveredPokemonCard = null;
+        this.hoveredPokemonBoard3dCard = null;
+      } else if (!isEnergyOrTool && this.hoveredPokemonCard) {
+        // Dragged card changed type (shouldn't happen, but handle gracefully)
+        if (this.hoveredPokemonBoard3dCard) {
+          this.hoveredPokemonBoard3dCard.setOutline(false);
+        }
+        this.hoveredPokemonCard = null;
+        this.hoveredPokemonBoard3dCard = null;
+      }
+
+      // Determine scale based on priority:
+      // 1. Over Pokemon (energy/tool only): 0.7
+      // 2. Over hand area (from hand): 1.05
+      // 3. Otherwise: 1.3 (normal drag scale)
+      let targetScale = 1.3; // Default drag scale
+      if (isEnergyOrTool && pokemonUnderCard) {
+        targetScale = 0.7; // Shrink to 70% when over Pokemon
+      } else if (isOverHand && this.currentDragContext?.source === 'hand') {
+        targetScale = 1.05; // Slight increase when over hand area
+      }
+
+      // Apply scale animation
+      gsap.to(this.draggedCard.scale, {
+        x: targetScale,
+        y: targetScale,
+        z: targetScale,
+        duration: 0.15,
+        ease: 'power2.out'
+      });
       
       // Only highlight drop zones if not over hand area
       if (!isOverHand) {
@@ -891,6 +965,13 @@ export class Board3dInteractionService {
    * Reset drag state
    */
   private resetDragState(): void {
+    // Remove glow from any hovered Pokemon
+    if (this.hoveredPokemonBoard3dCard) {
+      this.hoveredPokemonBoard3dCard.setOutline(false);
+    }
+    this.hoveredPokemonCard = null;
+    this.hoveredPokemonBoard3dCard = null;
+
     this.isDragging = false;
     this.draggedCard = null;
     this.draggedCardHandIndex = -1;
@@ -1089,7 +1170,7 @@ export class Board3dInteractionService {
   cancelDrag(): void {
     if (this.isDragging && this.draggedCard) {
       this.returnCardToHand(this.draggedCard);
-      this.resetDragState();
+      this.resetDragState(); // This will also remove glow from hovered Pokemon
       this.hideAllDropZones();
     }
   }
