@@ -18,7 +18,7 @@ export class ErikasGloom extends PokemonCard {
     name: 'Poison Spray',
     cost: [G, C],
     damage: 50,
-    text: 'Your opponent\'s Active Pokemon is now Poisoned.'
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
   }];
 
   public regulationMark = 'I';

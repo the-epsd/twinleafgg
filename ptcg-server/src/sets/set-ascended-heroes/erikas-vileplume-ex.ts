@@ -16,14 +16,14 @@ export class ErikasVileplumeex extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Envious Scent',
+    name: 'Lovely Fragrance',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may heal 30 damage from each of your Pokemon.'
+    text: 'Once during your turn, you may use this Ability. Heal 30 damage from each of your Pokémon.'
   }];
 
   public attacks = [{
-    name: 'Powder Bloom',
+    name: 'Bloom Powder',
     cost: [G, G, C],
     damage: 160,
     text: 'Your opponent\'s Active Pokemon is now Poisoned and Asleep.'

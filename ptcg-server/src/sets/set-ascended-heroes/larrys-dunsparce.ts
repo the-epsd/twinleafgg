@@ -13,7 +13,7 @@ export class LarrysDunsparce extends PokemonCard {
   public retreat = [];
 
   public attacks = [{
-    name: '',
+    name: 'Rising Lunge',
     cost: [C],
     damage: 10,
     damageCalculation: '+',

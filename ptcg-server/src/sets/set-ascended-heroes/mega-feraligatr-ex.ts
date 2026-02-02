@@ -13,11 +13,11 @@ export class MegaFeraligatrex extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Killer Crunch',
+    name: 'Mortal Crunch',
     cost: [W, W, C],
     damage: 200,
     damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokemon has damage counters on it, this attack does 200 more damage.'
+    text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 200 more damage.'
   }];
 
   public regulationMark: string = 'I';

@@ -20,10 +20,10 @@ export class Dustox extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Rustling Wind',
+    name: 'Boisterous Wind',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'You may use this Ability once during your turn. Flip a coin. If heads, put an Energy attached to your opponent\'s Active Pokémon into their hand.'
+    text: 'Once during your turn, you may use this Ability. Flip a coin. If heads, put an Energy attached to your opponent\'s Active Pokémon into their hand.'
   }];
 
   public attacks = [{

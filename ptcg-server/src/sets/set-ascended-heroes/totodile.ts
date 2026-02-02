@@ -15,7 +15,7 @@ export class Totodile extends PokemonCard {
     name: 'Slight Intrusion',
     cost: [W, W],
     damage: 40,
-    text: 'This Pokemon also does 10 damage to itself.'
+    text: 'This Pokémon also does 10 damage to itself.'
   }];
 
   public regulationMark = 'I';

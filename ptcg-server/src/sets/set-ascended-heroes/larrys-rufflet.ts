@@ -12,11 +12,11 @@ export class LarrysRufflet extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: '',
+    name: 'Peck the Wound',
     cost: [C, C],
     damage: 20,
     damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokemon has any damage counters on it, this attack does 80 more damage.'
+    text: 'If your opponent\'s Active Pokémon has any damage counters on it, this attack does 80 more damage.'
   }];
 
   public regulationMark = 'I';

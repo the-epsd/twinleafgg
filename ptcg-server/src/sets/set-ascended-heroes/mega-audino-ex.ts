@@ -15,14 +15,14 @@ export class MegaAudinoex extends PokemonCard {
     name: 'Kaleidowaltz',
     cost: [C],
     damage: 0,
-    text: 'Flip 3 coins. For each heads, search your deck for 2 Basic Energy cards and attach them to your Pokemon in any way you like. Then, shuffle your deck.'
+    text: 'Flip 3 coins. For each heads, search your deck for up to 2 Basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
   },
   {
     name: 'Ear Force',
     cost: [C, C, C],
     damage: 20,
     damageCalculation: '+',
-    text: 'This attack does 80 more damage for each Energy attached to your opponent\'s Active Pokemon.'
+    text: 'This attack does 80 more damage for each Energy attached to your opponent\'s Active Pokémon.'
   }];
 
   public regulationMark: string = 'I';

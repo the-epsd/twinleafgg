@@ -109,9 +109,10 @@ export class Canari extends TrainerCard {
   public setNumber: string = '185';
   public name: string = 'Canari';
   public fullName: string = 'Canari M2a';
-  public text: string = `You must discard 1 other card from your hand to play this card.
+
+  public text: string = `You can use this card only if you discard another card from your hand.
   
-  Search your deck for up to 4 [L] Pokémon and put them into your hand. Then, shuffle your deck.`;
+  Search your deck for up to 4 [L] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

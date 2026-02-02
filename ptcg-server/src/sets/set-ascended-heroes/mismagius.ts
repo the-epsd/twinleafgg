@@ -16,9 +16,9 @@ export class Mismagius extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks: Attack[] = [
+  public attacks = [
     {
-      name: 'Assassin Magic',
+      name: 'Assassin\'s Magic',
       cost: [P, C],
       damage: 60,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, place 6 damage counters on 1 of your opponent\'s Benched Pokémon.'

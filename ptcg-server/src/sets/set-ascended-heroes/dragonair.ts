@@ -18,10 +18,10 @@ export class Dragonair extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Evolution Guidance',
+    name: 'Evolutionary Guidance',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon has any Energy attached, you may use this Ability. Search your deck for an Evolution Pokémon and put it into your hand. Then, shuffle your deck.'
+    text: 'Once during your turn, if this Pokémon has any Energy attached, you may use this Ability. Search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
   public attacks = [{

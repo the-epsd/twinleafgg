@@ -9,7 +9,7 @@ export class Tepig extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: '',
+    name: 'Steady Firebreathing',
     cost: [R],
     damage: 20,
     text: ''

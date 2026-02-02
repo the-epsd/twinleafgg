@@ -15,7 +15,7 @@ export class Croconaw extends PokemonCard {
     name: 'Crunch',
     cost: [W, W],
     damage: 50,
-    text: 'Flip a coin. If heads, discard 1 Energy from your opponent\'s Active Pokemon.'
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
   }];
 
   public regulationMark = 'I';

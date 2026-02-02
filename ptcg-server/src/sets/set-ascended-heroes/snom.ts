@@ -10,7 +10,7 @@ export class Snom extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Icicle Spear',
+    name: 'Icicle',
     cost: [W],
     damage: 20,
     text: ''

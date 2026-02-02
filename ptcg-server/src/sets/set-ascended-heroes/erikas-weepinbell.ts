@@ -13,16 +13,16 @@ export class ErikasWeepinbell extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Cut',
+    name: 'Melt',
     cost: [G],
     damage: 30,
     text: ''
   },
   {
-    name: 'Happy Cyclone',
+    name: 'Leafy Cyclone',
     cost: [G, C],
     damage: 70,
-    text: 'During your next turn, this Pokemon can\'t attack.'
+    text: 'During your next turn, this Pokémon can\'t use attacks.'
   }];
 
   public regulationMark = 'I';

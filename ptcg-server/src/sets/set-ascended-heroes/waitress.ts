@@ -10,7 +10,8 @@ export class Waitress extends TrainerCard {
   public setNumber: string = '215';
   public name: string = 'Waitress';
   public fullName: string = 'Waitress MC';
-  public text: string = 'Look at the top 6 cards of your deck, choose a Basic Energy you find there, and attach it to 1 of your Pokémon. Then, shuffle the remaining cards back into your deck.';
+
+  public text: string = 'Look at the top 6 cards of your deck, and attach a Basic Energy you find there to 1 of your Pokémon. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

@@ -12,16 +12,16 @@ export class Registeelex extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Regicharge',
+    name: 'Regi Charge',
     cost: [C],
     damage: 0,
-    text: 'Attach up to 2 Basic [M] Energy from your discard pile to this Pokemon.'
+    text: 'Attach up to 2 Basic [M] Energy cards from your discard pile to this Pokémon.'
   },
   {
-    name: 'Protect Steel',
+    name: 'Protecting Steel',
     cost: [M, C, C, C],
     damage: 140,
-    text: 'During your opponent\'s next turn, this Pokemon takes 50 less damage from attacks.'
+    text: 'During your opponent\'s next turn, this Pokemon takes 50 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
   public regulationMark: string = 'I';

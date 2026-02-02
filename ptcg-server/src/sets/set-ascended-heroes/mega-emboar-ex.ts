@@ -17,7 +17,7 @@ export class MegaEmboarex extends PokemonCard {
     name: 'Crimson Blast',
     cost: [R, R, C],
     damage: 320,
-    text: 'This Pokemon also does 60 damage to itself.'
+    text: 'This Pokémon also does 60 damage to itself.'
   }];
 
   public regulationMark: string = 'I';

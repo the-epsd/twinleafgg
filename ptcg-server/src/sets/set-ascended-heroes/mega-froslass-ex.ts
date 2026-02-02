@@ -16,17 +16,17 @@ export class MegaFroslassex extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Rebellion',
+    name: 'Resentful Refrain',
     cost: [W],
     damage: 50,
     damageCalculation: 'x',
-    text: '50x damage. This attack does 50 damage times the number of cards in your opponent\'s hand.'
+    text: 'This attack does 50 damage for each card in your opponent\'s hand.'
   },
   {
     name: 'Absolute Snow',
     cost: [W, C, C],
     damage: 150,
-    text: '150 damage. Your opponent\'s Active Pokemon is now Asleep.'
+    text: 'Your opponent\'s Active Pokemon is now Asleep.'
   }];
 
   public regulationMark: string = 'I';

@@ -15,10 +15,10 @@ export class MegaCharizardYex extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Plosion Y',
+    name: 'Explosion Y',
     cost: [R, R, C],
     damage: 0,
-    text: 'Discard 3 Energy from this Pokemon. This attack does 280 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'Discard 3 Energy from this Pokémon, and this attack does 280 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public regulationMark: string = 'I';

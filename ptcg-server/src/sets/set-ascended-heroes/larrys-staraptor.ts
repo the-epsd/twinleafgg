@@ -14,17 +14,17 @@ export class LarrysStaraptor extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: '',
+    name: 'Facade',
     cost: [C],
     damage: 60,
     damageCalculation: '+',
-    text: 'If this Pokemon is Poisoned or Burned, this attack does 100 more damage.'
+    text: 'If this Pokémon is Burned or Poisoned, this attack does 100 more damage.'
   },
   {
-    name: 'Feather Strike',
+    name: 'Feathery Strike',
     cost: [C, C, C],
     damage: 150,
-    text: 'Discard 2 Energy from this Pokemon. This attack does 50 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'Discard 2 Energy from this Pokémon, and this attack also does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public regulationMark = 'I';

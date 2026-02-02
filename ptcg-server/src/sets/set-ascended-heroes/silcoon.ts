@@ -19,7 +19,7 @@ export class Silcoon extends PokemonCard {
     name: 'Multiplying Cocoon',
     useWhenInPlay: false,
     powerType: PowerType.ABILITY,
-    text: 'You may use this Ability when you play this Pokémon from your hand to evolve 1 of your Pokémon. Search your deck for a Silcoon or a Cascoon and put it onto your Bench. Then, shuffle your deck.'
+    text: 'Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Search your deck for a Silcoon or a Cascoon and put it onto your Bench. Then, shuffle your deck.'
   }];
 
   public attacks = [{

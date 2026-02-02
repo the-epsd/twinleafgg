@@ -18,14 +18,14 @@ export class LarrysKomala extends PokemonCard {
     name: 'Lethargic Charge',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokemon is on your Bench, you may attach an Energy card from your hand to your Active Larry\'s Pokemon.'
+    text: 'Once during your turn, if this Pokémon is on your Bench, you may use this Ability. Attach an Energy card from your hand to your Active Larry\'s Pokémon.'
   }];
 
   public attacks = [{
-    name: 'Drowsy Draw',
+    name: 'Dozing Draw',
     cost: [C],
     damage: 0,
-    text: 'This Pokemon is now Asleep. Draw 2 cards.'
+    text: 'This Pokémon is now Asleep. Draw 2 cards.'
   }];
 
   public regulationMark = 'I';

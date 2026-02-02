@@ -78,17 +78,17 @@ export class Rotom extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Rotocall',
+    name: 'Roto Call',
     cost: [C],
     damage: 0,
-    text: 'Search your deck for as many cards with Rotom in their name as you like, and place them onto your Bench. Then, shuffle your deck.'
+    text: 'You may search your deck for any number of Pokémon that have "Rotom" in their name and put them onto your Bench. Then, shuffle your deck.'
   },
   {
     name: 'Gadget Show',
     cost: [C, C],
-    damage: 0,
+    damage: 30,
     damageCalculation: 'x',
-    text: '30x damage. This attack does 30 damage for each Pokemon Tool attached to all your Pokemon.'
+    text: 'This attack does 30 damage for each Pokémon Tool attached to all your Pokémon.'
   }];
 
   public regulationMark: string = 'I';

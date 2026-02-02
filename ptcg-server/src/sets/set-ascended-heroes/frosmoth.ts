@@ -18,17 +18,17 @@ export class Frosmoth extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Inviting Wings',
+    name: 'Alluring Wings',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokemon is in your Active Spot, you may use this Ability. Each player draws a card.'
+    text: 'Once during your turn, if this Pokémon is in your Active Spot, you may use this Ability. Each player draws a card.'
   }];
 
   public attacks = [{
     name: 'Cold Cyclone',
     cost: [W, W],
     damage: 90,
-    text: 'Move a [W] Energy from this Pokemon to 1 of your Benched Pokemon.'
+    text: 'Move a [W] Energy from this Pokémon to 1 of your Benched Pokémon.'
   }];
 
   public regulationMark: string = 'I';

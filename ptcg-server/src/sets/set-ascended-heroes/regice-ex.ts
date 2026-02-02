@@ -16,13 +16,13 @@ export class Regiceex extends PokemonCard {
     name: 'Regi Charge',
     cost: [C],
     damage: 0,
-    text: 'Attach up to 2 Basic [W] Energy from your discard pile to this Pokemon.'
+    text: 'Attach up to 2 Basic [W] Energy cards from your discard pile to this Pokémon.'
   },
   {
     name: 'Ice Prison',
     cost: [W, C, C, C],
     damage: 140,
-    text: 'Discard 2 Energy from this Pokemon. Your opponent\'s Active Pokemon is now Paralyzed.'
+    text: 'Discard 2 Energy from this Pokémon, and your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
   public regulationMark: string = 'I';

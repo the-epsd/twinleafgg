@@ -12,13 +12,13 @@ export class LarrysStarly extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: '',
+    name: 'Minor Errand-Running',
     cost: [C],
     damage: 0,
-    text: 'Search your deck for up to 2 Basic Energy, reveal them, and put them into your hand. Then, shuffle your deck.'
+    text: 'Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   },
   {
-    name: '',
+    name: 'Glide',
     cost: [C],
     damage: 10,
     text: ''

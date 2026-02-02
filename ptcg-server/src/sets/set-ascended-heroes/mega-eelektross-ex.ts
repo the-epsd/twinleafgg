@@ -17,13 +17,13 @@ export class MegaEelektrossex extends PokemonCard {
     name: 'Split Bomb',
     cost: [L, L],
     damage: 0,
-    text: 'This attack does 60 damage to 2 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'This attack does 60 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Disaster Shock',
     cost: [L, L, L],
     damage: 190,
-    text: 'You may discard 2 [L] Energy from this Pokemon and make your opponent\'s Active Pokemon Paralyzed.'
+    text: 'You may discard 2 [L] Energy from this Pokémon and make your opponent\'s Active Pokemon Paralyzed.'
   }];
 
   public regulationMark: string = 'I';

@@ -14,7 +14,8 @@ export class NightMine extends TrainerCard {
   public setNumber: string = '197';
   public name: string = 'Nighttime Mine';
   public fullName: string = 'Night Mine M2a';
-  public text: string = 'Attacks used by Tera Pokémon in play cost [C] more.';
+
+  public text: string = 'Attacks used by each Tera Pokémon in play (both yours and your opponent\'s) cost [C] more.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckAttackCostEffect && StateUtils.getStadiumCard(state) === this) {
