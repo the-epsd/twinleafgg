@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 export class Snorunt extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
-  public hp: number = 60;
+  public hp: number = 70;
   public weakness = [{ type: M }];
   public retreat = [C];
 
