@@ -41,10 +41,10 @@
       </div>
 
       <!-- 3D/2D Board Toggle -->
-      <!-- <button mat-icon-button class="board-toggle" (click)="toggle3dBoard()" *ngIf="webglSupported"
+      <button mat-icon-button class="board-toggle" (click)="toggle3dBoard()" *ngIf="webglSupported"
         [matTooltip]="use3dBoard ? 'Switch to 2D Board' : 'Switch to 3D Board'">
         <mat-icon>{{ use3dBoard ? '3d_rotation' : 'view_in_ar' }}</mat-icon>
-      </button> -->
+      </button>
 
       <!-- Selection overlay for ChoosePokemonPrompt etc. (shared by 2D and 3D boards) -->
       <ptcg-board-selection-overlay></ptcg-board-selection-overlay>
