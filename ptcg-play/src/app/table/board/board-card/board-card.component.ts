@@ -595,6 +595,9 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
       'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
       'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
+      'Rock Fighting Energy': 'assets/energy/rock-fighting.webp',
+      'Growth Grass Energy': 'assets/energy/growth-grass.webp',
+      'Telepathic Psychic Energy': 'assets/energy/telepathic-psychic.webp',
     };
 
     if ((card.superType === SuperType.ENERGY || isAttachedAsEnergy) && customEnergyIcon[card.name]) {

@@ -156,7 +156,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Sync game state when it changes or when players change (for replay/spectator switchSide)
     const gameStateChanged = changes.gameState && !changes.gameState.firstChange;
     const playersChanged = (changes.topPlayer || changes.bottomPlayer) && this.scene;
-    
+
     if ((gameStateChanged || playersChanged) && this.scene) {
       this.syncGameState();
     }
@@ -239,7 +239,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.isUpsideDown = this.topPlayer?.id === this.clientId;
     const zMultiplier = this.isUpsideDown ? -1 : 1;
 
-    this.camera = new PerspectiveCamera(37.5, aspect, 0.1, 2000);
+    this.camera = new PerspectiveCamera(31, aspect, 0.1, 2000);
     this.camera.position.set(0, 25, 40 * zMultiplier);
     this.camera.lookAt(0, 0, 12);  // Center of board
   }
@@ -299,7 +299,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       metalness: 0.00,
       transparent: true,
       opacity: 1.0,
-      depthWrite: false // Prevent z-fighting with board texture
+      depthWrite: true, // Enable depth writing for proper layering
+      depthTest: true
     });
 
     this.boardCenterOverlay = new Mesh(centerGeometry, centerMaterial);
@@ -307,8 +308,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.boardCenterOverlay.rotation.z = Math.PI; // Rotate 180 degrees
     // Mirror horizontally by scaling X axis negatively
     this.boardCenterOverlay.scale.x = -1;
-    // Move down 2 units and increase offset to prevent z-fighting
-    this.boardCenterOverlay.position.z = 14.1; // Board is at z=12, so 14.1 = 2 units down + 0.1 offset
+    // Position significantly above board to prevent clipping
+    this.boardCenterOverlay.position.y = 0.05; // Move along y-axis
+    this.boardCenterOverlay.position.z = 14.1; // Board is at z=12, so 15.5 = 3.5 units above
+    this.boardCenterOverlay.renderOrder = 100; // Higher render order to appear on top
     this.boardCenterOverlay.receiveShadow = false;
     this.scene.add(this.boardCenterOverlay);
 
@@ -369,7 +372,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       this.camera.position.set(0, 30, 40 * zMultiplier);
     } else {
       // Wide/normal
-      this.camera.position.set(0, 40, 35 * zMultiplier);
+      this.camera.position.set(0, 47.5, 35 * zMultiplier);
     }
 
     this.camera.lookAt(0, 0, 18);  // Center of board
@@ -732,7 +735,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       const isTopLostZone = this.topPlayer && this.topPlayer.lostzone === cardList;
       const player = isBottomLostZone ? PlayerType.BOTTOM_PLAYER : (isTopLostZone ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER);
       const isOwner = (isBottomLostZone && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
-                      (isTopLostZone && this.topPlayer && this.topPlayer.id === this.clientId);
+        (isTopLostZone && this.topPlayer && this.topPlayer.id === this.clientId);
       const isDeleted = this.gameState.deleted;
 
       if (isDeleted || !isOwner) {

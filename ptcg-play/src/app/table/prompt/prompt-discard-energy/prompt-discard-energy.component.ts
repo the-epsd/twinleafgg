@@ -640,6 +640,9 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       'Legacy Energy': 'assets/energy/legacy.png',
       'Neo Upper Energy': 'assets/energy/neo-upper.png',
       'Electrode': 'assets/energy/neo-upper.png',
+      'Rock Fighting Energy': 'assets/energy/rock-fighting.webp',
+      'Growth Grass Energy': 'assets/energy/growth-grass.webp',
+      'Telepathic Psychic Energy': 'assets/energy/telepathic-psychic.webp',
       // Add more special energy mappings as needed
     };
 
