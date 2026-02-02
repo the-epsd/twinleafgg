@@ -55,7 +55,7 @@ export class Jellicentex extends PokemonCard {
       state = store.reduceEffect(state, checkEnergy);
 
       // Count total attached energy
-      const totalEnergy = checkEnergy.energyMap.length;
+      const totalEnergy = checkEnergy.energyMap.reduce((sum, energy) => sum + energy.provides.length, 0);
       const attackCost = checkCost.cost.length;
       const extraEnergy = totalEnergy - attackCost;
       if (extraEnergy >= 2) {

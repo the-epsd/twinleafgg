@@ -9,6 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Player } from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class IronDefender extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -26,6 +27,7 @@ export class IronDefender extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       effect.player.marker.addMarker(this.IRON_DEFENDER_MARKER, this);
+      CLEAN_UP_SUPPORTER(effect, effect.player);
     }
 
     if (effect instanceof PutDamageEffect) {
