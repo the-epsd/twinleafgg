@@ -1220,9 +1220,14 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
         }
         break;
       case TrainerType.TOOL:
-        // Tools need a Pokemon target - basic check only
-        const hasPokemon = player.active.cards.length > 0 || player.bench.some(b => b.cards.length > 0);
-        if (!hasPokemon) {
+        // Check if there are Pokemon that can accept a tool
+        let canAttachTool = false;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+          if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
+            canAttachTool = true;
+          }
+        });
+        if (!canAttachTool) {
           return false;
         }
         break;
@@ -1277,8 +1282,13 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
       }
     }
 
-    // If canPlay is not implemented or returns undefined, don't show as playable
-    // We can't validate card-specific requirements without canPlay, so err on the side of caution
+    // If canPlay is not implemented or returns undefined
+    // For Tool cards, if we've passed all basic checks, return true
+    if (trainerCard.trainerType === TrainerType.TOOL) {
+      return true; // Tool cards can be played if Pokemon can accept them
+    }
+    // For other trainer types, err on the side of caution
+    // We can't validate card-specific requirements without canPlay
     return false;
   } catch (error) {
     return false;

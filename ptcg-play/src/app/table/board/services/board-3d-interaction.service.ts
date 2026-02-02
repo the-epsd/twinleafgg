@@ -114,7 +114,7 @@ export class Board3dInteractionService {
 
     // Check if mouse actually moved (cache result if not)
     const mouseMoved = Math.abs(mouseX - this.lastMousePosition.x) > 0.001 ||
-                      Math.abs(mouseY - this.lastMousePosition.y) > 0.001;
+      Math.abs(mouseY - this.lastMousePosition.y) > 0.001;
 
     if (!mouseMoved && this.cachedRaycastResult !== undefined) {
       return this.cachedRaycastResult;
@@ -123,7 +123,7 @@ export class Board3dInteractionService {
     // Throttle raycasting to max 60fps
     const currentTime = performance.now();
     const timeSinceLastRaycast = currentTime - this.lastRaycastTime;
-    
+
     if (timeSinceLastRaycast < this.raycastThrottleMs && !mouseMoved) {
       return this.cachedRaycastResult;
     }
@@ -137,8 +137,8 @@ export class Board3dInteractionService {
     this.raycaster.setFromCamera(this.mouse, camera);
 
     // Use cached interactive objects if available, otherwise fall back to scene traversal
-    const objectsToTest = this.interactiveObjects.length > 0 
-      ? this.interactiveObjects 
+    const objectsToTest = this.interactiveObjects.length > 0
+      ? this.interactiveObjects
       : scene.children;
 
     // Find intersections with interactive objects only (much faster than entire scene)
@@ -349,9 +349,9 @@ export class Board3dInteractionService {
         if (trainerType === TrainerType.STADIUM) {
           return config.type === DropZoneType.STADIUM;
         }
-        // Supporter cards go to supporter zone
+        // Supporter cards can go to supporter zone or board zone (like items)
         if (trainerType === TrainerType.SUPPORTER) {
-          return config.type === DropZoneType.SUPPORTER;
+          return config.type === DropZoneType.SUPPORTER || config.type === DropZoneType.BOARD;
         }
         // Tool cards need to target a Pokemon
         if (trainerType === TrainerType.TOOL) {
@@ -581,7 +581,7 @@ export class Board3dInteractionService {
       if (velocityMagnitude > 0.01) {
         // Check if this is a hand card for enhanced physics
         const isHandCard = this.draggedCard?.userData?.isHandCard === true;
-        
+
         // Scale factor for rotation intensity (double for hand cards)
         const rotationScale = isHandCard ? 0.6 : 0.3;
         const maxRotation = isHandCard ? 0.6 : 0.3; // Max rotation in radians (~34 degrees for hand, ~17 for board)
@@ -606,10 +606,10 @@ export class Board3dInteractionService {
       // Highlight drop zones using world position
       const worldPos = new Vector3();
       this.draggedCard.getWorldPosition(worldPos);
-      
+
       // Check if card is over hand area
       const isOverHand = this.isOverHandArea(worldPos);
-      
+
       // Check if dragging energy or tool card over Pokemon
       const isEnergyOrTool = this.currentDragContext && (
         this.currentDragContext.superType === SuperType.ENERGY ||
@@ -682,7 +682,7 @@ export class Board3dInteractionService {
         duration: 0.15,
         ease: 'power2.out'
       });
-      
+
       // Only highlight drop zones if not over hand area
       if (!isOverHand) {
         this.highlightNearestDropZone(worldPos, scene);
@@ -749,12 +749,12 @@ export class Board3dInteractionService {
     // Get world position for checks
     const worldPos = new Vector3();
     this.draggedCard.getWorldPosition(worldPos);
-    
+
     // Check if card is over hand area first (priority over drop zones)
     const isOverHand = this.isOverHandArea(worldPos);
-    
+
     let result: DropResult | null = null;
-    
+
     // If over hand area and card came from hand, return to hand
     if (isOverHand && this.currentDragContext?.source === 'hand') {
       this.returnCardToHand(this.draggedCard);
@@ -763,10 +763,10 @@ export class Board3dInteractionService {
       this.mouseDownCard = null;
       return null; // No action needed, card returned to hand
     }
-    
+
     // Otherwise, check for valid drop zone
     const dropZone = this.findValidDropZone(worldPos);
-    
+
     if (dropZone) {
       const config = dropZone.getConfig();
       const zone = this.configToCardTarget(config);
@@ -797,7 +797,7 @@ export class Board3dInteractionService {
         if (this.draggedCard) {
           this.returnCardToHand(this.draggedCard);
         }
-        
+
         // Use current index from userData (may have changed during drag)
         result = {
           action: 'playCard',
@@ -860,10 +860,10 @@ export class Board3dInteractionService {
     const handTolerance = 5; // Allow some tolerance for easier targeting
     const handMinX = -25; // Extended bounds for easier targeting
     const handMaxX = 25;
-    
-    return position.x >= handMinX && 
-           position.x <= handMaxX && 
-           Math.abs(position.z - handCenterZ) < handTolerance;
+
+    return position.x >= handMinX &&
+      position.x <= handMaxX &&
+      Math.abs(position.z - handCenterZ) < handTolerance;
   }
 
   /**
@@ -898,7 +898,7 @@ export class Board3dInteractionService {
     gsap.killTweensOf(card.position);
     gsap.killTweensOf(card.rotation);
     gsap.killTweensOf(card.scale);
-    
+
     // Check if this is a hand card and verify it's still valid
     // If card was removed from handGroup during updateHand(), it might be disposed
     // In that case, the hand will be re-synced and this card will be recreated
@@ -909,30 +909,30 @@ export class Board3dInteractionService {
         // Don't animate, let updateHand() handle recreation
         return;
       }
-      
+
       // Traverse up parent chain to verify card is still connected
       let currentParent: Object3D | null = card.parent;
       let depth = 0;
       const maxDepth = 10; // Safety limit
-      
+
       while (currentParent && depth < maxDepth) {
         // Check if we've reached the scene root or handGroup-like structure
         // HandGroup is typically at z=30 and contains multiple cards
-        if (currentParent.type === 'Scene' || 
-            (Math.abs(currentParent.position.z - 30) < 1 && currentParent.children.length > 3)) {
+        if (currentParent.type === 'Scene' ||
+          (Math.abs(currentParent.position.z - 30) < 1 && currentParent.children.length > 3)) {
           break;
         }
         currentParent = currentParent.parent;
         depth++;
       }
-      
+
       // If card is orphaned (no valid parent chain), skip animation
       // The hand will be re-synced and card will be recreated
       if (!currentParent || depth >= maxDepth) {
         return;
       }
     }
-    
+
     // Smoothly animate position back
     gsap.to(card.position, {
       x: this.draggedCardOriginalPosition.x,
@@ -1111,11 +1111,12 @@ export class Board3dInteractionService {
   private highlightNearestDropZone(position: Vector3, scene: Scene): void {
     const nearestZone = this.findValidDropZone(position);
 
-    // Update visual states
+    // Update visual states - keep all valid zones visible
     for (const zone of this.dropZones) {
-      if (zone === nearestZone) {
+      if (this.isValidDropZone(zone)) {
+        // All valid zones stay in VALID state (nearest one will pulse)
         zone.setValid();
-      } else if (this.isValidDropZone(zone)) {
+      } else {
         zone.setState(DropZoneState.IDLE);
       }
     }
