@@ -7,32 +7,23 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class Bulbasaur extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = CardType.GRASS;
-
   public hp: number = 60;
-
   public weakness = [{ type: CardType.FIRE }];
-
   public retreat = [CardType.COLORLESS];
-
   public attacks = [
     {
       name: 'Find a Friend',
       cost: [CardType.GRASS],
       damage: 0,
-      text: 'Search your deck for a G Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.',
+      text: 'Search your deck for a [G] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.',
     }
   ];
 
   public set: string = 'DET';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '1';
-
   public name: string = 'Bulbasaur';
-
   public fullName: string = 'Bulbasaur DET';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
