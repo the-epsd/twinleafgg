@@ -18,14 +18,14 @@ export class Munkidoriex extends PokemonCard {
   public powers = [{
     name: 'Oh No You Don\'t',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is Knocked Out by damage from an opponent\'s attack while you have Pecharunt ex in play, your opponent takes one less prize card.'
+    text: 'If this Pokémon is Knocked Out by damage from an attack from your opponent\'s Pokémon, and if you have any Pecharunt ex in play, your opponent takes 1 fewer Prize card.'
   }];
 
   public attacks = [{
     name: 'Dirty Headbutt',
     cost: [D, D, C],
     damage: 190,
-    text: 'This Pokémon can\'t use Dirty Headbutt during your next turn.'
+    text: 'During your next turn, this Pokémon can\'t use Dirty Headbutt.'
   }];
 
   public regulationMark = 'H';

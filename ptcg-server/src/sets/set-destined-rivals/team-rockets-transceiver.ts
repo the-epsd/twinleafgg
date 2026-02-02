@@ -68,24 +68,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class TeamRocketsTransceiver extends TrainerCard {
+
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.TEAM_ROCKET];
-
   public regulationMark = 'I';
-
   public set: string = 'DRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '178';
-
   public name: string = 'Team Rocket\'s Transceiver';
-
   public fullName: string = 'Team Rocket\'s Transceiver DRI';
 
   public text: string =
-    'Search your deck for 1 Supporter with "Team Rocket" in its name, reveal it, and put it into your hand. Then shuffle your deck.';
+    'Search your deck for a Supporter card that has "Team Rocket" in its name, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

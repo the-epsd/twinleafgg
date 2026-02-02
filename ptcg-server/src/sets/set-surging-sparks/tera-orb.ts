@@ -58,21 +58,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class TeraOrb extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '189';
-
   public name: string = 'Tera Orb';
-
   public fullName: string = 'Tera Orb SSP';
 
   public text =
-    'Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then shuffle your deck.';
+    'Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

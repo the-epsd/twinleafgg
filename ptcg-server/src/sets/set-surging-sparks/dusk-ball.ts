@@ -9,21 +9,15 @@ import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsP
 export class DuskBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '175';
-
   public name: string = 'Dusk Ball';
-
   public fullName: string = 'Dusk Ball SSP';
 
   public text: string =
-    'Look at the bottom 7 cards of your deck. Choose one Pokémon from those cards, reveal it, and put it into your hand. Shuffle the other cards back into your deck.';
+    'Look at the 7 cards from the bottom of your deck. Choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. Put the remaining cards back on top of your deck. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
