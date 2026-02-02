@@ -32,7 +32,7 @@ export class LilliesPokeDoll extends TrainerCard {
   public attacksThisTurn: number = 0;
   public maxAttacksThisTurn: number = 1;
   public allowSubsequentAttackChoice: boolean = false;
-  public maxTools: number = 0;
+  public maxTools: number = 1;
   public set: string = 'CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '197';
