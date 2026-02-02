@@ -14,17 +14,17 @@ export class ErikasTangela extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Colorful Riot',
+    name: 'Gathering of Blossoms',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'You may use this Ability once during your turn. Search your deck for an Erika\'s Pokemon, reveal it, and put it into your hand. Then, shuffle your deck.'
+    text: 'Once during your turn, you may use this Ability. Search your deck for an Erika\'s Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
   public attacks = [{
     name: 'Bind',
     cost: [G, C],
-    damage: 30,
-    text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed.'
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
   public regulationMark = 'I';
