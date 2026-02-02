@@ -337,20 +337,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
-    const currentTime = performance.now();
-
-    // Check animation state periodically instead of every frame
-    if (currentTime - this.lastAnimationCheck >= this.animationCheckInterval) {
-      this.hasActiveAnimationsCache = this.animationService.hasActiveAnimations();
-      this.lastAnimationCheck = currentTime;
-    }
-
-    // Render if scene changed or animations are active (using cached value)
-    const didRender = this.needsRender || this.hasActiveAnimationsCache;
-    if (didRender) {
-      this.postProcessingService.render();
-      this.needsRender = false;
-    }
+    // Always render - uncapped at all times
+    this.postProcessingService.render();
   };
 
   private onContainerResize(): void {
