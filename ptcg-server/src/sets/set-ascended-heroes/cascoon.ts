@@ -18,7 +18,7 @@ export class Cascoon extends PokemonCard {
       name: 'Trading Places',
       cost: [G],
       damage: 0,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
 
@@ -32,14 +32,7 @@ export class Cascoon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_SWITCH_POKEMON,
-      ), wantToUse => {
-        if (wantToUse) {
-          SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-        }
-      });
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
     }
     return state;
   }
