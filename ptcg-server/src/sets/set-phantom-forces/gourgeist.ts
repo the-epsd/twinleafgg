@@ -17,7 +17,7 @@ export class Gourgeist extends PokemonCard {
   public powers = [{
     name: 'Gourgantic',
     powerType: PowerType.ABILITY,
-    text: ' If this Pokemon has any [G] Energy attached to it, its maximum HP is 200.'
+    text: 'If this Pokémon has any [G] Energy attached to it, its maximum HP is 200.'
   }];
 
   public attacks = [{
