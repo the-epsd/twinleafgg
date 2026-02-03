@@ -52,14 +52,18 @@ export class ToolbarComponent implements OnInit {
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
       map(gameStates => gameStates.filter(gameState => {
-        // Filter out finished games, games with gameOver flag, and deleted games
-        if (gameState.deleted || gameState.gameOver) {
+        // Always include replays (they have replay property)
+        if (gameState.replay) {
+          return true;
+        }
+
+        // Filter out deleted games (unless they're replays, which we already handled above)
+        if (gameState.deleted) {
           return false;
         }
-        // Check if game is in FINISHED phase
-        if (gameState.state && gameState.state.phase === GamePhase.FINISHED) {
-          return false;
-        }
+
+        // Include all games that the user has joined, even if finished
+        // The fact that they're in gameStates means the user joined/spectated them
         return true;
       }))
     );

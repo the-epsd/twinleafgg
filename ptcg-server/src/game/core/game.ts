@@ -46,6 +46,7 @@ export class Game implements StoreHandler {
   private isPaused: boolean = false;
   private pausedAt: number = 0;
   private userIdToPlayerId: Map<number, number> = new Map();
+  private previousPlayerCount: number = 0;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
@@ -120,12 +121,26 @@ export class Game implements StoreHandler {
 
     this.updateIsTimeRunning(state);
 
-    // Only notify clients that are actually in this game
+    // Check if a player was added to the game
+    const playerAdded = state.players.length > this.previousPlayerCount;
+    this.previousPlayerCount = state.players.length;
+
+    // Notify clients that are in this game
     this.clients.forEach(c => {
       if (typeof c.onStateChange === 'function') {
         c.onStateChange(this, state);
       }
     });
+
+    // If a player was added, also notify all clients so that other browser windows
+    // of the same user can receive the game info update and auto-join
+    if (playerAdded) {
+      this.core.emit(c => {
+        if (typeof c.onStateChange === 'function') {
+          c.onStateChange(this, state);
+        }
+      });
+    }
 
     // Clean up all disconnection timeouts if game is finished
     if (state.phase === GamePhase.FINISHED) {

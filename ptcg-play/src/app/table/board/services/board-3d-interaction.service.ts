@@ -63,9 +63,10 @@ export class Board3dInteractionService {
   // Current drag context
   private currentDragContext: DragContext | null = null;
 
-  // Pokemon hover tracking during drag (for energy/tool cards)
+  // Pokemon hover tracking during drag (for energy/tool cards and evolution cards)
   private hoveredPokemonCard: Object3D | null = null;
   private hoveredPokemonBoard3dCard: Board3dCard | null = null;
+  private hoveredPokemonOriginalScale: Vector3 = new Vector3();
 
   // Drop zones
   private dropZones: Board3dDropZone[] = [];
@@ -507,6 +508,32 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Check if an evolution card can evolve a specific Pokemon card
+   */
+  private isValidEvolutionTarget(evolutionCard: PokemonCard, targetPokemon: PokemonCard): boolean {
+    if (!evolutionCard || !targetPokemon) {
+      return false;
+    }
+
+    // Check if evolution card's evolvesFrom matches target Pokemon's name
+    if (evolutionCard.evolvesFrom === targetPokemon.name) {
+      return true;
+    }
+
+    // Check if target Pokemon's evolvesTo includes the evolution card name
+    if (targetPokemon.evolvesTo && targetPokemon.evolvesTo.includes(evolutionCard.name)) {
+      return true;
+    }
+
+    // Check if target Pokemon's evolvesToStage includes the evolution card stage
+    if (targetPokemon.evolvesToStage && targetPokemon.evolvesToStage.includes(evolutionCard.stage)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Handle mouse move during drag
    */
   onMouseMoveDrag(
@@ -616,9 +643,15 @@ export class Board3dInteractionService {
         this.currentDragContext.trainerType === TrainerType.TOOL
       );
 
-      // Detect Pokemon card under dragged card (for energy/tool cards only)
+      // Check if dragging evolution card over Pokemon
+      const isEvolutionCard = this.currentDragContext &&
+        this.currentDragContext.superType === SuperType.POKEMON &&
+        this.currentDragContext.stage !== undefined &&
+        this.currentDragContext.stage !== Stage.BASIC;
+
+      // Detect Pokemon card under dragged card (for energy/tool cards and evolution cards)
       let pokemonUnderCard: Object3D | null = null;
-      if (isEnergyOrTool && !isOverHand) {
+      if ((isEnergyOrTool || isEvolutionCard) && !isOverHand) {
         // Perform raycast to find Pokemon cards
         const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
         for (const intersect of intersects) {
@@ -627,35 +660,93 @@ export class Board3dInteractionService {
             const target = card.userData.cardTarget as CardTarget;
             // Only consider ACTIVE or BENCH Pokemon cards
             if (target.slot === SlotType.ACTIVE || target.slot === SlotType.BENCH) {
-              pokemonUnderCard = card;
-              break;
+              // For evolution cards, validate that the evolution is valid
+              if (isEvolutionCard && this.currentDragContext) {
+                const evolutionCard = this.currentDragContext.card as PokemonCard;
+                const targetPokemonCard = card.userData.cardData as PokemonCard;
+                if (targetPokemonCard && this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+                  pokemonUnderCard = card;
+                  break;
+                }
+              } else if (isEnergyOrTool) {
+                // For energy/tool cards, any Pokemon is valid
+                pokemonUnderCard = card;
+                break;
+              }
             }
           }
         }
       }
 
-      // Handle Pokemon hover effects
-      if (isEnergyOrTool && pokemonUnderCard && pokemonUnderCard !== this.hoveredPokemonCard) {
-        // New Pokemon hovered - remove glow from previous Pokemon
-        if (this.hoveredPokemonBoard3dCard) {
-          this.hoveredPokemonBoard3dCard.setOutline(false);
+      // Handle Pokemon hover effects (for energy/tool cards and evolution cards)
+      const shouldShowHoverEffects = isEnergyOrTool || isEvolutionCard;
+
+      if (shouldShowHoverEffects && pokemonUnderCard && pokemonUnderCard !== this.hoveredPokemonCard) {
+        // New Pokemon hovered - restore previous Pokemon's scale and remove glow
+        if (this.hoveredPokemonCard) {
+          // Restore scale of previous Pokemon
+          gsap.killTweensOf(this.hoveredPokemonCard.scale);
+          gsap.to(this.hoveredPokemonCard.scale, {
+            x: this.hoveredPokemonOriginalScale.x,
+            y: this.hoveredPokemonOriginalScale.y,
+            z: this.hoveredPokemonOriginalScale.z,
+            duration: 0.15,
+            ease: 'power2.out'
+          });
+
+          if (this.hoveredPokemonBoard3dCard) {
+            this.hoveredPokemonBoard3dCard.setOutline(false);
+          }
         }
 
-        // Add glow to new Pokemon
+        // Store original scale and add effects to new Pokemon
         this.hoveredPokemonCard = pokemonUnderCard;
+        this.hoveredPokemonOriginalScale.copy(pokemonUnderCard.scale);
         this.hoveredPokemonBoard3dCard = this.getBoard3dCardFromObject3D(pokemonUnderCard);
+
         if (this.hoveredPokemonBoard3dCard) {
+          // Add glow
           this.hoveredPokemonBoard3dCard.setOutline(true, 0xffd700); // Golden yellow glow
+
+          // Scale up by 20% (1.2x)
+          const targetScale = this.hoveredPokemonOriginalScale.clone().multiplyScalar(1.2);
+          gsap.killTweensOf(pokemonUnderCard.scale);
+          gsap.to(pokemonUnderCard.scale, {
+            x: targetScale.x,
+            y: targetScale.y,
+            z: targetScale.z,
+            duration: 0.15,
+            ease: 'power2.out'
+          });
         }
-      } else if (isEnergyOrTool && !pokemonUnderCard && this.hoveredPokemonCard) {
-        // No longer hovering over Pokemon - remove glow
+      } else if (shouldShowHoverEffects && !pokemonUnderCard && this.hoveredPokemonCard) {
+        // No longer hovering over Pokemon - restore scale and remove glow
+        gsap.killTweensOf(this.hoveredPokemonCard.scale);
+        gsap.to(this.hoveredPokemonCard.scale, {
+          x: this.hoveredPokemonOriginalScale.x,
+          y: this.hoveredPokemonOriginalScale.y,
+          z: this.hoveredPokemonOriginalScale.z,
+          duration: 0.15,
+          ease: 'power2.out'
+        });
+
         if (this.hoveredPokemonBoard3dCard) {
           this.hoveredPokemonBoard3dCard.setOutline(false);
         }
         this.hoveredPokemonCard = null;
         this.hoveredPokemonBoard3dCard = null;
-      } else if (!isEnergyOrTool && this.hoveredPokemonCard) {
+      } else if (!shouldShowHoverEffects && this.hoveredPokemonCard) {
         // Dragged card changed type (shouldn't happen, but handle gracefully)
+        // Restore scale and remove glow
+        gsap.killTweensOf(this.hoveredPokemonCard.scale);
+        gsap.to(this.hoveredPokemonCard.scale, {
+          x: this.hoveredPokemonOriginalScale.x,
+          y: this.hoveredPokemonOriginalScale.y,
+          z: this.hoveredPokemonOriginalScale.z,
+          duration: 0.15,
+          ease: 'power2.out'
+        });
+
         if (this.hoveredPokemonBoard3dCard) {
           this.hoveredPokemonBoard3dCard.setOutline(false);
         }
@@ -664,11 +755,11 @@ export class Board3dInteractionService {
       }
 
       // Determine scale based on priority:
-      // 1. Over Pokemon (energy/tool only): 0.7
+      // 1. Over Pokemon (energy/tool/evolution): 0.7
       // 2. Over hand area (from hand): 1.05
       // 3. Otherwise: 1.3 (normal drag scale)
       let targetScale = 1.3; // Default drag scale
-      if (isEnergyOrTool && pokemonUnderCard) {
+      if ((isEnergyOrTool || isEvolutionCard) && pokemonUnderCard) {
         targetScale = 0.7; // Shrink to 70% when over Pokemon
       } else if (isOverHand && this.currentDragContext?.source === 'hand') {
         targetScale = 1.05; // Slight increase when over hand area
@@ -965,7 +1056,18 @@ export class Board3dInteractionService {
    * Reset drag state
    */
   private resetDragState(): void {
-    // Remove glow from any hovered Pokemon
+    // Restore scale and remove glow from any hovered Pokemon
+    if (this.hoveredPokemonCard) {
+      gsap.killTweensOf(this.hoveredPokemonCard.scale);
+      gsap.to(this.hoveredPokemonCard.scale, {
+        x: this.hoveredPokemonOriginalScale.x,
+        y: this.hoveredPokemonOriginalScale.y,
+        z: this.hoveredPokemonOriginalScale.z,
+        duration: 0.15,
+        ease: 'power2.out'
+      });
+    }
+
     if (this.hoveredPokemonBoard3dCard) {
       this.hoveredPokemonBoard3dCard.setOutline(false);
     }

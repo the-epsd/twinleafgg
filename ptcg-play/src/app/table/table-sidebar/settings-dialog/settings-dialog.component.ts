@@ -5,6 +5,7 @@ import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { TranslateModule } from "@ngx-translate/core";
 import { SettingsService } from "./settings.service";
 import { Format } from "ptcg-server";
+import { Board3dAccessService } from "../../../shared/services/board3d-access.service";
 
 @Component({
   selector: 'ptcg-settings-dialog',
@@ -17,6 +18,8 @@ export class SettingsDialogComponent {
   showTags = false;
   cardSize = 100;
   hiddenFormats: Format[] = [];
+  use3dBoardDefault = false;
+  has3dBoardAccess = false;
 
   // Available formats for selection
   public Format = Format;
@@ -39,7 +42,8 @@ export class SettingsDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<SettingsDialogComponent>,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private board3dAccessService: Board3dAccessService
   ) {
     this.settingsService.holoEnabled$.subscribe(
       enabled => this.holoEnabled = enabled
@@ -53,6 +57,12 @@ export class SettingsDialogComponent {
     this.settingsService.cardSize$.subscribe(size => this.cardSize = size);
     this.settingsService.hiddenFormats$.subscribe(
       formats => this.hiddenFormats = formats
+    );
+    this.settingsService.use3dBoardDefault$.subscribe(
+      enabled => this.use3dBoardDefault = enabled
+    );
+    this.board3dAccessService.has3dBoardAccess$.subscribe(
+      hasAccess => this.has3dBoardAccess = hasAccess
     );
   }
 
@@ -81,6 +91,7 @@ export class SettingsDialogComponent {
     this.settingsService.setShowTags(this.showTags);
     this.settingsService.setCardSize(this.cardSize);
     this.settingsService.setHiddenFormats(this.hiddenFormats);
+    this.settingsService.setUse3dBoardDefault(this.use3dBoardDefault);
     this.dialogRef.close();
   }
 }

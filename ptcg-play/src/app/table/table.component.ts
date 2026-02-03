@@ -4,7 +4,7 @@ import { Player, GamePhase, Card, Format, GameWinner, ReplayPlayer, PlayerStats 
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { withLatestFrom, switchMap, finalize, tap, map } from 'rxjs/operators';
+import { withLatestFrom, switchMap, finalize, tap, map, take } from 'rxjs/operators';
 import { ApiError } from '../api/api.error';
 import { AlertService } from '../shared/alert/alert.service';
 import { DeckService } from '../api/services/deck.service';
@@ -15,6 +15,8 @@ import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../shared/services/board-interaction.service';
 import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SettingsService } from './table-sidebar/settings-dialog/settings.service';
+import { Board3dAccessService } from '../shared/services/board3d-access.service';
 
 @UntilDestroy()
 @Component({
@@ -42,6 +44,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public sandboxSidebarCollapsed: boolean = false;
   public use3dBoard: boolean = false;
   public webglSupported: boolean = true;
+  public has3dBoardAccess: boolean = false;
   public bottomReplayPlayer: ReplayPlayer | undefined;
   public topReplayPlayer: ReplayPlayer | undefined;
   public bottomPlayerStats: PlayerStats | undefined;
@@ -76,7 +79,9 @@ export class TableComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private cardsBaseService: CardsBaseService,
     private boardInteractionService: BoardInteractionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private settingsService: SettingsService,
+    private board3dAccessService: Board3dAccessService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
@@ -100,10 +105,28 @@ export class TableComponent implements OnInit, OnDestroy {
     // Ensure any active board selection is cleared when table initializes
     this.boardInteractionService.endBoardSelection();
 
-    // Check WebGL support - always default to 2D board
+    // Check WebGL support
     this.webglSupported = this.checkWebGLSupport();
-    // Always default to 2D board (false) - user can toggle to 3D if desired
-    this.use3dBoard = false;
+
+    // Subscribe to 3D board access status
+    this.board3dAccessService.has3dBoardAccess$.pipe(
+      untilDestroyed(this)
+    ).subscribe(hasAccess => {
+      this.has3dBoardAccess = hasAccess;
+      // If user loses access, disable 3D board
+      if (!hasAccess) {
+        this.use3dBoard = false;
+      }
+    });
+
+    // Read default 3D board setting from SettingsService
+    this.settingsService.use3dBoardDefault$.pipe(
+      take(1),
+      untilDestroyed(this)
+    ).subscribe(use3dDefault => {
+      // Only use 3D board if WebGL is supported, user has access, and setting is enabled
+      this.use3dBoard = this.webglSupported && this.has3dBoardAccess && use3dDefault;
+    });
 
     this.route.paramMap
       .pipe(
@@ -394,6 +417,10 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   public toggle3dBoard() {
+    // Only allow toggle if user has access
+    if (!this.has3dBoardAccess) {
+      return;
+    }
     this.use3dBoard = !this.use3dBoard;
     this.save3dBoardPreference(this.use3dBoard);
   }
