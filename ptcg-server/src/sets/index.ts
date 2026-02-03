@@ -179,7 +179,7 @@ export * from './set-black-bolt-white-flare';
 export * from './set-mega-evolution-promos';
 export * from './set-mega-evolution';
 export * from './set-phantasmal-flames';
-export * from './set-mega-dream';
+export * from './set-ascended-heroes';
 export * from './set-perfect-order';
 
 //TEST

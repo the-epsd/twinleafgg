@@ -4,6 +4,7 @@ import { BoardInteractionService } from '../../../shared/services/board-interact
 import { Subscription } from 'rxjs';
 import { BoardCardAnimationHelper, AnimationState } from './board-card-animations.helper';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
+import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -573,34 +574,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   // ==================== CUSTOM IMAGE HELPERS ====================
   getCustomEnergyIcon(card: Card, isAttachedAsEnergy: boolean = false): string {
-    const customEnergyIcon = {
-      'Grass Energy': 'assets/energy/grass.png',
-      'Fire Energy': 'assets/energy/fire.png',
-      'Water Energy': 'assets/energy/water.png',
-      'Lightning Energy': 'assets/energy/lightning.png',
-      'Psychic Energy': 'assets/energy/psychic.png',
-      'Fighting Energy': 'assets/energy/fighting.png',
-      'Darkness Energy': 'assets/energy/dark.png',
-      'Metal Energy': 'assets/energy/metal.png',
-      'Fairy Energy': 'assets/energy/fairy.png',
-      'Double Turbo Energy': 'assets/energy/double-turbo.png',
-      'Jet Energy': 'assets/energy/jet.png',
-      'Gift Energy': 'assets/energy/gift.png',
-      'Mist Energy': 'assets/energy/mist.png',
-      'Legacy Energy': 'assets/energy/legacy.png',
-      'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      'Electrode': 'assets/energy/electrode.png',
-      'Holon\'s Castform': 'assets/energy/holons-castform.png',
-      'Holon\'s Magnemite': 'assets/energy/holons-magnemite.png',
-      'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
-      'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
-      'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
-    };
-
-    if ((card.superType === SuperType.ENERGY || isAttachedAsEnergy) && customEnergyIcon[card.name]) {
-      return customEnergyIcon[card.name];
-    }
-    return '';
+    const iconPath = getCustomEnergyIconPath(card, isAttachedAsEnergy);
+    return iconPath || '';
   }
 
   getCustomToolIcon(card: Card): string {

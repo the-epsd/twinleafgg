@@ -298,8 +298,8 @@ export class Board3dStateSyncService {
     // Determine if card should be face-down (not public or is secret)
     const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
 
-    // Get card scan URL
-    const scanUrl = this.cardsBaseService.getScanUrl(mainCard);
+    // Get card scan URL (checks artworksMap for overrides first, like 2D components do)
+    const scanUrl = this.cardsBaseService.getScanUrlFromCardList(mainCard, cardList);
 
     // Get sleeve URL if sleeve image path is provided
     const sleeveUrl = sleeveImagePath ? this.cardsBaseService.getSleeveUrl(sleeveImagePath) : undefined;
@@ -312,10 +312,25 @@ export class Board3dStateSyncService {
       return this.assetLoader.loadCardBack();
     };
 
+    // Validate URL before loading - if empty or invalid, use cardback
+    const loadFrontTexture = async () => {
+      if (isFaceDown) {
+        return loadBackTexture();
+      }
+      if (!scanUrl || !scanUrl.trim()) {
+        console.warn('Empty scanUrl for card:', mainCard?.fullName, 'set:', mainCard?.set, 'setNumber:', mainCard?.setNumber);
+        return loadBackTexture();
+      }
+      try {
+        return await this.assetLoader.loadCardTexture(scanUrl);
+      } catch (error) {
+        console.error('Failed to load card texture:', scanUrl, error);
+        return loadBackTexture();
+      }
+    };
+
     const [frontTexture, backTexture] = await Promise.all([
-      isFaceDown
-        ? loadBackTexture()
-        : this.assetLoader.loadCardTexture(scanUrl),
+      loadFrontTexture(),
       loadBackTexture()
     ]);
 

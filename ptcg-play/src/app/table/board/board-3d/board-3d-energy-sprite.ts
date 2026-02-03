@@ -7,36 +7,12 @@ import {
   Vector3,
   DoubleSide
 } from 'three';
-import { Card, SuperType } from 'ptcg-server';
+import { Card } from 'ptcg-server';
+import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 const MAX_VISIBLE_ENERGIES = 8;
 const ENERGY_SPRITE_SIZE = 0.6;
-const ENERGY_SPACING = 0.7;
-
-// Custom energy icon paths (matching board-card.component.ts)
-const CUSTOM_ENERGY_ICONS: { [key: string]: string } = {
-  'Grass Energy': 'assets/energy/grass.png',
-  'Fire Energy': 'assets/energy/fire.png',
-  'Water Energy': 'assets/energy/water.png',
-  'Lightning Energy': 'assets/energy/lightning.png',
-  'Psychic Energy': 'assets/energy/psychic.png',
-  'Fighting Energy': 'assets/energy/fighting.png',
-  'Darkness Energy': 'assets/energy/dark.png',
-  'Metal Energy': 'assets/energy/metal.png',
-  'Fairy Energy': 'assets/energy/fairy.png',
-  'Double Turbo Energy': 'assets/energy/double-turbo.png',
-  'Jet Energy': 'assets/energy/jet.png',
-  'Gift Energy': 'assets/energy/gift.png',
-  'Mist Energy': 'assets/energy/mist.png',
-  'Legacy Energy': 'assets/energy/legacy.png',
-  'Neo Upper Energy': 'assets/energy/neo-upper.png',
-  'Electrode': 'assets/energy/electrode.png',
-  'Holon\'s Castform': 'assets/energy/holons-castform.png',
-  'Holon\'s Magnemite': 'assets/energy/holons-magnemite.png',
-  'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
-  'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
-  'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
-};
+const ENERGY_SPACING = 0.3;
 
 export class Board3dEnergySprite {
   private group: Group;
@@ -56,14 +32,7 @@ export class Board3dEnergySprite {
    * Get the custom energy icon path for a card
    */
   static getEnergyIconPath(card: Card): string | null {
-    if (card.superType === SuperType.ENERGY && CUSTOM_ENERGY_ICONS[card.name]) {
-      return CUSTOM_ENERGY_ICONS[card.name];
-    }
-    // For non-energy cards attached as energy (e.g., Holon's Pokemon)
-    if (CUSTOM_ENERGY_ICONS[card.name]) {
-      return CUSTOM_ENERGY_ICONS[card.name];
-    }
-    return null;
+    return getCustomEnergyIconPath(card, true);
   }
 
   /**

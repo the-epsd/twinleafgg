@@ -88,21 +88,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class Perrin extends TrainerCard {
 
   public regulationMark = 'H';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'TWM';
-
   public name: string = 'Perrin';
-
   public fullName: string = 'Perrin TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '160';
 
   public text: string =
-    'Reveal up to 2 Pokémon from your hand and shuffle them into your deck. Then, search your deck for up to that many Pokémon, reveal them, and put them into your hand. Then shuffle your deck.';
+    'Reveal up to 2 Pokémon from your hand and shuffle them into your deck. If you do, search your deck for up to that many Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

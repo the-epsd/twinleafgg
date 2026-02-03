@@ -21,6 +21,7 @@ export class Magneton extends PokemonCard {
     name: 'Call Signal',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
+    knocksOutSelf: true,
     text: 'Once during your turn (before your attack), you may search your deck for up to 3 Supporter cards, reveal them, and put them into your hand. Then, shuffle your deck. If you searched your deck in this way, this Pokémon is Knocked Out.'
   }];
 

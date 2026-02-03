@@ -65,6 +65,7 @@ import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
 import { Yveltal } from './yveltal';
+import { IronDefender } from './iron-defender';
 
 export const setMegaEvolution: Card[] = [
   new Abra(),
@@ -86,6 +87,7 @@ export const setMegaEvolution: Card[] = [
   new Gumshoos(),
   new Hariyama(),
   new Houndstone(),
+  new IronDefender(),
   new Ivysaur(),
   new Kadabra(),
   new Kirlia(),

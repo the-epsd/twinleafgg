@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { TextureLoader, Texture, sRGBEncoding, RepeatWrapping } from 'three';
+import { TextureLoader, Texture, RepeatWrapping } from 'three';
 import { ImageCacheService } from '../../../shared/image-cache/image-cache.service';
+import { ImageProxyService } from '../../../shared/image-cache/image-proxy.service';
 
 @Injectable()
 export class Board3dAssetLoaderService {
@@ -10,7 +11,10 @@ export class Board3dAssetLoaderService {
   private boardGridTexture: Texture | null = null;
   private slotGridTexture: Texture | null = null;
 
-  constructor(private imageCacheService: ImageCacheService) {
+  constructor(
+    private imageCacheService: ImageCacheService,
+    private imageProxyService: ImageProxyService
+  ) {
     this.textureLoader = new TextureLoader();
     this.textureCache = new Map();
   }
@@ -24,23 +28,106 @@ export class Board3dAssetLoaderService {
       return this.textureCache.get(scanUrl)!;
     }
 
-    try {
-      // Use imgcache.js to get cached image URL
-      const cachedUrl = await this.imageCacheService.fetchFromCache(scanUrl).toPromise();
+    // Store original URL for error handling
+    const originalUrl = scanUrl;
 
-      // Load texture with Three.js
+    try {
+      // Convert external URLs to proxy URLs before caching
+      const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(scanUrl);
+      const wasProxied = urlToCache !== scanUrl;
+      
+      // Use imgcache.js to get cached image URL
+      const cachedUrl = await this.imageCacheService.fetchFromCache(urlToCache).toPromise();
+
+      // Load texture with Three.js (no crossOrigin needed - proxy handles CORS)
       const texture = await this.textureLoader.loadAsync(cachedUrl);
 
-      // Configure texture
-      texture.encoding = sRGBEncoding;
+      // Configure texture (use colorSpace instead of encoding)
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16; // High quality filtering
       texture.flipY = true; // Fix texture orientation
 
-      // Cache and return
+      // Cache and return (use original URL as cache key)
       this.textureCache.set(scanUrl, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load card texture:', scanUrl, error);
+      // Check if proxy was used and failed
+      const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(scanUrl);
+      const wasProxied = urlToCache !== scanUrl;
+      const errorMessage = (error as any)?.message || error?.toString() || '';
+      const errorStatus = (error as any)?.status || (error as any)?.response?.status;
+      const errorTarget = (error as any)?.target;
+      
+      // Check if the failed URL matches proxy pattern
+      const failedUrl = errorTarget?.src || errorTarget?.currentSrc || '';
+      const isProxyUrl = failedUrl.includes('/v1/image-proxy/proxy');
+      
+      // Detect proxy failures (403, 404, network errors)
+      const isProxyError = wasProxied && (
+        errorStatus === 404 ||
+        errorStatus === 403 ||
+        errorMessage.includes('404') ||
+        errorMessage.includes('403') ||
+        errorMessage.includes('Forbidden') ||
+        errorMessage.includes('Domain not allowed') ||
+        errorMessage.includes('Failed to fetch') ||
+        errorMessage.includes('NetworkError') ||
+        errorMessage.includes('net::ERR_') ||
+        isProxyUrl
+      );
+
+      // If proxy failed, try original URL as fallback
+      if (isProxyError) {
+        try {
+          const originalIsExternal = originalUrl.startsWith('http://') || originalUrl.startsWith('https://');
+          const fallbackLoader = originalIsExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+          
+          const originalCachedUrl = await this.imageCacheService.fetchFromCache(originalUrl).toPromise();
+          const texture = await fallbackLoader.loadAsync(originalCachedUrl);
+          
+          texture.colorSpace = 'srgb';
+          texture.anisotropy = 16;
+          texture.flipY = true;
+          
+          this.textureCache.set(scanUrl, texture);
+          
+          // Fallback succeeded - log rejected domain for proxy errors
+          // Note: Browser network errors (like "Failed to load resource: 403") are logged automatically
+          // by the browser itself and cannot be suppressed from JavaScript. These errors appear in the
+          // console even though the fallback mechanism successfully loads images via the original URL.
+          // The errors are informational only - images are loading correctly via fallback.
+          // Extract domain from original URL for logging (works for all proxy errors, not just 403)
+          try {
+            const urlObj = new URL(originalUrl);
+            const rejectedDomain = urlObj.hostname.toLowerCase();
+            console.warn(`[ImageProxy] Domain rejected: ${rejectedDomain} - add to ALLOWED_DOMAINS in image-proxy.controller.ts`);
+          } catch (e) {
+            // URL parsing failed, skip domain extraction
+          }
+          
+          // Silently handled - fallback worked
+          return texture;
+        } catch (fallbackError) {
+          // Both proxy and original failed, use cardback
+          console.warn('Both proxy and original URL failed for card texture:', originalUrl);
+          return this.loadCardBack();
+        }
+      }
+
+      // For non-proxy errors, check if it's a CORS error to suppress logging
+      const isEventError = error instanceof Event;
+      const isCorsError = isEventError && (
+        errorMessage.includes('CORS') ||
+        errorMessage.includes('Access-Control') ||
+        errorMessage.includes('cross-origin') ||
+        (errorTarget && errorTarget.tagName === 'IMG')
+      );
+      
+      // Only log non-CORS errors
+      if (!isCorsError) {
+        console.error('Failed to load card texture:', originalUrl, error);
+      }
+      
       // Return card back as fallback
       return this.loadCardBack();
     }
@@ -55,23 +142,106 @@ export class Board3dAssetLoaderService {
       return this.textureCache.get(iconPath)!;
     }
 
-    try {
-      // Use imgcache.js to get cached image URL
-      const cachedUrl = await this.imageCacheService.fetchFromCache(iconPath).toPromise();
+    // Store original URL for error handling
+    const originalUrl = iconPath;
 
-      // Load texture with Three.js
+    try {
+      // Convert external URLs to proxy URLs before caching
+      const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(iconPath);
+      const wasProxied = urlToCache !== iconPath;
+      
+      // Use imgcache.js to get cached image URL
+      const cachedUrl = await this.imageCacheService.fetchFromCache(urlToCache).toPromise();
+
+      // Load texture with Three.js (no crossOrigin needed - proxy handles CORS)
       const texture = await this.textureLoader.loadAsync(cachedUrl);
 
-      // Configure texture
-      texture.encoding = sRGBEncoding;
+      // Configure texture (use colorSpace instead of encoding)
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16; // High quality filtering
       texture.flipY = true; // Fix texture orientation
 
-      // Cache and return
+      // Cache and return (use original URL as cache key)
       this.textureCache.set(iconPath, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load tool icon texture:', iconPath, error);
+      // Check if proxy was used and failed
+      const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(iconPath);
+      const wasProxied = urlToCache !== iconPath;
+      const errorMessage = (error as any)?.message || error?.toString() || '';
+      const errorStatus = (error as any)?.status || (error as any)?.response?.status;
+      const errorTarget = (error as any)?.target;
+      
+      // Check if the failed URL matches proxy pattern
+      const failedUrl = errorTarget?.src || errorTarget?.currentSrc || '';
+      const isProxyUrl = failedUrl.includes('/v1/image-proxy/proxy');
+      
+      // Detect proxy failures (403, 404, network errors)
+      const isProxyError = wasProxied && (
+        errorStatus === 404 ||
+        errorStatus === 403 ||
+        errorMessage.includes('404') ||
+        errorMessage.includes('403') ||
+        errorMessage.includes('Forbidden') ||
+        errorMessage.includes('Domain not allowed') ||
+        errorMessage.includes('Failed to fetch') ||
+        errorMessage.includes('NetworkError') ||
+        errorMessage.includes('net::ERR_') ||
+        isProxyUrl
+      );
+
+      // If proxy failed, try original URL as fallback
+      if (isProxyError) {
+        try {
+          const originalIsExternal = originalUrl.startsWith('http://') || originalUrl.startsWith('https://');
+          const fallbackLoader = originalIsExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+          
+          const originalCachedUrl = await this.imageCacheService.fetchFromCache(originalUrl).toPromise();
+          const texture = await fallbackLoader.loadAsync(originalCachedUrl);
+          
+          texture.colorSpace = 'srgb';
+          texture.anisotropy = 16;
+          texture.flipY = true;
+          
+          this.textureCache.set(iconPath, texture);
+          
+          // Fallback succeeded - log rejected domain for proxy errors
+          // Note: Browser network errors (like "Failed to load resource: 403") are logged automatically
+          // by the browser itself and cannot be suppressed from JavaScript. These errors appear in the
+          // console even though the fallback mechanism successfully loads images via the original URL.
+          // The errors are informational only - images are loading correctly via fallback.
+          // Extract domain from original URL for logging (works for all proxy errors, not just 403)
+          try {
+            const urlObj = new URL(originalUrl);
+            const rejectedDomain = urlObj.hostname.toLowerCase();
+            console.warn(`[ImageProxy] Domain rejected: ${rejectedDomain} - add to ALLOWED_DOMAINS in image-proxy.controller.ts`);
+          } catch (e) {
+            // URL parsing failed, skip domain extraction
+          }
+          
+          // Silently handled - fallback worked
+          return texture;
+        } catch (fallbackError) {
+          // Both proxy and original failed, throw error for caller to handle
+          console.warn('Both proxy and original URL failed for tool icon:', originalUrl);
+          throw error;
+        }
+      }
+
+      // For non-proxy errors, check if it's a CORS error to suppress logging
+      const isEventError = error instanceof Event;
+      const isCorsError = isEventError && (
+        errorMessage.includes('CORS') ||
+        errorMessage.includes('Access-Control') ||
+        errorMessage.includes('cross-origin') ||
+        (errorTarget && errorTarget.tagName === 'IMG')
+      );
+      
+      // Only log non-CORS errors
+      if (!isCorsError) {
+        console.error('Failed to load tool icon texture:', originalUrl, error);
+      }
+      
       throw error; // Let caller handle fallback
     }
   }
@@ -85,23 +255,106 @@ export class Board3dAssetLoaderService {
       return this.textureCache.get(sleeveUrl)!;
     }
 
-    try {
-      // Use imgcache.js to get cached image URL
-      const cachedUrl = await this.imageCacheService.fetchFromCache(sleeveUrl).toPromise();
+    // Store original URL for error handling
+    const originalUrl = sleeveUrl;
 
-      // Load texture with Three.js
+    try {
+      // Convert external URLs to proxy URLs before caching
+      const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(sleeveUrl);
+      const wasProxied = urlToCache !== sleeveUrl;
+      
+      // Use imgcache.js to get cached image URL
+      const cachedUrl = await this.imageCacheService.fetchFromCache(urlToCache).toPromise();
+
+      // Load texture with Three.js (no crossOrigin needed - proxy handles CORS)
       const texture = await this.textureLoader.loadAsync(cachedUrl);
 
-      // Configure texture
-      texture.encoding = sRGBEncoding;
+      // Configure texture (use colorSpace instead of encoding)
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16; // High quality filtering
       texture.flipY = true; // Fix texture orientation
 
-      // Cache and return
+      // Cache and return (use original URL as cache key)
       this.textureCache.set(sleeveUrl, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load sleeve texture:', sleeveUrl, error);
+      // Check if proxy was used and failed
+      const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(sleeveUrl);
+      const wasProxied = urlToCache !== sleeveUrl;
+      const errorMessage = (error as any)?.message || error?.toString() || '';
+      const errorStatus = (error as any)?.status || (error as any)?.response?.status;
+      const errorTarget = (error as any)?.target;
+      
+      // Check if the failed URL matches proxy pattern
+      const failedUrl = errorTarget?.src || errorTarget?.currentSrc || '';
+      const isProxyUrl = failedUrl.includes('/v1/image-proxy/proxy');
+      
+      // Detect proxy failures (403, 404, network errors)
+      const isProxyError = wasProxied && (
+        errorStatus === 404 ||
+        errorStatus === 403 ||
+        errorMessage.includes('404') ||
+        errorMessage.includes('403') ||
+        errorMessage.includes('Forbidden') ||
+        errorMessage.includes('Domain not allowed') ||
+        errorMessage.includes('Failed to fetch') ||
+        errorMessage.includes('NetworkError') ||
+        errorMessage.includes('net::ERR_') ||
+        isProxyUrl
+      );
+
+      // If proxy failed, try original URL as fallback
+      if (isProxyError) {
+        try {
+          const originalIsExternal = originalUrl.startsWith('http://') || originalUrl.startsWith('https://');
+          const fallbackLoader = originalIsExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+          
+          const originalCachedUrl = await this.imageCacheService.fetchFromCache(originalUrl).toPromise();
+          const texture = await fallbackLoader.loadAsync(originalCachedUrl);
+          
+          texture.colorSpace = 'srgb';
+          texture.anisotropy = 16;
+          texture.flipY = true;
+          
+          this.textureCache.set(sleeveUrl, texture);
+          
+          // Fallback succeeded - log rejected domain for proxy errors
+          // Note: Browser network errors (like "Failed to load resource: 403") are logged automatically
+          // by the browser itself and cannot be suppressed from JavaScript. These errors appear in the
+          // console even though the fallback mechanism successfully loads images via the original URL.
+          // The errors are informational only - images are loading correctly via fallback.
+          // Extract domain from original URL for logging (works for all proxy errors, not just 403)
+          try {
+            const urlObj = new URL(originalUrl);
+            const rejectedDomain = urlObj.hostname.toLowerCase();
+            console.warn(`[ImageProxy] Domain rejected: ${rejectedDomain} - add to ALLOWED_DOMAINS in image-proxy.controller.ts`);
+          } catch (e) {
+            // URL parsing failed, skip domain extraction
+          }
+          
+          // Silently handled - fallback worked
+          return texture;
+        } catch (fallbackError) {
+          // Both proxy and original failed, use cardback
+          console.warn('Both proxy and original URL failed for sleeve texture:', originalUrl);
+          return this.loadCardBack();
+        }
+      }
+
+      // For non-proxy errors, check if it's a CORS error to suppress logging
+      const isEventError = error instanceof Event;
+      const isCorsError = isEventError && (
+        errorMessage.includes('CORS') ||
+        errorMessage.includes('Access-Control') ||
+        errorMessage.includes('cross-origin') ||
+        (errorTarget && errorTarget.tagName === 'IMG')
+      );
+      
+      // Only log non-CORS errors
+      if (!isCorsError) {
+        console.error('Failed to load sleeve texture:', originalUrl, error);
+      }
+      
       // Return card back as fallback
       return this.loadCardBack();
     }
@@ -122,7 +375,7 @@ export class Board3dAssetLoaderService {
       const cachedUrl = await this.imageCacheService.fetchFromCache(cardBackUrl).toPromise();
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16;
       texture.flipY = true;
 
@@ -139,7 +392,7 @@ export class Board3dAssetLoaderService {
    * Load a marker texture (for status conditions)
    */
   async loadMarkerTexture(condition: string): Promise<Texture> {
-    const markerUrl = `assets/markers/${condition}.webp`;
+    const markerUrl = `assets/${condition}.webp`;
 
     if (this.textureCache.has(markerUrl)) {
       return this.textureCache.get(markerUrl)!;
@@ -149,7 +402,7 @@ export class Board3dAssetLoaderService {
       const cachedUrl = await this.imageCacheService.fetchFromCache(markerUrl).toPromise();
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 8;
 
       this.textureCache.set(markerUrl, texture);
@@ -173,7 +426,7 @@ export class Board3dAssetLoaderService {
       const cachedUrl = await this.imageCacheService.fetchFromCache(gridUrl).toPromise();
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16;
       texture.flipY = false; // Don't flip for board texture
       
@@ -204,7 +457,7 @@ export class Board3dAssetLoaderService {
       const cachedUrl = await this.imageCacheService.fetchFromCache(centerUrl).toPromise();
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16;
       texture.flipY = false; // Don't flip for board texture
 
@@ -229,7 +482,7 @@ export class Board3dAssetLoaderService {
       const cachedUrl = await this.imageCacheService.fetchFromCache(gridUrl).toPromise();
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
+      texture.colorSpace = 'srgb';
       texture.anisotropy = 16;
       texture.flipY = false; // Don't flip for slot texture
 
@@ -259,7 +512,7 @@ export class Board3dAssetLoaderService {
 
     const texture = new Texture(canvas);
     texture.needsUpdate = true;
-    texture.encoding = sRGBEncoding;
+    texture.colorSpace = 'srgb';
 
     return texture;
   }

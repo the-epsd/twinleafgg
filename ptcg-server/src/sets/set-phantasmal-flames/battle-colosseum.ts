@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 
 export class BattleColosseum extends TrainerCard {
@@ -19,20 +20,44 @@ export class BattleColosseum extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Also prevent damage counters from effects like PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE
-    if (effect instanceof PutCountersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof PutCountersEffect && StateUtils.getStadiumCard(state) === this) {
       const sourcePokemon = effect.source;
 
-      // Check if the source is the opponent's Pokemon
-      if (sourcePokemon && opponent.active === sourcePokemon) {
-        // Check if the target is a benched Pokemon (not active)
-        if (effect.target !== player.active && effect.target !== opponent.active) {
-          // Prevent damage counters to benched Pokemon from opponent's attacks/abilities
-          effect.preventDefault = true;
+      // Check if the source belongs to the opponent of the target's owner
+      if (sourcePokemon) {
+        const targetOwner = StateUtils.findOwner(state, effect.target);
+        const targetOpponent = StateUtils.getOpponent(state, targetOwner);
+        const sourceOwner = StateUtils.findOwner(state, sourcePokemon);
+        if (sourceOwner === targetOpponent) {
+          // Check if the target is a benched Pokemon (not active)
+          if (effect.target !== targetOwner.active && effect.target !== targetOpponent.active) {
+            // Prevent damage counters to benched Pokemon from opponent's attacks/abilities
+            effect.preventDefault = true;
+          }
         }
       }
     }
+
+    if (effect instanceof PlaceDamageCountersEffect && StateUtils.getStadiumCard(state) === this) {
+      // Check if the source is provided and belongs to the opponent of the target's owner
+      if (effect.source) {
+        const sourceCardList = StateUtils.findPokemonSlot(state, effect.source);
+        if (sourceCardList) {
+          const targetOwner = StateUtils.findOwner(state, effect.target);
+          const targetOpponent = StateUtils.getOpponent(state, targetOwner);
+          const sourceOwner = StateUtils.findOwner(state, sourceCardList);
+          if (sourceOwner === targetOpponent) {
+            // Check if the target is a benched Pokemon (not active)
+            if (effect.target !== targetOwner.active && effect.target !== targetOpponent.active) {
+              // Prevent damage counters to benched Pokemon from opponent's attacks/abilities
+              effect.preventDefault = true;
+            }
+          }
+        }
+      }
+    }
+
+
     return state;
   }
 }

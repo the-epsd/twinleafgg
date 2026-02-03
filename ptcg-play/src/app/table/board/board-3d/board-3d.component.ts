@@ -18,7 +18,6 @@ import {
   MeshStandardMaterial,
   Mesh,
   PCFSoftShadowMap,
-  sRGBEncoding,
   ACESFilmicToneMapping,
   Vector3,
   RepeatWrapping
@@ -40,6 +39,7 @@ import { CardInfoPaneOptions } from '../../../shared/cards/card-info-pane/card-i
 import { GameService } from '../../../api/services/game.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Object3D } from 'three';
+import { getCameraConfig } from './board-3d-config';
 
 @UntilDestroy()
 @Component({
@@ -157,7 +157,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Sync game state when it changes or when players change (for replay/spectator switchSide)
     const gameStateChanged = changes.gameState && !changes.gameState.firstChange;
     const playersChanged = (changes.topPlayer || changes.bottomPlayer) && this.scene;
-    
+
     if ((gameStateChanged || playersChanged) && this.scene) {
       this.syncGameState();
     }
@@ -238,11 +238,21 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Calculate initial perspective
     this.isUpsideDown = this.topPlayer?.id === this.clientId;
-    const zMultiplier = this.isUpsideDown ? -1 : 1;
 
-    this.camera = new PerspectiveCamera(37.5, aspect, 0.1, 2000);
-    this.camera.position.set(0, 25, 40 * zMultiplier);
-    this.camera.lookAt(0, 0, 12);  // Center of board
+    // Get camera configuration based on aspect ratio
+    const cameraConfig = getCameraConfig(aspect, this.isUpsideDown);
+
+    this.camera = new PerspectiveCamera(cameraConfig.fov, aspect, 0.1, 2000);
+    this.camera.position.set(
+      cameraConfig.position.x,
+      cameraConfig.position.y,
+      cameraConfig.position.z
+    );
+    this.camera.lookAt(
+      cameraConfig.lookAt.x,
+      cameraConfig.lookAt.y,
+      cameraConfig.lookAt.z
+    );
   }
 
   private initRenderer(): void {
@@ -262,7 +272,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.renderer.shadowMap.type = PCFSoftShadowMap;
 
     // Color and tone mapping
-    this.renderer.outputEncoding = sRGBEncoding;
+    this.renderer.outputColorSpace = 'srgb';
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.2;
   }
@@ -300,7 +310,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       metalness: 0.00,
       transparent: true,
       opacity: 1.0,
-      depthWrite: false // Prevent z-fighting with board texture
+      depthWrite: true, // Enable depth writing for proper layering
+      depthTest: true
     });
 
     this.boardCenterOverlay = new Mesh(centerGeometry, centerMaterial);
@@ -308,8 +319,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.boardCenterOverlay.rotation.z = Math.PI; // Rotate 180 degrees
     // Mirror horizontally by scaling X axis negatively
     this.boardCenterOverlay.scale.x = -1;
-    // Move down 2 units and increase offset to prevent z-fighting
-    this.boardCenterOverlay.position.z = 14.1; // Board is at z=12, so 14.1 = 2 units down + 0.1 offset
+    // Position significantly above board to prevent clipping
+    this.boardCenterOverlay.position.y = 0.05; // Move along y-axis
+    this.boardCenterOverlay.position.z = 14.1; // Board is at z=12, so 15.5 = 3.5 units above
+    this.boardCenterOverlay.renderOrder = 100; // Higher render order to appear on top
     this.boardCenterOverlay.receiveShadow = false;
     this.scene.add(this.boardCenterOverlay);
 
@@ -324,20 +337,8 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
-    const currentTime = performance.now();
-
-    // Check animation state periodically instead of every frame
-    if (currentTime - this.lastAnimationCheck >= this.animationCheckInterval) {
-      this.hasActiveAnimationsCache = this.animationService.hasActiveAnimations();
-      this.lastAnimationCheck = currentTime;
-    }
-
-    // Render if scene changed or animations are active (using cached value)
-    const didRender = this.needsRender || this.hasActiveAnimationsCache;
-    if (didRender) {
-      this.postProcessingService.render();
-      this.needsRender = false;
-    }
+    // Always render - uncapped at all times
+    this.postProcessingService.render();
   };
 
   private onContainerResize(): void {
@@ -357,23 +358,21 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.renderer.setSize(width, height);
     this.postProcessingService.setSize(width, height);
 
-    // Flip Z based on player perspective (like 2D board's isUpsideDown)
-    const zMultiplier = this.isUpsideDown ? -1 : 1;
+    // Get camera configuration based on aspect ratio and perspective
+    const cameraConfig = getCameraConfig(aspect, this.isUpsideDown);
 
-    // Adjust camera for different aspect ratios
-    // Camera must be at Z > 18 to see hand cards (hand is at Z=18)
-    if (aspect < 1.2) {
-      // Portrait/narrow - zoom out more
-      this.camera.position.set(0, 35, 45 * zMultiplier);
-    } else if (aspect < 1.5) {
-      // Slightly narrow
-      this.camera.position.set(0, 30, 40 * zMultiplier);
-    } else {
-      // Wide/normal
-      this.camera.position.set(0, 40, 35 * zMultiplier);
-    }
+    // Update camera position and lookAt from config
+    this.camera.position.set(
+      cameraConfig.position.x,
+      cameraConfig.position.y,
+      cameraConfig.position.z
+    );
+    this.camera.lookAt(
+      cameraConfig.lookAt.x,
+      cameraConfig.lookAt.y,
+      cameraConfig.lookAt.z
+    );
 
-    this.camera.lookAt(0, 0, 18);  // Center of board
     this.markDirty();
   }
 
@@ -733,7 +732,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       const isTopLostZone = this.topPlayer && this.topPlayer.lostzone === cardList;
       const player = isBottomLostZone ? PlayerType.BOTTOM_PLAYER : (isTopLostZone ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER);
       const isOwner = (isBottomLostZone && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
-                      (isTopLostZone && this.topPlayer && this.topPlayer.id === this.clientId);
+        (isTopLostZone && this.topPlayer && this.topPlayer.id === this.clientId);
       const isDeleted = this.gameState.deleted;
 
       if (isDeleted || !isOwner) {

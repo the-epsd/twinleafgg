@@ -15,6 +15,7 @@ import {
   AttackEffect,
   EvolveEffect,
   HealEffect, KnockOutEffect,
+  PlaceDamageCountersEffect,
   PowerEffect,
   PutDamageCountersEffect,
   TrainerPowerEffect,
@@ -156,6 +157,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   //  (attackingPokemon as any).pendingAttackTargets = [];
 
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
+  attackEffect.source = attackingPokemon;
   state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {
@@ -456,6 +458,40 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
             target: targetCard.name,
             effect: effect.power.name,
           });
+        }
+      }
+    }
+    return state;
+  }
+
+  if (effect instanceof PlaceDamageCountersEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+
+    const target = effect.target;
+    const targetCard = target.getPokemonCard();
+    if (targetCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    const damage = Math.max(0, effect.damage);
+    target.damage += damage;
+
+    if (damage > 0) {
+      const effectName = effect.source ? effect.source.name : '';
+      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+        name: effect.player.name,
+        damage: damage,
+        target: targetCard.name,
+        effect: effectName,
+      });
+
+      // Track damage dealt if source is provided
+      if (effect.source) {
+        const sourceCardList = StateUtils.findPokemonSlot(state, effect.source);
+        if (sourceCardList) {
+          GameStatsTracker.trackDamageDealt(effect.player, sourceCardList, damage);
         }
       }
     }

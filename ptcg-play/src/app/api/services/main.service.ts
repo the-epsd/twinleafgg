@@ -68,9 +68,14 @@ export class MainService {
     const index = this.sessionService.session.games.findIndex(g => g.gameId === game.gameId);
     if (index !== -1) {
       games[index] = game;
-      this.sessionService.set({ games });
-      this.autoJoinGame(game);
+    } else {
+      // Game not in session.games yet - add it
+      // This can happen when a player is added via invitation acceptance
+      // and the client wasn't connected when the game was created
+      games.push(game);
     }
+    this.sessionService.set({ games });
+    this.autoJoinGame(game);
   }
 
   private onUsersInfo(userInfos: UserInfo[]): void {

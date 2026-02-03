@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError, CardList, OrderCardsPrompt, SelectPrompt, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 
 export class Baltoy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,6 +40,10 @@ export class Baltoy extends PokemonCard {
       if (targetCard && targetCard === this && opponent.getPokemonInPlay().includes(effect.target)) {
         effect.target = undefined;
       }
+    }
+
+    if (effect instanceof PlaceDamageCountersEffect && effect.target.cards.includes(this)) {
+      effect.preventDefault = true;
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
