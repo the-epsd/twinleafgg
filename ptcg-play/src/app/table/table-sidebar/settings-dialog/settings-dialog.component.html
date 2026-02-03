@@ -19,6 +19,12 @@
         <input type="range" [(ngModel)]="cardSize" min="50" max="200" step="10" (change)="onCardSizeChange($event)">
         <span>{{cardSize}}%</span>
       </div>
+      <div class="slider-container">
+        <label>Card Text Kerning</label>
+        <input type="range" [(ngModel)]="cardTextKerning" min="-2" max="4" step="0.1"
+          (change)="onCardTextKerningChange($event)">
+        <span>{{cardTextKerning.toFixed(1)}}px</span>
+      </div>
       <div class="hidden-formats-container">
         <label class="section-label">Hidden Formats</label>
         <div class="format-checkboxes">
