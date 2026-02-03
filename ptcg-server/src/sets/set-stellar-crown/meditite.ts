@@ -9,40 +9,31 @@ import { StoreLike } from '../../game/store/store-like';
 export class Meditite extends PokemonCard {
 
   public regulationMark = 'H';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 70;
-
-  public retreat = [CardType.COLORLESS];
-
-  public weakness = [{ type: CardType.PSYCHIC }];
+  public retreat = [C];
+  public weakness = [{ type: P }];
 
   public attacks = [
     {
       name: 'Calm Mind',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 0,
       text: 'Heal 20 damage from this Pokémon.'
     },
     {
       name: 'Chop',
-      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [F, C, C],
       damage: 50,
       text: ''
     }
   ];
 
   public set: string = 'SCR';
-
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '77';
-
+  public setNumber: string = '78';
   public name: string = 'Meditite';
-
   public fullName: string = 'Meditite SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
