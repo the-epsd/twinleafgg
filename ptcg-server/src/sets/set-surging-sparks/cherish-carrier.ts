@@ -8,23 +8,16 @@ import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effec
 export class CherishCarrier extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.ACE_SPEC];
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '185';
-
   public regulationMark = 'H';
-
   public name: string = 'Precious Trolley';
-
   public fullName: string = 'Precious Trolley SSP';
 
   public text: string =
-    'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then shuffle your deck.';
+    'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

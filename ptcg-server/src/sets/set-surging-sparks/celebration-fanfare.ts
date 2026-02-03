@@ -10,20 +10,14 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class CelebrationFanfare extends TrainerCard {
 
   public trainerType = TrainerType.STADIUM;
-
   public set = 'SVP';
-
   public regulationMark = 'H';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '174';
-
   public name = 'Celebration Fanfare';
-
   public fullName = 'Celebration Fanfare SVP';
 
-  public text = 'Once during each player\'s turn, that player may heal 10 damage from each of their Pokémon.If they do, that player\'s turn ends.';
+  public text = 'Once during each player\'s turn, that player may heal 10 damage from each of their Pokémon. If they do, that player\'s turn ends.';
 
   useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
 

@@ -17,16 +17,16 @@ export class NsSigilyph extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Psy Sphere',
+      name: 'Psychic Sphere',
       cost: [P],
       damage: 20,
       text: ''
     },
     {
-      name: 'Victory Sigil',
+      name: 'Victory Symbol',
       cost: [P, C, C],
       damage: 0,
-      text: 'If you have exactly 1 Prize card remaining when using this attack, you win this game.'
+      text: 'If you use this attack when you have exactly 1 Prize card remaining, you win this game. '
     }
   ];
 

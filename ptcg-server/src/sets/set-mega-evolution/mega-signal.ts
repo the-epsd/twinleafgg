@@ -52,6 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class MegaSignal extends TrainerCard {
+
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'MEG';
   public regulationMark = 'I';
@@ -59,7 +60,8 @@ export class MegaSignal extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Signal';
   public fullName: string = 'Mega Signal M1S';
-  public text: string = 'Search your deck for 1 Mega Evolution Pokémon ex, reveal it, and put it into your hand. Then shuffle your deck.';
+
+  public text: string = 'Search your deck for a Mega Evolution Pokémon ex, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

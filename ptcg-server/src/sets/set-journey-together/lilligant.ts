@@ -17,7 +17,7 @@ export class Lilligant extends PokemonCard {
   public powers = [{
     name: 'Sunny Day',
     powerType: PowerType.ABILITY,
-    text: 'Attacks used by your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon(before applying Weakness and Resistance).'
+    text: 'Attacks used by your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 
   public attacks = [{

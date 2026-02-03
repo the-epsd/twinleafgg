@@ -31,6 +31,7 @@ export class Wobbuffet extends PokemonCard {
     name: 'Psychic Assault',
     cost: [P, C],
     damage: 10,
+    damageCalculation: "+",
     text: 'This attack does 10 more damage for each damage counter on ' +
       'your opponent\'s Active Pokemon.'
   }];
