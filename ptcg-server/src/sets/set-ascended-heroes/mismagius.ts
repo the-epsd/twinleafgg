@@ -4,7 +4,6 @@ import { StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { Attack } from '../../game/store/card/pokemon-types';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 export class Mismagius extends PokemonCard {
