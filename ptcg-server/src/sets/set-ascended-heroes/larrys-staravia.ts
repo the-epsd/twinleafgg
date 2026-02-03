@@ -10,13 +10,13 @@ export class LarrysStaravia extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: '',
+    name: 'Flap',
     cost: [C],
     damage: 20,
     text: ''
   },
   {
-    name: '',
+    name: 'Razor Wing',
     cost: [C, C],
     damage: 50,
     text: ''

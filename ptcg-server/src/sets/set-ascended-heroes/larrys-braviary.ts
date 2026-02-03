@@ -15,16 +15,16 @@ export class LarrysBraviary extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: '',
+    name: 'Clutch',
     cost: [C, C],
     damage: 50,
-    text: 'During your opponent\'s next turn, the Defending Pokemon can\'t retreat.'
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
   },
   {
     name: 'Brave Bird',
     cost: [C, C, C],
     damage: 120,
-    text: 'This Pokemon also does 30 damage to itself.'
+    text: 'This Pokémon also does 30 damage to itself.'
   }];
 
   public regulationMark = 'I';

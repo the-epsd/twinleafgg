@@ -16,7 +16,7 @@ export class LightBall extends TrainerCard {
   public name: string = 'Light Ball';
   public fullName: string = 'Light Ball M2a';
   public regulationMark = 'I';
-  public text: string = 'Attacks used by the Pikachu ex this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex.';
+  public text: string = 'Attacks used by the Pikachu ex this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

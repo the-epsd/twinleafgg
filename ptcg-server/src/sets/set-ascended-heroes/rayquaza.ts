@@ -14,7 +14,7 @@ export class Rayquaza extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Assault Break',
+    name: 'Breakthrough Assault',
     cost: [L, C],
     damage: 20,
     damageCalculation: '+',

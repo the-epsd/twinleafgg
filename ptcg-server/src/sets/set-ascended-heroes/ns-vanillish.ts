@@ -27,7 +27,7 @@ export class NsVanillish extends PokemonCard {
     name: 'Sheer Cold',
     cost: [W, C, C],
     damage: 60,
-    text: 'The Defending Pokemon can\'t attack during your opponent\'s next turn.'
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t use attacks.'
   }];
 
   public regulationMark = 'I';

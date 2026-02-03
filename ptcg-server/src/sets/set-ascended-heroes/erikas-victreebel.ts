@@ -13,14 +13,14 @@ export class ErikasVictreebel extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Mysterious Rondo',
+    name: 'Flower Garden Rondo',
     cost: [G, C],
     damage: 40,
     damageCalculation: 'x',
-    text: 'This attack does 40 damage for each Erika\'s Pokemon you have in play.'
+    text: 'This attack does 40 damage for each of your Erika\'s Pokémon in play.'
   },
   {
-    name: 'Solarbeam',
+    name: 'Solar Beam',
     cost: [G, G, C],
     damage: 130,
     text: ''

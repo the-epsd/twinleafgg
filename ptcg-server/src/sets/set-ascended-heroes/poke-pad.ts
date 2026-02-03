@@ -33,7 +33,7 @@ export class PokePad extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poké Pad';
   public fullName: string = 'Poké Pad MC';
-  public text: string = 'Search your deck for a Pokémon without a Rule Box, reveal it, and put it into your hand. Then, shuffle your deck.';
+  public text: string = 'Search your deck for a Pokémon that doesn\'t have a Rule Box, reveal it, and put it into your hand. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

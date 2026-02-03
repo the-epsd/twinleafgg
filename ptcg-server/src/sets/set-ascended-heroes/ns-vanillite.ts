@@ -17,7 +17,7 @@ export class NsVanillite extends PokemonCard {
     name: 'Call for Family',
     cost: [C],
     damage: 0,
-    text: 'Search your deck for up to 2 Basic Pokemon and put them onto your Bench. Then, shuffle your deck.'
+    text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
   },
   {
     name: 'Icy Snow',

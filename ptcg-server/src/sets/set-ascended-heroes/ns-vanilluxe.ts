@@ -16,7 +16,7 @@ export class NsVanilluxe extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Layered Snow',
+    name: 'Snow Coating',
     cost: [C, C],
     damage: 0,
     text: 'Double the number of damage counters on each of your opponent\'s Pokémon.'

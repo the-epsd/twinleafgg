@@ -18,7 +18,7 @@ export class MegaMeganiumex extends PokemonCard {
     cost: [C, C, C],
     damage: 70,
     damageCalculation: '+',
-    text: 'This attack does 50 more damage for each [G] Energy attached to this Pokemon.'
+    text: 'This attack does 50 more damage for each [G] Energy attached to this Pokémon.'
   }];
 
   public regulationMark: string = 'I';

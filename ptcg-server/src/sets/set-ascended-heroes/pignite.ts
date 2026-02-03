@@ -13,10 +13,10 @@ export class Pignite extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: '',
+    name: 'Super Singe',
     cost: [R, R, C],
     damage: 70,
-    text: 'Your opponent\'s Active Pokemon is now Burned.'
+    text: 'Your opponent\'s Active Pokémon is now Burned.'
   }];
 
   public regulationMark = 'I';

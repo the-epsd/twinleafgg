@@ -14,7 +14,7 @@ export class Camerupt extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Burn Roast',
+    name: 'Roasting Burn',
     cost: [R],
     damage: 110,
     text: 'If your opponent\'s Active Pokémon isn\'t Burned, this attack does nothing.'

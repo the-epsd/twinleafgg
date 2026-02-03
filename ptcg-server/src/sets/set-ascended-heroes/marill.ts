@@ -13,13 +13,13 @@ export class Marill extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: '',
+    name: 'Hide',
     cost: [C],
     damage: 0,
-    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all effects of attacks, including damage, done to this Pokémon.'
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
   },
   {
-    name: '',
+    name: 'Flop',
     cost: [P, C],
     damage: 20,
     text: ''

@@ -16,7 +16,7 @@ export class MegaScraftyex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Counter Crest',
+    name: 'Counterattacking Crest',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), place 5 damage counters on the Attacking Pokémon.'
   }];

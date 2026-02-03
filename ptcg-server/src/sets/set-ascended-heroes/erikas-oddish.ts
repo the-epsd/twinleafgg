@@ -13,10 +13,10 @@ export class ErikasOddish extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Assault',
+    name: 'Reckless Charge',
     cost: [G],
     damage: 30,
-    text: 'This Pokemon does 10 damage to itself.'
+    text: 'This Pokémon also does 10 damage to itself.'
   }];
 
   public regulationMark = 'I';

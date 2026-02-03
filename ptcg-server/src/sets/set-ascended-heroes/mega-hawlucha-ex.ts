@@ -15,7 +15,7 @@ export class MegaHawluchaex extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Resilient Body',
+    name: 'Tenacious Body',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10.'
   }];
@@ -24,7 +24,8 @@ export class MegaHawluchaex extends PokemonCard {
     name: 'Somersault Dive',
     cost: [F, F, C],
     damage: 120,
-    text: 'If there is a Stadium in play, this attack does 140 more damage. Then, discard that Stadium.'
+    damageCalculation: "+",
+    text: 'If a Stadium is in play, this attack does 140 more damage. Then, discard that Stadium.'
   }];
 
   public regulationMark: string = 'I';

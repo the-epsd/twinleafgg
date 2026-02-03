@@ -20,13 +20,13 @@ export class TeamRocketsHonchkrow extends PokemonCard {
     cost: [C, C],
     damage: 60,
     damageCalculation: 'x',
-    text: '60x damage. Discard any number of Supporter cards with "Team Rocket" in their name from your hand. This attack does 60 damage for each card discarded this way.'
+    text: 'You may discard any number of Supporter cards with "Team Rocket" in their name from your hand, and this attack does 60 damage for each card you discarded in this way.'
   },
   {
     name: 'Hammer In',
     cost: [D, C, C],
     damage: 100,
-    text: '100 damage.'
+    text: ''
   }];
 
   public regulationMark: string = 'I';

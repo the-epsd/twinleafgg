@@ -14,7 +14,7 @@ export class Chikorita extends PokemonCard {
     name: 'Growl',
     cost: [C],
     damage: 0,
-    text: 'During your opponent\'s next turn, any damage done by attacks from the Defending Pokemon is reduced by 20 (before applying Weakness and Resistance).'
+    text: 'During your opponent\'s next turn, attacks used by the Defending Pokémon do 20 less damage (before applying Weakness and Resistance).'
   },
   {
     name: 'Seed Bomb',

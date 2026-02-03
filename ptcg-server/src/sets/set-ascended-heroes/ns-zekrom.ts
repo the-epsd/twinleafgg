@@ -22,10 +22,10 @@ export class NsZekrom extends PokemonCard {
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   },
   {
-    name: 'Rampage Thunder',
+    name: 'Rampaging Thunder',
     cost: [R, L, L, C],
     damage: 250,
-    text: 'This Pokemon can\'t attack during your next turn.'
+    text: 'During your next turn, this Pokémon can\'t use attacks.'
   }];
 
   public regulationMark: string = 'I';

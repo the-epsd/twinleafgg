@@ -13,10 +13,10 @@ export class Azumarillex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Bubble Bundle',
+    name: 'Bubble Gathering',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may move an Energy from 1 of your Pokemon to this Pokemon.'
+    text: 'As often as you like during your turn, you may use this Ability. Move an Energy from 1 of your other Pokémon to this Pokémon.'
   }];
 
   public attacks = [{
