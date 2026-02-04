@@ -1,4 +1,5 @@
-<button mat-raised-button [class]="buttonClasses" [disabled]="disabled || loading" (click)="onClick()">
+<button mat-raised-button [class]="buttonClasses" [disabled]="disabled || loading"
+  [matMenuTriggerFor]="matMenuTriggerFor" [routerLink]="routerLink" (click)="onClick()">
 
   <mat-spinner *ngIf="loading" diameter="16" style="display: inline-block; margin-right: 8px;">
   </mat-spinner>

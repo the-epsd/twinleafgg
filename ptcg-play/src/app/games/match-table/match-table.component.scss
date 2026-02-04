@@ -1,59 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/global.scss';
 
 .ptcg-match-table {
   padding-top: 0;
   font-family: 'Urbanist', sans-serif;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(135deg, rgba($twinleaf-900, 0.8), rgba($twinleaf-950, 0.9));
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(69, 144, 88, 0.1);
+  border: 1px solid $twinleaf-green;
 
   h3 {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
-    color: #e2e8f0;
+    background: linear-gradient(135deg, rgba($twinleaf-800, 0.6), rgba($twinleaf-900, 0.4));
+    color: $twinleaf-50;
     margin: 0;
     padding: 24px 32px;
     font-size: 1.3rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+    border-bottom: 1px solid $twinleaf-green;
     font-family: 'Urbanist', sans-serif;
-    text-shadow: 0 0 10px rgba(69, 144, 88, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   }
 }
 
 // Matches Grid
 .matches-grid {
-
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: #12141b;
+  background: rgba($twinleaf-900, 0.5);
 
   &::-webkit-scrollbar {
     width: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba($bg-primary, 0.5);
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #459058, #5ba86b);
+    background: linear-gradient(180deg, $twinleaf-400, $twinleaf-500);
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #5ba86b, #459058);
+    background: linear-gradient(180deg, $twinleaf-500, $twinleaf-400);
   }
 }
 
 // Match Card
 .match-card {
-  background: #12141b;
+  background: rgba($twinleaf-800, 0.4);
   border: none;
   border-radius: 0;
   backdrop-filter: none;
@@ -63,7 +63,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+  border-bottom: 1px solid $twinleaf-green;
 
   &:last-child {
     border-bottom: none;
@@ -76,21 +76,21 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+  border-bottom: 1px solid $twinleaf-green;
 
   .match-date {
     .date-text {
       font-size: 12px;
       font-weight: 600;
-      color: #64748b;
+      color: $twinleaf-300;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
     }
   }
 
   .match-status {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.3), rgba($twinleaf-600, 0.2));
+    border: 1px solid $twinleaf-green;
     border-radius: 20px;
     padding: 6px 12px;
     backdrop-filter: blur(20px);
@@ -98,14 +98,14 @@
     .status-text {
       font-size: 10px;
       font-weight: 700;
-      color: #e2e8f0;
+      color: $twinleaf-50;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
     }
 
     &.winner {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
-      border-color: rgba(34, 197, 94, 0.3);
+      background: linear-gradient(135deg, rgba($twinleaf-400, 0.4), rgba($twinleaf-500, 0.3));
+      border-color: $twinleaf-green;
     }
   }
 }
@@ -126,13 +126,26 @@
   flex: 1;
   padding: 12px;
   border-radius: 8px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba($twinleaf-950, 0.5), rgba($twinleaf-900, 0.3));
+  border: 1px solid rgba($twinleaf-700, 0.4);
   position: relative;
 
   &.winner {
-    border-color: rgba(34, 197, 94, 0.4);
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+    border-color: $twinleaf-green;
+    background: linear-gradient(135deg, rgba($twinleaf-green, 0.15), rgba($twinleaf-950, 0.5), rgba($twinleaf-900, 0.3));
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba($twinleaf-green, 0.1);
+      border-radius: 8px;
+      pointer-events: none;
+    }
   }
 
   .player-avatar {
@@ -144,7 +157,7 @@
       height: 40px !important;
       border-radius: 50%;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      background: linear-gradient(135deg, rgba($twinleaf-50, 0.1), rgba($twinleaf-50, 0.05));
       backdrop-filter: blur(10px);
     }
   }
@@ -160,12 +173,12 @@
     .player-name {
       font-size: 14px;
       font-weight: 700;
-      color: #ffffff;
+      color: $twinleaf-100;
       font-family: 'Urbanist', sans-serif;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     }
 
     .player-details {
@@ -176,9 +189,9 @@
       .player-ranking {
         font-size: 11px;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.8);
+        color: $twinleaf-200;
         font-family: 'Urbanist', sans-serif;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
       }
 
       .player-archetype {
@@ -209,9 +222,9 @@
     height: 2px;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(69, 144, 88, 0.4) 20%,
-        rgba(69, 144, 88, 0.8) 50%,
-        rgba(69, 144, 88, 0.4) 80%,
+        rgba($twinleaf-green, 0.6) 20%,
+        $twinleaf-green 50%,
+        rgba($twinleaf-green, 0.6) 80%,
         transparent 100%);
     border-radius: 1px;
   }
@@ -219,10 +232,10 @@
   .vs-text {
     font-size: 12px;
     font-weight: 800;
-    color: #459058;
+    color: $twinleaf-green;
     font-family: 'Urbanist', sans-serif;
-    text-shadow: 0 0 8px rgba(69, 144, 88, 0.4);
-    background: linear-gradient(135deg, #459058, #5ba86b);
+    text-shadow: 0 0 12px rgba($twinleaf-green, 0.8), 0 2px 4px rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, $twinleaf-green, rgba($twinleaf-green, 0.8));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -234,15 +247,15 @@
   display: flex;
   justify-content: center;
   padding-top: 12px;
-  border-top: 1px solid rgba(69, 144, 88, 0.2);
+  border-top: 1px solid $twinleaf-green;
 }
 
 .action-button {
-  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-  border: 1px solid rgba(69, 144, 88, 0.3);
+  background: linear-gradient(135deg, rgba($twinleaf-500, 0.3), rgba($twinleaf-600, 0.2));
+  border: 1px solid rgba($twinleaf-400, 0.6);
   border-radius: 8px;
   padding: 10px 20px;
-  color: #e2e8f0;
+  color: $twinleaf-50;
   font-size: 12px;
   font-weight: 700;
   font-family: 'Urbanist', sans-serif;
@@ -256,8 +269,8 @@
   transition: all 0.3s ease;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-    border-color: rgba(69, 144, 88, 0.5);
+    background: linear-gradient(135deg, rgba($twinleaf-400, 0.4), rgba($twinleaf-500, 0.3));
+    border-color: rgba($twinleaf-300, 0.7);
   }
 
   mat-icon {
@@ -272,34 +285,34 @@
   padding: 20px;
   display: flex;
   justify-content: center;
-  border-top: 1px solid rgba(69, 144, 88, 0.2);
+  border-top: 1px solid $twinleaf-green;
 
   ::ng-deep .mat-paginator {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-900, 0.6), rgba($twinleaf-800, 0.4));
+    border: 1px solid $twinleaf-green;
     border-radius: 12px;
     backdrop-filter: blur(20px);
-    color: #ffffff;
+    color: $twinleaf-50;
     font-family: 'Urbanist', sans-serif;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 
     .mat-paginator-page-size-label,
     .mat-paginator-range-label {
-      color: #ffffff;
+      color: $twinleaf-100;
       font-weight: 500;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     }
 
     .mat-icon-button {
-      color: #ffffff;
+      color: $twinleaf-200;
 
       &:hover:not([disabled]) {
-        background: rgba(69, 144, 88, 0.1);
-        color: #459058;
+        background: rgba($twinleaf-500, 0.2);
+        color: $twinleaf-300;
       }
 
       &[disabled] {
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba($twinleaf-700, 0.5);
       }
     }
   }
@@ -313,15 +326,15 @@
 
 .ptcg-table-loading-failed {
   text-align: center;
-  color: #e2e8f0;
+  color: $twinleaf-50;
   font-family: 'Urbanist', sans-serif;
 }
 
 // Modern Menu Styling
 ::ng-deep .modern-menu {
   .mat-menu-panel {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-950, 0.95), rgba($twinleaf-900, 0.95));
+    border: 1px solid rgba($twinleaf-500, 0.3);
     border-radius: 12px;
     backdrop-filter: blur(20px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
@@ -331,7 +344,7 @@
     }
 
     .mat-menu-item {
-      color: #ffffff;
+      color: $twinleaf-100;
       font-size: 14px;
       font-weight: 500;
       font-family: 'Urbanist', sans-serif;
@@ -340,11 +353,11 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 
       &:hover {
-        background: rgba(69, 144, 88, 0.1);
-        color: #459058;
+        background: rgba($twinleaf-500, 0.2);
+        color: $twinleaf-300;
       }
 
       mat-icon {
@@ -369,14 +382,6 @@
 
 // Responsive Design
 @media (max-width: 1200px) {
-  .match-history-header {
-    min-height: 100px;
-
-    .header-content {
-      padding: 20px;
-    }
-  }
-
   .matches-grid {
     padding: 15px;
     gap: 12px;
@@ -384,20 +389,6 @@
 }
 
 @media (max-width: 768px) {
-  .match-history-header {
-    height: 25%;
-    min-height: 80px;
-
-    .header-content {
-      padding: 15px;
-    }
-
-    .section-title .title-text {
-      font-size: 20px;
-      letter-spacing: 2px;
-    }
-  }
-
   .matches-grid {
     padding: 10px;
     gap: 10px;
@@ -428,29 +419,15 @@
       height: 20px;
       background: linear-gradient(180deg,
           transparent 0%,
-          rgba(69, 144, 88, 0.6) 20%,
-          rgba(69, 144, 88, 0.8) 50%,
-          rgba(69, 144, 88, 0.6) 80%,
+          rgba($twinleaf-green, 0.7) 20%,
+          $twinleaf-green 50%,
+          rgba($twinleaf-green, 0.7) 80%,
           transparent 100%);
     }
   }
 }
 
 @media (max-width: 480px) {
-  .match-history-header {
-    height: 30%;
-    min-height: 70px;
-
-    .header-content {
-      padding: 10px;
-    }
-
-    .section-title .title-text {
-      font-size: 18px;
-      letter-spacing: 1px;
-    }
-  }
-
   .matches-grid {
     padding: 8px;
     gap: 8px;

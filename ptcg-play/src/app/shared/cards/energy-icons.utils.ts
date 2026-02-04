@@ -37,7 +37,7 @@ export const CUSTOM_ENERGY_ICONS: { [key: string]: string } = {
   'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
   'Rock Fighting Energy': 'assets/energy/rock-fighting.webp',
   'Growth Grass Energy': 'assets/energy/growth-grass.webp',
-  'Telepath Psychic Energy': 'assets/energy/telepathic-psychic.webp',
+  'Telepath Psychic Energy': 'assets/energy/telepath-psychic.webp',
 };
 
 /**

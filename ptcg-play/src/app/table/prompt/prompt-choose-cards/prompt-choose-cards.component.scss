@@ -1,3 +1,5 @@
+@import '../../../../theme/global.scss';
+
 .fullscreen-wrapper {
   position: fixed;
   top: 0;
@@ -36,7 +38,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: $bg-overlay;
   z-index: -1;
 }
 
@@ -48,13 +50,13 @@
   overflow: hidden;
   position: relative;
   z-index: 10001;
-  background-color: rgba(14, 15, 19, 0.7);
+  background-color: $bg-overlay;
 }
 
 .ptcg-prompt-title {
   padding: clamp(0.5rem, 2vh, 1rem) clamp(1rem, 4vw, 2rem);
-  background-color: rgb(10, 12, 16);
-  color: #fff;
+  background-color: $bg-secondary;
+  color: $text-primary;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -80,7 +82,7 @@
 
 .ptcg-prompt-actions {
   padding: clamp(0.5rem, 2vh, 1rem) clamp(1rem, 4vw, 2rem);
-  background-color: rgb(10, 12, 16);
+  background-color: $bg-secondary;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -354,17 +356,17 @@ ptcg-card {
       .card-slot {
         width: clamp(52px, 5.75vw, 69px);
         height: clamp(72px, 8.05vw, 96px);
-        border: 2px dashed rgba(255, 255, 255, 0.2);
+        border: 2px dashed $border-color;
         border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba($twinleaf-950, 0.2);
         transition: all 0.3s ease;
         flex-shrink: 0;
 
         &:hover {
-          border-color: rgba(255, 255, 255, 0.3);
+          border-color: $border-color-hover;
         }
 
         ptcg-card {
@@ -383,16 +385,16 @@ ptcg-card {
     .card-slot {
       width: clamp(100px, 11.5vw, 138px);
       height: clamp(140px, 16.1vw, 193px);
-      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border: 2px dashed $border-color;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba($twinleaf-950, 0.2);
       transition: all 0.3s ease;
 
       &:hover {
-        border-color: rgba(255, 255, 255, 0.3);
+        border-color: $border-color-hover;
       }
 
       ptcg-card {
@@ -407,16 +409,16 @@ ptcg-card {
 .card-slot {
   width: clamp(100px, 11.5vw, 138px);
   height: clamp(140px, 16.1vw, 193px);
-  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border: 2px dashed $border-color;
   border-radius: clamp(4px, 0.5vw, 8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba($twinleaf-950, 0.2);
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: $border-color-hover;
   }
 
   ptcg-card {
@@ -445,13 +447,13 @@ ptcg-card {
 }
 
 .cancel-button {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
+  background-color: rgba($twinleaf-50, 0.1);
+  color: $text-primary;
 }
 
 .confirm-button {
-  background-color: #449058;
-  color: white;
+  background-color: #449058; // Keep green for buttons
+  color: $text-primary;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -531,7 +533,7 @@ ptcg-card {
       .tab-button {
         padding: 8px 16px;
         border: none;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba($twinleaf-50, 0.1);
         cursor: pointer;
         font-size: 14px;
         color: #FFE0A3;
@@ -540,7 +542,7 @@ ptcg-card {
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 
         &:hover {
-          background: rgba(255, 255, 255, 0.15);
+          background: rgba($twinleaf-50, 0.15);
           color: #fff;
         }
 
@@ -570,7 +572,7 @@ ptcg-card {
     .mdc-dialog__container,
     .mdc-dialog__surface,
     .mat-mdc-dialog-surface {
-      background: rgba(0, 0, 0, 0.7) !important;
+      background: $bg-overlay !important;
       box-shadow: none !important;
     }
   }

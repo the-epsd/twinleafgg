@@ -1,12 +1,10 @@
 <div class="ptcg-games-table">
-
   <h3 translate>GAMES_ACTIVE_GAMES</h3>
 
   <ptcg-content>
     <!-- Games Grid -->
     <div class="games-grid">
       <div class="game-card" *ngFor="let row of games$ | async; let i = index">
-
         <!-- Game Header -->
         <div class="game-card-header">
           <div class="game-id">
@@ -75,8 +73,5 @@
         </div>
       </div>
     </div>
-
-
   </ptcg-content>
-
 </div>

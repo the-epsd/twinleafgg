@@ -1,26 +1,187 @@
-@import '../../../theme/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/global.scss';
 
 .ptcg-conversation {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
+  background: $bg-secondary;
 }
 
 .ptcg-conversation-content {
   display: block;
   flex: 1 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .ptcg-conversation-content-inner {
-  padding-bottom: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.ptcg-conversation-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: map-get($padding, normal);
+  display: flex;
+  flex-direction: column;
+  gap: map-get($padding, small);
+  scroll-behavior: smooth;
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($bg-card, 0.3);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($twinleaf-green, 0.3);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: rgba($twinleaf-green, 0.5);
+    }
+  }
+}
+
+.ptcg-conversation-message {
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .ptcg-conversation-footer {
-  flex: 0 0;
+  flex: 0 0 auto;
+  background: linear-gradient(135deg, rgba($bg-card, 0.5), rgba($bg-card, 0.3));
+  border-top: 1px solid rgba($twinleaf-green, 0.1);
+  backdrop-filter: blur(10px);
+  padding: map-get($padding, normal);
 
-  mat-form-field {
-    padding: 0 map-get($padding, normal);
+  form {
     width: 100%;
+  }
+}
+
+.ptcg-conversation-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: map-get($padding, small);
+  width: 100%;
+  max-width: 100%;
+}
+
+.ptcg-conversation-input-field {
+  flex: 1;
+  width: 100%;
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  ::ng-deep .mat-form-field-flex {
+    background: rgba($bg-card, 0.5);
+    border: 1px solid rgba($twinleaf-green, 0.2);
+    border-radius: 24px;
+    padding: 8px 16px;
+    align-items: center;
+    transition: all 0.3s ease;
+    min-height: 48px;
+
+    &:hover {
+      border-color: rgba($twinleaf-green, 0.4);
+      background: rgba($bg-card, 0.7);
+    }
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding: 0;
+    border-top: 0;
+    min-height: 32px;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    color: $text-muted;
+    font-size: 14px;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .mat-form-field-flex input {
+    color: $text-primary;
+    font-size: 14px;
+    font-family: 'Urbanist', sans-serif;
+    padding: 0;
+    margin: 0;
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-flex {
+    border-color: $twinleaf-green;
+    background: rgba($twinleaf-green, 0.1);
+    box-shadow: 0 0 0 3px rgba($twinleaf-green, 0.1);
+  }
+}
+
+.ptcg-conversation-send-button {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.1));
+  border: 1px solid $twinleaf-green;
+  color: $twinleaf-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  outline: none;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba($twinleaf-green, 0.3), rgba($twinleaf-green, 0.2));
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba($twinleaf-green, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
   }
 }

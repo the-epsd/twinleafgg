@@ -1,4 +1,4 @@
-@import '../../../theme/variables.scss';
+@import '../../../theme/global.scss';
 
 :host {
   display: flex;
@@ -50,12 +50,12 @@
 
 .ptcg-deck-edit-pane {
   flex: 0 0 300px;
-  background-color: #222a3a;
+  background-color: $bg-secondary;
 }
 
 .ptcg-deck-edit-pane-secondary {
   flex: 1 1 auto;
-  background-color: #2D3748;
+  background-color: $bg-card;
   position: relative;
   margin-left: 0;
   display: flex;
@@ -89,9 +89,9 @@ ptcg-deck-card {
   height: 28px;
   line-height: 28px;
   font-size: 12px;
-  background: #283142;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: $bg-card;
+  color: $text-primary;
+  border: 1px solid $border-color;
   border-radius: 4px;
   padding: 2px 8px;
 }
@@ -123,14 +123,14 @@ ptcg-deck-card.placeholder {
   right: 0;
   bottom: 0;
   padding: 8px 0;
-  background: #2D3748;
+  background: $bg-card;
   z-index: 10;
   display: flex;
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
   pointer-events: none;
-  
+
   ptcg-deck-validity {
     pointer-events: auto;
   }
@@ -167,10 +167,10 @@ ptcg-deck-card.placeholder {
   right: 10px;
   bottom: 10px;
   z-index: 1000;
-  background-color: #2D3748;
-  color: white;
+  background-color: $bg-card;
+  color: $text-primary;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid $border-color;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   width: 36px;
   height: 36px;
@@ -179,7 +179,7 @@ ptcg-deck-card.placeholder {
   justify-content: center;
 
   &:hover {
-    background-color: #3a4659;
+    background-color: $twinleaf-800;
   }
 
   mat-icon {

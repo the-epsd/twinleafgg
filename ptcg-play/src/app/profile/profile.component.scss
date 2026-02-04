@@ -3,7 +3,7 @@
 
 // Page-level background
 .ptcg-profile-page {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
   // min-height: 100vh;
 }
 
@@ -57,7 +57,7 @@
   padding: 40px;
   height: 30vh;
   min-height: 250px;
-  background: linear-gradient(135deg, #28303f, #313a4f, #28303f);
+  background: linear-gradient(135deg, $bg-card, $bg-secondary, $bg-card);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -135,7 +135,7 @@
 
       &:hover {
         transform: scale(1.05);
-        border-color: rgba(255, 255, 255, 0.5);
+        border-color: rgba($text-primary, 0.5);
         box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
       }
     }
@@ -155,7 +155,7 @@
       font-size: 2.5rem;
       font-weight: 800;
       margin: 0;
-      color: white;
+      color: $text-primary;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       letter-spacing: 2px;
 
@@ -175,7 +175,7 @@
         font-family: 'Urbanist', sans-serif;
         font-size: 1.3rem;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba($text-primary, 0.9);
         text-transform: uppercase;
         letter-spacing: 1px;
         display: flex;
@@ -188,8 +188,8 @@
 
     .ptcg-profile-badges {
       .ptcg-admin-badge {
-        background: linear-gradient(135deg, #67c85a, #4a9e40);
-        color: white;
+        background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600);
+        color: $text-primary;
         padding: 6px 15px;
         border-radius: 20px;
         font-family: 'Urbanist', sans-serif;
@@ -216,8 +216,8 @@
   .ptcg-edit-button,
   .ptcg-message-button,
   .ptcg-ban-button {
-    background: linear-gradient(135deg, #67c85a, #4a9e40);
-    color: white;
+    background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600);
+    color: $text-primary;
     font-weight: 600;
     padding: 10px 20px;
     border: none;
@@ -233,7 +233,7 @@
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-      background: linear-gradient(135deg, #7ad86e, #58b14c);
+      background: linear-gradient(135deg, $twinleaf-400, $twinleaf-500);
     }
 
     &:active {
@@ -243,10 +243,10 @@
   }
 
   .ptcg-ban-button {
-    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+    background: linear-gradient(135deg, $twinleaf-600, $twinleaf-700) !important;
 
     &:hover {
-      background: linear-gradient(135deg, #f87171, #ef4444) !important;
+      background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600) !important;
     }
   }
 }
@@ -265,8 +265,8 @@
   margin-bottom: 30px;
 
   .ptcg-profile-card {
-    background: rgba(40, 49, 66, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba($bg-card, 0.8);
+    border: 1px solid $border-color;
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
@@ -285,27 +285,44 @@
   animation: fadeIn 0.8s ease-out forwards;
   animation-delay: 1s;
   opacity: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 
   .ptcg-match-table {
     padding-top: 0;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 1200px) {
+    max-width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
   }
 }
 
 // Legacy styles for compatibility
 .ptcg-u-padding {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
 }
 
 .mat-header-row {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
 }
 
 .mat-cell {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
 }
 
 .mat-paginator {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
 }
 
 .mat-form-field-infix {
@@ -314,13 +331,13 @@
 }
 
 .mat-select-value {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
   font-size: 14px;
 }
 
 .mat-form-field-label {
   font-size: 14px;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
 }
 
 .mat-form-field-underline {
@@ -329,18 +346,18 @@
 }
 
 .mat-form-field-flex input {
-  color: #67c85a;
+  color: $twinleaf-500;
   font-size: 13px;
 }
 
 .mat-form-field-flex .mat-input-element {
-  color: #67c85a;
+  color: $twinleaf-500;
   font-size: 13px;
   margin-bottom: 1px;
 }
 
 .mat-focused .mat-form-field-flex {
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.585) 0%, rgba(5, 10, 25, 0.585) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.585) 0%, rgba($bg-primary, 0.585) 100%);
 
   .mat-select-value {
     width: 100%;

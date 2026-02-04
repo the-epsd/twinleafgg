@@ -27,6 +27,7 @@ import { TwinleafPlayButtonComponent } from './twinleaf-play-button/twinleaf-pla
 import { TwinleafPreviousButtonComponent } from './twinleaf-previous-button/twinleaf-previous-button.component';
 import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-next-button.component';
 import { TwinleafButtonComponent } from './twinleaf-button/twinleaf-button.component';
+import { TwinleafButtonModule } from './twinleaf-button/twinleaf-button.module';
 import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
 
 @NgModule({
@@ -43,7 +44,8 @@ import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
     DndModule,
     TranslateModule,
     UserInfoModule,
-    ValidationModule
+    ValidationModule,
+    TwinleafButtonModule
   ],
   declarations: [
     ContentComponent,
@@ -56,8 +58,7 @@ import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
     ConnectionStatusComponent,
     TwinleafPlayButtonComponent,
     TwinleafPreviousButtonComponent,
-    TwinleafNextButtonComponent,
-    TwinleafButtonComponent
+    TwinleafNextButtonComponent
   ],
   exports: [
     AlertModule,
@@ -86,7 +87,7 @@ import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
     TwinleafPlayButtonComponent,
     TwinleafPreviousButtonComponent,
     TwinleafNextButtonComponent,
-    TwinleafButtonComponent,
+    TwinleafButtonModule,
     TwinleafFormModule
   ],
   providers: [

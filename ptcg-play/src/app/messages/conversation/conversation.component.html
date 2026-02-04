@@ -1,32 +1,27 @@
 <div class="ptcg-conversation">
   <ptcg-content class="ptcg-conversation-content" [loading]="loading">
-    <div class="ptcg-conversation-content-inner ptcg-u-padding">
-      <div class="ptcg-conversation-message" *ngFor="let message of (messages$ | async)">
-        <ptcg-message-entry
-          [message]="message"
-          [loggedUserId]="loggedUserId">
-        </ptcg-message-entry>
+    <div class="ptcg-conversation-content-inner">
+      <div class="ptcg-conversation-messages">
+        <div class="ptcg-conversation-message" *ngFor="let message of (messages$ | async)">
+          <ptcg-message-entry [message]="message" [loggedUserId]="loggedUserId">
+          </ptcg-message-entry>
+        </div>
       </div>
     </div>
   </ptcg-content>
 
   <div class="ptcg-conversation-footer">
-    <form autocomplete="off">
-      <mat-form-field floatLabel="never" appearance="legacy">
-        <input
-          name="message"
-          maxlength="2048"
-          [disabled]="loading"
-          [(ngModel)]="text"
-          type="text" matInput [placeholder]="'MESSAGES_ENTER_MESSAGE' | translate">
-        <button mat-button matSuffix mat-icon-button
-          [matTooltip]="'MESSAGES_SEND_MESSAGE' | translate"
-          matTooltipShowDelay="1000"
-          [disabled]="loading"
-          (click)="sendMessage(userId, text)">
-          <mat-icon>play_arrow</mat-icon>
+    <form autocomplete="off" (ngSubmit)="sendMessage(userId, text); $event.preventDefault()">
+      <div class="ptcg-conversation-input-wrapper">
+        <mat-form-field floatLabel="never" appearance="legacy" class="ptcg-conversation-input-field">
+          <input name="message" maxlength="2048" [disabled]="loading" [(ngModel)]="text" type="text" matInput
+            [placeholder]="'MESSAGES_ENTER_MESSAGE' | translate" (keydown.enter)="handleEnterKey($event)">
+        </mat-form-field>
+        <button type="submit" class="ptcg-conversation-send-button" [matTooltip]="'MESSAGES_SEND_MESSAGE' | translate"
+          matTooltipShowDelay="500" [disabled]="loading || !text?.trim()">
+          <mat-icon>send</mat-icon>
         </button>
-      </mat-form-field>
+      </div>
     </form>
   </div>
 </div>

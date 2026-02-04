@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
-@import '../../theme/variables.scss';
+@import '../../theme/global.scss';
 
 :host {
   display: block;
   height: 100vh;
-  background: #10131e;
+  background: $bg-primary;
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
 }
@@ -29,7 +29,7 @@
   .header-background {
     position: relative;
     height: 100%;
-    background: #10131e;
+    background: $bg-primary;
   }
 
   .header-content {
@@ -51,7 +51,7 @@
   .ranking-title {
     font-size: 42px;
     font-weight: 800;
-    color: #ffffff;
+    color: $text-primary;
     font-family: 'Urbanist', sans-serif;
     margin: 0 0 8px 0;
     text-transform: uppercase;
@@ -62,7 +62,7 @@
   .ranking-subtitle {
     font-size: 14px;
     font-weight: 600;
-    color: #459058;
+    color: $twinleaf-500;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-family: 'Urbanist', sans-serif;
@@ -99,8 +99,8 @@
 }
 
 .ranking-table {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(69, 144, 88, 0.3);
+  background: linear-gradient(135deg, rgba($twinleaf-50, 0.05), rgba($twinleaf-50, 0.02));
+  border: 1px solid $twinleaf-green;
   border-radius: 16px;
   backdrop-filter: blur(20px);
   overflow: hidden;
@@ -113,15 +113,15 @@
   grid-template-columns: 80px 1fr 2fr 120px;
   gap: 1rem;
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-  border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+  background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+  border-bottom: 1px solid $twinleaf-green;
   height: 80px;
   align-items: center;
 
   .table-cell {
     font-size: 14px;
     font-weight: 700;
-    color: #e2e8f0;
+    color: $text-primary;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-family: 'Urbanist', sans-serif;
@@ -136,19 +136,19 @@
     grid-template-columns: 80px 1fr 2fr 120px;
     gap: 1rem;
     padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid $twinleaf-green;
     transition: all 0.3s ease;
     position: relative;
     height: 80px;
     align-items: center;
 
     &:hover {
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.05), rgba(69, 144, 88, 0.02));
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.05), rgba($twinleaf-500, 0.02));
     }
 
     &.current-user {
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-      border-left: 4px solid #459058;
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+      border-left: 4px solid $twinleaf-500;
 
       &::before {
         content: '';
@@ -157,16 +157,16 @@
         top: 0;
         bottom: 0;
         width: 4px;
-        background: linear-gradient(180deg, #459058, #5ba86b);
-        box-shadow: 0 0 10px rgba(69, 144, 88, 0.5);
+        background: linear-gradient(180deg, $twinleaf-500, $twinleaf-600);
+        box-shadow: 0 0 10px rgba($twinleaf-500, 0.5);
       }
     }
 
     &.top-three {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
 
       &.current-user {
-        background: linear-gradient(135deg, rgba(69, 144, 88, 0.15), rgba(69, 144, 88, 0.08));
+        background: linear-gradient(135deg, rgba($twinleaf-500, 0.15), rgba($twinleaf-500, 0.08));
       }
     }
 
@@ -208,13 +208,13 @@
   .position-number {
     font-size: 24px;
     font-weight: 800;
-    color: #e2e8f0;
+    color: $text-primary;
     font-family: 'Urbanist', sans-serif;
   }
 
   &.top-position {
     .position-number {
-      color: #ffd700;
+      color: $twinleaf-500;
     }
   }
 }
@@ -228,7 +228,7 @@
   .ranking-number {
     font-size: 18px;
     font-weight: 700;
-    color: #e2e8f0;
+    color: $text-primary;
     font-family: 'Urbanist', sans-serif;
   }
 }
@@ -240,11 +240,11 @@
 
 // Actions Button
 .actions-button {
-  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-  border: 1px solid rgba(69, 144, 88, 0.3);
+  background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+  border: 1px solid $twinleaf-green;
   border-radius: 8px;
   padding: 8px 16px;
-  color: #e2e8f0;
+  color: $text-primary;
   font-size: 12px;
   font-weight: 600;
   font-family: 'Urbanist', sans-serif;
@@ -257,8 +257,8 @@
   gap: 6px;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-    border-color: rgba(69, 144, 88, 0.5);
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+    border-color: $twinleaf-green;
     transform: translateY(-1px);
   }
 
@@ -276,29 +276,29 @@
   justify-content: center;
 
   ::ng-deep .mat-paginator {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-50, 0.05), rgba($twinleaf-50, 0.02));
+    border: 1px solid rgba($twinleaf-500, 0.3);
     border-radius: 12px;
     backdrop-filter: blur(20px);
-    color: #e2e8f0;
+    color: $text-primary;
     font-family: 'Urbanist', sans-serif;
 
     .mat-paginator-page-size-label,
     .mat-paginator-range-label {
-      color: #e2e8f0;
+      color: $text-primary;
       font-weight: 500;
     }
 
     .mat-icon-button {
-      color: #e2e8f0;
+      color: $text-primary;
 
       &:hover:not([disabled]) {
-        background: rgba(69, 144, 88, 0.1);
-        color: #459058;
+        background: rgba($twinleaf-500, 0.1);
+        color: $twinleaf-500;
       }
 
       &[disabled] {
-        color: rgba(226, 232, 240, 0.3);
+        color: rgba($twinleaf-50, 0.3);
       }
     }
   }
@@ -310,7 +310,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(45deg, rgba($twinleaf-950, 0.9) 0%, rgba($twinleaf-900, 0.9) 100%);
 
   .loading-content {
     display: flex;
@@ -319,7 +319,7 @@
     gap: 1rem;
 
     .loading-text {
-      color: #e2e8f0;
+      color: $text-primary;
       font-size: 16px;
       font-weight: 600;
       font-family: 'Urbanist', sans-serif;
@@ -338,8 +338,8 @@
   }
 
   .mat-form-field-flex {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-50, 0.1), rgba($twinleaf-50, 0.05));
+    border: 1px solid $twinleaf-green;
     border-radius: 12px;
     padding: 0.75rem 1rem;
     align-items: center;
@@ -350,8 +350,8 @@
     width: 100%;
 
     &:hover {
-      border-color: rgba(69, 144, 88, 0.5);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+      border-color: $twinleaf-green;
+      background: linear-gradient(135deg, rgba($twinleaf-50, 0.15), rgba($twinleaf-50, 0.08));
     }
   }
 
@@ -362,7 +362,7 @@
   }
 
   .mat-form-field-label {
-    color: #e2e8f0;
+    color: $text-primary;
     font-size: 14px;
     font-weight: 500;
     font-family: 'Urbanist', sans-serif;
@@ -376,7 +376,7 @@
   }
 
   .mat-form-field-flex input {
-    color: #e2e8f0;
+    color: $text-primary;
     font-size: 14px;
     font-family: 'Urbanist', sans-serif;
     padding: 0;
@@ -387,16 +387,16 @@
   }
 
   .mat-focused .mat-form-field-flex {
-    border-color: #459058;
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+    border-color: $twinleaf-green;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
   }
 }
 
 // Modern Menu Styling
 ::ng-deep .modern-menu {
   .mat-menu-panel {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.95));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-950, 0.95), rgba($twinleaf-900, 0.95));
+    border: 1px solid rgba($twinleaf-500, 0.3);
     border-radius: 12px;
     backdrop-filter: blur(20px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -406,7 +406,7 @@
     }
 
     .mat-menu-item {
-      color: #e2e8f0;
+      color: $text-primary;
       font-size: 14px;
       font-weight: 500;
       font-family: 'Urbanist', sans-serif;
@@ -417,8 +417,8 @@
       gap: 12px;
 
       &:hover {
-        background: rgba(69, 144, 88, 0.1);
-        color: #459058;
+        background: rgba($twinleaf-500, 0.1);
+        color: $twinleaf-500;
       }
 
       mat-icon {

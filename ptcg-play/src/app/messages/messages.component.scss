@@ -1,82 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../theme/global.scss';
+
+// Sidebar styling
+ptcg-sidebar.ptcg-messages-sidebar {
+  background: linear-gradient(180deg, $bg-primary 0%, $bg-secondary 100%);
+  border-right: 1px solid rgba($twinleaf-green, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .ptcg-messages-sidebar-header {
+    padding: map-get($padding, normal);
+    border-bottom: 1px solid rgba($twinleaf-green, 0.1);
+    background: rgba($bg-card, 0.3);
+    backdrop-filter: blur(10px);
+    min-height: 81px; // Match conversation header height (16px padding + 48px button + 16px padding)
+    display: flex;
+    align-items: center;
+
+    .ptcg-messages-sidebar-title {
+      margin: 0;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: $text-primary;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+
+  .ptcg-messages-conversation-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: map-get($padding, small) 0;
+
+    ::ng-deep .mat-list-item {
+      height: auto !important;
+      min-height: 0 !important;
+      margin-bottom: 4px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// Main content area
+ptcg-content.ptcg-messages-content {
+  background: $bg-secondary;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .ptcg-messages-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #1a202c;
+  background-color: $bg-secondary;
 }
 
-mat-toolbar {
-  flex: 0 0;
+// Header styling
+.ptcg-messages-header {
+  flex: 0 0 auto;
+  background: linear-gradient(135deg, rgba($bg-card, 0.5), rgba($bg-card, 0.3));
+  border-bottom: 1px solid rgba($twinleaf-green, 0.1);
+  backdrop-filter: blur(10px);
+  padding: map-get($padding, normal);
+
+  .ptcg-messages-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+
+    .ptcg-messages-header-title {
+      margin: 0;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: $text-primary;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+  }
 }
 
+// Empty state styling
+.ptcg-messages-empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: map-get($padding, large);
+
+  .ptcg-messages-empty-content {
+    width: 100%;
+    max-width: 500px;
+
+    .ptcg-messages-empty-card {
+      background: linear-gradient(135deg, rgba($bg-card, 0.5), rgba($bg-card, 0.3));
+      border: 1px solid rgba($twinleaf-green, 0.2);
+      border-radius: 16px;
+      padding: map-get($padding, large);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+      .ptcg-messages-empty-icon {
+        margin-bottom: map-get($padding, normal);
+
+        mat-icon {
+          font-size: 64px;
+          width: 64px;
+          height: 64px;
+          color: rgba($twinleaf-green, 0.5);
+        }
+      }
+
+      .ptcg-messages-empty-text {
+        font-family: 'Urbanist', sans-serif;
+        font-size: 16px;
+        color: $text-secondary;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Conversation component
 ptcg-conversation {
   display: flex;
   flex: 1 1;
   height: 100%;
+  min-height: 0;
 }
 
-@import '../../theme/variables.scss';
-
+// Legacy support for old classes
 .ptcg-u-padding {
-  background-color: #1a202c;
-}
-
-.mat-toolbar-row {
-  background-color: #1a202c;
-
-  >h1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  >button {
-    margin-left: map-get($padding, small);
-    min-width: 80px;
-  }
-}
-
-.mat-raised-button {
-  margin-top: 12px;
-  background-color: #449058;
-  border-radius: 16px;
-}
-
-.mat-form-field-infix {
-  padding: 0;
-  border-top: 0;
-}
-
-.mat-select-value {
-  color: #283142;
-  font-size: 14px;
-}
-
-.mat-form-field-label {
-  font-size: 14px;
-  color: #283142;
-}
-
-.mat-form-field-underline {
-  display: none;
-  margin-top: 4px;
-}
-
-.mat-form-field-flex input {
-  color: #449058;
-  font-size: 13px;
-}
-
-.mat-form-field-flex .mat-input-element {
-  color: #449058;
-  font-size: 13px;
-  margin-bottom: 1px;
-}
-
-.mat-focused .mat-form-field-flex {
-  background-color: #283142;
-
-  .mat-select-value {
-    width: 100%;
-    max-width: 100%;
-  }
+  background-color: $bg-secondary;
 }

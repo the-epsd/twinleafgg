@@ -3,36 +3,33 @@
     <mat-toolbar-row>
 
       <!-- Desktop Search Bar -->
-      <ptcg-search-box class="desktop-search" (search)="onSearch($event)" [showSearchButton]="false"
-        [isActivated]="true" label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
-      </ptcg-search-box>
+      <div class="search-container">
+        <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="false"
+          [isActivated]="true"></ptcg-search-box>
+      </div>
 
-      <button mat-raised-button class="filters-toggle-button" (click)="toggleFilters()">
-        Filters
-      </button>
+      <twinleaf-button [text]="'Filters'" (clicked)="toggleFilters()">
+      </twinleaf-button>
 
       <span class="ptcg-u-spacer"></span>
 
-      <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']"
+      <twinleaf-button [text]="'DECK_EDIT_BACK' | translate" (clicked)="onSave()" [routerLink]="['/deck']"
         [disabled]="!isThemeDeck && disabled">
-        <span translate>DECK_EDIT_BACK</span>
-      </button>
+      </twinleaf-button>
 
-      <button mat-raised-button class="green-button" (click)="exportToFile()" [disabled]="!isThemeDeck && disabled">
-        {{ 'BUTTON_EXPORT' | translate }}
-      </button>
+      <twinleaf-button [text]="'BUTTON_EXPORT' | translate" (clicked)="exportToFile()"
+        [disabled]="!isThemeDeck && disabled">
+      </twinleaf-button>
 
-      <button mat-raised-button class="green-button" (click)="importFromClipboard()" [disabled]="disabled">
-        {{ 'BUTTON_IMPORT' | translate }}
-      </button>
+      <twinleaf-button [text]="'BUTTON_IMPORT' | translate" (clicked)="importFromClipboard()" [disabled]="disabled">
+      </twinleaf-button>
 
       <!-- <button mat-raised-button class="green-button" (click)="onSleeveSelect()" [disabled]="disabled || isThemeDeck">
         Sleeves
       </button> -->
 
-      <button mat-raised-button class="green-button" (click)="onSave()" [disabled]="disabled">
-        {{ 'BUTTON_SAVE' | translate }}
-      </button>
+      <twinleaf-button [text]="'BUTTON_SAVE' | translate" (clicked)="onSave()" [disabled]="disabled">
+      </twinleaf-button>
 
     </mat-toolbar-row>
 
@@ -41,9 +38,10 @@
       <div class="filters-content">
         <!-- Mobile Search Bar -->
         <div class="filters-row mobile-search-row">
-          <ptcg-search-box class="mobile-search" (search)="onSearch($event)" [showSearchButton]="false"
-            [isActivated]="true" label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
-          </ptcg-search-box>
+          <div class="search-container">
+            <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="false"
+              [isActivated]="true"></ptcg-search-box>
+          </div>
         </div>
 
         <!-- Card Type Selection -->

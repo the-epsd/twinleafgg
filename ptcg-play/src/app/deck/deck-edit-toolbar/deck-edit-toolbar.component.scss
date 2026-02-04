@@ -1,15 +1,15 @@
-@import '../../../theme/variables.scss';
+@import '../../../theme/global.scss';
 
 .ptcg-deck-edit-toolbar {
   flex: 0 0 auto;
   min-height: 64px; // Ensure consistent minimum height
-  background-color: #1a1f29;
+  background-color: $bg-primary;
   overflow: hidden;
 }
 
 .green-button {
   flex: 0 0 auto;
-  background-color: #090b0f;
+  background-color: $bg-primary;
 }
 
 .mat-toolbar-row {
@@ -32,7 +32,8 @@
 
 
   >mat-form-field,
-  >ptcg-search-box {
+  >ptcg-search-box,
+  >.search-container {
     margin-left: map-get($padding, normal);
   }
 
@@ -40,10 +41,126 @@
     margin-left: map-get($padding, normal);
   }
 
+  >twinleaf-button {
+    margin-left: map-get($padding, small); // Add space between buttons
+  }
+
   >*:first-child {
     margin-left: 0;
   }
 
+}
+
+.search-container {
+  flex: 0 0 auto; // Change from flex: 1 to prevent expansion
+  min-width: 240px; // 40% of 600px
+  max-width: 320px; // 40% of 800px
+  display: flex;
+  align-items: center;
+  margin-right: map-get($padding, normal); // Add space before Filters button
+
+  // Ensure proper vertical alignment with buttons
+  ::ng-deep .mat-form-field {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  ::ng-deep .modern-search-box {
+    align-items: center;
+  }
+}
+
+// Modern Search Box Styling
+::ng-deep .modern-search-box {
+  width: 100%;
+
+  .search-form {
+    width: 100%;
+  }
+
+  .mat-form-field {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    align-items: center; // Ensure vertical alignment
+  }
+
+  .mat-form-field-flex {
+    background: linear-gradient(135deg, rgba($twinleaf-50, 0.1), rgba($twinleaf-50, 0.05));
+    border: 1px solid $twinleaf-green;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    align-items: center;
+    font-size: 14px;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    height: 48px;
+    min-height: 48px;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    margin: 0; // Ensure no margin
+    vertical-align: middle; // Additional alignment
+
+    &:hover {
+      border-color: $twinleaf-green;
+      background: linear-gradient(135deg, rgba($twinleaf-50, 0.15), rgba($twinleaf-50, 0.08));
+    }
+  }
+
+  .mat-form-field-infix {
+    padding: 0;
+    border-top: 0;
+    min-height: 20px;
+    width: 100%;
+  }
+
+  .mat-form-field-label {
+    color: $text-primary;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Urbanist', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(1px);
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-flex input {
+    color: $text-primary;
+    font-size: 14px;
+    font-family: 'Urbanist', sans-serif;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(1px);
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .mat-focused .mat-form-field-flex {
+    border-color: $twinleaf-green;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+  }
 }
 
 .archetype-selectors {
@@ -58,20 +175,20 @@
 
   .search-container {
     padding: 8px;
-    background: #1a1f29;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: $bg-primary;
+    border-bottom: 1px solid $border-color;
 
     input {
       width: 100%;
       background: transparent;
       border: none;
-      color: white;
+      color: $text-primary;
       font-size: 12px;
       padding: 4px 8px;
       outline: none;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
+        color: $text-muted;
       }
     }
   }
@@ -91,7 +208,7 @@
 
     span {
       font-size: 12px;
-      color: white;
+      color: $text-primary;
     }
   }
 }
@@ -99,29 +216,29 @@
 // Filters Toggle Button
 .filters-toggle-button {
   margin-left: map-get($padding, normal);
-  color: #ffffff;
-  background-color: #090b0f;
+  color: $text-primary;
+  background-color: $bg-primary;
   border-radius: 32px;
   min-width: 100px;
   padding: 6px 20px;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: #1a1f29;
+    background-color: $bg-secondary;
   }
 
   // Override Material Design button styles
   &.mat-raised-button {
-    background-color: #090b0f;
-    color: #ffffff;
+    background-color: $bg-primary;
+    color: $text-primary;
     box-shadow: none;
 
     &:hover {
-      background-color: #1a1f29;
+      background-color: $bg-secondary;
     }
 
     &:focus {
-      background-color: #090b0f;
+      background-color: $bg-primary;
     }
   }
 }
@@ -131,8 +248,8 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
-  background-color: #1a1f29;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: $bg-primary;
+  border-top: 1px solid $border-color;
 
   &.expanded {
     max-height: 450px; // Optimized for compact grid layout
@@ -150,26 +267,26 @@
 
 // Filter Groups
 .filter-group {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba($bg-card, 0.02);
+  border: 1px solid $border-color;
   border-radius: 6px;
   padding: 12px;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba($bg-card, 0.04);
+    border-color: $border-color-hover;
   }
 }
 
 .filter-group-title {
-  color: #ffffff;
+  color: $text-primary;
   font-size: 12px;
   font-weight: 600;
   margin: 0 0 8px 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid $border-color;
   padding-bottom: 6px;
 }
 
@@ -201,27 +318,27 @@
   display: flex;
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid $border-color-hover;
 
   button {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
+    background-color: rgba($bg-card, 0.05);
+    color: $text-primary;
     border: none;
     padding: 8px 16px;
     transition: all 0.2s ease;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid $border-color;
 
     &:last-child {
       border-right: none;
     }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba($bg-card, 0.1);
     }
 
     &.selected {
-      background-color: #4caf50;
-      color: #ffffff;
+      background-color: $twinleaf-500;
+      color: $text-primary;
     }
 
     &.left-rounded {
@@ -286,19 +403,25 @@
     font-size: 12px;
   }
 
-  // Hide desktop search bar on mobile
-  .desktop-search {
+  // Hide desktop search container on mobile
+  .search-container {
     display: none;
+    max-width: 100%;
+    min-width: 240px; // Maintain reduced width on mobile too
+    flex: 0 0 auto; // Prevent expansion
   }
 
   // Show mobile search bar in filters
   .mobile-search-row {
     display: flex !important;
     margin-bottom: 12px;
-  }
 
-  .mobile-search {
-    width: 100%;
+    .search-container {
+      display: flex !important;
+      max-width: 100%;
+      min-width: 100%;
+      width: 100%;
+    }
   }
 
   .filters-content {
