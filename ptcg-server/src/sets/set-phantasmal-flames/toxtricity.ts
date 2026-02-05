@@ -21,7 +21,7 @@ export class Toxtricity extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Bad Boost',
+    name: 'Sinister Surge',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may search your deck for a Basic [D] Energy card and attach it to 1 of your [D] Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon.'

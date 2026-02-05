@@ -20,6 +20,7 @@ import { GarchompGiratinaGX } from './garchomp-and-giratina-gx';
 import { Golisopod } from './golisopod';
 import { Grimsley } from './grimsley';
 import { Hapu } from './hapu';
+import { HeatranGX } from './heatran-gx';
 import { Hoopa } from './hoopa';
 import { Jynx } from './jynx';
 import { KarateBelt } from './karate-belt';
@@ -89,6 +90,7 @@ export const setUnifiedMinds: Card[] = [
   new Golisopod(),
   new Grimsley(),
   new Hapu(),
+  new HeatranGX(),
   new Hoopa(),
   new Jynx(),
   new KarateBelt(),
