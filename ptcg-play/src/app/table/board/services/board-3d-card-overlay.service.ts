@@ -74,7 +74,7 @@ export class Board3dCardOverlayService {
 
     // Update ability used badge
     const hasAbilityUsed = cardList.boardEffect.includes(BoardEffect.ABILITY_USED) ||
-                          cardList.specialConditions.includes(SpecialCondition.ABILITY_USED);
+      cardList.specialConditions.includes(SpecialCondition.ABILITY_USED);
     overlays.abilityUsedBadge.updateAbilityUsed(hasAbilityUsed);
 
     // Update BREAK card overlay
@@ -123,7 +123,7 @@ export class Board3dCardOverlayService {
   ): Promise<void> {
     if (breakCard && !isFaceDown) {
       const breakScanUrl = this.cardsBaseService.getScanUrlFromCardList(breakCard, cardList);
-      
+
       // Validate URL before loading - if empty or invalid, use cardback
       const loadBreakTexture = async () => {
         if (!breakScanUrl || !breakScanUrl.trim()) {
@@ -138,9 +138,10 @@ export class Board3dCardOverlayService {
         }
       };
 
-      const [breakFrontTexture, breakBackTexture] = await Promise.all([
+      const [breakFrontTexture, breakBackTexture, maskTexture] = await Promise.all([
         loadBreakTexture(),
-        this.assetLoader.loadCardBack()
+        this.assetLoader.loadCardBack(),
+        this.assetLoader.loadCardMaskTexture()
       ]);
 
       if (!overlays.breakCard) {
@@ -150,11 +151,12 @@ export class Board3dCardOverlayService {
           breakBackTexture,
           new Vector3(0, 0.05, 0), // Slightly above main card
           0,
-          1.0
+          1.0,
+          maskTexture
         );
         mainCardMesh.getGroup().add(overlays.breakCard.getGroup());
       } else {
-        overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture);
+        overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture, maskTexture);
       }
     } else if (overlays.breakCard) {
       // Remove BREAK card overlay
@@ -187,7 +189,10 @@ export class Board3dCardOverlayService {
     }
 
     // Create new tool card overlays
-    const backTexture = await this.assetLoader.loadCardBack();
+    const [backTexture, maskTexture] = await Promise.all([
+      this.assetLoader.loadCardBack(),
+      this.assetLoader.loadCardMaskTexture()
+    ]);
 
     // Custom tool icon mapping (matching 2D board logic)
     const customToolIcons: { [key: string]: string } = {
@@ -252,7 +257,8 @@ export class Board3dCardOverlayService {
         backTexture,
         new Vector3(baseX, baseY + (i * 0.01), baseZ - (i * verticalSpacing)), // Below main card, stacked downward, slightly behind
         0,
-        1.0 // Same size as main card
+        1.0, // Same size as main card
+        maskTexture
       );
 
       mainCardMesh.getGroup().add(toolCardMesh.getGroup());

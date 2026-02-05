@@ -16,6 +16,7 @@ export class Board3dCard {
   private group: Group;
   private cardMesh: Mesh;
   private outlineMesh: Mesh | null = null;
+  private maskTexture?: Texture;
   private static cardGeometry: BoxGeometry;
   private static edgeMaterial: MeshStandardMaterial;
   private static outlineGeometry: BoxGeometry;
@@ -25,7 +26,8 @@ export class Board3dCard {
     backTexture: Texture,
     position: Vector3,
     rotation: number = 0,
-    scale: number = 1
+    scale: number = 1,
+    maskTexture?: Texture
   ) {
     this.group = new Group();
     this.group.userData.isCard = true;
@@ -53,6 +55,7 @@ export class Board3dCard {
       Board3dCard.edgeMaterial,  // Bottom edge
       new MeshStandardMaterial({  // Front face (card image)
         map: frontTexture,
+        alphaMap: maskTexture,
         roughness: 0.4,
         metalness: 0.1,
         side: DoubleSide,
@@ -61,6 +64,7 @@ export class Board3dCard {
       }),
       new MeshStandardMaterial({  // Back face (card back)
         map: backTexture,
+        alphaMap: maskTexture,
         roughness: 0.4,
         metalness: 0.1,
         side: DoubleSide,
@@ -82,6 +86,9 @@ export class Board3dCard {
     this.group.position.copy(position);
     this.group.rotation.y = (rotation * Math.PI) / 180;
     this.group.scale.setScalar(scale);
+
+    // Store mask texture for use in outline
+    this.maskTexture = maskTexture;
   }
 
   public getGroup(): Group {
@@ -104,14 +111,31 @@ export class Board3dCard {
     this.group.scale.setScalar(scale);
   }
 
-  public updateTexture(frontTexture: Texture, backTexture?: Texture): void {
+  public updateTexture(frontTexture: Texture, backTexture?: Texture, maskTexture?: Texture): void {
     const materials = this.cardMesh.material as MeshStandardMaterial[];
     materials[4].map = frontTexture;
+    if (maskTexture) {
+      materials[4].alphaMap = maskTexture;
+    }
     materials[4].needsUpdate = true;
 
     if (backTexture) {
       materials[5].map = backTexture;
+      if (maskTexture) {
+        materials[5].alphaMap = maskTexture;
+      }
       materials[5].needsUpdate = true;
+    }
+
+    // Update stored mask texture for outline
+    if (maskTexture !== undefined) {
+      this.maskTexture = maskTexture;
+      // Update outline material if it exists
+      if (this.outlineMesh) {
+        const outlineMaterial = this.outlineMesh.material as MeshBasicMaterial;
+        outlineMaterial.alphaMap = maskTexture;
+        outlineMaterial.needsUpdate = true;
+      }
     }
   }
 
@@ -139,7 +163,10 @@ export class Board3dCard {
         // Create outline material with the specified color
         const outlineMaterial = new MeshBasicMaterial({
           color: color,
-          side: DoubleSide
+          side: DoubleSide,
+          alphaMap: this.maskTexture,
+          transparent: true,
+          alphaTest: 0.1
         });
 
         this.outlineMesh = new Mesh(Board3dCard.outlineGeometry, outlineMaterial);
@@ -150,7 +177,15 @@ export class Board3dCard {
         this.group.add(this.outlineMesh);
       } else {
         // Update color if outline already exists
-        (this.outlineMesh.material as MeshBasicMaterial).color.setHex(color);
+        const outlineMaterial = this.outlineMesh.material as MeshBasicMaterial;
+        outlineMaterial.color.setHex(color);
+        // Ensure mask is still applied
+        if (this.maskTexture) {
+          outlineMaterial.alphaMap = this.maskTexture;
+          outlineMaterial.transparent = true;
+          outlineMaterial.alphaTest = 0.1;
+        }
+        outlineMaterial.needsUpdate = true;
         this.outlineMesh.visible = true;
       }
     } else if (this.outlineMesh) {

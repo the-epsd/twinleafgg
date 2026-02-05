@@ -100,9 +100,10 @@ export class Board3dHandService {
       }
     };
 
-    const [frontTexture, backTexture] = await Promise.all([
+    const [frontTexture, backTexture, maskTexture] = await Promise.all([
       loadFrontTexture(),
-      this.assetLoader.loadCardBack()
+      this.assetLoader.loadCardBack(),
+      this.assetLoader.loadCardMaskTexture()
     ]);
 
     // Create card mesh with smaller scale
@@ -111,7 +112,8 @@ export class Board3dHandService {
       backTexture,
       position,
       rotation,
-      1.1// Smaller size
+      1.1, // Smaller size
+      maskTexture
     );
 
     // Ensure card is completely flat like the deck (no rotation on any axis)
