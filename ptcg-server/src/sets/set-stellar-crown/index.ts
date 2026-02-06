@@ -35,6 +35,7 @@ import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
+import { MedititeSCR77 } from './meditite77';
 import { Melmetal } from './melmetal';
 import { Meltan } from './meltan';
 import { Milcery } from './milcery';
@@ -92,6 +93,7 @@ export const setStellarCrown: Card[] = [
   new Laprasex(),
   new Medichamex(),
   new Meditite(),
+  new MedititeSCR77(),
   new Melmetal(),
   new Meltan(),
   new Noctowl(),
