@@ -1,10 +1,6 @@
 /* eslint-disable indent */
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 
 export class MedititeSCR77 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
