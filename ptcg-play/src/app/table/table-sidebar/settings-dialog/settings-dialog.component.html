@@ -25,6 +25,14 @@
           (change)="onCardTextKerningChange($event)">
         <span>{{cardTextKerning.toFixed(1)}}px</span>
       </div>
+      <label>
+        <input type="checkbox" [(ngModel)]="sfxEnabled"> Sound Effects
+      </label>
+      <div class="slider-container">
+        <label>Sound Effects Volume</label>
+        <input type="range" [(ngModel)]="sfxVolume" min="0" max="100" step="5" (change)="onSfxVolumeChange($event)">
+        <span>{{sfxVolume}}%</span>
+      </div>
       <div class="hidden-formats-container">
         <label class="section-label">Hidden Formats</label>
         <div class="format-checkboxes">

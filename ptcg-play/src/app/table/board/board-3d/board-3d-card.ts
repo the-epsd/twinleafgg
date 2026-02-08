@@ -55,7 +55,7 @@ export class Board3dCard {
       Board3dCard.edgeMaterial,  // Bottom edge
       new MeshStandardMaterial({  // Front face (card image)
         map: frontTexture,
-        alphaMap: maskTexture,
+        ...(maskTexture && { alphaMap: maskTexture }),
         roughness: 0.4,
         metalness: 0.1,
         side: DoubleSide,
@@ -64,7 +64,7 @@ export class Board3dCard {
       }),
       new MeshStandardMaterial({  // Back face (card back)
         map: backTexture,
-        alphaMap: maskTexture,
+        ...(maskTexture && { alphaMap: maskTexture }),
         roughness: 0.4,
         metalness: 0.1,
         side: DoubleSide,
@@ -164,7 +164,7 @@ export class Board3dCard {
         const outlineMaterial = new MeshBasicMaterial({
           color: color,
           side: DoubleSide,
-          alphaMap: this.maskTexture,
+          ...(this.maskTexture && { alphaMap: this.maskTexture }),
           transparent: true,
           alphaTest: 0.1
         });

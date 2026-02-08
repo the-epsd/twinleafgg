@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, HostBinding } from '@angular/core';
 import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag, Stage, PokemonCard } from 'ptcg-server';
-import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { BoardInteractionService, AttackEffectEvent } from '../../../shared/services/board-interaction.service';
 import { Subscription } from 'rxjs';
 import { BoardCardAnimationHelper, AnimationState } from './board-card-animations.helper';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -97,6 +97,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public showEvolutionAnimation = false;
   public showBasicAnimation = false;
   public showAttackAnimation = false;
+  public showAttackEffect = false;
+  public attackEffectType: CardType | null = null;
 
   // ==================== PRIVATE PROPERTIES ====================
   private isSecret = false;
@@ -133,6 +135,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   private animationElement: HTMLElement;
   private isInPrompt = false;
   private isAnimating = false;
+  private lastAttackEffectId: string | null = null;
 
   constructor(
     private boardInteractionService: BoardInteractionService,
@@ -356,6 +359,64 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  private handleAttackEffectEvent(event: AttackEffectEvent) {
+    // Check if this card is the opponent's active card
+    // The effect should be shown on the opponent's active card (opponentId's active slot)
+    if (!this.cardTarget || !this.cardTarget.player || !this.cardTarget.slot) {
+      return;
+    }
+
+    // Check if this is an active card
+    const isActiveCard = 
+      this.cardTarget.slot === SlotType.ACTIVE && 
+      this.cardTarget.index === 0;
+
+    if (!isActiveCard) {
+      return;
+    }
+
+    // Check if this card belongs to the opponent
+    // If opponentPlayerType is provided, use it for precise matching
+    if (event.opponentPlayerType !== undefined) {
+      if (this.cardTarget.player !== event.opponentPlayerType) {
+        return; // This is not the opponent's card
+      }
+    } else {
+      // Fallback: exclude the attacking player's card if attack came from active slot
+      // This works for two-player games where there's only one opponent active card
+      if (event.slot === 'active' && event.index === 0) {
+        // Attack came from active slot - we can't determine which card is the opponent's
+        // without PlayerType, so we show on any active card (works for two-player games)
+      }
+    }
+    
+    // Show effect on this opponent's active card
+
+    // Create unique attack effect ID to prevent replay
+    const attackEffectId = `${event.playerId}-${event.cardId}-${event.cardType}`;
+    
+    // Only show effect if it's a new attack (prevent replay)
+    if (this.lastAttackEffectId === attackEffectId) {
+      return;
+    }
+
+    // Show the effect
+    this.attackEffectType = event.cardType;
+    this.showAttackEffect = true;
+    this.lastAttackEffectId = attackEffectId;
+
+    // Auto-hide after animation duration (get from service or use default)
+    setTimeout(() => {
+      this.showAttackEffect = false;
+      // Reset after a delay to allow for new attacks
+      setTimeout(() => {
+        if (this.lastAttackEffectId === attackEffectId) {
+          this.lastAttackEffectId = null;
+        }
+      }, 500);
+    }, 1500); // Default animation duration
+  }
+
   @Input() set evolutionEntrance(value: boolean) {
     if (value && !this.isAnimating) {
       this.isAnimating = true;
@@ -423,6 +484,13 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         this.handleAttackAnimationEvent(event);
       })
     );
+
+    // Attack effect events (for visual effects on opponent's card)
+    this.subscriptions.push(
+      this.boardInteractionService.attackEffect$.subscribe(event => {
+        this.handleAttackEffectEvent(event);
+      })
+    );
   }
 
   private cleanupSubscriptions() {
@@ -469,6 +537,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.showBasicAnimation = false;
     this.showEvolutionAnimation = false;
     this.showAttackAnimation = false;
+    this.showAttackEffect = false;
+    this.attackEffectType = null;
   }
 
   private initPokemonCardList(cardList: PokemonCardList) {

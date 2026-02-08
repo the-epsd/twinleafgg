@@ -180,6 +180,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
   const card = attackingPokemon.getPokemonCard();
   const cardId = card ? card.id : undefined;
+  const cardType = card ? card.cardType : undefined;
 
   // Emit attack animation event
   const game = (store as any).handler;
@@ -190,7 +191,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
           playerId: player.id,
           cardId,
           slot,
-          index
+          index,
+          cardType,
+          opponentId: opponent.id
         });
       }
     });

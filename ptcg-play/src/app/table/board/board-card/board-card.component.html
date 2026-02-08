@@ -118,4 +118,10 @@
       {{ 'TABLE_CARDS_COUNT' | translate: { count: cardCount } }}
     </ptcg-badge>
   </div>
+
+  <!-- Attack effect overlay for opponent's card -->
+  <ptcg-attack-effect-overlay 
+    *ngIf="showAttackEffect && attackEffectType !== null" 
+    [cardType]="attackEffectType">
+  </ptcg-attack-effect-overlay>
 </div>

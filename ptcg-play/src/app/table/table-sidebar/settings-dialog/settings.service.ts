@@ -16,6 +16,8 @@ export class SettingsService {
   private readonly HIDDEN_FORMATS_KEY = 'hiddenFormats';
   private readonly USE_3D_BOARD_DEFAULT_KEY = 'use3dBoardDefault';
   private readonly CARD_TEXT_KERNING_KEY = 'cardTextKerning';
+  private readonly SFX_ENABLED_KEY = 'sfxEnabled';
+  private readonly SFX_VOLUME_KEY = 'sfxVolume';
 
   private holoEnabledSubject = new BehaviorSubject<boolean>(this.loadHoloSetting());
   private cardSizeSubject = new BehaviorSubject<number>(100);
@@ -24,6 +26,8 @@ export class SettingsService {
   private hiddenFormatsSubject = new BehaviorSubject<Format[]>(this.loadHiddenFormats());
   private use3dBoardDefaultSubject = new BehaviorSubject<boolean>(this.loadUse3dBoardDefaultSetting());
   private cardTextKerningSubject = new BehaviorSubject<number>(this.loadCardTextKerning());
+  private sfxEnabledSubject = new BehaviorSubject<boolean>(this.loadSfxSetting());
+  private sfxVolumeSubject = new BehaviorSubject<number>(this.loadSfxVolume());
 
   cardSize$ = this.cardSizeSubject.asObservable();
   holoEnabled$ = this.holoEnabledSubject.asObservable();
@@ -32,6 +36,8 @@ export class SettingsService {
   hiddenFormats$ = this.hiddenFormatsSubject.asObservable();
   use3dBoardDefault$ = this.use3dBoardDefaultSubject.asObservable();
   cardTextKerning$ = this.cardTextKerningSubject.asObservable();
+  sfxEnabled$ = this.sfxEnabledSubject.asObservable();
+  sfxVolume$ = this.sfxVolumeSubject.asObservable();
 
   private loadHoloSetting(): boolean {
     const saved = localStorage.getItem(this.HOLO_ENABLED_KEY);
@@ -61,6 +67,16 @@ export class SettingsService {
   private loadCardTextKerning(): number {
     const saved = localStorage.getItem(this.CARD_TEXT_KERNING_KEY);
     return saved ? parseFloat(saved) : 0;
+  }
+
+  private loadSfxSetting(): boolean {
+    const saved = localStorage.getItem(this.SFX_ENABLED_KEY);
+    return saved ? JSON.parse(saved) : true;
+  }
+
+  private loadSfxVolume(): number {
+    const saved = localStorage.getItem(this.SFX_VOLUME_KEY);
+    return saved ? parseFloat(saved) : 0.7;
   }
 
   setHoloEnabled(enabled: boolean) {
@@ -103,5 +119,17 @@ export class SettingsService {
   setCardTextKerning(value: number) {
     localStorage.setItem(this.CARD_TEXT_KERNING_KEY, value.toString());
     this.cardTextKerningSubject.next(value);
+  }
+
+  setSfxEnabled(enabled: boolean) {
+    localStorage.setItem(this.SFX_ENABLED_KEY, JSON.stringify(enabled));
+    this.sfxEnabledSubject.next(enabled);
+  }
+
+  setSfxVolume(volume: number) {
+    // Clamp volume between 0 and 1
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    localStorage.setItem(this.SFX_VOLUME_KEY, clampedVolume.toString());
+    this.sfxVolumeSubject.next(clampedVolume);
   }
 }

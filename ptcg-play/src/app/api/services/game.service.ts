@@ -16,6 +16,8 @@ import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
 import { SessionService } from '../../shared/session/session.service';
 import { BoardInteractionService } from '../../shared/services/board-interaction.service';
+import { SoundService } from '../../shared/services/sound.service';
+import { CardType, PlayerType, StateUtils } from 'ptcg-server';
 
 export interface GameUserInfo {
   gameId: number;
@@ -31,7 +33,8 @@ export class GameService {
     private sessionService: SessionService,
     public socketService: SocketService,
     private translate: TranslateService,
-    private boardInteractionService: BoardInteractionService
+    private boardInteractionService: BoardInteractionService,
+    private soundService: SoundService
   ) { }
 
   public getPlayerStats(gameId: number) {
@@ -267,8 +270,42 @@ export class GameService {
     this.socketService.on(`game[${id}]:evolution`, (data: { playerId: number, cardId: number | string, slot: string, index?: number }) => {
       this.boardInteractionService.triggerEvolutionAnimation(data);
     });
-    this.socketService.on(`game[${id}]:attack`, (data: { playerId: number, cardId: number | string, slot: string, index?: number }) => {
+    this.socketService.on(`game[${id}]:attack`, (data: { playerId: number, cardId: number | string, slot: string, index?: number, cardType?: CardType, opponentId?: number }) => {
       this.boardInteractionService.triggerAttackAnimation(data);
+      
+      // Trigger sound and visual effects if cardType is provided
+      if (data.cardType !== undefined && data.opponentId !== undefined) {
+        // Play attack sound
+        this.soundService.playAttackSound(data.cardType);
+        
+        // Determine opponent's PlayerType from game state
+        let opponentPlayerType: PlayerType | undefined;
+        const gameState = this.sessionService.session.gameStates.find(g => g.gameId === id && !g.deleted);
+        if (gameState && gameState.state) {
+          const state = gameState.state;
+          // Find which player is the opponent
+          const opponent = state.players.find(p => p.id === data.opponentId);
+          const attackingPlayer = state.players.find(p => p.id === data.playerId);
+          if (opponent && attackingPlayer) {
+            // Determine PlayerType based on player order in state.players array
+            // First player is typically BOTTOM_PLAYER, second is TOP_PLAYER
+            // But this can vary, so we use a more reliable method
+            const opponentIndex = state.players.indexOf(opponent);
+            opponentPlayerType = opponentIndex === 0 ? PlayerType.BOTTOM_PLAYER : PlayerType.TOP_PLAYER;
+          }
+        }
+        
+        // Trigger visual effect on opponent's card
+        this.boardInteractionService.triggerAttackEffect({
+          playerId: data.playerId,
+          cardId: data.cardId,
+          slot: data.slot,
+          index: data.index,
+          cardType: data.cardType,
+          opponentId: data.opponentId,
+          opponentPlayerType: opponentPlayerType
+        });
+      }
     });
     this.socketService.on(`game[${id}]:coinFlip`, (data: { playerId: number, result: boolean }) => {
       this.boardInteractionService.triggerCoinFlipAnimation(data.result, data.playerId);

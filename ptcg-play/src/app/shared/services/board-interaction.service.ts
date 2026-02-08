@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType, StateLog } from 'ptcg-server';
+import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType, StateLog, CardType } from 'ptcg-server';
 
 export interface BasicEntranceAnimationEvent {
   playerId: number;
@@ -12,6 +12,16 @@ export interface BasicEntranceAnimationEvent {
 export interface CoinFlipAnimationEvent {
   playerId: number;
   result: boolean;
+}
+
+export interface AttackEffectEvent {
+  playerId: number;
+  cardId: number | string;
+  slot: string;
+  index?: number;
+  cardType: CardType;
+  opponentId: number;
+  opponentPlayerType?: PlayerType; // Optional: opponent's PlayerType for easier identification
 }
 
 @Injectable({
@@ -72,6 +82,9 @@ export class BoardInteractionService {
 
   private coinFlipCancelSubject = new Subject<void>();
   public coinFlipCancel$ = this.coinFlipCancelSubject.asObservable();
+
+  private attackEffectSubject = new Subject<AttackEffectEvent>();
+  public attackEffect$ = this.attackEffectSubject.asObservable();
 
   constructor() { }
 
@@ -254,5 +267,9 @@ export class BoardInteractionService {
 
   public cancelCoinFlipAnimation() {
     this.coinFlipCancelSubject.next();
+  }
+
+  public triggerAttackEffect(event: AttackEffectEvent) {
+    this.attackEffectSubject.next(event);
   }
 } 
