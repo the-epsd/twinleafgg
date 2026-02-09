@@ -222,6 +222,8 @@ export class CardComponent implements OnInit, OnDestroy {
     if (this.customArtworkUrl) {
       return this.customArtworkUrl;
     }
+    
+    // Check for artworksMap lookup (for deck-selected artworks)
     const artworksMap = (this.cardList as any)?.artworksMap as { [code: string]: { imageUrl: string } } | undefined;
     if (artworksMap && this.data && artworksMap[this.data.fullName]?.imageUrl) {
       return artworksMap[this.data.fullName].imageUrl;

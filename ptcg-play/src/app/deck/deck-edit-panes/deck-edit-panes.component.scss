@@ -78,24 +78,6 @@ ptcg-deck-card {
   align-items: center;
 }
 
-.artwork-inline {
-  padding: 4px 0 8px 0;
-  display: flex;
-  justify-content: center;
-}
-
-.artwork-select-under-card {
-  width: 120px;
-  height: 28px;
-  line-height: 28px;
-  font-size: 12px;
-  background: $bg-card;
-  color: $text-primary;
-  border: 1px solid $border-color;
-  border-radius: 4px;
-  padding: 2px 8px;
-}
-
 ptcg-deck-card.placeholder {
   opacity: $ptcg-disabled-opacity;
   overflow: auto;

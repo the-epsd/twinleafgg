@@ -24,7 +24,6 @@ import {
   Replays,
   ResetPassword,
   BattlePass,
-  Artworks,
   Sleeves,
   MemoryHealthController,
   ImageProxy,
@@ -102,7 +101,6 @@ export class App {
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
     define('/v1/battlepass', BattlePass);
-    define('/v1/artworks', Artworks);
     define('/v1/sleeves', Sleeves);
     define('/v1/memory', MemoryHealthController);
 

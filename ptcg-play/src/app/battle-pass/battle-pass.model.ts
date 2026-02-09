@@ -1,7 +1,7 @@
 export interface BattlePassReward {
   level: number;
   item: string;
-  type: 'avatar' | 'card_back' | 'playmat' | 'marker' | 'card_artwork';
+  type: 'avatar' | 'card_back' | 'playmat' | 'marker';
   name: string;
   isPremium: boolean;
 }

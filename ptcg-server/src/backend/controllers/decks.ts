@@ -38,7 +38,6 @@ export class Decks extends Controller {
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
         format: getValidFormatsForCardList(cards),
-        ...(deck.artworks ? { artworks: JSON.parse(deck.artworks) } : {}),
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
@@ -73,16 +72,6 @@ export class Decks extends Controller {
       return;
     }
 
-    // Try to parse artworks from entity if present (future-proofing)
-    let artworks: { code: string; artworkId?: number }[] | undefined = undefined;
-    if (entity.artworks) {
-      try {
-        artworks = JSON.parse(entity.artworks);
-      } catch (error) {
-        // Ignore parsing errors for artworks
-      }
-    }
-
     const sleeveImagePath = entity.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: entity.sleeveIdentifier } }))?.imagePath
       : undefined;
@@ -94,7 +83,6 @@ export class Decks extends Controller {
       cards: JSON.parse(entity.cards),
       manualArchetype1: entity.manualArchetype1,
       manualArchetype2: entity.manualArchetype2,
-      ...(artworks ? { artworks } : {}),
       ...(entity.sleeveIdentifier ? { sleeveIdentifier: entity.sleeveIdentifier } : {}),
       ...(sleeveImagePath ? { sleeveImagePath } : {})
     };
@@ -159,10 +147,6 @@ export class Decks extends Controller {
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
     deck.sleeveIdentifier = body.sleeveIdentifier || '';
-    // Save artworks if present
-    if ('artworks' in body && body.artworks) {
-      deck.artworks = JSON.stringify(body.artworks);
-    }
     try {
       deck = await deck.save();
     } catch (error) {
@@ -181,7 +165,6 @@ export class Decks extends Controller {
         cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        ...(body.artworks ? { artworks: body.artworks } : {}),
         ...(body.sleeveIdentifier ? { sleeveIdentifier: body.sleeveIdentifier } : {}),
         ...(savedSleeveImagePath ? { sleeveImagePath: savedSleeveImagePath } : {})
       }

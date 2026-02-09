@@ -161,6 +161,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   public resolveArtUrlFor(card: Card | undefined): string | undefined {
     if (!card || !this._cardList) return undefined;
+    
+    // Check artworksMap for deck-selected artworks
     const map = (this._cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
     if (!map) return undefined;
     const entry = map[card.fullName];

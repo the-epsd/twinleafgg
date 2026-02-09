@@ -5,12 +5,5 @@
     "type": "avatar",
     "name": "Mewtwo Avatar",
     "isPremium": false
-  },
-  {
-    "level": 2,
-    "item": "1001",
-    "type": "card_artwork",
-    "name": "Gardevoir ex Alt Art",
-    "isPremium": false
   }
 ]

@@ -12,6 +12,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { FavoritesService } from '../../api/services/favorites.service';
 import { ProfileService } from '../../api/services/profile.service';
+import { CardArtwork } from '../../api/interfaces/cards.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class CardsBaseService implements OnDestroy {
   private customImages: { [key: string]: string } = {};
   private nightlyImages: { [key: string]: string } = {};
   private favoriteCards: { [cardName: string]: string } = {};
+  private unlockedArtworks: CardArtwork[] = [];
 
   private overridesChangedSubject = new Subject<string>();
   public overridesChanged$ = this.overridesChangedSubject.asObservable();
@@ -396,7 +398,7 @@ export class CardsBaseService implements OnDestroy {
       }
     }
 
-    // 2. If no artworksMap override, use getScanUrl() directly to ensure identical behavior
+    // 2. If no artworksMap override, use getScanUrl() directly
     // This checks nightly images → custom images → default URL (same as 2D board)
     return this.getScanUrl(card);
   }
@@ -599,6 +601,14 @@ export class CardsBaseService implements OnDestroy {
   public isFavoriteCard(card: Card): boolean {
     const favoriteFullName = this.favoriteCards[card.name];
     return favoriteFullName === card.fullName;
+  }
+
+  public setUnlockedArtworks(artworks: CardArtwork[]): void {
+    this.unlockedArtworks = artworks || [];
+  }
+
+  public getUnlockedArtworks(): CardArtwork[] {
+    return this.unlockedArtworks;
   }
 
   ngOnDestroy(): void {
