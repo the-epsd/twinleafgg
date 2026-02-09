@@ -6,7 +6,9 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+  max-width: 100%;
   background: $bg-secondary;
+  overflow-x: hidden; // Prevent horizontal overflow
 }
 
 .ptcg-conversation-content {
@@ -21,12 +23,17 @@
   display: flex;
   flex-direction: column;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; // Prevent horizontal overflow
 }
 
 .ptcg-conversation-messages {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: map-get($padding, normal);
+  padding-right: map-get($padding, large); // Extra right padding to prevent overlap with sidebar
   display: flex;
   flex-direction: column;
   gap: map-get($padding, small);

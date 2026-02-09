@@ -55,6 +55,8 @@
   align-items: flex-start;
   min-width: 0;
   max-width: 70%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .ptcg-message-header {
