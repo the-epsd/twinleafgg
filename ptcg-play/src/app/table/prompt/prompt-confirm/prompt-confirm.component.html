@@ -11,10 +11,9 @@
 </div>
 
 <div class="ptcg-prompt-actions">
-  <button mat-raised-button [disabled]="gameState.deleted" (click)="cancel()">
-    {{ 'BUTTON_NO' | translate }}
-  </button>
-  <button mat-raised-button [disabled]="gameState.deleted" (click)="confirm()">
-    {{ prompt.message === 'GO_FIRST' ? ('BUTTON_YES' | translate) : ('BUTTON_OK' | translate) }}
-  </button>
+  <twinleaf-button [text]="'BUTTON_NO' | translate" [disabled]="gameState.deleted" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="prompt.message === 'GO_FIRST' ? ('BUTTON_YES' | translate) : ('BUTTON_OK' | translate)"
+    [disabled]="gameState.deleted" (clicked)="confirm()">
+  </twinleaf-button>
 </div>
