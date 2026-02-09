@@ -30,10 +30,19 @@
 
 .ptcg-active-games,
 .ptcg-recent-matches {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
   // Wrapper only provides layout, visual styling is handled by child components
   ptcg-content {
     padding: 0;
+  }
+
+  ptcg-games-table,
+  ptcg-match-table {
+    width: 100%;
+    display: block;
   }
 }
 
