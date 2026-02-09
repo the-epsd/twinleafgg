@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CoinFlipPrompt, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, EnergyType, StateUtils } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CoinFlipPrompt, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, EnergyType, StateUtils } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class MegaAudinoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;

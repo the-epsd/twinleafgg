@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, SuperType, CoinFlipPrompt, GameMessage } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, SuperType, CoinFlipPrompt, GameMessage } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class LarrysDudunsparceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

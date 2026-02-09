@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { AFTER_ATTACK, COIN_FLIP_PROMPT } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Marill extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, DiscardEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AFTER_ATTACK, COIN_FLIP_PROMPT } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, DiscardEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Croconaw extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

@@ -93,7 +93,7 @@ export class EnteiAndRaikouLegendTop extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this)
+      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         // Check if the Pokemon has an Ability

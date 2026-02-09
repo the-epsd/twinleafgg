@@ -24,7 +24,7 @@ export class MegaHawluchaex extends PokemonCard {
     name: 'Somersault Dive',
     cost: [F, F, C],
     damage: 120,
-    damageCalculation: "+",
+    damageCalculation: '+',
     text: 'If a Stadium is in play, this attack does 140 more damage. Then, discard that Stadium.'
   }];
 

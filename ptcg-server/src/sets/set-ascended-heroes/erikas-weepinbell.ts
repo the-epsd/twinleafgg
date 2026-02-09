@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ErikasWeepinbell extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

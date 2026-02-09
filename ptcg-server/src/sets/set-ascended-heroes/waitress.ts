@@ -1,7 +1,7 @@
-import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, CardList, ChooseCardsPrompt, SuperType, EnergyType, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { SHUFFLE_DECK } from "../../game/store/prefabs/prefabs";
-import { WAS_TRAINER_USED } from "../../game/store/prefabs/trainer-prefabs";
+import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, CardList, ChooseCardsPrompt, SuperType, EnergyType, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Waitress extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;

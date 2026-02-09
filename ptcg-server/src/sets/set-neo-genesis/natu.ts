@@ -35,7 +35,7 @@ export class Natu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(20, effect, store, state, 1, 1, false)
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(20, effect, store, state, 1, 1, false);
     }
 
     return state;

@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-import { AFTER_ATTACK, COIN_FLIP_PROMPT } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class LarrysDunsparce extends PokemonCard {
   public stage: Stage = Stage.BASIC;

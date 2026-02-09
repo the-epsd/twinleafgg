@@ -1,7 +1,7 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';;
+import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
