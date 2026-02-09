@@ -63,6 +63,8 @@ export class SocketService {
   private reconnectionStatusSubject = new BehaviorSubject<ReconnectionStatus>(this.reconnectionStatus);
   private reconnectionEventSubject = new Subject<ReconnectionEvent>();
   private reconnectionTimer?: any;
+  private countdownInterval?: any;
+  private connectionAttemptTimeout?: any;
   private stopReconnection$ = new Subject<void>();
   private wasConnectedBefore = false;
   private lastKnownGameId?: number;
@@ -349,20 +351,30 @@ export class SocketService {
         this.socket.connect();
 
         // Set a timeout for this specific attempt
-        setTimeout(() => {
+        this.connectionAttemptTimeout = setTimeout(() => {
           if (!this.isConnected && this.reconnectionStatus.isReconnecting) {
             this.attemptReconnection();
           }
+          this.connectionAttemptTimeout = undefined;
         }, 5000); // Wait 5 seconds for connection to establish
       }
     }, delay);
   }
 
   private startCountdown(delay: number): void {
+    // Clear any existing countdown interval
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
+
     const startTime = Date.now();
-    const countdownInterval = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       if (!this.reconnectionStatus.isReconnecting) {
-        clearInterval(countdownInterval);
+        if (this.countdownInterval) {
+          clearInterval(this.countdownInterval);
+          this.countdownInterval = undefined;
+        }
         return;
       }
 
@@ -373,7 +385,10 @@ export class SocketService {
       this.updateReconnectionStatus();
 
       if (remaining <= 0) {
-        clearInterval(countdownInterval);
+        if (this.countdownInterval) {
+          clearInterval(this.countdownInterval);
+          this.countdownInterval = undefined;
+        }
       }
     }, 100);
   }
@@ -390,9 +405,12 @@ export class SocketService {
     // If we were in a game, attempt to rejoin after a short delay
     // This gives the server time to fully process the reconnection
     if (this.lastKnownGameId) {
-      setTimeout(() => {
+      // Store timeout reference for cleanup if needed
+      const rejoinTimeout = setTimeout(() => {
         this.attemptGameRejoin();
       }, 1000); // 1 second delay
+      // Note: This timeout is intentionally not stored as it should complete
+      // If service is disabled before completion, the attemptGameRejoin will check if gameId still exists
     }
   }
 
@@ -408,8 +426,10 @@ export class SocketService {
     });
 
     // After a delay, offer manual reconnection
+    // Note: This timeout is intentionally not stored as it should complete
+    // If service is disabled before completion, the check will fail gracefully
     setTimeout(() => {
-      if (!this.isConnected) {
+      if (!this.isConnected && this.enabled) {
         this.reconnectionEventSubject.next({
           type: 'manual_required',
           error: error
@@ -462,10 +482,14 @@ export class SocketService {
       (error) => {
 
         // Retry up to 3 times with increasing delays
-        if (attempt < 3) {
+        if (attempt < 3 && this.enabled) {
           const retryDelay = attempt * 2000; // 2s, 4s delays
+          // Note: This timeout is intentionally not stored as it should complete
+          // If service is disabled before completion, the attemptGameRejoin will check if enabled
           setTimeout(() => {
-            this.attemptGameRejoin(attempt + 1);
+            if (this.enabled && this.lastKnownGameId) {
+              this.attemptGameRejoin(attempt + 1);
+            }
           }, retryDelay);
         } else {
           this.clearGameId();
@@ -478,6 +502,14 @@ export class SocketService {
     if (this.reconnectionTimer) {
       clearTimeout(this.reconnectionTimer);
       this.reconnectionTimer = undefined;
+    }
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
+    if (this.connectionAttemptTimeout) {
+      clearTimeout(this.connectionAttemptTimeout);
+      this.connectionAttemptTimeout = undefined;
     }
     this.stopReconnection$.next();
   }

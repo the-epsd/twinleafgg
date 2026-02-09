@@ -12,6 +12,7 @@ import { SocketService } from '../socket.service';
 export class MainService {
 
   public loading = false;
+  private isInitialized = false;
 
   constructor(
     private gameService: GameService,
@@ -20,6 +21,12 @@ export class MainService {
   ) { }
 
   public init(coreInfo: CoreInfo): void {
+    // Clean up existing listeners if already initialized
+    if (this.isInitialized) {
+      this.cleanup();
+    }
+
+    this.isInitialized = true;
     const users = { ...this.sessionService.session.users };
     coreInfo.users.forEach(user => users[user.userId] = user);
 
@@ -110,6 +117,19 @@ export class MainService {
     this.loading = true;
     return this.socketService.emit('core:createGame', { deck, gameSettings, clientId, deckId, sleeveImagePath })
       .pipe(finalize(() => { this.loading = false; }));
+  }
+
+  /**
+   * Clean up socket listeners to prevent memory leaks
+   */
+  public cleanup(): void {
+    this.socketService.off('core:join');
+    this.socketService.off('core:leave');
+    this.socketService.off('core:gameInfo');
+    this.socketService.off('core:usersInfo');
+    this.socketService.off('core:createGame');
+    this.socketService.off('core:deleteGame');
+    this.isInitialized = false;
   }
 
 }

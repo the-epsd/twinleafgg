@@ -274,6 +274,13 @@ export class Game implements StoreHandler {
       this.pauseGame();
     }
 
+    // Clear any existing timeout for this client before creating a new one
+    // This prevents memory leaks if handlePlayerDisconnection is called multiple times
+    const existingTimeout = this.disconnectionTimeouts.get(client.id);
+    if (existingTimeout) {
+      clearTimeout(existingTimeout);
+    }
+
     // Schedule auto-forfeit timer (15 seconds)
     // Note: We already checked that state.phase !== FINISHED at the start of this method
     const timeout = setTimeout(() => {
