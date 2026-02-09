@@ -152,9 +152,15 @@
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transform: translateY(1px);
     width: 100%;
     min-width: 100%;
+    line-height: 1.8;
+    transform: translateY(1px);
+
+    &::placeholder {
+      line-height: calc(1.5em - 2px);
+      display: block;
+    }
   }
 
   .mat-focused .mat-form-field-flex {

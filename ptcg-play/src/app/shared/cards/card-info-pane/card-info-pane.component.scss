@@ -11,6 +11,11 @@
   flex: 1 1 33%;
   min-width: map-get($ptcg-size, card);
   padding-right: map-get($padding, normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
   >ptcg-card:first-child {
     width: 100%;
@@ -18,11 +23,14 @@
   }
 
   .swap-button-container {
+    position: absolute;
+    bottom: map-get($padding, small);
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-top: map-get($padding, small) + 16px;
+    z-index: 10;
   }
 
   .evolution-section {
@@ -241,12 +249,12 @@ ptcg-energy {
   width: 100%;
 
   .swap-button {
-    background-color: rgba($twinleaf-500, 0.1);
+    background-color: rgba($twinleaf-700, 0.9);
     color: $text-primary;
     transition: background-color 0.2s, transform 0.2s;
 
     &:hover:not(:disabled) {
-      background-color: rgba($twinleaf-500, 0.2);
+      background-color: rgba($twinleaf-600, 0.9);
       transform: scale(1.1);
     }
 

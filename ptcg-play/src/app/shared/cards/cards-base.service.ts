@@ -335,7 +335,7 @@ export class CardsBaseService implements OnDestroy {
     }
 
     const fullCardIdentifier = `${card.set} ${card.setNumber}`;
-    
+
     // Check nightly images first (supplements custom images)
     let nightlyUrl = this.nightlyImages[fullCardIdentifier];
     if (!nightlyUrl && card.setNumber) {
@@ -526,7 +526,7 @@ export class CardsBaseService implements OnDestroy {
     }
     const dialog = this.dialog.open(CardInfoPopupComponent, {
       maxWidth: '100%',
-      width: '650px',
+      width: '50vw',
       data
     });
 

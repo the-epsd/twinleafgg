@@ -45,7 +45,7 @@ export class Board3dAssetLoaderService {
 
       // Configure texture (use colorSpace instead of encoding)
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16; // High quality filtering
+      texture.anisotropy = 8; // Balanced quality/performance filtering
       texture.flipY = true; // Fix texture orientation
 
       // Cache and return (use original URL as cache key)
@@ -87,7 +87,7 @@ export class Board3dAssetLoaderService {
           const texture = await fallbackLoader.loadAsync(originalCachedUrl);
 
           texture.colorSpace = 'srgb';
-          texture.anisotropy = 16;
+          texture.anisotropy = 8;
           texture.flipY = true;
 
           this.textureCache.set(scanUrl, texture);
@@ -159,7 +159,7 @@ export class Board3dAssetLoaderService {
 
       // Configure texture (use colorSpace instead of encoding)
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16; // High quality filtering
+      texture.anisotropy = 8; // Balanced quality/performance filtering
       texture.flipY = true; // Fix texture orientation
 
       // Cache and return (use original URL as cache key)
@@ -201,7 +201,7 @@ export class Board3dAssetLoaderService {
           const texture = await fallbackLoader.loadAsync(originalCachedUrl);
 
           texture.colorSpace = 'srgb';
-          texture.anisotropy = 16;
+          texture.anisotropy = 8;
           texture.flipY = true;
 
           this.textureCache.set(iconPath, texture);
@@ -272,7 +272,7 @@ export class Board3dAssetLoaderService {
 
       // Configure texture (use colorSpace instead of encoding)
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16; // High quality filtering
+      texture.anisotropy = 8; // Balanced quality/performance filtering
       texture.flipY = true; // Fix texture orientation
 
       // Cache and return (use original URL as cache key)
@@ -314,7 +314,7 @@ export class Board3dAssetLoaderService {
           const texture = await fallbackLoader.loadAsync(originalCachedUrl);
 
           texture.colorSpace = 'srgb';
-          texture.anisotropy = 16;
+          texture.anisotropy = 8;
           texture.flipY = true;
 
           this.textureCache.set(sleeveUrl, texture);
@@ -377,7 +377,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = true;
 
       this.cardBackTexture = texture;
@@ -428,7 +428,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = false; // Don't flip for board texture
 
       // Configure for tiling
@@ -459,7 +459,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = false; // Don't flip for board texture
 
       this.textureCache.set(centerUrl, texture);
@@ -484,7 +484,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = true; // Match card texture orientation
 
       this.cardMaskTexture = texture;
@@ -510,7 +510,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = false; // Don't flip for slot texture
 
       this.slotGridTexture = texture;

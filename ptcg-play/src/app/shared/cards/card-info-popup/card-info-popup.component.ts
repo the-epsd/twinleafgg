@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Card, CardList, Player } from 'ptcg-server';
 import { CardInfoPaneOptions, CardInfoPaneAction } from '../card-info-pane/card-info-pane.component';
 import { CardListPopupComponent, CardListPopupData } from '../card-list-popup/card-list-popup.component';
@@ -31,6 +32,7 @@ export class CardInfoPopupComponent {
   constructor(
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<CardInfoPopupComponent>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) data: CardInfoPopupData,
   ) {
     this.data = data;
@@ -40,6 +42,10 @@ export class CardInfoPopupComponent {
     this.allowReveal = data.allowReveal;
     this.options = data.options || {};
     this.players = data.players || [];
+  }
+
+  public isInGame(): boolean {
+    return this.router.url.includes('/table');
   }
 
   public async showCardList(): Promise<void> {

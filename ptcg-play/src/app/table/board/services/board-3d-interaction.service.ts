@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Raycaster, Vector2, Vector3, Euler, Plane, Camera, Scene, Object3D, Intersection, Texture } from 'three';
+import { Raycaster, Vector2, Vector3, Euler, Plane, Camera, Scene, Object3D, Intersection, Texture, InstancedMesh } from 'three';
 import { PlayerType, SlotType, CardTarget, SuperType, Stage, TrainerType, Card, PokemonCard, TrainerCard } from 'ptcg-server';
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, DropZoneState, DropZoneConfig } from '../board-3d/board-3d-drop-zone';
@@ -89,6 +89,11 @@ export class Board3dInteractionService {
   updateInteractiveObjects(scene: Scene): void {
     this.interactiveObjects = [];
     scene.traverse((object: Object3D) => {
+      // Exclude InstancedMesh objects - they are decorative stack meshes and should not intercept clicks
+      // Only the top card (regular Mesh) should be clickable
+      if (object instanceof InstancedMesh) {
+        return;
+      }
       // Only include objects that can be interacted with
       if (object.userData && (object.userData.isCard || object.userData.isDropZone)) {
         this.interactiveObjects.push(object);

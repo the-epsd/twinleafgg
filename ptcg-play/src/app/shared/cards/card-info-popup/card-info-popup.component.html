@@ -10,7 +10,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <twinleaf-button *ngIf="cardList" [text]="'CARDS_SHOW_CARD_LIST' | translate" [disabled]="!card"
+  <twinleaf-button *ngIf="cardList && isInGame()" [text]="'CARDS_SHOW_CARD_LIST' | translate" [disabled]="!card"
     (clicked)="showCardList()">
   </twinleaf-button>
   <section class="ptcg-card-info-reveal-cards" *ngIf="allowReveal">

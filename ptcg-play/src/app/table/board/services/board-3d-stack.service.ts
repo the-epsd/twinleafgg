@@ -129,6 +129,13 @@ export class Board3dStackService {
         1.0,
         sleeveImagePath
       );
+
+      // Mark top card as deck for click detection and set full deck CardList
+      const topCardMesh = getCardByIdCallback(topCardId);
+      if (topCardMesh) {
+        topCardMesh.getGroup().userData.isDeck = true;
+        topCardMesh.getGroup().userData.cardList = deckCardList; // Set full deck CardList, not just single card
+      }
     }
   }
 
@@ -186,6 +193,9 @@ export class Board3dStackService {
     if (topCardMesh) {
       topCardMesh.getGroup().userData.isDiscard = true;
       topCardMesh.getGroup().userData.cardList = discard;
+      // Set render order to ensure top card is above instanced stack mesh
+      topCardMesh.getGroup().renderOrder = 100;
+      topCardMesh.getMesh().renderOrder = 100;
     }
 
     // Remaining cards (if any) as instanced stack underneath
