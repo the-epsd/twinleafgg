@@ -10,6 +10,10 @@ import { DarkraiEx } from './darkrai-ex';
 import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
+import { EnteiEx } from './entei-ex';
+import { KyogreEx } from './kyogre-ex';
+import { GroudonEx } from './groudon-ex';
+import { Gardevoir } from './gardevoir';
 
 export class DarkPatchDEX extends DarkPatch {
   public setNumber = '93';
@@ -82,4 +86,24 @@ export class PokemonCatcherDEX extends PokemonCatcher {
   public setNumber = '111';
   public fullName: string = 'Pokemon Catcher DEX';
   public set = 'DEX';
+}
+
+export class EnteiEx2 extends EnteiEx {
+  public setNumber = '103';
+  public fullName: string = 'Entei-EX DEX 103';
+}
+
+export class KyogreEx2 extends KyogreEx {
+  public setNumber = '104';
+  public fullName: string = 'Kyogre-EX DEX 104';
+}
+
+export class GroudonEx2 extends GroudonEx {
+  public setNumber = '106';
+  public fullName: string = 'Groudon-EX DEX 106';
+}
+
+export class GardevoirDEX extends Gardevoir {
+  public setNumber = '109';
+  public fullName: string = 'Gardevoir DEX 109';
 }
