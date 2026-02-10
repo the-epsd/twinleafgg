@@ -22,8 +22,7 @@ export class ElectricGenerator extends TrainerCard {
 
   public fullName: string = 'Electric Generator SVI';
 
-  public text: string =
-    'Look at the top 5 cards of your deck and attach up to 2 Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
+  public text: string = 'Look at the top 5 cards of your deck and attach up to 2 [L] Energy cards you find there to your Benched [L] Pokémon in any way you like. Shuffle the other cards back into your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.deck.cards.length === 0) {

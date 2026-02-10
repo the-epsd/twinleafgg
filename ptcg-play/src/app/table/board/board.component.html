@@ -1,6 +1,3 @@
-<!-- Move selection overlay out of container -->
-<ptcg-board-selection-overlay></ptcg-board-selection-overlay>
-
 <dnd-preview [allBackends]="true">
   <ng-template let-type let-item="item">
     <ng-container [ngSwitch]="type">
@@ -67,7 +64,7 @@
       <div class="ptcg-board-row ptcg-board-deck">
         <div class="deck-container" style="position: relative;">
           <ng-container *ngFor="let card of topPlayer?.deck?.cards; let idx = index">
-            <ptcg-board-card [cardList]="{ cards: [card] }" [owner]="topPlayer" class="deck-card"
+            <ptcg-board-card [cardList]="{ cards: [card], isSecret: topPlayer?.deck?.isSecret, isPublic: topPlayer?.deck?.isPublic }" [owner]="topPlayer?.id === clientId" class="deck-card"
               [sleeveImagePath]="topPlayerDeckSleeveImagePath"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'" [isFaceDown]="true">
             </ptcg-board-card>
@@ -168,7 +165,7 @@
       <div class="ptcg-board-row ptcg-board-deck">
         <div class="deck-container" style="position: relative;">
           <ng-container *ngFor="let card of bottomPlayer?.deck?.cards; let idx = index">
-            <ptcg-board-card [cardList]="{ cards: [card] }" [owner]="bottomPlayer" class="deck-card"
+            <ptcg-board-card [cardList]="{ cards: [card], isSecret: bottomPlayer?.deck?.isSecret, isPublic: bottomPlayer?.deck?.isPublic }" [owner]="bottomPlayer?.id === clientId" class="deck-card"
               [sleeveImagePath]="bottomPlayerDeckSleeveImagePath"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'" [isFaceDown]="true">
             </ptcg-board-card>

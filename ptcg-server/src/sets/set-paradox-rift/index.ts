@@ -48,6 +48,7 @@ import { Latios } from './latios';
 import { LuxuriousCape } from './luxurious-cape';
 import { Magby } from './magby';
 import { Mantyke } from './mantyke';
+import { MedicalEnergy } from './medical-energy';
 import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
@@ -140,6 +141,7 @@ export const setParadoxRift: Card[] = [
   new LuxuriousCape(),
   new Magby(),
   new Mantyke(),
+  new MedicalEnergy(),
   new Mela(),
   new Mewtwoex(),
   new Minior(),

@@ -52,6 +52,7 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
 
   public enabledAbilities: { [name: string]: boolean } = {};
   public showTags = false;
+  public cardTextKerning = 0;
   public SuperType = SuperType;
   public Stage = Stage;
   public PowerType = PowerType;
@@ -118,6 +119,11 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     this.subscriptions.push(
       this.settingsService.showTags$.subscribe(showTags => {
         this.showTags = showTags;
+      })
+    );
+    this.subscriptions.push(
+      this.settingsService.cardTextKerning$.subscribe(kerning => {
+        this.cardTextKerning = kerning;
       })
     );
   }
@@ -541,6 +547,10 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     } else {
       this.cardsBaseService.setFavoriteCard(this.card.name, this.card.fullName);
     }
+  }
+
+  public getCardTextKerningStyle(): { [key: string]: string } {
+    return { 'letter-spacing': this.cardTextKerning + 'px' };
   }
 
 }

@@ -17,11 +17,13 @@ mat-dialog-content {
   }
 }
 
+@import '../../../theme/variables.scss';
+
 .section-title {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 12px;
-  color: rgba(255, 255, 255, 0.9);
+  color: $text-primary;
 }
 
 .archetype-grid {
@@ -31,7 +33,7 @@ mat-dialog-content {
 }
 
 .archetype-option {
-  background-color: #2a2f3a;
+  background-color: $bg-card;
   border: 2px solid transparent;
   border-radius: 8px;
   padding: 12px;
@@ -43,15 +45,15 @@ mat-dialog-content {
   min-height: 100px;
 
   &:hover {
-    background-color: #384259;
-    border-color: rgba(77, 171, 247, 0.5);
+    background-color: $bg-secondary;
+    border-color: rgba($twinleaf-500, 0.5);
     transform: translateY(-2px);
   }
 
   &.selected {
-    background-color: #384259;
-    border-color: #4dabf7;
-    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.3);
+    background-color: $bg-secondary;
+    border-color: $twinleaf-500;
+    box-shadow: 0 0 0 2px rgba($twinleaf-500, 0.3);
   }
 }
 
@@ -70,7 +72,7 @@ mat-dialog-content {
 
 .archetype-label {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.85);
+  color: $text-primary;
   text-align: center;
   word-break: break-word;
   line-height: 1.2;
@@ -78,23 +80,23 @@ mat-dialog-content {
 
 ::ng-deep {
   .mat-dialog-container {
-    background-color: #1a202c;
-    color: white;
+    background-color: $bg-primary;
+    color: $text-primary;
   }
 
   .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: rgba(255, 255, 255, 0.3);
+    color: $border-color;
   }
 
   .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-    color: #4dabf7;
+    color: $twinleaf-500;
   }
 
   .mat-input-element {
-    color: white;
+    color: $text-primary;
   }
 
   .mat-form-field-label {
-    color: rgba(255, 255, 255, 0.6);
+    color: $text-muted;
   }
 }

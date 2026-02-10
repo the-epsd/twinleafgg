@@ -50,6 +50,7 @@ export * from './set-nintendo-promos';
 export * from './set-pop-series-2';
 export * from './set-pop-series-4';
 export * from './set-pop-series-5';
+export * from './set-pop-series-8';
 
 //Japan Promos ex-era
 export * from './set-pcg-l-promotional-cards';
@@ -178,7 +179,7 @@ export * from './set-black-bolt-white-flare';
 export * from './set-mega-evolution-promos';
 export * from './set-mega-evolution';
 export * from './set-phantasmal-flames';
-export * from './set-mega-dream';
+export * from './set-ascended-heroes';
 export * from './set-perfect-order';
 
 //TEST

@@ -19,7 +19,7 @@ export class Gigalith extends PokemonCard {
       name: 'Shear',
       cost: [F],
       damage: 0,
-      text: 'Discard the top 5 cards of your deck. If any of those cards are Fighting Energy cards, attach them to this Pokémon.'
+      text: 'Discard the top 5 cards of your deck. If any of those cards are [F] Energy cards, attach them to this Pokémon.'
     },
     {
       name: 'Rock Bullet',

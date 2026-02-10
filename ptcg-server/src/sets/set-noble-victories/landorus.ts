@@ -18,7 +18,7 @@ export class Landorus extends PokemonCard {
       name: 'Abundant Harvest',
       cost: [F],
       damage: 0,
-      text: 'Attach a Fighting Energy card from your discard pile to this Pokemon.'
+      text: 'Attach a [F] Energy card from your discard pile to this Pokemon.'
     },
     {
       name: 'Gaia Hammer',

@@ -1,3 +1,4 @@
+@import '../../../theme/variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
 :host {
@@ -5,7 +6,7 @@
   flex-direction: column;
   width: 100%;
   max-height: 80vh;
-  background: #1b202b;
+  background: $bg-card;
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
   position: relative;
@@ -16,8 +17,8 @@
 .change-images-header {
   position: relative;
   min-height: 80px;
-  background: #1b202b;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+  background: $bg-card;
+  border-bottom: 1px solid $border-color;
 
   .header-content {
     position: relative;
@@ -37,12 +38,12 @@
   .change-images-title {
     font-size: 28px;
     font-weight: 700;
-    color: #ffffff;
+    color: $text-primary;
     font-family: 'Urbanist', sans-serif;
     margin: 0 0 8px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    text-shadow: 0 0 10px rgba($twinleaf-500, 0.3);
   }
 }
 
@@ -65,7 +66,7 @@
   }
 
   .hint-text {
-    color: rgba(255, 255, 255, 0.7);
+    color: $text-muted;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 2rem;
@@ -84,7 +85,7 @@
     margin-bottom: 1.5rem;
 
     .section-title {
-      color: #ffffff;
+      color: $text-primary;
       font-size: 20px;
       font-weight: 700;
       margin: 0 0 8px 0;
@@ -93,7 +94,7 @@
     }
 
     .section-description {
-      color: rgba(255, 255, 255, 0.7);
+      color: $text-muted;
       font-size: 14px;
       font-weight: 500;
     }
@@ -104,8 +105,8 @@
       width: 100%;
 
       ::ng-deep .mat-form-field-wrapper {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-        border: 1px solid rgba(69, 144, 88, 0.3);
+        background: linear-gradient(135deg, rgba($bg-card, 0.05), rgba($bg-card, 0.02));
+        border: 1px solid $border-color;
         border-radius: 8px;
         backdrop-filter: blur(10px);
         padding: 1rem;
@@ -130,12 +131,12 @@
       }
 
       ::ng-deep .mat-form-field-label {
-        color: rgba(255, 255, 255, 0.9);
+        color: $text-primary;
         font-weight: 500;
       }
 
       ::ng-deep input.mat-input-element {
-        color: rgba(255, 255, 255, 0.9);
+        color: $text-primary;
         font-weight: 500;
         width: 100%;
       }
@@ -185,8 +186,8 @@
   align-items: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: #1b202b;
-  border-top: 1px solid rgba(69, 144, 88, 0.3);
+  background: $bg-card;
+  border-top: 1px solid $border-color;
   flex-shrink: 0;
 
   .action-buttons-left,
@@ -209,26 +210,26 @@
     gap: 8px;
 
     &.cancel-button {
-      background: linear-gradient(135deg, #f44336, #d32f2f);
-      color: white;
+      background: linear-gradient(135deg, $twinleaf-600, $twinleaf-700);
+      color: $text-primary;
       border: none;
 
       &:hover:not([disabled]) {
-        background: linear-gradient(135deg, #e53935, #c62828);
+        background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600);
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        box-shadow: 0 4px 15px rgba($twinleaf-600, 0.3);
       }
     }
 
     &.confirm-button {
-      background: linear-gradient(135deg, #459058, #3d7a4a);
-      color: white;
+      background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600);
+      color: $text-primary;
       border: none;
 
       &:hover:not([disabled]) {
-        background: linear-gradient(135deg, #3d7a4a, #2e5a3a);
+        background: linear-gradient(135deg, $twinleaf-400, $twinleaf-500);
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(69, 144, 88, 0.3);
+        box-shadow: 0 4px 15px rgba($twinleaf-500, 0.3);
       }
     }
 
@@ -236,7 +237,7 @@
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
-      background: linear-gradient(135deg, #9e9e9e, #757575);
+      background: linear-gradient(135deg, $twinleaf-800, $twinleaf-900);
 
       &:hover {
         transform: none;

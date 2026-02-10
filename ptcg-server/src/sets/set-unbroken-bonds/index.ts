@@ -6,6 +6,7 @@ import { Blacephalon } from './blacephalon';
 import { Charjabug } from './charjabug';
 import { Cleffa } from './cleffa';
 import { DedenneGX } from './dedenne-gx';
+import { DevolutionSprayZ } from './devolution-spray-z';
 import { Dewgong } from './dewgong';
 import { DuskStone } from './dusk-stone';
 import { ElectromagneticRadar } from './electromagnetic-radar';
@@ -41,6 +42,7 @@ import { PorygonZ } from './porygon-z';
 import { Porygon2 } from './porygon2';
 import { PowerPlant } from './power-plant';
 import { Pyukumuku } from './pyukumuku';
+import { RedsChallenge } from './reds-challenge';
 import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 import { Salazzle } from './salazzle';
 import { Seel } from './seel';
@@ -67,6 +69,7 @@ export const setUnbrokenBonds: Card[] = [
   new Charjabug(),
   new Cleffa(),
   new DedenneGX(),
+  new DevolutionSprayZ(),
   new Dewgong(),
   new DuskStone(),
   new ElectromagneticRadar(),
@@ -97,6 +100,7 @@ export const setUnbrokenBonds: Card[] = [
   new PorygonZ(),
   new PowerPlant(),
   new Pyukumuku(),
+  new RedsChallenge(),
   new ReshiramCharizardGX(),
   new Salazzle(),
   new Seel(),

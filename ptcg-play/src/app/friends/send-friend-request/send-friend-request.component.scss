@@ -1,8 +1,9 @@
 @import '../friends.theme.scss';
+@import '../../../theme/variables.scss';
 
 .connection-terminal {
-  background: linear-gradient(135deg, #1e2a3a 0%, #0d1421 100%);
-  border: 1px solid rgba(68, 144, 88, 0.3);
+  background: linear-gradient(135deg, $bg-card 0%, $bg-primary 100%);
+  border: 1px solid $border-color;
   border-radius: 12px;
   padding: 16px;
   position: relative;
@@ -15,7 +16,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #449058, #449058, transparent);
+    background: linear-gradient(90deg, transparent, $twinleaf-500, $twinleaf-500, transparent);
     animation: scanLine 3s ease-in-out infinite;
   }
 
@@ -26,7 +27,7 @@
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: linear-gradient(45deg, transparent, rgba(68, 144, 88, 0.1), transparent);
+    background: linear-gradient(45deg, transparent, rgba($twinleaf-500, 0.1), transparent);
     border-radius: 12px;
     z-index: -1;
   }
@@ -35,14 +36,14 @@
 .terminal-header {
   margin-bottom: 16px;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgba(68, 144, 88, 0.2);
+  border-bottom: 1px solid $border-color;
 
   .terminal-title {
     margin: 0;
-    color: #ffffff;
+    color: $text-primary;
     font-size: 18px;
     font-weight: 700;
-    text-shadow: 0 0 8px rgba(68, 144, 88, 0.3);
+    text-shadow: 0 0 8px rgba($twinleaf-500, 0.3);
   }
 }
 
@@ -84,8 +85,8 @@
         }
 
         &.input-invalid {
-          border-color: #ef4444;
-          background: rgba(239, 68, 68, 0.05);
+          border-color: $twinleaf-600;
+          background: rgba($twinleaf-600, 0.05);
         }
       }
 
@@ -104,7 +105,7 @@
           }
 
           &.invalid {
-            color: #ef4444;
+            color: $twinleaf-600;
           }
         }
       }
@@ -114,12 +115,12 @@
       margin-top: var(--friends-spacing-sm);
 
       .error-message {
-        color: #ef4444;
+        color: $twinleaf-600;
         font-size: 14px;
         font-weight: 500;
         padding: var(--friends-spacing-sm);
-        background: rgba(239, 68, 68, 0.05);
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        background: rgba($twinleaf-600, 0.05);
+        border: 1px solid rgba($twinleaf-600, 0.2);
         border-radius: var(--friends-radius-sm);
       }
     }
@@ -234,9 +235,9 @@
     }
 
     &.error-alert {
-      background: rgba(239, 68, 68, 0.05);
-      border-color: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
+      background: rgba($twinleaf-600, 0.05);
+      border-color: rgba($twinleaf-600, 0.2);
+      color: $twinleaf-600;
     }
 
     &.success-alert {
@@ -320,11 +321,11 @@
 
   0%,
   100% {
-    box-shadow: 0 4px 15px rgba(68, 144, 88, 0.3);
+    box-shadow: 0 4px 15px rgba($twinleaf-500, 0.3);
   }
 
   50% {
-    box-shadow: 0 6px 20px rgba(68, 144, 88, 0.6);
+    box-shadow: 0 6px 20px rgba($twinleaf-500, 0.6);
   }
 }
 
@@ -374,11 +375,11 @@
 
   0%,
   100% {
-    box-shadow: 0 4px 15px rgba(68, 144, 88, 0.3);
+    box-shadow: 0 4px 15px rgba($twinleaf-500, 0.3);
   }
 
   50% {
-    box-shadow: 0 6px 25px rgba(68, 144, 88, 0.5);
+    box-shadow: 0 6px 25px rgba($twinleaf-500, 0.5);
   }
 }
 

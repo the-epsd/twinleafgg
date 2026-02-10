@@ -9,13 +9,16 @@ import { SharedModule } from '../../shared/shared.module';
 import { CardsModule } from 'src/app/shared/cards/cards.module';
 import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-selection-overlay.component';
 import { VisualCoinFlipComponent } from './visual-coin-flip/visual-coin-flip.component';
+import { AttackEffectOverlayComponent } from './board-card/attack-effect-overlay/attack-effect-overlay.component';
+import { Board3dModule } from './board-3d.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MatDialogModule,
     SharedModule,
-    CardsModule
+    CardsModule,
+    Board3dModule
   ],
   declarations: [
     BoardComponent,
@@ -23,11 +26,14 @@ import { VisualCoinFlipComponent } from './visual-coin-flip/visual-coin-flip.com
     BoardDeckComponent,
     BoardCardComponent,
     BoardSelectionOverlayComponent,
-    VisualCoinFlipComponent
+    VisualCoinFlipComponent,
+    AttackEffectOverlayComponent
   ],
   exports: [
     BoardComponent,
-    BoardCardComponent
+    BoardCardComponent,
+    Board3dModule,
+    BoardSelectionOverlayComponent
   ]
 })
 export class BoardModule { }

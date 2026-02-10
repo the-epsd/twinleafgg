@@ -12,21 +12,15 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 export class ExcitingStadium extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '180';
-
   public name: string = 'Lively Stadium';
-
   public fullName: string = 'Exciting Stadium SSP';
 
   public text: string =
-    'Basic Pokémon in play get +30 HP.';
+    'Each Basic Pokémon in play (both yours and your opponent\'s) gets +30 HP.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {

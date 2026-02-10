@@ -29,9 +29,11 @@ export class AvatarService {
     });
   }
 
-  public markAsDefault(avatarId: number) {
-    return this.api.post<Response>('/v1/avatars/markAsDefault', {
-      id: avatarId
-    });
+  public markAsDefault(avatarId: number, fileName?: string) {
+    const body: { id: number, fileName?: string } = { id: avatarId };
+    if (fileName !== undefined) {
+      body.fileName = fileName;
+    }
+    return this.api.post<Response>('/v1/avatars/markAsDefault', body);
   }
 }

@@ -4,6 +4,7 @@ import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { Subscription, interval } from 'rxjs';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
+import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 // Interfaces for our self-contained implementation
 export interface PokemonCardItem {
@@ -630,44 +631,8 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
    */
   public getCustomEnergyImageUrl(card: Card): string {
     if (!card || card.superType !== SuperType.ENERGY) return '';
-
-    // Handle special energy cards
-    const specialEnergyUrls = {
-      'Double Turbo Energy': 'assets/energy/double-turbo.png',
-      'Jet Energy': 'assets/energy/jet.png',
-      'Gift Energy': 'assets/energy/gift.png',
-      'Mist Energy': 'assets/energy/mist.png',
-      'Legacy Energy': 'assets/energy/legacy.png',
-      'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      'Electrode': 'assets/energy/neo-upper.png',
-      // Add more special energy mappings as needed
-    };
-
-    // Check if it's a special energy first
-    if (specialEnergyUrls[card.name]) {
-      return specialEnergyUrls[card.name];
-    }
-
-    // Handle basic energy cards
-    const basicEnergyUrls = {
-      'Grass Energy': 'assets/energy/grass.png',
-      'Fire Energy': 'assets/energy/fire.png',
-      'Water Energy': 'assets/energy/water.png',
-      'Lightning Energy': 'assets/energy/lightning.png',
-      'Psychic Energy': 'assets/energy/psychic.png',
-      'Fighting Energy': 'assets/energy/fighting.png',
-      'Darkness Energy': 'assets/energy/dark.png',
-      'Metal Energy': 'assets/energy/metal.png',
-      'Fairy Energy': 'assets/energy/fairy.png',
-      'Electrode': 'assets/energy/electrode.png',
-      'Holon\'s Castform': 'assets/energy/holon-castform.png',
-      'Holon\'s Magnemite': 'assets/energy/holons-magnemite.png',
-      'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
-      'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
-      'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
-    };
-
-    return basicEnergyUrls[card.name] || '';
+    const iconPath = getCustomEnergyIconPath(card);
+    return iconPath || '';
   }
 
   /**

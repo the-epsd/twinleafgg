@@ -16,6 +16,8 @@ export interface GameInfo {
   turn: number;
   activePlayer: number;
   players: PlayerInfo[];
+  /** User ids of players in this game (so client can recognize "I am in this game" after reload). */
+  playerUserIds?: number[];
 }
 
 export interface ClientInfo {
@@ -28,6 +30,8 @@ export interface CoreInfo {
   clients: ClientInfo[];
   users: UserInfo[];
   games: GameInfo[];
+  /** When the user has an active disconnected session, the game id they can rejoin. */
+  reconnectableGameId?: number;
 }
 
 export interface GameState {

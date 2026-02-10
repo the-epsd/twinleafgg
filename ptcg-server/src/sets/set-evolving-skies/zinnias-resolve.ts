@@ -69,9 +69,9 @@ export class ZinniasResolve extends TrainerCard {
   public fullName: string = 'Zinnia\'s Resolve EVS';
 
   public text: string =
-    'You can play this card only if you discard 2 other cards from your hand.' +
-    '' +
-    'Draw a card for each of your opponent\'s Pokémon in play.';
+    `You can play this card only if you discard 2 other cards from your hand.
+
+Draw a card for each of your opponent\'s Pokémon in play.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

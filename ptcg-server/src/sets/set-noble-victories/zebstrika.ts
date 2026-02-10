@@ -25,7 +25,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Shock Bolt',
       cost: [L, L, C],
       damage: 90,
-      text: 'Flip a coin. If tails, discard all Lightning Energy attached to this Pokemon.'
+      text: 'Flip a coin. If tails, discard all [L] Energy attached to this Pokemon.'
     }
   ];
 

@@ -28,6 +28,7 @@ export class ElectrodeGX extends PokemonCard {
     name: 'Extra Energy Bomb',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
+    knocksOutSelf: true,
     text: 'Once during your turn (before your attack), you may attach 5 Energy cards from your discard pile to your Pokémon, except Pokémon-GX or Pokémon-EX, in any way you like. If you do, this Pokémon is Knocked Out.'
   }];
 

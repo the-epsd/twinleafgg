@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, Resistance, StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Girafarig extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -48,10 +49,8 @@ export class Girafarig extends PokemonCard {
         {},
         { min: 2, max: 2 }
       ), selected => {
-        if (selected && selected.length === 2) {
-          selected.forEach(card => {
-            opponent.discard.moveCardsTo(selected, player.lostzone);
-          });
+        if (selected) {
+          MOVE_CARDS(store, state, opponent.discard, opponent.lostzone, { cards: selected, sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
     }

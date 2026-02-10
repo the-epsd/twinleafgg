@@ -1,0 +1,8 @@
+<div class="board-3d-container">
+  <canvas #canvas class="board-3d-canvas"></canvas>
+  <ptcg-board-3d-stats 
+    [scene]="scene" 
+    [renderer]="renderer"
+    (wireframeToggle)="onWireframeToggle($event)">
+  </ptcg-board-3d-stats>
+</div>

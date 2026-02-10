@@ -38,7 +38,6 @@ export class Decks extends Controller {
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
         format: getValidFormatsForCardList(cards),
-        ...(deck.artworks ? { artworks: JSON.parse(deck.artworks) } : {}),
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
@@ -73,16 +72,6 @@ export class Decks extends Controller {
       return;
     }
 
-    // Try to parse artworks from entity if present (future-proofing)
-    let artworks: { code: string; artworkId?: number }[] | undefined = undefined;
-    if (entity.artworks) {
-      try {
-        artworks = JSON.parse(entity.artworks);
-      } catch (error) {
-        // Ignore parsing errors for artworks
-      }
-    }
-
     const sleeveImagePath = entity.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: entity.sleeveIdentifier } }))?.imagePath
       : undefined;
@@ -94,7 +83,6 @@ export class Decks extends Controller {
       cards: JSON.parse(entity.cards),
       manualArchetype1: entity.manualArchetype1,
       manualArchetype2: entity.manualArchetype2,
-      ...(artworks ? { artworks } : {}),
       ...(entity.sleeveIdentifier ? { sleeveIdentifier: entity.sleeveIdentifier } : {}),
       ...(sleeveImagePath ? { sleeveImagePath } : {})
     };
@@ -159,10 +147,6 @@ export class Decks extends Controller {
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
     deck.sleeveIdentifier = body.sleeveIdentifier || '';
-    // Save artworks if present
-    if ('artworks' in body && body.artworks) {
-      deck.artworks = JSON.stringify(body.artworks);
-    }
     try {
       deck = await deck.save();
     } catch (error) {
@@ -181,7 +165,6 @@ export class Decks extends Controller {
         cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        ...(body.artworks ? { artworks: body.artworks } : {}),
         ...(body.sleeveIdentifier ? { sleeveIdentifier: body.sleeveIdentifier } : {}),
         ...(savedSleeveImagePath ? { sleeveImagePath: savedSleeveImagePath } : {})
       }
@@ -723,10 +706,6 @@ const BanLists: { [key: number]: string[] } = {
     'Tatsugiri ex SSP 142',
     'Tatsugiri ex SSP 226',
     'Dragonair SUM 95',
-    'Arceus & Dialga & Palkia-GX CEC 156',
-    'Arceus & Dialga & Palkia-GX CEC 220',
-    'Arceus & Dialga & Palkia-GX CEC 221',
-    'Arceus & Dialga & Palkia-GX CEC 258',
     'Dialga-GX UPR 100',
     'Dialga-GX UPR 146',
     'Dialga-GX UPR 164',
@@ -882,6 +861,7 @@ const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
+  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -1025,8 +1005,11 @@ const SetReleaseDates: { [key: string]: Date } = {
   'M1L': new Date('2025-09-26'),
   'M1S': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
-  'M2a': new Date('2026-01-31'),
+  'M2a': new Date('2026-01-28'),
+  'ASC': new Date('2026-01-28')
 };
+
+const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
 
 function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
@@ -1137,6 +1120,7 @@ function getValidFormats(card: any): number[] {
     Format.ETERNAL,
     Format.STANDARD,
     Format.STANDARD_NIGHTLY,
+    Format.STANDARD_MAJORS,
     Format.EXPANDED,
     Format.GLC,
     Format.SV,
@@ -1164,15 +1148,60 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I';
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard (has regulation mark G, H, or I)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's regulation mark
+        if (allPrintings.length === 0) {
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+        }
+
+        return allPrintings.some((c: any) => {
+          const rm = c.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+        });
       }
-      case Format.STANDARD_NIGHTLY:
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I' ||
-          card.regulationMark === 'J';
+      case Format.STANDARD_NIGHTLY: {
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard Nightly (has regulation mark G, H, I, or J)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's regulation mark
+        if (allPrintings.length === 0) {
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        }
+
+        return allPrintings.some((c: any) => {
+          const rm = c.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        });
+      }
+      case Format.STANDARD_MAJORS: {
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard Majors (is in one of the allowed sets)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's set
+        if (allPrintings.length === 0) {
+          return STANDARD_MAJORS_SETS.includes(card.set);
+        }
+
+        return allPrintings.some((c: any) => {
+          return STANDARD_MAJORS_SETS.includes(c.set);
+        });
+      }
       case Format.EXPANDED: {
         // For anyPrintingAllowed cards, they are known to be legal in Expanded format
         // Just check if this specific printing is not banned
@@ -1229,6 +1258,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.regulationMark === 'H' ||
         card.regulationMark === 'I' ||
         card.regulationMark === 'J';
+    case Format.STANDARD_MAJORS:
+      return STANDARD_MAJORS_SETS.includes(card.set);
     case Format.EXPANDED: {
       const setDate = SetReleaseDates[card.set];
       return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&

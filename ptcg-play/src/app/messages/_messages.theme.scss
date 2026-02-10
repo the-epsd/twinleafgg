@@ -1,5 +1,5 @@
 @use '~@angular/material' as mat;
-
+@import '../../theme/variables.scss';
 
 @mixin ptcg-messages-theme($theme) {
   $background: map-get($theme, background);
@@ -8,32 +8,151 @@
   $input-message-background-color: mat.get-color-from-palette($background, app-bar);
   $active-contact-background-color: mat.get-color-from-palette($background, focused-button);
 
+  // Contact bar theming
   ptcg-contact-bar {
-    .ptcg-contact-bar.active {
-      background-color: $active-contact-background-color;
+    .ptcg-contact-bar {
+      &.active {
+        background: linear-gradient(135deg, rgba($twinleaf-green, 0.15), rgba($twinleaf-green, 0.05));
+        border-color: $twinleaf-green;
 
-      &:after {
-        background-color: #449058;
+        &:after {
+          background-color: $twinleaf-green;
+          box-shadow: 0 0 8px rgba($twinleaf-green, 0.5);
+        }
+      }
+
+      &.marked {
+        .ptcg-contact-name {
+          font-weight: 700;
+        }
+
+        .ptcg-contact-unread-badge {
+          background: $twinleaf-green;
+          box-shadow: 0 0 8px rgba($twinleaf-green, 0.6);
+        }
+      }
+
+      &:hover {
+        background: rgba($bg-card, 0.5);
+        border-color: rgba($twinleaf-green, 0.2);
       }
     }
 
-    .ptcg-contact-bar.marked .ptcg-contact-name {
-      background-color: #283142;
+    .ptcg-contact-name {
+      color: $text-primary;
+    }
+
+    .ptcg-contact-message-text {
+      color: $text-secondary;
+    }
+
+    .ptcg-contact-timestamp {
+      color: $text-muted;
     }
   }
 
+  // Conversation theming
   ptcg-conversation {
     .ptcg-conversation-footer {
-      background-color: #1a202c;
+      background: linear-gradient(135deg, rgba($bg-card, 0.5), rgba($bg-card, 0.3));
+      border-top-color: rgba($twinleaf-green, 0.1);
+    }
+
+    .ptcg-conversation-input-field {
+      ::ng-deep .mat-form-field-flex {
+        background: rgba($bg-card, 0.5);
+        border-color: rgba($twinleaf-green, 0.2);
+
+        &:hover {
+          border-color: rgba($twinleaf-green, 0.4);
+          background: rgba($bg-card, 0.7);
+        }
+      }
+
+      ::ng-deep .mat-focused .mat-form-field-flex {
+        border-color: $twinleaf-green;
+        background: rgba($twinleaf-green, 0.1);
+        box-shadow: 0 0 0 3px rgba($twinleaf-green, 0.1);
+      }
+
+      ::ng-deep .mat-form-field-flex input {
+        color: $text-primary;
+      }
+
+      ::ng-deep .mat-form-field-label {
+        color: $text-muted;
+      }
+    }
+
+    .ptcg-conversation-send-button {
+      background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.1));
+      border-color: $twinleaf-green;
+      color: $twinleaf-green;
+
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, rgba($twinleaf-green, 0.3), rgba($twinleaf-green, 0.2));
+        box-shadow: 0 4px 12px rgba($twinleaf-green, 0.3);
+      }
     }
   }
 
+  // Message entry theming
   ptcg-message-entry {
-    .myself mat-card {
-      background-color: #283142;
+    .ptcg-message-bubble {
+      background: linear-gradient(135deg, rgba($bg-card, 0.6), rgba($bg-card, 0.4));
+      border-color: rgba($twinleaf-green, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      &.ptcg-message-bubble-sent {
+        background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.15));
+        border-color: rgba($twinleaf-green, 0.3);
+      }
+    }
+
+    .ptcg-message-text {
+      color: $text-primary;
+    }
+
+    .ptcg-message-sender {
+      color: $text-primary;
+    }
+
+    .ptcg-message-timestamp {
+      color: $text-muted;
+    }
+
+    .ptcg-message-status-icon {
+      color: $text-muted;
+
+      &.ptcg-message-read {
+        color: $twinleaf-green;
+      }
     }
   }
 
+  // Messages container theming
+  .ptcg-messages-container {
+    background-color: $bg-secondary;
+  }
+
+  .ptcg-messages-header {
+    background: linear-gradient(135deg, rgba($bg-card, 0.5), rgba($bg-card, 0.3));
+    border-bottom-color: rgba($twinleaf-green, 0.1);
+  }
+
+  .ptcg-messages-sidebar {
+    background: linear-gradient(180deg, $bg-primary 0%, $bg-secondary 100%);
+    border-right-color: rgba($twinleaf-green, 0.1);
+  }
+
+  .ptcg-messages-empty-card {
+    background: linear-gradient(135deg, rgba($bg-card, 0.5), rgba($bg-card, 0.3));
+    border-color: rgba($twinleaf-green, 0.2);
+  }
 }
 
 @mixin ptcg-messages-typography($config) {
@@ -42,12 +161,34 @@
 
     .ptcg-contact-name {
       @include mat.typography-level($config, body-2);
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .ptcg-contact-message-text {
+      @include mat.typography-level($config, caption);
+      font-family: 'Urbanist', sans-serif;
     }
   }
 
   ptcg-message-entry {
-    .ptcg-message-footer {
-      @include mat.typography-level($config, caption);
+    .ptcg-message-text {
+      @include mat.typography-level($config, body-1);
+      font-family: 'Urbanist', sans-serif;
     }
+
+    .ptcg-message-sender {
+      @include mat.typography-level($config, caption);
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .ptcg-message-timestamp {
+      @include mat.typography-level($config, caption);
+      font-family: 'Urbanist', sans-serif;
+    }
+  }
+
+  .ptcg-messages-header-title,
+  .ptcg-messages-sidebar-title {
+    font-family: 'Urbanist', sans-serif;
   }
 }

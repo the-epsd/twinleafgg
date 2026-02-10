@@ -2,29 +2,22 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, PokemonCardList, ShuffleDeckPrompt, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class CherishCarrier extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.ACE_SPEC];
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '185';
-
   public regulationMark = 'H';
-
   public name: string = 'Precious Trolley';
-
   public fullName: string = 'Precious Trolley SSP';
 
   public text: string =
-    'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then shuffle your deck.';
+    'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -66,9 +59,10 @@ export class CherishCarrier extends TrainerCard {
           store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
         });
 
+        // Use the new PlayPokemonFromDeckEffect for each selected card
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
+          const playPokemonFromDeckEffect = new PlayPokemonFromDeckEffect(player, card as any, slots[index]);
+          store.reduceEffect(state, playPokemonFromDeckEffect);
         });
 
         player.supporter.moveCardTo(this, player.discard);

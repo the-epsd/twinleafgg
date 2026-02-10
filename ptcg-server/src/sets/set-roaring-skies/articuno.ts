@@ -74,9 +74,17 @@ export class Articuno extends PokemonCard {
     }
 
     // Delta Plus
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+    if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      // Check if the knocked out Pokemon belongs to the opponent (active or bench)
+      const isOpponentPokemon = opponent.active === effect.target ||
+        opponent.bench.includes(effect.target);
+
+      if (!isOpponentPokemon) {
+        return state;
+      }
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {

@@ -2,6 +2,8 @@ import { JirachiUL, CheerleadersCheerUL, PlusPowerUL } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Crobat } from './crobat-prime';
 import { DualBall } from './dual-ball';
+import { EnteiAndRaikouLegendBottom } from './entei-and-raikou-legend-bottom';
+import { EnteiAndRaikouLegendTop } from './entei-and-raikou-legend-top';
 import { Golbat } from './golbat';
 import { Horsea } from './horsea';
 import { Kingdra } from './kingdra';
@@ -21,6 +23,8 @@ import {
 export const setUnleashed: Card[] = [
   new Crobat(),
   new DualBall(),
+  new EnteiAndRaikouLegendBottom(),
+  new EnteiAndRaikouLegendTop(),
   new Golbat(),
   new Horsea(),
   new Kingdra(),

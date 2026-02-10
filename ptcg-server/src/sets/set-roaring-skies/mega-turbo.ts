@@ -29,7 +29,7 @@ export class MegaTurbo extends TrainerCard {
 
       let hasMegaPokemonInPlay = false;
 
-      player.bench.forEach(list => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
         if (list && list.cards.some(card => card.tags.includes(CardTag.MEGA))) {
           hasMegaPokemonInPlay = true;
         }
@@ -54,7 +54,7 @@ export class MegaTurbo extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 1, blockedTo: blocked2 }
       ), transfers => {

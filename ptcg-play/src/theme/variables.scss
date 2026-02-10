@@ -1,5 +1,54 @@
 @use 'sass:math';
 
+// Twinleaf Color Palette (HEX-based)
+$twinleaf-50: #fafafa;
+$twinleaf-100: #f4f4f4;
+$twinleaf-200: #e7e7e8;
+$twinleaf-300: #d4d5d6;
+$twinleaf-400: #a0a1a5;
+$twinleaf-500: #707278;
+$twinleaf-600: #52555c;
+$twinleaf-700: #3e414b;
+$twinleaf-800: #252935;
+$twinleaf-900: #151927;
+$twinleaf-950: #040816;
+
+// Twinleaf Green
+$twinleaf-green: #459058;
+
+// Twinleaf Red
+$twinleaf-red: #dc2626;
+
+// Twinleaf Gold
+$twinleaf-gold: #fbbf24;
+
+$twinleaf: (
+  50: $twinleaf-50,
+  100: $twinleaf-100,
+  200: $twinleaf-200,
+  300: $twinleaf-300,
+  400: $twinleaf-400,
+  500: $twinleaf-500,
+  600: $twinleaf-600,
+  700: $twinleaf-700,
+  800: $twinleaf-800,
+  900: $twinleaf-900,
+  950: $twinleaf-950
+);
+
+// Semantic color variables using twinleaf palette
+$bg-primary: $twinleaf-950;
+$bg-secondary: $twinleaf-900;
+$bg-card: $twinleaf-800;
+$bg-overlay: rgba($twinleaf-950, 0.7);
+
+$text-primary: $twinleaf-50;
+$text-secondary: $twinleaf-300;
+$text-muted: $twinleaf-400;
+
+$border-color: rgba($twinleaf-700, 0.3);
+$border-color-hover: rgba($twinleaf-600, 0.5);
+
 $ptcg-size: (
   nav-menu: 200px,
   sidebar: 200px,

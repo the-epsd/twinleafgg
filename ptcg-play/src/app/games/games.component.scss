@@ -1,10 +1,12 @@
+@import '../../theme/global.scss';
+
 .tcg-games-container {
   height: calc(100vh - 64px); // Account for app bar height
   display: flex;
   overflow: hidden;
   position: relative;
   transition: background 0.5s ease;
-  background: #10131e;
+  background: $bg-primary;
 
   &::before {
     content: '';
@@ -45,10 +47,10 @@
   z-index: 1001;
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba($twinleaf-50, 0.1), rgba($twinleaf-50, 0.05));
+  border: 2px solid rgba($twinleaf-50, 0.2);
   border-radius: 50%;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba($twinleaf-50, 0.8);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   display: flex; // Use flexbox for centering
@@ -56,13 +58,13 @@
   justify-content: center; // Center horizontally
 
   &:hover {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
-    border-color: rgba(255, 215, 0, 0.6);
-    color: #ffd700;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+    border-color: rgba($twinleaf-500, 0.6);
+    color: $twinleaf-500;
     transform: scale(1.1);
     box-shadow:
       0 8px 25px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(255, 215, 0, 0.2);
+      0 0 20px rgba($twinleaf-500, 0.2);
   }
 
   mat-icon {
@@ -78,7 +80,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba($twinleaf-950, 0.7);
   z-index: 9998; // Just below the sidebar
   display: none; // Hidden by default, shown on mobile
 }
@@ -97,10 +99,10 @@
     left: 0;
     right: 0;
     padding: 1rem;
-    background: linear-gradient(135deg, rgba(10, 10, 20, 0.98) 0%, rgba(5, 10, 25, 0.98) 100%);
+    background: linear-gradient(135deg, rgba($twinleaf-950, 0.98) 0%, rgba($twinleaf-900, 0.98) 100%);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-    border-left: 1px solid rgba(255, 215, 0, 0.3);
+    border-bottom: 1px solid rgba($twinleaf-500, 0.3);
+    border-left: 1px solid rgba($twinleaf-500, 0.3);
     align-items: center;
     justify-content: space-between;
     z-index: 10000; // Above everything
@@ -108,7 +110,7 @@
     box-sizing: border-box;
 
     .sidebar-title {
-      color: #ffd700;
+      color: $twinleaf-500;
       font-weight: 600;
       font-size: 18px;
       text-transform: uppercase;
@@ -116,16 +118,16 @@
     }
 
     .close-sidebar {
-      color: #ffd700;
-      background: rgba(255, 215, 0, 0.1);
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: $twinleaf-500;
+      background: rgba($twinleaf-500, 0.1);
+      border: 1px solid rgba($twinleaf-500, 0.3);
       border-radius: 50%;
       width: 40px;
       height: 40px;
 
       &:hover {
-        background: rgba(255, 215, 0, 0.2);
-        border-color: rgba(255, 215, 0, 0.6);
+        background: rgba($twinleaf-500, 0.2);
+        border-color: rgba($twinleaf-500, 0.6);
       }
     }
   }
@@ -154,27 +156,27 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba($twinleaf-950, 0.8);
   padding: 15px;
   border-radius: 8px;
-  border: 2px solid #ff6b6b;
+  border: 2px solid $twinleaf-600;
   backdrop-filter: blur(10px);
 
   .test-button {
     font-size: 12px;
     padding: 8px 12px;
     min-width: 180px;
-    background: #ff6b6b !important;
-    color: white !important;
+    background: $twinleaf-600 !important;
+    color: $text-primary !important;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      background: #ff5252 !important;
+      background: $twinleaf-700 !important;
       transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+      box-shadow: 0 4px 8px rgba($twinleaf-600, 0.3);
     }
 
     &:active {
@@ -187,8 +189,8 @@
     position: absolute;
     top: -10px;
     left: 10px;
-    background: #ff6b6b;
-    color: white;
+    background: $twinleaf-600;
+    color: $text-primary;
     padding: 2px 8px;
     font-size: 10px;
     font-weight: bold;

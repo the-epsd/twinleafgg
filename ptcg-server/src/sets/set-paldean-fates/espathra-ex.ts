@@ -9,24 +9,18 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Espathraex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Flittle';
-
   public cardType: CardType = CardType.GRASS;
-
   public hp: number = 260;
-
   public weakness = [{ type: CardType.FIRE }];
-
   public retreat = [CardType.COLORLESS];
 
   public powers =
     [{
       name: 'Dazzling Gaze',
       powerType: PowerType.ABILITY,
-      text: 'As long as this Pokémon is in the Active Spot, attacks used by your opponent\'s Active Pokémon cost C more.'
+      text: 'As long as this Pokémon is in the Active Spot, attacks used by your opponent\'s Active Pokémon cost [C] more.'
     }];
 
   public attacks = [

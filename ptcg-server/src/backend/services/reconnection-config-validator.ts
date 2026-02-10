@@ -49,7 +49,8 @@ export class ReconnectionConfigValidator {
         'reconnectIntervals',
         'healthCheckIntervalMs',
         'cleanupIntervalMs',
-        'maxPreservedSessionsPerUser'
+        'maxPreservedSessionsPerUser',
+        'disconnectForfeitMs'
       ];
 
       for (const field of requiredFields) {
@@ -172,6 +173,20 @@ export class ReconnectionConfigValidator {
       }
     }
 
+    // Validate disconnect forfeit timeout (min 10s, max 5 min)
+    const MIN_DISCONNECT_FORFEIT_MS = 10 * 1000;
+    const MAX_DISCONNECT_FORFEIT_MS = 5 * 60 * 1000;
+    if (config.disconnectForfeitMs !== undefined) {
+      const ms = config.disconnectForfeitMs;
+      if (!Number.isInteger(ms) || ms < 0) {
+        result.errors.push('disconnectForfeitMs must be a non-negative integer');
+      } else if (ms < MIN_DISCONNECT_FORFEIT_MS) {
+        result.errors.push(`disconnectForfeitMs must be at least ${MIN_DISCONNECT_FORFEIT_MS}ms (10s)`);
+      } else if (ms > MAX_DISCONNECT_FORFEIT_MS) {
+        result.warnings.push(`disconnectForfeitMs of ${ms}ms is high; consider ${MAX_DISCONNECT_FORFEIT_MS}ms (5 min) max`);
+      }
+    }
+
     // Cross-field validations
     if (config.preservationTimeoutMs !== undefined && config.cleanupIntervalMs !== undefined) {
       if (config.cleanupIntervalMs > config.preservationTimeoutMs / 2) {
@@ -222,7 +237,8 @@ export class ReconnectionConfigValidator {
       reconnectIntervals: [5000, 10000, 15000], // 5s, 10s, 15s
       healthCheckIntervalMs: 30 * 1000, // 30 seconds
       cleanupIntervalMs: 60 * 1000, // 1 minute
-      maxPreservedSessionsPerUser: 1
+      maxPreservedSessionsPerUser: 1,
+      disconnectForfeitMs: 60 * 1000 // 60 seconds before auto-forfeit
     };
   }
 

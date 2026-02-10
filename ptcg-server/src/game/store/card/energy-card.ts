@@ -19,5 +19,7 @@ export abstract class EnergyCard extends Card {
 
   public blendedEnergies: CardType[] = [];
 
+  public blendedEnergyCount: number = 1;
+
   public energyEffect: EnergyEffect | undefined;
 }

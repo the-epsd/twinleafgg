@@ -3,7 +3,7 @@ import { DeckListEntry } from "../api/interfaces/deck.interface";
 
 export class FormatValidator {
 
-  static getValidFormatsForCardList(cards: Card[]): Format[] {
+  static getValidFormatsForCardList(cards: Card[], allCards?: Card[]): Format[] {
 
     if (!cards || cards.length === 0) {
       return [];
@@ -11,8 +11,11 @@ export class FormatValidator {
 
     let formats = [];
 
+    // Use allCards if provided (for ANY_PRINTING_ALLOWED checks), otherwise fall back to deck's cards
+    const cardsToCheck = allCards || cards;
+
     cards.filter(c => !!c && (c.superType !== SuperType.ENERGY || (<any>c).energyType === EnergyType.SPECIAL)).forEach(card => {
-      formats.push(this.getValidFormats(card));
+      formats.push(this.getValidFormats(card, cardsToCheck));
     });
 
     let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))
@@ -117,12 +120,13 @@ export class FormatValidator {
     return formatList;
   }
 
-  static getValidFormats(card: Card): Format[] {
+  static getValidFormats(card: Card, allCards?: Card[]): Format[] {
     const formats = [Format.UNLIMITED];
     [
       Format.ETERNAL,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
+      Format.STANDARD_MAJORS,
       Format.EXPANDED,
       Format.GLC,
       Format.SV,
@@ -134,13 +138,13 @@ export class FormatValidator {
       Format.RETRO,
       // Format.PRE_RELEASE,
     ].forEach(format => {
-      this.isValid(card, format, ANY_PRINTING_ALLOWED) ? formats.push(format) : null;
+      this.isValid(card, format, ANY_PRINTING_ALLOWED, allCards) ? formats.push(format) : null;
     });
 
     return formats;
   }
 
-  static isValid(card: Card, format: Format, anyPrintingAllowed?: string[]): boolean {
+  static isValid(card: Card, format: Format, anyPrintingAllowed?: string[], allCards?: Card[]): boolean {
     if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
     }
@@ -151,18 +155,69 @@ export class FormatValidator {
         case Format.ETERNAL:
           return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
         case Format.STANDARD: {
-          if (card.regulationMark === 'J') {
+          // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+          // is legal in Standard (has regulation mark G, H, or I)
+          // If allCards is provided, check within that list; otherwise fall back to checking this card only
+          if (allCards) {
+            const allPrintings = allCards.filter(c => c && c.name === card.name);
+
+            // If no printings found, fall back to checking this card's regulation mark
+            if (allPrintings.length === 0) {
+              const rm = card.regulationMark;
+              return rm && rm !== 'J' && (rm === 'G' || rm === 'H' || rm === 'I');
+            }
+
+            return allPrintings.some(c => {
+              const rm = c.regulationMark;
+              return rm && rm !== 'J' && (rm === 'G' || rm === 'H' || rm === 'I');
+            });
+          }
+          // Fallback: check this card's regulation mark
+          const rm = card.regulationMark;
+          if (!rm || rm === 'J') {
             return false;
           }
-          return card.regulationMark === 'G' ||
-            card.regulationMark === 'H' ||
-            card.regulationMark === 'I';
+          return rm === 'G' || rm === 'H' || rm === 'I';
         }
-        case Format.STANDARD_NIGHTLY:
-          return card.regulationMark === 'G' ||
-            card.regulationMark === 'H' ||
-            card.regulationMark === 'I' ||
-            card.regulationMark === 'J';
+        case Format.STANDARD_NIGHTLY: {
+          // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+          // is legal in Standard Nightly (has regulation mark G, H, I, or J)
+          if (allCards) {
+            const allPrintings = allCards.filter(c => c && c.name === card.name);
+
+            // If no printings found, fall back to checking this card's regulation mark
+            if (allPrintings.length === 0) {
+              const rm = card.regulationMark;
+              return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+            }
+
+            return allPrintings.some(c => {
+              const rm = c.regulationMark;
+              return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+            });
+          }
+          // Fallback: check this card's regulation mark
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        }
+        case Format.STANDARD_MAJORS: {
+          // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+          // is legal in Standard Majors (is in one of the allowed sets)
+          if (allCards) {
+            const allPrintings = allCards.filter(c => c && c.name === card.name);
+
+            // If no printings found, fall back to checking this card's set
+            if (allPrintings.length === 0) {
+              return STANDARD_MAJORS_SETS.includes(card.set);
+            }
+
+            return allPrintings.some(c => {
+              return STANDARD_MAJORS_SETS.includes(c.set);
+            });
+          }
+          // Fallback: check this card's set
+          return STANDARD_MAJORS_SETS.includes(card.set);
+        }
         case Format.EXPANDED: {
           // For anyPrintingAllowed cards, they are known to be legal in Expanded format
           // Just check if this specific printing is not banned
@@ -218,6 +273,8 @@ export class FormatValidator {
           card.regulationMark === 'H' ||
           card.regulationMark === 'I' ||
           card.regulationMark === 'J';
+      case Format.STANDARD_MAJORS:
+        return STANDARD_MAJORS_SETS.includes(card.set);
       case Format.EXPANDED: {
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
@@ -600,10 +657,6 @@ export const BanLists: { [key: number]: string[] } = {
     'Tatsugiri ex SSP 142',
     'Tatsugiri ex SSP 226',
     'Dragonair SUM 95',
-    'Arceus & Dialga & Palkia-GX CEC 156',
-    'Arceus & Dialga & Palkia-GX CEC 220',
-    'Arceus & Dialga & Palkia-GX CEC 221',
-    'Arceus & Dialga & Palkia-GX CEC 258',
     'Dialga-GX UPR 100',
     'Dialga-GX UPR 146',
     'Dialga-GX UPR 164',
@@ -759,6 +812,7 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
+  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -902,5 +956,8 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'M1L': new Date('2025-09-26'),
   'M1S': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
-  'M2a': new Date('2026-01-31'),
+  'M2a': new Date('2026-01-28'),
+  'ASC': new Date('2026-01-28')
 };
+
+const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];

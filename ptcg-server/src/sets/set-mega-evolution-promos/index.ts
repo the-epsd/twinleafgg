@@ -4,6 +4,9 @@ import { Psyduck } from './psyduck';
 import { Sneasel } from './sneasel';
 import { Weavile } from './weavile';
 import { Golduck } from './golduck';
+import { Slowpoke } from './slowpoke';
+import { MegaSlowbroex } from './mega-slowbro-ex';
+import { Jett } from './jett';
 
 export const setMegaEvolutionPromos: Card[] = [
   new Psyduck(),
@@ -27,4 +30,7 @@ export const setMegaEvolutionPromos: Card[] = [
   new MegaKangaskhanexMEP(),
   new HaunterMEP(),
   new Golduck(),
+  new Slowpoke(),
+  new MegaSlowbroex(),
+  new Jett(),
 ];

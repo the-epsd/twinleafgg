@@ -38,6 +38,7 @@ export class CreateGamePopupComponent implements OnInit {
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
+    { value: Format.STANDARD_MAJORS, label: 'LABEL_STANDARD_MAJORS' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
@@ -141,15 +142,15 @@ export class CreateGamePopupComponent implements OnInit {
     //     return;
     //   }
     // } else {
-      if (!selectedDeck.value.format.includes(this.settings.format)) {
-        // Show an error message or alert
-        return;
-      }
-      // Use format-specific validation for deck size (60 cards required)
-      if (!FormatValidator.isDeckValidForFormat(selectedDeck.value, this.settings.format)) {
-        // Show an error message or alert
-        return;
-      }
+    if (!selectedDeck.value.format.includes(this.settings.format)) {
+      // Show an error message or alert
+      return;
+    }
+    // Use format-specific validation for deck size (60 cards required)
+    if (!FormatValidator.isDeckValidForFormat(selectedDeck.value, this.settings.format)) {
+      // Show an error message or alert
+      return;
+    }
     // }
 
     this.dialogRef.close({

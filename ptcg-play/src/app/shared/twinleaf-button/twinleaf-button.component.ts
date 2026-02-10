@@ -13,6 +13,8 @@ export class TwinleafButtonComponent implements OnInit, OnDestroy {
   @Input() color: string = 'primary'; // primary, secondary, accent
   @Input() size: string = 'normal'; // small, normal, large
   @Input() fullWidth: boolean = false;
+  @Input() matMenuTriggerFor: any;
+  @Input() routerLink: any;
 
   @Output() clicked = new EventEmitter<void>();
 

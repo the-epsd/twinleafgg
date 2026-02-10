@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, HostBinding } from '@angular/core';
 import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag, Stage, PokemonCard } from 'ptcg-server';
-import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { BoardInteractionService, AttackEffectEvent } from '../../../shared/services/board-interaction.service';
 import { Subscription } from 'rxjs';
 import { BoardCardAnimationHelper, AnimationState } from './board-card-animations.helper';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
+import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -96,6 +97,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public showEvolutionAnimation = false;
   public showBasicAnimation = false;
   public showAttackAnimation = false;
+  public showAttackEffect = false;
+  public attackEffectType: CardType | null = null;
 
   // ==================== PRIVATE PROPERTIES ====================
   private isSecret = false;
@@ -132,6 +135,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   private animationElement: HTMLElement;
   private isInPrompt = false;
   private isAnimating = false;
+  private lastAttackEffectId: string | null = null;
 
   constructor(
     private boardInteractionService: BoardInteractionService,
@@ -157,6 +161,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   public resolveArtUrlFor(card: Card | undefined): string | undefined {
     if (!card || !this._cardList) return undefined;
+    
+    // Check artworksMap for deck-selected artworks
     const map = (this._cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
     if (!map) return undefined;
     const entry = map[card.fullName];
@@ -355,6 +361,64 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  private handleAttackEffectEvent(event: AttackEffectEvent) {
+    // Check if this card is the opponent's active card
+    // The effect should be shown on the opponent's active card (opponentId's active slot)
+    if (!this.cardTarget || !this.cardTarget.player || !this.cardTarget.slot) {
+      return;
+    }
+
+    // Check if this is an active card
+    const isActiveCard = 
+      this.cardTarget.slot === SlotType.ACTIVE && 
+      this.cardTarget.index === 0;
+
+    if (!isActiveCard) {
+      return;
+    }
+
+    // Check if this card belongs to the opponent
+    // If opponentPlayerType is provided, use it for precise matching
+    if (event.opponentPlayerType !== undefined) {
+      if (this.cardTarget.player !== event.opponentPlayerType) {
+        return; // This is not the opponent's card
+      }
+    } else {
+      // Fallback: exclude the attacking player's card if attack came from active slot
+      // This works for two-player games where there's only one opponent active card
+      if (event.slot === 'active' && event.index === 0) {
+        // Attack came from active slot - we can't determine which card is the opponent's
+        // without PlayerType, so we show on any active card (works for two-player games)
+      }
+    }
+    
+    // Show effect on this opponent's active card
+
+    // Create unique attack effect ID to prevent replay
+    const attackEffectId = `${event.playerId}-${event.cardId}-${event.cardType}`;
+    
+    // Only show effect if it's a new attack (prevent replay)
+    if (this.lastAttackEffectId === attackEffectId) {
+      return;
+    }
+
+    // Show the effect
+    this.attackEffectType = event.cardType;
+    this.showAttackEffect = true;
+    this.lastAttackEffectId = attackEffectId;
+
+    // Auto-hide after animation duration (get from service or use default)
+    setTimeout(() => {
+      this.showAttackEffect = false;
+      // Reset after a delay to allow for new attacks
+      setTimeout(() => {
+        if (this.lastAttackEffectId === attackEffectId) {
+          this.lastAttackEffectId = null;
+        }
+      }, 500);
+    }, 1500); // Default animation duration
+  }
+
   @Input() set evolutionEntrance(value: boolean) {
     if (value && !this.isAnimating) {
       this.isAnimating = true;
@@ -422,6 +486,13 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         this.handleAttackAnimationEvent(event);
       })
     );
+
+    // Attack effect events (for visual effects on opponent's card)
+    this.subscriptions.push(
+      this.boardInteractionService.attackEffect$.subscribe(event => {
+        this.handleAttackEffectEvent(event);
+      })
+    );
   }
 
   private cleanupSubscriptions() {
@@ -468,6 +539,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.showBasicAnimation = false;
     this.showEvolutionAnimation = false;
     this.showAttackAnimation = false;
+    this.showAttackEffect = false;
+    this.attackEffectType = null;
   }
 
   private initPokemonCardList(cardList: PokemonCardList) {
@@ -573,34 +646,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   // ==================== CUSTOM IMAGE HELPERS ====================
   getCustomEnergyIcon(card: Card, isAttachedAsEnergy: boolean = false): string {
-    const customEnergyIcon = {
-      'Grass Energy': 'assets/energy/grass.png',
-      'Fire Energy': 'assets/energy/fire.png',
-      'Water Energy': 'assets/energy/water.png',
-      'Lightning Energy': 'assets/energy/lightning.png',
-      'Psychic Energy': 'assets/energy/psychic.png',
-      'Fighting Energy': 'assets/energy/fighting.png',
-      'Darkness Energy': 'assets/energy/dark.png',
-      'Metal Energy': 'assets/energy/metal.png',
-      'Fairy Energy': 'assets/energy/fairy.png',
-      'Double Turbo Energy': 'assets/energy/double-turbo.png',
-      'Jet Energy': 'assets/energy/jet.png',
-      'Gift Energy': 'assets/energy/gift.png',
-      'Mist Energy': 'assets/energy/mist.png',
-      'Legacy Energy': 'assets/energy/legacy.png',
-      'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      'Electrode': 'assets/energy/electrode.png',
-      'Holon\'s Castform': 'assets/energy/holons-castform.png',
-      'Holon\'s Magnemite': 'assets/energy/holons-magnemite.png',
-      'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
-      'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
-      'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
-    };
-
-    if ((card.superType === SuperType.ENERGY || isAttachedAsEnergy) && customEnergyIcon[card.name]) {
-      return customEnergyIcon[card.name];
-    }
-    return '';
+    const iconPath = getCustomEnergyIconPath(card, isAttachedAsEnergy);
+    return iconPath || '';
   }
 
   getCustomToolIcon(card: Card): string {

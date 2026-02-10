@@ -1,0 +1,14 @@
+# Place attack sound files here
+# Naming convention: attack_{type}.wav
+# Examples:
+# - attack_grass.wav
+# - attack_fire.wav
+# - attack_water.wav
+# - attack_lightning.wav
+# - attack_psychic.wav
+# - attack_fighting.wav
+# - attack_dark.wav
+# - attack_metal.wav
+# - attack_colorless.wav
+# - attack_fairy.wav
+# - attack_dragon.wav

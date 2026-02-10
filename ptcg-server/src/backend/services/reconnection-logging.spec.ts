@@ -11,7 +11,8 @@ describe('Reconnection System Logging', () => {
     reconnectIntervals: [5000, 10000, 15000],
     healthCheckIntervalMs: 30000,
     cleanupIntervalMs: 60000,
-    maxPreservedSessionsPerUser: 1
+    maxPreservedSessionsPerUser: 1,
+    disconnectForfeitMs: 60 * 1000
   };
 
   beforeEach(() => {

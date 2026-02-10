@@ -47,6 +47,7 @@ import { ProfessorElmLecture } from './professor-elms-lecture';
 import { Raikou } from './raikou';
 import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
+import { Sableye } from './sableye';
 import { Shedinja } from './shedinja';
 import { Shuckle } from './shuckle';
 import { ShuckleGX } from './shuckle-gx';
@@ -59,6 +60,7 @@ import { SpellTag } from './spell-tag';
 import { ThunderMountainPrismStar } from './thunder-mountain-prism-star';
 import { Treecko } from './treecko';
 import { Trumbeak } from './trumbeak';
+import { UnownDAMAGE } from './unown-damage';
 import { UnownHAND } from './unown-hand';
 import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
@@ -112,6 +114,7 @@ export const setLostThunder: Card[] = [
   new Raikou(),
   new Ralts(),
   new Ribombee(),
+  new Sableye(),
   new Shedinja(),
   new Shuckle(),
   new ShuckleGX(),
@@ -124,6 +127,7 @@ export const setLostThunder: Card[] = [
   new ThunderMountainPrismStar(),
   new Treecko(),
   new Trumbeak(),
+  new UnownDAMAGE(),
   new UnownHAND(),
   new WhiteKyurem(),
   new Wurmple(),

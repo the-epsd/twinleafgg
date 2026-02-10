@@ -1,23 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/variables.scss';
+
 .twinleaf-button {
-  background-color: #449058;
-  border-radius: 16px;
+  background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+  border: 1px solid $twinleaf-green;
+  border-radius: 12px;
   flex-shrink: 0;
   white-space: nowrap;
-  color: white;
+  color: $text-primary;
+  font-size: 12px;
   font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 8px 16px;
-  border: none;
+  min-height: 48px;
+  height: 48px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 
   &:hover:not(:disabled) {
-    background-color: #3d7a4a;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+    border-color: $twinleaf-green;
     transform: translateY(-1px);
   }
 
@@ -45,28 +53,34 @@
 
   // Color variants
   &--primary {
-    background-color: #449058;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    border: 1px solid $twinleaf-green;
 
     &:hover:not(:disabled) {
-      background-color: #3d7a4a;
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+      border-color: $twinleaf-green;
     }
   }
 
   &--secondary {
-    background-color: #6c757d;
-    color: white;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    border: 1px solid $twinleaf-green;
+    color: $text-primary;
 
     &:hover:not(:disabled) {
-      background-color: #5a6268;
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+      border-color: $twinleaf-green;
     }
   }
 
   &--accent {
-    background-color: #ffc107;
-    color: #212529;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    border: 1px solid $twinleaf-green;
+    color: $text-primary;
 
     &:hover:not(:disabled) {
-      background-color: #e0a800;
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+      border-color: $twinleaf-green;
     }
   }
 

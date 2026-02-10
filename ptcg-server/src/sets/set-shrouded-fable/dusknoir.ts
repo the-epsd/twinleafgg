@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
 import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
@@ -52,11 +52,8 @@ export class Dusknoir extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
-          store.reduceEffect(state, damageEffect);
-          if (damageEffect.target) {
-            damageEffect.target.damage += 130;
-          }
+          const placeCountersEffect = new PlaceDamageCountersEffect(player, targets[0], 130, this);
+          state = store.reduceEffect(state, placeCountersEffect);
         }
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

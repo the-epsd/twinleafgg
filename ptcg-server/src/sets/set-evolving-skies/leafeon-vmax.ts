@@ -1,12 +1,13 @@
 import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils } from '../../game';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
+import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class LeafeonVMAX extends PokemonCard {
 
-  public stage: Stage = Stage.VMAX;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Leafeon V';
 
@@ -25,6 +26,7 @@ export class LeafeonVMAX extends PokemonCard {
       name: 'Grass Knot',
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 60,
+      damageCalculation: 'x',
       text: 'This attack does 60 damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
@@ -49,22 +51,20 @@ export class LeafeonVMAX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const opponentActiveCard = opponent.active.getPokemonCard();
-      if (opponentActiveCard) {
-        const retreatCost = opponentActiveCard.retreat.filter(c => c === CardType.COLORLESS).length;
+      const checkRetreatCostEffect = new CheckRetreatCostEffect(opponent);
+      store.reduceEffect(state, checkRetreatCostEffect);
 
-        effect.damage = retreatCost * 60;
+      const retreatCost = checkRetreatCostEffect.cost.length;
+      effect.damage = retreatCost * 60;
 
-        return state;
-      }
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const healTargetEffect = new HealTargetEffect(effect, 30);

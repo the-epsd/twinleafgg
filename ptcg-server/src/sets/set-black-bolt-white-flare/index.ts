@@ -28,6 +28,7 @@ import { Genesectex } from './genesect-ex';
 import { Gothita } from './gothita';
 import { Gothorita } from './gothorita';
 import { Gothitelle } from './gothitelle';
+import { Harlequin } from './harlequin';
 import { Haxorus } from './haxorus';
 import { Hilda } from './hilda';
 import { IgnitionEnergy } from './ignition-energy';
@@ -66,6 +67,7 @@ import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
 export const setSV11: Card[] = [
+  new Harlequin(),
   new Purrloin(),
   new Gothita(),
   new Gothorita(),

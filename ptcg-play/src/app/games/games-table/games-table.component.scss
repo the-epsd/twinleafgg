@@ -1,26 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/global.scss';
 
 .ptcg-games-table {
   padding-top: 0;
   font-family: 'Urbanist', sans-serif;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(135deg, rgba($twinleaf-900, 0.8), rgba($twinleaf-950, 0.9));
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(69, 144, 88, 0.1);
+  border: 1px solid $twinleaf-green;
 
   h3 {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
-    color: #e2e8f0;
+    background: linear-gradient(135deg, rgba($twinleaf-800, 0.6), rgba($twinleaf-900, 0.4));
+    color: $twinleaf-50;
     margin: 0;
     padding: 24px 32px;
     font-size: 1.3rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+    border-bottom: 1px solid $twinleaf-green;
     font-family: 'Urbanist', sans-serif;
-    text-shadow: 0 0 10px rgba(69, 144, 88, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   }
 }
 
@@ -30,30 +31,30 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: #12141b;
+  background: rgba($twinleaf-900, 0.5);
 
   &::-webkit-scrollbar {
     width: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba($bg-primary, 0.5);
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #459058, #5ba86b);
+    background: linear-gradient(180deg, $twinleaf-400, $twinleaf-500);
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #5ba86b, #459058);
+    background: linear-gradient(180deg, $twinleaf-500, $twinleaf-400);
   }
 }
 
 // Game Card
 .game-card {
-  background: #12141b;
+  background: rgba($twinleaf-800, 0.4);
   border: none;
   border-radius: 0;
   backdrop-filter: none;
@@ -63,7 +64,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+  border-bottom: 1px solid $twinleaf-green;
 
   &:last-child {
     border-bottom: none;
@@ -76,7 +77,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.2);
+  border-bottom: 1px solid $twinleaf-green;
 
   .game-id {
     display: flex;
@@ -86,7 +87,7 @@
     .id-label {
       font-size: 10px;
       font-weight: 600;
-      color: #64748b;
+      color: $twinleaf-300;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
     }
@@ -94,14 +95,14 @@
     .id-value {
       font-size: 16px;
       font-weight: 800;
-      color: #e2e8f0;
+      color: $twinleaf-50;
       font-family: 'Urbanist', sans-serif;
     }
   }
 
   .game-status {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.3), rgba($twinleaf-600, 0.2));
+    border: 1px solid rgba($twinleaf-400, 0.6);
     border-radius: 20px;
     padding: 6px 12px;
     backdrop-filter: blur(20px);
@@ -109,7 +110,7 @@
     .status-text {
       font-size: 10px;
       font-weight: 700;
-      color: #e2e8f0;
+      color: $twinleaf-50;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
     }
@@ -132,8 +133,8 @@
   flex: 1;
   padding: 12px;
   border-radius: 8px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba($twinleaf-950, 0.5), rgba($twinleaf-900, 0.3));
+  border: 1px solid rgba($twinleaf-700, 0.4);
   position: relative;
 
   .player-avatar {
@@ -162,12 +163,12 @@
     .player-name {
       font-size: 14px;
       font-weight: 700;
-      color: #ffffff;
+      color: $twinleaf-100;
       font-family: 'Urbanist', sans-serif;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     }
 
     .player-details {
@@ -178,9 +179,9 @@
       .player-prizes {
         font-size: 11px;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.8);
+        color: $twinleaf-200;
         font-family: 'Urbanist', sans-serif;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
       }
     }
   }
@@ -200,9 +201,9 @@
     height: 2px;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(69, 144, 88, 0.4) 20%,
-        rgba(69, 144, 88, 0.8) 50%,
-        rgba(69, 144, 88, 0.4) 80%,
+        rgba($twinleaf-green, 0.6) 20%,
+        $twinleaf-green 50%,
+        rgba($twinleaf-green, 0.6) 80%,
         transparent 100%);
     border-radius: 1px;
   }
@@ -210,10 +211,10 @@
   .vs-text {
     font-size: 12px;
     font-weight: 800;
-    color: #459058;
+    color: $twinleaf-green;
     font-family: 'Urbanist', sans-serif;
-    text-shadow: 0 0 8px rgba(69, 144, 88, 0.4);
-    background: linear-gradient(135deg, #459058, #5ba86b);
+    text-shadow: 0 0 12px rgba($twinleaf-green, 0.8), 0 2px 4px rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, $twinleaf-green, rgba($twinleaf-green, 0.8));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -226,9 +227,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  background: linear-gradient(135deg, rgba($twinleaf-950, 0.6), rgba($twinleaf-900, 0.4));
   border-radius: 8px;
-  border: 1px solid rgba(69, 144, 88, 0.2);
+  border: 1px solid $twinleaf-green;
 
   .info-item {
     display: flex;
@@ -239,7 +240,7 @@
     .info-label {
       font-size: 10px;
       font-weight: 600;
-      color: #64748b;
+      color: $twinleaf-300;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
     }
@@ -247,7 +248,7 @@
     .info-value {
       font-size: 14px;
       font-weight: 700;
-      color: #e2e8f0;
+      color: $twinleaf-50;
       font-family: 'Urbanist', sans-serif;
     }
   }
@@ -258,9 +259,8 @@
   display: flex;
   justify-content: center;
   padding-top: 12px;
-  border-top: 1px solid rgba(69, 144, 88, 0.2);
+  border-top: 1px solid $twinleaf-green;
 }
-
 
 // Standard loading and error states handled by ptcg-content
 .ptcg-table-loading {
@@ -270,7 +270,7 @@
 
 .ptcg-table-loading-failed {
   text-align: center;
-  color: #e2e8f0;
+  color: $twinleaf-50;
   font-family: 'Urbanist', sans-serif;
 }
 
@@ -313,9 +313,9 @@
       height: 20px;
       background: linear-gradient(180deg,
           transparent 0%,
-          rgba(69, 144, 88, 0.6) 20%,
-          rgba(69, 144, 88, 0.8) 50%,
-          rgba(69, 144, 88, 0.6) 80%,
+          rgba($twinleaf-green, 0.7) 20%,
+          $twinleaf-green 50%,
+          rgba($twinleaf-green, 0.7) 80%,
           transparent 100%);
     }
   }
@@ -346,5 +346,4 @@
       font-size: 10px;
     }
   }
-
 }

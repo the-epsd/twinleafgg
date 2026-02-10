@@ -82,22 +82,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class Creamomatic extends TrainerCard {
 
   public trainerType = TrainerType.ITEM;
-
   public set: string = 'FST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '229';
-
   public regulationMark = 'E';
-
   public name: string = 'Cram-o-matic';
-
   public fullName: string = 'Cram-o-matic FST';
 
-  public text: string = 'You can use this card only if you discard another Item card from your hand.' +
-    '' +
-    'Flip a coin. If heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
+  public text: string = `You can use this card only if you discard another Item card from your hand.
+
+Flip a coin. If heads, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

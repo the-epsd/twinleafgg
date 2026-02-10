@@ -15,12 +15,12 @@ import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
 import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
-import { ArtworksService } from 'src/app/api/services/artworks.service';
-import { CardArtwork } from 'src/app/api/interfaces/cards.interface';
 import { SleeveService } from 'src/app/api/services/sleeve.service';
 import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { SleeveSelectPopupComponent } from '../sleeve-select-popup/sleeve-select-popup.component';
+import { ArchetypeDetectionService } from '../archetype-detection/archetype-detection.service';
+import { ArchetypeUtils } from '../deck-archetype-service/archetype.utils';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 
@@ -39,8 +39,6 @@ export class DeckEditComponent implements OnInit {
   public toolbarFilter: DeckEditToolbarFilter;
   public DeckEditPane = DeckEditPane;
   public isThemeDeck = false;
-  public selectedArtworks: { code: string; artworkId?: number }[] = [];
-  public unlockedArtworks: CardArtwork[] = [];
   public sleeves: SleeveInfo[] = [];
   public selectedSleeveIdentifier?: string;
 
@@ -48,25 +46,22 @@ export class DeckEditComponent implements OnInit {
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
     private deckService: DeckService,
-    private artworksService: ArtworksService,
     private sleeveService: SleeveService,
     private dialog: MatDialog,
     // private fileDownloadService: FileDownloadService,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+    private archetypeDetectionService: ArchetypeDetectionService
+  ) {
+    // Initialize ArchetypeUtils with the detection service for static access
+    ArchetypeUtils.setDetectionService(archetypeDetectionService);
+  }
 
 
 
   ngOnInit() {
     // this.setupAutoSave();
-    // Load unlocked artworks in parallel
-    this.artworksService.getUnlockedArtworks()
-      .pipe(untilDestroyed(this))
-      .subscribe(resp => {
-        this.unlockedArtworks = resp.artworks || [];
-      }, () => { this.unlockedArtworks = []; });
 
     this.sleeveService.getList()
       .pipe(untilDestroyed(this))
@@ -86,8 +81,6 @@ export class DeckEditComponent implements OnInit {
         this.loading = false;
         this.deck = response.deck;
         this.deckItems = this.loadDeckItems(response.deck.cards);
-        // Load artworks if present
-        this.selectedArtworks = response.deck.artworks || [];
         this.selectedSleeveIdentifier = response.deck.sleeveIdentifier || undefined;
         // Detect theme deck
         this.isThemeDeck = Array.isArray(this.deck.format) && this.deck.format.includes(Format['THEME']);
@@ -540,14 +533,24 @@ export class DeckEditComponent implements OnInit {
 
     const items = this.deckItems.flatMap(item => Array(item.count).fill(item.card.fullName));
 
+    // Auto-detect archetypes if none are manually set
+    let archetype1 = this.deck.manualArchetype1 as Archetype | undefined;
+    let archetype2 = this.deck.manualArchetype2 as Archetype | undefined;
+
+    if (!archetype1 && !archetype2 && this.deckItems.length > 0) {
+      const [detected1, detected2] = this.archetypeDetectionService.getSuggestedArchetypes(this.deckItems);
+      archetype1 = detected1 || undefined;
+      archetype2 = detected2 || undefined;
+    }
+
     this.loading = true;
     this.deckService.saveDeck(
       this.deck.id,
       this.deck.name,
       items,
-      this.deck.manualArchetype1 as Archetype,
-      this.deck.manualArchetype2 as Archetype,
-      this.selectedArtworks,
+      archetype1,
+      archetype2,
+      undefined,
       this.selectedSleeveIdentifier
     ).pipe(
       finalize(() => { this.loading = false; }),
@@ -561,26 +564,6 @@ export class DeckEditComponent implements OnInit {
     });
   }
 
-  public onArtworkChange(change: { code: string; artworkId?: number | null }) {
-    const code = change.code;
-    const artworkId = change.artworkId ?? undefined;
-    const next = this.selectedArtworks.slice();
-    const idx = next.findIndex(a => a.code === code);
-    if (artworkId === undefined) {
-      if (idx !== -1) {
-        next.splice(idx, 1);
-      }
-    } else {
-      if (idx !== -1) {
-        next[idx] = { code, artworkId };
-      } else {
-        next.push({ code, artworkId });
-      }
-    }
-    this.selectedArtworks = next;
-    // Save immediately for real-time persistence
-    this.saveDeck();
-  }
 
   public openSleeveSelector() {
     if (this.isThemeDeck || this.loading || !this.deck) {
@@ -604,10 +587,6 @@ export class DeckEditComponent implements OnInit {
     });
   }
 
-  public getSelectedArtworkId(cardFullName: string): number | null {
-    const entry = this.selectedArtworks.find(a => a.code === cardFullName);
-    return entry && entry.artworkId != null ? entry.artworkId : null;
-  }
 
   compareSupertype = (input: SuperType) => {
     if (input === SuperType.POKEMON) return 1;

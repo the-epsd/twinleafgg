@@ -3,7 +3,7 @@ import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
@@ -54,6 +54,10 @@ export class FusionStrikeEnergy extends EnergyCard {
           effect.target = undefined;
         }
       }
+    }
+
+    if (effect instanceof PlaceDamageCountersEffect && effect.target.energies.cards.includes(this)) {
+      effect.preventDefault = true;
     }
 
     // Prevent attaching to non Fusion Strike Pokemon

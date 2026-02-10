@@ -5,21 +5,21 @@ import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Terapagos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
   public hp: number = 120;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Prism Charge',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 3 Basic Energy all of different types, and attach them to your Tera Pokémon in any way you like. Then shuffle your deck.'
+      text: 'Search your deck for up to 3 Basic Energy cards of different types and attach them to your Tera Pokémon in any way you like. Then, shuffle your deck.'
     },
     {
       name: 'Hard Tackle',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 100,
       text: ''
     }];

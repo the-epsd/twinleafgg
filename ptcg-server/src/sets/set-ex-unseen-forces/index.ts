@@ -43,7 +43,11 @@ import { Ursaring } from './ursaring';
 // Other prints
 import {
   BoostEnergyUF,
+  CycloneEnergyUF,
+  DarknessEnergySpecialUF,
+  MetalEnergySpecialUF,
   PokeBallUF,
+  WarpPointUF,
   WarpEnergyUF
 } from './other-prints';
 
@@ -91,6 +95,10 @@ export const setEXUnseenForces: Card[] = [
 
   // Other prints
   new BoostEnergyUF(),
+  new CycloneEnergyUF(),
+  new DarknessEnergySpecialUF(),
+  new MetalEnergySpecialUF(),
   new PokeBallUF(),
   new WarpEnergyUF(),
+  new WarpPointUF(),
 ];

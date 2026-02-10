@@ -23,6 +23,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 ptcg-board {
@@ -30,6 +31,12 @@ ptcg-board {
   overflow: hidden;
   margin-top: -5%;
   margin-bottom: -2%;
+}
+
+ptcg-board-3d {
+  flex: 1 1 auto;
+  overflow: hidden;
+  // No negative margins - hands are rendered inside the 3D scene
 }
 
 ptcg-hand {
@@ -40,6 +47,27 @@ ptcg-hand {
 
 .opp-hand {
   margin-bottom: 1%;
+}
+
+.board-toggle {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  backdrop-filter: blur(5px);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .sandbox-sidebar-container {
@@ -94,6 +122,132 @@ ptcg-hand {
       font-size: 24px;
       width: 24px;
       height: 24px;
+    }
+  }
+}
+
+// Floating overlays for 3D board
+.board-3d-overlays {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.overlay-opponent-info {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 12px;
+  max-width: 300px;
+  min-width: 250px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+
+  ::ng-deep ptcg-player-bar {
+    display: block;
+    width: 100%;
+    background: transparent;
+  }
+}
+
+.overlay-player-info {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 12px;
+  max-width: 300px;
+  min-width: 250px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+
+  ::ng-deep ptcg-player-bar {
+    display: block;
+    width: 100%;
+    background: transparent;
+  }
+}
+
+.overlay-player-actions {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 150px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+
+  ::ng-deep ptcg-player-actions {
+    display: block;
+    width: 100%;
+  }
+}
+
+.overlay-replay-controls {
+  position: absolute;
+  top: calc(50% - 120px);
+  right: 20px;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 300px;
+  max-width: 320px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+
+  ::ng-deep ptcg-replay-controls {
+    display: block;
+    width: 100%;
+  }
+}
+
+.overlay-game-logs {
+  position: absolute;
+  top: calc(50% + 80px);
+  right: 20px;
+  pointer-events: auto;
+  width: 320px;
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  z-index: 101;
+
+  ::ng-deep ptcg-game-logs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 200px;
+
+    .ptcg-game-logs-content {
+      flex: 1 1 auto;
+      min-height: 150px;
+
+      ul {
+        height: auto;
+        min-height: 100px;
+      }
     }
   }
 }

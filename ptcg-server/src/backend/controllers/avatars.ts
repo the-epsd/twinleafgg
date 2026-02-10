@@ -44,7 +44,7 @@ export class Avatars extends Controller {
     // This is a placeholder. In a real system, you might have a mapping
     // or a consistent naming convention.
     const map: { [key: string]: string } = {
-      'avatar_spring_lord': 'av_5.png',
+      'avatar_150': 'av_5.png',
       'avatar_shadow_rider': 'av_4.png',
       'avatar_pao': 'pao.webp'
     };
@@ -117,10 +117,11 @@ export class Avatars extends Controller {
   @Post('/markAsDefault')
   @AuthToken()
   @Validate({
-    id: check().isNumber()
+    id: check().isNumber(),
+    fileName: check().optional().isString()
   })
   public async onMarkAsDefault(req: Request, res: Response) {
-    const body: { id: number } = req.body;
+    const body: { id: number, fileName?: string } = req.body;
     const userId: number = req.body.userId;
     const user = await User.findOne(userId);
 
@@ -128,6 +129,52 @@ export class Avatars extends Controller {
       res.status(400);
       res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
+    }
+
+    // Handle unlocked battle pass avatars (id: 0)
+    if (body.id === 0) {
+      if (!body.fileName) {
+        res.status(400);
+        res.send({ error: ApiErrorEnum.AVATAR_INVALID });
+        return;
+      }
+
+      // Verify the user owns an unlocked avatar that maps to this fileName
+      const unlockedItems = await UserUnlockedItem.find({ where: { userId, itemType: 'avatar' } });
+      
+      let foundMatch = false;
+      for (const item of unlockedItems) {
+        const itemFileName = this.getAvatarFileNameFromId(item.itemId);
+        if (itemFileName === body.fileName) {
+          foundMatch = true;
+          break;
+        }
+      }
+
+      if (!foundMatch) {
+        res.status(400);
+        res.send({ error: ApiErrorEnum.AVATAR_INVALID });
+        return;
+      }
+
+      if (user.avatarFile === body.fileName) {
+        res.send({ ok: true });
+        return;
+      }
+
+      try {
+        user.avatarFile = body.fileName;
+        const savedUser = await user.save();
+        if (savedUser) {
+          this.core.emit(c => c.onUsersUpdate([savedUser]));
+        }
+        res.send({ ok: true });
+        return;
+      } catch (error) {
+        res.status(400);
+        res.send({ error: ApiErrorEnum.AVATAR_INVALID });
+        return;
+      }
     }
 
     // For predefined avatars, we just update the user's avatarFile

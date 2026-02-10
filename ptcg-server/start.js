@@ -63,6 +63,7 @@ cardManager.defineSet(sets.setNintendoPromos);
 cardManager.defineSet(sets.setPOPSeries2);
 cardManager.defineSet(sets.setPOPSeries4);
 cardManager.defineSet(sets.setPOPSeries5);
+cardManager.defineSet(sets.setPOPSeries8);
 
 cardManager.defineSet(sets.setPCGLPromotionalCards);
 cardManager.defineSet(sets.setPCGPPromotionalCards);
@@ -186,7 +187,7 @@ cardManager.defineSet(sets.setSV11);
 cardManager.defineSet(sets.setMegaEvolutionPromos);
 cardManager.defineSet(sets.setMegaEvolution);
 cardManager.defineSet(sets.setPhantasmalFlames);
-cardManager.defineSet(sets.setMegaDream);
+cardManager.defineSet(sets.setAscendedHeroes);
 cardManager.defineSet(sets.setPerfectOrder);
 
 cardManager.defineSet(sets.setTest);

@@ -22,31 +22,31 @@ export class SingleStrikeStyleMustard extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '132';
+  public setNumber: string = '134';
 
   public name: string = 'Single Strike Style Mustard';
 
   public fullName: string = 'Single Strike Style Mustard BST';
 
   public text: string =
-    'You can play this card only when it is the last card in your hand. ' +
-    '' +
-    'Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, shuffle your deck. If you searched your deck in this way, draw 5 cards.';
+    `You can play this card only when it is the last card in your hand.
+
+Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, shuffle your deck. If you searched your deck in this way, draw 5 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      
+
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       const cards = player.hand.cards.filter(c => c !== this);
 
       const blocked: number[] = [];
@@ -73,13 +73,13 @@ export class SingleStrikeStyleMustard extends TrainerCard {
         const cards = selected || [];
         player.deck.moveCardsTo(cards, slot!);
         slot!.pokemonPlayedTurn = state.turn;
-        
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
-          
-          player.deck.moveTo(player.hand, 5);  
+
+          player.deck.moveTo(player.hand, 5);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        });       
+        });
       });
     }
 

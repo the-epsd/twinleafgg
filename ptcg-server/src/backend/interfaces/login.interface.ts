@@ -9,6 +9,7 @@ export interface ServerConfig {
   avatarMaxSize: number;
   replayFileSize: number;
   refreshTokenInterval: number;
+  board3dWhitelist: string[];
 }
 
 export interface RegisterRequest {

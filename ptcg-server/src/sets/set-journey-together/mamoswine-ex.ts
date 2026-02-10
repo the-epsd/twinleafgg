@@ -28,19 +28,19 @@ export class Mamoswineex extends PokemonCard {
   public retreat = [C, C, C, C];
 
   public powers = [{
-    name: 'Mammoth Ride',
+    name: 'Mammoth Hauler',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for 1 Pokémon, reveal it, and put it into your hand. Then shuffle your deck.'
+    text: 'Once during your turn, you may search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
   public attacks = [
     {
-      name: 'Roaring March',
+      name: 'Rumbling March',
       cost: [F, F],
       damage: 180,
       damageCalculation: '+',
-      text: 'This attack does 40 more damage for each of your Benched Stage 2 Pokémon.'
+      text: 'This attack does 40 more damage for each Stage 2 Pokémon on your Bench.'
     }
   ];
 

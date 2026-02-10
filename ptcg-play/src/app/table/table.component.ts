@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Player, GamePhase, Card, Format, GameWinner } from 'ptcg-server';
+import { Player, GamePhase, Card, Format, GameWinner, ReplayPlayer, PlayerStats } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { withLatestFrom, switchMap, finalize, tap, map } from 'rxjs/operators';
+import { withLatestFrom, switchMap, finalize, tap, map, take } from 'rxjs/operators';
 import { ApiError } from '../api/api.error';
 import { AlertService } from '../shared/alert/alert.service';
 import { DeckService } from '../api/services/deck.service';
@@ -15,6 +15,8 @@ import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../shared/services/board-interaction.service';
 import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SettingsService } from './table-sidebar/settings-dialog/settings.service';
+import { Board3dAccessService } from '../shared/services/board3d-access.service';
 
 @UntilDestroy()
 @Component({
@@ -40,10 +42,20 @@ export class TableComponent implements OnInit, OnDestroy {
   public canUndoBackend = false;
   public showSandboxPanel = false;
   public sandboxSidebarCollapsed: boolean = false;
+  public use3dBoard: boolean = false;
+  public webglSupported: boolean = true;
+  public has3dBoardAccess: boolean = false;
+  public bottomReplayPlayer: ReplayPlayer | undefined;
+  public topReplayPlayer: ReplayPlayer | undefined;
+  public bottomPlayerStats: PlayerStats | undefined;
+  public topPlayerStats: PlayerStats | undefined;
+  public isTopPlayerActive: boolean;
+  public isBottomPlayerActive: boolean;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
     [Format.STANDARD_NIGHTLY]: 'LABEL_STANDARD_NIGHTLY',
+    [Format.STANDARD_MAJORS]: 'LABEL_STANDARD_MAJORS',
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
     [Format.ETERNAL]: 'LABEL_ETERNAL',
@@ -67,7 +79,9 @@ export class TableComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private cardsBaseService: CardsBaseService,
     private boardInteractionService: BoardInteractionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private settingsService: SettingsService,
+    private board3dAccessService: Board3dAccessService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
@@ -90,6 +104,29 @@ export class TableComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Ensure any active board selection is cleared when table initializes
     this.boardInteractionService.endBoardSelection();
+
+    // Check WebGL support
+    this.webglSupported = this.checkWebGLSupport();
+
+    // Subscribe to 3D board access status
+    this.board3dAccessService.has3dBoardAccess$.pipe(
+      untilDestroyed(this)
+    ).subscribe(hasAccess => {
+      this.has3dBoardAccess = hasAccess;
+      // If user loses access, disable 3D board
+      if (!hasAccess) {
+        this.use3dBoard = false;
+      }
+    });
+
+    // Read default 3D board setting from SettingsService
+    this.settingsService.use3dBoardDefault$.pipe(
+      take(1),
+      untilDestroyed(this)
+    ).subscribe(use3dDefault => {
+      // Only use 3D board if WebGL is supported, user has access, and setting is enabled
+      this.use3dBoard = this.webglSupported && this.has3dBoardAccess && use3dDefault;
+    });
 
     this.route.paramMap
       .pipe(
@@ -244,6 +281,9 @@ export class TableComponent implements OnInit, OnDestroy {
       this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
     }
 
+    // Update player stats and active states for floating overlays
+    this.updatePlayerStatsAndActiveStates(gameState);
+
     // Do not set any global artworks map; overlays must come from the correct card list context
     this.cardsBaseService.setGlobalArtworksMap({});
 
@@ -254,6 +294,89 @@ export class TableComponent implements OnInit, OnDestroy {
     } else {
       this.showGameOver = false;
     }
+  }
+
+  private updatePlayerStatsAndActiveStates(gameState: LocalGameState) {
+    if (!gameState || !gameState.state) {
+      this.isTopPlayerActive = false;
+      this.isBottomPlayerActive = false;
+      this.bottomReplayPlayer = undefined;
+      this.topReplayPlayer = undefined;
+      this.bottomPlayerStats = undefined;
+      this.topPlayerStats = undefined;
+      return;
+    }
+
+    const state = gameState.state;
+
+    // Update active states
+    this.isTopPlayerActive = this.isPlayerActive(state, this.topPlayer);
+    this.isBottomPlayerActive = this.isPlayerActive(state, this.bottomPlayer);
+
+    // Update player stats
+    this.topPlayerStats = this.getPlayerStats(gameState, this.topPlayer);
+    this.bottomPlayerStats = this.getPlayerStats(gameState, this.bottomPlayer);
+
+    // Update replay players
+    this.bottomReplayPlayer = undefined;
+    this.topReplayPlayer = undefined;
+
+    if (gameState.replay !== undefined) {
+      this.bottomReplayPlayer = this.isFirstPlayer(state, this.bottomPlayer)
+        ? gameState.replay.player1
+        : gameState.replay.player2;
+
+      this.topReplayPlayer = this.isFirstPlayer(state, this.topPlayer)
+        ? gameState.replay.player1
+        : gameState.replay.player2;
+    }
+
+    // Refresh player stats if needed
+    const topPlayerId = this.topPlayer && this.topPlayer.id;
+    const bottomPlayerId = this.bottomPlayer && this.bottomPlayer.id;
+    const gameOrPlayerHasChanged = this.gameId !== gameState.localId
+      || (this.topPlayerStats && this.topPlayerStats.clientId !== topPlayerId)
+      || (this.bottomPlayerStats && this.bottomPlayerStats.clientId !== bottomPlayerId);
+
+    if (!gameState.deleted && gameOrPlayerHasChanged) {
+      this.refreshPlayerStats(gameState);
+    }
+  }
+
+  private isPlayerActive(state: any, player: Player): boolean {
+    if (!state || !player || !state.players[state.activePlayer]) {
+      return false;
+    }
+    return player.id === state.players[state.activePlayer].id;
+  }
+
+  private isFirstPlayer(state: any, player: Player): boolean {
+    if (!state || !player || state.players.length === 0) {
+      return false;
+    }
+    return player.id === state.players[0].id;
+  }
+
+  private getPlayerStats(gameState: LocalGameState, player: Player): PlayerStats | undefined {
+    if (!player || !gameState.playerStats) {
+      return undefined;
+    }
+    return gameState.playerStats.find(p => p.clientId === player.id);
+  }
+
+  private refreshPlayerStats(gameState: LocalGameState) {
+    this.gameService.getPlayerStats(gameState.gameId).pipe(
+      untilDestroyed(this)
+    ).subscribe({
+      next: response => {
+        const gameStates = this.sessionService.session.gameStates.slice();
+        const index = gameStates.findIndex(g => g.localId === gameState.localId);
+        if (index !== -1) {
+          gameStates[index] = { ...gameStates[index], playerStats: response.playerStats };
+          this.sessionService.set({ gameStates });
+        }
+      }
+    });
   }
 
   private updateCanUndo() {
@@ -291,5 +414,35 @@ export class TableComponent implements OnInit, OnDestroy {
 
   toggleSandboxSidebar() {
     this.sandboxSidebarCollapsed = !this.sandboxSidebarCollapsed;
+  }
+
+  public toggle3dBoard() {
+    // Only allow toggle if user has access
+    if (!this.has3dBoardAccess) {
+      return;
+    }
+    this.use3dBoard = !this.use3dBoard;
+    this.save3dBoardPreference(this.use3dBoard);
+  }
+
+  private checkWebGLSupport(): boolean {
+    try {
+      const canvas = document.createElement('canvas');
+      return !!(
+        window.WebGLRenderingContext &&
+        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private get3dBoardPreference(): boolean {
+    const stored = localStorage.getItem('ptcg-use-3d-board');
+    return stored === 'true';
+  }
+
+  private save3dBoardPreference(use3d: boolean): void {
+    localStorage.setItem('ptcg-use-3d-board', use3d.toString());
   }
 }

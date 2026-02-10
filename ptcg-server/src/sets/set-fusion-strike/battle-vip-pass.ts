@@ -8,24 +8,17 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class BattleVIPPass extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'FST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '225';
-
   public regulationMark = 'E';
-
   public name: string = 'Battle VIP Pass';
-
   public fullName: string = 'Battle VIP Pass FST';
 
   public text: string =
-    'You can use this card only during your first turn. ' +
-    '' +
-    'Search your deck for up to 2 Basic Pokémon and put ' +
-    'them onto your Bench. Then, shuffle your deck.';
+    `You can use this card only during your first turn.
+
+Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

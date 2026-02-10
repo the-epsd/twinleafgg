@@ -1,4 +1,4 @@
-@import '../../../theme/variables.scss';
+@import '../../../theme/global.scss';
 
 :host {
   display: inline-flex;
@@ -49,8 +49,8 @@ ptcg-card {
   bottom: 10px;
   width: 32px;
   height: 32px;
-  border: 2px solid #2d3748;
-  background-color: #0e1117;
+  border: 2px solid $bg-secondary;
+  background-color: $bg-primary;
   border-radius: 50%;
   font-weight: bold;
   font-size: 18px;
@@ -66,10 +66,10 @@ ptcg-card {
   bottom: 12.5px;
   width: 27px;
   height: 27px;
-  border: 2px solid #2d3748;
-  background-color: #0e1117;
+  border: 2px solid $bg-secondary;
+  background-color: $bg-primary;
   border-radius: 50%;
-  color: #ffffff;
+  color: $text-primary;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
@@ -95,10 +95,10 @@ ptcg-card {
   bottom: 12.5px;
   width: 27px;
   height: 27px;
-  border: 2px solid #2d3748;
-  background-color: #0e1117;
+  border: 2px solid $bg-secondary;
+  background-color: $bg-primary;
   border-radius: 50%;
-  color: #ffffff;
+  color: $text-primary;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
@@ -129,8 +129,8 @@ ptcg-card {
   right: 4px;
   padding: 0 !important;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #ff6b6b;
+  background-color: rgba($bg-primary, 0.6);
+  color: $twinleaf-500;
   opacity: 0.9;
   transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
   z-index: 12;
@@ -143,7 +143,7 @@ ptcg-card {
   overflow: visible;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba($bg-primary, 0.8);
     transform: scale(1.1);
     opacity: 1;
   }

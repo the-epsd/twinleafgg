@@ -26,9 +26,9 @@ export class MallowAndLana extends TrainerCard {
   public fullName: string = 'Mallow & Lana CEC';
 
   public text: string =
-    'Switch your Active Pokémon with 1 of your Benched Pokémon.' +
-    '' +
-    'When you play this card, you may discard 2 other cards from your hand. If you do, heal 120 damage from the Pokémon you moved to your Bench.';
+    `Switch your Active Pokémon with 1 of your Benched Pokémon. 
+
+When you play this card, you may discard 2 other cards from your hand. If you do, heal 120 damage from the Pokémon you moved to your Bench.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

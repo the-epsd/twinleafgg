@@ -69,9 +69,9 @@ export class Roxanne extends TrainerCard {
   public fullName: string = 'Roxanne ASR';
 
   public text: string =
-    'You can use this card only if your opponent has 3 or fewer Prize cards remaining.' +
-    '' +
-    'Each player shuffles their hand into their deck. Then, you draw 6 cards, and your opponent draws 2 cards.';
+    `You can use this card only if your opponent has 3 or fewer Prize cards remaining.
+
+Each player shuffles their hand into their deck. Then, you draw 6 cards, and your opponent draws 2 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

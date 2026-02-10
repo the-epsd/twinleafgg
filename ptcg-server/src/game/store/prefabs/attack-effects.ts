@@ -160,7 +160,7 @@ export function PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(
 export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
   store: StoreLike,
   state: State,
-  effect: AttackEffect | AfterAttackEffect) {
+  effect: AfterAttackEffect) {
   const player = effect.player;
 
   // Get all Pokemon cards (including evolutions)
@@ -197,6 +197,44 @@ export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
+}
+
+export function PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND(
+  store: StoreLike,
+  state: State,
+  effect: AfterAttackEffect) {
+  const player = effect.player;
+
+  // Get all Pokemon cards (including evolutions)
+  const pokemons = player.active.getPokemons();
+
+  // Get other attached cards (energy, etc.) but not Pokemon or tools
+  const otherCards = player.active.cards.filter(card =>
+    !(card instanceof PokemonCard) &&
+    !pokemons.includes(card as PokemonCard) &&
+    (!player.active.tools || !player.active.tools.includes(card))
+  );
+
+  // Get tools separately
+  const tools = [...player.active.tools];
+
+  // Clear effects from the Pokemon
+  player.active.clearEffects();
+
+  // Move other cards (energy) to deck
+  if (otherCards.length > 0) {
+    MOVE_CARDS(store, state, player.active, player.hand, { cards: otherCards });
+  }
+
+  // Move tools to deck explicitly
+  for (const tool of tools) {
+    player.active.moveCardTo(tool, player.hand);
+  }
+
+  // Move Pokemon cards to deck
+  if (pokemons.length > 0) {
+    MOVE_CARDS(store, state, player.active, player.hand, { cards: pokemons });
+  }
 }
 
 export function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(

@@ -53,14 +53,28 @@ export class CoreSocket {
   }
 
   public onStateChange(game: Game, state: State): void {
-    // Only send game info updates to clients that are in this game
-    // This is a defensive check - the root cause is fixed in Game.onStateChange()
-    if (!game.clients.includes(this.client)) {
+    const gameInfo = CoreSocket.buildGameInfo(game);
+    const gameInfoChanged = !deepCompare(gameInfo, this.cache.gameInfoCache[game.id]);
+
+    // Check if this client is in the game
+    const isClientInGame = game.clients.includes(this.client);
+
+    // Check if this client's user ID matches any player in the game
+    // This ensures that when a player is added via invitation acceptance,
+    // other browser windows of the same user receive the game info update
+    const isClientAPlayer = state.players.some(player => {
+      // Find the client with this player's ID
+      const playerClient = this.core.clients.find(c => c.id === player.id);
+      return playerClient && playerClient.user.id === this.client.user.id;
+    });
+
+    // Send game info updates to clients that are in the game OR are players
+    // This fixes the issue where inviting yourself doesn't show the game in the dropdown
+    if (!isClientInGame && !isClientAPlayer) {
       return;
     }
 
-    const gameInfo = CoreSocket.buildGameInfo(game);
-    if (!deepCompare(gameInfo, this.cache.gameInfoCache[game.id])) {
+    if (gameInfoChanged) {
       this.cache.gameInfoCache[game.id] = gameInfo;
       this.socket.emit('core:gameInfo', gameInfo);
     }
@@ -85,6 +99,7 @@ export class CoreSocket {
   }
 
   private buildCoreInfo(): CoreInfo {
+    const reconnectableGameId = this.core.getReconnectableGameId(this.client.user.id);
     return {
       clientId: this.client.id,
       clients: this.core.clients.map(client => ({
@@ -92,7 +107,8 @@ export class CoreSocket {
         userId: client.user.id
       })),
       users: this.core.clients.map(client => CoreSocket.buildUserInfo(client.user)),
-      games: this.core.games.map(game => CoreSocket.buildGameInfo(game))
+      games: this.core.games.map(game => CoreSocket.buildGameInfo(game)),
+      ...(reconnectableGameId !== undefined && { reconnectableGameId })
     };
   }
 
@@ -152,7 +168,8 @@ export class CoreSocket {
       phase: state.phase,
       turn: state.turn,
       activePlayer: state.activePlayer,
-      players: players
+      players,
+      playerUserIds: game.getPlayerUserIds()
     };
   }
 

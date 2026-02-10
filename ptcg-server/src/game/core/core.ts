@@ -31,14 +31,14 @@ export class Core {
     this.messager = new Messager(this);
     this.botManager = BotManager.getInstance();
 
-    // Initialize reconnection manager with default config if not provided
     const defaultConfig: ReconnectionConfig = {
-      preservationTimeoutMs: 5 * 60 * 1000, // 5 minutes
+      preservationTimeoutMs: 5 * 60 * 1000,
       maxAutoReconnectAttempts: 3,
       reconnectIntervals: [5000, 10000, 15000],
       healthCheckIntervalMs: 30 * 1000,
       cleanupIntervalMs: 60 * 1000,
-      maxPreservedSessionsPerUser: 1
+      maxPreservedSessionsPerUser: 1,
+      disconnectForfeitMs: 60 * 1000
     };
     this.reconnectionManager = new ReconnectionManager(reconnectionConfig || defaultConfig);
 
@@ -54,6 +54,19 @@ export class Core {
 
   public getReconnectionManager(): ReconnectionManager {
     return this.reconnectionManager;
+  }
+
+  /**
+   * Returns the game id the user can rejoin if they have a disconnected slot (for core:getInfo).
+   */
+  public getReconnectableGameId(userId: number): number | undefined {
+    for (const game of this.games) {
+      const playerId = game.getPlayerIdForUser(userId);
+      if (playerId !== undefined && game.isPlayerDisconnected(playerId) && game.state.phase !== GamePhase.FINISHED) {
+        return game.id;
+      }
+    }
+    return undefined;
   }
 
   public async connect(client: Client): Promise<Client> {

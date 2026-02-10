@@ -14,21 +14,19 @@ export class Bisharp extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Energy Stream',
-      cost: [C],
-      damage: 20,
-      text: 'Attach a Metal Energy card from your discard pile to this Pokemon.'
-    },
-    {
-      name: 'Metal Scissors',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Does 20 more damage for each Metal Energy attached to this Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Stream',
+    cost: [C],
+    damage: 20,
+    text: 'Attach a [M] Energy card from your discard pile to this Pokemon.'
+  },
+  {
+    name: 'Metal Scissors',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Does 20 more damage for each [M] Energy attached to this Pokemon.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

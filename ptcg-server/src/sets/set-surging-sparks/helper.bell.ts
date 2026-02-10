@@ -8,23 +8,17 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class HelperBell extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '165';
-
   public regulationMark = 'H';
-
   public name: string = 'Call Bell';
-
   public fullName: string = 'Helper Bell SSP';
 
   public text: string =
-    'You can use this card only if you go second, and only on your first turn.' +
-    '' +
-    'Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.';
+    `You can use this card only if you go second, and only on your first turn.
+
+Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -13,20 +13,15 @@ import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 export class RoughSeas extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public set: string = 'PRC';
-
   public name: string = 'Rough Seas';
-
   public fullName: string = 'Rough Seas PRC';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '137';
 
   public text: string =
     'Once during each player\'s turn, that player may heal 30 damage ' +
-    'from each of his or her W Pokemon and L Pokemon.';
+    'from each of his or her [W] Pokémon and [L] Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

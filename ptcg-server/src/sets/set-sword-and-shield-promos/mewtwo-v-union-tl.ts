@@ -112,6 +112,10 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
 
+      if (StateUtils.findOwner(state, effect.source) === StateUtils.findOwner(state, effect.target)) {
+        return state;
+      }
+
       if (sourceCard) {
         // Allow Weakness & Resistance
         if (effect instanceof ApplyWeaknessEffect) {

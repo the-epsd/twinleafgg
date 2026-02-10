@@ -1,24 +1,26 @@
+@import '../../../theme/variables.scss';
+
 .deck-info {
   display: inline-flex;
   align-items: center;
   padding: 10px;
   border-radius: 12px;
   margin: 0 auto;
-  background-color: #1a1f29;
+  background-color: $bg-primary;
 }
 
 .deck-info span {
   margin-right: 8px;
-  background-color: #1a1f29;
+  background-color: $bg-primary;
 }
 
 .deck-info span:last-child {
   margin-right: 0;
-  background-color: #1a1f29;
+  background-color: $bg-primary;
 }
 
 :host {
   display: flex;
   justify-content: center;
-  background-color: #1a1f29;
+  background-color: $bg-primary;
 }

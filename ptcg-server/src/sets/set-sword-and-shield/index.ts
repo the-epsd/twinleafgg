@@ -20,6 +20,7 @@ import { GiantHearth } from './giant-hearth';
 import { Gossifleur } from './gossifleur';
 import { Hop } from './hop';
 import { Inteleon } from './inteleon';
+import { Joltik } from './joltik';
 import { Maractus } from './maractus';
 import { Marnie } from './marnie';
 import { MetalSaucer } from './metal-saucer';
@@ -78,6 +79,7 @@ export const setSwordAndShield: Card[] = [
   new Gossifleur(),
   new Hop(),
   new Inteleon(),
+  new Joltik(),
   new Maractus(),
   new Marnie(),
   new MetalSaucer(),

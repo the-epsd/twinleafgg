@@ -154,9 +154,9 @@ export class CynthiaAndCaitlin extends TrainerCard {
   public fullName: string = 'Cynthia & Caitlin CEC';
 
   public text: string =
-    'Put a Supporter card from your discard pile into your hand. You can\'t choose Cynthia & Caitlin or a card you discarded with the effect of this card.' +
-    '' +
-    'When you play this card, you may discard another card from your hand. If you do, draw 3 cards.';
+    `Put a Supporter card from your discard pile into your hand. You can\'t choose Cynthia & Caitlin or a card you discarded with the effect of this card.
+
+When you play this card, you may discard another card from your hand. If you do, draw 3 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
