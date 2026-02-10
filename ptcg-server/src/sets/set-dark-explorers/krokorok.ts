@@ -9,26 +9,26 @@ export class Krokorok extends PokemonCard {
 
   public evolvesFrom = 'Sandile';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 90;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Mud-Slap',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: ''
     },
     {
       name: 'Corkscrew Punch',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [D, D, C, C],
       damage: 70,
       text: ''
     }

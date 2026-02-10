@@ -19,7 +19,7 @@ export class Excadrill2 extends PokemonCard {
       cost: [F, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If this Pokemon has a Pokemon Tool card attached to it, this attack does 30 more damage.'
+      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 30 more damage.'
     },
     {
       name: 'Mach Claw',

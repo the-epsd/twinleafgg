@@ -21,13 +21,13 @@ export class Eelektross extends PokemonCard {
       name: 'Suction Heal',
       cost: [L, C, C],
       damage: 40,
-      text: 'Heal from this Pokemon the same amount of damage you did to the Defending Pokemon.'
+      text: 'Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
     },
     {
       name: 'Slurp Shakedown',
       cost: [L, L, C, C],
       damage: 0,
-      text: 'Switch the Defending Pokemon with 1 of your opponent\'s Benched Pokemon. This attack does 60 damage to the new Defending Pokemon.'
+      text: 'Switch the Defending Pokémon with 1 of your opponent\'s Benched Pokémon. This attack does 60 damage to the new Defending Pokémon.'
     }
   ];
 

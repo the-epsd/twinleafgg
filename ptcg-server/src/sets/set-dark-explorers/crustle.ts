@@ -11,26 +11,26 @@ export class Crustle extends PokemonCard {
 
   public evolvesFrom = 'Dwebble';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 110;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Cut',
-      cost: [CardType.GRASS, CardType.COLORLESS],
+      cost: [G, C],
       damage: 30,
       text: ''
     },
     {
       name: 'Heavy Bullet',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, C, C],
       damage: 70,
-      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

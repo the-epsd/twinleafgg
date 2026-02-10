@@ -18,7 +18,7 @@ export class Herdier extends PokemonCard {
       name: 'Roar',
       cost: [C],
       damage: 0,
-      text: 'Your opponent switches the Defending Pokemon with 1 of his or her Benched Pokemon.'
+      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
     },
     {
       name: 'Tackle',

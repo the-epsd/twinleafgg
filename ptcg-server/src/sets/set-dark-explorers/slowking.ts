@@ -19,7 +19,7 @@ export class Slowking extends PokemonCard {
       name: 'Psy Bolt',
       cost: [P],
       damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     },
     {
       name: 'Hand Press',

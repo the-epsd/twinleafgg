@@ -18,13 +18,13 @@ export class EnteiEx extends PokemonCard {
       name: 'Fire Fang',
       cost: [R, C],
       damage: 30,
-      text: 'The Defending Pokemon is now Burned.'
+      text: 'The Defending Pokémon is now Burned.'
     },
     {
       name: 'Grand Flame',
       cost: [R, R, C],
       damage: 90,
-      text: 'Attach a Fire Energy card from your discard pile to 1 of your Benched Pokemon.'
+      text: 'Attach a [R] Energy card from your discard pile to 1 of your Benched Pokémon.'
     }
   ];
 

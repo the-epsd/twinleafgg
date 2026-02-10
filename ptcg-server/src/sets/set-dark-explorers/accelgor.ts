@@ -14,25 +14,25 @@ export class Accelgor extends PokemonCard {
 
   public evolvesFrom = 'Shelmet';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 90;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
   public retreat = [];
 
   public attacks = [{
     name: 'Hammer In',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 20,
     text: ''
   }, {
     name: 'Deck and Cover',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 50,
-    text: 'The Defending Pokemon is now Paralyzed and Poisoned. Shuffle this ' +
-      'Pokemon and all cards attached to it into your deck.'
+    text: 'The Defending Pokémon is now Paralyzed and Poisoned. Shuffle this ' +
+      'Pokémon and all cards attached to it into your deck.'
   }];
 
   public set: string = 'DEX';

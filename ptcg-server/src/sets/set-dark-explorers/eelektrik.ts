@@ -24,7 +24,7 @@ export class Eelektrik extends PokemonCard {
       name: 'Shock Bolt',
       cost: [L, L, C],
       damage: 80,
-      text: 'Discard all Lightning Energy attached to this Pokemon.'
+      text: 'Discard all [L] Energy attached to this Pokémon.'
     }
   ];
 

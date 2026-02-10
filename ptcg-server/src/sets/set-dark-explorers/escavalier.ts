@@ -20,13 +20,13 @@ export class Escavalier extends PokemonCard {
       name: 'Joust',
       cost: [M],
       damage: 30,
-      text: 'Before doing damage, discard a Pokemon Tool card attached to the Defending Pokemon.'
+      text: 'Before doing damage, discard a Pokémon Tool card attached to the Defending Pokémon.'
     },
     {
       name: 'Cavalry Lance',
       cost: [M, M, C],
       damage: 70,
-      text: 'During your opponent\'s next turn, this Pokemon has no Weakness.'
+      text: 'During your opponent\'s next turn, this Pokémon has no Weakness.'
     }
   ];
 

@@ -20,13 +20,13 @@ export class Umbreon extends PokemonCard {
       name: 'Shadow Drain',
       cost: [C, C],
       damage: 30,
-      text: 'Heal from this Pokemon the same amount of damage you did to the Defending Pokemon.'
+      text: 'Heal from this Pokemon the same amount of damage you did to the Defending Pokémon.'
     },
     {
       name: 'Slashing Strike',
       cost: [D, C, C],
       damage: 80,
-      text: 'This Pokemon can\'t use Slashing Strike during your next turn.'
+      text: 'This Pokémon can\'t use Slashing Strike during your next turn.'
     }
   ];
 

@@ -18,7 +18,7 @@ export class Klang extends PokemonCard {
       name: 'Charge Beam',
       cost: [C, C],
       damage: 20,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokemon.'
+      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
     },
     {
       name: 'Vice Grip',

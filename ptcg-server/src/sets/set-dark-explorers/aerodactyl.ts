@@ -16,7 +16,7 @@ export class Aerodactyl extends PokemonCard {
   public powers = [{
     name: 'Ancient Scream',
     powerType: PowerType.ABILITY,
-    text: 'Your Pokemon\'s attacks do 10 more damage to the Active Pokemon (before applying Weakness and Resistance).'
+    text: 'Your Pokémon\'s attacks do 10 more damage to the Active Pokémon (before applying Weakness and Resistance).'
   }];
 
   public attacks = [{

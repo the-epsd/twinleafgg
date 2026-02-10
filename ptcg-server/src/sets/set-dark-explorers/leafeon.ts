@@ -26,7 +26,7 @@ export class Leafeon extends PokemonCard {
       name: 'Energy Assist',
       cost: [G, C],
       damage: 40,
-      text: 'Attach a basic Energy card from your discard pile to 1 of your Benched Pokemon.'
+      text: 'Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon.'
     }
   ];
 

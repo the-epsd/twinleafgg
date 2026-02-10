@@ -19,29 +19,29 @@ export class Venusaur extends PokemonCard {
 
   public evolvesFrom = 'Ivysaur';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 140;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public resistance = [{ type: CardType.WATER, value: -20 }];
+  public resistance = [{ type: W, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Floral Fragrance',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may search your deck for a Pokemon, reveal it, and put it into your hand. Shuffle your deck afterward.'
+    text: 'Once during your turn (before your attack), you may search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
   }];
 
   public attacks = [
     {
       name: 'Poison Powder',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, G, C, C],
       damage: 70,
-      text: 'The Defending Pokemon is now Poisoned.'
+      text: 'The Defending Pokémon is now Poisoned.'
     }
   ];
 

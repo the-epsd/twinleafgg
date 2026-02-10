@@ -16,13 +16,13 @@ export class Empoleon extends PokemonCard {
 
   public evolvesFrom = 'Prinplup';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 140;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Diving Draw',
@@ -35,9 +35,9 @@ export class Empoleon extends PokemonCard {
   public attacks = [
     {
       name: 'Attack Command',
-      cost: [CardType.WATER],
+      cost: [W],
       damage: 10,
-      text: 'Does 10 damage times the number of Pokemon in play (both yours ' +
+      text: 'Does 10 damage times the number of Pokémon in play (both yours ' +
         'and your opponent\'s).'
     }
   ];

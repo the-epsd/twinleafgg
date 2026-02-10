@@ -18,7 +18,7 @@ export class Slowpoke extends PokemonCard {
       name: 'Big Yawn',
       cost: [C],
       damage: 0,
-      text: 'Both this Pokemon and the Defending Pokemon are now Asleep.'
+      text: 'Both this Pokemon and the Defending Pokémon are now Asleep.'
     },
     {
       name: 'Shot in the Dark',

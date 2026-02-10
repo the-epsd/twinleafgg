@@ -18,7 +18,7 @@ export class Chatot extends PokemonCard {
       name: 'Tone-Deaf',
       cost: [C],
       damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Confused.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
     },
     {
       name: 'Peck',

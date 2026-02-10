@@ -6,15 +6,15 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/pref
 
 export class Tynamo2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 40;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Charge Beam',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 10,
       text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
     }

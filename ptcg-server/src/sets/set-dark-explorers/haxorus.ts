@@ -24,7 +24,7 @@ export class Haxorus extends PokemonCard {
       name: 'Stunning Uppercut',
       cost: [C, C, C, C],
       damage: 80,
-      text: 'Flip 2 coins. If both of them are heads, the Defending Pokemon is now Paralyzed. If both of them are tails, this attack does nothing.'
+      text: 'Flip 2 coins. If both of them are heads, the Defending Pokémon is now Paralyzed. If both of them are tails, this attack does nothing.'
     }
   ];
 

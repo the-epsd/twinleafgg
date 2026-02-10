@@ -24,8 +24,8 @@ export class DarkClaw extends TrainerCard {
   public setNumber: string = '92';
 
   public text: string =
-    'If this card is attached to a [D] Pokemon, each of the attacks ' +
-    'of that Pokemon does 20 more damage to the Active Pokemon ' +
+    'If this card is attached to a [D] Pokémon, each of the attacks ' +
+    'of that Pokémon does 20 more damage to the Active Pokémon ' +
     '(before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

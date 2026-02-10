@@ -12,27 +12,27 @@ export class Blaziken extends PokemonCard {
 
   public evolvesFrom = 'Combusken';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
 
   public hp: number = 140;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: W }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Blaze Kick',
-      cost: [CardType.FIRE, CardType.COLORLESS],
+      cost: [R, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, the Defending Pokemon is now Burned.'
+      text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, the Defending Pokémon is now Burned.'
     },
     {
       name: 'Flamethrower',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+      cost: [R, R, C],
       damage: 130,
-      text: 'Discard an Energy attached to this Pokemon.'
+      text: 'Discard an Energy attached to this Pokémon.'
     }
   ];
 

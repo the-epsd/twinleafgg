@@ -25,7 +25,7 @@ export class Glaceon extends PokemonCard {
       name: 'Reflect Energy',
       cost: [W, C],
       damage: 40,
-      text: 'Move an Energy from this Pokemon to 1 of your Benched Pokemon.'
+      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
     }
   ];
 

@@ -26,7 +26,7 @@ export class Galvantula extends PokemonCard {
       cost: [L, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon has no Retreat Cost, this attack does 40 more damage.'
+      text: 'If the Defending Pokémon has no Retreat Cost, this attack does 40 more damage.'
     }
   ];
 

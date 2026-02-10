@@ -12,26 +12,26 @@ export class Krookodile extends PokemonCard {
 
   public evolvesFrom = 'Krokorok';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 150;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Dark Clamp',
-      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [D, C, C],
       damage: 60,
-      text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     },
     {
       name: 'Bombast',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [D, D, C, C],
       damage: 0,
       damageCalculation: 'x',
       text: 'Does 40 damage times the number of Prize cards you have taken.'

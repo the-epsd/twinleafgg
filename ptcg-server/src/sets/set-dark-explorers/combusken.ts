@@ -11,27 +11,27 @@ export class Combusken extends PokemonCard {
 
   public evolvesFrom = 'Torchic';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
 
   public hp: number = 80;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: W }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Double Kick',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 20,
       damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     },
     {
       name: 'Flamethrower',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+      cost: [R, R, C],
       damage: 70,
-      text: 'Discard an Energy attached to this Pokemon.'
+      text: 'Discard an Energy attached to this Pokémon.'
     }
   ];
 

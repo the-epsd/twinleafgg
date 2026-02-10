@@ -20,14 +20,14 @@ export class Flareon extends PokemonCard {
       name: 'Sand-Attack',
       cost: [C],
       damage: 20,
-      text: 'If the Defending Pokemon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
+      text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
     },
     {
       name: 'Fire Slash',
       cost: [R, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'You may discard a Fire Energy attached to this Pokemon. If you do, this attack does 30 more damage.'
+      text: 'You may discard a [R] Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
     }
   ];
 

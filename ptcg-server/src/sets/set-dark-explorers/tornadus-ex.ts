@@ -54,28 +54,28 @@ export class TornadusEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
 
   public hp: number = 170;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
+  public resistance = [{ type: F, value: -20 }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Blow Through',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: 'If there is any Stadium card in play, this attack does 30 ' +
         'more damage.'
     }, {
       name: 'Power Blast',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 100,
-      text: 'Flip a coin. If tails, discard an Energy attached to this Pokemon.'
+      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
     },
   ];
 

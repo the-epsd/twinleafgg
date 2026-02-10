@@ -16,7 +16,7 @@ export class Tympole extends PokemonCard {
       name: 'Spiral Drain',
       cost: [W, C],
       damage: 20,
-      text: 'Heal 20 damage from this Pokemon.'
+      text: 'Heal 20 damage from this Pokémon.'
     }
   ];
 
