@@ -35,7 +35,21 @@ export class GameService {
     private translate: TranslateService,
     private boardInteractionService: BoardInteractionService,
     private soundService: SoundService
-  ) { }
+  ) {
+    this.socketService.rejoinSuccess$.subscribe((gameState) => {
+      this.appendGameState(gameState);
+      const localGameState = this.sessionService.session.gameStates.find(
+        g => g.gameId === gameState.gameId && g.deleted === false
+      );
+      if (localGameState) {
+        const clientId = this.sessionService.session.clientId;
+        const isPlayer = localGameState.state.players.some(p => p.id === clientId);
+        if (isPlayer) {
+          this.socketService.setGameId(gameState.gameId);
+        }
+      }
+    });
+  }
 
   public getPlayerStats(gameId: number) {
     return this.api.get<PlayerStatsResponse>('/v1/game/' + gameId + '/playerStats');

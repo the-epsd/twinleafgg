@@ -42,11 +42,10 @@ export class WebSocketServer {
       try {
         const socketClient = new SocketClient(user, this.core, server, socket);
         const reconnectionTarget = this.findReconnectionTarget(user.id);
-        if ((socket as any).isReconnectionAttempt && reconnectionTarget) {
+        if (reconnectionTarget) {
           socketClient.id = reconnectionTarget.playerId;
         }
 
-        // Simple connection - just connect to core
         await this.core.connect(socketClient);
         socketClient.attachListeners();
 

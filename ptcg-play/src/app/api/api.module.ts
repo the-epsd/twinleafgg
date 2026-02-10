@@ -61,6 +61,7 @@ export class ApiModule {
       .subscribe(coreInfo => {
         mainService.init(coreInfo);
         messageService.init();
+        socketService.tryRejoinAfterConnect();
       });
 
   }

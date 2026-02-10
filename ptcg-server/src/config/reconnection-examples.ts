@@ -22,7 +22,8 @@ export const developmentConfig: ReconnectionConfig = {
   reconnectIntervals: [2000, 5000],          // Quick reconnection attempts
   healthCheckIntervalMs: 15 * 1000,          // Frequent health checks for debugging
   cleanupIntervalMs: 30 * 1000,              // Frequent cleanup for memory management
-  maxPreservedSessionsPerUser: 1             // Single session for simplicity
+  maxPreservedSessionsPerUser: 1,            // Single session for simplicity
+  disconnectForfeitMs: 60 * 1000
 };
 
 /**
@@ -37,7 +38,8 @@ export const productionConfig: ReconnectionConfig = {
   reconnectIntervals: [5000, 10000, 15000],  // Exponential backoff pattern
   healthCheckIntervalMs: 30 * 1000,          // 30 second health checks
   cleanupIntervalMs: 60 * 1000,              // 1 minute cleanup interval
-  maxPreservedSessionsPerUser: 1             // Single session per user
+  maxPreservedSessionsPerUser: 1,            // Single session per user
+  disconnectForfeitMs: 60 * 1000
 };
 
 /**
@@ -52,7 +54,8 @@ export const highLoadConfig: ReconnectionConfig = {
   reconnectIntervals: [10000, 20000],        // Longer intervals to reduce traffic
   healthCheckIntervalMs: 60 * 1000,          // Less frequent health checks
   cleanupIntervalMs: 2 * 60 * 1000,          // Less frequent cleanup
-  maxPreservedSessionsPerUser: 1             // Single session to minimize memory
+  maxPreservedSessionsPerUser: 1,            // Single session to minimize memory
+  disconnectForfeitMs: 60 * 1000
 };
 
 /**
@@ -67,7 +70,8 @@ export const resourceConstrainedConfig: ReconnectionConfig = {
   reconnectIntervals: [15000],               // Single, longer interval
   healthCheckIntervalMs: 2 * 60 * 1000,      // Infrequent health checks
   cleanupIntervalMs: 5 * 60 * 1000,          // Infrequent cleanup
-  maxPreservedSessionsPerUser: 1             // Single session only
+  maxPreservedSessionsPerUser: 1,            // Single session only
+  disconnectForfeitMs: 60 * 1000
 };
 
 /**
@@ -82,7 +86,8 @@ export const unreliableNetworkConfig: ReconnectionConfig = {
   reconnectIntervals: [5000, 10000, 15000, 20000, 30000], // Extended backoff sequence
   healthCheckIntervalMs: 20 * 1000,          // More frequent monitoring
   cleanupIntervalMs: 60 * 1000,              // Standard cleanup
-  maxPreservedSessionsPerUser: 1             // Single session
+  maxPreservedSessionsPerUser: 1,            // Single session
+  disconnectForfeitMs: 60 * 1000
 };
 
 /**
@@ -97,7 +102,8 @@ export const tournamentConfig: ReconnectionConfig = {
   reconnectIntervals: [3000, 6000, 12000, 20000], // Aggressive initial attempts
   healthCheckIntervalMs: 15 * 1000,          // Frequent monitoring
   cleanupIntervalMs: 60 * 1000,              // Standard cleanup
-  maxPreservedSessionsPerUser: 2             // Allow multiple sessions for flexibility
+  maxPreservedSessionsPerUser: 2,            // Allow multiple sessions for flexibility
+  disconnectForfeitMs: 60 * 1000
 };
 
 /**

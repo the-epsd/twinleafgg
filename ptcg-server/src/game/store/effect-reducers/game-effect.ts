@@ -137,10 +137,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-      result => {
-        flip = result;
-        next();
-      });
+    result => {
+      flip = result;
+      next();
+    });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);

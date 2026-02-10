@@ -238,6 +238,11 @@ export class Game implements StoreHandler {
     return this.userIdToPlayerId.get(userId);
   }
 
+  /** Returns user ids of all players in this game (for GameInfo.playerUserIds). */
+  public getPlayerUserIds(): number[] {
+    return Array.from(this.userIdToPlayerId.keys());
+  }
+
   /**
    * Handle player disconnection - preserve state and notify other players
    */
@@ -281,16 +286,14 @@ export class Game implements StoreHandler {
       clearTimeout(existingTimeout);
     }
 
-    // Schedule auto-forfeit timer (15 seconds)
-    // Note: We already checked that state.phase !== FINISHED at the start of this method
+    // Schedule auto-forfeit timer (configurable, default 60s)
+    const disconnectForfeitMs = this.core.getReconnectionManager().getCurrentConfig().disconnectForfeitMs ?? 60 * 1000;
     const timeout = setTimeout(() => {
-      // Check if player is still disconnected and game is still active
       if (this.disconnectedPlayers.has(client.id) && this.state.phase !== GamePhase.FINISHED) {
         this.handleReconnectionTimeout(client.id);
       }
-      // Remove timeout reference
       this.disconnectionTimeouts.delete(client.id);
-    }, 15000); // 15 seconds
+    }, disconnectForfeitMs);
 
     this.disconnectionTimeouts.set(client.id, timeout);
 
