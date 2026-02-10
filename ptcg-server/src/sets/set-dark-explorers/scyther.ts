@@ -9,20 +9,20 @@ export class Scyther extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 80;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Air Slash',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 60,
-      text: 'Discard an Energy attached to this Pokemon.'
+      text: 'Discard an Energy attached to this Pokémon.'
     }
   ];
 

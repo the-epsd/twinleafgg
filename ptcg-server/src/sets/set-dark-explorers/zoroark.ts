@@ -11,30 +11,30 @@ export class Zoroark extends PokemonCard {
 
   public evolvesFrom = 'Zorua';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 100;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Brutal Bash',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 0,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of Darkness Pokemon you have in play.'
+      text: 'Does 20 damage times the number of [D] Pokémon you have in play.'
     },
     {
       name: 'Dark Rush',
-      cost: [CardType.DARK, CardType.DARK],
+      cost: [D, D],
       damage: 0,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of damage counters on this Pokemon.'
+      text: 'Does 20 damage times the number of damage counters on this Pokémon.'
     }
   ];
 

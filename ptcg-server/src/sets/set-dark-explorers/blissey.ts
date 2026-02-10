@@ -20,14 +20,14 @@ export class Blissey extends PokemonCard {
     name: 'Softboiled',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may flip a coin. If heads, heal 30 damage from your Active Pokemon.'
+    text: 'Once during your turn (before your attack), you may flip a coin. If heads, heal 30 damage from your Active Pokémon.'
   }];
 
   public attacks = [{
     name: 'Double-Edge',
     cost: [C, C, C],
     damage: 90,
-    text: 'This Pokemon does 60 damage to itself.'
+    text: 'This Pokémon does 60 damage to itself.'
   }];
 
   public set: string = 'DEX';

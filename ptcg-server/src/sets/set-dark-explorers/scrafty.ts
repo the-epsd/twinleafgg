@@ -11,28 +11,28 @@ export class Scrafty extends PokemonCard {
 
   public evolvesFrom = 'Scraggy';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 100;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Headbutt',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: ''
     },
     {
       name: 'Crushing Blow',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
+      cost: [D, D, C],
       damage: 70,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
+      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
     }
   ];
 

@@ -21,13 +21,13 @@ export class Cofagrigus extends PokemonCard {
       cost: [C, C],
       damage: 40,
       damageCalculation: 'x',
-      text: 'Discard as many Pokemon Tool cards as you like from your hand. This attack does 40 damage times the number of cards you discarded.'
+      text: 'Discard as many Pokémon Tool cards as you like from your hand. This attack does 40 damage times the number of cards you discarded.'
     },
     {
       name: 'Lock Up',
       cost: [P, P],
       damage: 40,
-      text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     }
   ];
 

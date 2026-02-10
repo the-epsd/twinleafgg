@@ -9,28 +9,28 @@ export class Carnivine extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 90;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public resistance = [{ type: CardType.WATER, value: -20 }];
+  public resistance = [{ type: W, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Lure Poison',
-      cost: [CardType.GRASS],
+      cost: [G],
       damage: 0,
-      text: 'Switch the Defending Pokemon with 1 of your opponent\'s Benched Pokemon. The new Defending Pokemon is now Poisoned.'
+      text: 'Switch the Defending Pokémon with 1 of your opponent\'s Benched Pokémon. The new Defending Pokémon is now Poisoned.'
     },
     {
       name: 'Spit Squall',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+      cost: [G, G, C],
       damage: 0,
-      text: 'Your opponent puts the Defending Pokemon and all cards attached to it into his or her hand.'
+      text: 'Your opponent puts the Defending Pokémon and all cards attached to it into his or her hand.'
     }
   ];
 

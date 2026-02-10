@@ -5,26 +5,26 @@ export class Bulbasaur extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public resistance = [{ type: CardType.WATER, value: -20 }];
+  public resistance = [{ type: W, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Tackle',
-      cost: [CardType.GRASS],
+      cost: [G],
       damage: 10,
       text: ''
     },
     {
       name: 'Razor Leaf',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, C, C],
       damage: 30,
       text: ''
     }

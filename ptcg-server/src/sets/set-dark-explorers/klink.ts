@@ -18,7 +18,7 @@ export class Klink extends PokemonCard {
       name: 'Smash Turn',
       cost: [C, C],
       damage: 20,
-      text: 'Switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
 

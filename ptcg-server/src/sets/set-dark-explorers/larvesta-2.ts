@@ -17,7 +17,7 @@ export class Larvesta2 extends PokemonCard {
       name: 'Super Singe',
       cost: [R, C],
       damage: 10,
-      text: 'The Defending Pokemon is now Burned.'
+      text: 'The Defending Pokémon is now Burned.'
     }
   ];
 

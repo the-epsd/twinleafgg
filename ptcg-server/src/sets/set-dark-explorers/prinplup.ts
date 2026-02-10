@@ -11,24 +11,24 @@ export class Prinplup extends PokemonCard {
 
   public evolvesFrom = 'Piplup';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 80;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [ C, C ];
 
   public attacks = [
     {
       name: 'Razor Wing',
-      cost: [ CardType.COLORLESS ],
+      cost: [ C ],
       damage: 20,
       text: ''
     },
     {
       name: 'Fury Attack',
-      cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [ W, C, C ],
       damage: 30,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     }

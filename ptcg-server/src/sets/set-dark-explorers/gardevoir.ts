@@ -9,10 +9,10 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Gardevoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 110;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Psychic Mirage',
@@ -22,7 +22,7 @@ export class Gardevoir extends PokemonCard {
 
   public attacks = [{
     name: 'Mind Shock',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [P, P, C, C],
     damage: 60,
     text: 'This attack\'s damage isn\'t affected by Weakness or Resistance. '
   }];

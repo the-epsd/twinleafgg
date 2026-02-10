@@ -18,14 +18,14 @@ export class Slowbro extends PokemonCard {
   public powers = [{
     name: 'Airhead',
     powerType: PowerType.ABILITY,
-    text: 'If you have 2, 4, or 6 Prize Cards left, this Pokemon can\'t attack.'
+    text: 'If you have 2, 4, or 6 Prize Cards left, this Pokémon can\'t attack.'
   }];
 
   public attacks = [{
     name: 'Lazy Headbutt',
     cost: [W, C],
     damage: 80,
-    text: 'This Pokemon is now Asleep.'
+    text: 'This Pokémon is now Asleep.'
   }];
 
   public set: string = 'DEX';

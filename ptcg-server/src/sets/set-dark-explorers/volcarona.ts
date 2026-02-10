@@ -20,7 +20,7 @@ export class Volcarona extends PokemonCard {
   public powers = [{
     name: 'Scorching Scales',
     powerType: PowerType.ABILITY,
-    text: 'Put 4 damage counters instead of 2 on your opponent\'s Burned Pokemon between turns.'
+    text: 'Put 4 damage counters instead of 2 on your opponent\'s Burned Pokémon between turns.'
   }];
 
   public attacks = [
@@ -28,7 +28,7 @@ export class Volcarona extends PokemonCard {
       name: 'Burning Wind',
       cost: [R, C, C],
       damage: 70,
-      text: 'You may discard an Energy attached to this Pokemon. If you do, the Defending Pokemon is now Burned.'
+      text: 'You may discard an Energy attached to this Pokemon. If you do, the Defending Pokémon is now Burned.'
     }
   ];
 

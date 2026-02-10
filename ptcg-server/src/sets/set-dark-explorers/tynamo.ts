@@ -10,21 +10,21 @@ export class Tynamo extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 40;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [ C ];
 
   public attacks = [
     {
       name: 'Spark',
-      cost: [ CardType.LIGHTNING ],
+      cost: [ L ],
       damage: 10,
-      text: 'Does 10 damage to 1 of your opponent\'s Benched Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 10 damage to 1 of your opponent\'s Benched Pokémon. ' +
+        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

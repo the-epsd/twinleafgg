@@ -5,24 +5,24 @@ export class Torchic2 extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: W }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Peck',
-      cost: [CardType.FIRE],
+      cost: [R],
       damage: 10,
       text: ''
     },
     {
       name: 'Live Coal',
-      cost: [CardType.FIRE, CardType.COLORLESS],
+      cost: [R, C],
       damage: 20,
       text: ''
     }

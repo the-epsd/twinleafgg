@@ -18,7 +18,7 @@ export class Woobat extends PokemonCard {
       name: 'Supersonic',
       cost: [P],
       damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Confused.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
     },
     {
       name: 'Heart Stamp',

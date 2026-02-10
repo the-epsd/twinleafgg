@@ -18,7 +18,7 @@ export class Palpitoad extends PokemonCard {
       name: 'Bubble Beam',
       cost: [W, C],
       damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }
   ];
 

@@ -8,45 +8,35 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class GroudonEx extends PokemonCard {
 
   public tags = [CardTag.POKEMON_EX];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 180;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public resistance = [{ type: CardType.LIGHTNING, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public resistance = [{ type: L, value: -20 }];
+  public retreat = [C, C, C, C];
 
   public attacks = [
     {
       name: 'Tromp',
-      cost: [CardType.FIGHTING, CardType.COLORLESS],
+      cost: [F, C],
       damage: 20,
-      text: 'Does 10 damage to each of your opponent\'s Benched Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 10 damage to each of your opponent\'s Benched Pokémon. ' +
+        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Giant Claw',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
+      cost: [F, F, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon already has 2 or more damage counters on it, ' +
+      text: 'If the Defending Pokémon already has 2 or more damage counters on it, ' +
         'this attack does 40 more damage.'
     }
   ];
 
   public set: string = 'DEX';
-
   public setNumber: string = '54';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Groudon-EX';
-
   public fullName: string = 'Groudon EX DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

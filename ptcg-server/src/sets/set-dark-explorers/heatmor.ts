@@ -18,7 +18,7 @@ export class Heatmor extends PokemonCard {
       cost: [C],
       damage: 10,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon is Durant, this attack does 50 more damage.'
+      text: 'If the Defending Pokémon is Durant, this attack does 50 more damage.'
     },
     {
       name: 'Firebreathing',

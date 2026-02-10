@@ -76,7 +76,7 @@ export class TwistMountain extends TrainerCard {
 
   public text: string =
     'Once during each player\'s turn, that player may flip a coin. ' +
-    'If heads, the player puts a Restored Pokemon from his or her hand ' +
+    'If heads, the player puts a Restored Pokémon from his or her hand ' +
     'onto his or her Bench.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

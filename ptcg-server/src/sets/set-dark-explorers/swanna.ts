@@ -20,7 +20,7 @@ export class Swanna extends PokemonCard {
       name: 'Healing Dance',
       cost: [W],
       damage: 0,
-      text: 'Heal 30 damage from each of your Pokemon.'
+      text: 'Heal 30 damage from each of your Pokémon.'
     },
     {
       name: 'Incessant Peck',

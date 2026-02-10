@@ -17,13 +17,13 @@ export class Chansey extends PokemonCard {
       name: 'Sing',
       cost: [C],
       damage: 0,
-      text: 'The Defending Pokemon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.'
     },
     {
       name: 'Double-Edge',
       cost: [C, C, C],
       damage: 60,
-      text: 'This Pokemon does 30 damage to itself.'
+      text: 'This Pokémon does 30 damage to itself.'
     }
   ];
 

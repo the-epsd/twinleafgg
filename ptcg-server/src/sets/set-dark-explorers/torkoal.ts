@@ -16,7 +16,7 @@ export class Torkoal extends PokemonCard {
       name: 'Flame Cloak',
       cost: [C],
       damage: 10,
-      text: 'Flip a coin. If heads, attach a Fire Energy card from your discard pile to this Pokemon.'
+      text: 'Flip a coin. If heads, attach a [R] Energy card from your discard pile to this Pokémon.'
     },
     {
       name: 'Heat Blast',

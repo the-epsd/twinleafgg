@@ -19,7 +19,7 @@ export class Excadrill extends PokemonCard {
       name: 'Tunnel Strike',
       cost: [F],
       damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Dig Uppercut',

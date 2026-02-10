@@ -18,7 +18,7 @@ export class Espeon extends PokemonCard {
   public powers = [{
     name: 'Solar Revelation',
     powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s attacks, except damage, done to each of your Pokemon that has any Energy attached to it.'
+    text: 'Prevent all effects of your opponent\'s attacks, except damage, done to each of your Pokémon that has any Energy attached to it.'
   }];
 
   public attacks = [{

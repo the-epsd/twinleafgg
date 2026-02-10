@@ -20,7 +20,7 @@ export class Klinklang extends PokemonCard {
       cost: [C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Does 20 more damage for each Metal Energy attached to this Pokemon.'
+      text: 'Does 20 more damage for each [M] Energy attached to this Pokémon.'
     },
     {
       name: 'Lock Gear',

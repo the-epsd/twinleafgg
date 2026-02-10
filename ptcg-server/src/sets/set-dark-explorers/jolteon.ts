@@ -18,7 +18,7 @@ export class Jolteon extends PokemonCard {
       cost: [C],
       damage: 20,
       damageCalculation: '+',
-      text: 'You may discard a Lightning Energy attached to this Pokemon. If you do, this attack does 40 more damage.'
+      text: 'You may discard a [L] Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
     },
     {
       name: 'Pin Missile',

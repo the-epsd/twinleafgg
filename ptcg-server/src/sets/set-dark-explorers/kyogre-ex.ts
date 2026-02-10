@@ -11,26 +11,26 @@ export class KyogreEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 170;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C, C];
 
   public attacks = [
     {
       name: 'Smash Turn',
-      cost: [CardType.WATER, CardType.COLORLESS],
+      cost: [W, C],
       damage: 30,
-      text: 'You may switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
     },
     {
       name: 'Dual Splash',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      cost: [W, W, C],
       damage: 0,
-      text: 'This attack does 50 damage to 2 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

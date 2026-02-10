@@ -22,13 +22,13 @@ export class Stoutland extends PokemonCard {
       cost: [C, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'If this Pokemon has a Special Energy attached to it, this attack does 40 more damage.'
+      text: 'If this Pokémon has a Special Energy attached to it, this attack does 40 more damage.'
     },
     {
       name: 'Ferocious Bellow',
       cost: [C, C, C, C],
       damage: 60,
-      text: 'During your opponent\'s next turn, any damage done by attacks from the Defending Pokemon is reduced by 30 (before applying Weakness and Resistance).'
+      text: 'During your opponent\'s next turn, any damage done by attacks from the Defending Pokémon is reduced by 30 (before applying Weakness and Resistance).'
     }
   ];
 

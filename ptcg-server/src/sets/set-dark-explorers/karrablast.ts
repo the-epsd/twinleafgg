@@ -8,26 +8,26 @@ export class Karrablast extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Beat',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 10,
       text: ''
     },
     {
       name: 'Reckless Charge',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 40,
-      text: 'This Pokemon does 10 damage to itself.'
+      text: 'This Pokémon does 10 damage to itself.'
     }
   ];
 

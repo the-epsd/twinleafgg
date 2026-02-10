@@ -8,20 +8,20 @@ export class Torchic extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
 
   public hp: number = 50;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: W }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Reckless Charge',
-      cost: [CardType.FIRE, CardType.COLORLESS],
+      cost: [R, C],
       damage: 30,
-      text: 'This Pokemon does 10 damage to itself.'
+      text: 'This Pokémon does 10 damage to itself.'
     }
   ];
 

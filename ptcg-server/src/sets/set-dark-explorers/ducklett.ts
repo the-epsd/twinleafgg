@@ -18,7 +18,7 @@ export class Ducklett extends PokemonCard {
       name: 'Water Pulse',
       cost: [W, C],
       damage: 20,
-      text: 'The Defending Pokemon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.'
     }
   ];
 
