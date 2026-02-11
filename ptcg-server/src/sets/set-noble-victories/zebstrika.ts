@@ -25,7 +25,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Shock Bolt',
       cost: [L, L, C],
       damage: 90,
-      text: 'Flip a coin. If tails, discard all [L] Energy attached to this Pokemon.'
+      text: 'Flip a coin. If tails, discard all [L] Energy attached to this Pokémon.'
     }
   ];
 
@@ -45,7 +45,7 @@ export class Zebstrika extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (!result) {
-          // Discard all Lightning Energy attached to this Pokemon
+          // Discard all Lightning Energy attached to this Pokémon
           const lightningEnergies = player.active.cards.filter(card =>
             card.superType === SuperType.ENERGY &&
             card instanceof PokemonCard === false &&

@@ -26,7 +26,7 @@ export class Golett extends PokemonCard {
       cost: [P, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokemon is now Confused.'
+      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
     }
   ];
 

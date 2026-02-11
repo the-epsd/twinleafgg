@@ -23,7 +23,7 @@ export class Haxorus extends PokemonCard {
       name: 'Giga Impact',
       cost: [C, C, C],
       damage: 120,
-      text: 'This Pokemon can\'t attack during your next turn.'
+      text: 'This Pokémon can\'t attack during your next turn.'
     }
   ];
 

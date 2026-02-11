@@ -53,7 +53,7 @@ export class KyogreEx extends PokemonCard {
       this.usedSmashTurn = true;
     }
 
-    // Dual Splash - does 50 damage to 2 of opponent's Pokemon
+    // Dual Splash - does 50 damage to 2 of opponent's Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 

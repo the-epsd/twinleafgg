@@ -9,10 +9,15 @@ export class GroudonEx extends PokemonCard {
 
   public tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
+
   public cardType: CardType = F;
+
   public hp: number = 180;
+
   public weakness = [{ type: W }];
+
   public resistance = [{ type: L, value: -20 }];
+
   public retreat = [C, C, C, C];
 
   public attacks = [
@@ -41,7 +46,7 @@ export class GroudonEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Tromp - 20 damage + 10 to each of opponent's Benched Pokemon
+    // Tromp - 20 damage + 10 to each of opponent's Benched Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
@@ -54,7 +59,7 @@ export class GroudonEx extends PokemonCard {
       });
     }
 
-    // Giant Claw - 80 damage, +40 if Defending Pokemon has 2+ damage counters
+    // Giant Claw - 80 damage, +40 if Defending Pokémon has 2+ damage counters
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 

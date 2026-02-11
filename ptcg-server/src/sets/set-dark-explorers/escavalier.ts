@@ -80,7 +80,7 @@ export class Escavalier extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      // When opponent's turn ends, remove marker from our Pokemon
+      // When opponent's turn ends, remove marker from our Pokémon
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         REMOVE_MARKER(this.NO_WEAKNESS_MARKER, cardList, this);
       });

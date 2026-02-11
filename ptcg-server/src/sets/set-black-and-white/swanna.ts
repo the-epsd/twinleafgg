@@ -20,13 +20,13 @@ export class Swanna extends PokemonCard {
       name: 'Feather Dance',
       cost: [C],
       damage: 0,
-      text: 'During your next turn, each of this Pokemon\'s attacks does 40 more damage (before applying Weakness and Resistance).'
+      text: 'During your next turn, each of this Pokémon\'s attacks does 40 more damage (before applying Weakness and Resistance).'
     },
     {
       name: 'Aqua Ring',
       cost: [W, C],
       damage: 40,
-      text: 'Switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
 

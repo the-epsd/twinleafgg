@@ -18,14 +18,14 @@ export class Cinccino extends PokemonCard {
   public powers = [{
     name: 'Smooth Coat',
     powerType: PowerType.ABILITY,
-    text: 'If any damage is done to this Pokemon by attacks, flip a coin. If heads, prevent that damage.'
+    text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
   }];
 
   public attacks = [{
     name: 'Echoed Voice',
     cost: [C, C, C],
     damage: 50,
-    text: 'During your next turn, this Pokemon\'s Echoed Voice attack does 50 more damage (before applying Weakness and Resistance).'
+    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 50 more damage (before applying Weakness and Resistance).'
   }];
 
   public set: string = 'NXD';

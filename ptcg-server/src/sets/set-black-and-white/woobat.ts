@@ -10,15 +10,15 @@ export class Woobat extends PokemonCard {
   public hp: number = 50;
 
   public weakness = [{
-    type: CardType.LIGHTNING
+    type: L
   }];
 
   public resistance = [{
-    type: CardType.FIGHTING,
+    type: F,
     value: -20
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Gust', cost: [C], damage: 10, text: '' }

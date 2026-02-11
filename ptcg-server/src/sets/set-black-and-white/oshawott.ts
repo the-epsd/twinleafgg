@@ -10,10 +10,10 @@ export class Oshawott extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.LIGHTNING
+    type: L
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Tackle', cost: [W], damage: 10, text: '' },

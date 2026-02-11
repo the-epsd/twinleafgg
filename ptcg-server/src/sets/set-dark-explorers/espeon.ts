@@ -35,7 +35,7 @@ export class Espeon extends PokemonCard {
   public fullName: string = 'Espeon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Solar Revelation - prevent effects (except damage) on Pokemon with energy
+    // Solar Revelation - prevent effects (except damage) on Pokémon with energy
     if (effect instanceof AbstractAttackEffect) {
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       const sourcePlayer = effect.player;
@@ -61,7 +61,7 @@ export class Espeon extends PokemonCard {
         return state;
       }
 
-      // Check if the target Pokemon has any energy attached
+      // Check if the target Pokémon has any energy attached
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(targetPlayer, effect.target);
       store.reduceEffect(state, checkProvidedEnergyEffect);
 

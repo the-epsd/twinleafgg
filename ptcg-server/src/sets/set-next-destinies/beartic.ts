@@ -19,7 +19,7 @@ export class Beartic extends PokemonCard {
       name: 'Daunt',
       cost: [C, C],
       damage: 40,
-      text: 'During your opponent\'s next turn, any damage done by attack from the Defending Pokemon is reduced by 20 (before applying Weakness and Resistance).'
+      text: 'During your opponent\'s next turn, any damage done by attack from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance).'
     },
     {
       name: 'Ambush',
@@ -39,7 +39,7 @@ export class Beartic extends PokemonCard {
   public readonly DAUNT_MARKER = 'DAUNT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Daunt - add marker to defending Pokemon
+    // Daunt - add marker to defending Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -47,7 +47,7 @@ export class Beartic extends PokemonCard {
       ADD_MARKER(this.DAUNT_MARKER, opponent.active, this);
     }
 
-    // Reduce damage from marked Pokemon
+    // Reduce damage from marked Pokémon
     if (effect instanceof DealDamageEffect) {
       const source = effect.source;
       if (HAS_MARKER(this.DAUNT_MARKER, source, this)) {

@@ -17,7 +17,7 @@ export class Darumaka2 extends PokemonCard {
       name: 'Singe',
       cost: [R],
       damage: 0,
-      text: 'The Defending Pokemon is now Burned.'
+      text: 'The Defending Pokémon is now Burned.'
     },
     {
       name: 'Rollout',

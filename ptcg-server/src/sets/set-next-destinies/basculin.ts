@@ -22,7 +22,7 @@ export class Basculin extends PokemonCard {
       name: 'Bared Fangs',
       cost: [W, C],
       damage: 60,
-      text: 'If the Defending Pokemon has no damage counters on it, this attack does nothing.'
+      text: 'If the Defending Pokémon has no damage counters on it, this attack does nothing.'
     }
   ];
 
@@ -38,7 +38,7 @@ export class Basculin extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check if defending Pokemon has damage
+      // Check if defending Pokémon has damage
       if (opponent.active.damage === 0) {
         effect.damage = 0;
       }

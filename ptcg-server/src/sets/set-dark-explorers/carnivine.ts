@@ -66,12 +66,12 @@ export class Carnivine extends PokemonCard {
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
 
       if (!hasBenched) {
-        // No benched Pokemon to switch, just poison the current active
+        // No benched Pokémon to switch, just poison the current active
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
         return state;
       }
 
-      // Switch opponent's active with a benched Pokemon
+      // Switch opponent's active with a benched Pokémon
       store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
@@ -84,19 +84,19 @@ export class Carnivine extends PokemonCard {
         }
         const target = selected[0];
         opponent.switchPokemon(target);
-        // Poison the new active Pokemon
+        // Poison the new active Pokémon
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
       });
     }
 
-    // After Spit Squall - return defending Pokemon to hand
+    // After Spit Squall - return defending Pokémon to hand
     if (effect instanceof AfterAttackEffect && this.usedSpitSquall) {
       this.usedSpitSquall = false;
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const defendingPokemon = opponent.active;
 
-      // Move the defending Pokemon and all attached cards to opponent's hand
+      // Move the defending Pokémon and all attached cards to opponent's hand
       defendingPokemon.moveTo(opponent.hand);
       defendingPokemon.clearEffects();
     }

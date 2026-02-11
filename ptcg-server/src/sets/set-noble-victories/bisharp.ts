@@ -18,14 +18,14 @@ export class Bisharp extends PokemonCard {
     name: 'Energy Stream',
     cost: [C],
     damage: 20,
-    text: 'Attach a [M] Energy card from your discard pile to this Pokemon.'
+    text: 'Attach a [M] Energy card from your discard pile to this Pokémon.'
   },
   {
     name: 'Metal Scissors',
     cost: [C, C, C],
     damage: 40,
     damageCalculation: '+',
-    text: 'Does 20 more damage for each [M] Energy attached to this Pokemon.'
+    text: 'Does 20 more damage for each [M] Energy attached to this Pokémon.'
   }];
 
   public set: string = 'NVI';

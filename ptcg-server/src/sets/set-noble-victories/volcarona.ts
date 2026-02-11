@@ -18,13 +18,13 @@ export class Volcarona extends PokemonCard {
       name: 'Fiery Dance',
       cost: [R],
       damage: 30,
-      text: 'Attach a basic Energy card from your discard pile to 1 of your Pokemon.'
+      text: 'Attach a basic Energy card from your discard pile to 1 of your Pokémon.'
     },
     {
       name: 'Heat Wave',
       cost: [R, C, C],
       damage: 60,
-      text: 'The Defending Pokemon is now Burned.'
+      text: 'The Defending Pokémon is now Burned.'
     }
   ];
 

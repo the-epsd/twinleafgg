@@ -24,7 +24,7 @@ export class Vanillish extends PokemonCard {
       name: 'Icy Wind',
       cost: [W, C, C],
       damage: 50,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Asleep.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
     }
   ];
 

@@ -19,7 +19,7 @@ export class Amoonguss extends PokemonCard {
   public powers = [{
     name: 'Sporprise',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokemon from your hand to evolve 1 of your Pokemon, you may use this Ability. If you do, your opponent\'s Active Pokemon is now Confused and Poisoned.'
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. If you do, your opponent\'s Active Pokémon is now Confused and Poisoned.'
   }];
 
   public attacks = [{

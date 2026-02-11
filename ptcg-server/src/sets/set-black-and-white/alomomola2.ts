@@ -18,14 +18,14 @@ export class Alomomola2 extends PokemonCard {
       name: 'Water Pulse',
       cost: [W, C],
       damage: 20,
-      text: 'The Defending Pokemon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.'
     },
     {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each [W] Energy attached to this Pokemon.'
+      text: 'Does 10 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
 

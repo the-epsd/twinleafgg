@@ -10,15 +10,15 @@ export class Scraggy extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.FIGHTING
+    type: F
   }];
 
   public resistance = [{
-    type: CardType.PSYCHIC,
+    type: P,
     value: -20
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Headbutt', cost: [C, C], damage: 20, text: '' }

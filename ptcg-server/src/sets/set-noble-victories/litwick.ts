@@ -17,7 +17,7 @@ export class Litwick extends PokemonCard {
       name: 'Searing Flame',
       cost: [C, C],
       damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Burned.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
     }
   ];
 

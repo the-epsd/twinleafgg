@@ -27,7 +27,7 @@ export class Tympole extends PokemonCard {
   public fullName: string = 'Tympole DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Spiral Drain - heal 20 damage from this Pokemon
+    // Spiral Drain - heal 20 damage from this Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 20);
     }

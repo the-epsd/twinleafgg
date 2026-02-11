@@ -18,7 +18,7 @@ export class Vaporeon extends PokemonCard {
       name: 'Muddy Water',
       cost: [C],
       damage: 20,
-      text: 'Does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: 'Does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Spiral Drain',

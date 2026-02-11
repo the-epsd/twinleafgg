@@ -20,13 +20,13 @@ export class Chandelure extends PokemonCard {
       name: 'Flame Burst',
       cost: [R],
       damage: 30,
-      text: 'Does 30 damage to 2 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 30 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Inferno',
       cost: [R, C],
       damage: 80,
-      text: 'Discard all Energy attached to this Pokemon. The Defending Pokemon is now Burned.'
+      text: 'Discard all Energy attached to this Pokémon. The Defending Pokémon is now Burned.'
     }
   ];
 
@@ -42,7 +42,7 @@ export class Chandelure extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Get benched Pokemon
+      // Get benched Pokémon
       const benchedPokemon = opponent.bench.filter(b => b.cards.length > 0);
 
       if (benchedPokemon.length === 0) {

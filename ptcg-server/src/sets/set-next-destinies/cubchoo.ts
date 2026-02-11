@@ -17,7 +17,7 @@ export class Cubchoo extends PokemonCard {
       name: 'Sniffle',
       cost: [W],
       damage: 0,
-      text: 'During your next turn, this Pokemon\'s Belt attack\'s base damage is 40.'
+      text: 'During your next turn, this Pokémon\'s Belt attack\'s base damage is 40.'
     },
     {
       name: 'Belt',

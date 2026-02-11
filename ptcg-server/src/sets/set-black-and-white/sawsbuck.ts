@@ -40,7 +40,7 @@ export class Sawsbuck extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Count all Grass Energy attached to all of your Pokemon
+      // Count all Grass Energy attached to all of your Pokémon
       let grassEnergyCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.cards.forEach(card => {

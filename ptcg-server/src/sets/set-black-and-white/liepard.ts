@@ -14,13 +14,13 @@ function* useAssist(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  // Check if there are benched Pokemon
+  // Check if there are benched Pokémon
   const hasBenchedPokemon = player.bench.some(b => b.cards.length > 0);
   if (!hasBenchedPokemon) {
     return state;
   }
 
-  // Choose a benched Pokemon
+  // Choose a benched Pokémon
   let targets: any[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
@@ -44,7 +44,7 @@ function* useAssist(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  // Choose an attack from the benched Pokemon
+  // Choose an attack from the benched Pokémon
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
@@ -101,7 +101,7 @@ export class Liepard extends PokemonCard {
       cost: [D],
       damage: 0,
       copycatAttack: true,
-      text: 'Choose 1 of your Benched Pokemon\'s attacks and use it as this attack.'
+      text: 'Choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
     },
     {
       name: 'Fury Swipes',

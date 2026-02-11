@@ -22,7 +22,7 @@ export class Heatmor extends PokemonCard {
       name: 'Incinerate',
       cost: [R, C],
       damage: 30,
-      text: 'Before doing damage, discard a Pokemon Tool card attached to the Defending Pokemon.'
+      text: 'Before doing damage, discard a Pokémon Tool card attached to the Defending Pokémon.'
     }
   ];
 

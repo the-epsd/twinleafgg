@@ -26,7 +26,7 @@ export class Virizion extends PokemonCard {
       cost: [G, G, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'During your next turn, this Pokemon\'s Leaf Wallop attack does 40 more damage (before applying Weakness and Resistance).'
+      text: 'During your next turn, this Pokémon\'s Leaf Wallop attack does 40 more damage (before applying Weakness and Resistance).'
     }
   ];
 
@@ -71,7 +71,7 @@ export class Virizion extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Remove marker from opponent's Pokemon (this card)
+      // Remove marker from opponent's Pokémon (this card)
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           REMOVE_MARKER(this.LEAF_WALLOP_MARKER, cardList, this);

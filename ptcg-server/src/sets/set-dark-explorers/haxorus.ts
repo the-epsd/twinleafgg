@@ -43,7 +43,7 @@ export class Haxorus extends PokemonCard {
         const heads = results.filter(r => r).length;
 
         if (heads === 2) {
-          // Both heads - Paralyze the defending Pokemon
+          // Both heads - Paralyze the defending Pokémon
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         } else if (heads === 0) {
           // Both tails - attack does nothing

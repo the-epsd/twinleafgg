@@ -20,14 +20,14 @@ export class Bisharp2 extends PokemonCard {
       name: 'Night Slash',
       cost: [D, C],
       damage: 30,
-      text: 'You may switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
     },
     {
       name: 'Metal Claw',
       cost: [D, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If this Pokemon has any damage counters on it, this attack does 50 more damage. Then, switch the Defending Pokemon with 1 of your opponent\'s Benched Pokemon.'
+      text: 'If this Pokémon has any damage counters on it, this attack does 50 more damage. Then, switch the Defending Pokémon with 1 of your opponent\'s Benched Pokémon.'
     }
   ];
 

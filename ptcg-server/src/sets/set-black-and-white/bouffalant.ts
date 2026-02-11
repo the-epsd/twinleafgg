@@ -17,7 +17,7 @@ export class Bouffalant extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'If any of your Pokemon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 70 more damage.'
+      text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 70 more damage.'
     },
     {
       name: 'Head Charge',

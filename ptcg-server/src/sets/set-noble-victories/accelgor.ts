@@ -20,13 +20,13 @@ export class Accelgor extends PokemonCard {
       name: 'Acid Spray',
       cost: [G],
       damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
+      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
     },
     {
       name: 'Deck and Cover',
       cost: [C, C],
       damage: 50,
-      text: 'The Defending Pokemon is now Paralyzed and Poisoned. Shuffle this Pokemon and all cards attached to it into your deck.'
+      text: 'The Defending Pokémon is now Paralyzed and Poisoned. Shuffle this Pokémon and all cards attached to it into your deck.'
     }
   ];
 
@@ -79,7 +79,7 @@ export class Accelgor extends PokemonCard {
       store.reduceEffect(state, addSpecialCondition);
     }
 
-    // Shuffle this Pokemon and all attached cards into deck (after attack)
+    // Shuffle this Pokémon and all attached cards into deck (after attack)
     if (AFTER_ATTACK(effect, 1, this)) {
       return SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
     }

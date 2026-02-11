@@ -22,14 +22,14 @@ export class Shiftry extends PokemonCard {
   public powers = [{
     name: 'Giant Fan',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokemon from your hand to evolve 1 of your Pokemon, you may flip a coin. If heads, choose 1 of your opponent\'s Pokemon. Your opponent shuffles that Pokemon and all cards attached to it into his or her deck.'
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may flip a coin. If heads, choose 1 of your opponent\'s Pokémon. Your opponent shuffles that Pokémon and all cards attached to it into his or her deck.'
   }];
 
   public attacks = [{
     name: 'Whirlwind',
     cost: [D, D, C],
     damage: 60,
-    text: 'Your opponent switches the Defending Pokemon with 1 of his or her Benched Pokemon.'
+    text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
   }];
 
   public set: string = 'NXD';
@@ -41,7 +41,7 @@ export class Shiftry extends PokemonCard {
   public usedWhirlwind: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Giant Fan - when evolved, may shuffle opponent's Pokemon into deck
+    // Giant Fan - when evolved, may shuffle opponent's Pokémon into deck
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
@@ -61,7 +61,7 @@ export class Shiftry extends PokemonCard {
             if (result) {
               const opponent = StateUtils.getOpponent(state, player);
 
-              // Choose any of opponent's Pokemon
+              // Choose any of opponent's Pokémon
               store.prompt(state, new ChoosePokemonPrompt(
                 player.id,
                 GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
@@ -72,7 +72,7 @@ export class Shiftry extends PokemonCard {
                 if (targets && targets.length > 0) {
                   const targetPokemon = targets[0];
 
-                  // Shuffle all cards (Pokemon + attached cards) into deck
+                  // Shuffle all cards (Pokémon + attached cards) into deck
                   const cardsToShuffle = targetPokemon.cards.slice();
                   targetPokemon.clearEffects();
                   targetPokemon.cards = [];

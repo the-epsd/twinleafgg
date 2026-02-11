@@ -18,7 +18,7 @@ export class Klink extends PokemonCard {
       name: 'Charge Beam',
       cost: [M],
       damage: 10,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokemon.'
+      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
     },
     {
       name: 'Bind',

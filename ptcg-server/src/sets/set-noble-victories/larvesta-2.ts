@@ -17,7 +17,7 @@ export class Larvesta2 extends PokemonCard {
       name: 'Ember',
       cost: [R],
       damage: 20,
-      text: 'Flip a coin. If tails, discard an Energy attached to this Pokemon.'
+      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
     }
   ];
 

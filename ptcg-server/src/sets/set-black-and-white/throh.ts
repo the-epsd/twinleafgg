@@ -17,7 +17,7 @@ export class Throh extends PokemonCard {
       name: 'Circle Throw',
       cost: [F, C, C],
       damage: 60,
-      text: 'Your opponent switches the Defending Pokemon with 1 of his or her Benched Pokemon.'
+      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
     }
   ];
 
@@ -35,7 +35,7 @@ export class Throh extends PokemonCard {
       this.usedCircleThrow = true;
     }
 
-    // Switch opponent's Pokemon after damage
+    // Switch opponent's Pokémon after damage
     if (effect instanceof AfterAttackEffect && this.usedCircleThrow) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       this.usedCircleThrow = false;

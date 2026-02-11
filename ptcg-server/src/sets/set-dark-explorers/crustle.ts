@@ -50,7 +50,7 @@ export class Crustle extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check if opponent has benched Pokemon
+      // Check if opponent has benched Pokémon
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
 
       if (hasBenched) {

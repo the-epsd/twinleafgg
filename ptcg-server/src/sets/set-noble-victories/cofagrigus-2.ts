@@ -18,14 +18,14 @@ export class Cofagrigus2 extends PokemonCard {
     name: 'Chuck into the Chest',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may choose a Pokemon from your Bench (excluding any Cofagrigus) and put it on top of your face-down Prize cards. If you do, put 1 of your face-down Prize cards onto your Bench. (You can\'t use this Ability if your Bench is full.) This ends your turn.'
+    text: 'Once during your turn (before your attack), you may choose a Pokémon from your Bench (excluding any Cofagrigus) and put it on top of your face-down Prize cards. If you do, put 1 of your face-down Prize cards onto your Bench. (You can\'t use this Ability if your Bench is full.) This ends your turn.'
   }];
 
   public attacks = [{
     name: 'Hex',
     cost: [P, C],
     damage: 0,
-    text: 'Put 4 damage counters on the Defending Pokemon.'
+    text: 'Put 4 damage counters on the Defending Pokémon.'
   }];
 
   public set: string = 'NVI';
@@ -49,7 +49,7 @@ export class Cofagrigus2 extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Check for eligible benched Pokemon (not Cofagrigus)
+      // Check for eligible benched Pokémon (not Cofagrigus)
       const eligibleBench = player.bench.filter(b =>
         b.cards.length > 0 &&
         b.getPokemonCard()?.name !== 'Cofagrigus'
@@ -65,7 +65,7 @@ export class Cofagrigus2 extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Choose a benched Pokemon
+      // Choose a benched Pokémon
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON,
@@ -84,7 +84,7 @@ export class Cofagrigus2 extends PokemonCard {
           return;
         }
 
-        // Move bench Pokemon to prizes (on top)
+        // Move bench Pokémon to prizes (on top)
         const cardsToMove = benchSlot.cards.slice();
 
         // Find an empty prize slot or use the first one
@@ -116,7 +116,7 @@ export class Cofagrigus2 extends PokemonCard {
             chosenPrize.moveCardTo(prizeCard, emptyBench);
             emptyBench.pokemonPlayedTurn = state.turn;
           } else {
-            // If it's not a Pokemon, put it in hand instead
+            // If it's not a Pokémon, put it in hand instead
             chosenPrize.moveTo(player.hand);
           }
         }

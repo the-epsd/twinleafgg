@@ -19,14 +19,14 @@ export class Vanilluxe extends PokemonCard {
     name: 'Slippery Soles',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may switch your Active Pokemon with 1 of your Benched Pokemon. If you do, your opponent switches his or her Active Pokemon with 1 of his or her Benched Pokemon.'
+    text: 'Once during your turn (before your attack), you may switch your Active Pokémon with 1 of your Benched Pokémon. If you do, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
   }];
 
   public attacks = [{
     name: 'Crushing Ice',
     cost: [W, C, C],
     damage: 60,
-    text: 'Does 10 more damage for each Colorless in the Defending Pokemon\'s Retreat Cost.'
+    text: 'Does 10 more damage for each Colorless in the Defending Pokémon\'s Retreat Cost.'
   }];
 
   public set: string = 'NXD';
@@ -51,13 +51,13 @@ export class Vanilluxe extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      // Check if player has benched Pokemon
+      // Check if player has benched Pokémon
       const playerHasBench = player.bench.some(b => b.cards.length > 0);
       if (!playerHasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Check if opponent has benched Pokemon
+      // Check if opponent has benched Pokémon
       const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
       if (!opponentHasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

@@ -20,7 +20,7 @@ export class Umbreon extends PokemonCard {
       name: 'Shadow Drain',
       cost: [C, C],
       damage: 30,
-      text: 'Heal from this Pokemon the same amount of damage you did to the Defending Pokémon.'
+      text: 'Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
     },
     {
       name: 'Slashing Strike',

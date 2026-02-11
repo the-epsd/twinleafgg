@@ -10,10 +10,10 @@ export class Patrat extends PokemonCard {
   public hp: number = 50;
 
   public weakness = [{
-    type: CardType.FIGHTING
+    type: F
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Tackle', cost: [C], damage: 10, text: '' },

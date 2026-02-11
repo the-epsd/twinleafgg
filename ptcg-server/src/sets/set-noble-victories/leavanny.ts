@@ -17,7 +17,7 @@ export class Leavanny extends PokemonCard {
   public powers = [{
     name: 'Leaf Tailor',
     powerType: PowerType.ABILITY,
-    text: 'Each of your Pokemon that has any Energy attached to it has no Weakness.'
+    text: 'Each of your Pokémon that has any Energy attached to it has no Weakness.'
   }];
 
   public attacks = [{
@@ -35,7 +35,7 @@ export class Leavanny extends PokemonCard {
   public fullName: string = 'Leavanny NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Leaf Tailor - remove weakness from Pokemon with energy attached
+    // Leaf Tailor - remove weakness from Pokémon with energy attached
     if (effect instanceof CheckPokemonStatsEffect) {
       // Find who owns this Leavanny and if it's in play
       let leavannyOwner: any = null;

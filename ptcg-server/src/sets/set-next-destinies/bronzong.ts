@@ -18,7 +18,7 @@ export class Bronzong extends PokemonCard {
   public powers = [{
     name: 'Heal Block',
     powerType: PowerType.ABILITY,
-    text: 'Damage can\'t be healed from any Pokemon (both yours and your opponent\'s). (Damage counters can still be moved.)'
+    text: 'Damage can\'t be healed from any Pokémon (both yours and your opponent\'s). (Damage counters can still be moved.)'
   }];
 
   public attacks = [{

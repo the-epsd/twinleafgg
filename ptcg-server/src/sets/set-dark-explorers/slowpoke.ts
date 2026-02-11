@@ -18,7 +18,7 @@ export class Slowpoke extends PokemonCard {
       name: 'Big Yawn',
       cost: [C],
       damage: 0,
-      text: 'Both this Pokemon and the Defending Pokémon are now Asleep.'
+      text: 'Both this Pokémon and the Defending Pokémon are now Asleep.'
     },
     {
       name: 'Shot in the Dark',
@@ -35,12 +35,12 @@ export class Slowpoke extends PokemonCard {
   public fullName: string = 'Slowpoke DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Big Yawn - both Pokemon fall asleep
+    // Big Yawn - both Pokémon fall asleep
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Put both this Pokemon and the Defending Pokemon to sleep
+      // Put both this Pokémon and the Defending Pokémon to sleep
       const selfAsleep = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       selfAsleep.target = player.active;
       store.reduceEffect(state, selfAsleep);

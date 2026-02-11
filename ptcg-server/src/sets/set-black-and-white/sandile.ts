@@ -18,7 +18,7 @@ export class Sandile extends PokemonCard {
       name: 'Sand-Attack',
       cost: [F],
       damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokemon\'s attacks do nothing during your opponent\'s next turn.'
+      text: 'Flip a coin. If heads, the Defending Pokémon\'s attacks do nothing during your opponent\'s next turn.'
     },
     {
       name: 'Bite',

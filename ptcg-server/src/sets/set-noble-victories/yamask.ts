@@ -17,7 +17,7 @@ export class Yamask extends PokemonCard {
       name: 'Perplex',
       cost: [P],
       damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Confused.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
     }
   ];
 

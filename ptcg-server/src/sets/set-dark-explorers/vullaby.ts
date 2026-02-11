@@ -18,7 +18,7 @@ export class Vullaby extends PokemonCard {
       name: 'Whirlwind',
       cost: [D],
       damage: 10,
-      text: 'Your opponent switches the Defending Pokemon with 1 of his or her Benched Pokémon.'
+      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
     }
   ];
 

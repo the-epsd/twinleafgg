@@ -58,7 +58,7 @@ export class Venusaur extends PokemonCard {
   public readonly FLORAL_FRAGRANCE_MARKER = 'FLORAL_FRAGRANCE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Reset marker when Pokemon is played
+    // Reset marker when Pokémon is played
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.FLORAL_FRAGRANCE_MARKER, this);

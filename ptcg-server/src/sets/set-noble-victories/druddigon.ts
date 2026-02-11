@@ -16,14 +16,14 @@ export class Druddigon extends PokemonCard {
   public powers = [{
     name: 'Rough Skin',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokemon is your Active Pokemon and is damaged by an opponent\'s attack (even if this Pokemon is Knocked Out), put 2 damage counters on the Attacking Pokemon.'
+    text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon.'
   }];
 
   public attacks = [{
     name: 'Clutch',
     cost: [C, C, C],
     damage: 60,
-    text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
   }];
 
   public set: string = 'NVI';
@@ -38,7 +38,7 @@ export class Druddigon extends PokemonCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      // Only works if this is the active Pokemon and was damaged by opponent
+      // Only works if this is the active Pokémon and was damaged by opponent
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }

@@ -40,7 +40,7 @@ export class Conkeldurr2 extends PokemonCard {
   public readonly TOP_DOWN_MARKER = 'TOP_DOWN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Reset marker when Pokemon is played
+    // Reset marker when Pokémon is played
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       effect.player.marker.removeMarker(this.TOP_DOWN_MARKER, this);
     }

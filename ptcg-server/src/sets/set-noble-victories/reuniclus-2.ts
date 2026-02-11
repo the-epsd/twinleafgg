@@ -24,7 +24,7 @@ export class Reuniclus2 extends PokemonCard {
       name: 'Mind Bend',
       cost: [P, C, C],
       damage: 60,
-      text: 'The Defending Pokemon is now Confused.'
+      text: 'The Defending Pokémon is now Confused.'
     }
   ];
 

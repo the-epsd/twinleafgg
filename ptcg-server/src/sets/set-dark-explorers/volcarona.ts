@@ -28,7 +28,7 @@ export class Volcarona extends PokemonCard {
       name: 'Burning Wind',
       cost: [R, C, C],
       damage: 70,
-      text: 'You may discard an Energy attached to this Pokemon. If you do, the Defending Pokémon is now Burned.'
+      text: 'You may discard an Energy attached to this Pokémon. If you do, the Defending Pokémon is now Burned.'
     }
   ];
 

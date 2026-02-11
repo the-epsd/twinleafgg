@@ -19,7 +19,7 @@ export class Gurdurr2 extends PokemonCard {
       name: 'Focus Energy',
       cost: [C],
       damage: 0,
-      text: 'During your next turn, each of this Pokemon\'s attacks does 40 more damage (before applying Weakness and Resistance).'
+      text: 'During your next turn, each of this Pokémon\'s attacks does 40 more damage (before applying Weakness and Resistance).'
     },
     {
       name: 'Low Sweep',

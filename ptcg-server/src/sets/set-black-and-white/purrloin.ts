@@ -10,15 +10,15 @@ export class Purrloin extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.FIGHTING
+    type: F
   }];
 
   public resistance = [{
-    type: CardType.PSYCHIC,
+    type: P,
     value: -20
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Scratch', cost: [C], damage: 10, text: '' },

@@ -49,7 +49,7 @@ export class Umbreon2 extends PokemonCard {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         const allHeads = results.every(r => r);
         if (allHeads) {
-          // Discard all energy from defending Pokemon
+          // Discard all energy from defending Pokémon
           const energyCards = opponent.active.cards.filter(c =>
             c.superType === SuperType.ENERGY
           );

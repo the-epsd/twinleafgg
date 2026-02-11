@@ -33,7 +33,7 @@ export class Aerodactyl extends PokemonCard {
   public fullName: string = 'Aerodactyl DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ancient Scream - boost damage to Active Pokemon
+    // Ancient Scream - boost damage to Active Pokémon
     if (effect instanceof DealDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -63,7 +63,7 @@ export class Aerodactyl extends PokemonCard {
         return state;
       }
 
-      // Only boost damage to opponent's Active Pokemon
+      // Only boost damage to opponent's Active Pokémon
       if (effect.target !== opponent.active) {
         return state;
       }

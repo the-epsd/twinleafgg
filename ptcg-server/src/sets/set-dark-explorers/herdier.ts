@@ -42,7 +42,7 @@ export class Herdier extends PokemonCard {
       this.usedRoar = true;
     }
 
-    // Switch opponent's Pokemon after attack
+    // Switch opponent's Pokémon after attack
     if (effect instanceof AfterAttackEffect && this.usedRoar) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       this.usedRoar = false;

@@ -10,15 +10,15 @@ export class Ducklett extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.LIGHTNING
+    type: L
   }];
 
   public resistance = [{
-    type: CardType.FIGHTING,
+    type: F,
     value: -20
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Water Gun', cost: [W], damage: 10, text: '' }

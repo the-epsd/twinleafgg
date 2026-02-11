@@ -39,7 +39,7 @@ export class Blissey extends PokemonCard {
   public readonly SOFTBOILED_MARKER = 'SOFTBOILED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Clear marker when Pokemon enters play
+    // Clear marker when Pokémon enters play
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.SOFTBOILED_MARKER, this);
@@ -65,7 +65,7 @@ export class Blissey extends PokemonCard {
       // Flip a coin
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          // Heal 30 damage from Active Pokemon
+          // Heal 30 damage from Active Pokémon
           const healEffect = new HealEffect(player, player.active, 30);
           store.reduceEffect(state, healEffect);
         }

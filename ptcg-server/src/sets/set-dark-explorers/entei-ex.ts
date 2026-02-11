@@ -41,7 +41,7 @@ export class EnteiEx extends PokemonCard {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
     }
 
-    // Grand Flame - attach Fire Energy from discard to a benched Pokemon
+    // Grand Flame - attach Fire Energy from discard to a benched Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -50,7 +50,7 @@ export class EnteiEx extends PokemonCard {
         return c instanceof EnergyCard && c.name === 'Fire Energy';
       });
 
-      // Check if there are any benched Pokemon
+      // Check if there are any benched Pokémon
       const hasBenchedPokemon = player.bench.some(b => b.cards.length > 0);
 
       if (!hasFireEnergyInDiscard || !hasBenchedPokemon) {

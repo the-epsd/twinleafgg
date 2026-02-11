@@ -17,7 +17,7 @@ export class Joltik extends PokemonCard {
       name: 'Thunder Wave',
       cost: [L],
       damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }
   ];
 

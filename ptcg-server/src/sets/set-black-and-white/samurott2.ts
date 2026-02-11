@@ -18,7 +18,7 @@ export class Samurott2 extends PokemonCard {
   public powers = [{
     name: 'Shell Armor',
     powerType: PowerType.ABILITY,
-    text: 'Any damage done to this Pokemon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+    text: 'Any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
   }];
 
   public attacks = [{
@@ -26,7 +26,7 @@ export class Samurott2 extends PokemonCard {
     cost: [C, C, C],
     damage: 70,
     damageCalculation: '+',
-    text: 'Does 10 more damage for each [W] Energy attached to this Pokemon.'
+    text: 'Does 10 more damage for each [W] Energy attached to this Pokémon.'
   }];
 
   public set: string = 'BLW';

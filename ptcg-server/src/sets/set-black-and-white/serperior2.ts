@@ -20,14 +20,14 @@ export class Serperior2 extends PokemonCard {
   public powers = [{
     name: 'Royal Heal',
     powerType: PowerType.ABILITY,
-    text: 'At any time between turns, heal 10 damage from each of your Pokemon.'
+    text: 'At any time between turns, heal 10 damage from each of your Pokémon.'
   }];
 
   public attacks = [{
     name: 'Leaf Tornado',
     cost: [G, C],
     damage: 60,
-    text: 'Move as many [G] Energy attached to your Pokemon to your other Pokemon in any way you like.'
+    text: 'Move as many [G] Energy attached to your Pokémon to your other Pokémon in any way you like.'
   }];
 
   public set: string = 'BLW';
@@ -52,7 +52,7 @@ export class Serperior2 extends PokemonCard {
       });
 
       if (hasSerperior) {
-        // Heal 10 from each of this player's Pokemon
+        // Heal 10 from each of this player's Pokémon
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.damage > 0) {
             cardList.damage = Math.max(0, cardList.damage - 10);

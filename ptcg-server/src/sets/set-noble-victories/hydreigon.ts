@@ -20,14 +20,14 @@ export class Hydreigon extends PokemonCard {
   public powers = [{
     name: 'Dark Aura',
     powerType: PowerType.ABILITY,
-    text: 'Each basic Energy attached to your Pokemon provides [D] Energy instead of its usual type.'
+    text: 'Each basic Energy attached to your Pokémon provides [D] Energy instead of its usual type.'
   }];
 
   public attacks = [{
     name: 'Berserker Blade',
     cost: [D, D, C, C],
     damage: 60,
-    text: 'Does 40 damage to 2 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'Does 40 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public set: string = 'NVI';
@@ -57,7 +57,7 @@ export class Hydreigon extends PokemonCard {
         return state;
       }
 
-      // Only affect player's own Pokemon
+      // Only affect player's own Pokémon
       let sourceOwner: any = null;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList === effect.source) {
@@ -77,7 +77,7 @@ export class Hydreigon extends PokemonCard {
       });
     }
 
-    // Berserker Blade - damage 2 benched Pokemon
+    // Berserker Blade - damage 2 benched Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -57,13 +57,13 @@ export class Stoutland extends PokemonCard {
       }
     }
 
-    // Ferocious Bellow - add marker to defending Pokemon for damage reduction
+    // Ferocious Bellow - add marker to defending Pokémon for damage reduction
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       ADD_MARKER(this.FEROCIOUS_BELLOW_MARKER, opponent.active, this);
     }
 
-    // Reduce damage from Pokemon with Ferocious Bellow marker
+    // Reduce damage from Pokémon with Ferocious Bellow marker
     if (effect instanceof DealDamageEffect) {
       const source = effect.source;
       if (HAS_MARKER(this.FEROCIOUS_BELLOW_MARKER, source, this)) {
@@ -74,7 +74,7 @@ export class Stoutland extends PokemonCard {
     // Remove marker at end of opponent's turn
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      // Remove marker from current player's Pokemon (it's now their turn ending)
+      // Remove marker from current player's Pokémon (it's now their turn ending)
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         REMOVE_MARKER(this.FEROCIOUS_BELLOW_MARKER, cardList, this);
       });

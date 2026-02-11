@@ -16,7 +16,7 @@ export class Elgyem extends PokemonCard {
     name: 'Psy Bolt',
     cost: [P],
     damage: 10,
-    text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
   }];
 
   public set: string = 'NXD';

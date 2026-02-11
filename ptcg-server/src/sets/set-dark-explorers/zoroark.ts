@@ -49,7 +49,7 @@ export class Zoroark extends PokemonCard {
   public setNumber: string = '71';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Brutal Bash - damage based on Dark Pokemon in play
+    // Brutal Bash - damage based on Dark Pokémon in play
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let darkPokemonCount = 0;
@@ -63,7 +63,7 @@ export class Zoroark extends PokemonCard {
       (effect as AttackEffect).damage = 20 * darkPokemonCount;
     }
 
-    // Dark Rush - damage based on damage counters on this Pokemon
+    // Dark Rush - damage based on damage counters on this Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // Damage counters = damage / 10

@@ -38,7 +38,7 @@ export class Swanna extends PokemonCard {
   public fullName: string = 'Swanna DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Healing Dance - heal 30 from each of your Pokemon
+    // Healing Dance - heal 30 from each of your Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

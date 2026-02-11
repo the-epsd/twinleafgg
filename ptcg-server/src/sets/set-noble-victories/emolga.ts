@@ -25,7 +25,7 @@ export class Emolga extends PokemonCard {
       name: 'Electrichain',
       cost: [L, C, C],
       damage: 40,
-      text: 'If the Defending Pokemon has any Energy attached to it, this attack does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'If the Defending Pokémon has any Energy attached to it, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -41,7 +41,7 @@ export class Emolga extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check if defending Pokemon has energy attached
+      // Check if defending Pokémon has energy attached
       const hasEnergy = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
 
       if (hasEnergy) {
