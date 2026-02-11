@@ -3,9 +3,11 @@ import { Card } from '../../game/store/card/card';
 import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Cleffa } from './cleffa';
+import { Croconaw } from './croconaw';
 import { Cyndaquil } from './cyndaquil';
 import { Donphan } from './donphan-prime';
 import { Drowzee } from './drowzee';
+import { Feraligatr } from './feraligatr';
 import { GrassEnergy } from './grass-energy';
 import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
@@ -24,6 +26,7 @@ import { Pichu } from './pichu';
 import { PokemonCollector } from './pokemon-collector';
 import { ProfessorOaksNewTheory } from './professor-oaks-new-theory';
 import { Quilava } from './quilava';
+import { Totodile } from './totodile';
 import { Typhlosion } from './typhlosion';
 import { Tyrogue } from './tyrogue';
 import { Unown } from './unown';
@@ -44,10 +47,12 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new Bayleef(),
   new Chikorita(),
   new Cleffa(),
+  new Croconaw(),
   new Cyndaquil(),
   new DarknessEnergy(),
   new Donphan(),
   new Drowzee(),
+  new Feraligatr(),
   new FightingEnergy(),
   new FireEnergy(),
   new GrassEnergy(),
@@ -64,6 +69,7 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new ProfessorOaksNewTheory(),
   new PsychicEnergy(),
   new Quilava(),
+  new Totodile(),
   new Typhlosion(),
   new Tyrogue(),
   new Unown(),

@@ -5,45 +5,43 @@ import {
   GameError, GameMessage, EnergyCard, PlayerType, SlotType
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
-export class Frosmoth extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Snom';
+export class Feraligatr extends PokemonCard {
+  public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Croconaw';
   public cardType: CardType = W;
-  public hp: number = 90;
-  public weakness = [{ type: M }];
-  public retreat = [C, C];
+  public hp: number = 140;
+  public weakness = [{ type: G }];
+  public retreat = [C, C, C];
 
   public powers = [{
-    name: 'Ice Dance',
+    name: 'Torrential Heart',
     useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a [W] Energy card from your hand to 1 of your Benched [W] Pokémon.'
+    powerType: PowerType.POKEPOWER,
+    text: 'As often as you like during your turn (before your attack), you may attach a [W] Energy card from your hand to 1 of your [W] Pokémon. This power can\'t be used if Feraligatr is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Aurora Beam',
-      cost: [W, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hydro Crunch',
+    cost: [W, W, W, W],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Does 60 damage plus 10 more damage for each damage counter on the Defending Pokémon.'
+  }];
 
-  public regulationMark = 'D';
-  public set: string = 'SSH';
-  public setNumber: string = '64';
+  public set: string = 'HS';
+  public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Frosmoth';
-  public fullName: string = 'Frosmoth SSH';
+  public name: string = 'Feraligatr';
+  public fullName: string = 'Feraligatr HS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -55,28 +53,27 @@ export class Frosmoth extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      let hasWaterPokemonOnBench = false;
+      let hasWaterPokemon = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList === player.active) {
-          return;
-        }
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(cardList);
         store.reduceEffect(state, checkPokemonTypeEffect);
         if (checkPokemonTypeEffect.cardTypes.includes(CardType.WATER)) {
-          hasWaterPokemonOnBench = true;
+          hasWaterPokemon = true;
         }
       });
 
-      if (!hasWaterPokemonOnBench) {
+      if (!hasWaterPokemon) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      BLOCK_IF_HAS_SPECIAL_CONDITION(effect.player, this);
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true }
       ), transfers => {
@@ -93,6 +90,12 @@ export class Frosmoth extends PokemonCard {
           store.reduceEffect(state, attachEnergyEffect);
         }
       });
+    }
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      effect.damage += opponent.active.damage;
     }
 
     return state;
