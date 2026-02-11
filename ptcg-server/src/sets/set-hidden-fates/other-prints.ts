@@ -433,7 +433,7 @@ export class TapuLeleGXHIF extends TapuLeleGX {
 }
 
 export class CharizardGXHIF extends CharizardGXBUS {
-  public setNumber = 'SV49'
-  public fullName: string = 'Charizard-GX HIF SV49'
-  public set = 'HIF'
+  public setNumber = 'SV49';
+  public fullName: string = 'Charizard-GX HIF SV49';
+  public set = 'HIF';
 }

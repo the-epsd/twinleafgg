@@ -140,21 +140,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class CynthiaAndCaitlin extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'CEC';
-
   public tags = [CardTag.TAG_TEAM];
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '189';
-
   public name: string = 'Cynthia & Caitlin';
-
   public fullName: string = 'Cynthia & Caitlin CEC';
 
   public text: string =
-    `Put a Supporter card from your discard pile into your hand. You can\'t choose Cynthia & Caitlin or a card you discarded with the effect of this card.
+    `Put a Supporter card from your discard pile into your hand. You can't choose Cynthia & Caitlin or a card you discarded with the effect of this card.
 
 When you play this card, you may discard another card from your hand. If you do, draw 3 cards.`;
 

@@ -371,7 +371,7 @@ export class ReconnectionErrorRecovery {
         }
         break;
 
-      case 'minimal_state':
+      case 'minimal_state': {
         const minimalState = this.createMinimalState(context.gameId, context.userId);
         if (minimalState) {
           return {
@@ -383,6 +383,7 @@ export class ReconnectionErrorRecovery {
           };
         }
         break;
+      }
 
       case 'state_reset':
         // This would require game-specific logic to reset to a safe state

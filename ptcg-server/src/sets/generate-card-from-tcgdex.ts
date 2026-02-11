@@ -1,3 +1,4 @@
+// eslint-disable no-use-before-define
 // @ts-nocheck
 // Run this script with: npx ts-node ptcg-server/src/sets/generate-card-from-tcgdex.ts <card-id>
 if (typeof fetch === 'undefined') {

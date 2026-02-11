@@ -89,7 +89,7 @@ export class ErikasBellsprout extends PokemonCard {
 
     // Stretch Vine
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(10, effect, store, state, 1, 1)
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(10, effect, store, state, 1, 1);
     }
 
     return state;

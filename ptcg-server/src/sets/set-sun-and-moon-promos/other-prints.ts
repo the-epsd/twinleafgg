@@ -470,7 +470,7 @@ export class SolgaleoGX3SMP extends SolgaleoGXSMP104 {
 }
 
 export class CharizardGXSMP60 extends CharizardGX {
-  public setNumber = '60'
-  public fullName: string = 'Charizard-GX SMP 60'
-  public set = 'SMP'
+  public setNumber = '60';
+  public fullName: string = 'Charizard-GX SMP 60';
+  public set = 'SMP';
 }

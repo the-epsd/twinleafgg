@@ -1245,7 +1245,7 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
           return false;
         }
         break;
-      case TrainerType.STADIUM:
+      case TrainerType.STADIUM: {
         // Can't play stadium if one already played this turn
         if (player.stadiumPlayedTurn === state.turn) {
           return false;
@@ -1256,7 +1256,8 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
           return false;
         }
         break;
-      case TrainerType.TOOL:
+      }
+      case TrainerType.TOOL: {
         // Check if there are Pokemon that can accept a tool
         let canAttachTool = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
@@ -1268,6 +1269,7 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
           return false;
         }
         break;
+      }
       // Items have no basic restrictions beyond being in player's turn
     }
 

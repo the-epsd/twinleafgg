@@ -26,7 +26,7 @@ export class AntiquePlumeFossil extends TrainerCard {
 
   public powers: Power[] = [{
     name: 'Antique Plume Fossil',
-    text: `Play this card as if it were a 60-HP [C] Basic Pokémon. This card can't be affected by any Special Conditions and can'\' retreat.
+    text: `Play this card as if it were a 60-HP [C] Basic Pokémon. This card can't be affected by any Special Conditions and can't retreat.
 
 At any time during your turn, you may discard this card from play.`,
     useWhenInPlay: true,

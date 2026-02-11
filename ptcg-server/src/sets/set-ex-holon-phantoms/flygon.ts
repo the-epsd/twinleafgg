@@ -59,8 +59,7 @@ export class Flygon extends PokemonCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((card, index) => {
-        if (card instanceof EnergyCard && (card.energyType === EnergyType.BASIC || card.name === 'Delta Rainbow Energy')) {
-        } else {
+        if (!(card instanceof EnergyCard && (card.energyType === EnergyType.BASIC || card.name === 'Delta Rainbow Energy'))) {
           blocked.push(index);
         }
       });

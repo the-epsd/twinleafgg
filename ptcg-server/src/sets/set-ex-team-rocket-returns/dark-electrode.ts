@@ -79,8 +79,7 @@ export class DarkElectrode extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (card instanceof EnergyCard && (card.name === 'Darkness Energy' || card.name === 'Dark Metal Energy')) {
-        } else {
+        if (!(card instanceof EnergyCard && (card.name === 'Darkness Energy' || card.name === 'Dark Metal Energy'))) {
           blocked.push(index);
         }
       });
