@@ -13,7 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType, ApiErrorEnum } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 import { SleeveService } from 'src/app/api/services/sleeve.service';
 import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
@@ -84,9 +84,17 @@ export class DeckEditComponent implements OnInit {
         this.selectedSleeveIdentifier = response.deck.sleeveIdentifier || undefined;
         // Detect theme deck
         this.isThemeDeck = Array.isArray(this.deck.format) && this.deck.format.includes(Format['THEME']);
+
+        // If navigated with clipboard text in state (Create from Clipboard flow), import and save
+        const clipboardText = history.state?.importFromClipboard as string | undefined;
+        if (clipboardText) {
+          this.importFromClipboardText(clipboardText);
+          this.saveDeck();
+          history.replaceState({}, '', window.location.href);
+        }
       }, async () => {
         await this.alertService.confirm(this.translate.instant('DECK_EDIT_LOADING_ERROR'));
-        this.router.navigate(['/decks']);
+        this.router.navigate(['/deck']);
       });
   }
 
@@ -427,28 +435,48 @@ export class DeckEditComponent implements OnInit {
     return -1;
   }
 
-  importFromClipboard() {
-    navigator.clipboard.readText()
-      .then(text => {
-        // Expect lines like: '4 Pikachu BSS 58'
-        const cardDetails = text.split('\n')
-          .filter(line => !!line)
-          .flatMap(line => {
-            const parts = line.trim().split(/\s+/);
-            if (parts.length < 4) {
-              return [];
-            }
-            const count = parseInt(parts[0], 10);
-            if (isNaN(count)) {
-              return [];
-            }
-            const setNumber = parts.pop();
-            const set = parts.pop();
-            const name = parts.slice(1).join(' ');
-            return new Array(count).fill({ name, set, setNumber });
-          });
-        this.importDeck(cardDetails);
+  private parseClipboardLines(text: string): { name: string, set: string, setNumber: string }[] {
+    return text.split('\n')
+      .filter(line => !!line)
+      .flatMap(line => {
+        const parts = line.trim().split(/\s+/);
+        if (parts.length < 4) {
+          return [];
+        }
+        const count = parseInt(parts[0], 10);
+        if (isNaN(count)) {
+          return [];
+        }
+        const setNumber = parts.pop();
+        const set = parts.pop();
+        const name = parts.slice(1).join(' ');
+        return new Array(count).fill({ name, set, setNumber });
       });
+  }
+
+  importFromClipboard(): Promise<void> {
+    return navigator.clipboard.readText()
+      .then(text => {
+        this.importFromClipboardText(text);
+      });
+  }
+
+  importFromClipboardText(text: string): void {
+    const cardDetails = this.parseClipboardLines(text);
+    this.importDeck(cardDetails);
+  }
+
+  private getSaveErrorMessage(error: ApiError): string {
+    switch (error.code) {
+      case ApiErrorEnum.DECK_INVALID:
+        return this.translate.instant('ERROR_DECK_INVALID');
+      case ApiErrorEnum.NAME_DUPLICATE:
+        return this.translate.instant('ERROR_DECK_NAME_DUPLICATE');
+      case ApiErrorEnum.VALIDATION_INVALID_PARAM:
+        return this.translate.instant('ERROR_DECK_SAVE_CARDS_INVALID');
+      default:
+        return this.translate.instant('ERROR_UNKNOWN');
+    }
   }
 
   public importDeck(cardDetails: { name: string, set: string, setNumber: string }[]) {
@@ -559,7 +587,9 @@ export class DeckEditComponent implements OnInit {
       this.alertService.toast(this.translate.instant('DECK_EDIT_SAVED'));
     }, (error: ApiError) => {
       if (!error.handled) {
-        this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
+        console.error('[Deck] saveDeck failed', error);
+        const message = this.getSaveErrorMessage(error);
+        this.alertService.toast(message);
       }
     });
   }

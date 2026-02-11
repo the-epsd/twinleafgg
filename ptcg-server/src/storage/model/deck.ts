@@ -30,6 +30,9 @@ export class Deck extends BaseEntity {
   @Column()
   public manualArchetype2: string = '';
 
+  @Column({ type: 'text', nullable: true })
+  public formats?: string;
+
   @Column({ nullable: true })
   public sleeveIdentifier?: string;
 

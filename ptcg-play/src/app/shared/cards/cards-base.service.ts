@@ -21,6 +21,7 @@ export class CardsBaseService implements OnDestroy {
 
   private cards: Card[] = [];
   private names: string[] = [];
+  private cardIndex = new Map<string, Card>();
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
   private nightlyImages: { [key: string]: string } = {};
@@ -54,6 +55,7 @@ export class CardsBaseService implements OnDestroy {
   public loadCardsInfo(cardsInfo: CardsInfo) {
     this.cardManager.loadCardsInfo(cardsInfo);
     this.cards = this.cardManager.getAllCards().slice();
+    this.rebuildCardIndex();
     this.names = this.cards.map(c => c.fullName);
     this.cards.sort(this.compareCards);
     StateSerializer.setKnownCards(this.cards);
@@ -61,9 +63,21 @@ export class CardsBaseService implements OnDestroy {
 
   public setCards(cards: Card[]) {
     this.cards = cards;
+    this.rebuildCardIndex();
     this.names = this.cards.map(c => c.fullName);
     this.cards.sort(this.compareCards);
     StateSerializer.setKnownCards(this.cards);
+  }
+
+  private rebuildCardIndex(): void {
+    this.cardIndex.clear();
+    for (const card of this.cards) {
+      this.cardIndex.set(card.fullName, card);
+      const p = card as any;
+      if (p.legacyFullName) {
+        this.cardIndex.set(p.legacyFullName, card);
+      }
+    }
   }
 
   private compareCards(c1: Card, c2: Card) {
@@ -503,7 +517,7 @@ export class CardsBaseService implements OnDestroy {
 
 
   public getCardByName(cardName: string): Card | undefined {
-    return this.cards.find(c => c.fullName === cardName);
+    return this.cardIndex.get(cardName);
   }
 
   public getCardByNameSetNumber(name: string, set: string, setNumber: string): Card | undefined {

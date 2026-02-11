@@ -17,30 +17,59 @@ export class Decks extends Controller {
   @AuthToken()
   public async onList(req: Request, res: Response) {
     const userId: number = req.body.userId;
-    const user = await User.findOne(userId, { relations: ['decks'] });
+    const user = await User.findOne(userId);
 
     if (user === undefined) {
       res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
+    const summary = req.query.summary === 'true';
+    const limit = Math.min(Math.max(parseInt(String(req.query.limit || '1000'), 10) || 1000, 1), 500);
+    const offset = Math.max(parseInt(String(req.query.offset || '0'), 10) || 0, 0);
+
+    const [userDecks, total] = await Deck.findAndCount({
+      where: { user: { id: userId } },
+      order: { id: 'DESC' },
+      take: limit,
+      skip: offset
+    });
+
     const sleeves = await Sleeve.find();
     const sleeveMap = new Map(sleeves.map(sleeve => [sleeve.identifier, sleeve.imagePath]));
-    const decks = user.decks.map(deck => {
-      const cards = JSON.parse(deck.cards);
+
+    const decks = userDecks.map(deck => {
       const sleeveImagePath = deck.sleeveIdentifier ? sleeveMap.get(deck.sleeveIdentifier) : undefined;
-      return {
+      let format: number[];
+      if (deck.formats && deck.formats.trim() !== '') {
+        try {
+          format = JSON.parse(deck.formats);
+        } catch {
+          const cards = JSON.parse(deck.cards);
+          format = getValidFormatsForCardList(cards);
+        }
+      } else {
+        const cards = JSON.parse(deck.cards);
+        format = getValidFormatsForCardList(cards);
+      }
+
+      const base: Record<string, any> = {
         id: deck.id,
         name: deck.name,
         isValid: deck.isValid,
-        cards,
-        cardTypes: JSON.parse(deck.cardTypes),
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        format: getValidFormatsForCardList(cards),
+        format,
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
+
+      if (!summary) {
+        base.cards = JSON.parse(deck.cards);
+        base.cardTypes = JSON.parse(deck.cardTypes);
+      }
+
+      return base;
     });
 
     // Inject theme decks (with negative IDs)
@@ -51,7 +80,7 @@ export class Decks extends Controller {
       deckItems: [],
     }));
 
-    res.send({ ok: true, decks: [...decks, ...themeDecks] });
+    res.send({ ok: true, decks: [...decks, ...themeDecks], total });
   }
 
   @Get('/get/:id')
@@ -147,6 +176,7 @@ export class Decks extends Controller {
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
     deck.sleeveIdentifier = body.sleeveIdentifier || '';
+    deck.formats = JSON.stringify(getValidFormatsForCardList(resolvedCards));
     try {
       deck = await deck.save();
     } catch (error) {

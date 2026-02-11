@@ -91,6 +91,8 @@
 
       <twinleaf-button [text]="'DECK_CREATE' | translate" (clicked)="createDeck()">
       </twinleaf-button>
+      <twinleaf-button [text]="'DECK_CREATE_FROM_CLIPBOARD' | translate" (clicked)="createDeckFromClipboard()">
+      </twinleaf-button>
     </div>
 
     <div class="deck-grid-container">
@@ -167,6 +169,8 @@
         <p *ngIf="selectedFormat !== 'all'">{{ 'DECK_NO_DECKS_FORMAT' | translate:{format:
           getFormatDisplayName(selectedFormat)} }}</p>
         <twinleaf-button [text]="'DECK_CREATE' | translate" (clicked)="createDeck()">
+        </twinleaf-button>
+        <twinleaf-button [text]="'DECK_CREATE_FROM_CLIPBOARD' | translate" (clicked)="createDeckFromClipboard()">
         </twinleaf-button>
       </div>
     </div>
