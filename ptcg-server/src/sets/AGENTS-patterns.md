@@ -1,0 +1,558 @@
+# Text-to-Code Patterns
+
+Card text from different Pokemon TCG eras uses varying grammar. This reference maps card text patterns to their code implementations.
+
+## Table of Contents
+- [Drawing Cards](#drawing-cards)
+- [Special Conditions](#special-conditions)
+- [Coin Flips](#coin-flips)
+- [Damage Effects](#damage-effects)
+- [Healing](#healing)
+- [Switching Pokemon](#switching-pokemon)
+- [Energy Manipulation](#energy-manipulation)
+- [Searching Deck](#searching-deck)
+- [Discard Pile](#discard-pile)
+- [Attack Restrictions](#attack-restrictions)
+- [Damage Prevention/Reduction](#damage-preventionreduction)
+- [Bench Targeting](#bench-targeting)
+- [Trainer Prefabs](#trainer-prefabs)
+- [Energy Card Prefabs](#energy-card-prefabs)
+- [Grammar Variations by Era](#grammar-variations-by-era)
+
+---
+
+## Drawing Cards
+
+| Card Text | Code |
+|-----------|------|
+| "Draw a card." | `DRAW_CARDS(player, 1)` |
+| "Draw 2 cards." | `DRAW_CARDS(player, 2)` |
+| "Draw 3 cards." | `DRAW_CARDS(player, 3)` |
+| "Draw cards until you have X cards in your hand." | `DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, X)` |
+| "You may draw up to X cards." | `DRAW_UP_TO_X_CARDS(store, state, player, X)` |
+| "Draw until you have 7 cards in your hand." (attack) | `DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND(7, effect, state)` |
+
+**Import:** `from '../../game/store/prefabs/prefabs'`
+
+---
+
+## Special Conditions
+
+### Applying to Opponent's Active
+
+| Card Text | Code |
+|-----------|------|
+| "The Defending Pokemon is now Paralyzed." | `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect)` |
+| "The Defending Pokemon is now Asleep." | `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect)` |
+| "The Defending Pokemon is now Confused." | `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect)` |
+| "The Defending Pokemon is now Poisoned." | `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect)` |
+| "The Defending Pokemon is now Burned." | `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect)` |
+
+**Modern text variations (same code):**
+- "Your opponent's Active Pokemon is now Paralyzed."
+- "The Active Pokemon is now Asleep."
+
+**Import:** `from '../../game/store/prefabs/attack-effects'`
+
+### Applying to Your Own Pokemon (abilities, self-effects)
+
+| Card Text | Code |
+|-----------|------|
+| "This Pokemon is now Asleep." | `ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, player, this)` |
+| "This Pokemon is now Poisoned." | `ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this)` |
+
+**Import:** `from '../../game/store/prefabs/prefabs'`
+
+### Custom Poison/Burn Damage
+
+```typescript
+// Poison that does 20 damage instead of 10
+ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this, 20);
+
+// Set on the target directly
+opponent.active.poisonDamage = 20;
+opponent.active.burnDamage = 40;
+```
+
+---
+
+## Coin Flips
+
+| Card Text | Code |
+|-----------|------|
+| "Flip a coin. If heads, this attack does X more damage." | `FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, X)` |
+| "Flip a coin. If tails, this attack does nothing." | `FLIP_A_COIN_IF_TAILS_THIS_ATTACK_DOES_NOTHING(store, state, effect)` |
+| "Flip a coin. If heads, [effect]." | See pattern below |
+| "Flip X coins. This attack does Y damage for each heads." | See pattern below |
+
+### Single Coin Flip with Callback
+
+```typescript
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  COIN_FLIP_PROMPT(store, state, player, result => {
+    if (result) {
+      // Heads - do something
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+    }
+  });
+}
+```
+
+### Multiple Coin Flips
+
+```typescript
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
+    const heads = results.filter(r => r).length;
+    effect.damage = 30 * heads;
+  });
+}
+```
+
+### Flip Until Tails
+
+```typescript
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  let heads = 0;
+  const flipUntilTails = (): State => {
+    return COIN_FLIP_PROMPT(store, state, player, result => {
+      if (result) {
+        heads++;
+        return flipUntilTails();
+      } else {
+        effect.damage = 30 * heads;
+      }
+    });
+  };
+  return flipUntilTails();
+}
+```
+
+**Import:** `from '../../game/store/prefabs/prefabs'` (COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT)
+**Import:** `from '../../game/store/prefabs/attack-effects'` (FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE)
+
+---
+
+## Damage Effects
+
+| Card Text | Code |
+|-----------|------|
+| "This Pokemon does X damage to itself." | `THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, X)` |
+| "This attack does X more damage." | `effect.damage += X` |
+| "This attack does X less damage." | `effect.damage -= X` |
+| "This attack does X more damage for each [condition]." | Count condition, then `effect.damage += X * count` |
+| "This attack does X damage for each Energy attached." | `effect.damage = X * player.active.cards.filter(c => c instanceof EnergyCard).length` |
+| "This attack does X damage for each damage counter on this Pokemon." | `effect.damage = X * (player.active.damage / 10)` |
+
+### Damage to Opponent's Bench (ignores weakness/resistance)
+
+```typescript
+// Single target
+THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(30, effect, store, state);
+
+// All benched Pokemon
+opponent.bench.forEach(benched => {
+  if (benched.cards.length > 0) {
+    const damage = new PutDamageEffect(effect, 20);
+    damage.target = benched;
+    store.reduceEffect(state, damage);
+  }
+});
+```
+
+### Damage Counters (not "damage")
+
+```typescript
+// Put X damage counters = X * 10 damage
+PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(3, store, state, effect);  // 30 damage
+
+// Distribute damage counters
+PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(5, store, state, effect);  // 50 damage total
+```
+
+**Import:** `from '../../game/store/prefabs/attack-effects'`
+
+---
+
+## Healing
+
+| Card Text | Code |
+|-----------|------|
+| "Heal X damage from this Pokemon." | `HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, X)` |
+| "Heal all damage from this Pokemon." | `player.active.damage = 0` |
+| "Remove all Special Conditions from this Pokemon." | `player.active.specialConditions = []` |
+
+**Import:** `from '../../game/store/prefabs/attack-effects'`
+
+---
+
+## Switching Pokemon
+
+| Card Text | Code |
+|-----------|------|
+| "Switch this Pokemon with 1 of your Benched Pokemon." | `SWITCH_ACTIVE_WITH_BENCHED(store, state, player)` |
+| "Your opponent switches their Active Pokemon..." | `SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent)` |
+| "Switch the Defending Pokemon with 1 of your opponent's Benched Pokemon." | Use AfterAttackEffect pattern (see below) |
+
+### Post-Damage Switching (CRITICAL - use AfterAttackEffect)
+
+```typescript
+public usedSwitchAttack = false;
+
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  this.usedSwitchAttack = true;
+}
+
+if (effect instanceof AfterAttackEffect && this.usedSwitchAttack) {
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  if (opponent.bench.some(b => b.cards.length > 0)) {
+    SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+  }
+}
+
+if (effect instanceof EndTurnEffect) {
+  this.usedSwitchAttack = false;
+}
+```
+
+**Import:** `from '../../game/store/prefabs/prefabs'`
+
+---
+
+## Energy Manipulation
+
+### Discarding Energy
+
+| Card Text | Code |
+|-----------|------|
+| "Discard an Energy attached to this Pokemon." | `DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1)` |
+| "Discard 2 [R] Energy attached to this Pokemon." | `DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, CardType.FIRE)` |
+| "Discard all Energy attached to this Pokemon." | `DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, player.active.getPokemonCard())` |
+
+**Import:** `from '../../game/store/prefabs/costs'` (DISCARD_X_ENERGY_FROM_THIS_POKEMON)
+**Import:** `from '../../game/store/prefabs/prefabs'` (DISCARD_ALL_ENERGY_FROM_POKEMON)
+
+### Attaching Energy
+
+```typescript
+// From discard to bench (prompt user to choose)
+ATTACH_ENERGY_PROMPT(store, state, player, PlayerType.BOTTOM_PLAYER, player.discard,
+  [SlotType.BENCH], { energyType: EnergyType.BASIC }, { min: 0, max: 1 });
+
+// Move specific energy card
+player.discard.moveCardTo(energyCard, target);
+```
+
+---
+
+## Searching Deck
+
+| Card Text | Code |
+|-----------|------|
+| "Search your deck for a Pokemon and put it into your hand." | `SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player)` |
+| "Search your deck for a Basic Pokemon and put it onto your Bench." | `SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC })` |
+| "Search your deck for up to 2 Basic [L] Pokemon..." | `SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC, cardType: CardType.LIGHTNING }, { max: 2 })` |
+
+### Generic Card Search
+
+```typescript
+SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+  { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+  { min: 0, max: 1 }
+);
+```
+
+### Always Shuffle After Searching
+
+```typescript
+// Many search prefabs shuffle automatically
+// If doing manual search, always call:
+SHUFFLE_DECK(store, state, player);
+```
+
+---
+
+## Discard Pile
+
+| Card Text | Code |
+|-----------|------|
+| "Put a Pokemon from your discard pile into your hand." | `SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.POKEMON }, { min: 0, max: 1 })` |
+
+**Import:** `from '../../game/store/prefabs/prefabs'`
+
+---
+
+## Attack Restrictions
+
+### Self-Restriction (this Pokemon can't attack/use move)
+
+| Card Text | Code |
+|-----------|------|
+| "This Pokemon can't attack during your next turn." | `player.active.cannotAttackNextTurnPending = true` |
+| "This Pokemon can't use [Attack Name] during your next turn." | `player.active.cannotUseAttacksNextTurnPending.push('Attack Name')` |
+
+**No cleanup needed** - system handles these automatically.
+
+### Opponent Restriction (Defending Pokemon can't attack)
+
+```typescript
+public readonly CANT_ATTACK_MARKER = 'CANT_ATTACK_MARKER';
+
+// On attack
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  opponent.active.marker.addMarker(this.CANT_ATTACK_MARKER, this);
+}
+
+// Block attacks
+if (effect instanceof AttackEffect) {
+  if (effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+}
+
+// Cleanup at end of opponent's turn
+if (effect instanceof EndTurnEffect) {
+  effect.player.active.marker.removeMarker(this.CANT_ATTACK_MARKER, this);
+}
+```
+
+### Retreat Restriction
+
+| Card Text | Code |
+|-----------|------|
+| "The Defending Pokemon can't retreat during your opponent's next turn." | `BLOCK_RETREAT(store, state, effect, this)` |
+
+---
+
+## Damage Prevention/Reduction
+
+### During Opponent's Next Turn
+
+```typescript
+public readonly REDUCE_DAMAGE_MARKER = 'REDUCE_DAMAGE_MARKER';
+
+// On attack - set marker
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
+}
+
+// Intercept damage
+if (effect instanceof DealDamageEffect) {
+  if (effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
+    effect.damage = Math.max(0, effect.damage - 30);
+  }
+}
+
+// Cleanup
+if (effect instanceof EndTurnEffect) {
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+    cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
+  });
+}
+```
+
+### Prevent All Damage
+
+```typescript
+// Use prefab for "prevent all damage" markers
+PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect, this.PREVENT_MARKER, this);
+```
+
+---
+
+## Bench Targeting
+
+### Choose 1 of Opponent's Pokemon
+
+```typescript
+THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(30, effect, store, state);
+```
+
+### Choose 1 of Opponent's Benched Pokemon
+
+```typescript
+THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(20, effect, store, state);
+```
+
+### Damage Each Benched Pokemon
+
+```typescript
+opponent.bench.forEach(benched => {
+  if (benched.cards.length > 0) {
+    const damage = new PutDamageEffect(effect, 10);
+    damage.target = benched;
+    store.reduceEffect(state, damage);
+  }
+});
+```
+
+### Damage All Opponent's Pokemon
+
+```typescript
+// Active
+const damageActive = new DealDamageEffect(effect, 30);
+damageActive.target = opponent.active;
+store.reduceEffect(state, damageActive);
+
+// Bench (use PutDamageEffect - no weakness/resistance)
+opponent.bench.forEach(benched => {
+  if (benched.cards.length > 0) {
+    const damage = new PutDamageEffect(effect, 30);
+    damage.target = benched;
+    store.reduceEffect(state, damage);
+  }
+});
+```
+
+---
+
+## Trainer Prefabs
+
+### Detection
+
+```typescript
+if (WAS_TRAINER_USED(effect, this)) {
+  const player = effect.player;
+  // Trainer logic
+}
+```
+
+### Common Trainer Operations
+
+| Operation | Code |
+|-----------|------|
+| Discard cards from hand | `DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, min, max)` |
+| Shuffle deck | `SHUFFLE_DECK(store, state, player)` |
+| Check if supporter can be played | `CAN_PLAY_SUPPORTER_CARD(store, state, player, this)` |
+| Check if trainer can be played | `CAN_PLAY_TRAINER_CARD(store, state, player, this)` |
+
+### Generator Pattern for Multi-Step Trainers
+
+```typescript
+public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    const generator = playCard(() => generator.next(), store, state, this, effect);
+    return generator.next().value;
+  }
+  return state;
+}
+
+function* playCard(next: Function, store: StoreLike, state: State,
+                   self: TrainerCard, effect: TrainerEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  // Move to supporter zone, prevent default discard
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  effect.preventDefault = true;
+
+  // First prompt
+  let cards: Card[] = [];
+  yield store.prompt(state, new ChooseCardsPrompt(...), selected => {
+    cards = selected || [];
+    next();
+  });
+
+  // Process selection
+  // ...
+
+  // Move to discard when done
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+  return SHUFFLE_DECK(store, state, player);
+}
+```
+
+**Import:** `from '../../game/store/prefabs/trainer-prefabs'` (WAS_TRAINER_USED, DISCARD_X_CARDS_FROM_YOUR_HAND)
+
+---
+
+## Energy Card Prefabs
+
+### Check if Special Energy is Blocked
+
+```typescript
+if (effect instanceof SomeEffect) {
+  const attachedTo = StateUtils.findPokemonSlot(state, this);
+  if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, attachedTo)) {
+    return state;  // Effect blocked
+  }
+  // Apply energy effect
+}
+```
+
+### Providing Multiple/Conditional Energy Types
+
+```typescript
+// In reduceEffect
+if (effect instanceof CheckProvidedEnergyEffect) {
+  const attachedTo = effect.source;
+
+  // Check if this energy is attached to the Pokemon being checked
+  if (!attachedTo.cards.includes(this)) {
+    return state;
+  }
+
+  // Find this energy in the map and modify what it provides
+  effect.energyMap.forEach(em => {
+    if (em.card === this) {
+      // Example: provide any type
+      em.provides = [CardType.ANY, CardType.ANY];
+    }
+  });
+}
+```
+
+---
+
+## Grammar Variations by Era
+
+Pokemon card text has changed over the years. All variations map to the same code:
+
+### "Defending Pokemon" vs "Your opponent's Active Pokemon"
+
+| Era | Text | Code |
+|-----|------|------|
+| Classic (BW and earlier) | "The Defending Pokemon is now Paralyzed." | `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(...)` |
+| Modern (XY onward) | "Your opponent's Active Pokemon is now Paralyzed." | Same |
+
+### Flip Results
+
+| Era | Text | Code |
+|-----|------|------|
+| Classic | "Flip a coin. If heads, the Defending Pokemon is now Paralyzed." | `COIN_FLIP_PROMPT` + condition prefab |
+| Modern | "Flip a coin. If heads, your opponent's Active Pokemon is now Paralyzed." | Same |
+
+### Damage Wording
+
+| Era | Text | Code |
+|-----|------|------|
+| Classic | "Does 10 damage to 1 of your opponent's Benched Pokemon." | `THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON` |
+| Modern | "This attack also does 10 damage to 1 of your opponent's Benched Pokemon." | Same |
+| Modern | "This attack does 10 damage to 1 of your opponent's Benched Pokemon. (Don't apply Weakness and Resistance for Benched Pokemon.)" | Same (PutDamageEffect handles this) |
+
+### Self-Damage
+
+| Era | Text | Code |
+|-----|------|------|
+| Classic | "Flip a coin. If tails, this Pokemon does 10 damage to itself." | `THIS_POKEMON_DOES_DAMAGE_TO_ITSELF` |
+| Modern | "This Pokemon also does 10 damage to itself." | Same |
+
+### Search Instructions
+
+| Era | Text | Code |
+|-----|------|------|
+| Classic | "Search your deck for a Basic Pokemon card, show it to your opponent, and put it into your hand. Shuffle your deck afterward." | `SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND` (handles show + shuffle) |
+| Modern | "Search your deck for a Basic Pokemon, reveal it, and put it into your hand. Then, shuffle your deck." | Same |
+
+### Energy Attachment
+
+| Era | Text | Code |
+|-----|------|------|
+| Classic | "Attach a [R] Energy card from your discard pile to this Pokemon." | Manual `moveCardTo` or `ATTACH_ENERGY_PROMPT` |
+| Modern | "Attach a basic [R] Energy card from your discard pile to this Pokemon." | Same (note: "basic" added for clarity) |
+
+### Key Principle
+
+**Normalize all text variations to the same code pattern.** The prefabs are designed to handle the game mechanics regardless of how the text is worded. When in doubt, search for existing implementations of similar effects.
