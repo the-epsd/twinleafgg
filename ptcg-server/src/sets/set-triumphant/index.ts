@@ -10,6 +10,8 @@ import { JunkArm } from './junk-arm';
 import { Machamp } from './machamp-prime';
 import { Machoke } from './machoke';
 import { Machop } from './machop';
+import { Magmar } from './magmar';
+import { Magmortar } from './magmortar';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Magnezone } from './magnezone-prime';
@@ -38,6 +40,8 @@ export const setTriumphant: Card[] = [
   new Machamp(),
   new Machoke(),
   new Machop(),
+  new Magmar(),
+  new Magmortar(),
   new Magnemite(),
   new Magneton(),
   new Magnezone(),
