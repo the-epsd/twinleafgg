@@ -1,6 +1,6 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseEnergyPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { TrainerEffect, AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
-import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { GamePhase } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -428,6 +428,30 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
   });
 }
 
+/**
+ * Discard a specific set of Energies of the player's choice from this Pokémon (e.g. 3 [R] energy). Not restricted to Basics.
+ * @param energyMap The Energies that must be discarded.
+ */
+export function DISCARD_SPECIFIC_ENERGY_FROM_THIS_POKEMON(store: StoreLike, state: State, effect: AttackEffect, energyMap: CardType[]) {
+  const player = effect.player;
+      
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  state = store.reduceEffect(state, checkProvidedEnergy);
+
+  state = store.prompt(state, new ChooseEnergyPrompt(
+    player.id,
+    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+    checkProvidedEnergy.energyMap,
+    energyMap,
+    { allowCancel: false }
+  ), energy => {
+    const cards: Card[] = (energy || []).map(e => e.card);
+    const discardEnergy = new DiscardCardsEffect(effect, cards);
+    discardEnergy.target = player.active;
+    store.reduceEffect(state, discardEnergy);
+  });
+}
+
 export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card) {
   const player = effect.player;
   const cardList = StateUtils.findCardList(state, card);
@@ -441,6 +465,19 @@ export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, 
   const discardEnergy = new DiscardCardsEffect(effect, cards);
   discardEnergy.target = cardList;
   store.reduceEffect(state, discardEnergy);
+}
+
+/**
+ * Discards the top `amount` cards of the opponent's deck (commonly called "milling").
+ * @param player The player ***using*** this effect. Their opponent will be milled.
+ * @param amount The number of cards to discard.
+ * @param card The card causing the effect.
+ * @param sourceEffect The attack or ability causing the effect.
+ */
+export function DISCARD_TOP_X_OF_OPPONENTS_DECK(store: StoreLike, state: State, player: Player, amount: number, card: Card, sourceEffect: any) {
+  const opponent = StateUtils.getOpponent(state, player);
+
+  MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: amount, sourceCard: card, sourceEffect: sourceEffect });
 }
 
 /**

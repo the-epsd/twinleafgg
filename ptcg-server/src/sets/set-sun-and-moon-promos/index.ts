@@ -1,4 +1,4 @@
-import { PassimianSMP, OranguruSMP, Oricorio2SMP, Rowlet2SMP, Popplio2SMP, VikavoltSMP, TapuKoko3SMP, TapuBuluGXSMP, TapuKokoGXSMP, EspeonGXSMP, DecidueyeGXSMP, CosmogSMP, TapuKokoGX2SMP, LucarioSMP, NecrozmaGXSMP, MarshadowGXSMP, SalazzleGXSMP, BuzzwoleGXSMP, SalazzleSMP, ZoruaSMP, ZoroarkGXSMP, MarshadowSMP, LatiosSMP, SilvallyGXSMP, Lucario2SMP, Mimikyu2SMP, DawnWingsNecrozmaGXSMP, DuskManeNecrozmaGXSMP, MalamarSMP, NaganadelGXSMP, UltraNecrozmaGXSMP, DelcattySMP, GlaceonGXSMP, RaikouSMP, GiratinaSMP, CharizardSMP, Zapdos2SMP, NidoqueenSMP, JirachiSMP, VolcanionSMP, PersianSMP, MewtwoMewGXSMP, GarchompGiratinaGXSMP, NecrozmaSMP, MoltresZapdosArticunoGXSMP, Mewtwo2SMP, BuzzwoleSMP, EnteiSMP, PhioneSMP, BlacephalonSMP, Charizard2SMP, CharizardBraixenGXSMP, ReshiramCharizardGX2SMP, PikachuZekromGX2SMP, SolgaleoGX3SMP } from './other-prints';
+import { PassimianSMP, OranguruSMP, Oricorio2SMP, Rowlet2SMP, Popplio2SMP, VikavoltSMP, TapuKoko3SMP, TapuBuluGXSMP, TapuKokoGXSMP, EspeonGXSMP, DecidueyeGXSMP, CosmogSMP, TapuKokoGX2SMP, LucarioSMP, NecrozmaGXSMP, MarshadowGXSMP, SalazzleGXSMP, BuzzwoleGXSMP, SalazzleSMP, ZoruaSMP, ZoroarkGXSMP, MarshadowSMP, LatiosSMP, SilvallyGXSMP, Lucario2SMP, Mimikyu2SMP, DawnWingsNecrozmaGXSMP, DuskManeNecrozmaGXSMP, MalamarSMP, NaganadelGXSMP, UltraNecrozmaGXSMP, DelcattySMP, GlaceonGXSMP, RaikouSMP, GiratinaSMP, CharizardSMP, Zapdos2SMP, NidoqueenSMP, JirachiSMP, VolcanionSMP, PersianSMP, MewtwoMewGXSMP, GarchompGiratinaGXSMP, NecrozmaSMP, MoltresZapdosArticunoGXSMP, Mewtwo2SMP, BuzzwoleSMP, EnteiSMP, PhioneSMP, BlacephalonSMP, Charizard2SMP, CharizardBraixenGXSMP, ReshiramCharizardGX2SMP, PikachuZekromGX2SMP, SolgaleoGX3SMP, CharizardGXSMP60 } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { CarracostaGX } from './carracosta-gx';
 import { FirefighterPikachu } from './firefighter-pikachu';
@@ -100,4 +100,5 @@ export const setSunAndMoonPromos: Card[] = [
   new ReshiramCharizardGX2SMP(),
   new PikachuZekromGX2SMP(),
   new SolgaleoGX3SMP(),
+  new CharizardGXSMP60(),
 ];
