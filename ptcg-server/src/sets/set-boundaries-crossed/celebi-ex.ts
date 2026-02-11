@@ -3,10 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { PlayerType, PowerType, StateUtils, StoreLike, State } from '../../game';
+import { CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CelebiEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -41,15 +42,79 @@ export class CelebiEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Time Recall
-    // TODO: Each of your evolved Pokémon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Refs: set-temporal-forces/relicanth.ts (Memory Dive), set-sun-and-moon-promos/shining-celebi.ts (Time Recall)
+    if (effect instanceof CheckTableStateEffect) {
+      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (owner !== player) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      let isCelebiInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
+        if (card === this) {
+          isCelebiInPlay = true;
+        }
+      });
+
+      if (!isCelebiInPlay) {
+        return state;
+      }
+
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
+        if (card.stage !== Stage.BASIC) {
+          player.showAllStageAbilities = true;
+        }
+      });
+    }
+
+    if (effect instanceof CheckPokemonAttacksEffect) {
+      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (owner !== player) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      let isCelebiInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
+        if (card === this) {
+          isCelebiInPlay = true;
+        }
+      });
+
+      if (!isCelebiInPlay) {
+        return state;
+      }
+
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonCardList, card) => {
+        if (card.stage !== Stage.BASIC) {
+          for (const evolutionCard of pokemonCardList.cards) {
+            if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== card) {
+              effect.attacks.push(...(evolutionCard.attacks || []));
+            }
+          }
+        }
+      });
     }
 
     // Attack 1: Wind Whisk
-    // TODO: Switch this Pokémon with 1 of your Benched Pokémon.
+    // Ref: set-journey-together/accelgor.ts (Poisonous Ploy)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return state;
+    }
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
     }
 
     return state;

@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Purrloin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,12 +31,35 @@ export class Purrloin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purrloin';
   public fullName: string = 'Purrloin BCR';
+  public usedCaptivate = false;
+  public captivateHeads = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Captivate
-    // TODO: Flip a coin. If heads, switch 1 of your opponent's Benched Pokémon with the Defending Pokémon.
+    // Refs: set-dark-explorers/scrafty.ts (coin handling), set-dark-explorers/herdier.ts (Roar)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      this.usedCaptivate = true;
+      this.captivateHeads = false;
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        this.captivateHeads = result;
+      });
+      return state;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedCaptivate) {
+      this.usedCaptivate = false;
+      if (!this.captivateHeads) {
+        return state;
+      }
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (opponent.bench.some(b => b.cards.length > 0)) {
+        SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+      }
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      this.usedCaptivate = false;
+      this.captivateHeads = false;
     }
 
     return state;

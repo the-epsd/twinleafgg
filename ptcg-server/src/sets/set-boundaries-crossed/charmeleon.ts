@@ -40,9 +40,10 @@ export class Charmeleon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Raging Claws
-    // TODO: Does 10 more damage for each damage counter on this Pokémon.
+    // Ref: set-dark-explorers/zoroark.ts (Dark Rush)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const damageCounters = Math.floor(effect.player.active.damage / 10);
+      effect.damage += 10 * damageCounters;
     }
 
     return state;

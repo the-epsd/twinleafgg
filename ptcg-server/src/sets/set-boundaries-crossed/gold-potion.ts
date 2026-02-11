@@ -4,8 +4,10 @@
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { GameError, GameMessage, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class GoldPotion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -17,9 +19,15 @@ export class GoldPotion extends TrainerCard {
   public text: string = 'Heal 90 damage from your Active Pokémon. You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // TODO: Implement trainer effect
-    // Heal 90 damage from your Active Pokémon.
-    // You can't have more than 1 ACE SPEC card in your deck.
+    // Ref: set-fusion-strike/cook.ts (active heal trainer pattern)
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      const player = effect.player;
+      if (player.active.damage === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      const healEffect = new HealEffect(player, player.active, 90);
+      return store.reduceEffect(state, healEffect);
+    }
 
     return state;
   }

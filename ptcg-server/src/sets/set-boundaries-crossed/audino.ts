@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { HealEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Audino extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,7 +19,7 @@ export class Audino extends PokemonCard {
 
   public powers = [  {
     name: 'Busybody',
-    useWhenInPlay: true,
+    useFromHand: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), if this Pokémon is in your hand, you may reveal it. If you do, heal 10 damage and remove a Special Condition from your Active Pokémon. Then, discard this Pokémon.'
   }];
@@ -36,18 +38,59 @@ export class Audino extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Audino';
   public fullName: string = 'Audino BCR';
+  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
+  public readonly HIP_BUMP_MARKER = 'HIP_BUMP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Busybody
-    // TODO: Once during your turn (before your attack), if this Pokémon is in your hand, you may reveal it. If you do, heal 10 damage and remove a Special Condition from your Active Pokémon. Then, discard this Pokémon.
+    // Refs: set-fusion-strike/pyukumuku.ts (useFromHand flow), set-fusion-strike/cook.ts (Active heal)
     if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+      const player = effect.player;
+
+      if (!(effect instanceof PowerEffect) || !player.hand.cards.includes(this)) {
+        return state;
+      }
+
+      const healEffect = new HealEffect(player, player.active, 10);
+      store.reduceEffect(state, healEffect);
+      player.active.clearAllSpecialConditions();
+      player.hand.moveCardTo(this, player.discard);
     }
 
     // Attack 1: Hip Bump
-    // TODO: If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.
+    // Refs: set-unified-minds/wimpod.ts (Sand Attack), set-fossil/magmar.ts (Smokescreen flow)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
+    }
+
+    if (effect instanceof UseAttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (HAS_MARKER(this.HIP_BUMP_MARKER, opponent, this)) {
+        return state;
+      }
+
+      effect.preventDefault = true;
+      ADD_MARKER(this.HIP_BUMP_MARKER, opponent, this);
+
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          const useAttackEffect = new UseAttackEffect(player, effect.attack);
+          store.reduceEffect(state, useAttackEffect);
+        } else {
+          const endTurnEffect = new EndTurnEffect(player);
+          store.reduceEffect(state, endTurnEffect);
+        }
+      });
+    }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.HIP_BUMP_MARKER, this);
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
     }
 
     return state;

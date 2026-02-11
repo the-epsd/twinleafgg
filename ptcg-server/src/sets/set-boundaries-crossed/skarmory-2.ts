@@ -6,7 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Skarmory2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,15 +40,20 @@ export class Skarmory2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metal Sound
-    // TODO: Flip a coin. If heads, the Defending Pokémon is now Confused.
+    // Ref: set-noble-victories/yamask.ts (Astonish)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+        }
+      });
     }
 
     // Attack 2: Swift
-    // TODO: This attack's damage isn't affected by Weakness, Resistance, or any other effects on the Defending Pokémon.
+    // Refs: set-fossil/magneton.ts (ignore both weakness and resistance), set-surging-sparks/flygon-ex.ts (dual ignore flags)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      effect.ignoreWeakness = true;
+      effect.ignoreResistance = true;
     }
 
     return state;

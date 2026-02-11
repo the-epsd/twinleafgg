@@ -3,10 +3,10 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { EnergyCard, PlayerType, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Charmander extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,9 +38,30 @@ export class Charmander extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Draw In
-    // TODO: Attach 2 [R] Energy cards from your discard pile to this Pokémon.
+    // Refs: set-lost-origin/slugma.ts (discard-to-active attach), set-fusion-strike/heatmor.ts (Fire filter)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const fireCount = player.discard.cards.filter(c =>
+        c instanceof EnergyCard &&
+        c.energyType === EnergyType.BASIC &&
+        c.provides.includes(CardType.FIRE)
+      ).length;
+
+      if (fireCount === 0) {
+        return state;
+      }
+
+      const count = Math.min(2, fireCount);
+      return ATTACH_ENERGY_PROMPT(
+        store,
+        state,
+        player,
+        PlayerType.BOTTOM_PLAYER,
+        SlotType.DISCARD,
+        [SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { min: count, max: count, allowCancel: false }
+      );
     }
 
     return state;

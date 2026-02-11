@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lillipup extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,9 +38,16 @@ export class Lillipup extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Roar
-    // TODO: Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.
+    // Ref: set-dark-explorers/herdier.ts (Roar)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return state;
+    }
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (opponent.bench.some(b => b.cards.length > 0)) {
+        SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+      }
     }
 
     return state;

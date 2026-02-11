@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StateUtils, StoreLike, State } from '../../game';
+import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, COIN_FLIP_PROMPT, DRAW_CARDS, PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dunsparce extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,16 +40,37 @@ export class Dunsparce extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Draw
-    // TODO: Draw 2 cards.
+    // Ref: set-noble-victories/virizion.ts (Double Draw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      DRAW_CARDS(effect.player, 2);
     }
 
     // Attack 2: Dig
-    // TODO: Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn.
+    // Ref: set-temporal-forces/dunsparce.ts (Dig)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          PREVENT_DAMAGE(store, state, effect, this);
+        }
+      });
     }
+
+    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      const sourceCard = effect.source.getPokemonCard();
+
+      if (sourceCard && opponent.active.marker.hasMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
+        effect.preventDefault = true;
+      }
+    }
+
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
+      state,
+      effect,
+      MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
+      MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
+      this
+    );
 
     return state;
   }

@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -42,15 +42,19 @@ export class Bellossom extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grass Knot
-    // TODO: Does 20 more damage for each Colorless in the Defending Pokémon's Retreat Cost.
+    // Ref: set-team-up/absol.ts (Shadow Seeker)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const retreatCost = effect.opponent.active.getPokemonCard()?.retreat.length ?? 0;
+      effect.damage += 20 * retreatCost;
     }
 
     // Attack 2: Petal Dance
-    // TODO: Flip 3 coins. This attack does 50 damage times the number of heads. This Pokémon is now Confused.
+    // Refs: set-boundaries-crossed/spoink.ts (multi-coin damage), set-surging-sparks/annihilape.ts (self confusion)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 3, results => {
+        effect.damage = 50 * results.filter(r => r).length;
+      });
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.player, this);
     }
 
     return state;

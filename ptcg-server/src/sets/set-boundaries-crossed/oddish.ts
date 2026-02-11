@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Oddish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,9 +39,9 @@ export class Oddish extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb
-    // TODO: Heal 10 damage from this Pokémon.
+    // Ref: set-noble-victories/elgyem.ts (First Aid)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 10);
     }
 
     return state;

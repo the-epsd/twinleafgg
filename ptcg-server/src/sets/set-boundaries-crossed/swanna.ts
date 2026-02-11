@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { ConfirmPrompt, GameMessage, StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Swanna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,15 +43,28 @@ export class Swanna extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aerial Ace
-    // TODO: Flip a coin. If heads, this attack does 20 more damage.
+    // Ref: set-emerging-powers/darmanitan.ts (Rock Smash)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }
 
     // Attack 2: Defog
-    // TODO: You may discard any Stadium card in play. If you do, this attack does 40 more damage.
+    // Ref: set-boundaries-crossed/swanna.ts (Defog stadium bonus pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const stadiumCard = StateUtils.getStadiumCard(state);
+      if (stadiumCard === undefined) {
+        return state;
+      }
+
+      return store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY
+      ), wantToDiscard => {
+        if (wantToDiscard) {
+          DISCARD_A_STADIUM_CARD_IN_PLAY(state);
+          effect.damage += 40;
+        }
+      });
     }
 
     return state;

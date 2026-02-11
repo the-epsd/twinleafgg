@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Samurott extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,9 +40,9 @@ export class Samurott extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Destructive Whirlpool
-    // TODO: Discard an Energy attached to the Defending Pokémon.
+    // Ref: set-black-and-white/servine2.ts (Wring Out)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
     }
 
     return state;

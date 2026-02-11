@@ -4,9 +4,12 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PlayerType, PowerType, StateUtils, StoreLike, State } from '../../game';
+import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CresseliaEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -37,18 +40,45 @@ export class CresseliaEx extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cresselia-EX';
   public fullName: string = 'Cresselia-EX BCR';
+  public readonly PSYCHIC_PROTECTION_MARKER = 'PSYCHIC_PROTECTION_MARKER';
+  public readonly CLEAR_PSYCHIC_PROTECTION_MARKER = 'CLEAR_PSYCHIC_PROTECTION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sparkling Particles
-    // TODO: At any time between turns, heal 10 damage from this Pokémon.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Refs: set-ex-sandstorm/lotad.ts (between-turn healing), set-black-and-white/serperior2.ts (ability lock check)
+    if (effect instanceof BetweenTurnsEffect) {
+      const player = effect.player;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this && !IS_ABILITY_BLOCKED(store, state, player, this)) {
+          const healEffect = new HealEffect(player, cardList, 10);
+          state = store.reduceEffect(state, healEffect);
+        }
+      });
     }
 
     // Attack 1: Psychic Protection
-    // TODO: During your opponent's next turn, this Pokémon has no Weakness.
+    // Refs: set-primal-clash/gardevoir-ex.ts (no-weakness marker lifecycle), set-surging-sparks/archaludon-ex.ts (CheckPokemonStatsEffect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.active.marker.addMarker(this.PSYCHIC_PROTECTION_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_PSYCHIC_PROTECTION_MARKER, this);
+    }
+
+    if (effect instanceof CheckPokemonStatsEffect) {
+      const player = StateUtils.findOwner(state, effect.target);
+      if (player.active.marker.hasMarker(this.PSYCHIC_PROTECTION_MARKER, this)) {
+        effect.weakness = [];
+      }
+    }
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.marker.hasMarker(this.CLEAR_PSYCHIC_PROTECTION_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_PSYCHIC_PROTECTION_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        cardList.marker.removeMarker(this.PSYCHIC_PROTECTION_MARKER, this);
+      });
     }
 
     return state;

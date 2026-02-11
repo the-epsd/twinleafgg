@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,15 +39,16 @@ export class Electivire extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electriwave
-    // TODO: This attack does 30 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-temporal-forces/pikachu.ts (Random Spark target damage helper)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const targets = effect.opponent.bench.filter(b => b.cards.length > 0);
+      DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
     }
 
     // Attack 2: Shock Wave
-    // TODO: This attack's damage isn't affected by Resistance.
+    // Ref: set-noble-victories/mienshao.ts (Feint)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      effect.ignoreResistance = true;
     }
 
     return state;

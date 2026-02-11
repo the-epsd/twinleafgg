@@ -84,6 +84,8 @@ opponent.active.burnDamage = 40;
 | "Flip a coin. If tails, this attack does nothing." | `FLIP_A_COIN_IF_TAILS_THIS_ATTACK_DOES_NOTHING(store, state, effect)` |
 | "Flip a coin. If heads, [effect]." | See pattern below |
 | "Flip X coins. This attack does Y damage for each heads." | See pattern below |
+| "Flip a coin until you get tails. This attack does X damage times/for each heads." | `FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(store, state, effect, X)` |
+| "Flip a coin until you get tails. This attack does X more damage for each heads." | `FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, X)` |
 
 ### Single Coin Flip with Callback
 
@@ -111,21 +113,16 @@ if (WAS_ATTACK_USED(effect, 0, this)) {
 
 ### Flip Until Tails
 
+**Use the prefab** — no manual recursion needed:
+
 ```typescript
-if (WAS_ATTACK_USED(effect, 0, this)) {
-  let heads = 0;
-  const flipUntilTails = (): State => {
-    return COIN_FLIP_PROMPT(store, state, player, result => {
-      if (result) {
-        heads++;
-        return flipUntilTails();
-      } else {
-        effect.damage = 30 * heads;
-      }
-    });
-  };
-  return flipUntilTails();
-}
+// "does X damage times the number of heads" (overrides base damage)
+return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(store, state, effect, 30);
+```
+
+```typescript
+// "does X more damage for each heads" (adds to base damage)
+return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, 50);
 ```
 
 **Import:** `from '../../game/store/prefabs/prefabs'` (COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT)
@@ -221,7 +218,7 @@ if (effect instanceof EndTurnEffect) {
 
 ## Energy Manipulation
 
-### Discarding Energy
+### Discarding Energy from This Pokemon
 
 | Card Text | Code |
 |-----------|------|
@@ -231,6 +228,17 @@ if (effect instanceof EndTurnEffect) {
 
 **Import:** `from '../../game/store/prefabs/costs'` (DISCARD_X_ENERGY_FROM_THIS_POKEMON)
 **Import:** `from '../../game/store/prefabs/prefabs'` (DISCARD_ALL_ENERGY_FROM_POKEMON)
+
+### Discarding Energy from Opponent's Pokemon
+
+| Card Text | Code |
+|-----------|------|
+| "Discard an Energy attached to the Defending Pokemon." | `DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect)` |
+| "Flip a coin. If heads, discard an Energy attached to the Defending Pokemon." | `COIN_FLIP_PROMPT(store, state, effect.player, result => { if (result) { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect); } })` |
+
+**Import:** `from '../../game/store/prefabs/attack-effects'`
+
+> **WARNING**: Do NOT use `moveCardTo(energyCards[0], opponent.discard)` directly! This skips player choice (when multiple energies are attached) and bypasses `DiscardCardsEffect` (preventing effects like Energy Retrieval from intercepting). Always use the prefab.
 
 ### Attaching Energy
 

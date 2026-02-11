@@ -5,6 +5,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -32,9 +33,22 @@ export class Psyduck2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Firefighting
-    // TODO: Discard a [R] Energy attached to the Defending Pokémon.
+    // Ref: set-team-up/moltres.ts (filter attached energy by provided type)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const opponent = effect.opponent;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      const fireEnergyCards = checkProvidedEnergy.energyMap
+        .filter(em => em.provides.includes(CardType.FIRE) || em.provides.includes(CardType.ANY))
+        .map(em => em.card);
+
+      if (fireEnergyCards.length > 0) {
+        const cardToDiscard = fireEnergyCards[0];
+        if (opponent.active.cards.includes(cardToDiscard)) {
+          opponent.active.moveCardTo(cardToDiscard, opponent.discard);
+        }
+      }
     }
 
     return state;

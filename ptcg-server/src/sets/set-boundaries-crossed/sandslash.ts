@@ -4,9 +4,12 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PlayerType, StateUtils, StoreLike, State } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sandslash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,18 +40,59 @@ export class Sandslash extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandslash';
   public fullName: string = 'Sandslash BCR';
+  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
+  public readonly SAND_ATTACK_MARKER = 'SAND_ATTACK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand-Attack
-    // TODO: If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.
+    // Refs: set-unified-minds/wimpod.ts (Sand Attack), set-fossil/magmar.ts (Smokescreen flow)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
+    }
+
+    if (effect instanceof UseAttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (HAS_MARKER(this.SAND_ATTACK_MARKER, opponent, this)) {
+        return state;
+      }
+
+      effect.preventDefault = true;
+      ADD_MARKER(this.SAND_ATTACK_MARKER, opponent, this);
+
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          const useAttackEffect = new UseAttackEffect(player, effect.attack);
+          store.reduceEffect(state, useAttackEffect);
+        } else {
+          const endTurnEffect = new EndTurnEffect(player);
+          store.reduceEffect(state, endTurnEffect);
+        }
+      });
+    }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SAND_ATTACK_MARKER, this);
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
     }
 
     // Attack 2: Earthquake
-    // TODO: Does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-heartgold-and-soulsilver/donphan-prime.ts (Earthquake self-bench damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList === player.active) {
+          return;
+        }
+        const damage = new PutDamageEffect(effect, 10);
+        damage.target = cardList;
+        store.reduceEffect(state, damage);
+      });
     }
 
     return state;

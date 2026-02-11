@@ -6,6 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Watchog extends PokemonCard {
@@ -36,18 +38,33 @@ export class Watchog extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
   public fullName: string = 'Watchog BCR';
+  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
+  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnoblast
-    // TODO: The Defending Pokémon is now Asleep.
+    // Ref: set-noble-victories/cryogonal.ts (Frozen Whirlpool)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
     }
 
     // Attack 2: Psych Up
-    // TODO: During your next turn, this Pokémon's Psych Up attack does 30 more damage (before applying Weakness and Resistance).
+    // Refs: set-jungle/scyther.ts (Swords Dance), set-lost-thunder/donphan.ts (Rolling Spin)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
+        effect.damage += 30;
+      }
+      effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
+      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this)) {
+        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
+        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+      } else {
+        effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+      }
     }
 
     return state;

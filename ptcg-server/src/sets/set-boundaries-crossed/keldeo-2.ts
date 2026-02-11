@@ -6,6 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Keldeo2 extends PokemonCard {
@@ -39,9 +40,9 @@ export class Keldeo2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rising Lunge
-    // TODO: Flip a coin. If heads, this attack does 20 more damage.
+    // Ref: set-emerging-powers/darmanitan.ts (Rock Smash)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }
 
     return state;

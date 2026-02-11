@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Klink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,9 +33,9 @@ export class Klink extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge
-    // TODO: This Pokémon does 10 damage to itself.
+    // Ref: set-noble-victories/larvesta.ts (Double Spin)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 10);
     }
 
     return state;

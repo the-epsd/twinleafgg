@@ -33,9 +33,10 @@ export class Dwebble extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail
-    // TODO: Does 10 damage times the number of damage counters on this Pokémon.
+    // Ref: set-dark-explorers/zoroark.ts (Dark Rush)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const damageCounters = Math.floor(effect.player.active.damage / 10);
+      effect.damage = 10 * damageCounters;
     }
 
     return state;

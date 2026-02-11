@@ -3,10 +3,12 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { PowerType, StateUtils, StoreLike, State } from '../../game';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { GamePhase } from '../../game/store/state/state';
+import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Scolipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,15 +43,27 @@ export class Scolipede extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Point
-    // TODO: If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), this Attacking Pokémon is now Poisoned.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ref: set-pokemon-151/hitmonchan.ts (Counterattack timing)
+    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
+      const player = StateUtils.findOwner(state, effect.target);
+      const opponent = effect.player;
+
+      if (player === opponent || player.active !== effect.target) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
     }
 
     // Attack 1: Venoshock
-    // TODO: If the Defending Pokémon is Poisoned, this attack does 40 more damage.
+    // Refs: set-black-and-white/scolipede.ts (Venoshock), set-emerging-powers/whirlipede.ts (Poisoned check)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      if (effect.opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
+        effect.damage += 40;
+      }
     }
 
     return state;

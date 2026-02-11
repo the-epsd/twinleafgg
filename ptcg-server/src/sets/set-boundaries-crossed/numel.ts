@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Numel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,9 +33,9 @@ export class Numel extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flamethrower
-    // TODO: Discard an Energy attached to this Pokémon.
+    // Ref: set-emerging-powers/simisear.ts (Flamethrower)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
 
     return state;

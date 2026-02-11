@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Attack, ChooseAttackPrompt, GameError, GameLog, GameMessage, PokemonCardList, StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Golduck2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,18 +38,55 @@ export class Golduck2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck';
   public fullName: string = 'Golduck BCR 35';
+  public amnesiaAttack: Attack | null = null;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Amnesia
-    // TODO: Choose 1 of the Defending Pokémon's attacks. The Pokémon can't use that attack during your opponent's next turn.
+    // Refs: set-evolutions/poliwhirl.ts (Amnesia prompt/marker), set-base-set/poliwhirl.ts (attack disable guard)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const pokemonCard = opponent.active.getPokemonCard();
+
+      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+        return state;
+      }
+
+      return store.prompt(state, new ChooseAttackPrompt(
+        player.id,
+        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
+        [pokemonCard],
+        { allowCancel: false }
+      ), result => {
+        if (!result) {
+          return state;
+        }
+
+        this.amnesiaAttack = result;
+        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
+        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
+          name: player.name,
+          attack: this.amnesiaAttack.name
+        });
+      });
+    }
+
+    if (effect instanceof AttackEffect
+      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
+      && effect.attack === this.amnesiaAttack) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
+      this.amnesiaAttack = null;
     }
 
     // Attack 2: Aquafall
-    // TODO: Discard all Energy attached to this Pokémon.
+    // Ref: set-sword-and-shield/cramorant-v.ts (discard all attached energy)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
     }
 
     return state;

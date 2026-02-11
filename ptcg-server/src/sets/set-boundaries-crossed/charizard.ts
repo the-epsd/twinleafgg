@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Charizard extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,15 +40,29 @@ export class Charizard extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Split Bomb
-    // TODO: This attack does 40 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-temporal-forces/pikachu.ts (Random Spark target selection + damage helper)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const targetCount = Math.min(2, effect.opponent.getPokemonInPlay().length);
+      if (targetCount === 0) {
+        return state;
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        effect.player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: targetCount, max: targetCount, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 40, targets);
+      });
     }
 
     // Attack 2: Scorching Fire
-    // TODO: Discard a [R] Energy attached to this Pokémon.
+    // Ref: set-emerging-powers/simisear.ts (Flamethrower)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.FIRE);
     }
 
     return state;

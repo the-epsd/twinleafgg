@@ -6,7 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlackKyuremEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -39,15 +40,19 @@ export class BlackKyuremEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Fang
-    // TODO: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.
+    // Ref: set-boundaries-crossed/rattata.ts (Paralyzing Gaze)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+        }
+      });
     }
 
     // Attack 2: Freeze Shock
-    // TODO: This Pokémon can't attack during your next turn.
+    // Ref: set-surging-sparks/ceruledge.ts (Searing Flame)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      effect.player.active.cannotAttackNextTurnPending = true;
     }
 
     return state;

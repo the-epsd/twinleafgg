@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Chinchou extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,9 +32,18 @@ export class Chinchou extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electripult
-    // TODO: This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-temporal-forces/pikachu.ts (Random Spark)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return store.prompt(state, new ChoosePokemonPrompt(
+        effect.player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 20, targets);
+      });
     }
 
     return state;

@@ -3,10 +3,10 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { PlayerType, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ATTACH_ENERGY_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Delcatty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,15 +40,26 @@ export class Delcatty extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gather Energy
-    // TODO: Search your deck for a basic Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.
+    // Ref: set-black-and-white/pignite.ts (Flame Charge)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      state = ATTACH_ENERGY_PROMPT(
+        store,
+        state,
+        effect.player,
+        PlayerType.BOTTOM_PLAYER,
+        SlotType.DECK,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { min: 1, max: 1, allowCancel: true }
+      );
     }
 
     // Attack 2: Double Slap
-    // TODO: Flip 2 coins. This attack does 30 damage times the number of heads.
+    // Ref: set-boundaries-crossed/black-kyurem.ts (Dual Claw)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        effect.damage = 30 * results.filter(r => r).length;
+      });
     }
 
     return state;

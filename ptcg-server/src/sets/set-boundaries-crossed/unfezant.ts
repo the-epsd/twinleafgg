@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Unfezant extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,15 +41,26 @@ export class Unfezant extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wing Flick
-    // TODO: Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.
+    // Ref: set-dark-explorers/herdier.ts (Roar)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return state;
+    }
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (opponent.bench.some(b => b.cards.length > 0)) {
+        SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+      }
     }
 
     // Attack 2: Air Slash
-    // TODO: Flip a coin. If tails, discard an Energy attached to this Pokémon.
+    // Refs: set-emerging-powers/patrat.ts (coin check), set-emerging-powers/swanna.ts (Air Slash)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
+          DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
+        }
+      });
     }
 
     return state;

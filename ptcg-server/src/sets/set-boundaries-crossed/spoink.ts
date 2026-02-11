@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Spoink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,9 +33,11 @@ export class Spoink extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail Around
-    // TODO: Flip 3 coins. This attack does 10 damage times the number of heads.
+    // Ref: set-boundaries-crossed/black-kyurem.ts (Dual Claw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 3, results => {
+        effect.damage = 10 * results.filter(r => r).length;
+      });
     }
 
     return state;

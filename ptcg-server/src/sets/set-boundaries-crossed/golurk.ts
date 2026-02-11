@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PlayerType, StateUtils, StoreLike, State } from '../../game';
+import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AFTER_ATTACK, DEVOLVE_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Golurk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,18 +38,45 @@ export class Golurk extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
   public fullName: string = 'Golurk BCR';
+  public readonly GHOST_HAMMER_MARKER = 'GHOST_HAMMER_MARKER';
+  public readonly CLEAR_GHOST_HAMMER_MARKER = 'CLEAR_GHOST_HAMMER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Devolution Punch
-    // TODO: Devolve the Defending Pokémon and put the highest Stage evolution card on it into your opponent's hand.
+    // Ref: set-lost-thunder/dialga.ts (Turn Back Time)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return state;
+    }
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      DEVOLVE_POKEMON(store, state, opponent.active, opponent.hand);
     }
 
     // Attack 2: Ghost Hammer
-    // TODO: During your opponent's next turn, this Pokémon has no Weakness.
+    // Ref: set-primal-clash/gardevoir-ex.ts (Shining Wind)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.active.marker.addMarker(this.GHOST_HAMMER_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_GHOST_HAMMER_MARKER, this);
+    }
+
+    if (effect instanceof CheckPokemonStatsEffect) {
+      const player = StateUtils.findOwner(state, effect.target);
+      if (player.active.marker.hasMarker(this.GHOST_HAMMER_MARKER, this)) {
+        effect.weakness = [];
+      }
+    }
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.marker.hasMarker(this.CLEAR_GHOST_HAMMER_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_GHOST_HAMMER_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        cardList.marker.removeMarker(this.GHOST_HAMMER_MARKER, this);
+      });
     }
 
     return state;

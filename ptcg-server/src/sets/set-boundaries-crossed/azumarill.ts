@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Azumarill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,15 +39,20 @@ export class Azumarill extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deep Dive
-    // TODO: Flip 2 coins. For each heads, heal 40 damage from this Pokémon.
+    // Refs: set-noble-victories/stunfisk.ts (coin handling), set-noble-victories/audino.ts (self-heal)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        const heads = results.filter(r => r).length;
+        if (heads > 0) {
+          HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 40 * heads);
+        }
+      });
     }
 
     // Attack 2: Aqua Sonic
-    // TODO: This attack's damage isn't affected by Resistance.
+    // Ref: set-noble-victories/mienshao.ts (Feint)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      effect.ignoreResistance = true;
     }
 
     return state;

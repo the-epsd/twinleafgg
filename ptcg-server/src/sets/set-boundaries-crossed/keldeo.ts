@@ -5,6 +5,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -39,9 +40,16 @@ export class Keldeo extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Hydro Pump
-    // TODO: Does 10 more damage for each [W] Energy attached to this Pokémon.
+    // Ref: set-vivid-voltage/wailmer.ts (Hydro Pump)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(effect.player, effect.player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      const totalWaterEnergy = checkProvidedEnergy.energyMap.reduce((sum, em) => {
+        return sum + em.provides.filter(type => type === CardType.WATER || type === CardType.ANY).length;
+      }, 0);
+
+      effect.damage += totalWaterEnergy * 10;
     }
 
     return state;

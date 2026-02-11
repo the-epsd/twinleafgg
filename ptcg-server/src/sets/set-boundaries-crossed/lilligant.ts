@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, DRAW_CARDS_UNTIL_CARDS_IN_HAND, HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,15 +41,20 @@ export class Lilligant extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Return
-    // TODO: Draw cards until you have 6 cards in your hand.
+    // Ref: set-dark-explorers/klinklang.ts (Draw In)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(effect.player, 6);
     }
 
     // Attack 2: Magical Leaf
-    // TODO: Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.
+    // Refs: set-emerging-powers/darmanitan.ts (Rock Smash), set-noble-victories/audino.ts (Doze Off)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          effect.damage += 30;
+          HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
+        }
+      });
     }
 
     return state;

@@ -6,7 +6,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Emboar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,15 +42,15 @@ export class Emboar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Firebreathing
-    // TODO: Flip a coin. If heads, this attack does 30 more damage.
+    // Ref: set-emerging-powers/darmanitan.ts (Rock Smash)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 30);
     }
 
     // Attack 2: Fire Blast
-    // TODO: Discard an Energy attached to this Pokémon.
+    // Ref: set-emerging-powers/simisear.ts (Flamethrower)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
 
     return state;

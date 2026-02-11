@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Serperior extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,15 +40,17 @@ export class Serperior extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Slash
-    // TODO: Flip 2 coins. This attack does 50 damage times the number of heads.
+    // Ref: set-boundaries-crossed/black-kyurem.ts (Dual Claw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        effect.damage = 50 * results.filter(r => r).length;
+      });
     }
 
     // Attack 2: Mega Drain
-    // TODO: Heal 30 damage from this Pokémon.
+    // Ref: set-noble-victories/audino.ts (Doze Off)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }
 
     return state;

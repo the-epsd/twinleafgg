@@ -3,10 +3,12 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { PlayerType, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
+import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class WhiteKyuremEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -39,15 +41,30 @@ export class WhiteKyuremEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Stream
-    // TODO: Flip a coin. If heads, attach a basic Energy card from your discard pile to this Pokémon.
+    // Ref: set-black-and-white/pignite.ts (Flame Charge)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
+          return;
+        }
+        state = ATTACH_ENERGY_PROMPT(
+          store,
+          state,
+          effect.player,
+          PlayerType.BOTTOM_PLAYER,
+          SlotType.DISCARD,
+          [SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 1, max: 1, allowCancel: true }
+        );
+      });
     }
 
     // Attack 2: Ice Burn
-    // TODO: Discard 2 [R] Energy attached to this Pokémon. The Defending Pokémon is now Burned.
+    // Refs: set-ancient-origins/hoopa-ex.ts (multi-energy discard), set-emerging-powers/darmanitan.ts (Fire Punch)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, CardType.FIRE);
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
     }
 
     return state;

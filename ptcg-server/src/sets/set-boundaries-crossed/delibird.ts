@@ -6,7 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
+import { COIN_FLIP_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Delibird extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,15 +39,27 @@ export class Delibird extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Present
-    // TODO: Flip a coin. If heads, search your deck for a card and put it into your hand. Shuffle your deck afterward.
+    // Refs: set-dark-explorers/scrafty.ts (coin handling), set-boundaries-crossed/skyla.ts (search deck to hand)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          SEARCH_DECK_FOR_CARDS_TO_HAND(
+            store,
+            state,
+            effect.player,
+            this,
+            {},
+            { min: 1, max: 1, allowCancel: false },
+            this.attacks[0]
+          );
+        }
+      });
     }
 
     // Attack 2: Icy Wind
-    // TODO: The Defending Pokémon is now Asleep.
+    // Ref: set-noble-victories/cryogonal.ts (Frozen Whirlpool)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
     }
 
     return state;

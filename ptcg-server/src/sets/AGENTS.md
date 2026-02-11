@@ -46,6 +46,18 @@ grep -r "DealDamageEffect" ptcg-server/src/sets/ --include="*.ts" -l
 
 Read the matching files. Use them as your reference implementation.
 
+**Cite your references.** When you implement an effect based on a reference card, replace the `// TODO:` comment with a `// Ref:` comment citing the file and attack name you used:
+
+```typescript
+// Single reference:
+// Ref: set-emerging-powers/darmanitan.ts (Rock Smash)
+
+// Multiple references (when combining patterns):
+// Refs: set-noble-victories/stunfisk.ts (coin handling), set-noble-victories/audino.ts (self-heal)
+```
+
+This is **required** for every implemented effect. It helps reviewers verify correctness and helps future agents find examples. The `// Ref:` comment replaces the `// TODO:` line — do not leave both.
+
 ### 3. Check Text-to-Code Patterns
 
 Read **AGENTS-patterns.md** in this directory. It maps common card text phrases directly to code, covering drawing, special conditions, coin flips, damage, healing, switching, energy, searching, and more.
@@ -195,6 +207,8 @@ SWITCH_ACTIVE_WITH_BENCHED(store, state, player)
 COIN_FLIP_PROMPT(store, state, player, callback)
 MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, amount, callback)
 FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, damage)
+FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(store, state, effect, damagePerHeads)
+FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, damagePerHeads)
 ```
 
 ### Blocking / Checks
@@ -206,6 +220,7 @@ BLOCK_IF_DECK_EMPTY(player)
 ### Energy
 ```typescript
 DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, amount, type?)
+DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect)
 ```
 
 For the complete prefab reference with all signatures and imports, read **CLAUDE-prefabs.md**.
@@ -222,6 +237,7 @@ For the complete prefab reference with all signatures and imports, read **CLAUDE
 6. **`effect.preventDefault = true`** to block effects
 7. **Never modify state directly** — use `store.reduceEffect()` to dispatch sub-effects
 8. **Energy symbols in text** — Use `[G]`, `[R]`, `[W]`, `[L]`, `[P]`, `[F]`, `[D]`, `[M]` instead of "Grass", "Fire", etc.
+9. **Cite your references** — Replace `// TODO:` with `// Ref: set-name/file.ts (Attack Name)` for every implemented effect
 
 ---
 

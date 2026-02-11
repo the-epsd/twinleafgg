@@ -6,7 +6,16 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import {
+  AFTER_ATTACK,
+  BLOCK_RETREAT,
+  BLOCK_RETREAT_IF_MARKER,
+  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  WAS_ATTACK_USED
+} from '../../game/store/prefabs/prefabs';
 
 export class Gliscor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,16 +49,24 @@ export class Gliscor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Ring
-    // TODO: The Defending Pokémon is now Poisoned. The Defending Pokémon can't retreat during your opponent's next turn.
+    // Refs: set-boundaries-crossed/croagunk.ts (Poison), set-temporal-forces/totodile.ts (retreat lock)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+      BLOCK_RETREAT(store, state, effect, this);
     }
 
     // Attack 2: Night Slash
-    // TODO: Switch this Pokémon with 1 of your Benched Pokémon.
+    // Ref: set-journey-together/accelgor.ts (Poisonous Ploy)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      return state;
     }
+
+    if (AFTER_ATTACK(effect, 1, this)) {
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
+    }
+
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     return state;
   }

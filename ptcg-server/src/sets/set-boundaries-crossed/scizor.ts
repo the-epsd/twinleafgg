@@ -3,9 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { PlayerType, StateUtils, StoreLike, State } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Scizor extends PokemonCard {
@@ -37,18 +39,41 @@ export class Scizor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor';
   public fullName: string = 'Scizor BCR';
+  public readonly STEEL_SLASH_MARKER = 'STEEL_SLASH_MARKER';
+  public readonly CLEAR_STEEL_SLASH_MARKER = 'CLEAR_STEEL_SLASH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steel Slash
-    // TODO: During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-EX.
+    // Refs: set-paldea-evolved/noivern-ex.ts (targeted prevention marker), set-furious-fists/hawlucha.ts (CardTag.POKEMON_EX check)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.active.marker.addMarker(this.STEEL_SLASH_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_STEEL_SLASH_MARKER, this);
+    }
+
+    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.STEEL_SLASH_MARKER, this)) {
+      const sourceCard = effect.source.getPokemonCard();
+      if (sourceCard?.tags.includes(CardTag.POKEMON_EX)) {
+        effect.preventDefault = true;
+      }
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_STEEL_SLASH_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_STEEL_SLASH_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        cardList.marker.removeMarker(this.STEEL_SLASH_MARKER, this);
+      });
     }
 
     // Attack 2: Slashing Strike
-    // TODO: This Pokémon can't use Slashing Strike during your next turn.
+    // Ref: set-undaunted/scyther.ts (Slashing Strike lock)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Slashing Strike')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Slashing Strike');
+      }
     }
 
     return state;

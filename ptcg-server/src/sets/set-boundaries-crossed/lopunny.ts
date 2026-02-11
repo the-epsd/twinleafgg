@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PlayerType, StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lopunny extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,15 +40,30 @@ export class Lopunny extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Healing Melody
-    // TODO: Flip a coin. If heads, heal 60 damage from each of your Pokémon.
+    // Refs: set-dark-explorers/swanna.ts (Healing Dance), set-dark-explorers/scrafty.ts (coin handling)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
+          return;
+        }
+        effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          const healEffect = new HealEffect(effect.player, cardList, 60);
+          store.reduceEffect(state, healEffect);
+        });
+      });
     }
 
     // Attack 2: Kick Away
-    // TODO: Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.
+    // Ref: set-dark-explorers/herdier.ts (Roar)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      return state;
+    }
+
+    if (AFTER_ATTACK(effect, 1, this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (opponent.bench.some(b => b.cards.length > 0)) {
+        SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+      }
     }
 
     return state;

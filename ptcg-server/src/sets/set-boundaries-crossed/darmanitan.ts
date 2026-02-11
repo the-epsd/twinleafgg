@@ -6,6 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Darmanitan extends PokemonCard {
@@ -41,15 +42,17 @@ export class Darmanitan extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble
-    // TODO: Flip a coin until you get tails. This attack does 20 damage times the number of heads.
+    // Ref: set-mega-evolution/mega-kangaskhan-ex.ts (Rapid-Fire Combo)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(store, state, effect, 20);
     }
 
     // Attack 2: Damage Counterpunch
-    // TODO: If this Pokémon has any damage counters on it, this attack does 60 more damage.
+    // Ref: set-noble-victories/bisharp-2.ts (Metal Claw)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      if (effect.player.active.damage > 0) {
+        effect.damage += 60;
+      }
     }
 
     return state;

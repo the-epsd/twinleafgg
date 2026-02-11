@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vibrava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,15 +40,18 @@ export class Vibrava extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Turn
-    // TODO: Flip 2 coins. This attack does 20 damage times the number of heads.
+    // Ref: set-boundaries-crossed/black-kyurem.ts (Dual Claw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        effect.damage = 20 * results.filter(r => r).length;
+      });
     }
 
     // Attack 2: Sand Pulse
-    // TODO: Does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-temporal-forces/pikachu.ts (Random Spark target damage helper)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const targets = effect.opponent.bench.filter(b => b.cards.length > 0);
+      DAMAGE_OPPONENT_POKEMON(store, state, effect, 10, targets);
     }
 
     return state;

@@ -4,9 +4,12 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, StoreLike, State } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Whimsicott extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,18 +40,62 @@ export class Whimsicott extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
   public fullName: string = 'Whimsicott BCR';
+  public readonly FLUFFY_TAG_MARKER = 'FLUFFY_TAG_MARKER';
+  public readonly CLEAR_FLUFFY_TAG_MARKER = 'CLEAR_FLUFFY_TAG_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fluffy Tag
-    // TODO: Switch this Pokémon with 1 of your Benched Pokémon. During your next turn, the attacks of that Pokémon do 40 more damage to the Active Pokémon (before applying Weakness and Resistance).
+    // Refs: set-boundaries-crossed/celebi-ex.ts (switch flow), set-dark-explorers/dark-claw.ts (Active-only damage boost)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
+
+      if (!hasBenched) {
+        return state;
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), selected => {
+        if (!selected || selected.length === 0) {
+          return;
+        }
+        const target = selected[0];
+        player.switchPokemon(target, store, state);
+        target.marker.addMarker(this.FLUFFY_TAG_MARKER, this);
+        opponent.marker.addMarker(this.CLEAR_FLUFFY_TAG_MARKER, this);
+      });
+    }
+
+    if (effect instanceof DealDamageEffect
+      && effect.source.marker.hasMarker(this.FLUFFY_TAG_MARKER, this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (effect.target === opponent.active && effect.damage > 0) {
+        effect.damage += 40;
+      }
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_FLUFFY_TAG_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_FLUFFY_TAG_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        cardList.marker.removeMarker(this.FLUFFY_TAG_MARKER, this);
+      });
     }
 
     // Attack 2: Stun Spore
-    // TODO: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.
+    // Ref: set-boundaries-crossed/rattata.ts (Paralyzing Gaze)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+        }
+      });
     }
 
     return state;

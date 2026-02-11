@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Darumaka extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,9 +32,13 @@ export class Darumaka extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge
-    // TODO: Flip a coin. If tails, this Pokémon does 10 damage to itself.
+    // Ref: set-noble-victories/stunfisk-2.ts (Thunder)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
+          THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 10);
+        }
+      });
     }
 
     return state;

@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { CardList, GameError, GameMessage, OrderCardsPrompt, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -32,9 +32,30 @@ export class Patrat extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Patrol
-    // TODO: Look at the top 3 cards of your deck and put them back on top of your deck in any order.
+    // Refs: set-x-and-y/braixen.ts (Clairvoyant Eye), set-great-encounters/porygon.ts (Calculate)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+      }
+
+      const deckTop = new CardList();
+      player.deck.moveTo(deckTop, 3);
+
+      return store.prompt(state, new OrderCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARDS_ORDER,
+        deckTop,
+        { allowCancel: false }
+      ), order => {
+        if (order === null) {
+          return state;
+        }
+
+        deckTop.applyOrder(order);
+        deckTop.moveToTopOfDestination(player.deck);
+      });
     }
 
     return state;

@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PlayerType, PowerType, StateUtils, StoreLike, State } from '../../game';
+import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,15 +43,35 @@ export class Vileplume extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Allergy Panic
-    // TODO: Apply Weakness for each Pokémon (both yours and your opponent's) as ×4 instead.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Refs: set-primal-clash/gardevoir-ex.ts (CheckPokemonStatsEffect hook), set-surging-sparks/archaludon-ex.ts (marker gating pattern)
+    if (effect instanceof CheckPokemonStatsEffect) {
+      if ((effect as any).allergyPanicApplied) {
+        return state;
+      }
+
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      let isInPlay = false;
+
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
+        if (card === this) {
+          isInPlay = true;
+        }
+      });
+
+      if (!isInPlay || IS_ABILITY_BLOCKED(store, state, owner, this)) {
+        return state;
+      }
+
+      (effect as any).allergyPanicApplied = true;
+      effect.weakness = effect.weakness.flatMap(w => [w, { ...w }]);
     }
 
     // Attack 1: Pollen Spray
-    // TODO: The Defending Pokémon is now Asleep and Poisoned.
+    // Ref: set-triumphant/haunter.ts (Sleep Poison)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
     }
 
     return state;

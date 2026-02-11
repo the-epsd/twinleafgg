@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StateUtils, StoreLike, State } from '../../game';
+import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,15 +42,29 @@ export class Jellicent extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Stickiness
-    // TODO: The Retreat Cost of each of your opponent's Pokémon in play is Colorless more.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ref: set-team-up/absol.ts (Dark Ambition retreat-cost hook)
+    if (effect instanceof CheckRetreatCostEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (!StateUtils.isPokemonInPlay(opponent, this)) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+        return state;
+      }
+
+      effect.cost.push(CardType.COLORLESS);
     }
 
     // Attack 1: Eerie Light
-    // TODO: Flip a coin. If heads, the Defending Pokémon is now Confused.
+    // Ref: set-noble-victories/yamask.ts (Astonish)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+        }
+      });
     }
 
     return state;

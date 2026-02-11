@@ -6,6 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Toxicroak extends PokemonCard {
@@ -40,15 +42,17 @@ export class Toxicroak extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Revenge
-    // TODO: If any of your Pokémon were Knocked Out by damage from an opponent's attack during his or her last turn, this attack does 70 more damage.
+    // Refs: set-black-and-white/bouffalant.ts (Revenge), set-paradox-rift/chi-yu.ts (MarkerConstants.REVENGE_MARKER)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      if (effect.player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+        effect.damage += 70;
+      }
     }
 
     // Attack 2: Poison Jab
-    // TODO: The Defending Pokémon is now Poisoned.
+    // Ref: set-stormfront/haunter.ts (Poison Breath)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
     }
 
     return state;

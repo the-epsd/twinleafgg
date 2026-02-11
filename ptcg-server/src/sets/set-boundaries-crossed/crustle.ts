@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StateUtils, StoreLike, State } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
+import { DAMAGED_FROM_FULL_HP, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,15 +43,18 @@ export class Crustle extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sturdy
-    // TODO: If this Pokémon has full HP and would be Knocked Out by damage from an attack, this Pokémon is not Knocked Out and its remaining HP becomes 10 instead.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ref: set-lost-thunder/donphan.ts (Sturdy)
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      const player = StateUtils.findOwner(state, effect.target);
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+        effect.surviveOnTenHPReason = this.powers[0].name;
+      }
     }
 
     // Attack 1: Stone Edge
-    // TODO: Flip a coin. If heads, this attack does 20 more damage.
+    // Ref: set-emerging-powers/darmanitan.ts (Rock Smash)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }
 
     return state;

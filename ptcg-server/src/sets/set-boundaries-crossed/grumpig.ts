@@ -6,6 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Grumpig extends PokemonCard {
@@ -40,15 +41,17 @@ export class Grumpig extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psybeam
-    // TODO: The Defending Pokémon is now Confused.
+    // Ref: set-noble-victories/reuniclus-2.ts (Netherworld Gate)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
     }
 
     // Attack 2: Extrasensory
-    // TODO: If you have the same number of cards in your hand as your opponent, this attack does 60 more damage.
+    // Ref: set-emerging-powers/grumpig.ts (Extrasensory)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      if (effect.player.hand.cards.length === effect.opponent.hand.cards.length) {
+        effect.damage += 60;
+      }
     }
 
     return state;

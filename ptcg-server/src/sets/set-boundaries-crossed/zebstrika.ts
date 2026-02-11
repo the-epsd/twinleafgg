@@ -3,10 +3,10 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { PlayerType, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ATTACH_ENERGY_PROMPT, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,15 +39,28 @@ export class Zebstrika extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge
-    // TODO: Search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.
+    // Ref: set-black-and-white/pignite.ts (Flame Charge)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      state = ATTACH_ENERGY_PROMPT(
+        store,
+        state,
+        effect.player,
+        PlayerType.BOTTOM_PLAYER,
+        SlotType.DECK,
+        [SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { min: 1, max: 1, allowCancel: true }
+      );
     }
 
     // Attack 2: Thunder
-    // TODO: Flip a coin. If tails, this Pokémon does 30 damage to itself.
+    // Ref: set-noble-victories/stunfisk-2.ts (Thunder)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
+          THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
+        }
+      });
     }
 
     return state;

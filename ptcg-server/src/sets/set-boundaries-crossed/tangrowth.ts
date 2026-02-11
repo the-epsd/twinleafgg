@@ -5,8 +5,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tangrowth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,15 +42,27 @@ export class Tangrowth extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hundred Furious Lashes
-    // TODO: Does 30 damage times the amount of [G] Energy attached to this Pokémon. This Pokémon can't use Hundred Furious Lashes during your next turn.
+    // Refs: set-vivid-voltage/wailmer.ts (Hydro Pump), set-temporal-forces/torracat.ts (can't use specific attack next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      const totalGrassEnergy = checkProvidedEnergy.energyMap.reduce((sum, em) => {
+        return sum + em.provides.filter(type => type === CardType.GRASS || type === CardType.ANY).length;
+      }, 0);
+
+      effect.damage = totalGrassEnergy * 30;
+
+      if (!player.active.cannotUseAttacksNextTurnPending.includes('Hundred Furious Lashes')) {
+        player.active.cannotUseAttacksNextTurnPending.push('Hundred Furious Lashes');
+      }
     }
 
     // Attack 2: Mega Drain
-    // TODO: Heal 30 damage from this Pokémon.
+    // Ref: set-noble-victories/audino.ts (Doze Off)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }
 
     return state;

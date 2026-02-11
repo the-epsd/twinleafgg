@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StateUtils, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mienshao extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,15 +40,24 @@ export class Mienshao extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knock Off
-    // TODO: Discard a random card from your opponent's hand.
+    // Ref: set-emerging-powers/purrloin.ts (random discard from hand)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (opponent.hand.cards.length === 0) {
+        return state;
+      }
+
+      const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+      const cardToDiscard = opponent.hand.cards[randomIndex];
+      opponent.hand.moveCardTo(cardToDiscard, opponent.discard);
     }
 
     // Attack 2: Double Whip
-    // TODO: Flip 2 coins. This attack does 70 damage times the number of heads.
+    // Ref: set-boundaries-crossed/black-kyurem.ts (Dual Claw)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        effect.damage = 70 * results.filter(r => r).length;
+      });
     }
 
     return state;
