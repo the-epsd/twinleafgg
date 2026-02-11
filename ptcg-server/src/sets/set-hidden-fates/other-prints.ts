@@ -59,6 +59,7 @@ import { TapuKokoGX } from '../set-guardians-rising/tapu-koko-gx';
 import { TapuLeleGX } from '../set-guardians-rising/tapu-lele-gx';
 import { BrocksGrit } from '../set-evolutions/brocks-grit';
 import { Guzma } from '../set-burning-shadows/guzma';
+import { CharizardGX as CharizardGXBUS } from '../set-burning-shadows/charizard-gx';
 
 export class BrocksGritHIF extends BrocksGrit {
   public fullName = 'Brock\'s Grit HIF';
@@ -429,4 +430,10 @@ export class TapuLeleGXHIF extends TapuLeleGX {
   public setNumber = 'SV94';
   public fullName: string = 'Tapu Lele-GX HIF';
   public set = 'HIF';
+}
+
+export class CharizardGXHIF extends CharizardGXBUS {
+  public setNumber = 'SV49'
+  public fullName: string = 'Charizard-GX HIF SV49'
+  public set = 'HIF'
 }

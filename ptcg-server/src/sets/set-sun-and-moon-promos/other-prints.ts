@@ -65,6 +65,7 @@ import { ReshiramCharizardGX } from '../set-unbroken-bonds/reshiram-and-charizar
 import { TapuKoko } from './tapu-koko';
 import { EspeonDeoxysGX } from '../set-unified-minds/espeon-and-deoxys-gx';
 import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
+import { CharizardGX } from '../set-burning-shadows/charizard-gx';
 
 export class UmbreonDarkraiGXSMP extends UmbreonDarkraiGX {
   public fullName = 'Umbreon & Darkrai-GX SMP';
@@ -466,4 +467,10 @@ export class SolgaleoGX3SMP extends SolgaleoGXSMP104 {
   public setNumber = '104a';
   public fullName: string = 'Solgaleo-GX3 SMP';
   public set = 'SMP';
+}
+
+export class CharizardGXSMP60 extends CharizardGX {
+  public setNumber = '60'
+  public fullName: string = 'Charizard-GX SMP 60'
+  public set = 'SMP'
 }

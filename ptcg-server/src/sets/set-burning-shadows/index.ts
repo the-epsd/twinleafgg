@@ -1,8 +1,11 @@
-import { SuperScoopUpBUS, SalazzleGX2BUS, TapuFiniGX3BUS, NecrozmaGX2BUS, MarshadowGX2BUS, DarkraiGX3BUS, GardevoirGX2BUS, NoivernGX2BUS, Acerola3BUS, Kiawe3BUS, Plumeria2BUS, Sophocles2BUS, TapuBuluGX2BUS, SalazzleGX3BUS, TapuFiniGX4BUS, NecrozmaGX3BUS, MarshadowGX3BUS, DarkraiGX4BUS, GardevoirGX3BUS, NoivernGX3BUS, BodybuildingDumbbells2BUS, ChoiceBandBUS, EscapeRopeBUS2BUS, SuperScoopUp2BUS, FireEnergyBUS, DarknessEnergyBUS, FairyEnergyBUS, TapuFiniGX2BUS, DarkraiGX2BUS, Acerola2BUS, Kiawe2BUS } from './other-prints';
+import { SuperScoopUpBUS, SalazzleGX2BUS, TapuFiniGX3BUS, NecrozmaGX2BUS, MarshadowGX2BUS, DarkraiGX3BUS, GardevoirGX2BUS, NoivernGX2BUS, Acerola3BUS, Kiawe3BUS, Plumeria2BUS, Sophocles2BUS, TapuBuluGX2BUS, SalazzleGX3BUS, TapuFiniGX4BUS, NecrozmaGX3BUS, MarshadowGX3BUS, DarkraiGX4BUS, GardevoirGX3BUS, NoivernGX3BUS, BodybuildingDumbbells2BUS, ChoiceBandBUS, EscapeRopeBUS2BUS, SuperScoopUp2BUS, FireEnergyBUS, DarknessEnergyBUS, FairyEnergyBUS, TapuFiniGX2BUS, DarkraiGX2BUS, Acerola2BUS, Kiawe2BUS, CharmanderAlt, CharizardGXBUS150 } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Acerola } from './acerola';
 import { BodybuildingDumbbells } from './bodybuilding-dumbbells';
 import { Bruxish } from './bruxish';
+import { CharizardGX } from './charizard-gx';
+import { Charmander } from './charmander';
+import { Charmeleon } from './charmeleon';
 import { Cutiefly } from './cutiefly';
 import { DarkraiGX } from './darkrai-gx';
 import { Diancie } from './diancie';
@@ -47,6 +50,9 @@ export const setBurningShadows: Card[] = [
   new Acerola(),
   new BodybuildingDumbbells(),
   new Bruxish(),
+  new CharizardGX(),
+  new Charmander(),
+  new Charmeleon(),
   new Cutiefly(),
   new DarkraiGX(),
   new Diancie(),
@@ -79,6 +85,8 @@ export const setBurningShadows: Card[] = [
   new Weavile(),
 
   // Other prints
+  new CharmanderAlt(),
+  new CharizardGXBUS150(),
   new EscapeRopeBUS(),
   new GuzmaBUS(),
   new GuzmaBUS2(),
