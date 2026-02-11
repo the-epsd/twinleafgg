@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardType, isCoreFormat } from '../../game/store/card/card-types';
+import { TrainerType, CardType, Format } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.cards.forEach((c, index) => {
     if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
       pokemons += 1;
-    } else if (c instanceof TrainerCard && (c.trainerType === TrainerType.ITEM || (!isCoreFormat(format) && c.trainerType === TrainerType.TOOL))) {
+    } else if (c instanceof TrainerCard && (c.trainerType === TrainerType.ITEM || (format === Format.SWSH && c.trainerType === TrainerType.TOOL))) {
       itemsOrTools += 1;
     } else {
       blocked.push(index);
