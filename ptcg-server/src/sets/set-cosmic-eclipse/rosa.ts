@@ -82,19 +82,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Rosa extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'CEC';
-
+  public setNumber: string = '204';
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Rosa';
-
   public fullName: string = 'Rosa CEC';
 
-  public setNumber: string = '204';
-
   public text: string =
-    `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.
+    `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent's last turn.
 
 Search your deck for a Pokémon, a Trainer card, and a basic Energy card, reveal them, and put them into your hand. Then, shuffle your deck.`;
 

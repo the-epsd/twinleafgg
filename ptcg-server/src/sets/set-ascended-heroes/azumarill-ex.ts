@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, MoveEnergyPrompt, GameMessage, PlayerType, SlotType, SuperType, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, MoveEnergyPrompt, GameMessage, PlayerType, SlotType, SuperType, StateUtils, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_POWER_USED, ABILITY_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -50,6 +50,9 @@ export class Azumarillex extends PokemonCard {
         transfers = transfers || [];
         if (transfers.length > 0) {
           for (const transfer of transfers) {
+            if (StateUtils.getTarget(state, player, transfer.to) !== StateUtils.findCardList(state, this)) {
+              throw new GameError(GameMessage.INVALID_TARGET);
+            }
             const source = StateUtils.getTarget(state, player, transfer.from);
             const target = StateUtils.getTarget(state, player, transfer.to);
             source.moveCardTo(transfer.card, target);

@@ -16,7 +16,7 @@ export class Briar extends TrainerCard {
   public text: string =
     `You can use this card only if your opponent has exactly 2 Prize cards remaining.
 
-During this turn, if your opponent\'s Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.`;
+During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.`;
 
   public extraPrizes = false;
   

@@ -41,7 +41,7 @@ export class Inteleon extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
-      let leastHP = 9999999999999999;
+      let leastHP = Infinity;
 
       // figuring out which pokemon actually has the least hp
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {

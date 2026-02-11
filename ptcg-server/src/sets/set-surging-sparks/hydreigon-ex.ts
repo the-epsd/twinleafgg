@@ -1,31 +1,23 @@
-import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, CardTag, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, DISCARD_TOP_X_OF_OPPONENTS_DECK, TERA_RULE, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Hydreigonex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Zweilous';
-
   public cardType: CardType = D;
-
   public hp: number = 330;
-
   public weakness = [{ type: G }];
-
   public retreat = [C, C, C];
 
   public attacks = [
     {
-      name: 'Crash Heads',
+      name: 'Crashing Headbutt',
       cost: [D, C],
       damage: 200,
-      text: 'Discard the top 3 cards from your opponent\'s deck.'
+      text: 'Discard the top 3 cards of your opponent\'s deck.'
     },
 
     {
@@ -37,70 +29,26 @@ export class Hydreigonex extends PokemonCard {
   ];
 
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public setNumber: string = '119';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Hydreigon ex';
-
   public fullName: string = 'Hydreigon ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Crash Heads
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    // Tera
+    TERA_RULE(effect, state, this);
 
-      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 3, sourceCard: this, sourceEffect: this.attacks[0] });
-
-      return state;
+    // Crashing Headbutt
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_TOP_X_OF_OPPONENTS_DECK(store, state, effect.player, 3, this, this.attacks[0]);
     }
 
     // Obsidian
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
-      }
-
-      const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-      const count = Math.min(2, benched);
-
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: count, max: count, allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 130);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-      });
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(130, effect, store, state, 2, 2);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Target is not Active
-      if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-    }
     return state;
   }
 }

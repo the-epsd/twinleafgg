@@ -29,6 +29,7 @@ import { Rotom } from './rotom';
 import { Scraggy } from './scraggy';
 import { Snom } from './snom';
 import { Snorunt } from './snorunt';
+import { Spectrier } from './spectrier';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
 import { Wurmple } from './wurmple';
@@ -101,6 +102,7 @@ export const setAscendedHeroes: Card[] = [
   new Silcoon(),
   new Snom(),
   new Snorunt(),
+  new Spectrier(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
   new Wurmple(),

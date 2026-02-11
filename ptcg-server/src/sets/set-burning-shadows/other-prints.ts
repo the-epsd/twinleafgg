@@ -22,6 +22,8 @@ import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { Guzma } from './guzma';
 import { RescueStretcher } from '../set-guardians-rising/rescue-stretcher';
 import { WeaknessPolicy } from '../set-primal-clash/weakness-policy';
+import { Charmander } from './charmander';
+import { CharizardGX } from './charizard-gx';
 
 export class EscapeRopeBUS extends EscapeRope {
   public fullName = 'Escape Rope BUS';
@@ -239,5 +241,17 @@ export class Acerola2BUS extends AcerolaBUS112 {
 export class Kiawe2BUS extends KiaweBUS116 {
   public setNumber = '116a';
   public fullName: string = 'Kiawe2 BUS';
+  public set = 'BUS';
+}
+
+export class CharmanderAlt extends Charmander {
+  public setNumber = '18a';
+  public fullName: string = 'CharmanderAlt BUS';
+  public set = 'BUS';
+}
+
+export class CharizardGXBUS150 extends CharizardGX {
+  public setNumber = '150';
+  public fullName: string = 'Charizard-GX BUS 150';
   public set = 'BUS';
 }

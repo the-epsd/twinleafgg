@@ -19,7 +19,9 @@ export class HolonResearcher extends TrainerCard {
   public fullName: string = 'Holon Researcher DS';
 
   public text: string =
-    'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) that has delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
+    `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
+    
+Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) that has delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

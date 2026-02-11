@@ -1,4 +1,4 @@
-import { SlowpokeHIF, BillsAnalysisHIF, LtSurgesStrategyHIF, MoltresZapdosArticunoGX2HIF, MoltresZapdosArticunoGX3HIF, RowletHIF, DartrixHIF, FroakieFrubblesHIF, FrogadierHIF, ShuppetHIF, InkayHIF, MalamarHIF, PoipoleHIF, SudowoodoHIF, RioluHIF, LucarioHIF, RockruffHIF, BuzzwoleHIF, ZoruaHIF, MagnezoneHIF, RaltsHIF, DiancieHIF, GibleHIF, GabiteHIF, GarchompHIF, Eevee3HIF, NoibatHIF, OranguruHIF, DecidueyeGXHIF, AlolanNinetalesGXHIF, ArticunoGXHIF, GlaceonGXHIF, GreninjaGXHIF, ElectrodeGXHIF, MewtwoGX2HIF, EspeonGXHIF, BanetteGXHIF, NaganadelGXHIF, LucarioGXHIF, LycanrocGXHIF, BuzzwoleGXHIF, DarkraiGXHIF, GuzzlordGXHIF, KartanaGXHIF, GardevoirGXHIF, SylveonGXHIF, NoivernGXHIF, SilvallyGXHIF, DrampaGXHIF, CynthiaHIF, FishermanHSHIF, LadyFLIHIF, AetherParadiseConvserationAreaHIF, BrookletHillHIF, MtCoronetHIF, ShrineOfPunishmentHIF, TapuBuluGXHIF, TapuFiniGXHIF, TapuKokoGXHIF, TapuLeleGXHIF } from './other-prints';
+import { SlowpokeHIF, BillsAnalysisHIF, LtSurgesStrategyHIF, MoltresZapdosArticunoGX2HIF, MoltresZapdosArticunoGX3HIF, RowletHIF, DartrixHIF, FroakieFrubblesHIF, FrogadierHIF, ShuppetHIF, InkayHIF, MalamarHIF, PoipoleHIF, SudowoodoHIF, RioluHIF, LucarioHIF, RockruffHIF, BuzzwoleHIF, ZoruaHIF, MagnezoneHIF, RaltsHIF, DiancieHIF, GibleHIF, GabiteHIF, GarchompHIF, Eevee3HIF, NoibatHIF, OranguruHIF, DecidueyeGXHIF, AlolanNinetalesGXHIF, ArticunoGXHIF, GlaceonGXHIF, GreninjaGXHIF, ElectrodeGXHIF, MewtwoGX2HIF, EspeonGXHIF, BanetteGXHIF, NaganadelGXHIF, LucarioGXHIF, LycanrocGXHIF, BuzzwoleGXHIF, DarkraiGXHIF, GuzzlordGXHIF, KartanaGXHIF, GardevoirGXHIF, SylveonGXHIF, NoivernGXHIF, SilvallyGXHIF, DrampaGXHIF, CynthiaHIF, FishermanHSHIF, LadyFLIHIF, AetherParadiseConvserationAreaHIF, BrookletHillHIF, MtCoronetHIF, ShrineOfPunishmentHIF, TapuBuluGXHIF, TapuFiniGXHIF, TapuKokoGXHIF, TapuLeleGXHIF, CharizardGXHIF } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { AlolanVulpix } from './alolan-vulpix';
 import { Charmander } from './charmander';
@@ -59,6 +59,7 @@ export const setHiddenFates: Card[] = [
   new DecidueyeGXHIF(),
   new AlolanNinetalesGXHIF(),
   new ArticunoGXHIF(),
+  new CharizardGXHIF(),
   new GlaceonGXHIF(),
   new GreninjaGXHIF(),
   new ElectrodeGXHIF(),

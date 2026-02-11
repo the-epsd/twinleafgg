@@ -79,7 +79,7 @@ export class MortysConviction extends TrainerCard {
   public text: string =
     `You can use this card only if you discard another card from your hand.
 
-Draw a card for each of your opponent\'s Benched Pokémon.`;
+Draw a card for each of your opponent's Benched Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

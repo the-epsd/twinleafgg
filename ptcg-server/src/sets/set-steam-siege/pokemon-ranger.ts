@@ -21,7 +21,7 @@ export class PokemonRanger extends TrainerCard {
   public setNumber: string = '104';
 
   public text: string =
-    'Remove all effects of attacks on each player and his' +
+    'Remove all effects of attacks on each player and his ' +
     'or her Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
