@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LeafeonVMAX extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Leafeon V';
 

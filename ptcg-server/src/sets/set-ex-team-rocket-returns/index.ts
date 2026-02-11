@@ -31,6 +31,7 @@ import { Skiploom } from './skiploom';
 import { Spinarak } from './spinarak';
 import { SurpriseTimeMachine } from './surprise-time-machine';
 import { SwoopTeleporter } from './swoop-teleporter';
+import { VentureBomb } from './venture-bomb';
 import { Voltorb } from './voltorb';
 
 export const setEXTeamRocketReturns: Card[] = [
@@ -66,5 +67,6 @@ export const setEXTeamRocketReturns: Card[] = [
   new Spinarak(),
   new SurpriseTimeMachine(),
   new SwoopTeleporter(),
+  new VentureBomb(),
   new Voltorb(),
 ];

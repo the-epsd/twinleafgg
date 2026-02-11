@@ -1,4 +1,5 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CoinFlipPrompt, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, EnergyType, StateUtils } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
@@ -77,11 +78,12 @@ export class MegaAudinoex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const energyCount = opponent.active.energies.cards.filter(card =>
-        card.superType === SuperType.ENERGY
-      ).length;
+      const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
+      store.reduceEffect(state, opponentProvidedEnergy);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap
+        .reduce((left, p) => left + p.provides.length, 0);
 
-      effect.damage = 20 + (80 * energyCount);
+      effect.damage += opponentEnergyCount * 80;
     }
 
     return state;
