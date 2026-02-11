@@ -1,10 +1,10 @@
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, CoinFlipPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
-import { COIN_FLIP_PROMPT, MOVE_CARDS } from './prefabs';
+import { COIN_FLIP_PROMPT, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 
 
 /**
@@ -256,19 +256,9 @@ export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(
   effect: AttackEffect,
   damagePerHeads: number
 ): State {
-  const player = effect.player;
-  const flipCoin = (heads: number): State => {
-    return store.prompt(state, [
-      new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-    ], result => {
-      if (result) {
-        return flipCoin(heads + 1);
-      }
-      effect.damage = damagePerHeads * heads;
-      return state;
-    });
-  };
-  return flipCoin(0);
+  return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, heads => {
+    effect.damage = damagePerHeads * heads;
+  });
 }
 
 export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(
@@ -277,19 +267,9 @@ export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(
   effect: AttackEffect,
   damagePerHeads: number
 ): State {
-  const player = effect.player;
-  const flipCoin = (heads: number): State => {
-    return store.prompt(state, [
-      new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-    ], result => {
-      if (result) {
-        return flipCoin(heads + 1);
-      }
-      effect.damage += damagePerHeads * heads;
-      return state;
-    });
-  };
-  return flipCoin(0);
+  return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, heads => {
+    effect.damage += damagePerHeads * heads;
+  });
 }
 
 export function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(
