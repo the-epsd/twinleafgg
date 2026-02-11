@@ -6,8 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { EnergyCard, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Meloetta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -49,23 +48,14 @@ export class Meloetta extends PokemonCard {
     }
 
     // Attack 2: Echoed Voice
-    // Refs: set-jungle/scyther.ts (Swords Dance), set-lost-thunder/donphan.ts (Rolling Spin)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-        effect.damage += 50;
-      }
-      effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this)) {
-        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      } else {
-        effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      }
-    }
+    // Refs: set-jungle/scyther.ts (Swords Dance), set-lost-thunder/donphan.ts (Rolling Spin), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[1],
+      source: this,
+      bonusDamage: 50,
+      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+    });
 
     return state;
   }

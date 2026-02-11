@@ -4,13 +4,10 @@ import { LugiaEx as LugiaExPLS108 } from '../set-plasma-storm/lugia-ex';
 import { Colress as ColressPLS118 } from '../set-plasma-storm/colress';
 import { Blastoise } from '../set-boundaries-crossed/blastoise';
 import { RandomReceiver } from '../set-dark-explorers/random-receiver';
-import { EscapeRope } from '../set-battle-styles/escape-rope';
+import { ArticunoEx } from './articuno-ex';
+import { CobalionEx } from './cobalion-ex';
+import { Charizard } from '../set-boundaries-crossed/charizard';
 
-export class EscapeRopePLS extends EscapeRope {
-  public set = 'PLS';
-  public setNumber = '120';
-  public fullName = 'Escape Rope PLS';
-}
 export class EviolitePLS extends Eviolite {
   public setNumber = '122';
   public fullName: string = 'Eviolite PLS';
@@ -45,4 +42,22 @@ export class RandomReceiverPLS extends RandomReceiver {
   public setNumber = '138';
   public fullName: string = 'Random Receiver PLS';
   public set = 'PLS';
+}
+
+export class ArticunoEx2 extends ArticunoEx {
+  public set: string = 'PLS';
+  public setNumber: string = '132';
+  public fullName: string = 'Articuno-EX PLS 132';
+}
+
+export class CobalionEx2 extends CobalionEx {
+  public set: string = 'PLS';
+  public setNumber: string = '133';
+  public fullName: string = 'Cobalion-EX PLS 133';
+}
+
+export class CharizardPLS extends Charizard {
+  public set: string = 'PLS';
+  public setNumber: string = '136';
+  public fullName: string = 'Charizard PLS';
 }

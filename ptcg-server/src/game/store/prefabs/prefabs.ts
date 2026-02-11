@@ -1,14 +1,15 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseEnergyPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { TrainerEffect, AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
 import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
-import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
+import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPokemonTypeEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, MoveCardsEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
-import { MoveCardsEffect } from '../effects/game-effects';
+import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -131,6 +132,300 @@ export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike,
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
   effect.damage += damage;
   return state;
+}
+
+export interface NextTurnAttackBonusOptions {
+  attack: Attack;
+  source: Card;
+  bonusDamage: number;
+  bonusMarker: string;
+  clearMarker: string;
+}
+
+/**
+ * Standard marker lifecycle for:
+ * "During your next turn, this Pokemon's [Attack Name] attack does [N] more damage."
+ *
+ * Applies bonus when the same attack is used while marker is active and clears after that next turn.
+ */
+export function NEXT_TURN_ATTACK_BONUS(effect: Effect, options: NextTurnAttackBonusOptions): void {
+  const { attack, source, bonusDamage, bonusMarker, clearMarker } = options;
+
+  if (effect instanceof AttackEffect && effect.attack === attack) {
+    // Guard against copied attacks: only apply when this source card is the attacker.
+    if (source instanceof PokemonCard && effect.source.getPokemonCard() !== source) {
+      return;
+    }
+
+    if (HAS_MARKER(bonusMarker, effect.player, source)) {
+      effect.damage += bonusDamage;
+    }
+    REMOVE_MARKER(clearMarker, effect.player, source);
+    ADD_MARKER(bonusMarker, effect.player, source);
+  }
+
+  if (effect instanceof EndTurnEffect && HAS_MARKER(bonusMarker, effect.player, source)) {
+    if (HAS_MARKER(clearMarker, effect.player, source)) {
+      REMOVE_MARKER(bonusMarker, effect.player, source);
+      REMOVE_MARKER(clearMarker, effect.player, source);
+    } else {
+      ADD_MARKER(clearMarker, effect.player, source);
+    }
+  }
+}
+
+export interface NextTurnAttackBaseDamageOptions {
+  setupAttack: Attack;
+  boostedAttack: Attack;
+  source: Card;
+  baseDamage: number;
+  bonusMarker: string;
+  clearMarker: string;
+}
+
+/**
+ * Standard marker lifecycle for:
+ * "During your next turn, this Pokemon's [Attack Name] attack's base damage is [N]."
+ *
+ * `setupAttack` is the attack that applies the marker and `boostedAttack` is the attack
+ * whose base damage is overridden during the next turn.
+ */
+export function NEXT_TURN_ATTACK_BASE_DAMAGE(effect: Effect, options: NextTurnAttackBaseDamageOptions): void {
+  const { setupAttack, boostedAttack, source, baseDamage, bonusMarker, clearMarker } = options;
+
+  if (effect instanceof AttackEffect) {
+    // Guard against copied attacks: only apply when this source card is the attacker.
+    if (source instanceof PokemonCard && effect.source.getPokemonCard() !== source) {
+      return;
+    }
+
+    if (effect.attack === boostedAttack && HAS_MARKER(bonusMarker, effect.player, source)) {
+      effect.damage = baseDamage;
+    }
+
+    if (effect.attack === setupAttack) {
+      REMOVE_MARKER(clearMarker, effect.player, source);
+      ADD_MARKER(bonusMarker, effect.player, source);
+    }
+  }
+
+  if (effect instanceof EndTurnEffect && HAS_MARKER(bonusMarker, effect.player, source)) {
+    if (HAS_MARKER(clearMarker, effect.player, source)) {
+      REMOVE_MARKER(bonusMarker, effect.player, source);
+      REMOVE_MARKER(clearMarker, effect.player, source);
+    } else {
+      ADD_MARKER(clearMarker, effect.player, source);
+    }
+  }
+}
+
+export interface CopyBenchAttackOptions {
+  allowCancel?: boolean;
+  throwIfNoBenchedPokemon?: boolean;
+  disallowCopycatAttack?: boolean;
+}
+
+function* copyBenchAttackGenerator(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  options: CopyBenchAttackOptions
+): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  const { allowCancel = false, throwIfNoBenchedPokemon = true, disallowCopycatAttack = true } = options;
+
+  const hasBenchedPokemon = player.bench.some(b => b.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    if (throwIfNoBenchedPokemon) {
+      throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+    }
+    return state;
+  }
+
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel }
+  ), results => {
+    targets = results || [];
+    next();
+  });
+
+  if (targets.length === 0) {
+    return state;
+  }
+
+  const benchedPokemon = targets[0];
+  const benchedCard = benchedPokemon.getPokemonCard();
+  if (benchedCard === undefined || benchedCard.attacks.length === 0) {
+    return state;
+  }
+
+  let selected: Attack | null = null;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [benchedCard],
+    { allowCancel }
+  ), result => {
+    selected = result;
+    next();
+  });
+
+  const copiedAttack = selected as Attack | null;
+  if (copiedAttack === null) {
+    return state;
+  }
+
+  if (disallowCopycatAttack && copiedAttack.copycatAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: copiedAttack.name
+  });
+
+  const attackEffect = new AttackEffect(player, opponent, copiedAttack);
+  store.reduceEffect(state, attackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  return state;
+}
+
+/**
+ * Generic implementation for:
+ * "Choose 1 of your Benched Pokemon's attacks and use it as this attack."
+ *
+ * Call this inside your WAS_ATTACK_USED(...) block (optionally coin-gated).
+ */
+export function COPY_BENCH_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  options: CopyBenchAttackOptions = {}
+): State {
+  const generator = copyBenchAttackGenerator(() => generator.next(), store, state, effect, options);
+  return generator.next().value;
+}
+
+export interface ToolActiveDamageBonusOptions {
+  damageBonus: number;
+  sourcePokemonName?: string;
+  sourceCardType?: CardType;
+  sourceCardTag?: CardTag;
+}
+
+/**
+ * Standard Tool damage hook for text like:
+ * "If this card is attached to [condition], each of its attacks does [N] more damage
+ * to the Active Pokemon (before applying Weakness and Resistance)."
+ */
+export function TOOL_ACTIVE_DAMAGE_BONUS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  tool: TrainerCard,
+  options: ToolActiveDamageBonusOptions
+): void {
+  if (!(effect instanceof DealDamageEffect) || !effect.source.tools.includes(tool)) {
+    return;
+  }
+
+  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
+    return;
+  }
+
+  const sourcePokemon = effect.source.getPokemonCard();
+  if (sourcePokemon === undefined) {
+    return;
+  }
+
+  if (options.sourcePokemonName !== undefined && sourcePokemon.name !== options.sourcePokemonName) {
+    return;
+  }
+
+  if (options.sourceCardTag !== undefined && !sourcePokemon.tags.includes(options.sourceCardTag)) {
+    return;
+  }
+
+  if (options.sourceCardType !== undefined) {
+    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.source);
+    store.reduceEffect(state, checkPokemonTypeEffect);
+    if (!checkPokemonTypeEffect.cardTypes.includes(options.sourceCardType)) {
+      return;
+    }
+  }
+
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  if (effect.target !== opponent.active || effect.damage <= 0) {
+    return;
+  }
+
+  effect.damage += options.damageBonus;
+}
+
+export interface ToolSetHpIfOptions {
+  hp: number;
+  sourcePokemonName?: string;
+  sourceCardType?: CardType;
+  sourceCardTag?: CardTag;
+}
+
+/**
+ * Standard Tool HP hook for text like:
+ * "If this card is attached to [condition], its maximum HP is [N]."
+ */
+export function TOOL_SET_HP_IF(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  tool: TrainerCard,
+  options: ToolSetHpIfOptions
+): void {
+  if (!(effect instanceof CheckHpEffect) || !effect.target.tools.includes(tool)) {
+    return;
+  }
+
+  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
+    return;
+  }
+
+  const sourcePokemon = effect.target.getPokemonCard();
+  if (sourcePokemon === undefined) {
+    return;
+  }
+
+  if (options.sourcePokemonName !== undefined && sourcePokemon.name !== options.sourcePokemonName) {
+    return;
+  }
+
+  if (options.sourceCardTag !== undefined && !sourcePokemon.tags.includes(options.sourceCardTag)) {
+    return;
+  }
+
+  if (options.sourceCardType !== undefined) {
+    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
+    store.reduceEffect(state, checkPokemonTypeEffect);
+    if (!checkPokemonTypeEffect.cardTypes.includes(options.sourceCardType)) {
+      return;
+    }
+  }
+
+  effect.hp = options.hp;
 }
 
 export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(player: Player, store: StoreLike, state: State) {
@@ -318,6 +613,40 @@ export function DEVOLVE_POKEMON(store: StoreLike, state: State, target: PokemonC
     target.clearEffects();
     target.pokemonPlayedTurn = state.turn;
   }
+}
+
+export type DevolutionDestination = 'hand' | 'deck' | 'discard' | 'lostzone';
+
+/**
+ * Compound helper for text like:
+ * "Devolve the Defending Pokemon and put the highest Stage Evolution card on it into your opponent's hand/deck/discard/Lost Zone."
+ */
+export function DEVOLVE_DEFENDING_AFTER_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  index: number,
+  user: PokemonCard,
+  destination: DevolutionDestination = 'hand'
+): State {
+  if (!AFTER_ATTACK(effect, index, user)) {
+    return state;
+  }
+
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  let destinationList: CardList = opponent.hand;
+  if (destination === 'deck') {
+    destinationList = opponent.deck;
+  } else if (destination === 'discard') {
+    destinationList = opponent.discard;
+  } else if (destination === 'lostzone') {
+    destinationList = opponent.lostzone;
+  }
+
+  DEVOLVE_POKEMON(store, state, opponent.active, destinationList);
+  return state;
 }
 
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number, applyWeaknessAndResistance: boolean = false, slots?: SlotType[]) {
@@ -979,6 +1308,18 @@ export function HAS_MARKER(marker: string, owner: Player | Card | PokemonCard | 
   return owner.marker.hasMarker(marker, source);
 }
 
+/**
+ * Enforce "Once during your turn" for activated abilities.
+ * Call this after all card-specific validation, right before applying the ability effect.
+ * Pair with REMOVE_MARKER_AT_END_OF_TURN(effect, marker, source) in reduceEffect.
+ */
+export function USE_ABILITY_ONCE_PER_TURN(player: Player, marker: string, source: Card) {
+  if (HAS_MARKER(marker, player, source)) {
+    throw new GameError(GameMessage.POWER_ALREADY_USED);
+  }
+  ADD_MARKER(marker, player, source);
+}
+
 export function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card) {
   if (HAS_MARKER(marker, owner, source))
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
@@ -1504,6 +1845,53 @@ export function DAMAGED_FROM_FULL_HP(store: StoreLike, state: State, effect: Put
   const checkHpEffect = new CheckHpEffect(player, target);
   store.reduceEffect(state, checkHpEffect);
   return effect.damage >= checkHpEffect.hp;
+}
+
+export interface SurviveOnTenIfFullHpOptions {
+  reason: string;
+  source: PokemonCard | TrainerCard;
+  checkBlocked?: boolean;
+}
+
+/**
+ * Compound helper for text like:
+ * "If this Pokemon has full HP and would be Knocked Out by damage from an attack,
+ * this Pokemon is not Knocked Out and its remaining HP becomes 10 instead."
+ */
+export function SURVIVE_ON_TEN_IF_FULL_HP(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  options: SurviveOnTenIfFullHpOptions
+): void {
+  if (!(effect instanceof PutDamageEffect)) {
+    return;
+  }
+
+  const { reason, source, checkBlocked = true } = options;
+  const player = StateUtils.findOwner(state, effect.target);
+
+  if (source instanceof PokemonCard) {
+    if (!effect.target.cards.includes(source)) {
+      return;
+    }
+    if (checkBlocked && IS_ABILITY_BLOCKED(store, state, player, source)) {
+      return;
+    }
+  } else if (source instanceof TrainerCard) {
+    if (!effect.target.tools.includes(source)) {
+      return;
+    }
+    if (checkBlocked && IS_TOOL_BLOCKED(store, state, player, source)) {
+      return;
+    }
+  } else {
+    return;
+  }
+
+  if (DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+    effect.surviveOnTenHPReason = reason;
+  }
 }
 
 /**

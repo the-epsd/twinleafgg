@@ -7,6 +7,7 @@ Card text from different Pokemon TCG eras uses varying grammar. This reference m
 - [Special Conditions](#special-conditions)
 - [Coin Flips](#coin-flips)
 - [Damage Effects](#damage-effects)
+- [Compound Prefab Patterns (Use First)](#compound-prefab-patterns-use-first)
 - [Healing](#healing)
 - [Switching Pokemon](#switching-pokemon)
 - [Energy Manipulation](#energy-manipulation)
@@ -171,6 +172,29 @@ PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(5, store, state, effect);  // 50 damag
 
 ---
 
+## Compound Prefab Patterns (Use First)
+
+Use these before writing custom marker/prompt logic.
+
+| Card Text Pattern | Preferred Code | Notes |
+|-----------|------|------|
+| "During your next turn, this Pokemon's [Attack] attack does X more damage." | `NEXT_TURN_ATTACK_BONUS(effect, { attack: this.attacks[i], source: this, bonusDamage: X, bonusMarker: '...', clearMarker: '...' })` | For named-attack, one-turn-later self-buffs. |
+| "During your next turn, this Pokemon's [Attack] attack's base damage is N." | `NEXT_TURN_ATTACK_BASE_DAMAGE(effect, { setupAttack: this.attacks[i], boostedAttack: this.attacks[j], source: this, baseDamage: N, bonusMarker: '...', clearMarker: '...' })` | Use `setupAttack===boostedAttack` when the same attack sets and receives the next-turn base-damage override. |
+| "Choose 1 of your Benched Pokemon's attacks and use it as this attack." | `COPY_BENCH_ATTACK(store, state, effect, options?)` | Optionally wrap in `COIN_FLIP_PROMPT` when coin-gated. |
+| "If this card is attached to [condition], each of its attacks does X more damage to the Active Pokemon..." | `TOOL_ACTIVE_DAMAGE_BONUS(store, state, effect, this, { damageBonus: X, ...condition })` | Tool cards only. Works on `DealDamageEffect`. |
+| "If this card is attached to [condition], its maximum HP is N." | `TOOL_SET_HP_IF(store, state, effect, this, { hp: N, ...condition })` | Tool cards only. Works on `CheckHpEffect`. |
+| "If this Pokemon has full HP and would be Knocked Out by damage from an attack, it is not Knocked Out and its remaining HP becomes 10." | `SURVIVE_ON_TEN_IF_FULL_HP(store, state, effect, { source: this, reason: this.powers[0].name })` | Ability-style Sturdy effects. Tool sources also supported. |
+| "Devolve the Defending Pokemon and put the highest Stage Evolution card on it into your opponent's [hand/deck/discard/Lost Zone]." | `DEVOLVE_DEFENDING_AFTER_ATTACK(store, state, effect, attackIndex, this, 'hand')` | Handles AFTER_ATTACK timing + destination. |
+
+**Import:** `from '../../game/store/prefabs/prefabs'`
+
+**Condition keys for Tool prefabs:**
+- `sourcePokemonName`
+- `sourceCardType`
+- `sourceCardTag`
+
+---
+
 ## Healing
 
 | Card Text | Code |
@@ -330,6 +354,23 @@ if (effect instanceof EndTurnEffect) {
 | Card Text | Code |
 |-----------|------|
 | "The Defending Pokemon can't retreat during your opponent's next turn." | `BLOCK_RETREAT(store, state, effect, this)` |
+
+### Activated Ability Limit ("Once during your turn")
+
+```typescript
+public readonly MY_ABILITY_MARKER = 'MY_ABILITY_MARKER';
+
+if (WAS_POWER_USED(effect, 0, this)) {
+  const player = effect.player;
+
+  // Card-specific validation first...
+  USE_ABILITY_ONCE_PER_TURN(player, this.MY_ABILITY_MARKER, this);
+  ABILITY_USED(player, this);
+  // Ability effect...
+}
+
+REMOVE_MARKER_AT_END_OF_TURN(effect, this.MY_ABILITY_MARKER, this);
+```
 
 ---
 

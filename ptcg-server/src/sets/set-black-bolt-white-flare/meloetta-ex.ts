@@ -4,9 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
 // Energy type constants (P, C, D, F) are assumed to be globally available as in other SV11B cards
 
 export class Meloettaex extends PokemonCard {
@@ -38,7 +37,6 @@ export class Meloettaex extends PokemonCard {
   public name: string = 'Meloetta ex';
   public fullName: string = 'Meloetta ex SV11B';
 
-  public usedAttack: boolean = false;
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
@@ -50,31 +48,14 @@ export class Meloettaex extends PokemonCard {
       effect.attack.canUseOnFirstTurn = true;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      this.usedAttack = true;
-    }
-
-    if (effect instanceof BeginTurnEffect && this.usedAttack) {
-      this.usedAttack = false;
-    }
-
-    if (effect instanceof EndTurnEffect && !this.usedAttack) {
-      this.usedAttack = false;
-      REMOVE_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this);
-      REMOVE_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, effect.player, this);
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this)) {
-      ADD_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, effect.player, this);
-    }
-
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Check marker
-      if (HAS_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this)) {
-        effect.damage += 80;
-      }
-      ADD_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this);
-    }
+    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[0],
+      source: this,
+      bonusDamage: 80,
+      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+    });
     return state;
   }
 }

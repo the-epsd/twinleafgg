@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../game/store/prefabs/prefabs';
 
 export class Scyther extends PokemonCard {
 
@@ -49,25 +48,15 @@ export class Scyther extends PokemonCard {
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this)) {
-      effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-      effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-        effect.damage += 30;
-      }
-    }
+    // Refs: set-next-destinies/cubchoo.ts (Sniffle/Belt), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BASE_DAMAGE)
+    NEXT_TURN_ATTACK_BASE_DAMAGE(effect, {
+      setupAttack: this.attacks[0],
+      boostedAttack: this.attacks[1],
+      source: this,
+      baseDamage: 60,
+      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+    });
 
     return state;
   }

@@ -166,6 +166,21 @@ if (effect instanceof EndTurnEffect) {
 }
 ```
 
+## "Once During Your Turn" Abilities
+
+Use the dedicated prefab for activated abilities:
+```typescript
+if (WAS_POWER_USED(effect, 0, this)) {
+  const player = effect.player;
+  // card-specific validation first...
+  USE_ABILITY_ONCE_PER_TURN(player, this.MY_ABILITY_MARKER, this);
+  ABILITY_USED(player, this);
+  // ability effect...
+}
+
+REMOVE_MARKER_AT_END_OF_TURN(effect, this.MY_ABILITY_MARKER, this);
+```
+
 ---
 
 ## Key Prefabs Quick Reference
@@ -215,6 +230,7 @@ FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect,
 ```typescript
 IS_ABILITY_BLOCKED(store, state, player, card)
 BLOCK_IF_DECK_EMPTY(player)
+USE_ABILITY_ONCE_PER_TURN(player, marker, source)
 ```
 
 ### Energy

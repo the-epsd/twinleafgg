@@ -3,10 +3,7 @@ import { TrainerType, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { StateUtils } from '../../game/store/state-utils';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../game/store/prefabs/prefabs';
 
 
 export class DarkClaw extends TrainerCard {
@@ -29,28 +26,11 @@ export class DarkClaw extends TrainerCard {
     '(before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const sourcePokemon = effect.source;
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
-        return state;
-      }
-
-      // Not active Pokemon
-      if (opponent.active !== effect.target) {
-        return state;
-      }
-
-      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(sourcePokemon);
-      store.reduceEffect(state, checkPokemonTypeEffect);
-
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.DARK) && effect.damage > 0) {
-        effect.damage += 20;
-      }
-    }
+    // Refs: set-boundaries-crossed/crystal-edge.ts (tool active-damage bonus), prefabs/prefabs.ts (TOOL_ACTIVE_DAMAGE_BONUS)
+    TOOL_ACTIVE_DAMAGE_BONUS(store, state, effect, this, {
+      damageBonus: 20,
+      sourceCardType: CardType.DARK
+    });
 
     return state;
   }

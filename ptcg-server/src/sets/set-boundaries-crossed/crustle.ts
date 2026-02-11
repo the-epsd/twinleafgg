@@ -4,11 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StateUtils, StoreLike, State } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
-import { DAMAGED_FROM_FULL_HP, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SURVIVE_ON_TEN_IF_FULL_HP, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -43,13 +42,8 @@ export class Crustle extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sturdy
-    // Ref: set-lost-thunder/donphan.ts (Sturdy)
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const player = StateUtils.findOwner(state, effect.target);
-      if (!IS_ABILITY_BLOCKED(store, state, player, this) && DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
-        effect.surviveOnTenHPReason = this.powers[0].name;
-      }
-    }
+    // Refs: set-lost-thunder/donphan.ts (Sturdy), prefabs/prefabs.ts (SURVIVE_ON_TEN_IF_FULL_HP)
+    SURVIVE_ON_TEN_IF_FULL_HP(store, state, effect, { source: this, reason: this.powers[0].name });
 
     // Attack 1: Stone Edge
     // Ref: set-emerging-powers/darmanitan.ts (Rock Smash)

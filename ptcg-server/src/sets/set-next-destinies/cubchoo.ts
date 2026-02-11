@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../game/store/prefabs/prefabs';
 
 export class Cubchoo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,43 +33,18 @@ export class Cubchoo extends PokemonCard {
   public fullName: string = 'Cubchoo NXD';
 
   public readonly SNIFFLE_MARKER = 'SNIFFLE_MARKER';
+  public readonly SNIFFLE_CLEAR_MARKER = 'SNIFFLE_CLEAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Sniffle - add marker for boosted Belt next turn
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          ADD_MARKER(this.SNIFFLE_MARKER, cardList, this);
-        }
-      });
-    }
-
-    // Belt - check for marker to boost damage
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this && HAS_MARKER(this.SNIFFLE_MARKER, cardList, this)) {
-          effect.damage = 40;
-          REMOVE_MARKER(this.SNIFFLE_MARKER, cardList, this);
-        }
-      });
-    }
-
-    // Remove marker at end of opponent's turn (so it lasts "during your next turn")
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Clean up YOUR markers when OPPONENT's turn ends
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          REMOVE_MARKER(this.SNIFFLE_MARKER, cardList, this);
-        }
-      });
-    }
+    // Refs: set-jungle/scyther.ts (Swords Dance), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BASE_DAMAGE)
+    NEXT_TURN_ATTACK_BASE_DAMAGE(effect, {
+      setupAttack: this.attacks[0],
+      boostedAttack: this.attacks[1],
+      source: this,
+      baseDamage: 40,
+      bonusMarker: this.SNIFFLE_MARKER,
+      clearMarker: this.SNIFFLE_CLEAR_MARKER
+    });
 
     return state;
   }

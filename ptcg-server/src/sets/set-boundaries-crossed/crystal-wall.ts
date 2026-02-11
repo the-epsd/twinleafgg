@@ -5,9 +5,8 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { TOOL_SET_HP_IF } from '../../game/store/prefabs/prefabs';
 
 export class CrystalWall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -19,17 +18,11 @@ export class CrystalWall extends TrainerCard {
   public text: string = 'If this card is attached to Black Kyurem-EX, its maximum HP is 300. You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-darkness-ablaze/cape-of-toughness.ts (tool HP modifier)
-    if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
-        return state;
-      }
-
-      const card = effect.target.getPokemonCard();
-      if (card?.name === 'Black Kyurem-EX') {
-        effect.hp = 300;
-      }
-    }
+    // Refs: set-darkness-ablaze/cape-of-toughness.ts (tool HP modifier), prefabs/prefabs.ts (TOOL_SET_HP_IF)
+    TOOL_SET_HP_IF(store, state, effect, this, {
+      hp: 300,
+      sourcePokemonName: 'Black Kyurem-EX'
+    });
 
     return state;
   }

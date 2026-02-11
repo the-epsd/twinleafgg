@@ -5,10 +5,8 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { StateUtils } from '../../game/store/state-utils';
-import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../game/store/prefabs/prefabs';
 
 export class CrystalEdge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -20,22 +18,11 @@ export class CrystalEdge extends TrainerCard {
   public text: string = 'If this card is attached to White Kyurem-EX, each of its attacks does 50 more damage to the Active Pokémon (before applying Weakness and Resistance). You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-dark-explorers/dark-claw.ts (tool active-damage bonus)
-    if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
-        return state;
-      }
-
-      const sourcePokemon = effect.source.getPokemonCard();
-      if (sourcePokemon?.name !== 'White Kyurem-EX') {
-        return state;
-      }
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      if (effect.target === opponent.active && effect.damage > 0) {
-        effect.damage += 50;
-      }
-    }
+    // Refs: set-dark-explorers/dark-claw.ts (tool active-damage bonus), prefabs/prefabs.ts (TOOL_ACTIVE_DAMAGE_BONUS)
+    TOOL_ACTIVE_DAMAGE_BONUS(store, state, effect, this, {
+      damageBonus: 50,
+      sourcePokemonName: 'White Kyurem-EX'
+    });
 
     return state;
   }

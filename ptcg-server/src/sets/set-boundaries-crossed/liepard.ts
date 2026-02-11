@@ -4,77 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack } from '../../game/store/card/pokemon-types';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ChooseAttackPrompt } from '../../game/store/prompts/choose-attack-prompt';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { GameLog, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-
-function* useAssist(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  let targets: any[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), results => {
-    targets = results || [];
-    next();
-  });
-
-  if (targets.length === 0) {
-    return state;
-  }
-
-  const benchedPokemon = targets[0];
-  const benchedCard = benchedPokemon.getPokemonCard();
-  if (benchedCard === undefined || benchedCard.attacks.length === 0) {
-    return state;
-  }
-
-  let selected: Attack | null = null;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [benchedCard],
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
-
-  const attack = selected as Attack | null;
-  if (attack === null || (attack as any).copycatAttack === true) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
-
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COIN_FLIP_PROMPT, COPY_BENCH_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Liepard extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -115,18 +49,13 @@ export class Liepard extends PokemonCard {
     }
 
     // Attack 2: Assist
-    // Refs: set-black-and-white/liepard.ts (Assist), set-vivid-voltage/clefairy.ts (coin-gated copied attack)
+    // Refs: set-black-and-white/liepard.ts (Assist), set-vivid-voltage/clefairy.ts (coin-gated copied attack), prefabs/prefabs.ts (COPY_BENCH_ATTACK)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result) {
           return;
         }
-        const hasBenchedPokemon = effect.player.bench.some(b => b.cards.length > 0);
-        if (!hasBenchedPokemon) {
-          return;
-        }
-        const generator = useAssist(() => generator.next(), store, state, effect);
-        generator.next();
+        state = COPY_BENCH_ATTACK(store, state, effect as AttackEffect, { throwIfNoBenchedPokemon: false });
       });
     }
 

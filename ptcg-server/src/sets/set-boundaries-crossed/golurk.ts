@@ -8,7 +8,7 @@ import { PlayerType, StateUtils, StoreLike, State } from '../../game';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AFTER_ATTACK, DEVOLVE_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DEVOLVE_DEFENDING_AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Golurk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -48,11 +48,7 @@ export class Golurk extends PokemonCard {
       return state;
     }
 
-    if (AFTER_ATTACK(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      DEVOLVE_POKEMON(store, state, opponent.active, opponent.hand);
-    }
+    state = DEVOLVE_DEFENDING_AFTER_ATTACK(store, state, effect, 0, this, 'hand');
 
     // Attack 2: Ghost Hammer
     // Ref: set-primal-clash/gardevoir-ex.ts (Shining Wind)
