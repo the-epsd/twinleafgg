@@ -7,7 +7,10 @@ import { BrocksTrainingMethod } from './brocks-training-method';
 import { BrocksZubat } from './brocks-zubat';
 import { BrocksZubat2 } from './brocks-zubat-2';
 import { ErikasDratini } from './erikas-dratini';
+import { ErikasMaids } from './erikas-maids';
 import { ErikasPerfume } from './erikas-perfume';
+import { ErikasWeepinbell } from './erikas-weepinbell';
+import { ErikasVictreebel } from './erikas-victreebel';
 import { GoodManners } from './good-manners';
 import { MistysPoliwhirl } from './mistys-poliwhirl';
 import { MistysWrath } from './mistys-wrath';
@@ -22,7 +25,10 @@ export const setGymHeros: Card[] = [
   new BrocksZubat(),
   new BrocksZubat2(),
   new ErikasDratini(),
+  new ErikasMaids(),
   new ErikasPerfume(),
+  new ErikasVictreebel(),
+  new ErikasWeepinbell(),
   new GoodManners(),
   new MistysPoliwhirl(),
   new MistysWrath(),
