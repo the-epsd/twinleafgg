@@ -1,0 +1,74 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, PlayerType, SlotType, EnergyCard, GameMessage } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+
+export class Glalie extends PokemonCard {
+  public tags = [CardTag.TEAM_PLASMA];
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom: string = 'Snorunt';
+  public cardType: CardType = W;
+  public hp: number = 100;
+  public weakness = [{ type: M }];
+  public retreat = [C, C];
+
+  public attacks = [
+    {
+      name: 'Powder Snow',
+      cost: [W, C],
+      damage: 30,
+      text: 'The Defending Pok\u00e9mon is now Asleep.'
+    },
+    {
+      name: 'Reflect Energy',
+      cost: [W, C, C],
+      damage: 60,
+      text: 'Move a [W] Energy from this Pok\u00e9mon to 1 of your Benched Pok\u00e9mon.'
+    }
+  ];
+
+  public set: string = 'PLB';
+  public setNumber: string = '22';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Glalie';
+  public fullName: string = 'Glalie PLB';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    }
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+
+      const hasWaterEnergy = player.active.cards.some(c =>
+        c instanceof EnergyCard && c.provides.includes(CardType.WATER)
+      );
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+
+      if (hasWaterEnergy && hasBench) {
+        return store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.active,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, name: 'Water Energy' },
+          { min: 1, max: 1, allowCancel: false }
+        ), transfers => {
+          if (transfers && transfers.length > 0) {
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.active.moveCardTo(transfer.card, target);
+            }
+          }
+        });
+      }
+    }
+
+    return state;
+  }
+}

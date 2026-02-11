@@ -1,0 +1,40 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
+
+export class Horsea extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = W;
+  public hp: number = 60;
+  public weakness = [{ type: L }];
+  public retreat = [C];
+
+  public attacks = [
+    {
+      name: 'Fin Smack',
+      cost: [W],
+      damage: 10,
+      damageCalculation: 'x' as 'x',
+      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+    }
+  ];
+
+  public set: string = 'PLF';
+  public setNumber: string = '18';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Horsea';
+  public fullName: string = 'Horsea PLF';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        const heads = results.filter(r => r).length;
+        effect.damage = 10 * heads;
+      });
+    }
+
+    return state;
+  }
+}
