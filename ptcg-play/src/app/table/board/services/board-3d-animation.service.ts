@@ -43,7 +43,7 @@ export class Board3dAnimationService {
   }
 
   /**
-   * Evolution animation (spin, scale, and glow)
+   * Evolution animation (spin, scale, and glow) - matches 2D board: 1080deg spin, scale 1.3, ~1.5s total
    */
   evolutionAnimation(card: Object3D): Promise<void> {
     return new Promise(resolve => {
@@ -55,19 +55,18 @@ export class Board3dAnimationService {
       });
 
       timeline
-        // Rise up
+        // Rise up (0.4s)
         .to(card.position, {
           y: 2,
           duration: 0.4,
           ease: 'power2.out'
         })
-        // Triple spin
+        // Triple spin (1080deg = 6*PI) + scale up, overlap with rise
         .to(card.rotation, {
-          y: Math.PI * 3,
+          y: Math.PI * 6,
           duration: 0.8,
           ease: 'power2.inOut'
         }, '<')
-        // Scale up
         .to(card.scale, {
           x: 1.3,
           y: 1.3,
@@ -75,7 +74,7 @@ export class Board3dAnimationService {
           duration: 0.4,
           ease: 'back.out(1.7)'
         }, '<')
-        // Settle back down
+        // Settle back down (0.3s)
         .to(card.position, {
           y: 0.1,
           duration: 0.3,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Player, CardList, CardTarget, PlayerType, SlotType, PokemonCardList, CardTag, SuperType, Card, Stage, PokemonCard } from 'ptcg-server';
-import { Vector3, Scene } from 'three';
+import { Vector3, Scene, PerspectiveCamera } from 'three';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -583,6 +583,14 @@ export class Board3dStateSyncService {
    */
   getCardById(cardId: string): Board3dCard | undefined {
     return this.cardsMap.get(cardId);
+  }
+
+  /**
+   * Update all energy sprites to face the camera (billboard behavior).
+   * Call each frame before rendering.
+   */
+  updateBillboards(camera: PerspectiveCamera): void {
+    this.overlayService.updateBillboards(camera);
   }
 
   /**

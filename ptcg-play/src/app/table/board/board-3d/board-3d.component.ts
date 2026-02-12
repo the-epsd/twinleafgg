@@ -20,7 +20,11 @@ import {
   PCFSoftShadowMap,
   ACESFilmicToneMapping,
   Vector3,
-  RepeatWrapping
+  RepeatWrapping,
+  BufferGeometry,
+  BufferAttribute,
+  LineLoop,
+  LineBasicMaterial
 } from 'three';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Board3dAssetLoaderService } from '../services/board-3d-asset-loader.service';
@@ -39,6 +43,7 @@ import { GameService } from '../../../api/services/game.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Object3D } from 'three';
 import { getCameraConfig } from './board-3d-config';
+import { getBenchPositions } from './board-3d-zone-positions';
 
 @UntilDestroy()
 @Component({
@@ -64,6 +69,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   // Board elements
   private boardMesh!: Mesh;
   private boardCenterOverlay!: Mesh;
+
+  // Bench turn-indicator outlines (gray by default, red/blue when that player's turn)
+  private topBenchOutline: LineLoop | null = null;
+  private bottomBenchOutline: LineLoop | null = null;
 
   private animationFrameId: number = 0;
   private needsRender: boolean = true;
@@ -116,6 +125,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
     const topBenchSize = this.topPlayer?.bench?.length ?? 5;
     this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(() => {
+      this.createBenchOutlines(bottomBenchSize, topBenchSize);
       this.markDirty();
     });
 
@@ -141,6 +151,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       untilDestroyed(this)
     ).subscribe(() => {
       this.updateSelectionVisuals();
+    });
+
+    // Evolution animation - play only when evolution event fires (not on state sync)
+    this.boardInteractionService.evolutionAnimation$.pipe(
+      untilDestroyed(this)
+    ).subscribe(event => {
+      this.handleEvolutionAnimationEvent(event);
     });
 
   }
@@ -206,6 +223,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Clean up wireframes
     this.wireframeService.dispose(this.scene);
+
+    // Clean up bench outline meshes
+    this.disposeBenchOutlines();
 
     // Clean up service state to prevent stale references on mode switch
     this.stateSync.dispose(this.scene);
@@ -332,6 +352,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
+    this.stateSync.updateBillboards(this.camera);
     this.postProcessingService.render();
     this.needsRender = false;
   };
@@ -450,6 +471,9 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         // Update drop zones if bench size changed
         this.updateDropZonesForBenchSize();
 
+        // Update bench outline colors based on whose turn it is
+        this.updateBenchOutlineColors();
+
         // Update interactive objects cache for optimized raycasting
         this.interactionService.updateInteractiveObjects(this.scene);
 
@@ -469,8 +493,124 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Recreate drop zones with updated bench sizes
     this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(() => {
+      this.createBenchOutlines(bottomBenchSize, topBenchSize);
       this.markDirty();
     });
+  }
+
+  /**
+   * Create rectangular outline meshes around each player's bench area.
+   * Gray by default; colors update based on whose turn it is.
+   */
+  private createBenchOutlines(bottomBenchSize: number, topBenchSize: number): void {
+    this.disposeBenchOutlines();
+
+    const padding = 2;
+    const benchHeight = 3;
+
+    // Create top player bench outline
+    const topPositions = getBenchPositions(topBenchSize, PlayerType.TOP_PLAYER);
+    if (topPositions.length > 0) {
+      const topBounds = this.getBenchOutlineBounds(topPositions, padding, benchHeight);
+      this.topBenchOutline = this.createBenchOutlineLineLoop(topBounds);
+      this.topBenchOutline.userData.isBenchOutline = true;
+      this.scene.add(this.topBenchOutline);
+    }
+
+    // Create bottom player bench outline
+    const bottomPositions = getBenchPositions(bottomBenchSize, PlayerType.BOTTOM_PLAYER);
+    if (bottomPositions.length > 0) {
+      const bottomBounds = this.getBenchOutlineBounds(bottomPositions, padding, benchHeight);
+      this.bottomBenchOutline = this.createBenchOutlineLineLoop(bottomBounds);
+      this.bottomBenchOutline.userData.isBenchOutline = true;
+      this.scene.add(this.bottomBenchOutline);
+    }
+
+    this.updateBenchOutlineColors();
+  }
+
+  private getBenchOutlineBounds(
+    positions: Vector3[],
+    padding: number,
+    benchHeight: number
+  ): { minX: number; maxX: number; minZ: number; maxZ: number } {
+    const xs = positions.map(p => p.x);
+    const zs = positions.map(p => p.z);
+    const centerZ = zs[0];
+    return {
+      minX: Math.min(...xs) - padding,
+      maxX: Math.max(...xs) + padding,
+      minZ: centerZ - benchHeight,
+      maxZ: centerZ + benchHeight
+    };
+  }
+
+  private createBenchOutlineLineLoop(bounds: {
+    minX: number;
+    maxX: number;
+    minZ: number;
+    maxZ: number;
+  }): LineLoop {
+    const y = 0.02;
+    const vertices = new Float32Array([
+      bounds.minX, y, bounds.minZ,
+      bounds.maxX, y, bounds.minZ,
+      bounds.maxX, y, bounds.maxZ,
+      bounds.minX, y, bounds.maxZ
+    ]);
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new BufferAttribute(vertices, 3));
+
+    const material = new LineBasicMaterial({
+      color: 0x6b7280,
+      linewidth: 1
+    });
+
+    return new LineLoop(geometry, material);
+  }
+
+  /**
+   * Update bench outline colors based on whose turn it is.
+   * Gray default; red when top player's turn; blue when bottom player's turn.
+   */
+  private updateBenchOutlineColors(): void {
+    const isTopPlayerActive =
+      this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.topPlayer?.id;
+    const isBottomPlayerActive =
+      this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.bottomPlayer?.id;
+
+    const GRAY = 0x6b7280;
+    const RED = 0xdc2626;
+    const BLUE = 0x0052ff;
+
+    if (this.topBenchOutline?.material) {
+      (this.topBenchOutline.material as LineBasicMaterial).color.setHex(
+        isTopPlayerActive ? RED : GRAY
+      );
+    }
+    if (this.bottomBenchOutline?.material) {
+      (this.bottomBenchOutline.material as LineBasicMaterial).color.setHex(
+        isBottomPlayerActive ? BLUE : GRAY
+      );
+    }
+  }
+
+  /**
+   * Remove and dispose bench outline meshes.
+   */
+  private disposeBenchOutlines(): void {
+    if (this.topBenchOutline) {
+      this.scene.remove(this.topBenchOutline);
+      (this.topBenchOutline.geometry as BufferGeometry).dispose();
+      (this.topBenchOutline.material as LineBasicMaterial).dispose();
+      this.topBenchOutline = null;
+    }
+    if (this.bottomBenchOutline) {
+      this.scene.remove(this.bottomBenchOutline);
+      (this.bottomBenchOutline.geometry as BufferGeometry).dispose();
+      (this.bottomBenchOutline.material as LineBasicMaterial).dispose();
+      this.bottomBenchOutline = null;
+    }
   }
 
   private updateDropZoneOccupancy(): void {
@@ -493,6 +633,44 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       topActive,
       topBench
     );
+  }
+
+  /**
+   * Handle evolution animation event - play 3D animation only when server emits evolution event.
+   * Card ID format: bottomPlayer_1_active or topPlayer_2_bench_0. Slot: "1"=ACTIVE, "2"=BENCH.
+   * Retries once if card not found or cardData mismatch (evolution event may arrive before state sync).
+   */
+  private handleEvolutionAnimationEvent(event: { playerId: number; cardId: number | string; slot: string; index?: number }, retryCount = 0): void {
+    if (!event || !this.topPlayer || !this.bottomPlayer) return;
+
+    const position = event.playerId === this.bottomPlayer.id ? 'bottomPlayer' :
+      event.playerId === this.topPlayer.id ? 'topPlayer' : undefined;
+    if (!position) return;
+
+    const slotStr = String(event.slot);
+    const isActive = slotStr === String(SlotType.ACTIVE);
+    const cardId = isActive
+      ? `${position}_${event.playerId}_active`
+      : `${position}_${event.playerId}_bench_${event.index ?? 0}`;
+
+    const card = this.stateSync.getCardById(cardId);
+    if (!card) {
+      if (retryCount < 1) {
+        setTimeout(() => this.handleEvolutionAnimationEvent(event, retryCount + 1), 80);
+      }
+      return;
+    }
+
+    const cardData = card.getGroup().userData.cardData;
+    if (cardData && cardData.id !== event.cardId) {
+      if (retryCount < 1) {
+        setTimeout(() => this.handleEvolutionAnimationEvent(event, retryCount + 1), 80);
+      }
+      return;
+    }
+
+    this.animationService.evolutionAnimation(card.getGroup());
+    this.markDirty();
   }
 
   private syncHand(): void {

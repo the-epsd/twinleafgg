@@ -4,14 +4,17 @@ import {
   Mesh,
   Texture,
   Group,
-  Vector3,
-  DoubleSide
+  DoubleSide,
+  PerspectiveCamera
 } from 'three';
 import { Card } from 'ptcg-server';
 import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 const MAX_VISIBLE_ENERGIES = 8;
-const ENERGY_SPRITE_SIZE = 0.6;
+const ENERGY_SPRITE_HEIGHT = 0.6;
+// Energy icons are 749×1042 (portrait); preserve aspect ratio so they don't appear stretched
+const ENERGY_ICON_ASPECT = 749 / 1042;
+const ENERGY_SPRITE_WIDTH = ENERGY_SPRITE_HEIGHT * ENERGY_ICON_ASPECT;
 const ENERGY_SPACING = 0.3;
 
 export class Board3dEnergySprite {
@@ -22,9 +25,9 @@ export class Board3dEnergySprite {
   constructor() {
     this.group = new Group();
 
-    // Initialize shared geometry if not already created
+    // Initialize shared geometry if not already created (width x height to match icon aspect)
     if (!Board3dEnergySprite.geometry) {
-      Board3dEnergySprite.geometry = new PlaneGeometry(ENERGY_SPRITE_SIZE, ENERGY_SPRITE_SIZE);
+      Board3dEnergySprite.geometry = new PlaneGeometry(ENERGY_SPRITE_WIDTH, ENERGY_SPRITE_HEIGHT);
     }
   }
 
@@ -64,8 +67,13 @@ export class Board3dEnergySprite {
         texture = cardBackTexture;
       }
 
+      // Clone and flip horizontally to correct mirroring from billboard orientation
+      const textureToUse = texture.clone();
+      textureToUse.repeat.x = -1;
+      textureToUse.offset.x = 1;
+
       const material = new MeshBasicMaterial({
-        map: texture,
+        map: textureToUse,
         transparent: true,
         side: DoubleSide,
         alphaTest: 0.1
@@ -80,11 +88,21 @@ export class Board3dEnergySprite {
         1.75   // Below the card (card center is at 0, card bottom is around 1.75)
       );
 
-      // Rotate to face up (like the card)
-      mesh.rotation.x = -Math.PI / 2;
-
+      // Billboard: orientation updated via updateBillboards() each frame
       this.group.add(mesh);
       this.energyMeshes.push(mesh);
+    }
+  }
+
+  /**
+   * Update all energy meshes to face the camera (billboard behavior).
+   * Call this each frame before rendering.
+   */
+  updateBillboards(camera: PerspectiveCamera): void {
+    for (const mesh of this.energyMeshes) {
+      mesh.lookAt(camera.position);
+      // Three.js lookAt makes -Z point at target; flip so front face (+Z) faces camera
+      mesh.rotateY(Math.PI);
     }
   }
 
@@ -94,7 +112,11 @@ export class Board3dEnergySprite {
   clear(): void {
     for (const mesh of this.energyMeshes) {
       this.group.remove(mesh);
-      (mesh.material as MeshBasicMaterial).dispose();
+      const material = mesh.material as MeshBasicMaterial;
+      if (material.map) {
+        material.map.dispose();
+      }
+      material.dispose();
     }
     this.energyMeshes = [];
   }
