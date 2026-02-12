@@ -267,9 +267,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Shadow settings
+    // Shadow settings - optimized for performance
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = PCFSoftShadowMap;
+    // Note: Shadow map size is controlled by light.shadow.mapSize, not renderer
+
+    // Optimize renderer settings
+    this.renderer.sortObjects = false; // Disable sorting for better performance (we handle transparency with alphaTest)
 
     // Color and tone mapping
     this.renderer.outputColorSpace = 'srgb';
@@ -337,8 +341,19 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
 
-    // Always render - uncapped at all times
-    this.postProcessingService.render();
+    // Conditional rendering: only render when needed
+    const hasActiveAnimations = this.animationService.hasActiveAnimations();
+    const isDragging = this.interactionService.getIsDragging();
+    
+    // Render if:
+    // - Scene changed (needsRender flag set)
+    // - Animations are active
+    // - User is dragging
+    // - Camera moved (handled by markDirty on resize)
+    if (this.needsRender || hasActiveAnimations || isDragging) {
+      this.postProcessingService.render();
+      this.needsRender = false; // Reset flag after rendering
+    }
   };
 
   private onContainerResize(): void {
@@ -414,6 +429,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   public markDirty(): void {
     // Set render flag immediately - batching happens at render level
     this.needsRender = true;
+    // Force immediate render if animations are active or dragging
+    if (this.animationService.hasActiveAnimations() || this.interactionService.getIsDragging()) {
+      // Render will happen on next frame via animate loop
+    }
   }
 
   public onWireframeToggle(enabled: boolean): void {
@@ -768,10 +787,15 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Handle discard pile click
     if (isDiscard && cardList) {
-      const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+      // Determine which player's discard this is by checking cardList reference
+      const isBottomDiscard = this.bottomPlayer && this.bottomPlayer.discard === cardList;
+      const isTopDiscard = this.topPlayer && this.topPlayer.discard === cardList;
+      const player = isBottomDiscard ? PlayerType.BOTTOM_PLAYER : (isTopDiscard ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER);
+      const isOwner = (isBottomDiscard && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
+        (isTopDiscard && this.topPlayer && this.topPlayer.id === this.clientId);
       const isDeleted = this.gameState.deleted;
 
-      if (!isBottomOwner || isDeleted) {
+      if (!isOwner || isDeleted) {
         // Show card list without ability options
         this.cardsBaseService.showCardInfoList({
           card: cardData,
@@ -781,7 +805,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         return;
       }
 
-      const player = PlayerType.BOTTOM_PLAYER;
       const slot = SlotType.DISCARD;
       const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
 
@@ -813,15 +836,18 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     }
 
     // Handle deck click
-    if (isDeck) {
-      // Find the deck CardList from the player
-      const deckCardList = this.bottomPlayer?.deck || this.topPlayer?.deck;
-      if (deckCardList) {
+    if (isDeck && cardList) {
+      // Use the full deck CardList from userData (set by updateDeckStack)
+      // Determine which player's deck this is by checking cardList reference
+      const isBottomDeck = this.bottomPlayer && this.bottomPlayer.deck === cardList;
+      const isTopDeck = this.topPlayer && this.topPlayer.deck === cardList;
+      
+      if (cardList) {
         const facedown = true;
         const allowReveal = !!this.gameState.replay;
         this.cardsBaseService.showCardInfoList({
           card: cardData,
-          cardList: deckCardList,
+          cardList: cardList, // Use full deck CardList from userData
           allowReveal,
           facedown,
           players: [this.topPlayer, this.bottomPlayer].filter(p => p)

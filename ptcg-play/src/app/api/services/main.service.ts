@@ -12,6 +12,7 @@ import { SocketService } from '../socket.service';
 export class MainService {
 
   public loading = false;
+  private isInitialized = false;
 
   constructor(
     private gameService: GameService,
@@ -20,6 +21,12 @@ export class MainService {
   ) { }
 
   public init(coreInfo: CoreInfo): void {
+    // Clean up existing listeners if already initialized
+    if (this.isInitialized) {
+      this.cleanup();
+    }
+
+    this.isInitialized = true;
     const users = { ...this.sessionService.session.users };
     coreInfo.users.forEach(user => users[user.userId] = user);
 
@@ -29,6 +36,9 @@ export class MainService {
       games: coreInfo.games,
       clientId: coreInfo.clientId
     });
+    if (coreInfo.reconnectableGameId !== undefined) {
+      this.socketService.setGameId(coreInfo.reconnectableGameId);
+    }
     this.socketService.on('core:join', (data: ClientUserData) => this.onJoin(data));
     this.socketService.on('core:leave', (clientId: number) => this.onLeave(clientId));
     this.socketService.on('core:gameInfo', (game: GameInfo) => this.onGameInfo(game));
@@ -38,15 +48,20 @@ export class MainService {
   }
 
   private autoJoinGame(game: GameInfo) {
-    const games = this.sessionService.session.gameStates;
+    const session = this.sessionService.session;
+    const games = session.gameStates;
     const index = games.findIndex(g => g.gameId === game.gameId && g.deleted === false);
-    if (index !== -1) { // already joined
+    if (index !== -1) {
       return;
     }
-    const clientId = this.sessionService.session.clientId;
-    if (game.players.some(p => p.clientId === clientId)) {
-      // we are listed as players, but not connected.
+    const clientId = session.clientId;
+    const isPlayerByClientId = game.players.some(p => p.clientId === clientId);
+    const isPlayerByUserId = game.playerUserIds && game.playerUserIds.indexOf(session.loggedUserId) !== -1;
+    if (isPlayerByClientId) {
       this.gameService.join(game.gameId).subscribe(() => { }, () => { });
+    } else if (isPlayerByUserId) {
+      // We are a player (by userId) but not by clientId – e.g. after reload. Trigger rejoin.
+      this.socketService.tryRejoinGame(game.gameId);
     }
   }
 
@@ -110,6 +125,19 @@ export class MainService {
     this.loading = true;
     return this.socketService.emit('core:createGame', { deck, gameSettings, clientId, deckId, sleeveImagePath })
       .pipe(finalize(() => { this.loading = false; }));
+  }
+
+  /**
+   * Clean up socket listeners to prevent memory leaks
+   */
+  public cleanup(): void {
+    this.socketService.off('core:join');
+    this.socketService.off('core:leave');
+    this.socketService.off('core:gameInfo');
+    this.socketService.off('core:usersInfo');
+    this.socketService.off('core:createGame');
+    this.socketService.off('core:deleteGame');
+    this.isInitialized = false;
   }
 
 }

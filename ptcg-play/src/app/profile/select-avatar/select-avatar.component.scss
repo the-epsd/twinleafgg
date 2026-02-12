@@ -1,15 +1,7 @@
 @import '../../../../src/theme/variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
 
-// Battle Pass inspired color palette
-$primary-green: #459058;
-$secondary-green: #5ba86b;
-$dark-bg: rgba(10, 10, 20, 0.9);
-$card-bg: rgba(255, 255, 255, 0.05);
-$card-border: rgba(69, 144, 88, 0.3);
-$text-primary: #e2e8f0;
-$text-secondary: #64748b;
-$text-muted: #94a3b8;
+// Using global twinleaf palette from variables.scss
 
 // Subtle animations
 @keyframes fadeIn {
@@ -38,18 +30,18 @@ $text-muted: #94a3b8;
 
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(69, 144, 88, 0.2);
+    box-shadow: 0 0 20px rgba($twinleaf-500, 0.2);
   }
 
   50% {
-    box-shadow: 0 0 30px rgba(69, 144, 88, 0.4);
+    box-shadow: 0 0 30px rgba($twinleaf-500, 0.4);
   }
 }
 
 // Main Container
 .avatar-selector-container {
   min-height: 100vh;
-  background: linear-gradient(45deg, $dark-bg 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(45deg, rgba($bg-primary, 0.9) 0%, rgba($bg-primary, 0.9) 100%);
   font-family: 'Urbanist', sans-serif;
   position: relative;
   overflow: hidden;
@@ -62,8 +54,8 @@ $text-muted: #94a3b8;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(69, 144, 88, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(69, 144, 88, 0.03) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 80%, rgba($twinleaf-500, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba($twinleaf-500, 0.03) 0%, transparent 50%);
     pointer-events: none;
   }
 }
@@ -86,7 +78,7 @@ $text-muted: #94a3b8;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+    background: linear-gradient(135deg, rgba($bg-primary, 0.8) 0%, rgba($bg-primary, 0.8) 50%, rgba($bg-primary, 0.8) 100%);
   }
 
   .back-button {
@@ -94,8 +86,8 @@ $text-muted: #94a3b8;
     top: 40px;
     left: 40px;
     z-index: 20;
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    border: 1px solid $card-border;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    border: 1px solid $border-color;
     color: $text-primary;
     padding: 12px 24px;
     border-radius: 8px;
@@ -111,8 +103,8 @@ $text-muted: #94a3b8;
     animation: slideUp 0.8s ease-out;
 
     &:hover {
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-      border-color: rgba(69, 144, 88, 0.5);
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+      border-color: $border-color-hover;
       transform: translateY(-2px);
     }
 
@@ -173,8 +165,8 @@ $text-muted: #94a3b8;
 // Avatar Card - Battle Pass Item Panel Style
 .avatar-card {
   position: relative;
-  background: $card-bg;
-  border: 1px solid $card-border;
+  background: rgba($bg-card, 0.05);
+  border: 1px solid $border-color;
   border-radius: 0;
   padding: 16px;
   cursor: pointer;
@@ -190,7 +182,7 @@ $text-muted: #94a3b8;
   // Hover States
   &:hover {
     transform: translateY(-4px);
-    border-color: rgba(69, 144, 88, 0.5);
+    border-color: $border-color-hover;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     animation: glow 2s ease-in-out infinite;
 
@@ -199,15 +191,15 @@ $text-muted: #94a3b8;
     }
 
     .avatar-name {
-      color: $primary-green;
+      color: $twinleaf-500;
     }
   }
 
   // Selected State
   &.selected {
-    border-color: $primary-green;
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    box-shadow: 0 0 20px rgba(69, 144, 88, 0.2);
+    border-color: $twinleaf-500;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    box-shadow: 0 0 20px rgba($twinleaf-500, 0.2);
 
     .selection-indicator {
       opacity: 1;
@@ -232,9 +224,9 @@ $text-muted: #94a3b8;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  border: 3px solid $primary-green;
+  border: 3px solid $twinleaf-500;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, $primary-green, $secondary-green);
+  background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600);
 
   .avatar-image {
     width: 100%;
@@ -250,7 +242,7 @@ $text-muted: #94a3b8;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent, rgba(69, 144, 88, 0.1));
+    background: linear-gradient(45deg, transparent, rgba($twinleaf-500, 0.1));
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -268,7 +260,7 @@ $text-muted: #94a3b8;
   right: 10px;
   width: 22px;
   height: 22px;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: linear-gradient(135deg, $twinleaf-500, $twinleaf-600);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -279,7 +271,7 @@ $text-muted: #94a3b8;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   mat-icon {
-    color: white;
+    color: $text-primary;
     font-size: 14px;
   }
 }
@@ -299,8 +291,8 @@ $text-muted: #94a3b8;
   }
 
   .avatar-badge {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    border: 1px solid $card-border;
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    border: 1px solid $border-color;
     color: $text-primary;
     padding: 8px 16px;
     border-radius: 20px;
@@ -313,8 +305,8 @@ $text-muted: #94a3b8;
     transition: all 0.3s ease;
 
     &:hover {
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-      border-color: rgba(69, 144, 88, 0.5);
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+      border-color: $border-color-hover;
     }
   }
 }
@@ -324,8 +316,8 @@ $text-muted: #94a3b8;
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-  border: 1px solid $card-border;
+  background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+  border: 1px solid $border-color;
   color: $text-primary;
   padding: 12px 20px;
   border-radius: 8px;
@@ -341,7 +333,7 @@ $text-muted: #94a3b8;
 
     .confirmation-icon {
       font-size: 18px;
-      color: $primary-green;
+      color: $twinleaf-500;
     }
 
     .confirmation-text {

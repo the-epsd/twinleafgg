@@ -74,11 +74,6 @@
               [disabled]="claimingLevel === level.level">
               {{ claimingLevel === level.level ? 'Claiming...' : 'Claim' }}
             </button>
-            <button class="claim-button admin-grant"
-              *ngIf="!isClaimable(level.level) && progress?.level >= level.level && level.freeReward"
-              (click)="adminGrant(level.freeReward)">
-              Force Grant
-            </button>
             <div class="completion-check"
               *ngIf="progress && progress.level >= level.level && progress.claimedRewards.includes(level.level)">
               <svg viewBox="0 0 24 24" fill="currentColor">

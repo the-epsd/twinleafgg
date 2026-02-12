@@ -52,7 +52,7 @@ export class CounterCatcher extends TrainerCard {
   public text: string =
     `You can play this card only if you have more Prize Cards remaining than your opponent.
 
-Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.`;
+Switch in 1 of your opponent's Benched Pokémon to the Active Spot.`;
 
   public readonly COUNTER_CATCHER_MARKER = 'COUNTER_CATCHER_MARKER';
 

@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../game";
-import { DealDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaEmboarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

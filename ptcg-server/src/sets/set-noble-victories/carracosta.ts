@@ -19,7 +19,7 @@ export class Carracosta extends PokemonCard {
   public powers = [{
     name: 'Solid Rock',
     powerType: PowerType.ABILITY,
-    text: 'Any damage done to this Pokemon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+    text: 'Any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
   }];
 
   public attacks = [{
@@ -27,7 +27,7 @@ export class Carracosta extends PokemonCard {
     cost: [W, W, C],
     damage: 60,
     damageCalculation: '+',
-    text: 'Does 10 more damage for each [W] Energy attached to this Pokemon.'
+    text: 'Does 10 more damage for each [W] Energy attached to this Pokémon.'
   }];
 
   public set: string = 'NVI';

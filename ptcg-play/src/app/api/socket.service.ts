@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiErrorEnum, Format } from 'ptcg-server';
+import { ApiErrorEnum, Format, GameState } from 'ptcg-server';
 import { BehaviorSubject, Observable, throwError, timer, Subject } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
 import { timeout, catchError, retry, takeUntil, switchMap, tap } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import { ApiError } from './api.error';
 import { environment } from '../../environments/environment';
 import { SessionService } from '../shared/session/session.service';
 import { GamePhase } from 'ptcg-server';
+
+const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
 
 interface SocketResponse<T> {
   message: string;
@@ -63,9 +65,14 @@ export class SocketService {
   private reconnectionStatusSubject = new BehaviorSubject<ReconnectionStatus>(this.reconnectionStatus);
   private reconnectionEventSubject = new Subject<ReconnectionEvent>();
   private reconnectionTimer?: any;
+  private countdownInterval?: any;
+  private connectionAttemptTimeout?: any;
   private stopReconnection$ = new Subject<void>();
   private wasConnectedBefore = false;
   private lastKnownGameId?: number;
+
+  /** Emits when game:rejoin succeeds so GameService can append state (e.g. after page reload). */
+  public rejoinSuccess$ = new Subject<GameState>();
 
   constructor(private sessionService: SessionService) {
     this.setServerUrl(environment.apiUrl);
@@ -132,6 +139,14 @@ export class SocketService {
 
     (this.socket.io.opts.query as any).token = authToken;
     this.setReconnectionFlag(false);
+    // Restore persisted game id so rejoin works after page reload
+    const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(RECONNECT_GAME_ID_KEY) : null;
+    if (stored) {
+      const n = parseInt(stored, 10);
+      if (!isNaN(n)) {
+        this.lastKnownGameId = n;
+      }
+    }
     this.socket.connect();
     this.enabled = true;
   }
@@ -219,10 +234,34 @@ export class SocketService {
 
   public setGameId(gameId: number): void {
     this.lastKnownGameId = gameId;
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(RECONNECT_GAME_ID_KEY, String(gameId));
+    }
   }
 
   public clearGameId(): void {
     this.lastKnownGameId = undefined;
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(RECONNECT_GAME_ID_KEY);
+    }
+  }
+
+  /**
+   * Call after connect + core:getInfo so client can rejoin a game after page reload
+   * (uses persisted lastKnownGameId or server reconnectableGameId).
+   */
+  public tryRejoinAfterConnect(): void {
+    if (this.lastKnownGameId) {
+      setTimeout(() => this.attemptGameRejoin(), 1000);
+    }
+  }
+
+  /**
+   * Attempt to rejoin a specific game (e.g. when core:gameInfo shows we're a player by userId).
+   */
+  public tryRejoinGame(gameId: number): void {
+    this.setGameId(gameId);
+    setTimeout(() => this.attemptGameRejoin(), 500);
   }
 
   public manualReconnect(): Observable<boolean> {
@@ -349,20 +388,30 @@ export class SocketService {
         this.socket.connect();
 
         // Set a timeout for this specific attempt
-        setTimeout(() => {
+        this.connectionAttemptTimeout = setTimeout(() => {
           if (!this.isConnected && this.reconnectionStatus.isReconnecting) {
             this.attemptReconnection();
           }
+          this.connectionAttemptTimeout = undefined;
         }, 5000); // Wait 5 seconds for connection to establish
       }
     }, delay);
   }
 
   private startCountdown(delay: number): void {
+    // Clear any existing countdown interval
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
+
     const startTime = Date.now();
-    const countdownInterval = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       if (!this.reconnectionStatus.isReconnecting) {
-        clearInterval(countdownInterval);
+        if (this.countdownInterval) {
+          clearInterval(this.countdownInterval);
+          this.countdownInterval = undefined;
+        }
         return;
       }
 
@@ -373,7 +422,10 @@ export class SocketService {
       this.updateReconnectionStatus();
 
       if (remaining <= 0) {
-        clearInterval(countdownInterval);
+        if (this.countdownInterval) {
+          clearInterval(this.countdownInterval);
+          this.countdownInterval = undefined;
+        }
       }
     }, 100);
   }
@@ -390,9 +442,12 @@ export class SocketService {
     // If we were in a game, attempt to rejoin after a short delay
     // This gives the server time to fully process the reconnection
     if (this.lastKnownGameId) {
-      setTimeout(() => {
+      // Store timeout reference for cleanup if needed
+      const rejoinTimeout = setTimeout(() => {
         this.attemptGameRejoin();
       }, 1000); // 1 second delay
+      // Note: This timeout is intentionally not stored as it should complete
+      // If service is disabled before completion, the attemptGameRejoin will check if gameId still exists
     }
   }
 
@@ -408,8 +463,10 @@ export class SocketService {
     });
 
     // After a delay, offer manual reconnection
+    // Note: This timeout is intentionally not stored as it should complete
+    // If service is disabled before completion, the check will fail gracefully
     setTimeout(() => {
-      if (!this.isConnected) {
+      if (!this.isConnected && this.enabled) {
         this.reconnectionEventSubject.next({
           type: 'manual_required',
           error: error
@@ -423,49 +480,40 @@ export class SocketService {
       return;
     }
 
-    // Verify the user is actually a player in this game before attempting rejoin
     const session = this.sessionService.session;
     const gameState = session.gameStates.find(
       g => g.gameId === this.lastKnownGameId && g.deleted === false
     );
 
-    if (!gameState) {
-      // No game state found, clear game ID and don't attempt rejoin
-      this.clearGameId();
-      return;
+    // When we have local game state (same-tab reconnect), validate before rejoin
+    if (gameState) {
+      const clientId = session.clientId;
+      const isPlayer = gameState.state.players.some(p => p.id === clientId);
+      if (!isPlayer) {
+        this.clearGameId();
+        return;
+      }
+      if (gameState.state.phase === GamePhase.FINISHED) {
+        this.clearGameId();
+        return;
+      }
     }
-
-    // Check if the user is a player (not just a spectator)
-    const clientId = session.clientId;
-    const isPlayer = gameState.state.players.some(p => p.id === clientId);
-
-    if (!isPlayer) {
-      // User is not a player, clear game ID and don't attempt rejoin
-      this.clearGameId();
-      return;
-    }
-
-    // Check if game is finished - don't attempt rejoin for finished games
-    if (gameState.state.phase === GamePhase.FINISHED) {
-      this.clearGameId();
-      return;
-    }
+    // When we have no game state (e.g. page reload), still attempt rejoin; server will accept or reject
 
     this.emit('game:rejoin', { gameId: this.lastKnownGameId }).pipe(
-      timeout(15000), // 15 second timeout for rejoin operations
-      catchError((error) => {
-        return throwError(error);
-      })
+      timeout(15000),
+      catchError((error) => throwError(error))
     ).subscribe(
-      (response) => {
+      (response: GameState) => {
+        this.rejoinSuccess$.next(response);
       },
       (error) => {
-
-        // Retry up to 3 times with increasing delays
-        if (attempt < 3) {
-          const retryDelay = attempt * 2000; // 2s, 4s delays
+        if (attempt < 3 && this.enabled) {
+          const retryDelay = attempt * 2000;
           setTimeout(() => {
-            this.attemptGameRejoin(attempt + 1);
+            if (this.enabled && this.lastKnownGameId) {
+              this.attemptGameRejoin(attempt + 1);
+            }
           }, retryDelay);
         } else {
           this.clearGameId();
@@ -478,6 +526,14 @@ export class SocketService {
     if (this.reconnectionTimer) {
       clearTimeout(this.reconnectionTimer);
       this.reconnectionTimer = undefined;
+    }
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
+    if (this.connectionAttemptTimeout) {
+      clearTimeout(this.connectionAttemptTimeout);
+      this.connectionAttemptTimeout = undefined;
     }
     this.stopReconnection$.next();
   }

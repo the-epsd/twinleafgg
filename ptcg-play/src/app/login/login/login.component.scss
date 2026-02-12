@@ -1,10 +1,12 @@
+@import '../../../theme/variables.scss';
+
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   min-height: 100vh;
-  background-color: #1c2128;
+  background-color: $bg-primary;
   padding-left: 15%;
   color: white;
   position: relative;
@@ -121,7 +123,7 @@
   left: 10px;
   font-size: 11px;
   color: #449058;
-  background: #1c2128;
+  background: $bg-secondary;
   padding: 0 4px;
 }
 
@@ -383,5 +385,57 @@ $duration: 1.4s;
 
   to {
     opacity: 1;
+  }
+}
+
+// Override twinleaf-form styles for Login component
+::ng-deep .login-form-container {
+  .twinleaf-form {
+    .form-field {
+      .input-wrapper {
+        .form-input {
+          border: 1px solid $twinleaf-green !important;
+
+          &:focus {
+            border-color: $twinleaf-green !important;
+            box-shadow: 0 0 0 2px rgba($twinleaf-green, 0.2);
+          }
+
+          &.input-valid,
+          &.input-invalid {
+            border-color: $twinleaf-green !important;
+          }
+        }
+      }
+
+      // Checkbox styling
+      .checkbox-container {
+        .checkbox-label {
+          .checkmark {
+            border: 2px solid $twinleaf-green !important;
+            background: rgba($bg-card, 0.05) !important;
+
+            &::after {
+              border-color: white !important;
+            }
+          }
+
+          .checkbox-input:checked+.checkmark {
+            background: $twinleaf-green !important;
+            border-color: $twinleaf-green !important;
+
+            &::after {
+              opacity: 1 !important;
+              border-color: white !important;
+            }
+          }
+
+          &:hover .checkmark {
+            border-color: $twinleaf-green !important;
+            background: rgba($twinleaf-green, 0.1) !important;
+          }
+        }
+      }
+    }
   }
 }

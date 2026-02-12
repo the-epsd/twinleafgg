@@ -1,9 +1,9 @@
-@import '../../../theme/variables.scss';
+@import '../../../theme/global.scss';
 
 .ptcg-sleeve-select-popup {
   padding: 12px 16px 16px;
-  background: #12161f;
-  color: #fff;
+  background: $bg-card;
+  color: $text-primary;
   min-width: 320px;
 }
 
@@ -22,8 +22,8 @@
 }
 
 .sleeve-card {
-  background: #1a1f29;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: $bg-card;
+  border: 1px solid $border-color;
   border-radius: 6px;
   padding: 8px;
   text-align: center;
@@ -31,13 +31,13 @@
   transition: border-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: $border-color-hover;
     transform: translateY(-2px);
   }
 
   &.selected {
-    border-color: #4caf50;
-    box-shadow: 0 0 0 1px #4caf50 inset;
+    border-color: $twinleaf-500;
+    box-shadow: 0 0 0 1px $twinleaf-500 inset;
   }
 }
 
@@ -45,7 +45,7 @@
   width: 100%;
   padding-bottom: $card-aspect-ratio * 100%;
   border-radius: 4px;
-  background-color: #0b0f17;
+  background-color: $bg-primary;
   background-size: cover;
   background-position: center;
   margin-bottom: 6px;
@@ -57,7 +57,7 @@
 
 .sleeve-name {
   font-size: 12px;
-  color: #e2e8f0;
+  color: $text-primary;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -1,9 +1,24 @@
-<button mat-raised-button [class]="buttonClasses" [disabled]="disabled || loading" (click)="onClick()">
+<ng-container *ngIf="matMenuTriggerFor; else noMenuBtn">
+  <button mat-raised-button [class]="buttonClasses" [disabled]="disabled || loading"
+    [matMenuTriggerFor]="matMenuTriggerFor" [routerLink]="routerLink" (click)="onClick()">
 
-  <mat-spinner *ngIf="loading" diameter="16" style="display: inline-block; margin-right: 8px;">
-  </mat-spinner>
+    <mat-spinner *ngIf="loading" diameter="16" style="display: inline-block; margin-right: 8px;">
+    </mat-spinner>
 
-  <mat-icon *ngIf="icon && !loading">{{ icon }}</mat-icon>
+    <mat-icon *ngIf="icon && !loading">{{ icon }}</mat-icon>
 
-  <span>{{ text }}</span>
-</button>
+    <span>{{ text }}</span>
+  </button>
+</ng-container>
+<ng-template #noMenuBtn>
+  <button mat-raised-button [class]="buttonClasses" [disabled]="disabled || loading"
+    [routerLink]="routerLink" (click)="onClick()">
+
+    <mat-spinner *ngIf="loading" diameter="16" style="display: inline-block; margin-right: 8px;">
+    </mat-spinner>
+
+    <mat-icon *ngIf="icon && !loading">{{ icon }}</mat-icon>
+
+    <span>{{ text }}</span>
+  </button>
+</ng-template>

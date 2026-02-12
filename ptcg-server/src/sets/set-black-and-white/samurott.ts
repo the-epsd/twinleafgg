@@ -18,7 +18,7 @@ export class Samurott extends PokemonCard {
       name: 'Pike',
       cost: [C, C],
       damage: 30,
-      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Surf',

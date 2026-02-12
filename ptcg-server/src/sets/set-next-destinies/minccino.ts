@@ -16,7 +16,7 @@ export class Minccino extends PokemonCard {
       name: 'Call for Family',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for a Basic Pokemon and put it onto your Bench. Shuffle your deck afterward.'
+      text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward.'
     },
     {
       name: 'Tail Smack',
@@ -33,7 +33,7 @@ export class Minccino extends PokemonCard {
   public fullName: string = 'Minccino NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Call for Family - search for a Basic Pokemon and put onto bench
+    // Call for Family - search for a Basic Pokémon and put onto bench
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

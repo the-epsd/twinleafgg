@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, SpecialCondition } from "../../game";
-import { AddSpecialConditionsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, SpecialCondition } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pignite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

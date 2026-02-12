@@ -11,19 +11,19 @@ export class Shelmet extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Body Slam',
-    cost: [CardType.GRASS, CardType.GRASS],
+    cost: [G, G],
     damage: 20,
-    text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
   }];
 
   public set: string = 'DEX';

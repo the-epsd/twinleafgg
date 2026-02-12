@@ -1,89 +1,121 @@
-<div class="replays-container">
-  <div class="replays-content">
+<ptcg-content [loading]="loading">
+  <div class="replays-container">
+    <!-- Header Section -->
     <div class="replays-header">
-      <h1 translate>REPLAY_TITLE</h1>
+      <div class="header-background">
+        <div class="header-content">
+          <div class="replays-title-section">
+            <h1 class="replays-title" translate>REPLAY_TITLE</h1>
+          </div>
 
-      <div class="replays-controls">
-        <ptcg-search-box class="replays-search" (search)="onSearch($event)" [showSearchButton]="false"
-          [isActivated]="true"></ptcg-search-box>
-
-        <button mat-raised-button class="import-button" (click)="importFromFile()">
-          {{ 'BUTTON_IMPORT_FROM_FILE' | translate }}
-        </button>
+          <div class="header-controls">
+            <div class="search-container">
+              <ptcg-search-box class="modern-search-box" (search)="onSearch($event)" [showSearchButton]="false"
+                [isActivated]="true"></ptcg-search-box>
+            </div>
+            <button mat-raised-button class="import-button" (click)="importFromFile()">
+              {{ 'BUTTON_IMPORT_FROM_FILE' | translate }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="ptcg-replays-table">
-      <h3 translate>REPLAY_LIST_TITLE</h3>
+    <!-- Main Content -->
+    <div class="replays-content">
+      <div class="replays-table-container">
+        <!-- Modern Card-based Table -->
+        <div class="replays-table">
+          <!-- Header -->
+          <div class="table-header">
+            <div class="table-cell name-cell">
+              <span translate>LABEL_NAME</span>
+            </div>
+            <div class="table-cell player1-cell">
+              <span translate>LABEL_PLAYER_1</span>
+            </div>
+            <div class="table-cell player2-cell">
+              <span translate>LABEL_PLAYER_2</span>
+            </div>
+            <div class="table-cell date-cell">
+              <span translate>LABEL_DATE</span>
+            </div>
+            <div class="table-cell actions-cell">
+              <span translate>LABEL_ACTIONS</span>
+            </div>
+          </div>
 
-      <table mat-table [dataSource]="replays" class="mat-table">
-        <!-- Name -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef translate>LABEL_NAME</th>
-          <td mat-cell *matCellDef="let replay">
-            {{ replay.name }}
-          </td>
-        </ng-container>
+          <!-- Rows -->
+          <div class="table-body">
+            <div class="replay-row" *ngFor="let replay of replays">
+              <!-- Name -->
+              <div class="table-cell name-cell">
+                <div class="replay-name">
+                  <span class="name-text">{{ replay.name }}</span>
+                </div>
+              </div>
 
-        <!-- Player 1 -->
-        <ng-container matColumnDef="player1">
-          <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_1</th>
-          <td mat-cell *matCellDef="let replay">
-            <ptcg-user-bar openUserPopup="true" [user]="replay.player1"
-              [marked]="replay.winner === GameWinner.PLAYER_1">
-            </ptcg-user-bar>
-          </td>
-        </ng-container>
+              <!-- Player 1 -->
+              <div class="table-cell player1-cell">
+                <div class="player-info">
+                  <ptcg-user-bar openUserPopup="true" [user]="replay.player1"
+                    [marked]="replay.winner === GameWinner.PLAYER_1">
+                  </ptcg-user-bar>
+                </div>
+              </div>
 
-        <!-- Player 2 -->
-        <ng-container matColumnDef="player2">
-          <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_2</th>
-          <td mat-cell *matCellDef="let replay">
-            <ptcg-user-bar openUserPopup="true" [user]="replay.player2"
-              [marked]="replay.winner === GameWinner.PLAYER_2">
-            </ptcg-user-bar>
-          </td>
-        </ng-container>
+              <!-- Player 2 -->
+              <div class="table-cell player2-cell">
+                <div class="player-info">
+                  <ptcg-user-bar openUserPopup="true" [user]="replay.player2"
+                    [marked]="replay.winner === GameWinner.PLAYER_2">
+                  </ptcg-user-bar>
+                </div>
+              </div>
 
-        <!-- Date -->
-        <ng-container matColumnDef="created">
-          <th mat-header-cell *matHeaderCellDef translate>LABEL_DATE</th>
-          <td mat-cell *matCellDef="let replay">
-            {{replay.created | date: ('DATE_FORMAT' | translate) }}
-          </td>
-        </ng-container>
+              <!-- Date -->
+              <div class="table-cell date-cell">
+                <div class="replay-date-value">
+                  <span class="date-text">{{replay.created | date: ('DATE_FORMAT' | translate) }}</span>
+                </div>
+              </div>
 
-        <!-- Actions -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef translate>LABEL_ACTIONS</th>
-          <td mat-cell *matCellDef="let replay">
-            <button mat-button [matMenuTriggerFor]="menu">
-              {{ 'BUTTON_ACTIONS' | translate }}
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="showReplay(replay.replayId)">
-                {{ 'BUTTON_SHOW' | translate }}
-              </button>
-              <button mat-menu-item (click)="deleteReplay(replay.replayId)">
-                {{ 'BUTTON_DELETE' | translate }}
-              </button>
-              <button mat-menu-item (click)="renameReplay(replay.replayId, replay.name)">
-                {{ 'BUTTON_RENAME' | translate }}
-              </button>
-              <button mat-menu-item (click)="exportReplay(replay.replayId, replay.name)">
-                {{ 'BUTTON_EXPORT' | translate }}
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
+              <!-- Actions -->
+              <div class="table-cell actions-cell">
+                <button class="actions-button" [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                  <span>{{ 'BUTTON_ACTIONS' | translate }}</span>
+                </button>
+                <mat-menu #menu="matMenu" class="modern-menu">
+                  <button mat-menu-item (click)="showReplay(replay.replayId)">
+                    <mat-icon>play_arrow</mat-icon>
+                    <span>{{ 'BUTTON_SHOW' | translate }}</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteReplay(replay.replayId)">
+                    <mat-icon>delete</mat-icon>
+                    <span>{{ 'BUTTON_DELETE' | translate }}</span>
+                  </button>
+                  <button mat-menu-item (click)="renameReplay(replay.replayId, replay.name)">
+                    <mat-icon>edit</mat-icon>
+                    <span>{{ 'BUTTON_RENAME' | translate }}</span>
+                  </button>
+                  <button mat-menu-item (click)="exportReplay(replay.replayId, replay.name)">
+                    <mat-icon>download</mat-icon>
+                    <span>{{ 'BUTTON_EXPORT' | translate }}</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator hidePageSize="true" [disabled]="loading" [length]="rankingTotal" [pageIndex]="pageIndex"
-        [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
-      </mat-paginator>
+        <!-- Pagination -->
+        <div class="pagination-container">
+          <mat-paginator hidePageSize="true" [disabled]="loading" [length]="rankingTotal" [pageIndex]="pageIndex"
+            [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+          </mat-paginator>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</ptcg-content>

@@ -10,10 +10,10 @@ export class Timburr extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.PSYCHIC
+    type: P
   }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [
     { name: 'Pound', cost: [F], damage: 10, text: '' }

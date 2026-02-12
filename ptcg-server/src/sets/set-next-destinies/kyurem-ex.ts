@@ -19,13 +19,13 @@ export class KyuremEx extends PokemonCard {
       name: 'Frozen Wings',
       cost: [W, C, C],
       damage: 60,
-      text: 'Discard a Special Energy attached to the Defending Pokemon.'
+      text: 'Discard a Special Energy attached to the Defending Pokémon.'
     },
     {
       name: 'Hail Blizzard',
       cost: [W, W, C, C],
       damage: 120,
-      text: 'This Pokemon can\'t use Hail Blizzard during your next turn.'
+      text: 'This Pokémon can\'t use Hail Blizzard during your next turn.'
     }
   ];
 

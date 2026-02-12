@@ -329,9 +329,10 @@ export class Board3dStateSyncService {
       }
     };
 
-    const [frontTexture, backTexture] = await Promise.all([
+    const [frontTexture, backTexture, maskTexture] = await Promise.all([
       loadFrontTexture(),
-      loadBackTexture()
+      loadBackTexture(),
+      this.assetLoader.loadCardMaskTexture()
     ]);
 
     // Check if card already exists
@@ -339,7 +340,7 @@ export class Board3dStateSyncService {
 
     if (cardMesh) {
       // Update existing card
-      cardMesh.updateTexture(frontTexture, backTexture);
+      cardMesh.updateTexture(frontTexture, backTexture, maskTexture);
       cardMesh.setPosition(position);
       cardMesh.setRotation(rotation);
       cardMesh.setScale(scale);
@@ -353,7 +354,8 @@ export class Board3dStateSyncService {
         backTexture,
         position,
         rotation,
-        scale
+        scale,
+        maskTexture
       );
 
       cardMesh.getGroup().userData.cardId = cardId;

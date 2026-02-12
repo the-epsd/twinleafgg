@@ -16,6 +16,9 @@ export interface ReconnectionConfig {
 
   // Maximum number of preserved sessions per user (default: 1)
   maxPreservedSessionsPerUser: number;
+
+  // Time before auto-forfeit when a player is disconnected (default: 60 seconds)
+  disconnectForfeitMs: number;
 }
 
 export interface ReconnectionResult {

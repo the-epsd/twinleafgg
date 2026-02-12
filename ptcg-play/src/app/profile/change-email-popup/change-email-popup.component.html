@@ -24,11 +24,10 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button mat-dialog-close>
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button (click)="changeEmail()" [disabled]="loading || form.invalid">
-    {{ 'BUTTON_SAVE' | translate }}
-  </button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_SAVE' | translate" (clicked)="changeEmail()"
+    [disabled]="loading || form.invalid">
+  </twinleaf-button>
+</div>

@@ -38,7 +38,7 @@ export class Emboar2 extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // Discard all Fire Energy attached to this Pokemon
+      // Discard all Fire Energy attached to this Pokémon
       const fireEnergies = player.active.cards.filter(c =>
         c instanceof EnergyCard && c.provides.includes(CardType.FIRE)
       );

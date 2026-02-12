@@ -16,7 +16,7 @@ export class Larvesta extends PokemonCard {
     name: 'Take Down',
     cost: [C, C],
     damage: 30,
-    text: 'This Pokemon does 10 damage to itself.'
+    text: 'This Pokémon does 10 damage to itself.'
   }];
 
   public set: string = 'NVI';

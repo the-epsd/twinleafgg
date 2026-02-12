@@ -18,14 +18,14 @@ export class Lucario extends PokemonCard {
   public powers = [{
     name: 'Reflexive Retaliation',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokemon is your Active Pokemon and is damaged by an opponent\'s attack (even if this Pokemon is Knocked Out), put 2 damage counters on the Attacking Pokemon.'
+    text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon.'
   }];
 
   public attacks = [{
     name: 'Aura Sphere',
     cost: [F, F],
     damage: 50,
-    text: 'Does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'Does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public set: string = 'NXD';
@@ -40,7 +40,7 @@ export class Lucario extends PokemonCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      // Only works if this is the active Pokemon and was damaged by opponent
+      // Only works if this is the active Pokémon and was damaged by opponent
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }
@@ -58,7 +58,7 @@ export class Lucario extends PokemonCard {
       effect.source.damage += 20;
     }
 
-    // Aura Sphere - damage a benched Pokemon
+    // Aura Sphere - damage a benched Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

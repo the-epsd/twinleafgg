@@ -102,6 +102,13 @@ export class ConversationComponent implements OnInit, OnChanges {
     });
   }
 
+  public handleEnterKey(event: KeyboardEvent): void {
+    if (!event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage(this.userId, this.text);
+    }
+  }
+
   private observeLastMessage() {
     this.lastMessage$.pipe(
       untilDestroyed(this),

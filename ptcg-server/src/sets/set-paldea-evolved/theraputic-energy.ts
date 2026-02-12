@@ -19,7 +19,7 @@ export class TherapeuticEnergy extends EnergyCard {
 
   public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
 
-The Pokémon this card is attached to recovers from being Asleep, Confused, or Paralyzed and can\'t be affected by those Special Conditions.`;
+The Pokémon this card is attached to recovers from being Asleep, Confused, or Paralyzed and can't be affected by those Special Conditions.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

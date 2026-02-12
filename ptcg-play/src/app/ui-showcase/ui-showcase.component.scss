@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../theme/global.scss';
 
 .ui-showcase-container {
   padding: 2rem;
@@ -68,7 +69,7 @@
 
   // Play Button Styles
   .play-button {
-    background: #459058;
+    background: $twinleaf-green;
     color: white;
     width: 240px;
     height: 60px;
@@ -82,7 +83,7 @@
     align-items: center;
     justify-content: center;
     box-shadow:
-      0 4px 15px rgba(69, 144, 88, 0.3),
+      0 4px 15px rgba($twinleaf-green, 0.3),
       0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     position: relative;
@@ -104,7 +105,7 @@
     &:hover:not([disabled]) {
       transform: translateY(-2px) scale(1.02);
       box-shadow:
-        0 6px 20px rgba(69, 144, 88, 0.4),
+        0 6px 20px rgba($twinleaf-green, 0.4),
         0 4px 12px rgba(0, 0, 0, 0.15);
       background: #3d7a4a;
     }
@@ -112,7 +113,7 @@
     &:active:not([disabled]) {
       transform: translateY(0) scale(1);
       box-shadow:
-        0 2px 8px rgba(69, 144, 88, 0.3),
+        0 2px 8px rgba($twinleaf-green, 0.3),
         0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
@@ -204,7 +205,7 @@
 
       ::ng-deep .mat-form-field-flex {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-        border: 1px solid rgba(69, 144, 88, 0.3);
+        border: 1px solid rgba($twinleaf-green, 0.3);
         border-radius: 12px;
         padding: 0.75rem 1rem;
         align-items: center;
@@ -215,7 +216,7 @@
         width: 100%;
 
         &:hover {
-          border-color: rgba(69, 144, 88, 0.5);
+          border-color: rgba($twinleaf-green, 0.5);
           background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
         }
       }
@@ -252,8 +253,8 @@
       }
 
       ::ng-deep .mat-focused .mat-form-field-flex {
-        border-color: #459058;
-        background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+        border-color: $twinleaf-green;
+        background: linear-gradient(135deg, rgba($twinleaf-green, 0.1), rgba($twinleaf-green, 0.05));
       }
     }
   }
@@ -354,7 +355,7 @@
     width: 280px;
     height: 400px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 2px solid #459058;
+    border: 2px solid $twinleaf-green;
     border-radius: 0;
     display: flex;
     flex-direction: column;
@@ -374,12 +375,12 @@
       opacity: 1;
 
       .format-name {
-        color: #459058;
-        text-shadow: 0 0 10px rgba(69, 144, 88, 0.3);
+        color: $twinleaf-green;
+        text-shadow: 0 0 10px rgba($twinleaf-green, 0.3);
       }
 
       .deck-name {
-        color: rgba(69, 144, 88, 0.8);
+        color: rgba($twinleaf-green, 0.8);
       }
 
       .format-info {
@@ -395,12 +396,12 @@
       opacity: 1;
 
       .format-name {
-        color: #459058;
-        text-shadow: 0 0 10px rgba(69, 144, 88, 0.3);
+        color: $twinleaf-green;
+        text-shadow: 0 0 10px rgba($twinleaf-green, 0.3);
       }
 
       .deck-name {
-        color: rgba(69, 144, 88, 0.8);
+        color: rgba($twinleaf-green, 0.8);
       }
 
       .format-info {
@@ -481,7 +482,7 @@
   .format-info {
     padding: 1.5rem;
     background: rgba(0, 0, 0, 0.4);
-    border-top: 1px solid #459058;
+    border-top: 1px solid $twinleaf-green;
 
     .format-name {
       color: rgba(255, 255, 255, 0.9);

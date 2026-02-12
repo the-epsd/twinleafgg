@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, StateUtils, SpecialCondition } from "../../game";
-import { AddSpecialConditionsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, StateUtils, SpecialCondition } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class ErikasGloom extends PokemonCard {

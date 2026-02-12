@@ -18,13 +18,13 @@ export class Landorus extends PokemonCard {
       name: 'Abundant Harvest',
       cost: [F],
       damage: 0,
-      text: 'Attach a [F] Energy card from your discard pile to this Pokemon.'
+      text: 'Attach a [F] Energy card from your discard pile to this Pokémon.'
     },
     {
       name: 'Gaia Hammer',
       cost: [F, F, C],
       damage: 80,
-      text: 'Does 10 damage to each Benched Pokemon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

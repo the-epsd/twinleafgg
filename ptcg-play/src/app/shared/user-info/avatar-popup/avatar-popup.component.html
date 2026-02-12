@@ -6,8 +6,7 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
-  </button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_OK' | translate" (clicked)="confirm()">
+  </twinleaf-button>
+</div>

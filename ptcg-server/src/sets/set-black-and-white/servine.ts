@@ -19,7 +19,7 @@ export class Servine extends PokemonCard {
       name: 'Wrap',
       cost: [C],
       damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     },
     {
       name: 'Tackle',

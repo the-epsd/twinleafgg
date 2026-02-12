@@ -18,7 +18,7 @@ export class Emolga extends PokemonCard {
       name: 'Bounce',
       cost: [L, C],
       damage: 30,
-      text: 'Switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
 

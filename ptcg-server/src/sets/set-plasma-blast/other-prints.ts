@@ -16,6 +16,10 @@ import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { MasterBall } from '../set-temporal-forces/master-ball';
 import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
 import { ScoopUpCyclone } from '../set-twilight-masquerade/scoop-up-cyclone';
+import { CoverFossil } from '../set-noble-victories/cover-fossil';
+import { DialgaEx } from './dialga-ex';
+import { Iris } from './iris';
+import { Virizion } from '../set-noble-victories/virizion';
 
 export class ScoopUpCyclonePLB extends ScoopUpCyclone {
   public set = 'PLB';
@@ -122,4 +126,28 @@ export class RareCandy2PLB extends RareCandyHP90 {
   public setNumber = '105';
   public fullName: string = 'Rare Candy2 PLB';
   public set = 'PLB';
+}
+
+export class CoverFossilPLB extends CoverFossil {
+  public set: string = 'PLB';
+  public setNumber: string = '79';
+  public fullName: string = 'Cover Fossil PLB';
+}
+
+export class DialgaEx2 extends DialgaEx {
+  public set: string = 'PLB';
+  public setNumber: string = '99';
+  public fullName: string = 'Dialga-EX PLB 99';
+}
+
+export class Iris2 extends Iris {
+  public set: string = 'PLB';
+  public setNumber: string = '101';
+  public fullName: string = 'Iris PLB 101';
+}
+
+export class VirizionPLB extends Virizion {
+  public set: string = 'PLB';
+  public setNumber: string = '103';
+  public fullName: string = 'Virizion PLB';
 }

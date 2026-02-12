@@ -18,13 +18,13 @@ export class Zebstrika extends PokemonCard {
     name: 'Charge',
     cost: [L],
     damage: 0,
-    text: 'Search your deck for a [L] Energy card and attach it to this Pokemon. Shuffle your deck afterward.'
+    text: 'Search your deck for a [L] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
   },
   {
     name: 'Lightning Crash',
     cost: [L, L, C],
     damage: 80,
-    text: 'The Defending Pokemon is now Paralyzed.'
+    text: 'The Defending Pokémon is now Paralyzed.'
   }];
 
   public set: string = 'BLW';

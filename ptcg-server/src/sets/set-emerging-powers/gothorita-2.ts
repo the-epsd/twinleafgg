@@ -41,7 +41,7 @@ export class Gothorita2 extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check if any opponent Pokemon has energy
+      // Check if any opponent Pokémon has energy
       let hasEnergyOnField = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         if (cardList.cards.some(c => c instanceof EnergyCard)) {

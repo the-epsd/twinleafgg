@@ -13,10 +13,8 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType, ApiErrorEnum } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
-import { ArtworksService } from 'src/app/api/services/artworks.service';
-import { CardArtwork } from 'src/app/api/interfaces/cards.interface';
 import { SleeveService } from 'src/app/api/services/sleeve.service';
 import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,8 +39,6 @@ export class DeckEditComponent implements OnInit {
   public toolbarFilter: DeckEditToolbarFilter;
   public DeckEditPane = DeckEditPane;
   public isThemeDeck = false;
-  public selectedArtworks: { code: string; artworkId?: number }[] = [];
-  public unlockedArtworks: CardArtwork[] = [];
   public sleeves: SleeveInfo[] = [];
   public selectedSleeveIdentifier?: string;
 
@@ -50,7 +46,6 @@ export class DeckEditComponent implements OnInit {
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
     private deckService: DeckService,
-    private artworksService: ArtworksService,
     private sleeveService: SleeveService,
     private dialog: MatDialog,
     // private fileDownloadService: FileDownloadService,
@@ -67,12 +62,6 @@ export class DeckEditComponent implements OnInit {
 
   ngOnInit() {
     // this.setupAutoSave();
-    // Load unlocked artworks in parallel
-    this.artworksService.getUnlockedArtworks()
-      .pipe(untilDestroyed(this))
-      .subscribe(resp => {
-        this.unlockedArtworks = resp.artworks || [];
-      }, () => { this.unlockedArtworks = []; });
 
     this.sleeveService.getList()
       .pipe(untilDestroyed(this))
@@ -92,14 +81,20 @@ export class DeckEditComponent implements OnInit {
         this.loading = false;
         this.deck = response.deck;
         this.deckItems = this.loadDeckItems(response.deck.cards);
-        // Load artworks if present
-        this.selectedArtworks = response.deck.artworks || [];
         this.selectedSleeveIdentifier = response.deck.sleeveIdentifier || undefined;
         // Detect theme deck
         this.isThemeDeck = Array.isArray(this.deck.format) && this.deck.format.includes(Format['THEME']);
+
+        // If navigated with clipboard text in state (Create from Clipboard flow), import and save
+        const clipboardText = history.state?.importFromClipboard as string | undefined;
+        if (clipboardText) {
+          this.importFromClipboardText(clipboardText);
+          this.saveDeck();
+          history.replaceState({}, '', window.location.href);
+        }
       }, async () => {
         await this.alertService.confirm(this.translate.instant('DECK_EDIT_LOADING_ERROR'));
-        this.router.navigate(['/decks']);
+        this.router.navigate(['/deck']);
       });
   }
 
@@ -440,28 +435,48 @@ export class DeckEditComponent implements OnInit {
     return -1;
   }
 
-  importFromClipboard() {
-    navigator.clipboard.readText()
-      .then(text => {
-        // Expect lines like: '4 Pikachu BSS 58'
-        const cardDetails = text.split('\n')
-          .filter(line => !!line)
-          .flatMap(line => {
-            const parts = line.trim().split(/\s+/);
-            if (parts.length < 4) {
-              return [];
-            }
-            const count = parseInt(parts[0], 10);
-            if (isNaN(count)) {
-              return [];
-            }
-            const setNumber = parts.pop();
-            const set = parts.pop();
-            const name = parts.slice(1).join(' ');
-            return new Array(count).fill({ name, set, setNumber });
-          });
-        this.importDeck(cardDetails);
+  private parseClipboardLines(text: string): { name: string, set: string, setNumber: string }[] {
+    return text.split('\n')
+      .filter(line => !!line)
+      .flatMap(line => {
+        const parts = line.trim().split(/\s+/);
+        if (parts.length < 4) {
+          return [];
+        }
+        const count = parseInt(parts[0], 10);
+        if (isNaN(count)) {
+          return [];
+        }
+        const setNumber = parts.pop();
+        const set = parts.pop();
+        const name = parts.slice(1).join(' ');
+        return new Array(count).fill({ name, set, setNumber });
       });
+  }
+
+  importFromClipboard(): Promise<void> {
+    return navigator.clipboard.readText()
+      .then(text => {
+        this.importFromClipboardText(text);
+      });
+  }
+
+  importFromClipboardText(text: string): void {
+    const cardDetails = this.parseClipboardLines(text);
+    this.importDeck(cardDetails);
+  }
+
+  private getSaveErrorMessage(error: ApiError): string {
+    switch (error.code) {
+      case ApiErrorEnum.DECK_INVALID:
+        return this.translate.instant('ERROR_DECK_INVALID');
+      case ApiErrorEnum.NAME_DUPLICATE:
+        return this.translate.instant('ERROR_DECK_NAME_DUPLICATE');
+      case ApiErrorEnum.VALIDATION_INVALID_PARAM:
+        return this.translate.instant('ERROR_DECK_SAVE_CARDS_INVALID');
+      default:
+        return this.translate.instant('ERROR_UNKNOWN');
+    }
   }
 
   public importDeck(cardDetails: { name: string, set: string, setNumber: string }[]) {
@@ -563,7 +578,7 @@ export class DeckEditComponent implements OnInit {
       items,
       archetype1,
       archetype2,
-      this.selectedArtworks,
+      undefined,
       this.selectedSleeveIdentifier
     ).pipe(
       finalize(() => { this.loading = false; }),
@@ -572,31 +587,13 @@ export class DeckEditComponent implements OnInit {
       this.alertService.toast(this.translate.instant('DECK_EDIT_SAVED'));
     }, (error: ApiError) => {
       if (!error.handled) {
-        this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
+        console.error('[Deck] saveDeck failed', error);
+        const message = this.getSaveErrorMessage(error);
+        this.alertService.toast(message);
       }
     });
   }
 
-  public onArtworkChange(change: { code: string; artworkId?: number | null }) {
-    const code = change.code;
-    const artworkId = change.artworkId ?? undefined;
-    const next = this.selectedArtworks.slice();
-    const idx = next.findIndex(a => a.code === code);
-    if (artworkId === undefined) {
-      if (idx !== -1) {
-        next.splice(idx, 1);
-      }
-    } else {
-      if (idx !== -1) {
-        next[idx] = { code, artworkId };
-      } else {
-        next.push({ code, artworkId });
-      }
-    }
-    this.selectedArtworks = next;
-    // Save immediately for real-time persistence
-    this.saveDeck();
-  }
 
   public openSleeveSelector() {
     if (this.isThemeDeck || this.loading || !this.deck) {
@@ -620,10 +617,6 @@ export class DeckEditComponent implements OnInit {
     });
   }
 
-  public getSelectedArtworkId(cardFullName: string): number | null {
-    const entry = this.selectedArtworks.find(a => a.code === cardFullName);
-    return entry && entry.artworkId != null ? entry.artworkId : null;
-  }
 
   compareSupertype = (input: SuperType) => {
     if (input === SuperType.POKEMON) return 1;

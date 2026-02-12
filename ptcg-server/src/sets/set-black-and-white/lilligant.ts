@@ -20,13 +20,13 @@ export class Lilligant extends PokemonCard {
       cost: [G],
       damage: 30,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads. This Pokemon is now Confused.'
+      text: 'Flip 3 coins. This attack does 30 damage times the number of heads. This Pokémon is now Confused.'
     },
     {
       name: 'Leaf Storm',
       cost: [G, C],
       damage: 30,
-      text: 'Heal 20 damage from each of your Grass Pokemon.'
+      text: 'Heal 20 damage from each of your Grass Pokémon.'
     }
   ];
 
@@ -45,14 +45,14 @@ export class Lilligant extends PokemonCard {
         (effect as AttackEffect).damage = 30 * heads;
       });
 
-      // This Pokemon becomes Confused
+      // This Pokémon becomes Confused
       ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // Heal 20 from each Grass Pokemon
+      // Heal 20 from each Grass Pokémon
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.cardType === CardType.GRASS) {
           const healEffect = new HealEffect(player, cardList, 20);

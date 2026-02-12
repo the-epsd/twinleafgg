@@ -21,7 +21,7 @@ export class Stunfisk2 extends PokemonCard {
     name: 'Thunder',
     cost: [L, C, C],
     damage: 60,
-    text: 'Flip a coin. If tails, this Pokemon does 30 damage to itself.'
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
   }];
 
   public set: string = 'NVI';

@@ -16,13 +16,13 @@ export class Lapras extends PokemonCard {
       name: 'Call for Family',
       cost: [W],
       damage: 0,
-      text: 'Search your deck for up to 2 Basic Pokemon and put them onto your Bench. Shuffle your deck afterward.'
+      text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
     },
     {
       name: 'Reckless Charge',
       cost: [C, C],
       damage: 40,
-      text: 'This Pokemon does 20 damage to itself.'
+      text: 'This Pokémon does 20 damage to itself.'
     }
   ];
 
@@ -33,7 +33,7 @@ export class Lapras extends PokemonCard {
   public fullName: string = 'Lapras NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Call for Family - search for up to 2 Basic Pokemon
+    // Call for Family - search for up to 2 Basic Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

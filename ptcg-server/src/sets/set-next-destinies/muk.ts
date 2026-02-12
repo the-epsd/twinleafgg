@@ -18,13 +18,13 @@ export class Muk extends PokemonCard {
       name: 'Gentle Wrap',
       cost: [P, C],
       damage: 20,
-      text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     },
     {
       name: 'Toxic Secretion',
       cost: [P, C, C, C],
       damage: 60,
-      text: 'The Defending Pokemon is now Poisoned. Put 2 damage counters instead of 1 on that Pokemon between turns.'
+      text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on that Pokémon between turns.'
     }
   ];
 

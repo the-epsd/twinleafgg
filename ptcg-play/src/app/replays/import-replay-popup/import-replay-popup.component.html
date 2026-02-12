@@ -105,11 +105,10 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button mat-dialog-close>
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button (click)="importReplay()" [disabled]="!replayFile || !name || loading">
-    {{ 'BUTTON_IMPORT' | translate }}
-  </button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_IMPORT' | translate" (clicked)="importReplay()"
+    [disabled]="!replayFile || !name || loading">
+  </twinleaf-button>
+</div>

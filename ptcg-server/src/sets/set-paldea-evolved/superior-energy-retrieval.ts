@@ -94,7 +94,7 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
   public text: string =
     `You can use this card only if you discard 2 other cards from your hand. 
 
-Put up to 4 Basic Energy cards from your discard pile into your hand. (You can\'t choose a card you discarded with the effect of this card.)`;
+Put up to 4 Basic Energy cards from your discard pile into your hand. (You can't choose a card you discarded with the effect of this card.)`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -25,7 +25,7 @@ export class Simisage extends PokemonCard {
       cost: [G, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 30 more damage and heal 30 damage from this Pokemon.'
+      text: 'If there is any Stadium card in play, this attack does 30 more damage and heal 30 damage from this Pokémon.'
     }
   ];
 

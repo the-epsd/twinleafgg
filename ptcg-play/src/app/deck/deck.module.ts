@@ -20,7 +20,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
-import { ArtworksForPipe } from './artworks-for.pipe';
 import { ArchetypeSelectPopupComponent } from './archetype-select-popup/archetype-select-popup.component';
 import { DeckStatsComponent } from './deck-stats/deck-stats.component';
 import { SleeveSelectPopupComponent } from './sleeve-select-popup/sleeve-select-popup.component';
@@ -55,7 +54,6 @@ import { SleeveSelectPopupComponent } from './sleeve-select-popup/sleeve-select-
     DeckEditInfoComponent,
     ImportDeckPopupComponent,
     DeckCardDialogComponent,
-    ArtworksForPipe,
     ArchetypeSelectPopupComponent,
     DeckStatsComponent,
     SleeveSelectPopupComponent

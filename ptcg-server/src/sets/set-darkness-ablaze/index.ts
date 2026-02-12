@@ -27,6 +27,7 @@ import { RareFossil } from './rare-fossil';
 import { RoseTower } from './rose-tower';
 import { Rowlet } from './rowlet';
 import { Sinistea } from './sinistea';
+import { Skarmory } from './skarmory';
 import { Starly } from './starly';
 import { Swanna } from './swanna';
 import { TapuKoko } from './tapu-koko';
@@ -65,6 +66,7 @@ export const setDarknessAblaze: Card[] = [
   new RoseTower(),
   new Rowlet(),
   new Sinistea(),
+  new Skarmory(),
   new Starly(),
   new Swanna(),
   new TapuKoko(),

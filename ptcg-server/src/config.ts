@@ -80,7 +80,10 @@ export const config = {
     cleanupIntervalMs: 60 * 1000,
 
     // Maximum number of preserved sessions per user
-    maxPreservedSessionsPerUser: 1
+    maxPreservedSessionsPerUser: 1,
+
+    // Time before auto-forfeit when a player is disconnected (60 seconds; was 15s)
+    disconnectForfeitMs: 60 * 1000
   },
   sets: {
     scansDir: '',

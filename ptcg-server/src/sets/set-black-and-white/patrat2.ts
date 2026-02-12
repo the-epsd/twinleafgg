@@ -23,7 +23,7 @@ export class Patrat2 extends PokemonCard {
       name: 'Hypnosis',
       cost: [C, C],
       damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Asleep.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
     }
   ];
 

@@ -1,12 +1,15 @@
 import { JirachiUL, CheerleadersCheerUL, PlusPowerUL } from './other-prints';
 import { Card } from '../../game/store/card/card';
+import { Chinchou } from './chinchou';
 import { Crobat } from './crobat-prime';
 import { DualBall } from './dual-ball';
 import { EnteiAndRaikouLegendBottom } from './entei-and-raikou-legend-bottom';
 import { EnteiAndRaikouLegendTop } from './entei-and-raikou-legend-top';
 import { Golbat } from './golbat';
 import { Horsea } from './horsea';
+import { InterviewersQuestions } from './interviewers-questions';
 import { Kingdra } from './kingdra';
+import { Lanturn } from './lanturn';
 import { PokemonCirculator } from './pokemon-circulator';
 import { Seadra } from './seadra';
 import { Shaymin } from './shaymin';
@@ -21,13 +24,16 @@ import {
 } from './other-prints';
 
 export const setUnleashed: Card[] = [
+  new Chinchou(),
   new Crobat(),
   new DualBall(),
   new EnteiAndRaikouLegendBottom(),
   new EnteiAndRaikouLegendTop(),
   new Golbat(),
   new Horsea(),
+  new InterviewersQuestions(),
   new Kingdra(),
+  new Lanturn(),
   new PokemonCirculator(),
   new Seadra(),
   new Shaymin(),

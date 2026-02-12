@@ -188,8 +188,7 @@ export class BattlePass extends Controller {
           case 'avatar':
           case 'card_back':
           case 'playmat':
-          case 'marker':
-          case 'card_artwork': {
+          case 'marker': {
             const unlockedItem = new UserUnlockedItem();
             unlockedItem.userId = userId;
             unlockedItem.itemId = reward.item;

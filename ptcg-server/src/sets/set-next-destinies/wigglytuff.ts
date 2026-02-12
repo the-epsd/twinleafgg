@@ -20,13 +20,13 @@ export class Wigglytuff extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of your Pokemon that have the Round attack.'
+      text: 'Does 20 damage times the number of your Pokémon that have the Round attack.'
     },
     {
       name: 'Hypnoblast',
       cost: [C, C, C],
       damage: 60,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Asleep.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
     }
   ];
 

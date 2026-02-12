@@ -56,7 +56,7 @@ export class Stoutland extends PokemonCard {
       name: 'Wild Tackle',
       cost: [C, C, C, C],
       damage: 100,
-      text: 'This Pokemon can\'t attack during your next turn.'
+      text: 'This Pokémon can\'t attack during your next turn.'
     }
   ];
 

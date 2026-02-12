@@ -19,7 +19,7 @@ export class Beheeyem extends PokemonCard {
       name: 'Synchronoise',
       cost: [P],
       damage: 20,
-      text: 'Does 20 damage to each of your opponent\'s Benched Pokemon that shares a type with the Defending Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 20 damage to each of your opponent\'s Benched Pokémon that shares a type with the Defending Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Psyshot',
@@ -36,17 +36,17 @@ export class Beheeyem extends PokemonCard {
   public fullName: string = 'Beheeyem NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Synchronoise - damage benched Pokemon of same type as active
+    // Synchronoise - damage benched Pokémon of same type as active
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Get defending Pokemon's type(s)
+      // Get defending Pokémon's type(s)
       const defendingTypeEffect = new CheckPokemonTypeEffect(opponent.active);
       store.reduceEffect(state, defendingTypeEffect);
       const defendingTypes = defendingTypeEffect.cardTypes;
 
-      // Damage each benched Pokemon that shares a type
+      // Damage each benched Pokémon that shares a type
       opponent.bench.forEach(benchSlot => {
         if (benchSlot.cards.length === 0) {
           return;

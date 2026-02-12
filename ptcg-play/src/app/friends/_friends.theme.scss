@@ -1,22 +1,24 @@
-// Friends Theme Variables
+@import '../../theme/variables.scss';
+
+// Friends Theme Variables using twinleaf palette
 :root {
-  --friends-bg-primary: #1a1a1a;
-  --friends-bg-secondary: #2a2a2a;
-  --friends-bg-card: #252525;
-  --friends-border: #3a3a3a;
-  --friends-border-hover: #4a4a4a;
+  --friends-bg-primary: #{$bg-primary};
+  --friends-bg-secondary: #{$bg-secondary};
+  --friends-bg-card: #{$bg-card};
+  --friends-border: #{$border-color};
+  --friends-border-hover: #{$border-color-hover};
 
-  --friends-green-primary: #4ade80;
-  --friends-green-secondary: #22c55e;
-  --friends-green-dark: #16a34a;
-  --friends-green-light: #86efac;
-  --friends-green-bg: rgba(74, 222, 128, 0.1);
-  --friends-green-border: rgba(74, 222, 128, 0.2);
+  --friends-green-primary: #{$twinleaf-500};
+  --friends-green-secondary: #{$twinleaf-400};
+  --friends-green-dark: #{$twinleaf-600};
+  --friends-green-light: #{$twinleaf-300};
+  --friends-green-bg: #{rgba($twinleaf-500, 0.1)};
+  --friends-green-border: #{rgba($twinleaf-500, 0.2)};
 
-  --friends-text-primary: #ffffff;
-  --friends-text-secondary: #d1d5db;
-  --friends-text-muted: #9ca3af;
-  --friends-text-disabled: #6b7280;
+  --friends-text-primary: #{$text-primary};
+  --friends-text-secondary: #{$text-secondary};
+  --friends-text-muted: #{$text-muted};
+  --friends-text-disabled: #{$twinleaf-800};
 
   --friends-radius-sm: 6px;
   --friends-radius-md: 12px;

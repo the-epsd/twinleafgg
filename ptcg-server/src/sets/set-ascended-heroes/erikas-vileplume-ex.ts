@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, PlayerType, StateUtils, SpecialCondition } from "../../game";
-import { AddSpecialConditionsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect, HealEffect } from "../../game/store/effects/game-effects";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { ABILITY_USED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, PlayerType, StateUtils, SpecialCondition } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ErikasVileplumeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

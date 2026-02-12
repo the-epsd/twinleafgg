@@ -18,13 +18,13 @@ export class Munna extends PokemonCard {
       name: 'Sleep Inducer',
       cost: [C],
       damage: 0,
-      text: 'Switch the Defending Pokemon with 1 of your opponent\'s Benched Pokemon. The new Defending Pokemon is now Asleep.'
+      text: 'Switch the Defending Pokémon with 1 of your opponent\'s Benched Pokémon. The new Defending Pokémon is now Asleep.'
     },
     {
       name: 'Hypnotic Ray',
       cost: [P, C, C],
       damage: 30,
-      text: 'The Defending Pokemon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.'
     }
   ];
 

@@ -16,7 +16,7 @@ export class Lampent extends PokemonCard {
     name: 'Ember',
     cost: [R, C],
     damage: 40,
-    text: 'Flip a coin. If tails, discard an Energy attached to this Pokemon.'
+    text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
   }];
 
   public set: string = 'NXD';

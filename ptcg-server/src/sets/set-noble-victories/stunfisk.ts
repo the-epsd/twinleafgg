@@ -26,7 +26,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Thundershock',
       cost: [L, L, C],
       damage: 50,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }
   ];
 

@@ -25,7 +25,7 @@ export class Darmanitan extends PokemonCard {
       cost: [C, C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokemon. This attack does 50 damage times the number of heads.'
+      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
     }
   ];
 

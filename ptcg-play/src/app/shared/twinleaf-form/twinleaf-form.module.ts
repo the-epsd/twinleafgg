@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { TwinleafFormComponent } from './twinleaf-form.component';
+import { TwinleafButtonModule } from '../twinleaf-button/twinleaf-button.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { TwinleafFormComponent } from './twinleaf-form.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    TwinleafButtonModule
   ],
   exports: [
     TwinleafFormComponent

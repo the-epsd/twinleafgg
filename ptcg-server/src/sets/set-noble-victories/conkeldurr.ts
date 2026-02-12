@@ -18,7 +18,7 @@ export class Conkeldurr extends PokemonCard {
     name: 'Chip Away',
     cost: [F],
     damage: 40,
-    text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokemon.'
+    text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokémon.'
   }, {
     name: 'Swing Around',
     cost: [F, F, C],

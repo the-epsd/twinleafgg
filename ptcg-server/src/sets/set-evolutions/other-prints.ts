@@ -22,7 +22,7 @@ import { BrocksGrit as BrocksGritEVO74 } from '../set-evolutions/brocks-grit';
 import { HereComesTeamRocket } from '../set-team-rocket/here-comes-team-rocket';
 import { Pokedex } from '../set-black-and-white/pokedex';
 import { DarknessEnergy } from '../set-scarlet-and-violet-energy/darkness-energy';
-import { MVenusaurEX } from "../set-x-and-y/m-venusaur-ex";
+import { MVenusaurEX } from '../set-x-and-y/m-venusaur-ex';
 
 export class PokedexEVO extends Pokedex {
   public set = 'EVO';

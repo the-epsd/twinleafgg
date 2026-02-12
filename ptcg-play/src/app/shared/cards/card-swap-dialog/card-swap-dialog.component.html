@@ -42,6 +42,7 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" (clicked)="onCancel()">
+  </twinleaf-button>
+</div>

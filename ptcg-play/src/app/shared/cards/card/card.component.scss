@@ -155,8 +155,13 @@ $holo-types: (
 @each $type, $mask in $holo-types {
   .#{$type} .holo-overlay {
     @include holo-base;
-    -webkit-mask-image: url('/assets/#{$mask}.png');
-    mask-image: url('/assets/#{$mask}.png');
+    @if $type == 'fullart-holo' {
+      -webkit-mask-image: url('/assets/#{$mask}.webp');
+      mask-image: url('/assets/#{$mask}.webp');
+    } @else {
+      -webkit-mask-image: url('/assets/#{$mask}.png');
+      mask-image: url('/assets/#{$mask}.png');
+    }
 
     @if $type =='radiant-holo' or $type =='ace-spec-holo' {
       opacity: 4;

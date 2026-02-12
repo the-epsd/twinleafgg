@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../../theme/global.scss';
 
 :host {
   display: flex;
@@ -27,7 +28,7 @@
   position: relative;
   min-height: 80px;
   background: #1b202b;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+  border-bottom: 1px solid rgba($twinleaf-green, 0.3);
 
   .header-content {
     position: relative;
@@ -58,8 +59,8 @@
   }
 
   .format-badge {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-    border: 1px solid rgba(69, 144, 88, 0.4);
+    background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.1));
+    border: 1px solid rgba($twinleaf-green, 0.4);
     border-radius: 12px;
     padding: 6px 12px;
     backdrop-filter: blur(10px);
@@ -76,7 +77,7 @@
     }
 
     .format-value {
-      color: #459058;
+      color: $twinleaf-green;
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
@@ -129,18 +130,18 @@
       width: 100%;
       height: 100%;
       border: 3px solid transparent;
-      border-top: 3px solid #459058;
+      border-top: 3px solid $twinleaf-green;
       border-radius: 50%;
       animation: spin 1.2s linear infinite;
 
       &:nth-child(2) {
         animation-delay: -0.4s;
-        border-top-color: rgba(69, 144, 88, 0.6);
+        border-top-color: rgba($twinleaf-green, 0.6);
       }
 
       &:nth-child(3) {
         animation-delay: -0.8s;
-        border-top-color: rgba(69, 144, 88, 0.3);
+        border-top-color: rgba($twinleaf-green, 0.3);
       }
     }
   }
@@ -172,13 +173,13 @@
     align-items: center;
     gap: 1rem;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    border: 1px solid rgba($twinleaf-green, 0.3);
     border-radius: 12px;
     padding: 1.5rem;
     backdrop-filter: blur(10px);
 
     .message-icon {
-      color: #459058;
+      color: $twinleaf-green;
       font-size: 24px;
       width: 24px;
       height: 24px;
@@ -237,7 +238,7 @@
 
   .deck-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 2px solid rgba(69, 144, 88, 0.3);
+    border: 2px solid rgba($twinleaf-green, 0.3);
     border-radius: 12px;
     padding: 1rem;
     cursor: pointer;
@@ -255,8 +256,8 @@
     }
 
     &.selected {
-      border-color: #459058;
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      border-color: $twinleaf-green;
+      background: linear-gradient(135deg, rgba($twinleaf-green, 0.1), rgba($twinleaf-green, 0.05));
       transform: none;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
@@ -268,7 +269,7 @@
 
       &:hover {
         transform: none;
-        border-color: rgba(69, 144, 88, 0.3);
+        border-color: rgba($twinleaf-green, 0.3);
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
         box-shadow: none;
       }
@@ -319,7 +320,7 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    color: #459058;
+    color: $twinleaf-green;
     font-size: 24px;
     width: 24px;
     height: 24px;
@@ -376,7 +377,7 @@
     }
 
     .create-deck-button {
-      background: #459058;
+      background: $twinleaf-green;
       color: white;
       font-weight: 600;
       text-transform: uppercase;
@@ -388,7 +389,7 @@
       &:hover {
         background: #3d7a4a;
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(69, 144, 88, 0.3);
+        box-shadow: 0 4px 15px rgba($twinleaf-green, 0.3);
       }
 
       mat-icon {
@@ -405,7 +406,7 @@
   gap: 1rem;
   padding: 1.5rem;
   background: #1b202b;
-  border-top: 1px solid rgba(69, 144, 88, 0.3);
+  border-top: 1px solid rgba($twinleaf-green, 0.3);
   flex-shrink: 0;
 
   // Action button styles moved to twinleaf-button component

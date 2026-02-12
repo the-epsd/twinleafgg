@@ -31,7 +31,7 @@ export class Durantex extends PokemonCard {
     name: 'Vengeful Crush',
     cost: [G, C, C],
     damage: 120,
-    damageCalculation: "+",
+    damageCalculation: '+',
     text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
   }];
 

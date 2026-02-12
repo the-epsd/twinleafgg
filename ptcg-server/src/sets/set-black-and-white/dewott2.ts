@@ -19,7 +19,7 @@ export class Dewott2 extends PokemonCard {
     cost: [C, C],
     damage: 30,
     damageCalculation: '+',
-    text: 'Flip a coin for each [W] Energy attached to this Pokemon. This attack does 10 more damage for each heads.'
+    text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 10 more damage for each heads.'
   }];
 
   public set: string = 'BLW';

@@ -54,7 +54,7 @@ export class Ferrothorn extends PokemonCard {
       this.usedGyroBall = true;
     }
 
-    // Gyro Ball - switch both Pokemon after damage is dealt
+    // Gyro Ball - switch both Pokémon after damage is dealt
     if (effect instanceof AfterAttackEffect && this.usedGyroBall) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

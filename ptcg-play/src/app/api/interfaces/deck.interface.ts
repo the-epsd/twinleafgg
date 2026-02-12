@@ -5,12 +5,12 @@ import { DeckItem } from 'src/app/deck/deck-card/deck-card.interface';
 export interface DeckListEntry {
   id: number;
   name: string;
-  cardType: CardType[];
-  cardTag: CardTag[];
-  cards: string[];
+  cardType?: CardType[];
+  cardTag?: CardTag[];
+  cards?: string[];
   format: Format[];
   isValid: boolean;
-  deckItems: DeckItem[];
+  deckItems?: DeckItem[];
   manualArchetype1?: Archetype;
   manualArchetype2?: Archetype;
   artworks?: { code: string; artworkId?: number }[];
@@ -20,6 +20,13 @@ export interface DeckListEntry {
 
 export interface DeckListResponse extends Response {
   decks: DeckListEntry[];
+  total?: number;
+}
+
+export interface DeckListOptions {
+  summary?: boolean;
+  limit?: number;
+  offset?: number;
 }
 
 export interface Deck {

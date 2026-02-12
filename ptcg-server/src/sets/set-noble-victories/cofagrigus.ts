@@ -19,13 +19,13 @@ export class Cofagrigus extends PokemonCard {
       name: 'Damagriiigus',
       cost: [P],
       damage: 0,
-      text: 'Move up to 3 damage counters from 1 of your Pokemon to 1 of your opponent\'s Pokemon.'
+      text: 'Move up to 3 damage counters from 1 of your Pokémon to 1 of your opponent\'s Pokémon.'
     },
     {
       name: 'Perplex',
       cost: [P, C, C],
       damage: 30,
-      text: 'The Defending Pokemon is now Confused.'
+      text: 'The Defending Pokémon is now Confused.'
     }
   ];
 
@@ -36,11 +36,11 @@ export class Cofagrigus extends PokemonCard {
   public fullName: string = 'Cofagrigus NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Damagriiigus - move up to 3 damage counters from your Pokemon to opponent's
+    // Damagriiigus - move up to 3 damage counters from your Pokémon to opponent's
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Check if any of player's Pokemon has damage
+      // Check if any of player's Pokémon has damage
       const damagedPokemon: any[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.damage > 0) {
@@ -52,7 +52,7 @@ export class Cofagrigus extends PokemonCard {
         return state;
       }
 
-      // Choose source Pokemon
+      // Choose source Pokémon
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON,
@@ -72,7 +72,7 @@ export class Cofagrigus extends PokemonCard {
         // Calculate how many damage counters can be moved (max 3)
         const maxCounters = Math.min(3, Math.floor(source.damage / 10));
 
-        // Choose target Pokemon
+        // Choose target Pokémon
         store.prompt(state, new ChoosePokemonPrompt(
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,

@@ -10,10 +10,10 @@ export class Blitzle extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.FIGHTING
+    type: F
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Rear Kick', cost: [L, C], damage: 20, text: '' }

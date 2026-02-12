@@ -1,3 +1,11 @@
+@import '../../theme/global.scss';
+
+:host {
+  display: block;
+  background-color: $bg-primary;
+  min-height: 100vh;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -54,7 +62,7 @@ ptcg-archetype,
 }
 
 .deck-card {
-  background-color: #2a2f3a;
+  background-color: $bg-card;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -85,8 +93,8 @@ ptcg-archetype,
   position: absolute;
   top: 8px;
   left: 8px;
-  background-color: #ff4444;
-  color: white;
+  background-color: $twinleaf-600;
+  color: $text-primary;
   border-radius: 8px;
   padding: 2px 6px;
   font-size: 8px;
@@ -100,11 +108,11 @@ ptcg-archetype,
   backdrop-filter: blur(2px);
 
   &.valid {
-    background-color: #4CAF50;
+    background-color: $twinleaf-green;
   }
 
   &.invalid {
-    background-color: #ff4444;
+    background-color: $twinleaf-red;
   }
 }
 
@@ -126,8 +134,8 @@ ptcg-archetype,
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+  background-color: rgba($twinleaf-950, 0.8);
+  color: $text-primary;
   padding: 5px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -152,17 +160,12 @@ ptcg-archetype,
 
 .deck-archetype {
   height: 145px;
-  background-color: #101219;
+  background-color: $twinleaf-700;
   padding: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #1a1f2e;
-  }
 
   ptcg-archetype {
     transform: scale(3);
@@ -182,17 +185,17 @@ ptcg-archetype,
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #449058;
-  color: white;
+  background-color: $twinleaf-500;
+  color: $text-primary;
   border-radius: 50%;
   z-index: 3;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   &:hover {
-    background-color: #5ba86b;
+    background-color: $twinleaf-600;
     transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(68, 144, 88, 0.5);
+    box-shadow: 0 4px 12px rgba($twinleaf-500, 0.5);
   }
 
   &:active {
@@ -208,18 +211,18 @@ ptcg-archetype,
 }
 
 .deck-name-row {
-  background-color: #384259;
+  background-color: $twinleaf-700;
   padding: 8px 10px 8px 8px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 4px;
   transition: background-color 0.3s ease;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba($twinleaf-50, 0.05);
 }
 
 .deck-name {
-  color: white;
+  color: $text-primary;
   font-size: 11px;
   font-family: 'Segoe UI', sans-serif;
   font-weight: bold;
@@ -243,7 +246,7 @@ ptcg-archetype,
   border-radius: 4px;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba($twinleaf-50, 0.15);
     transform: scale(1.1);
   }
 
@@ -252,7 +255,7 @@ ptcg-archetype,
     width: 18px;
     height: 18px;
     line-height: 18px;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba($twinleaf-50, 0.85);
   }
 }
 
@@ -303,8 +306,8 @@ ptcg-archetype,
 .format-tab {
   padding: 6px 16px;
   border-radius: 16px;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(42, 47, 58, 0.5);
+  color: rgba($twinleaf-50, 0.7);
+  background-color: rgba($twinleaf-800, 0.5);
   transition: all 0.2s ease;
   font-size: 12px;
   letter-spacing: 0.5px;
@@ -313,13 +316,13 @@ ptcg-archetype,
   white-space: nowrap;
 
   &:hover {
-    color: white;
-    background-color: rgba(42, 47, 58, 0.8);
+    color: $text-primary;
+    background-color: rgba($twinleaf-800, 0.8);
   }
 
   &.active {
-    color: white;
-    background-color: #384259;
+    color: $text-primary;
+    background-color: $twinleaf-700;
     font-weight: bold;
   }
 
@@ -356,8 +359,8 @@ ptcg-archetype,
 .more-formats-menu {
   .mat-menu-item {
     &.active {
-      background-color: #384259;
-      color: white;
+      background-color: $twinleaf-700;
+      color: $text-primary;
       font-weight: bold;
     }
   }
@@ -369,7 +372,7 @@ ptcg-archetype,
   align-items: center;
   justify-content: center;
   padding: 32px;
-  background-color: #2a2f3a;
+  background-color: $bg-card;
   border-radius: 12px;
   text-align: center;
   margin: 2rem auto;
@@ -380,11 +383,11 @@ ptcg-archetype,
     width: 36px;
     height: 36px;
     margin-bottom: 16px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba($twinleaf-50, 0.7);
   }
 
   p {
-    color: white;
+    color: $text-primary;
     font-size: 16px;
     margin-bottom: 24px;
   }

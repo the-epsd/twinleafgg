@@ -15,7 +15,7 @@ export class JudgeWhistle extends TrainerCard {
   public setNumber: string = '146';
 
   public text: string =
-  `Choose 1:
+    `Choose 1:
 
   • Draw a card.
   • Put a Judge card from your discard pile into your hand.`;

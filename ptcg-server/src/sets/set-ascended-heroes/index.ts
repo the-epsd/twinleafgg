@@ -5,6 +5,7 @@ import { Beautifly } from './beautifly';
 import { Cascoon } from './cascoon';
 import { Camerupt } from './camerupt';
 import { Canari } from './canari';
+import { Delcatty } from './delcatty';
 import { Dragonair } from './dragonair';
 import { Dratini } from './dratini';
 import { Dustox } from './dustox';
@@ -28,6 +29,7 @@ import { Rotom } from './rotom';
 import { Scraggy } from './scraggy';
 import { Snom } from './snom';
 import { Snorunt } from './snorunt';
+import { Spectrier } from './spectrier';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
 import { Wurmple } from './wurmple';
@@ -52,6 +54,7 @@ import { Totodile } from './totodile';
 import { Croconaw } from './croconaw';
 import { MegaFeraligatrex } from './mega-feraligatr-ex';
 import { Regiceex } from './regice-ex';
+import { Skitty } from './skitty';
 import { Marill } from './marill';
 import { Azumarillex } from './azumarill-ex';
 import { Registeelex } from './registeel-ex';
@@ -74,6 +77,7 @@ export const setAscendedHeroes: Card[] = [
   new Cascoon(),
   new Camerupt(),
   new Canari(),
+  new Delcatty(),
   new Dragonair(),
   new Dratini(),
   new Dustox(),
@@ -98,6 +102,7 @@ export const setAscendedHeroes: Card[] = [
   new Silcoon(),
   new Snom(),
   new Snorunt(),
+  new Spectrier(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
   new Wurmple(),
@@ -121,6 +126,7 @@ export const setAscendedHeroes: Card[] = [
   new Croconaw(),
   new MegaFeraligatrex(),
   new Regiceex(),
+  new Skitty(),
   new Marill(),
   new Azumarillex(),
   new Registeelex(),

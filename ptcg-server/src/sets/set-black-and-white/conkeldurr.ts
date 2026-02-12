@@ -25,7 +25,7 @@ export class Conkeldurr extends PokemonCard {
       name: 'Swing Around',
       cost: [F, F, C, C],
       damage: 100,
-      text: 'Does 40 damage to each Benched Pokemon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 40 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -50,7 +50,7 @@ export class Conkeldurr extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Damage all opponent's benched Pokemon
+      // Damage all opponent's benched Pokémon
       opponent.bench.forEach(benchSlot => {
         if (benchSlot.cards.length > 0) {
           const damageEffect = new PutDamageEffect(effect, 40);
@@ -59,7 +59,7 @@ export class Conkeldurr extends PokemonCard {
         }
       });
 
-      // Damage all your own benched Pokemon
+      // Damage all your own benched Pokémon
       player.bench.forEach(benchSlot => {
         if (benchSlot.cards.length > 0) {
           const damageEffect = new PutDamageEffect(effect, 40);

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType } from "../../game";
+import { PokemonCard, Stage, CardType } from '../../game';
 
 export class Charmander extends PokemonCard {
   public stage: Stage = Stage.BASIC;

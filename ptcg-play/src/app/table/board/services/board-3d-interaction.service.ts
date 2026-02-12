@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Raycaster, Vector2, Vector3, Euler, Plane, Camera, Scene, Object3D, Intersection, Texture } from 'three';
+import { Raycaster, Vector2, Vector3, Euler, Plane, Camera, Scene, Object3D, Intersection, Texture, InstancedMesh } from 'three';
 import { PlayerType, SlotType, CardTarget, SuperType, Stage, TrainerType, Card, PokemonCard, TrainerCard } from 'ptcg-server';
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, DropZoneState, DropZoneConfig } from '../board-3d/board-3d-drop-zone';
@@ -89,6 +89,11 @@ export class Board3dInteractionService {
   updateInteractiveObjects(scene: Scene): void {
     this.interactiveObjects = [];
     scene.traverse((object: Object3D) => {
+      // Exclude InstancedMesh objects - they are decorative stack meshes and should not intercept clicks
+      // Only the top card (regular Mesh) should be clickable
+      if (object instanceof InstancedMesh) {
+        return;
+      }
       // Only include objects that can be interacted with
       if (object.userData && (object.userData.isCard || object.userData.isDropZone)) {
         this.interactiveObjects.push(object);
@@ -298,6 +303,32 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Find the next open bench slot for a given player
+   * @param player Player type to find bench slot for
+   * @returns The bench zone for the first open slot, or null if no open slots
+   */
+  private findNextOpenBenchSlot(player: PlayerType): Board3dDropZone | null {
+    // Find all bench zones for this player, sorted by index
+    const benchZones = this.dropZones
+      .filter(zone => {
+        const config = zone.getConfig();
+        return config.type === DropZoneType.BENCH && config.player === player;
+      })
+      .sort((a, b) => a.getConfig().index - b.getConfig().index);
+
+    // Find the first unoccupied bench zone
+    for (const zone of benchZones) {
+      const config = zone.getConfig();
+      const zoneKey = `${config.player}_${config.type}_${config.index}`;
+      if (!this.occupiedZones.has(zoneKey)) {
+        return zone;
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * Check if a drop zone is valid for the current drag context
    */
   private isValidDropZone(zone: Board3dDropZone): boolean {
@@ -322,6 +353,18 @@ export class Board3dInteractionService {
       if (originalTarget.slot === SlotType.BENCH && config.type === DropZoneType.ACTIVE) {
         return true; // Can always switch to active (will swap)
       }
+      return false;
+    }
+
+    // Handle BENCH_GENERAL zone - only valid for Basic Pokemon with open bench slots
+    if (config.type === DropZoneType.BENCH_GENERAL) {
+      const { superType, stage } = this.currentDragContext;
+      // Only Basic Pokemon can use general bench zone
+      if (superType === SuperType.POKEMON && stage === Stage.BASIC) {
+        // Check if there's at least one open bench slot for this player
+        return this.findNextOpenBenchSlot(config.player) !== null;
+      }
+      // Evolution Pokemon, Energy, Tool, and Trainer cards need specific targets
       return false;
     }
 
@@ -374,11 +417,75 @@ export class Board3dInteractionService {
    * Show valid drop zones based on current drag context
    */
   private showValidDropZones(): void {
+    if (!this.currentDragContext) {
+      return;
+    }
+
+    const { superType, stage, trainerType } = this.currentDragContext;
+
     for (const zone of this.dropZones) {
+      const config = zone.getConfig();
+
+      // When dragging a Basic Pokemon: Only show BENCH_GENERAL, hide individual BENCH zones
+      if (superType === SuperType.POKEMON && stage === Stage.BASIC) {
+        if (config.type === DropZoneType.BENCH_GENERAL) {
+          if (this.isValidDropZone(zone)) {
+            zone.setValid();
+          } else {
+            zone.hide();
+          }
+          continue;
+        }
+        if (config.type === DropZoneType.BENCH) {
+          // Hide individual bench zones when dragging Pokemon
+          zone.hide();
+          continue;
+        }
+        // Show ACTIVE zone if valid
+        if (config.type === DropZoneType.ACTIVE && this.isValidDropZone(zone)) {
+          zone.setValid();
+          continue;
+        }
+        // Hide other zones
+        zone.hide();
+        continue;
+      }
+
+      // When dragging a Trainer (Item or Supporter): Only show BOARD, hide SUPPORTER zone
+      if (superType === SuperType.TRAINER) {
+        if (trainerType === TrainerType.STADIUM) {
+          // Stadium cards: Only show STADIUM zone
+          if (config.type === DropZoneType.STADIUM && this.isValidDropZone(zone)) {
+            zone.setValid();
+          } else {
+            zone.hide();
+          }
+          continue;
+        }
+        // Item and Supporter cards: Only show BOARD zone
+        if (config.type === DropZoneType.BOARD && this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else if (config.type === DropZoneType.SUPPORTER) {
+          // Hide SUPPORTER zone when dragging Trainer
+          zone.hide();
+        } else {
+          // Hide other zones
+          zone.hide();
+        }
+        continue;
+      }
+
+      // For other card types (Evolution Pokemon, Energy, Tool), show individual BENCH/ACTIVE zones
+      // Hide BENCH_GENERAL for these card types (they need specific targets)
+      if (config.type === DropZoneType.BENCH_GENERAL) {
+        zone.hide();
+        continue;
+      }
+
       if (this.isValidDropZone(zone)) {
         zone.setValid();
       } else {
-        zone.setState(DropZoneState.IDLE);
+        zone.hide();
       }
     }
   }
@@ -963,18 +1070,60 @@ export class Board3dInteractionService {
   private findValidDropZone(position: Vector3): Board3dDropZone | null {
     let nearestZone: Board3dDropZone | null = null;
     let minDistance = Infinity;
+    let nearestGeneralBenchZone: Board3dDropZone | null = null;
+    let minGeneralBenchDistance = Infinity;
 
+    // First pass: check for BENCH_GENERAL zones and individual zones separately
     for (const zone of this.dropZones) {
       if (!this.isValidDropZone(zone)) {
         continue;
       }
 
+      const config = zone.getConfig();
       const distance = zone.distanceToPosition(position);
-      // Use larger snap distance for BOARD zone (trainers)
-      const snapDist = zone.getConfig().type === DropZoneType.BOARD ? 15 : SNAP_DISTANCE;
+
+      // Handle BENCH_GENERAL zones separately - use bounds check instead of distance
+      if (config.type === DropZoneType.BENCH_GENERAL) {
+        // Check if position is actually within the zone's rectangular bounds
+        if (zone.isPositionInBounds(position)) {
+          // Use distance as tiebreaker if multiple BENCH_GENERAL zones match
+          if (distance < minGeneralBenchDistance) {
+            nearestGeneralBenchZone = zone;
+            minGeneralBenchDistance = distance;
+          }
+        }
+        continue;
+      }
+
+      // Handle BOARD zones - use bounds check instead of distance for large zones
+      if (config.type === DropZoneType.BOARD) {
+        // Check if position is actually within the zone's rectangular bounds
+        if (zone.isPositionInBounds(position)) {
+          // Use distance as tiebreaker if multiple BOARD zones match
+          if (distance < minDistance) {
+            nearestZone = zone;
+            minDistance = distance;
+          }
+        }
+        continue;
+      }
+
+      // Handle other zones (including individual BENCH, ACTIVE, SUPPORTER zones)
+      // These are small enough that distance-based detection is accurate
+      const snapDist = SNAP_DISTANCE;
       if (distance < snapDist && distance < minDistance) {
         nearestZone = zone;
         minDistance = distance;
+      }
+    }
+
+    // If we found a BENCH_GENERAL zone, resolve it to the specific open bench slot
+    if (nearestGeneralBenchZone) {
+      const generalConfig = nearestGeneralBenchZone.getConfig();
+      const openBenchSlot = this.findNextOpenBenchSlot(generalConfig.player);
+      if (openBenchSlot) {
+        // Return the specific bench zone instead of the general one
+        return openBenchSlot;
       }
     }
 
@@ -1191,6 +1340,32 @@ export class Board3dInteractionService {
       this.dropZones.push(benchZone);
     });
 
+    // General bench zone - large area covering entire bench for easy card placement
+    if (benchPositions.length > 0) {
+      // Calculate center position (average of all bench positions)
+      const centerX = benchPositions.reduce((sum, pos) => sum + pos.x, 0) / benchPositions.length;
+      const centerZ = benchPositions[0].z; // All bench positions share the same Z
+      const benchCenter = new Vector3(centerX, 0.1, centerZ);
+
+      // Calculate width to span all bench positions with some padding
+      const minX = Math.min(...benchPositions.map(pos => pos.x));
+      const maxX = Math.max(...benchPositions.map(pos => pos.x));
+      const benchWidth = Math.max((maxX - minX) + 4.0, 20.0); // At least 20 units wide, add padding
+      const benchHeight = 6.0; // Extended height for easier targeting above and below bench
+
+      const generalBenchZone = new Board3dDropZone({
+        type: DropZoneType.BENCH_GENERAL,
+        position: benchCenter,
+        player,
+        index: -1, // Special index for general zone
+        width: benchWidth,
+        height: benchHeight,
+        texture: this.slotGridTexture
+      });
+      generalBenchZone.addToScene(scene);
+      this.dropZones.push(generalBenchZone);
+    }
+
     // Stadium zone is now shared - created in createDropZoneIndicators()
 
     // Board zone (for Items/Supporters) - large area covering player's side
@@ -1213,13 +1388,76 @@ export class Board3dInteractionService {
   private highlightNearestDropZone(position: Vector3, scene: Scene): void {
     const nearestZone = this.findValidDropZone(position);
 
-    // Update visual states - keep all valid zones visible
+    if (!this.currentDragContext) {
+      return;
+    }
+
+    const { superType, stage, trainerType } = this.currentDragContext;
+
+    // Update visual states - show only relevant zones based on card type
     for (const zone of this.dropZones) {
+      const config = zone.getConfig();
+
+      // When dragging a Basic Pokemon: Only show BENCH_GENERAL, hide individual BENCH zones
+      if (superType === SuperType.POKEMON && stage === Stage.BASIC) {
+        if (config.type === DropZoneType.BENCH_GENERAL) {
+          if (this.isValidDropZone(zone)) {
+            zone.setValid();
+          } else {
+            zone.hide();
+          }
+          continue;
+        }
+        if (config.type === DropZoneType.BENCH) {
+          // Hide individual bench zones when dragging Pokemon
+          zone.hide();
+          continue;
+        }
+        // Show ACTIVE zone if valid
+        if (config.type === DropZoneType.ACTIVE && this.isValidDropZone(zone)) {
+          zone.setValid();
+          continue;
+        }
+        // Hide other zones
+        zone.hide();
+        continue;
+      }
+
+      // When dragging a Trainer (Item or Supporter): Only show BOARD, hide SUPPORTER zone
+      if (superType === SuperType.TRAINER) {
+        if (trainerType === TrainerType.STADIUM) {
+          // Stadium cards: Only show STADIUM zone
+          if (config.type === DropZoneType.STADIUM && this.isValidDropZone(zone)) {
+            zone.setValid();
+          } else {
+            zone.hide();
+          }
+          continue;
+        }
+        // Item and Supporter cards: Only show BOARD zone
+        if (config.type === DropZoneType.BOARD && this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else if (config.type === DropZoneType.SUPPORTER) {
+          // Hide SUPPORTER zone when dragging Trainer
+          zone.hide();
+        } else {
+          // Hide other zones
+          zone.hide();
+        }
+        continue;
+      }
+
+      // For other card types (Evolution Pokemon, Energy, Tool), show individual BENCH/ACTIVE zones
+      // Hide BENCH_GENERAL for these card types (they need specific targets)
+      if (config.type === DropZoneType.BENCH_GENERAL) {
+        zone.hide();
+        continue;
+      }
+
       if (this.isValidDropZone(zone)) {
-        // All valid zones stay in VALID state (nearest one will pulse)
         zone.setValid();
       } else {
-        zone.setState(DropZoneState.IDLE);
+        zone.hide();
       }
     }
   }

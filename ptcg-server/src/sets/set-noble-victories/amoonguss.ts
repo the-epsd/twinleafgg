@@ -19,14 +19,14 @@ export class Amoonguss extends PokemonCard {
       name: 'Toxic',
       cost: [G],
       damage: 0,
-      text: 'The Defending Pokemon is now Poisoned. Put 2 damage counters instead of 1 on the Poisoned Pokemon between turns.'
+      text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Poisoned Pokémon between turns.'
     },
     {
       name: 'Rising Lunge',
       cost: [G, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage and the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, this attack does 30 more damage and the Defending Pokémon is now Paralyzed.'
     }
   ];
 

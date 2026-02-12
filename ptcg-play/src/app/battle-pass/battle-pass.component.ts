@@ -47,22 +47,6 @@ export class BattlePassComponent implements OnInit {
       });
   }
 
-  public adminGrant(reward: BattlePassReward | undefined): void {
-    if (!reward) return;
-    if (reward.type === 'card_artwork') {
-      // Upsert artwork and grant to current user
-      // Assumes current userId/role are attached by AuthToken middleware
-      const artworkId = Number(reward.item);
-      if (Number.isFinite(artworkId)) {
-        this.api.post('/v1/artworks/admin/grant', { artworkId })
-          .pipe(untilDestroyed(this))
-          .subscribe({
-            next: () => { /* no-op */ },
-            error: (err) => { }
-          });
-      }
-    }
-  }
 
   private groupRewardsByLevel(rewards: BattlePassReward[]): BattlePassLevel[] {
     const levelMap = new Map<number, BattlePassLevel>();

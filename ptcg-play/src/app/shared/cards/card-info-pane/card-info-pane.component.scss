@@ -11,6 +11,11 @@
   flex: 1 1 33%;
   min-width: map-get($ptcg-size, card);
   padding-right: map-get($padding, normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
   >ptcg-card:first-child {
     width: 100%;
@@ -18,11 +23,14 @@
   }
 
   .swap-button-container {
+    position: absolute;
+    bottom: map-get($padding, small);
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-top: map-get($padding, small) + 16px;
+    z-index: 10;
   }
 
   .evolution-section {
@@ -44,7 +52,7 @@
   border-top-right-radius: map-get($padding, small);
   display: flex;
   padding: map-get($padding, small);
-  background-color: #1a202c7a;
+  background-color: rgba($twinleaf-800, 0.48);
   position: relative;
 
   .favorite-button {
@@ -71,7 +79,7 @@
   display: flex;
   align-items: center;
   padding: map-get($padding, small);
-  background-color: #2127347a;
+  background-color: rgba($twinleaf-700, 0.48);
 }
 
 .subtitle-set-code {
@@ -107,8 +115,8 @@
 }
 
 .tag {
-  background-color: #4a5568;
-  color: #ffffff;
+  background-color: $twinleaf-600;
+  color: $text-primary;
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 10px;
@@ -143,7 +151,7 @@
   border-radius: map-get($padding, small);
   display: flex;
   padding: map-get($padding, small);
-  background-color: #2127347a;
+  background-color: rgba($twinleaf-700, 0.48);
 }
 
 .stats ptcg-hover-highlight {
@@ -241,12 +249,12 @@ ptcg-energy {
   width: 100%;
 
   .swap-button {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: rgba($twinleaf-700, 0.9);
+    color: $text-primary;
     transition: background-color 0.2s, transform 0.2s;
 
     &:hover:not(:disabled) {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba($twinleaf-600, 0.9);
       transform: scale(1.1);
     }
 
@@ -281,7 +289,7 @@ ptcg-energy {
     .evolution-label {
       font-size: 12px;
       font-weight: 600;
-      color: #cccccc;
+      color: $text-secondary;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }

@@ -13,6 +13,7 @@ export class Cards extends Controller {
     if (!this.cardsInfo) {
       this.cardsInfo = this.buildCardsInfo();
     }
+
     res.send({ ok: true, cardsInfo: this.cardsInfo });
   }
 
@@ -28,10 +29,10 @@ export class Cards extends Controller {
 
   private buildCardsInfo(): CardsInfo {
     const cardManager = CardManager.getInstance();
-    const cards = cardManager.getAllCards();
+    const allCards = cardManager.getAllCards();
 
     const cardsInfo: CardsInfo = {
-      cards,
+      cards: allCards,
       hash: ''
     };
 

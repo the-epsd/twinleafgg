@@ -21,7 +21,7 @@ export class Servine2 extends PokemonCard {
       name: 'Wring Out',
       cost: [G, C],
       damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed. Discard an Energy attached to the Defending Pokemon.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed. Discard an Energy attached to the Defending Pokémon.'
     }
   ];
 

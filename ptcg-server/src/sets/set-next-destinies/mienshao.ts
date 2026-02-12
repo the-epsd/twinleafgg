@@ -21,14 +21,14 @@ export class Mienshao extends PokemonCard {
       name: 'Haul In',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for 2 Pokemon Tool cards, reveal them, and put them into your hand. Shuffle your deck afterward.'
+      text: 'Search your deck for 2 Pokémon Tool cards, reveal them, and put them into your hand. Shuffle your deck afterward.'
     },
     {
       name: 'Meditate',
       cost: [F, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on the Defending Pokemon.'
+      text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
     }
   ];
 
@@ -39,7 +39,7 @@ export class Mienshao extends PokemonCard {
   public fullName: string = 'Mienshao NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Haul In - search for 2 Pokemon Tool cards
+    // Haul In - search for 2 Pokémon Tool cards
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

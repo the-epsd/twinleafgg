@@ -68,7 +68,7 @@ export class Teammates extends TrainerCard {
   public fullName: string = 'Teammates PRC';
 
   public text: string =
-    `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.
+    `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent's last turn.
 
 Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward.`;
 

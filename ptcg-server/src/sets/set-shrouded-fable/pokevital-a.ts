@@ -70,7 +70,7 @@ export class PokeVitalA extends TrainerCard {
   public text: string =
     `Heal 150 damage from 1 of your Pokémon.
 
-If this card is in your discard pile, it can\'t be put into your deck or hand.`;
+If this card is in your discard pile, it can't be put into your deck or hand.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

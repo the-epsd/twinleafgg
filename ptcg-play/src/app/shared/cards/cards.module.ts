@@ -22,6 +22,7 @@ import { TrainerTypeComponent } from './trainer-type/trainer-type.component';
 import { HoverHighlightComponent } from './hover-highlight/hover-highlight.component';
 import { ArchetypeComponent } from './archetype/archetype.component';
 import { FormsModule } from '@angular/forms';
+import { TwinleafButtonModule } from '../twinleaf-button/twinleaf-button.module';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     DndMultiBackendModule,
     DndModule,
     TranslateModule,
-    MatDialogModule
+    MatDialogModule,
+    TwinleafButtonModule
   ],
   declarations: [
     CardComponent,

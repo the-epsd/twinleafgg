@@ -1,10 +1,10 @@
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
-import { COIN_FLIP_PROMPT, MOVE_CARDS } from './prefabs';
+import { COIN_FLIP_PROMPT, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 
 
 /**
@@ -77,9 +77,9 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
       { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min, max, allowCancel: false }
     )], selected => {
-      const cards = selected || [];
-      player.discard.moveCardsTo(cards, player.hand);
-    });
+    const cards = selected || [];
+    player.discard.moveCardsTo(cards, player.hand);
+  });
 }
 
 export function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(
@@ -250,6 +250,28 @@ export function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(
   }));
 }
 
+export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  damagePerHeads: number
+): State {
+  return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, heads => {
+    effect.damage = damagePerHeads * heads;
+  });
+}
+
+export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  damagePerHeads: number
+): State {
+  return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, heads => {
+    effect.damage += damagePerHeads * heads;
+  });
+}
+
 export function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(
   store: StoreLike,
   state: State,
@@ -406,4 +428,33 @@ export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(
   );
   store.reduceEffect(state, specialConditionEffect);
 
+}
+
+export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect
+) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+  if (energyCards.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    opponent.active,
+    { superType: SuperType.ENERGY },
+    { min: 1, max: 1, allowCancel: false }
+  ), selected => {
+    const cards = selected || [];
+    if (cards.length > 0) {
+      const discardEnergy = new DiscardCardsEffect(effect, cards);
+      discardEnergy.target = opponent.active;
+      store.reduceEffect(state, discardEnergy);
+    }
+  });
 }

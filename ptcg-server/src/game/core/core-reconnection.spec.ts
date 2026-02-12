@@ -19,7 +19,8 @@ describe('Core Reconnection Integration', () => {
       reconnectIntervals: [5000, 10000, 15000],
       healthCheckIntervalMs: 30 * 1000,
       cleanupIntervalMs: 60 * 1000,
-      maxPreservedSessionsPerUser: 1
+      maxPreservedSessionsPerUser: 1,
+      disconnectForfeitMs: 60 * 1000
     };
 
     // Create core with reconnection config

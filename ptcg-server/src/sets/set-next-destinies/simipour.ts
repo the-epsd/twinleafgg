@@ -26,7 +26,7 @@ export class Simipour extends PokemonCard {
       cost: [W, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 30 more damage and the Defending Pokemon is now Asleep.'
+      text: 'If there is any Stadium card in play, this attack does 30 more damage and the Defending Pokémon is now Asleep.'
     }
   ];
 

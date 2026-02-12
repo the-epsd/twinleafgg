@@ -8,20 +8,20 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
   
   public attacks = [{
     name: 'Negative Ion',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 30,
     text: 'During your opponent\'s next turn, any damage done by attacks from the Defending Pokémon is reduced by 30 (before applying Weakness and Resistance).'
   },
   {
     name: 'Electrishower',
-    cost: [CardType.LIGHTNING],
+    cost: [L],
     damage: 0,
     text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];

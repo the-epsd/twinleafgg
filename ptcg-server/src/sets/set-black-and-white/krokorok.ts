@@ -20,7 +20,7 @@ export class Krokorok extends PokemonCard {
       name: 'Torment',
       cost: [C, C],
       damage: 30,
-      text: 'Choose 1 of the Defending Pokemon\'s attacks. That Pokemon can\'t use that attack during your opponent\'s next turn.'
+      text: 'Choose 1 of the Defending Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
     },
     {
       name: 'Bite',

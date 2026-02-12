@@ -26,7 +26,7 @@ export class Gigalith extends PokemonCard {
       cost: [C, C, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Does 20 more damage for each Fighting Energy attached to this Pokémon.'
+      text: 'Does 20 more damage for each [F] Energy attached to this Pokémon.'
     }
   ];
 

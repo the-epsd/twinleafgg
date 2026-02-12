@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 /* Ensure app-wide uppercase variant when desired */
 .uppercase-all {
     text-transform: uppercase !important;
@@ -20,8 +22,8 @@ body {
 }
 
 body {
-    background-color: #fff;
-    color: #FFFFFF;
+    background-color: $bg-primary;
+    color: $text-primary;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857;
@@ -137,14 +139,19 @@ table {
 
 /* Some material overrides, and fixes */
 mat-dialog-container {
-    background: rgba(26, 32, 44);
+    background: $bg-card;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid $twinleaf-green;
     position: relative;
 }
 
-mat-dialog-actions {
+.dialog-actions {
+    display: flex;
     justify-content: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px 0;
 }
 
 mat-dialog-content {
@@ -157,4 +164,13 @@ mat-dialog-content {
     >.mat-list-item-content {
         padding: 0 !important;
     }
+}
+
+// Twinleaf color styles
+.twinleaf-red {
+    color: $twinleaf-red;
+}
+
+.twinleaf-gold {
+    color: $twinleaf-gold;
 }

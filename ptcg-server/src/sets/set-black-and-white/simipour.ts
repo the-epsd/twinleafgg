@@ -19,7 +19,7 @@ export class Simipour extends PokemonCard {
       name: 'Scald',
       cost: [W],
       damage: 20,
-      text: 'The Defending Pokemon is now Burned.'
+      text: 'The Defending Pokémon is now Burned.'
     },
     {
       name: 'Fury Swipes',

@@ -20,6 +20,9 @@ export class SettingsDialogComponent {
   hiddenFormats: Format[] = [];
   use3dBoardDefault = false;
   has3dBoardAccess = false;
+  cardTextKerning = 0;
+  sfxEnabled = true;
+  sfxVolume = 70; // Display as percentage (0-100), stored as 0.0-1.0 internally
 
   // Available formats for selection
   public Format = Format;
@@ -61,6 +64,15 @@ export class SettingsDialogComponent {
     this.settingsService.use3dBoardDefault$.subscribe(
       enabled => this.use3dBoardDefault = enabled
     );
+    this.settingsService.cardTextKerning$.subscribe(
+      kerning => this.cardTextKerning = kerning
+    );
+    this.settingsService.sfxEnabled$.subscribe(
+      enabled => this.sfxEnabled = enabled
+    );
+    this.settingsService.sfxVolume$.subscribe(
+      volume => this.sfxVolume = Math.round(volume * 100) // Convert 0.0-1.0 to 0-100 for display
+    );
     this.board3dAccessService.has3dBoardAccess$.subscribe(
       hasAccess => this.has3dBoardAccess = hasAccess
     );
@@ -69,6 +81,17 @@ export class SettingsDialogComponent {
   onCardSizeChange(event: Event) {
     const size = (event.target as HTMLInputElement).value;
     this.settingsService.setCardSize(parseInt(size));
+  }
+
+  onCardTextKerningChange(event: Event) {
+    const kerning = (event.target as HTMLInputElement).value;
+    this.settingsService.setCardTextKerning(parseFloat(kerning));
+  }
+
+  onSfxVolumeChange(event: Event) {
+    const volumePercent = parseInt((event.target as HTMLInputElement).value);
+    const volume = volumePercent / 100; // Convert 0-100 to 0.0-1.0
+    this.settingsService.setSfxVolume(volume);
   }
 
   onHiddenFormatsChange(format: Format, isHidden: boolean) {
@@ -92,6 +115,9 @@ export class SettingsDialogComponent {
     this.settingsService.setCardSize(this.cardSize);
     this.settingsService.setHiddenFormats(this.hiddenFormats);
     this.settingsService.setUse3dBoardDefault(this.use3dBoardDefault);
+    this.settingsService.setCardTextKerning(this.cardTextKerning);
+    this.settingsService.setSfxEnabled(this.sfxEnabled);
+    this.settingsService.setSfxVolume(this.sfxVolume / 100); // Convert percentage to 0.0-1.0
     this.dialogRef.close();
   }
 }

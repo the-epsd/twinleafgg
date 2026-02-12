@@ -1,34 +1,41 @@
+@import '../../theme/variables.scss';
+
 .terms-of-service {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
   font-family: sans-serif;
   line-height: 1.6;
+  color: $text-primary;
 }
 
 .terms-title {
   text-align: center;
   margin-bottom: 20px;
+  color: $text-primary;
 }
 
 .terms-last-updated {
   text-align: center;
   font-style: italic;
   margin-bottom: 30px;
+  color: $text-muted;
 }
 
 .terms-section-header {
   margin-top: 30px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $border-color;
   padding-bottom: 5px;
+  color: $text-primary;
 }
 
 .terms-of-service ul {
   margin-left: 20px;
   padding-left: 20px;
+  color: $text-secondary;
 }
 
 .email {
-  color: green;
+  color: $twinleaf-500;
 }

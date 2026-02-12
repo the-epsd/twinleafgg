@@ -19,7 +19,7 @@ export class Gigalith extends PokemonCard {
       name: 'Power Gem',
       cost: [F, C, C],
       damage: 60,
-      text: 'Does 10 damage to each of your opponent\'s Benched Pokemon for each Energy attached to this Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 10 damage to each of your opponent\'s Benched Pokémon for each Energy attached to this Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -35,7 +35,7 @@ export class Gigalith extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Count energy attached to this Pokemon
+      // Count energy attached to this Pokémon
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkEnergy);
 
@@ -44,7 +44,7 @@ export class Gigalith extends PokemonCard {
         energyCount += 1;
       });
 
-      // Damage each benched Pokemon for 10 x energy count
+      // Damage each benched Pokémon for 10 x energy count
       const benchDamage = 10 * energyCount;
       if (benchDamage > 0) {
         opponent.bench.forEach(benchSlot => {

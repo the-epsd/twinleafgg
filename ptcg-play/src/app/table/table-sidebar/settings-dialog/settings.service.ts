@@ -15,6 +15,9 @@ export class SettingsService {
   private readonly CARD_SIZE_KEY = 'cardSize';
   private readonly HIDDEN_FORMATS_KEY = 'hiddenFormats';
   private readonly USE_3D_BOARD_DEFAULT_KEY = 'use3dBoardDefault';
+  private readonly CARD_TEXT_KERNING_KEY = 'cardTextKerning';
+  private readonly SFX_ENABLED_KEY = 'sfxEnabled';
+  private readonly SFX_VOLUME_KEY = 'sfxVolume';
 
   private holoEnabledSubject = new BehaviorSubject<boolean>(this.loadHoloSetting());
   private cardSizeSubject = new BehaviorSubject<number>(100);
@@ -22,6 +25,9 @@ export class SettingsService {
   private showTagsSubject = new BehaviorSubject<boolean>(this.loadTagsSetting());
   private hiddenFormatsSubject = new BehaviorSubject<Format[]>(this.loadHiddenFormats());
   private use3dBoardDefaultSubject = new BehaviorSubject<boolean>(this.loadUse3dBoardDefaultSetting());
+  private cardTextKerningSubject = new BehaviorSubject<number>(this.loadCardTextKerning());
+  private sfxEnabledSubject = new BehaviorSubject<boolean>(this.loadSfxSetting());
+  private sfxVolumeSubject = new BehaviorSubject<number>(this.loadSfxVolume());
 
   cardSize$ = this.cardSizeSubject.asObservable();
   holoEnabled$ = this.holoEnabledSubject.asObservable();
@@ -29,6 +35,9 @@ export class SettingsService {
   showTags$ = this.showTagsSubject.asObservable();
   hiddenFormats$ = this.hiddenFormatsSubject.asObservable();
   use3dBoardDefault$ = this.use3dBoardDefaultSubject.asObservable();
+  cardTextKerning$ = this.cardTextKerningSubject.asObservable();
+  sfxEnabled$ = this.sfxEnabledSubject.asObservable();
+  sfxVolume$ = this.sfxVolumeSubject.asObservable();
 
   private loadHoloSetting(): boolean {
     const saved = localStorage.getItem(this.HOLO_ENABLED_KEY);
@@ -53,6 +62,21 @@ export class SettingsService {
   private loadUse3dBoardDefaultSetting(): boolean {
     const saved = localStorage.getItem(this.USE_3D_BOARD_DEFAULT_KEY);
     return saved ? JSON.parse(saved) : false;
+  }
+
+  private loadCardTextKerning(): number {
+    const saved = localStorage.getItem(this.CARD_TEXT_KERNING_KEY);
+    return saved ? parseFloat(saved) : 0;
+  }
+
+  private loadSfxSetting(): boolean {
+    const saved = localStorage.getItem(this.SFX_ENABLED_KEY);
+    return saved ? JSON.parse(saved) : true;
+  }
+
+  private loadSfxVolume(): number {
+    const saved = localStorage.getItem(this.SFX_VOLUME_KEY);
+    return saved ? parseFloat(saved) : 0.7;
   }
 
   setHoloEnabled(enabled: boolean) {
@@ -90,5 +114,22 @@ export class SettingsService {
       localStorage.setItem(this.USE_3D_BOARD_DEFAULT_KEY, JSON.stringify(enabled));
     }
     this.use3dBoardDefaultSubject.next(enabled);
+  }
+
+  setCardTextKerning(value: number) {
+    localStorage.setItem(this.CARD_TEXT_KERNING_KEY, value.toString());
+    this.cardTextKerningSubject.next(value);
+  }
+
+  setSfxEnabled(enabled: boolean) {
+    localStorage.setItem(this.SFX_ENABLED_KEY, JSON.stringify(enabled));
+    this.sfxEnabledSubject.next(enabled);
+  }
+
+  setSfxVolume(volume: number) {
+    // Clamp volume between 0 and 1
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    localStorage.setItem(this.SFX_VOLUME_KEY, clampedVolume.toString());
+    this.sfxVolumeSubject.next(clampedVolume);
   }
 }

@@ -1,6 +1,8 @@
+@import '../../../theme/variables.scss';
+
 .play-button {
-  background: #459058;
-  color: white;
+  background: $twinleaf-green;
+  color: $text-primary;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -10,7 +12,7 @@
   align-items: center;
   justify-content: center;
   box-shadow:
-    0 4px 15px rgba(69, 144, 88, 0.3),
+    0 4px 15px rgba($twinleaf-green, 0.3),
     0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   position: relative;
@@ -33,43 +35,43 @@
   &:hover:not([disabled]) {
     transform: translateY(-2px) scale(1.02);
     box-shadow:
-      0 6px 20px rgba(69, 144, 88, 0.4),
+      0 6px 20px rgba($twinleaf-green, 0.4),
       0 4px 12px rgba(0, 0, 0, 0.15);
-    background: #3d7a4a;
+    background: darken($twinleaf-green, 10%);
   }
 
   &:active:not([disabled]) {
     transform: translateY(0) scale(1);
     box-shadow:
-      0 2px 8px rgba(69, 144, 88, 0.3),
+      0 2px 8px rgba($twinleaf-green, 0.3),
       0 1px 4px rgba(0, 0, 0, 0.1);
   }
 
   &.in-queue {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    background: linear-gradient(135deg, $twinleaf-green 0%, $twinleaf-green 100%);
     box-shadow:
-      0 4px 15px rgba(255, 107, 107, 0.3),
+      0 4px 15px rgba($twinleaf-green, 0.3),
       0 2px 8px rgba(0, 0, 0, 0.1);
 
     &:hover:not([disabled]) {
       box-shadow:
-        0 6px 20px rgba(255, 107, 107, 0.4),
+        0 6px 20px rgba($twinleaf-green, 0.4),
         0 4px 12px rgba(0, 0, 0, 0.15);
-      background: linear-gradient(135deg, #ff5252 0%, #e53935 100%);
+      background: linear-gradient(135deg, $twinleaf-green 0%, $twinleaf-green 100%);
     }
   }
 
   &.error {
-    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    background: linear-gradient(135deg, $twinleaf-green 0%, $twinleaf-green 100%);
     box-shadow:
-      0 4px 15px rgba(255, 68, 68, 0.3),
+      0 4px 15px rgba($twinleaf-green, 0.3),
       0 2px 8px rgba(0, 0, 0, 0.1);
 
     &:hover:not([disabled]) {
       box-shadow:
-        0 6px 20px rgba(255, 68, 68, 0.4),
+        0 6px 20px rgba($twinleaf-green, 0.4),
         0 4px 12px rgba(0, 0, 0, 0.15);
-      background: linear-gradient(135deg, #ff3333 0%, #bb0000 100%);
+      background: linear-gradient(135deg, $twinleaf-green 0%, $twinleaf-green 100%);
     }
   }
 

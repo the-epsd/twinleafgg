@@ -10,10 +10,10 @@ export class Panpour extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.LIGHTNING
+    type: L
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Scratch', cost: [C], damage: 10, text: '' },

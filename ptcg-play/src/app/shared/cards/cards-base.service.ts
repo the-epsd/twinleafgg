@@ -12,6 +12,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { FavoritesService } from '../../api/services/favorites.service';
 import { ProfileService } from '../../api/services/profile.service';
+import { CardArtwork } from '../../api/interfaces/cards.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,12 @@ export class CardsBaseService implements OnDestroy {
 
   private cards: Card[] = [];
   private names: string[] = [];
+  private cardIndex = new Map<string, Card>();
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
   private nightlyImages: { [key: string]: string } = {};
   private favoriteCards: { [cardName: string]: string } = {};
+  private unlockedArtworks: CardArtwork[] = [];
 
   private overridesChangedSubject = new Subject<string>();
   public overridesChanged$ = this.overridesChangedSubject.asObservable();
@@ -52,6 +55,7 @@ export class CardsBaseService implements OnDestroy {
   public loadCardsInfo(cardsInfo: CardsInfo) {
     this.cardManager.loadCardsInfo(cardsInfo);
     this.cards = this.cardManager.getAllCards().slice();
+    this.rebuildCardIndex();
     this.names = this.cards.map(c => c.fullName);
     this.cards.sort(this.compareCards);
     StateSerializer.setKnownCards(this.cards);
@@ -59,9 +63,21 @@ export class CardsBaseService implements OnDestroy {
 
   public setCards(cards: Card[]) {
     this.cards = cards;
+    this.rebuildCardIndex();
     this.names = this.cards.map(c => c.fullName);
     this.cards.sort(this.compareCards);
     StateSerializer.setKnownCards(this.cards);
+  }
+
+  private rebuildCardIndex(): void {
+    this.cardIndex.clear();
+    for (const card of this.cards) {
+      this.cardIndex.set(card.fullName, card);
+      const p = card as any;
+      if (p.legacyFullName) {
+        this.cardIndex.set(p.legacyFullName, card);
+      }
+    }
   }
 
   private compareCards(c1: Card, c2: Card) {
@@ -333,7 +349,7 @@ export class CardsBaseService implements OnDestroy {
     }
 
     const fullCardIdentifier = `${card.set} ${card.setNumber}`;
-    
+
     // Check nightly images first (supplements custom images)
     let nightlyUrl = this.nightlyImages[fullCardIdentifier];
     if (!nightlyUrl && card.setNumber) {
@@ -396,7 +412,7 @@ export class CardsBaseService implements OnDestroy {
       }
     }
 
-    // 2. If no artworksMap override, use getScanUrl() directly to ensure identical behavior
+    // 2. If no artworksMap override, use getScanUrl() directly
     // This checks nightly images → custom images → default URL (same as 2D board)
     return this.getScanUrl(card);
   }
@@ -501,7 +517,7 @@ export class CardsBaseService implements OnDestroy {
 
 
   public getCardByName(cardName: string): Card | undefined {
-    return this.cards.find(c => c.fullName === cardName);
+    return this.cardIndex.get(cardName);
   }
 
   public getCardByNameSetNumber(name: string, set: string, setNumber: string): Card | undefined {
@@ -524,7 +540,7 @@ export class CardsBaseService implements OnDestroy {
     }
     const dialog = this.dialog.open(CardInfoPopupComponent, {
       maxWidth: '100%',
-      width: '650px',
+      width: '50vw',
       data
     });
 
@@ -599,6 +615,14 @@ export class CardsBaseService implements OnDestroy {
   public isFavoriteCard(card: Card): boolean {
     const favoriteFullName = this.favoriteCards[card.name];
     return favoriteFullName === card.fullName;
+  }
+
+  public setUnlockedArtworks(artworks: CardArtwork[]): void {
+    this.unlockedArtworks = artworks || [];
+  }
+
+  public getUnlockedArtworks(): CardArtwork[] {
+    return this.unlockedArtworks;
   }
 
   ngOnDestroy(): void {

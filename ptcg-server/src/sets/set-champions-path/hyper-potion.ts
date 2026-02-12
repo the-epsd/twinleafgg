@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: false, blocked }
+    { min: 1, max: 1, allowCancel: false, blocked }
   ), results => {
     targets = results || [];
     next();

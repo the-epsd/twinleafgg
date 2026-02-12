@@ -99,6 +99,7 @@ export class CoreSocket {
   }
 
   private buildCoreInfo(): CoreInfo {
+    const reconnectableGameId = this.core.getReconnectableGameId(this.client.user.id);
     return {
       clientId: this.client.id,
       clients: this.core.clients.map(client => ({
@@ -106,7 +107,8 @@ export class CoreSocket {
         userId: client.user.id
       })),
       users: this.core.clients.map(client => CoreSocket.buildUserInfo(client.user)),
-      games: this.core.games.map(game => CoreSocket.buildGameInfo(game))
+      games: this.core.games.map(game => CoreSocket.buildGameInfo(game)),
+      ...(reconnectableGameId !== undefined && { reconnectableGameId })
     };
   }
 
@@ -166,7 +168,8 @@ export class CoreSocket {
       phase: state.phase,
       turn: state.turn,
       activePlayer: state.activePlayer,
-      players: players
+      players,
+      playerUserIds: game.getPlayerUserIds()
     };
   }
 

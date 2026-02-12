@@ -125,6 +125,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.socketService.setServerUrl(apiUrl);
     }
 
+    // Load saved username
+    const savedUsername = this.getSavedUsername();
+    if (savedUsername) {
+      const nameField = this.loginFormFields.find(f => f.name === 'name');
+      if (nameField) {
+        nameField.value = savedUsername;
+        this.name = savedUsername;
+      }
+    }
+
     const token = this.loginRememberService.token;
     if (token) {
       timer(1000).pipe(
@@ -159,6 +169,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       next: response => {
         if (this.rememberMe) {
           this.loginRememberService.rememberToken(response.token);
+          // Save username when rememberMe is checked
+          this.saveUsername(this.name);
+        } else {
+          // Clear saved username if rememberMe is unchecked
+          this.clearSavedUsername();
         }
         this.errorMessage = null;
         this.router.navigate([this.redirectUrl]);
@@ -221,5 +236,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loginAborted$.next();
     this.loginAborted$.complete();
+  }
+
+  private getSavedUsername(): string | null {
+    return window.localStorage.getItem('lastUsername');
+  }
+
+  private saveUsername(username: string): void {
+    if (username) {
+      window.localStorage.setItem('lastUsername', username);
+    }
+  }
+
+  private clearSavedUsername(): void {
+    window.localStorage.removeItem('lastUsername');
   }
 }

@@ -16,14 +16,14 @@ export class Audino extends PokemonCard {
       name: 'Heal Pulse',
       cost: [C],
       damage: 0,
-      text: 'Heal 30 damage from this Pokemon.'
+      text: 'Heal 30 damage from this Pokémon.'
     },
     {
       name: 'Return',
       cost: [C, C],
       damage: 10,
       damageCalculation: 'x',
-      text: 'Does 10 damage times the number of your Benched Pokemon.'
+      text: 'Does 10 damage times the number of your Benched Pokémon.'
     }
   ];
 
@@ -39,7 +39,7 @@ export class Audino extends PokemonCard {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }
 
-    // Return - 10x number of benched Pokemon
+    // Return - 10x number of benched Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const benchCount = player.bench.filter(b => b.cards.length > 0).length;

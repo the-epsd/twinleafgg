@@ -1,7 +1,10 @@
 <ptcg-sidebar-container>
 
-  <ptcg-sidebar>
-    <mat-nav-list>
+  <ptcg-sidebar class="ptcg-messages-sidebar">
+    <div class="ptcg-messages-sidebar-header">
+      <h2 class="ptcg-messages-sidebar-title" translate>MESSAGES_TITLE</h2>
+    </div>
+    <mat-nav-list class="ptcg-messages-conversation-list">
       <a mat-list-item *ngFor="let conversation of (conversations$ | async)" class="ptcg-no-padding-list-item">
         <ptcg-contact-bar [active]="userId === conversation.user1Id || userId === conversation.user2Id"
           [conversation]="conversation" [loggedUserId]="loggedUserId">
@@ -10,24 +13,24 @@
     </mat-nav-list>
   </ptcg-sidebar>
 
-  <ptcg-content [loading]="loading">
+  <ptcg-content [loading]="loading" class="ptcg-messages-content">
     <div class="ptcg-messages-container">
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <h1 translate>MESSAGES_TITLE</h1>
+      <div class="ptcg-messages-header" *ngIf="userId !== 0">
+        <div class="ptcg-messages-header-content">
+          <h1 class="ptcg-messages-header-title" translate>MESSAGES_TITLE</h1>
+          <twinleaf-button [text]="'MESSAGES_DELETE_CONVERSATION' | translate" color="secondary" size="small"
+            (clicked)="deleteConversation(userId)">
+          </twinleaf-button>
+        </div>
+      </div>
 
-          <span class="ptcg-u-spacer"></span>
-
-          <button mat-raised-button *ngIf="userId !== 0" (click)="deleteConversation(userId)">
-            {{ 'MESSAGES_DELETE_CONVERSATION' | translate }}
-          </button>
-        </mat-toolbar-row>
-      </mat-toolbar>
-
-      <div *ngIf="userId === 0 ; else messages">
-        <div class="ptcg-u-padding">
-          <mat-card class="mat-elevation-z2" translate>
-            MESSAGES_NO_CONVERSATION_SELECTED
+      <div *ngIf="userId === 0 ; else messages" class="ptcg-messages-empty-state">
+        <div class="ptcg-messages-empty-content">
+          <mat-card class="ptcg-messages-empty-card">
+            <div class="ptcg-messages-empty-icon">
+              <mat-icon>chat_bubble_outline</mat-icon>
+            </div>
+            <p class="ptcg-messages-empty-text" translate>MESSAGES_NO_CONVERSATION_SELECTED</p>
           </mat-card>
         </div>
       </div>

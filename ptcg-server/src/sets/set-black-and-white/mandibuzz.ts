@@ -21,14 +21,14 @@ export class Mandibuzz extends PokemonCard {
       cost: [D],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of [D] Energy attached to all of your Pokemon.'
+      text: 'Does 20 damage times the number of [D] Energy attached to all of your Pokémon.'
     },
     {
       name: 'Punishment',
       cost: [D, D],
       damage: 40,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon has an Ability, this attack does 30 more damage.'
+      text: 'If the Defending Pokémon has an Ability, this attack does 30 more damage.'
     }
   ];
 

@@ -10,6 +10,7 @@ export class Board3dAssetLoaderService {
   private cardBackTexture: Texture | null = null;
   private boardGridTexture: Texture | null = null;
   private slotGridTexture: Texture | null = null;
+  private cardMaskTexture: Texture | null = null;
 
   constructor(
     private imageCacheService: ImageCacheService,
@@ -35,7 +36,7 @@ export class Board3dAssetLoaderService {
       // Convert external URLs to proxy URLs before caching
       const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(scanUrl);
       const wasProxied = urlToCache !== scanUrl;
-      
+
       // Use imgcache.js to get cached image URL
       const cachedUrl = await this.imageCacheService.fetchFromCache(urlToCache).toPromise();
 
@@ -44,7 +45,7 @@ export class Board3dAssetLoaderService {
 
       // Configure texture (use colorSpace instead of encoding)
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16; // High quality filtering
+      texture.anisotropy = 8; // Balanced quality/performance filtering
       texture.flipY = true; // Fix texture orientation
 
       // Cache and return (use original URL as cache key)
@@ -57,11 +58,11 @@ export class Board3dAssetLoaderService {
       const errorMessage = (error as any)?.message || error?.toString() || '';
       const errorStatus = (error as any)?.status || (error as any)?.response?.status;
       const errorTarget = (error as any)?.target;
-      
+
       // Check if the failed URL matches proxy pattern
       const failedUrl = errorTarget?.src || errorTarget?.currentSrc || '';
       const isProxyUrl = failedUrl.includes('/v1/image-proxy/proxy');
-      
+
       // Detect proxy failures (403, 404, network errors)
       const isProxyError = wasProxied && (
         errorStatus === 404 ||
@@ -81,16 +82,16 @@ export class Board3dAssetLoaderService {
         try {
           const originalIsExternal = originalUrl.startsWith('http://') || originalUrl.startsWith('https://');
           const fallbackLoader = originalIsExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
-          
+
           const originalCachedUrl = await this.imageCacheService.fetchFromCache(originalUrl).toPromise();
           const texture = await fallbackLoader.loadAsync(originalCachedUrl);
-          
+
           texture.colorSpace = 'srgb';
-          texture.anisotropy = 16;
+          texture.anisotropy = 8;
           texture.flipY = true;
-          
+
           this.textureCache.set(scanUrl, texture);
-          
+
           // Fallback succeeded - log rejected domain for proxy errors
           // Note: Browser network errors (like "Failed to load resource: 403") are logged automatically
           // by the browser itself and cannot be suppressed from JavaScript. These errors appear in the
@@ -104,7 +105,7 @@ export class Board3dAssetLoaderService {
           } catch (e) {
             // URL parsing failed, skip domain extraction
           }
-          
+
           // Silently handled - fallback worked
           return texture;
         } catch (fallbackError) {
@@ -122,12 +123,12 @@ export class Board3dAssetLoaderService {
         errorMessage.includes('cross-origin') ||
         (errorTarget && errorTarget.tagName === 'IMG')
       );
-      
+
       // Only log non-CORS errors
       if (!isCorsError) {
         console.error('Failed to load card texture:', originalUrl, error);
       }
-      
+
       // Return card back as fallback
       return this.loadCardBack();
     }
@@ -149,7 +150,7 @@ export class Board3dAssetLoaderService {
       // Convert external URLs to proxy URLs before caching
       const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(iconPath);
       const wasProxied = urlToCache !== iconPath;
-      
+
       // Use imgcache.js to get cached image URL
       const cachedUrl = await this.imageCacheService.fetchFromCache(urlToCache).toPromise();
 
@@ -158,7 +159,7 @@ export class Board3dAssetLoaderService {
 
       // Configure texture (use colorSpace instead of encoding)
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16; // High quality filtering
+      texture.anisotropy = 8; // Balanced quality/performance filtering
       texture.flipY = true; // Fix texture orientation
 
       // Cache and return (use original URL as cache key)
@@ -171,11 +172,11 @@ export class Board3dAssetLoaderService {
       const errorMessage = (error as any)?.message || error?.toString() || '';
       const errorStatus = (error as any)?.status || (error as any)?.response?.status;
       const errorTarget = (error as any)?.target;
-      
+
       // Check if the failed URL matches proxy pattern
       const failedUrl = errorTarget?.src || errorTarget?.currentSrc || '';
       const isProxyUrl = failedUrl.includes('/v1/image-proxy/proxy');
-      
+
       // Detect proxy failures (403, 404, network errors)
       const isProxyError = wasProxied && (
         errorStatus === 404 ||
@@ -195,16 +196,16 @@ export class Board3dAssetLoaderService {
         try {
           const originalIsExternal = originalUrl.startsWith('http://') || originalUrl.startsWith('https://');
           const fallbackLoader = originalIsExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
-          
+
           const originalCachedUrl = await this.imageCacheService.fetchFromCache(originalUrl).toPromise();
           const texture = await fallbackLoader.loadAsync(originalCachedUrl);
-          
+
           texture.colorSpace = 'srgb';
-          texture.anisotropy = 16;
+          texture.anisotropy = 8;
           texture.flipY = true;
-          
+
           this.textureCache.set(iconPath, texture);
-          
+
           // Fallback succeeded - log rejected domain for proxy errors
           // Note: Browser network errors (like "Failed to load resource: 403") are logged automatically
           // by the browser itself and cannot be suppressed from JavaScript. These errors appear in the
@@ -218,7 +219,7 @@ export class Board3dAssetLoaderService {
           } catch (e) {
             // URL parsing failed, skip domain extraction
           }
-          
+
           // Silently handled - fallback worked
           return texture;
         } catch (fallbackError) {
@@ -236,12 +237,12 @@ export class Board3dAssetLoaderService {
         errorMessage.includes('cross-origin') ||
         (errorTarget && errorTarget.tagName === 'IMG')
       );
-      
+
       // Only log non-CORS errors
       if (!isCorsError) {
         console.error('Failed to load tool icon texture:', originalUrl, error);
       }
-      
+
       throw error; // Let caller handle fallback
     }
   }
@@ -262,7 +263,7 @@ export class Board3dAssetLoaderService {
       // Convert external URLs to proxy URLs before caching
       const urlToCache = this.imageProxyService.getProxyUrlIfNeeded(sleeveUrl);
       const wasProxied = urlToCache !== sleeveUrl;
-      
+
       // Use imgcache.js to get cached image URL
       const cachedUrl = await this.imageCacheService.fetchFromCache(urlToCache).toPromise();
 
@@ -271,7 +272,7 @@ export class Board3dAssetLoaderService {
 
       // Configure texture (use colorSpace instead of encoding)
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16; // High quality filtering
+      texture.anisotropy = 8; // Balanced quality/performance filtering
       texture.flipY = true; // Fix texture orientation
 
       // Cache and return (use original URL as cache key)
@@ -284,11 +285,11 @@ export class Board3dAssetLoaderService {
       const errorMessage = (error as any)?.message || error?.toString() || '';
       const errorStatus = (error as any)?.status || (error as any)?.response?.status;
       const errorTarget = (error as any)?.target;
-      
+
       // Check if the failed URL matches proxy pattern
       const failedUrl = errorTarget?.src || errorTarget?.currentSrc || '';
       const isProxyUrl = failedUrl.includes('/v1/image-proxy/proxy');
-      
+
       // Detect proxy failures (403, 404, network errors)
       const isProxyError = wasProxied && (
         errorStatus === 404 ||
@@ -308,16 +309,16 @@ export class Board3dAssetLoaderService {
         try {
           const originalIsExternal = originalUrl.startsWith('http://') || originalUrl.startsWith('https://');
           const fallbackLoader = originalIsExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
-          
+
           const originalCachedUrl = await this.imageCacheService.fetchFromCache(originalUrl).toPromise();
           const texture = await fallbackLoader.loadAsync(originalCachedUrl);
-          
+
           texture.colorSpace = 'srgb';
-          texture.anisotropy = 16;
+          texture.anisotropy = 8;
           texture.flipY = true;
-          
+
           this.textureCache.set(sleeveUrl, texture);
-          
+
           // Fallback succeeded - log rejected domain for proxy errors
           // Note: Browser network errors (like "Failed to load resource: 403") are logged automatically
           // by the browser itself and cannot be suppressed from JavaScript. These errors appear in the
@@ -331,7 +332,7 @@ export class Board3dAssetLoaderService {
           } catch (e) {
             // URL parsing failed, skip domain extraction
           }
-          
+
           // Silently handled - fallback worked
           return texture;
         } catch (fallbackError) {
@@ -349,12 +350,12 @@ export class Board3dAssetLoaderService {
         errorMessage.includes('cross-origin') ||
         (errorTarget && errorTarget.tagName === 'IMG')
       );
-      
+
       // Only log non-CORS errors
       if (!isCorsError) {
         console.error('Failed to load sleeve texture:', originalUrl, error);
       }
-      
+
       // Return card back as fallback
       return this.loadCardBack();
     }
@@ -376,7 +377,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = true;
 
       this.cardBackTexture = texture;
@@ -427,9 +428,9 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = false; // Don't flip for board texture
-      
+
       // Configure for tiling
       texture.wrapS = RepeatWrapping;
       texture.wrapT = RepeatWrapping;
@@ -458,13 +459,39 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = false; // Don't flip for board texture
 
       this.textureCache.set(centerUrl, texture);
       return texture;
     } catch (error) {
       console.error('Failed to load board center texture:', error);
+      return this.createFallbackTexture();
+    }
+  }
+
+  /**
+   * Load the card mask texture for rounded corners
+   */
+  async loadCardMaskTexture(): Promise<Texture> {
+    if (this.cardMaskTexture) {
+      return this.cardMaskTexture;
+    }
+
+    try {
+      const maskUrl = 'assets/3d-card-mask.png';
+      const cachedUrl = await this.imageCacheService.fetchFromCache(maskUrl).toPromise();
+
+      const texture = await this.textureLoader.loadAsync(cachedUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 8;
+      texture.flipY = true; // Match card texture orientation
+
+      this.cardMaskTexture = texture;
+      return texture;
+    } catch (error) {
+      console.error('Failed to load card mask texture:', error);
+      // Return a fallback texture (fully opaque white) so cards still render
       return this.createFallbackTexture();
     }
   }
@@ -483,7 +510,7 @@ export class Board3dAssetLoaderService {
 
       const texture = await this.textureLoader.loadAsync(cachedUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 16;
+      texture.anisotropy = 8;
       texture.flipY = false; // Don't flip for slot texture
 
       this.slotGridTexture = texture;
@@ -539,6 +566,11 @@ export class Board3dAssetLoaderService {
     if (this.slotGridTexture) {
       this.slotGridTexture.dispose();
       this.slotGridTexture = null;
+    }
+
+    if (this.cardMaskTexture) {
+      this.cardMaskTexture.dispose();
+      this.cardMaskTexture = null;
     }
   }
 

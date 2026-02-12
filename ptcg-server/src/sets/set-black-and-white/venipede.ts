@@ -17,7 +17,7 @@ export class Venipede extends PokemonCard {
       name: 'Poison Sting',
       cost: [P],
       damage: 10,
-      text: 'The Defending Pokemon is now Poisoned.'
+      text: 'The Defending Pokémon is now Poisoned.'
     }
   ];
 

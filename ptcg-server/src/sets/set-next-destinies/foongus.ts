@@ -18,7 +18,7 @@ export class Foongus extends PokemonCard {
       name: 'Find a Friend',
       cost: [C],
       damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Pokemon, reveal it, and put it into your hand. Shuffle your deck afterward.'
+      text: 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
     },
     {
       name: 'Rising Lunge',

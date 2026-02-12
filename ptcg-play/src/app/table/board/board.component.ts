@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, Output, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, SuperType } from 'ptcg-server';
 import { map } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
 import { BoardCardItem, BoardCardType } from './board-item.interface';
@@ -19,6 +20,7 @@ const DEFAULT_BENCH_SIZE = 5;
 
 type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
 
+@UntilDestroy()
 @Component({
   selector: 'ptcg-board',
   templateUrl: './board.component.html',
@@ -113,7 +115,9 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     private boardInteractionService: BoardInteractionService
   ) {
 
-    this.settingsService.cardSize$.subscribe(size => {
+    this.cardSizeSubscription = this.settingsService.cardSize$.pipe(
+      untilDestroyed(this)
+    ).subscribe(size => {
       document.documentElement.style.setProperty('--card-scale', (size / 100).toString());
     });
 
@@ -166,6 +170,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
   // Add property to track deck size
   public deckSize: number = 0;
   public discardSize: number = 0;
+  private cardSizeSubscription: Subscription;
 
   ngOnChanges(changes: SimpleChanges) {
     // Cancel coin flip animation only on meaningful state changes
@@ -355,6 +360,11 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     for (let i = 0; i < MAX_BENCH_SIZE; i++) {
       this.bottomBench[i].source.unsubscribe();
       this.bottomBenchTarget[i].unsubscribe();
+    }
+
+    // Clean up cardSize subscription (untilDestroyed handles this, but explicit cleanup for clarity)
+    if (this.cardSizeSubscription) {
+      this.cardSizeSubscription.unsubscribe();
     }
   }
 

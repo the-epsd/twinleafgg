@@ -14,7 +14,8 @@
   <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
     #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)"
     (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" (addCard)="addCardToDeck(card)"
-    (removeCard)="removeCardFromDeck(card)" (favoriteToggled)="refreshLibrary()" [card]="card" [isLibraryCard]="true">
+    (removeCard)="removeCardFromDeck(card)" (favoriteToggled)="refreshLibrary()" [card]="card" [isLibraryCard]="true"
+    [artworksContext]="{ unlockedArtworks: [] }" [customArtworkUrl]="resolveArtworkUrlFor(card.card)">
   </ptcg-deck-card>
 </cdk-virtual-scroll-viewport>
 
@@ -33,17 +34,9 @@
             (countClick)="setCardCount(render.data)"
             (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)"
             (addCard)="addCardToDeck(render.data)" (removeCard)="removeCardFromDeck(render.data)" [card]="render.data"
-            [customArtworkUrl]="resolveArtworkUrlFor(render.data.card)" [artworksContext]="null">
+            [customArtworkUrl]="resolveArtworkUrlFor(render.data.card)"
+            [artworksContext]="{ unlockedArtworks: [] }">
           </ptcg-deck-card>
-          <!-- <div class="artwork-inline" *ngIf="!disabled">
-            <select class="artwork-select-under-card" [value]="getSelectedArtworkIdString(render.data.card.fullName)"
-              (change)="onArtworkSelect(render.data.card.fullName, $event.target.value)">
-              <option value="" [selected]="getSelectedArtworkId(render.data.card.fullName) === null">Default</option>
-              <option *ngFor="let a of (unlockedArtworks | artworksFor:render.data.card)" [value]="a.id"
-                [selected]="getSelectedArtworkId(render.data.card.fullName) === a.id">{{ a.name }}
-              </option>
-            </select>
-          </div> -->
         </div>
       </ng-template>
     </dnd-sortable-list>

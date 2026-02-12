@@ -10,6 +10,7 @@ import { InputNumberPopupComponent } from './input-number-popup/input-number-pop
 import { InputNamePopupComponent } from './input-name-popup/input-name-popup.component';
 import { MaterialModule } from '../material.module';
 import { SelectPopupComponent } from './select-popup/select-popup.component';
+import { TwinleafButtonModule } from '../twinleaf-button/twinleaf-button.module';
 import { ValidationModule } from '../validation/validation.module';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ValidationModule } from '../validation/validation.module';
     CommonModule,
     FormsModule,
     MaterialModule,
+    TwinleafButtonModule,
     TranslateModule,
     ValidationModule
   ],

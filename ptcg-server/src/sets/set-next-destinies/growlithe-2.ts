@@ -17,7 +17,7 @@ export class Growlithe2 extends PokemonCard {
       name: 'Stoke',
       cost: [C],
       damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a [R] Energy card and attach it to this Pokemon. Shuffle your deck afterward.'
+      text: 'Flip a coin. If heads, search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
     },
     {
       name: 'Firebreathing',
