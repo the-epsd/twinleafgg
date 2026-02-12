@@ -4,6 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Drifloon2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -14,22 +18,41 @@ export class Drifloon2 extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Beat',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Gust',
-      cost: [P, C],
-      damage: 20,
-      text: ''
+      name: 'Sneaky Placement',
+      cost: [P],
+      damage: 0,
+      text: 'Put 1 damage counter on 1 of your opponent\'s Pokémon.'
     }
   ];
 
   public set: string = 'DRX';
-  public setNumber: string = '50';
+  public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drifloon';
-  public fullName: string = 'Drifloon DRX 50';
+  public fullName: string = 'Drifloon DRX 49';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Ref: set-triumphant/gastly.ts (Sneaky Placement)
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+          const damageEffect = new PutCountersEffect(effect, 10);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
+        return state;
+      });
+    }
+
+    return state;
+  }
 }

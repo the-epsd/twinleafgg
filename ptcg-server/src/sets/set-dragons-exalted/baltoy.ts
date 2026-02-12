@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { ShuffleDeckPrompt, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -37,10 +37,17 @@ export class Baltoy extends PokemonCard {
   public fullName: string = 'Baltoy DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 2: Reverse Spin
-    // TODO: Your opponent shuffles his or her hand into his or her deck and draws 4 cards.
+    // Ref: set-generations/red-card.ts (opponent shuffles hand and draws 4)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const opponent = StateUtils.getOpponent(state, effect.player);
+
+      const cardsInHand = [...opponent.hand.cards];
+      opponent.hand.moveCardsTo(cardsInHand, opponent.deck);
+
+      return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+        opponent.deck.applyOrder(order);
+        opponent.deck.moveTo(opponent.hand, 4);
+      });
     }
 
     return state;

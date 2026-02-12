@@ -4,9 +4,18 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PlayerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {
+  ADD_MARKER,
+  COIN_FLIP_PROMPT,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED
+} from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 
 export class Skuntank extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,11 +47,51 @@ export class Skuntank extends PokemonCard {
   public name: string = 'Skuntank';
   public fullName: string = 'Skuntank DRX';
 
+  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'SKUNTANK_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
+  public readonly CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'SKUNTANK_CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
+  public readonly SMOGSCREEN_MARKER = 'SKUNTANK_SMOGSCREEN_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Smogscreen
-    // TODO: The Defending Pokémon is now Poisoned. If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.
+    // Refs: set-ex-deoxys/weezing.ts (Smogscreen), set-dragons-exalted/gible-2.ts (coin-gated attack block)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
+      ADD_MARKER(this.CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent, this);
+    }
+
+    if (effect instanceof UseAttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (HAS_MARKER(this.SMOGSCREEN_MARKER, opponent, this)) {
+        return state;
+      }
+
+      effect.preventDefault = true;
+      ADD_MARKER(this.SMOGSCREEN_MARKER, opponent, this);
+
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          const useAttackEffect = new UseAttackEffect(player, effect.attack);
+          store.reduceEffect(state, useAttackEffect);
+        } else {
+          const endTurnEffect = new EndTurnEffect(player);
+          store.reduceEffect(state, endTurnEffect);
+        }
+      });
+    }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SMOGSCREEN_MARKER, this);
+
+    if (effect instanceof EndTurnEffect) {
+      if (HAS_MARKER(this.CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player, this)) {
+        effect.player.marker.removeMarker(this.CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
+        const opponent = StateUtils.getOpponent(state, effect.player);
+        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+          cardList.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
+        });
+      }
     }
 
     return state;

@@ -6,7 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 
 export class Bidoof extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,10 +32,10 @@ export class Bidoof extends PokemonCard {
   public fullName: string = 'Bidoof DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Bang Heads
-    // TODO: Both this Pokémon and the Defending Pokémon are now Confused.
+    // Refs: set-dragons-exalted/skuntank.ts (add condition to opponent), set-neo-revelation/tentacruel.ts (self confusion)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.player, this);
     }
 
     return state;

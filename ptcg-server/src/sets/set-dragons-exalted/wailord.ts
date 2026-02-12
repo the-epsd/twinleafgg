@@ -5,8 +5,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,16 +40,30 @@ export class Wailord extends PokemonCard {
   public fullName: string = 'Wailord DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Water Cannon
-    // TODO: Flip a coin. If heads, this attack does 30 damage times the amount of [W] Energy attached to this Pokémon.
+    // Refs: set-destined-rivals/gorebyss.ts (energy counting), set-paradox-rift/brute-bonnet.ts (coin-gated damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+          state = store.reduceEffect(state, checkProvidedEnergy);
+
+          let waterCount = 0;
+          for (const energyMap of checkProvidedEnergy.energyMap) {
+            waterCount += energyMap.provides.filter(t => t === CardType.WATER || t === CardType.ANY).length;
+          }
+
+          effect.damage = 30 * waterCount;
+        } else {
+          effect.damage = 0;
+        }
+      });
     }
 
-    // Attack 2: Giant Wave
-    // TODO: This Pokémon can't use Giant Wave during your next turn.
+    // Ref: set-dragons-exalted/walrein.ts (cannotUseAttacksNextTurnPending)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(effect.player, this.attacks[1]);
     }
 
     return state;

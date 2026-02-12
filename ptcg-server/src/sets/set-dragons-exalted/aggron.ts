@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Aggron extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -17,7 +18,7 @@ export class Aggron extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Toppling Wind',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
@@ -40,16 +41,46 @@ export class Aggron extends PokemonCard {
   public fullName: string = 'Aggron DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Toppling Wind
-    // TODO: When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may discard the top 3 cards of your opponent's deck.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ref: set-dragons-exalted/ninjask.ts (on-evolve trigger + ability-block check)
+    // Ability: Toppling Wind - When evolving, discard top 3 of opponent's deck
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (opponent.deck.cards.length === 0) {
+        return state;
+      }
+
+      // Check if ability is blocked
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      return store.prompt(state, new ConfirmPrompt(
+        player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+          opponent.deck.moveTo(opponent.discard, 3);
+        }
+      });
     }
 
-    // Attack 1: Giga Horn
-    // TODO: Flip 2 coins. If both of them are tails, this attack does nothing.
+    // Ref: set-plasma-blast/druddigon.ts (Big Swing)
+    // Attack: Giga Horn - Flip 2 coins, both tails = does nothing
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        if (results.every(r => !r)) {
+          effect.damage = 0;
+        }
+      });
     }
 
     return state;

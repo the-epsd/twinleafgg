@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
 
 export class Mareep extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,17 +38,48 @@ export class Mareep extends PokemonCard {
   public name: string = 'Mareep';
   public fullName: string = 'Mareep DRX';
 
+  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_MAREEP';
+  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_MAREEP';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Cotton Guard
-    // TODO: During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).
+    // Ref: set-dragons-exalted/deino-2.ts (Guard Press)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
     }
 
-    // Attack 2: Thunder Jolt
-    // TODO: Flip a coin. If tails, this Pokémon does 10 damage to itself.
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      // Ref: set-sun-and-moon/snubbull.ts (coin flip self-damage on tails)
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
+          THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 10);
+        }
+      });
+    }
+
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.damage = Math.max(0, effect.damage - 20);
+        return state;
+      }
+    }
+
+    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.damage = Math.max(0, effect.damage - 20);
+        return state;
+      }
+    }
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      });
     }
 
     return state;
