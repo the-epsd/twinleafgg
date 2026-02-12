@@ -22,32 +22,23 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public fullName = 'Blend Energy WLFM DRX';
 
-  public text = 'This card provides [C] Energy. When attached to a Pokémon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
+  public text = 'This card provides [C] Energy. When attached to a Pokemon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
-        // Always add the base "EnergyEffect"
         const energyEffect = new EnergyEffect(effect.player, this);
         store.reduceEffect(state, energyEffect);
       } catch {
         return state;
       }
 
-      // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(type =>
-        !effect.energyMap.some(energy => energy.provides.includes(type))
-      );
-
-      if (neededType) {
-        // Only provide the specific energy type that's needed
-        effect.energyMap.push({
-          card: this,
-          provides: [neededType]
-        });
-      }
+      effect.energyMap.push({
+        card: this,
+        provides: [...this.blendedEnergies]
+      });
     }
 
     return state;
