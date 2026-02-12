@@ -7,7 +7,7 @@ import { AttackAction, PassTurnAction, UseAbilityAction } from '../../game/store
 import { PlayCardAction, PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { Card } from '../../game/store/card/card';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { SetupGameResult } from './test-helpers';
 
 // ── Action helpers ──
@@ -77,6 +77,19 @@ export function createDamageEffect(
     putDamage.target = defender.bench[options.benchIndex];
   }
   return putDamage;
+}
+
+export function createActiveDamageEffect(
+  game: SetupGameResult,
+  attackerIndex: number,
+  options?: { damage?: number }
+): DealDamageEffect {
+  const attacker = game.state.players[attackerIndex];
+  const defender = game.state.players[1 - attackerIndex];
+  const damage = options?.damage ?? 30;
+  const attack = { name: 'Test Attack', cost: [], damage, text: '' };
+  const attackEffect = new AttackEffect(attacker, defender, attack);
+  return new DealDamageEffect(attackEffect, damage);
 }
 
 export function createAttackEffect(

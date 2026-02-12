@@ -1,5 +1,5 @@
 import { setupGame, padDeck } from './test-helpers';
-import { createDamageEffect } from './card-test-helpers';
+import { createDamageEffect, createActiveDamageEffect } from './card-test-helpers';
 
 describe('Manaphy BRS — Wave Veil', () => {
 
@@ -41,7 +41,7 @@ describe('Manaphy BRS — Wave Veil', () => {
     });
 
     // Create damage effect targeting active (the default)
-    const effect = createDamageEffect(game, 1);
+    const effect = createActiveDamageEffect(game, 1);
     game.store.reduceEffect(game.state, effect);
 
     // Active damage should NOT be prevented

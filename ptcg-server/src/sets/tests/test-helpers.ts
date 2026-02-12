@@ -2,11 +2,12 @@ import { Card } from '../../game/store/card/card';
 import { CardManager } from '../../game/cards/card-manager';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { SuperType } from '../../game/store/card/card-types';
+import { SuperType, CardType } from '../../game/store/card/card-types';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Player } from '../../game/store/state/player';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { CardList } from '../../game/store/state/card-list';
+import { StateUtils } from '../../game/store/state-utils';
 import { Store } from '../../game/store/store';
 import { StoreHandler } from '../../game/store/store-handler';
 import { Prompt } from '../../game/store/prompts/prompt';
@@ -57,54 +58,170 @@ export interface SetupGameConfig {
 
 // ── Card registration ──
 
-let cardsRegistered = false;
+const fs = require('fs');
+const path = require('path');
 
-export function ensureCardsRegistered(): void {
-  if (cardsRegistered) return;
-  cardsRegistered = true;
+const setsDir = path.resolve(__dirname, '..');
+const EXPORT_PATH_REGEX = /export \* from '\.\/([^']+)'/g;
+const IMPORT_PATH_REGEX = /from '\.\/([^']+)'/g;
+const SET_DECLARATION_REGEX = /public set(?:\s*:\s*string)?\s*=\s*['"]([^'"]+)['"]/;
+const SET_CODE_REGEX = /^[A-Z0-9-]{2,8}$/;
 
-  const fs = require('fs');
-  const path = require('path');
-  const cardManager = CardManager.getInstance();
-  const setsDir = path.resolve(__dirname, '..');
+let setCodeToModules: Map<string, string[]> | undefined;
+const loadedSetModules = new Set<string>();
 
-  // Parse index.ts to find all set module paths
+function getExportedSetModulePaths(): string[] {
   const indexContent: string = fs.readFileSync(path.join(setsDir, 'index.ts'), 'utf8');
-  const regex = /export \* from '\.\/([^']+)'/g;
-  let match: RegExpExecArray | null;
   const modulePaths: string[] = [];
-  while ((match = regex.exec(indexContent)) !== null) {
+  EXPORT_PATH_REGEX.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = EXPORT_PATH_REGEX.exec(indexContent)) !== null) {
     modulePaths.push(match[1]);
   }
+  return modulePaths;
+}
 
-  // Import each set individually — skip sets that fail to load
+function extractSetCodeFromSource(source: string): string | undefined {
+  const match = SET_DECLARATION_REGEX.exec(source);
+  if (!match) {
+    return undefined;
+  }
+  const setCode = match[1].toUpperCase();
+  return SET_CODE_REGEX.test(setCode) ? setCode : undefined;
+}
+
+function inferSetCodeFromModule(moduleName: string): string | undefined {
+  const moduleDir = path.join(setsDir, moduleName);
+  const indexPath = path.join(moduleDir, 'index.ts');
+  if (!fs.existsSync(indexPath)) {
+    return undefined;
+  }
+
+  const indexContent: string = fs.readFileSync(indexPath, 'utf8');
+  const candidateFiles: string[] = [];
+  IMPORT_PATH_REGEX.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = IMPORT_PATH_REGEX.exec(indexContent)) !== null) {
+    candidateFiles.push(path.join(moduleDir, `${match[1]}.ts`));
+  }
+
+  for (const candidateFile of candidateFiles) {
+    if (!fs.existsSync(candidateFile)) {
+      continue;
+    }
+    const fileContent = fs.readFileSync(candidateFile, 'utf8');
+    const setCode = extractSetCodeFromSource(fileContent);
+    if (setCode) {
+      return setCode;
+    }
+  }
+
+  const fallbackFiles = fs.readdirSync(moduleDir)
+    .filter((file: string) => file.endsWith('.ts') && file !== 'index.ts')
+    .map((file: string) => path.join(moduleDir, file));
+
+  for (const candidateFile of fallbackFiles) {
+    const fileContent = fs.readFileSync(candidateFile, 'utf8');
+    const setCode = extractSetCodeFromSource(fileContent);
+    if (setCode) {
+      return setCode;
+    }
+  }
+
+  return undefined;
+}
+
+function getSetCodeToModules(): Map<string, string[]> {
+  if (setCodeToModules) {
+    return setCodeToModules;
+  }
+
+  const map = new Map<string, string[]>();
+  const modulePaths = getExportedSetModulePaths();
+  for (const moduleName of modulePaths) {
+    const setCode = inferSetCodeFromModule(moduleName);
+    if (!setCode) {
+      continue;
+    }
+    const modules = map.get(setCode) ?? [];
+    modules.push(moduleName);
+    map.set(setCode, modules);
+  }
+
+  setCodeToModules = map;
+  return map;
+}
+
+function extractSetCodeFromFullName(fullName: string): string {
+  const tokens = fullName.trim().split(/\s+/);
+  const lastToken = tokens[tokens.length - 1]?.toUpperCase();
+  if (!lastToken || !SET_CODE_REGEX.test(lastToken)) {
+    throw new Error(`[test-helpers] Could not infer set code from card fullName "${fullName}"`);
+  }
+  return lastToken;
+}
+
+function loadSetModule(moduleName: string): void {
+  if (loadedSetModules.has(moduleName)) {
+    return;
+  }
+
+  const cardManager = CardManager.getInstance();
+  const mod = require(path.join(setsDir, moduleName));
+  for (const key of Object.keys(mod)) {
+    const value = mod[key];
+    if (!Array.isArray(value) || value.length === 0 || !(value[0] instanceof Card)) {
+      continue;
+    }
+    try {
+      cardManager.defineSet(value);
+    } catch (error: any) {
+      if (!error.message?.startsWith('Multiple cards with the same name')) {
+        throw error;
+      }
+    }
+  }
+  loadedSetModules.add(moduleName);
+}
+
+function ensureSetCodeLoaded(setCode: string): void {
+  const modulePaths = getSetCodeToModules().get(setCode);
+  if (!modulePaths || modulePaths.length === 0) {
+    throw new Error(`[test-helpers] No set module found for set code "${setCode}"`);
+  }
+
   for (const moduleName of modulePaths) {
     try {
-      const mod = require(path.join(setsDir, moduleName));
-      for (const key of Object.keys(mod)) {
-        const value = mod[key];
-        if (Array.isArray(value) && value.length > 0 && value[0] instanceof Card) {
-          try {
-            cardManager.defineSet(value);
-          } catch (e: any) {
-            if (!e.message?.startsWith('Multiple cards with the same name')) {
-              throw e;
-            }
-          }
-        }
-      }
-    } catch (e: any) {
-      // Log but don't fail — stale .js artifacts can cause benign load errors
-      console.warn(`[test-helpers] Skipped set "${moduleName}": ${e.message}`);
+      loadSetModule(moduleName);
+    } catch (error: any) {
+      throw new Error(`[test-helpers] Failed to load set module "${moduleName}" (${setCode}): ${error.message}`);
     }
+  }
+}
+
+export function ensureCardsRegistered(cardNames: string[] = []): void {
+  const cardManager = CardManager.getInstance();
+  const namesToRegister = Array.from(new Set(cardNames.map(name => name.trim()).filter(Boolean)));
+
+  for (const fullName of namesToRegister) {
+    if (cardManager.isCardDefined(fullName)) {
+      continue;
+    }
+    const setCode = extractSetCodeFromFullName(fullName);
+    ensureSetCodeLoaded(setCode);
   }
 }
 
 // ── Convenience helpers ──
 
 export function getCardByName(fullName: string): Card {
-  const card = CardManager.getInstance().getCardByName(fullName);
+  const cardManager = CardManager.getInstance();
+  let card = cardManager.getCardByName(fullName);
   if (!card) {
+    ensureCardsRegistered([fullName]);
+    card = cardManager.getCardByName(fullName);
+  }
+  if (card === undefined) {
     throw new Error(`Card not found: "${fullName}"`);
   }
   return card;
@@ -154,19 +271,23 @@ class TestStoreHandler implements StoreHandler {
     const override = this.overrides.get(prompt.type);
     if (override) {
       this.overrides.delete(prompt.type);
-      const result = override(prompt, state);
-      return new ResolvePromptAction(prompt.id, result);
+      const rawResult = override(prompt, state);
+      return this.decodeAndValidatePromptResult(state, prompt, rawResult);
     }
 
     // Try BotArbiter for coin flips and shuffles
     const arbiterResult = this.arbiter.resolvePrompt(state, prompt);
     if (arbiterResult) {
-      // BotArbiter already encodes results correctly for CoinFlip and Shuffle
-      return arbiterResult;
+      return this.decodeAndValidatePromptResult(state, prompt, arbiterResult.result, arbiterResult.log);
     }
 
-    // Auto-resolve by prompt type — get raw result, then decode
-    let rawResult: any;
+    const rawResult = this.resolveRawPromptResult(state, prompt);
+    return this.decodeAndValidatePromptResult(state, prompt, rawResult);
+  }
+
+  private resolveRawPromptResult(state: State, prompt: Prompt<any>): any {
+    // Auto-resolve by prompt type — these are raw prompt payloads
+    let rawResult: any = true;
 
     if (prompt instanceof AlertPrompt) {
       rawResult = true;
@@ -200,13 +321,49 @@ class TestStoreHandler implements StoreHandler {
       rawResult = prompt.options.allowCancel ? null : [];
     } else if (prompt instanceof DiscardEnergyPrompt) {
       rawResult = this.resolveDiscardEnergyRaw(state, prompt);
-    } else {
-      rawResult = true;
     }
 
-    // Decode the raw result (converts indices to card references, etc.)
+    return rawResult;
+  }
+
+  private decodeAndValidatePromptResult(
+    state: State,
+    prompt: Prompt<any>,
+    rawResult: any,
+    log?: any
+  ): ResolvePromptAction {
     const decoded = prompt.decode(rawResult, state);
-    return new ResolvePromptAction(prompt.id, decoded);
+    if (prompt.validate(decoded, state) === false) {
+      throw new Error(`[test-helpers] Invalid auto-resolved prompt result for "${prompt.type}"`);
+    }
+    return new ResolvePromptAction(prompt.id, decoded, log);
+  }
+
+  private getPromptPlayers(state: State, prompt: Prompt<any>): { player: Player; opponent: Player } | undefined {
+    const player = state.players.find(p => p.id === prompt.playerId);
+    const opponent = state.players.find(p => p.id !== prompt.playerId);
+    if (!player || !opponent) {
+      return undefined;
+    }
+    return { player, opponent };
+  }
+
+  private toTargetKey(target: CardTarget): string {
+    return `${target.player}-${target.slot}-${target.index}`;
+  }
+
+  private cardMatchesPartialFilter(card: Card, filter: Partial<Card>): boolean {
+    for (const key in filter) {
+      if (!Object.prototype.hasOwnProperty.call(filter, key)) {
+        continue;
+      }
+      const expected = (filter as any)[key];
+      const actual = (card as any)[key];
+      if (actual !== expected) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private resolveChooseCardsRaw(prompt: ChooseCardsPrompt): any {
@@ -225,12 +382,11 @@ class TestStoreHandler implements StoreHandler {
   }
 
   private resolveChoosePokemonRaw(state: State, prompt: ChoosePokemonPrompt): any {
-    const player = state.players.find(p => p.id === prompt.playerId);
-    if (!player) return null;
-    const opponent = state.players.find(p => p.id !== prompt.playerId);
-    if (!opponent) return null;
+    const promptPlayers = this.getPromptPlayers(state, prompt);
+    if (!promptPlayers) return null;
+    const { player, opponent } = promptPlayers;
 
-    const blockedSet = new Set(prompt.options.blocked.map(b => `${b.player}-${b.slot}-${b.index}`));
+    const blockedSet = new Set(prompt.options.blocked.map(b => this.toTargetKey(b)));
     const targets: CardTarget[] = [];
 
     for (const pt of [PlayerType.BOTTOM_PLAYER, PlayerType.TOP_PLAYER]) {
@@ -239,7 +395,7 @@ class TestStoreHandler implements StoreHandler {
 
       if (prompt.slots.includes(SlotType.ACTIVE) && p.active.cards.length > 0) {
         const t: CardTarget = { player: pt, slot: SlotType.ACTIVE, index: 0 };
-        if (!blockedSet.has(`${t.player}-${t.slot}-${t.index}`)) {
+        if (!blockedSet.has(this.toTargetKey(t))) {
           targets.push(t);
         }
       }
@@ -247,7 +403,7 @@ class TestStoreHandler implements StoreHandler {
         for (let i = 0; i < p.bench.length; i++) {
           if (p.bench[i].cards.length > 0) {
             const t: CardTarget = { player: pt, slot: SlotType.BENCH, index: i };
-            if (!blockedSet.has(`${t.player}-${t.slot}-${t.index}`)) {
+            if (!blockedSet.has(this.toTargetKey(t))) {
               targets.push(t);
             }
           }
@@ -258,68 +414,272 @@ class TestStoreHandler implements StoreHandler {
     const max = prompt.options.max;
     const result = targets.slice(0, max);
     if (result.length < prompt.options.min) {
-      return null;
+      return prompt.options.allowCancel ? null : [];
     }
     return result;
   }
 
-  private resolveAttachEnergyRaw(state: State, prompt: AttachEnergyPrompt): any {
-    const player = state.players.find(p => p.id === prompt.playerId);
-    if (!player) return null;
+  private getPrimaryEnergyType(card: Card): CardType {
+    if (card instanceof EnergyCard && card.provides.length > 0) {
+      return card.provides[0];
+    }
+    return CardType.NONE;
+  }
 
-    const blocked = new Set(prompt.options.blocked);
-    const blockedToSet = new Set(prompt.options.blockedTo.map(b => `${b.player}-${b.slot}-${b.index}`));
+  private buildAttachTargets(
+    player: Player,
+    opponent: Player,
+    prompt: AttachEnergyPrompt
+  ): CardTarget[] {
+    const blockedToSet = new Set(prompt.options.blockedTo.map(target => this.toTargetKey(target)));
+    const targets: CardTarget[] = [];
+    const targetPlayers: PlayerType[] = prompt.playerType === PlayerType.ANY
+      ? [PlayerType.BOTTOM_PLAYER, PlayerType.TOP_PLAYER]
+      : [prompt.playerType];
 
-    // Find first valid energy card
-    let energyIndex = -1;
-    for (let i = 0; i < prompt.cardList.cards.length; i++) {
-      if (!blocked.has(i) && prompt.cardList.cards[i].superType === SuperType.ENERGY) {
-        energyIndex = i;
-        break;
+    for (const playerType of targetPlayers) {
+      const targetPlayer = playerType === PlayerType.BOTTOM_PLAYER ? player : opponent;
+      if (prompt.slots.includes(SlotType.ACTIVE) && targetPlayer.active.cards.length > 0) {
+        const target: CardTarget = { player: playerType, slot: SlotType.ACTIVE, index: 0 };
+        if (!blockedToSet.has(this.toTargetKey(target))) {
+          targets.push(target);
+        }
       }
-    }
-    if (energyIndex === -1) {
-      return prompt.options.allowCancel ? null : [];
-    }
-
-    // Find first valid target
-    let target: CardTarget | undefined;
-    if (prompt.slots.includes(SlotType.ACTIVE)) {
-      const t: CardTarget = { player: prompt.playerType, slot: SlotType.ACTIVE, index: 0 };
-      if (!blockedToSet.has(`${t.player}-${t.slot}-${t.index}`) && player.active.cards.length > 0) {
-        target = t;
-      }
-    }
-    if (!target && prompt.slots.includes(SlotType.BENCH)) {
-      for (let i = 0; i < player.bench.length; i++) {
-        if (player.bench[i].cards.length > 0) {
-          const t: CardTarget = { player: prompt.playerType, slot: SlotType.BENCH, index: i };
-          if (!blockedToSet.has(`${t.player}-${t.slot}-${t.index}`)) {
-            target = t;
-            break;
+      if (prompt.slots.includes(SlotType.BENCH)) {
+        for (let i = 0; i < targetPlayer.bench.length; i++) {
+          if (targetPlayer.bench[i].cards.length === 0) {
+            continue;
+          }
+          const target: CardTarget = { player: playerType, slot: SlotType.BENCH, index: i };
+          if (!blockedToSet.has(this.toTargetKey(target))) {
+            targets.push(target);
           }
         }
       }
     }
 
-    if (!target) {
+    return targets;
+  }
+
+  private findAttachAssignments(
+    energies: Array<{ index: number; card: Card; type: CardType }>,
+    targets: CardTarget[],
+    prompt: AttachEnergyPrompt,
+    desiredCount: number
+  ): Array<{ to: CardTarget; index: number }> | undefined {
+    const assignments: Array<{ to: CardTarget; index: number }> = [];
+    const usedTargets = new Set<string>();
+    const usedTypes = new Set<CardType>();
+    const typeCounts = new Map<CardType, number>();
+
+    const canUseEnergy = (energy: { card: Card; type: CardType }): boolean => {
+      if (prompt.options.validCardTypes) {
+        const provided = energy.card instanceof EnergyCard ? energy.card.provides : [];
+        if (!provided.some(type => prompt.options.validCardTypes!.includes(type))) {
+          return false;
+        }
+      }
+
+      if (prompt.options.differentTypes && usedTypes.has(energy.type)) {
+        return false;
+      }
+
+      if (prompt.options.maxPerType !== undefined) {
+        const count = (typeCounts.get(energy.type) ?? 0) + 1;
+        if (count > prompt.options.maxPerType) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    const canUseTarget = (target: CardTarget): boolean => {
+      const targetKey = this.toTargetKey(target);
+      if (prompt.options.sameTarget && assignments.length > 0) {
+        const firstKey = this.toTargetKey(assignments[0].to);
+        if (targetKey !== firstKey) {
+          return false;
+        }
+      }
+      if (prompt.options.differentTargets && usedTargets.has(targetKey)) {
+        return false;
+      }
+      return true;
+    };
+
+    const recurse = (energyStartIndex: number): boolean => {
+      if (assignments.length === desiredCount) {
+        return true;
+      }
+
+      for (let i = energyStartIndex; i < energies.length; i++) {
+        const energy = energies[i];
+        if (!canUseEnergy(energy)) {
+          continue;
+        }
+
+        for (const target of targets) {
+          if (!canUseTarget(target)) {
+            continue;
+          }
+
+          const targetKey = this.toTargetKey(target);
+          assignments.push({ to: target, index: energy.index });
+          usedTargets.add(targetKey);
+          usedTypes.add(energy.type);
+          typeCounts.set(energy.type, (typeCounts.get(energy.type) ?? 0) + 1);
+
+          if (recurse(i + 1)) {
+            return true;
+          }
+
+          assignments.pop();
+          if (prompt.options.differentTargets) {
+            usedTargets.delete(targetKey);
+          }
+
+          const nextCount = (typeCounts.get(energy.type) ?? 1) - 1;
+          if (nextCount <= 0) {
+            typeCounts.delete(energy.type);
+            usedTypes.delete(energy.type);
+          } else {
+            typeCounts.set(energy.type, nextCount);
+          }
+        }
+      }
+
+      return false;
+    };
+
+    return recurse(0) ? assignments : undefined;
+  }
+
+  private resolveAttachEnergyRaw(state: State, prompt: AttachEnergyPrompt): any {
+    const promptPlayers = this.getPromptPlayers(state, prompt);
+    if (!promptPlayers) return null;
+    const { player, opponent } = promptPlayers;
+
+    const blocked = new Set(prompt.options.blocked);
+    const energyCandidates: Array<{ index: number; card: Card; type: CardType }> = [];
+    for (let i = 0; i < prompt.cardList.cards.length; i++) {
+      const card = prompt.cardList.cards[i];
+      if (blocked.has(i) || card.superType !== SuperType.ENERGY) {
+        continue;
+      }
+      if (!this.cardMatchesPartialFilter(card, prompt.filter)) {
+        continue;
+      }
+      energyCandidates.push({ index: i, card, type: this.getPrimaryEnergyType(card) });
+    }
+    if (energyCandidates.length === 0) {
       return prompt.options.allowCancel ? null : [];
     }
 
-    // Build result: attach up to max energy cards to the first valid target
-    const result: { to: CardTarget; index: number }[] = [];
-    const max = prompt.options.max;
-    for (let i = 0; i < prompt.cardList.cards.length && result.length < max; i++) {
-      if (!blocked.has(i) && prompt.cardList.cards[i].superType === SuperType.ENERGY) {
-        result.push({ to: target, index: i });
+    const targets = this.buildAttachTargets(player, opponent, prompt);
+    if (targets.length === 0) {
+      return prompt.options.allowCancel ? null : [];
+    }
+
+    const max = Math.min(prompt.options.max, energyCandidates.length);
+    const min = Math.max(0, prompt.options.min);
+    for (let desiredCount = max; desiredCount >= min; desiredCount--) {
+      const assignments = this.findAttachAssignments(energyCandidates, targets, prompt, desiredCount);
+      if (assignments !== undefined) {
+        return assignments;
       }
     }
 
-    return result;
+    return prompt.options.allowCancel ? null : [];
+  }
+
+  private getEnergyCardScore(provides: CardType[]): number {
+    let score = 0;
+    provides.forEach(cardType => {
+      if (cardType === CardType.COLORLESS) {
+        score += 2;
+      } else if (cardType === CardType.ANY) {
+        score += 10;
+      } else {
+        score += 3;
+      }
+    });
+    return score;
   }
 
   private resolveChooseEnergyRaw(prompt: ChooseEnergyPrompt): any {
-    return prompt.energy.map((_: any, i: number) => i);
+    const selectedIndices: number[] = [];
+    const remainingIndices = prompt.energy.map((_, index) => index);
+    const costsToCover = prompt.cost.filter(cost => cost !== CardType.COLORLESS);
+
+    while (costsToCover.length > 0 && remainingIndices.length > 0) {
+      const cost = costsToCover[0];
+      let selectedPosition = remainingIndices.findIndex(index => prompt.energy[index].provides.includes(cost));
+      if (selectedPosition === -1) {
+        selectedPosition = remainingIndices.findIndex(index => prompt.energy[index].provides.includes(CardType.ANY));
+      }
+      if (selectedPosition === -1) {
+        break;
+      }
+
+      const energyIndex = remainingIndices[selectedPosition];
+      remainingIndices.splice(selectedPosition, 1);
+      selectedIndices.push(energyIndex);
+
+      for (const providedType of prompt.energy[energyIndex].provides) {
+        if (providedType === CardType.ANY && costsToCover.length > 0) {
+          costsToCover.shift();
+        } else {
+          const costIndex = costsToCover.indexOf(providedType);
+          if (costIndex !== -1) {
+            costsToCover.splice(costIndex, 1);
+          }
+        }
+      }
+    }
+
+    if (costsToCover.length > 0) {
+      return prompt.options.allowCancel ? null : [];
+    }
+
+    remainingIndices.sort((left, right) => {
+      const leftScore = this.getEnergyCardScore(prompt.energy[left].provides);
+      const rightScore = this.getEnergyCardScore(prompt.energy[right].provides);
+      return leftScore - rightScore;
+    });
+
+    while (remainingIndices.length > 0) {
+      const selectedEnergy = selectedIndices.map(index => prompt.energy[index]);
+      if (StateUtils.checkEnoughEnergy(selectedEnergy, prompt.cost)) {
+        break;
+      }
+      const energyIndex = remainingIndices.shift();
+      if (energyIndex !== undefined) {
+        selectedIndices.push(energyIndex);
+      }
+    }
+
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (let i = 0; i < selectedIndices.length; i++) {
+        const nextSelected = selectedIndices.slice();
+        nextSelected.splice(i, 1);
+        const selectedEnergy = nextSelected.map(index => prompt.energy[index]);
+        if (StateUtils.checkEnoughEnergy(selectedEnergy, prompt.cost)) {
+          selectedIndices.splice(i, 1);
+          changed = true;
+          break;
+        }
+      }
+    }
+
+    const selectedEnergy = selectedIndices.map(index => prompt.energy[index]);
+    if (!prompt.validate(selectedEnergy)) {
+      return prompt.options.allowCancel ? null : [];
+    }
+
+    return selectedIndices;
   }
 
   private resolveChoosePrizeRaw(state: State, prompt: ChoosePrizePrompt): any {
@@ -339,62 +699,94 @@ class TestStoreHandler implements StoreHandler {
     const player = state.players.find(p => p.id === prompt.playerId);
     if (!player) return null;
 
-    const blockedSet = new Set(prompt.options.blocked.map(b => `${b.player}-${b.slot}-${b.index}`));
+    const blockedSet = new Set(prompt.options.blocked.map(b => this.toTargetKey(b)));
 
+    let fallbackTarget: CardTarget | undefined;
     for (const dm of prompt.maxAllowedDamage) {
-      if (dm.damage > 0 && !blockedSet.has(`${dm.target.player}-${dm.target.slot}-${dm.target.index}`)) {
+      if (dm.damage <= 0 || blockedSet.has(this.toTargetKey(dm.target))) {
+        continue;
+      }
+      if (fallbackTarget === undefined) {
+        fallbackTarget = dm.target;
+      }
+      if (dm.damage >= prompt.damage) {
         return [{ target: dm.target, damage: prompt.damage }];
       }
+    }
+
+    if (fallbackTarget && prompt.options.allowPlacePartialDamage) {
+      const target = fallbackTarget;
+      const fallbackDamage = prompt.maxAllowedDamage.find(dm => this.toTargetKey(dm.target) === this.toTargetKey(target))?.damage ?? prompt.damage;
+      return [{ target, damage: Math.min(prompt.damage, fallbackDamage) }];
     }
 
     return prompt.options.allowCancel ? null : [];
   }
 
   private resolveDiscardEnergyRaw(state: State, prompt: DiscardEnergyPrompt): any {
-    const player = state.players.find(p => p.id === prompt.playerId);
-    if (!player) return null;
+    const promptPlayers = this.getPromptPlayers(state, prompt);
+    if (!promptPlayers) return null;
+    const { player, opponent } = promptPlayers;
 
-    const blockedFromSet = new Set(prompt.options.blockedFrom.map(
-      b => `${b.player}-${b.slot}-${b.index}`
-    ));
+    const blockedFromSet = new Set(prompt.options.blockedFrom.map(source => this.toTargetKey(source)));
+    const blockedBySource = new Map<string, Set<number>>();
+    for (const blockEntry of prompt.options.blockedMap) {
+      blockedBySource.set(
+        this.toTargetKey(blockEntry.source),
+        new Set(blockEntry.blocked)
+      );
+    }
 
     const result: { from: CardTarget; index: number }[] = [];
     const max = prompt.options.max ?? Infinity;
 
-    const scanSlots = (pt: PlayerType, p: Player) => {
-      if (prompt.playerType !== PlayerType.ANY && prompt.playerType !== pt) return;
+    const scanSlots = (playerType: PlayerType, targetPlayer: Player) => {
+      if (prompt.playerType !== PlayerType.ANY && prompt.playerType !== playerType) return;
 
       const slots: Array<{ cardList: PokemonCardList; target: CardTarget }> = [];
-      if (prompt.slots.includes(SlotType.ACTIVE) && p.active.cards.length > 0) {
-        slots.push({ cardList: p.active, target: { player: pt, slot: SlotType.ACTIVE, index: 0 } });
+      if (prompt.slots.includes(SlotType.ACTIVE) && targetPlayer.active.cards.length > 0) {
+        slots.push({
+          cardList: targetPlayer.active,
+          target: { player: playerType, slot: SlotType.ACTIVE, index: 0 }
+        });
       }
       if (prompt.slots.includes(SlotType.BENCH)) {
-        for (let i = 0; i < p.bench.length; i++) {
-          if (p.bench[i].cards.length > 0) {
-            slots.push({ cardList: p.bench[i], target: { player: pt, slot: SlotType.BENCH, index: i } });
+        for (let i = 0; i < targetPlayer.bench.length; i++) {
+          if (targetPlayer.bench[i].cards.length > 0) {
+            slots.push({
+              cardList: targetPlayer.bench[i],
+              target: { player: playerType, slot: SlotType.BENCH, index: i }
+            });
           }
         }
       }
 
       for (const { cardList, target } of slots) {
-        if (blockedFromSet.has(`${target.player}-${target.slot}-${target.index}`)) continue;
+        const sourceKey = this.toTargetKey(target);
+        if (blockedFromSet.has(sourceKey)) continue;
+        const blockedIndices = blockedBySource.get(sourceKey) ?? new Set<number>();
         for (let i = 0; i < cardList.cards.length && result.length < max; i++) {
-          if (cardList.cards[i].superType === SuperType.ENERGY) {
-            result.push({ from: target, index: i });
+          const card = cardList.cards[i];
+          if (card.superType !== SuperType.ENERGY) {
+            continue;
           }
+          if (blockedIndices.has(i)) {
+            continue;
+          }
+          if (!this.cardMatchesPartialFilter(card, prompt.filter)) {
+            continue;
+          }
+          result.push({ from: target, index: i });
         }
       }
     };
 
     scanSlots(PlayerType.BOTTOM_PLAYER, player);
-    const opponent = state.players.find(p => p.id !== player.id);
-    if (opponent) {
-      scanSlots(PlayerType.TOP_PLAYER, opponent);
-    }
+    scanSlots(PlayerType.TOP_PLAYER, opponent);
 
     const min = prompt.options.min;
-    if (result.length < min && prompt.options.allowCancel) {
-      return null;
+    if (result.length < min) {
+      return prompt.options.allowCancel ? null : [];
     }
     return result.slice(0, max);
   }
@@ -412,8 +804,45 @@ export interface SetupGameResult {
   overridePrompt: (type: string, handler: PromptHandler) => void;
 }
 
+function collectCardsFromPokemonSlot(config: PokemonSlotConfig): string[] {
+  const cards: string[] = [config.card];
+  if (config.energy) {
+    cards.push(...config.energy);
+  }
+  if (config.tools) {
+    cards.push(...config.tools);
+  }
+  return cards;
+}
+
+function collectCardsFromPlayerConfig(config: PlayerConfig): string[] {
+  const cards: string[] = [];
+  cards.push(...collectCardsFromPokemonSlot(config.active));
+  if (config.bench) {
+    config.bench.forEach(slot => cards.push(...collectCardsFromPokemonSlot(slot)));
+  }
+  if (config.hand) {
+    cards.push(...config.hand);
+  }
+  if (config.deck) {
+    cards.push(...config.deck);
+  }
+  if (config.discard) {
+    cards.push(...config.discard);
+  }
+  return cards;
+}
+
+function collectCardsFromSetupConfig(config: SetupGameConfig): string[] {
+  return [
+    DEFAULT_FILLER,
+    ...collectCardsFromPlayerConfig(config.player1),
+    ...collectCardsFromPlayerConfig(config.player2)
+  ];
+}
+
 export function setupGame(config: SetupGameConfig): SetupGameResult {
-  ensureCardsRegistered();
+  ensureCardsRegistered(collectCardsFromSetupConfig(config));
   nextCardId = 1000;
 
   const handler = new TestStoreHandler();
