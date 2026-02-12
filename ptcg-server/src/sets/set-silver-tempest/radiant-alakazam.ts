@@ -12,6 +12,7 @@ import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damag
 import { GameMessage } from '../../game/game-message';
 import { GameError } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class RadiantAlakazam extends PokemonCard {
@@ -64,6 +65,11 @@ export class RadiantAlakazam extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.PAINFUL_SPOONS_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -110,15 +116,15 @@ export class RadiantAlakazam extends PokemonCard {
 
           source.damage -= damageToMove;
           target.damage += damageToMove;
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            }
-          });
-
-          return state;
         }
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+
+        return state;
       });
     }
 
