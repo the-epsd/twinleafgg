@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AvatarInfo } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,7 +9,6 @@ import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../../api/api.error';
 import { AvatarService } from '../../api/services/avatar.service';
 import { SessionService } from '../../shared/session/session.service';
-import { MatDialog } from '@angular/material/dialog';
 
 @UntilDestroy()
 @Component({
@@ -33,7 +32,7 @@ export class EditAvatarsPopupComponent implements OnInit {
     private sessionService: SessionService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) data: { userId: number },
-    private dialog: MatDialog
+    private dialogRef: MatDialogRef<EditAvatarsPopupComponent>
   ) {
     this.userId = data.userId;
     this.user$ = this.sessionService.get(session => session.users[this.userId]);
@@ -79,6 +78,10 @@ export class EditAvatarsPopupComponent implements OnInit {
           }
         }
       });
+  }
+
+  public close(): void {
+    this.dialogRef.close();
   }
 
   private getAvatarName(name: string = ''): Promise<string | undefined> {

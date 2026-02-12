@@ -27,6 +27,10 @@ export class ImportDeckPopupComponent {
     this.maxFileSize = this.sessionService.session.config.avatarFileSize;
   }
 
+  public cancel(): void {
+    this.dialogRef.close();
+  }
+
   public updatePreview(value: FileInput) {
     this.cardNames = undefined;
 

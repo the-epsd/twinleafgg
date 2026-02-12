@@ -9,7 +9,7 @@
   </ptcg-card-info-pane>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<div class="dialog-actions">
   <twinleaf-button *ngIf="cardList && isInGame()" [text]="'CARDS_SHOW_CARD_LIST' | translate" [disabled]="!card"
     (clicked)="showCardList()">
   </twinleaf-button>
@@ -21,4 +21,4 @@
   <span class="ptcg-u-spacer"></span>
   <twinleaf-button [text]="'BUTTON_CLOSE' | translate" (clicked)="close()" cdkFocusInitial>
   </twinleaf-button>
-</mat-dialog-actions>
+</div>

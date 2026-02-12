@@ -10,32 +10,6 @@ mat-dialog-content {
   color: $text-primary;
 }
 
-mat-dialog-actions {
+.dialog-actions {
   padding-top: 24px;
-
-  button {
-    &.mat-raised-button {
-      background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
-      border: 1px solid $twinleaf-green;
-      border-radius: 12px;
-      color: $text-primary;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Urbanist', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.3s ease;
-
-      &:hover:not(:disabled) {
-        background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
-        border-color: $twinleaf-green;
-        transform: translateY(-1px);
-      }
-
-      &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-  }
 }

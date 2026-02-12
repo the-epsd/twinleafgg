@@ -145,8 +145,13 @@ mat-dialog-container {
     position: relative;
 }
 
-mat-dialog-actions {
+.dialog-actions {
+    display: flex;
     justify-content: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px 0;
 }
 
 mat-dialog-content {

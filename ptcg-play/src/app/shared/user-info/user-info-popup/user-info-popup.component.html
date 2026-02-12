@@ -6,21 +6,18 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button [routerLink]="['/profile', userId]" (click)="close()">
-    {{ 'BUTTON_SHOW_PROFILE' | translate }}
-  </button>
-  <button mat-raised-button *ngIf="visitor$ | async" [routerLink]="['/message', userId]" (click)="close()">
-    {{ 'BUTTON_SEND_MESSAGE' | translate }}
-  </button>
-  <button mat-raised-button *ngIf="isAdmin$ | async" [style.background-color]="(isBanned$ | async) ? '' : '#FF0000'"
-    [style.color]="(isBanned$ | async) ? '' : 'white'" (click)="banUser(userId)">
-    {{ (isBanned$ | async) ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
-  </button>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_SHOW_PROFILE' | translate" [routerLink]="['/profile', userId]" (clicked)="close()">
+  </twinleaf-button>
+  <twinleaf-button *ngIf="visitor$ | async" [text]="'BUTTON_SEND_MESSAGE' | translate" [routerLink]="['/message', userId]"
+    (clicked)="close()">
+  </twinleaf-button>
+  <twinleaf-button *ngIf="isAdmin$ | async" [text]="(isBanned$ | async) ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate)"
+    [color]="(isBanned$ | async) ? 'secondary' : 'primary'" (clicked)="banUser(userId)">
+  </twinleaf-button>
 
   <span class="ptcg-u-spacer"></span>
 
-  <button mat-raised-button (click)="close()" cdkFocusInitial>
-    {{ 'BUTTON_CLOSE' | translate }}
-  </button>
-</mat-dialog-actions>
+  <twinleaf-button [text]="'BUTTON_CLOSE' | translate" (clicked)="close()" cdkFocusInitial>
+  </twinleaf-button>
+</div>

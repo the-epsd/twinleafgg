@@ -103,16 +103,12 @@
   </div>
 
   <!-- Dialog Actions - Hidden for now -->
-  <div mat-dialog-actions class="dialog-actions" style="display: none;">
+  <div class="dialog-actions" style="display: none;">
     <div *ngIf="showManualOptions && !isManualReconnecting" class="action-buttons">
-      <button mat-button (click)="returnToMenu()" class="return-button">
-        <mat-icon>home</mat-icon>
-        <span>RETURN TO MENU</span>
-      </button>
-      <button mat-raised-button (click)="manualReconnect()" class="reconnect-button">
-        <mat-icon>refresh</mat-icon>
-        <span>TRY AGAIN</span>
-      </button>
+      <twinleaf-button [text]="'RETURN TO MENU'" [icon]="'home'" color="secondary" (clicked)="returnToMenu()">
+      </twinleaf-button>
+      <twinleaf-button [text]="'TRY AGAIN'" [icon]="'refresh'" (clicked)="manualReconnect()">
+      </twinleaf-button>
     </div>
   </div>
 </div>

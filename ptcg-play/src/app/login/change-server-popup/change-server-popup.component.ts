@@ -34,6 +34,10 @@ export class ChangeServerPopupComponent {
     this.value = this.apiService.getApiUrl();
   }
 
+  public cancel(): void {
+    this.dialogRef.close();
+  }
+
   public confirm(): void {
     const newApiUrl = this.value;
 

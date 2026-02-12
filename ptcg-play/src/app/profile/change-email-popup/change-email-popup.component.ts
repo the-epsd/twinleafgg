@@ -37,6 +37,10 @@ export class ChangeEmailPopupComponent {
     this.email = user ? user.email : '';
   }
 
+  public cancel(): void {
+    this.dialogRef.close();
+  }
+
   public changeEmail(): void {
     this.loading = true;
     this.profileService.changeEmail(this.email).pipe(

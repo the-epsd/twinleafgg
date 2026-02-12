@@ -16,10 +16,9 @@
 </div>
 
 <div class="ptcg-prompt-actions">
-  <button mat-raised-button *ngIf="prompt.options.allowCancel" [disabled]="gameState.deleted" (click)="cancel()">
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button color="primary" [disabled]="gameState.deleted" (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
-  </button>
+  <twinleaf-button *ngIf="prompt.options.allowCancel" [text]="'BUTTON_CANCEL' | translate" color="secondary"
+    [disabled]="gameState.deleted" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_OK' | translate" [disabled]="gameState.deleted" (clicked)="confirm()">
+  </twinleaf-button>
 </div>
