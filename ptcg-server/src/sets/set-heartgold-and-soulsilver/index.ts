@@ -1,6 +1,8 @@
 import { BillHS, CopycatHS, EnergySwitchPKHS, FullHealHS, PokeBallHS, ProfessorElmsTrainingMethodHS } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Bayleef } from './bayleef';
+import { Blissey } from './blissey';
+import { Chansey } from './chansey';
 import { Chikorita } from './chikorita';
 import { Cleffa } from './cleffa';
 import { Croconaw } from './croconaw';
@@ -26,6 +28,9 @@ import { Pichu } from './pichu';
 import { PokemonCollector } from './pokemon-collector';
 import { ProfessorOaksNewTheory } from './professor-oaks-new-theory';
 import { Quilava } from './quilava';
+import { Slowking } from './slowking';
+import { Sunflora } from './sunflora';
+import { Sunkern } from './sunkern';
 import { Totodile } from './totodile';
 import { Typhlosion } from './typhlosion';
 import { Tyrogue } from './tyrogue';
@@ -45,6 +50,8 @@ import {
 
 export const setHeartGoldAndSoulSilver: Card[] = [
   new Bayleef(),
+  new Blissey(),
+  new Chansey(),
   new Chikorita(),
   new Cleffa(),
   new Croconaw(),
@@ -69,6 +76,9 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new ProfessorOaksNewTheory(),
   new PsychicEnergy(),
   new Quilava(),
+  new Slowking(),
+  new Sunkern(),
+  new Sunflora(),
   new Totodile(),
   new Typhlosion(),
   new Tyrogue(),

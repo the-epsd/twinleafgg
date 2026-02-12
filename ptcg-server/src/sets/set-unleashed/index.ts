@@ -1,5 +1,6 @@
 import { JirachiUL, CheerleadersCheerUL, PlusPowerUL } from './other-prints';
 import { Card } from '../../game/store/card/card';
+import { Aipom } from './aipom';
 import { Chinchou } from './chinchou';
 import { Crobat } from './crobat-prime';
 import { DualBall } from './dual-ball';
@@ -11,6 +12,8 @@ import { InterviewersQuestions } from './interviewers-questions';
 import { Kingdra } from './kingdra';
 import { Lanturn } from './lanturn';
 import { PokemonCirculator } from './pokemon-circulator';
+import { Roselia } from './roselia';
+import { Roserade } from './roserade';
 import { Seadra } from './seadra';
 import { Shaymin } from './shaymin';
 import { Vulpix } from './vulpix';
@@ -24,6 +27,7 @@ import {
 } from './other-prints';
 
 export const setUnleashed: Card[] = [
+  new Aipom(),
   new Chinchou(),
   new Crobat(),
   new DualBall(),
@@ -35,6 +39,8 @@ export const setUnleashed: Card[] = [
   new Kingdra(),
   new Lanturn(),
   new PokemonCirculator(),
+  new Roselia(),
+  new Roserade(),
   new Seadra(),
   new Shaymin(),
   new Vulpix(),

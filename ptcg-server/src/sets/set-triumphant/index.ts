@@ -3,6 +3,7 @@ import { AlphLithograph } from './alph-lithograph';
 import { BlackBelt } from './black-belt';
 import { Celebi } from './celebi';
 import { Ditto } from './ditto';
+import { Electrode } from './electrode';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar-prime';
 import { Haunter } from './haunter';
@@ -25,6 +26,9 @@ import { Shuppet } from './shuppet';
 import { Spiritomb } from './spiritomb';
 import { Twins } from './twins';
 import { Unown } from './unown';
+import { Venomoth } from './venomoth';
+import { Venonat } from './venonat';
+import { Voltorb } from './voltorb';
 import { Yanma } from './yanma';
 import { Yanmega } from './yanmega-prime';
 
@@ -33,6 +37,7 @@ export const setTriumphant: Card[] = [
   new BlackBelt(),
   new Celebi(),
   new Ditto(),
+  new Electrode(),
   new Gastly(),
   new Gengar(),
   new Haunter(),
@@ -55,6 +60,9 @@ export const setTriumphant: Card[] = [
   new Spiritomb(),
   new Twins(),
   new Unown(),
+  new Venomoth(),
+  new Venonat(),
+  new Voltorb(),
   new Yanma(),
   new Yanmega(),
 

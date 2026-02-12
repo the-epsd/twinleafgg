@@ -15,6 +15,7 @@ import { Pidgey } from './pidgey';
 import { Plusle } from './plusle';
 import { Ralts } from './ralts';
 import { RoseannesResearch } from './roseannes-research';
+import { Sentret } from './sentret';
 import { Skiploom } from './skiploom';
 import { Trapinch } from './trapinch';
 
@@ -37,6 +38,7 @@ export const setSecretWonders: Card[] = [
   new GardevoirLVX(),
   new Hoppip(),
   new RoseannesResearch(),
+  new Sentret(),
   new Skiploom(),
   new Trapinch(),
 
