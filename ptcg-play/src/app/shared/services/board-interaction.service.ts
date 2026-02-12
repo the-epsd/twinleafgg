@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType, StateLog, CardType } from 'ptcg-server';
+import { CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateLog, CardType } from 'ptcg-server';
 
 export interface BasicEntranceAnimationEvent {
   playerId: number;
@@ -93,6 +93,30 @@ export class BoardInteractionService {
    */
   public updateGameLogs(logs: StateLog[]): void {
     this.gameLogsSubject.next(logs);
+  }
+
+  /**
+   * Start board selection mode for choosing a bench Pokémon to retreat into.
+   * Uses the same UI as ChoosePokemonPrompt; on completion calls onComplete with the selected bench index.
+   */
+  public startRetreatSelection(_gameId: number, onComplete: (benchIndex: number) => void): void {
+    const syntheticPrompt = new ChoosePokemonPrompt(
+      0,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { min: 1, max: 1, allowCancel: true, blocked: [] }
+    );
+
+    this.startBoardSelection(syntheticPrompt, (targets: CardTarget[] | null) => {
+      if (targets === null) {
+        return;
+      }
+      const benchTarget = targets.find(t => t.slot === SlotType.BENCH);
+      if (benchTarget !== undefined && benchTarget.index !== undefined) {
+        onComplete(benchTarget.index);
+      }
+    });
   }
 
   /**

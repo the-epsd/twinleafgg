@@ -13,7 +13,7 @@
       (click)="onAddCard($event)">
       <mat-icon>add</mat-icon>
     </div>
-    <div class="favorite-icon-button"
+    <div class="favorite-icon-button" [class.favorited]="isFavoriteCard()"
       *ngIf="isLibraryCard && (card.card.superType === SuperType.TRAINER || card.card.superType === SuperType.ENERGY)"
       (click)="toggleFavorite($event)" [matTooltip]="isFavoriteCard() ? 'Remove from favorites' : 'Add to favorites'">
       <mat-icon>{{isFavoriteCard() ? 'favorite' : 'favorite_border'}}</mat-icon>

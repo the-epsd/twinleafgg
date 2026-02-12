@@ -567,7 +567,9 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
     const slot = SlotType.ACTIVE;
     const target: CardTarget = { player, slot, index: 0 };
 
-    const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
+    const canRetreat = this.bottomPlayer && this.gameState?.state &&
+      this.bottomPlayer.retreatedTurn !== this.gameState.state.turn;
+    const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true, enableRetreat: canRetreat };
     this.cardsBaseService.showCardInfo({ card, cardList, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
@@ -582,6 +584,13 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
           // Use attack from the card
         } else if (result.attack) {
           this.gameService.attack(gameId, result.attack);
+
+          // Retreat: choose bench Pokémon to retreat into
+        } else if (result.retreat) {
+          if (!canRetreat) return;
+          this.boardInteractionService.startRetreatSelection(gameId, (benchIndex) => {
+            this.gameService.retreatAction(gameId, benchIndex);
+          });
         }
       });
   }
