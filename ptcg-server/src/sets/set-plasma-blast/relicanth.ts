@@ -69,7 +69,7 @@ export class Relicanth extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
         {},
-        { min: 0, max, allowCancel: false, blocked }
+        { min: max, max, allowCancel: false, blocked }
       ), selected => {
         const cards = selected || [];
         cards.forEach(card => {

@@ -4,6 +4,7 @@ import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUti
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Wochien extends PokemonCard {
 
@@ -71,7 +72,11 @@ export class Wochien extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      player.deck.moveTo(player.discard, 3);
+      // Legacy implementation:
+      // - Moved top 3 cards directly from deck to discard.
+      //
+      // Converted to prefab version (DISCARD_TOP_X_CARDS_FROM_YOUR_DECK).
+      return DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(store, state, player, 3, this, effect);
     }
 
     return state;

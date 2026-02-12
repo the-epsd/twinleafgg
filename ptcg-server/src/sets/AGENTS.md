@@ -66,6 +66,19 @@ Read **AGENTS-patterns.md** in this directory. It maps common card text phrases 
 
 Always prefer prefab functions over custom logic. Read **CLAUDE-prefabs.md** for the complete list of available prefabs with signatures.
 
+### 4.5 Public vs Private Knowledge (Search Rules)
+
+This is a core rules concept and must be handled correctly:
+
+- **Private knowledge zones** (usually the deck): if card text asks you to find a specific subset (for example, "a Pokemon", "2 Basic Energy"), the player may select fewer than requested or fail, because the opponent cannot verify deck contents.
+- **Public knowledge zones** (discard, in-play, etc.): required counts are mandatory unless text says "up to".
+- **Known guaranteed target in private zone**: if text is broad enough that a legal target is guaranteed when the zone is non-empty (for example, "search your deck for a card"), do not allow failing.
+
+Examples:
+- `Computer Search` ("a card") should be mandatory when the deck has cards.
+- `Ultra Ball` style Pokemon search can fail, because deck contents are private.
+- Discard-pile retrieval should follow exact counts unless the card says "up to".
+
 ### 5. Verify Compilation
 
 After implementing cards, run:

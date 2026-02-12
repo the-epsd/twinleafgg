@@ -1,13 +1,11 @@
-import { PlayerType } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS } from '../../game/store/prefabs/prefabs';
 
 export class Manaphy extends PokemonCard {
 
@@ -50,44 +48,22 @@ export class Manaphy extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PutDamageEffect) {
-      // Find the owner of the target (the defending player)
-      const defendingPlayer = StateUtils.findOwner(state, effect.target);
-      // Find the owner of the source (the attacking player)
-      const attackingPlayer = StateUtils.findOwner(state, effect.source);
-
-      // Only prevent if the effect is coming from the opponent
-      if (attackingPlayer === defendingPlayer) {
-        return state;
-      }
-
-      // Only prevent if the target is on the bench (not active)
-      if (effect.target === defendingPlayer.active) {
-        return state;
-      }
-
-      // Check if Manaphy is in play on the defending player's field
-      let isManaphyInPlay = false;
-      defendingPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card instanceof Manaphy) {
-          isManaphyInPlay = true;
-        }
+      /*
+       * Legacy pre-prefab implementation:
+       * - inferred defending/attacking owners from source/target
+       * - checked bench-only targeting and opponent-only source
+       * - scanned defending board for this Manaphy instance
+       * - manually stubbed PowerEffect to respect ability lock
+       * - set effect.preventDefault = true
+       */
+      // Converted to prefab version (PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS).
+      state.players.forEach(owner => {
+        PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(store, state, effect, {
+          owner,
+          source: this,
+          includeSourcePokemon: true
+        });
       });
-      if (!isManaphyInPlay) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(defendingPlayer, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-      effect.preventDefault = true;
     }
     return state;
   }

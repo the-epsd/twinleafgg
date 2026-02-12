@@ -898,6 +898,7 @@ export interface AttachXTypeEnergyFromDiscardToOnePokemonOptions {
   energyFilter?: Partial<EnergyCard>;
   min?: number;
   allowCancel?: boolean;
+  onAttached?: (transfers: { to: CardTarget, card: Card }[]) => void;
 }
 
 /**
@@ -919,7 +920,8 @@ export function ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
     targetFilter,
     energyFilter = {},
     min = 1,
-    allowCancel = false
+    allowCancel = false,
+    onAttached
   } = options;
 
   if (player.discard.cards.length === 0 || amount <= 0) {
@@ -956,6 +958,9 @@ export function ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
       const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
       store.reduceEffect(state, attachEnergyEffect);
     }
+    if (onAttached !== undefined) {
+      onAttached(transfers);
+    }
   });
 }
 
@@ -970,6 +975,7 @@ export interface AttachUpToXEnergyFromDeckToYOfYourPokemonOptions {
   sameTarget?: boolean;
   validCardTypes?: CardType[];
   maxPerType?: number;
+  onAttached?: (transfers: { to: CardTarget, card: Card }[]) => void;
 }
 
 /**
@@ -999,7 +1005,8 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
     differentTargets = false,
     sameTarget = false,
     validCardTypes,
-    maxPerType
+    maxPerType,
+    onAttached
   } = options;
 
   if (player.deck.cards.length === 0 || maxEnergyCards <= 0 || maxPokemonTargets <= 0) {
@@ -1041,6 +1048,10 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
       const energyCard = transfer.card as EnergyCard;
       const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
       store.reduceEffect(state, attachEnergyEffect);
+    }
+
+    if (onAttached !== undefined) {
+      onAttached(transfers);
     }
 
     SHUFFLE_DECK(store, state, player);
@@ -1477,22 +1488,23 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   });
 }
 
-export interface GustOpponentBenchedPokemonOptions {
+export interface SwitchInOpponentBenchedPokemonOptions {
   allowCancel?: boolean;
   blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
 }
 
 /**
- * Compound helper for "gust" effects:
+ * Compound helper for "switch in" effects:
  * "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
  */
-export function GUST_OPPONENT_BENCHED_POKEMON(
+export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
   store: StoreLike,
   state: State,
   player: Player,
-  options: GustOpponentBenchedPokemonOptions = {}
+  options: SwitchInOpponentBenchedPokemonOptions = {}
 ): State {
-  const { allowCancel = false, blocked = [] } = options;
+  const { allowCancel = false, blocked = [], onSwitched } = options;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBenchedPokemon = opponent.bench.some(bench => bench.cards.length > 0);
   if (!hasBenchedPokemon) {
@@ -1510,8 +1522,88 @@ export function GUST_OPPONENT_BENCHED_POKEMON(
       return;
     }
     opponent.switchPokemon(selected[0], store, state);
+    if (onSwitched !== undefined) {
+      onSwitched(selected[0]);
+    }
   });
 }
+
+export interface SwitchOutOpponentActivePokemonOptions {
+  allowCancel?: boolean;
+  blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
+}
+
+/**
+ * Compound helper for text like:
+ * "Switch out your opponent's Active Pokémon to the Bench.
+ * (Your opponent chooses the new Active Pokémon.)"
+ *
+ * Common on effects like Repel and the opponent-facing part of Escape Rope.
+ */
+export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {}
+): State {
+  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const opponent = StateUtils.getOpponent(state, player);
+  const hasBenchedPokemon = opponent.bench.some(bench => bench.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    return state;
+  }
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    opponent.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { min: 1, max: 1, allowCancel, blocked }
+  ), selected => {
+    if (!selected || selected.length === 0) {
+      return;
+    }
+    opponent.switchPokemon(selected[0], store, state);
+    if (onSwitched !== undefined) {
+      onSwitched(selected[0]);
+    }
+  });
+}
+
+/**
+ * Backward-compatible alias for `SWITCH_OUT_OPPONENT_ACTIVE_POKEMON`.
+ */
+export function OPPONENT_SWITCHES_THEIR_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {}
+): State {
+  return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchInOpponentBenchedPokemonOptions`.
+ */
+export type GustOpponentBenchedPokemonOptions = SwitchInOpponentBenchedPokemonOptions;
+
+/**
+ * Backward-compatible alias for `SWITCH_IN_OPPONENT_BENCHED_POKEMON`.
+ */
+export function GUST_OPPONENT_BENCHED_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchInOpponentBenchedPokemonOptions = {}
+): State {
+  return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchOutOpponentActivePokemonOptions`.
+ */
+export type OpponentSwitchesTheirActivePokemonOptions = SwitchOutOpponentActivePokemonOptions;
 
 export interface MoveDamageCountersOptions {
   playerType?: PlayerType;

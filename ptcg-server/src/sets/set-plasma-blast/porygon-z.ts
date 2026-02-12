@@ -75,6 +75,12 @@ export class PorygonZ extends PokemonCard {
         }
 
         for (const transfer of transfers) {
+          if (transfer.from.player === transfer.to.player
+            && transfer.from.slot === transfer.to.slot
+            && transfer.from.index === transfer.to.index) {
+            continue;
+          }
+
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);

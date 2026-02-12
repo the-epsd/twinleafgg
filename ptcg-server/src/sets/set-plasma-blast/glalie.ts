@@ -2,6 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType, SlotType, EnergyCard, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -44,20 +45,34 @@ export class Glalie extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const hasWaterEnergy = player.active.cards.some(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.WATER)
-      );
       const hasBench = player.bench.some(b => b.cards.length > 0);
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
 
-      if (hasWaterEnergy && hasBench) {
+      const waterProvidingCards = new Set<EnergyCard>();
+      checkProvidedEnergy.energyMap.forEach(em => {
+        if (em.card instanceof EnergyCard
+          && (em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY))) {
+          waterProvidingCards.add(em.card);
+        }
+      });
+
+      const blocked: number[] = [];
+      player.active.cards.forEach((card, index) => {
+        if (!(card instanceof EnergyCard) || !waterProvidingCards.has(card)) {
+          blocked.push(index);
+        }
+      });
+
+      if (blocked.length !== player.active.cards.length && hasBench) {
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
           GameMessage.ATTACH_ENERGY_TO_BENCH,
           player.active,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
-          { superType: SuperType.ENERGY, name: 'Water Energy' },
-          { min: 1, max: 1, allowCancel: false }
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false, blocked }
         ), transfers => {
           if (transfers && transfers.length > 0) {
             for (const transfer of transfers) {

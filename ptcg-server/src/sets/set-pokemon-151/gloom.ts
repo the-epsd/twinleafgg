@@ -1,6 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, ShuffleDeckPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, EnergyType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
 
 
 export class Gloom extends PokemonCard {
@@ -60,56 +61,23 @@ export class Gloom extends PokemonCard {
         return state;
       }
 
-      const temp = new CardList();
-
-
-      player.deck.moveTo(temp, 3);
-
-      // Check if any cards drawn are basic energy
-      const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC;
-      });
-
-      // If no energy cards were drawn, move all cards to deck
-      if (energyCardsDrawn.length == 0) {
-        temp.cards.slice(0, 3).forEach(card => {
-          temp.moveCardTo(card, player.deck);
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
-      } else {
-
-
-        // Prompt to attach energy if any were drawn
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          temp, // Only show drawn energies
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { min: 0, max: energyCardsDrawn.length }
-        ), transfers => {
-
-          // Attach energy based on prompt selection
-          if (transfers) {
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              temp.moveCardTo(transfer.card, target); // Move card to target
-            }
-            temp.cards.forEach(card => {
-              temp.moveCardTo(card, player.deck); // Move card to deck
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-              });
-            });
-          }
-          return state;
-        });
-        return state;
-      }
-      return state;
+      // Legacy implementation:
+      // - Moved top 3 cards into a temporary CardList.
+      // - Prompted to attach any Basic Energy among those cards to your Pokémon.
+      // - Shuffled all remaining cards back into the deck.
+      //
+      // Converted to prefab version (LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY).
+      return LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY(
+        store,
+        state,
+        player,
+        3,
+        3,
+        {
+          energyFilter: { energyType: EnergyType.BASIC },
+          remainderDestination: 'shuffle'
+        }
+      );
     }
     return state;
   }

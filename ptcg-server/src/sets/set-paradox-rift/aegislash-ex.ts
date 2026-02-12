@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
 
 export class Aegislashex extends PokemonCard {
 
@@ -61,11 +61,11 @@ export class Aegislashex extends PokemonCard {
 
     // Double-Edged Slash
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-
-      const damageEffect = new PutDamageEffect(effect, 30);
-      damageEffect.target = player.active;
-      store.reduceEffect(state, damageEffect);
+      // Legacy implementation:
+      // - Created PutDamageEffect for 30 and targeted player.active directly.
+      //
+      // Converted to prefab version (THIS_POKEMON_DOES_DAMAGE_TO_ITSELF).
+      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
     }
 
     return state;

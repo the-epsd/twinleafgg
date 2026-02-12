@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect, CheckHpEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -58,10 +59,8 @@ export class Haxorus extends PokemonCard {
       const defendingCard = opponent.active.getPokemonCard();
 
       if (defendingCard && defendingCard.tags.includes(CardTag.TEAM_PLASMA)) {
-        // KO the defending Pokemon by setting damage equal to remaining HP
-        const checkHp = new CheckHpEffect(opponent, opponent.active);
-        store.reduceEffect(state, checkHp);
-        effect.damage = checkHp.hp;
+        // Ref: set-shrouded-fable/haxorus.ts (direct KO attack effect)
+        return KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
     }
 

@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../game';
+import { GamePhase, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -76,8 +76,12 @@ export class Machamp extends PokemonCard {
     }
 
     // Intercept incoming damage for Close Combat penalty
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.CLOSE_COMBAT_MARKER, this)) {
-      effect.damage += 30;
+    // Ref: set-base-set/pluspower.ts (AfterWeaknessAndResistance timing via post-W/R hook)
+    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.CLOSE_COMBAT_MARKER, this)) {
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      if (state.phase === GamePhase.ATTACK && effect.player !== targetOwner) {
+        effect.damage += 30;
+      }
     }
 
     // Cleanup Close Combat marker

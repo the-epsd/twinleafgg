@@ -40,6 +40,11 @@ export class Froslass extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Cursed Glare - Block opponent's special energy attachment
     if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
+      // Text is "from hand", so ignore attachments from deck/discard/in-play effects.
+      if (!effect.player.hand.cards.includes(effect.energyCard)) {
+        return state;
+      }
+
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 

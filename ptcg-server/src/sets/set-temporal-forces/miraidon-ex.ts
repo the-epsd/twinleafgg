@@ -5,7 +5,7 @@ import { CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Miraidonex extends PokemonCard {
   public tags = [CardTag.FUTURE, CardTag.POKEMON_ex];
@@ -46,11 +46,13 @@ export class Miraidonex extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      if (!player.active.cannotUseAttacksNextTurnPending.includes('Cyber Drive')) {
-        player.active.cannotUseAttacksNextTurnPending.push('Cyber Drive');
-      }
+
+      // Legacy implementation:
+      // - Pushed "Cyber Drive" into cannotUseAttacksNextTurnPending if missing.
+      //
+      // Converted to prefab version (THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN).
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(player, this.attacks[1]);
     }
     return state;
   }
 }
-

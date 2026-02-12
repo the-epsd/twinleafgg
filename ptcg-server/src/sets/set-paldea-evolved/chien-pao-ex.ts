@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils, EnergyCard } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON } from '../../game/store/prefabs/costs';
 
 
 export class ChienPaoex extends PokemonCard {
@@ -114,38 +114,27 @@ export class ChienPaoex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
+      effect.damage = 0;
 
-      let totalWaterEnergy = 0;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const waterCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard && card.name === 'Water Energy'
-        ).length;
-        totalWaterEnergy += waterCount;
-      });
-
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
+      // Legacy implementation:
+      // - Counted only Basic Water Energy by name.
+      // - Used DiscardEnergyPrompt on Active + Bench.
+      // - Moved selected cards manually to discard.
+      // - Set damage as discardedCount * 60.
+      //
+      // Converted to prefab version (DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON).
+      return DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON(
+        store,
+        state,
+        effect,
+        Number.MAX_SAFE_INTEGER,
+        CardType.WATER,
+        0,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 1, max: totalWaterEnergy, allowCancel: false }
-      ), transfers => {
-        if (transfers === null) {
-          return state;
+        transfers => {
+          effect.damage = transfers.length * 60;
         }
-
-        // Move all selected energies to discard
-        transfers.forEach(transfer => {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          source.moveCardTo(transfer.card, player.discard);
-        });
-
-        // Set damage based on number of discarded cards
-        effect.damage = transfers.length * 60;
-        return state;
-      });
+      );
     }
     return state;
   }

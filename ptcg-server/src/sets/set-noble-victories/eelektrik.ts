@@ -1,13 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State,
+  GameError, GameMessage, EnergyCard, SlotType } from '../../game';
+import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
 
 export class Eelektrik extends PokemonCard {
 
@@ -81,26 +80,31 @@ export class Eelektrik extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: true, min: 1, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0) {
-          return;
+      /*
+       * Legacy pre-prefab implementation:
+       * - used AttachEnergyPrompt directly from discard to bench
+       * - manually resolved transfer targets and moved cards
+       * - set DYNAMOTOR marker only if at least 1 transfer was made
+       */
+      // Converted to prefab version (ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON).
+      state = ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
+        store,
+        state,
+        player,
+        1,
+        CardType.LIGHTNING,
+        {
+          destinationSlots: [SlotType.BENCH],
+          energyFilter: { energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+          min: 1,
+          allowCancel: true,
+          onAttached: transfers => {
+            if (transfers.length > 0) {
+              player.marker.addMarker(this.DYNAMOTOR_MARKER, this);
+            }
+          }
         }
-        player.marker.addMarker(this.DYNAMOTOR_MARKER, this);
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      );
 
       return state;
     }

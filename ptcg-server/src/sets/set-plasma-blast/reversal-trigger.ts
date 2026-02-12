@@ -51,7 +51,7 @@ export class ReversalTrigger extends TrainerCard {
         if (toolOwner.deck.cards.length > 0) {
           SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, toolOwner, this,
             {},
-            { min: 0, max: 1, allowCancel: false }
+            { min: 1, max: 1, allowCancel: false }
           );
         }
       }

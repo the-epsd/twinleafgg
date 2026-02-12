@@ -1,4 +1,4 @@
-import { CobalionNVI, NNVI, RockyHelmetNVI, Terrakion2NVI, Cobalion2NVI, N2NVI, Virizion2NVI } from './other-prints';
+import { CobalionNVI, NNVI, RockyHelmetNVI, Terrakion2NVI, Cobalion2NVI, N2NVI, Virizion2NVI, Victini4NVI } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
@@ -59,6 +59,8 @@ import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
 import { Victini } from './victini';
+import { Victini2 } from './victini-2';
+import { Victini3 } from './victini-3';
 import { Volcarona } from './volcarona';
 import { Xtransceiver } from './xtransceiver';
 import { Yamask } from './yamask';
@@ -154,6 +156,9 @@ export const setNobleVictories: Card[] = [
   new Vanillite(),
   new Vanilluxe(),
   new Victini(),
+  new Victini2(),
+  new Victini3(),
+  new Victini4NVI(),
   new Volcarona(),
   new Xtransceiver(),
   new Yamask(),

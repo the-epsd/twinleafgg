@@ -1,7 +1,7 @@
 import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
 import { COIN_FLIP_PROMPT, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
@@ -48,6 +48,16 @@ export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(
   const healTargetEffect = new HealTargetEffect(effect, damage);
   healTargetEffect.target = player.active;
   state = store.reduceEffect(state, healTargetEffect);
+}
+
+export function KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect
+): State {
+  const knockOutEffect = new KnockOutOpponentEffect(effect, 999);
+  knockOutEffect.target = effect.opponent.active;
+  return store.reduceEffect(state, knockOutEffect);
 }
 
 export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
