@@ -1283,7 +1283,6 @@ export class Board3dInteractionService {
       index: 0,
       texture: this.slotGridTexture
     });
-    stadiumZone.addToScene(scene);
     this.dropZones.push(stadiumZone);
 
     // Update interactive objects cache after creating drop zones
@@ -1312,7 +1311,6 @@ export class Board3dInteractionService {
       index: 0,
       texture: this.slotGridTexture
     });
-    activeZone.addToScene(scene);
     this.dropZones.push(activeZone);
 
     // Supporter zone
@@ -1323,7 +1321,6 @@ export class Board3dInteractionService {
       index: 0,
       texture: this.slotGridTexture
     });
-    supporterZone.addToScene(scene);
     this.dropZones.push(supporterZone);
 
     // Bench zones - use dynamic positioning based on bench size
@@ -1336,7 +1333,6 @@ export class Board3dInteractionService {
         index: i,
         texture: this.slotGridTexture
       });
-      benchZone.addToScene(scene);
       this.dropZones.push(benchZone);
     });
 
@@ -1362,7 +1358,6 @@ export class Board3dInteractionService {
         height: benchHeight,
         texture: this.slotGridTexture
       });
-      generalBenchZone.addToScene(scene);
       this.dropZones.push(generalBenchZone);
     }
 
@@ -1378,7 +1373,6 @@ export class Board3dInteractionService {
       height: 14.0,
       texture: this.slotGridTexture
     });
-    boardZone.addToScene(scene);
     this.dropZones.push(boardZone);
   }
 

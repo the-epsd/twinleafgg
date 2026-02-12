@@ -36,8 +36,8 @@ export class Board3dPrizeService {
     // Get sleeve image path from player (fallback if not on individual prizes)
     const playerSleeveImagePath = (player as any)?.sleeveImagePath;
 
-    // Loop through all 6 prize slots
-    for (let index = 0; index < 6; index++) {
+    // Load all 6 prize slots in parallel
+    const prizePromises = Array.from({ length: 6 }, (_, index) => {
       const prizeId = `${playerPrefix}_prize_${index}`;
       const prize = prizeSlots[index];
 
@@ -56,8 +56,7 @@ export class Board3dPrizeService {
         // Extract sleeve image path from prize CardList, fallback to player-level sleeve
         const sleeveImagePath = (prize as any)?.sleeveImagePath || playerSleeveImagePath;
 
-        // Render the prize card
-        await updateCardCallback(
+        return updateCardCallback(
           prize,
           prizeId,
           gridPosition,
@@ -67,18 +66,20 @@ export class Board3dPrizeService {
           undefined, // No cardTarget for prizes
           1.0, // Normal scale
           sleeveImagePath
-        );
-
-        // Mark prize card for click detection
-        const prizeCardMesh = getCardByIdCallback(prizeId);
-        if (prizeCardMesh) {
-          prizeCardMesh.getGroup().userData.isPrize = true;
-        }
+        ).then(() => {
+          // Mark prize card for click detection
+          const prizeCardMesh = getCardByIdCallback(prizeId);
+          if (prizeCardMesh) {
+            prizeCardMesh.getGroup().userData.isPrize = true;
+          }
+        });
       } else {
-        // Remove empty prize slot
         removeCardCallback(prizeId, scene);
+        return Promise.resolve();
       }
-    }
+    });
+
+    await Promise.all(prizePromises);
   }
 
   /**

@@ -23,7 +23,6 @@ import {
   RepeatWrapping
 } from 'three';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Board3dEdgeGlow } from './board-3d-edge-glow';
 import { Board3dAssetLoaderService } from '../services/board-3d-asset-loader.service';
 import { Board3dStateSyncService } from '../services/board-3d-state-sync.service';
 import { Board3dAnimationService } from '../services/board-3d-animation.service';
@@ -65,7 +64,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   // Board elements
   private boardMesh!: Mesh;
   private boardCenterOverlay!: Mesh;
-  private edgeGlow!: Board3dEdgeGlow;
 
   private animationFrameId: number = 0;
   private needsRender: boolean = true;
@@ -106,7 +104,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.initRenderer();
     this.lightingService.initialize(this.scene);
     this.createBoardAsync();
-    this.createGlowingEdges();
     this.postProcessingService.initialize(this.renderer, this.scene, this.camera, this.canvasRef.nativeElement);
 
     // Initialize wireframe service
@@ -333,27 +330,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.markDirty();
   }
 
-  private createGlowingEdges(): void {
-    this.edgeGlow = new Board3dEdgeGlow(this.scene);
-  }
-
-
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
-
-    // Conditional rendering: only render when needed
-    const hasActiveAnimations = this.animationService.hasActiveAnimations();
-    const isDragging = this.interactionService.getIsDragging();
-    
-    // Render if:
-    // - Scene changed (needsRender flag set)
-    // - Animations are active
-    // - User is dragging
-    // - Camera moved (handled by markDirty on resize)
-    if (this.needsRender || hasActiveAnimations || isDragging) {
-      this.postProcessingService.render();
-      this.needsRender = false; // Reset flag after rendering
-    }
+    this.postProcessingService.render();
+    this.needsRender = false;
   };
 
   private onContainerResize(): void {
@@ -406,11 +386,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   }
 
   private disposeScene(): void {
-    // Dispose edge glow
-    if (this.edgeGlow) {
-      this.edgeGlow.dispose();
-    }
-
     this.scene.traverse((object: any) => {
       if (object.geometry) {
         object.geometry.dispose();

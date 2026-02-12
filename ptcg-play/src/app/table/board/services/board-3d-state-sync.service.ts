@@ -61,6 +61,10 @@ export class Board3dStateSyncService {
     // Clear old cards that no longer match the current player assignments
     this.cleanupOldCards(state, topPlayerToSync, bottomPlayerToSync, scene);
 
+    // Preload textures for visible cards (fire-and-forget for faster display during sync)
+    const preloadUrls = this.collectVisibleCardUrls(bottomPlayerToSync, topPlayerToSync, currentPlayerId, state);
+    this.assetLoader.preloadCardTextures(preloadUrls);
+
     // Sync bottomPlayer
     if (bottomPlayerToSync) {
       // Determine isOwner: true if this is the current client's player
@@ -123,49 +127,48 @@ export class Board3dStateSyncService {
     const playerPrefix = `${position}_${player.id}`;
     const playerType = position === 'topPlayer' ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER;
 
-    // Active Pokemon - 1.5x larger
-    if (player.active && player.active.cards.length > 0) {
-      const sleeveImagePath = this.getSleeveImagePath(player.active, player);
-      await this.updateCard(
-        player.active,
-        `${playerPrefix}_active`,
-        ZONE_POSITIONS[position].active,
-        isOwner,
-        rotation,
-        scene,
-        { player: playerType, slot: SlotType.ACTIVE, index: 0 },
-        1.5,
-        sleeveImagePath
-      );
-    } else {
-      this.removeCard(`${playerPrefix}_active`, scene);
-    }
+    // Active and Supporter - run in parallel (independent zones)
+    const activePromise = player.active && player.active.cards.length > 0
+      ? (() => {
+          const sleeveImagePath = this.getSleeveImagePath(player.active, player);
+          return this.updateCard(
+            player.active!,
+            `${playerPrefix}_active`,
+            ZONE_POSITIONS[position].active,
+            isOwner,
+            rotation,
+            scene,
+            { player: playerType, slot: SlotType.ACTIVE, index: 0 },
+            1.5,
+            sleeveImagePath
+          );
+        })()
+      : Promise.resolve(undefined).then(() => {
+          this.removeCard(`${playerPrefix}_active`, scene);
+        });
 
-    // Supporter card
-    if (player.supporter && player.supporter.cards.length > 0) {
-      await this.updateCard(
-        player.supporter,
-        `${playerPrefix}_supporter`,
-        ZONE_POSITIONS[position].supporter,
-        isOwner,
-        rotation,
-        scene
-      );
-    } else {
-      this.removeCard(`${playerPrefix}_supporter`, scene);
-    }
+    const supporterPromise = player.supporter && player.supporter.cards.length > 0
+      ? this.updateCard(
+          player.supporter,
+          `${playerPrefix}_supporter`,
+          ZONE_POSITIONS[position].supporter,
+          isOwner,
+          rotation,
+          scene
+        )
+      : Promise.resolve(undefined).then(() => {
+          this.removeCard(`${playerPrefix}_supporter`, scene);
+        });
 
-    // Bench Pokemon - normal size
-    // Get dynamic bench positions based on bench size
+    await Promise.all([activePromise, supporterPromise]);
+
+    // Bench Pokemon - load all in parallel
     const benchPositions = getBenchPositions(player.bench.length, playerType);
-
-    for (let i = 0; i < player.bench.length; i++) {
-      const benchCard = player.bench[i];
+    const benchPromises = player.bench.map((benchCard, i) => {
       const cardId = `${playerPrefix}_bench_${i}`;
-
       if (benchCard && benchCard.cards.length > 0) {
         const sleeveImagePath = this.getSleeveImagePath(benchCard, player);
-        await this.updateCard(
+        return this.updateCard(
           benchCard,
           cardId,
           benchPositions[i],
@@ -178,8 +181,10 @@ export class Board3dStateSyncService {
         );
       } else {
         this.removeCard(cardId, scene);
+        return Promise.resolve();
       }
-    }
+    });
+    await Promise.all(benchPromises);
 
     // Deck stack
     if (player.deck && player.deck.cards.length > 0) {
@@ -251,6 +256,58 @@ export class Board3dStateSyncService {
   }
 
   /**
+   * Collect scan URLs for all visible face-up cards (for texture preloading)
+   */
+  private collectVisibleCardUrls(
+    bottomPlayer: Player | undefined,
+    topPlayer: Player | undefined,
+    currentPlayerId: number,
+    state: any
+  ): string[] {
+    const urls: string[] = [];
+    const collectFromCardList = (cardList: CardList, isOwner: boolean) => {
+      if (!cardList || !cardList.cards.length) return;
+      const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
+      if (isFaceDown) return;
+      if (cardList instanceof PokemonCardList) {
+        const main = cardList.getPokemonCard();
+        const mainCard = main?.tags?.includes(CardTag.BREAK)
+          ? cardList.cards.find(c => c.superType === SuperType.POKEMON && !c.tags?.includes(CardTag.BREAK)) || main
+          : main || cardList.cards[0];
+        if (mainCard) {
+          const url = this.cardsBaseService.getScanUrlFromCardList(mainCard, cardList);
+          if (url && url.trim()) urls.push(url);
+        }
+      } else {
+        const url = this.cardsBaseService.getScanUrlFromCardList(cardList.cards[0], cardList);
+        if (url && url.trim()) urls.push(url);
+      }
+    };
+
+    [bottomPlayer, topPlayer].forEach(player => {
+      if (!player) return;
+      const isOwner = player.id === currentPlayerId;
+      if (player.active) collectFromCardList(player.active, isOwner);
+      if (player.supporter) collectFromCardList(player.supporter, isOwner);
+      player.bench?.forEach(bench => collectFromCardList(bench, isOwner));
+      if (player.discard?.cards?.length) {
+        const topCard = player.discard.cards[player.discard.cards.length - 1];
+        const topList = new CardList();
+        topList.cards = [topCard];
+        topList.isPublic = player.discard.isPublic;
+        topList.isSecret = player.discard.isSecret;
+        collectFromCardList(topList, true);
+      }
+      player.prizes?.forEach(prize => collectFromCardList(prize, isOwner));
+    });
+
+    const stadium = state?.players?.find((p: Player) => p.stadium?.cards?.length > 0)?.stadium;
+    if (stadium?.cards?.length) collectFromCardList(stadium, true);
+
+    return urls;
+  }
+
+  /**
    * Extract sleeve image path from CardList with fallback to player's sleeve
    */
   private getSleeveImagePath(cardList: CardList | undefined, player: Player): string | undefined {
@@ -312,28 +369,34 @@ export class Board3dStateSyncService {
       return this.assetLoader.loadCardBack();
     };
 
-    // Validate URL before loading - if empty or invalid, use cardback
-    const loadFrontTexture = async () => {
-      if (isFaceDown) {
-        return loadBackTexture();
-      }
-      if (!scanUrl || !scanUrl.trim()) {
-        console.warn('Empty scanUrl for card:', mainCard?.fullName, 'set:', mainCard?.set, 'setNumber:', mainCard?.setNumber);
-        return loadBackTexture();
-      }
-      try {
-        return await this.assetLoader.loadCardTexture(scanUrl);
-      } catch (error) {
-        console.error('Failed to load card texture:', scanUrl, error);
-        return loadBackTexture();
-      }
-    };
-
-    const [frontTexture, backTexture, maskTexture] = await Promise.all([
-      loadFrontTexture(),
+    // Progressive loading: show card-back immediately, load front texture in background
+    const [backTexture, maskTexture] = await Promise.all([
       loadBackTexture(),
       this.assetLoader.loadCardMaskTexture()
     ]);
+
+    // Use card-back as front placeholder for face-up cards (will swap when loaded)
+    const placeholderFrontTexture = await this.assetLoader.loadCardBack();
+    let frontTexture = placeholderFrontTexture;
+
+    if (isFaceDown) {
+      frontTexture = backTexture;
+    } else {
+      const needsFrontLoad = scanUrl && scanUrl.trim();
+      if (needsFrontLoad) {
+        // Load front texture in background - will swap when ready
+        this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
+          const currentCard = this.cardsMap.get(cardId);
+          if (currentCard && currentCard.getGroup().userData.cardData?.id === mainCard.id) {
+            currentCard.updateTexture(loadedFront, backTexture, maskTexture);
+          }
+        }).catch(() => {
+          // Fallback already shown (card-back)
+        });
+      } else {
+        console.warn('Empty scanUrl for card:', mainCard?.fullName, 'set:', mainCard?.set, 'setNumber:', mainCard?.setNumber);
+      }
+    }
 
     // Check if card already exists
     let cardMesh = this.cardsMap.get(cardId);
