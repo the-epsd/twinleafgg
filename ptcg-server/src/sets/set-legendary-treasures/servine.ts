@@ -37,7 +37,7 @@ export class Servine extends PokemonCard {
   public setNumber: string = 'RC2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Servine';
-  public fullName: string = 'Servine LTR';
+  public fullName: string = 'Servine RC2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leaf Blade

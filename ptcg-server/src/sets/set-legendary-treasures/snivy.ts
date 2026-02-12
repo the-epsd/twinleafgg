@@ -35,7 +35,7 @@ export class Snivy extends PokemonCard {
   public setNumber: string = 'RC1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snivy';
-  public fullName: string = 'Snivy LTR';
+  public fullName: string = 'Snivy RC1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Growth
