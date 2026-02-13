@@ -8,6 +8,11 @@ import { MCharizardEX as MCharizardEXFLF69 } from '../set-flashfire/m-charizard-
 import { MKangaskhanEX as MKangaskhanEXFLF79 } from '../set-flashfire/m-kangaskhan-ex';
 import { Blacksmith as BlacksmithFLF88 } from '../set-flashfire/blacksmith';
 import { PokemonFanClub } from '../set-ultra-prism/pokemon-fan-club';
+import { Druddigon } from '../set-brilliant-stars/druddigon';
+import { CharizardEx } from './charizard-ex';
+import { MagnezoneEx } from './magnezone-ex';
+import { PokemonCenterLady } from './pokemon-center-lady';
+import { MCharizardEX as MCharizardEX107 } from './m-charizard-ex';
 
 export class PokemonFanClubFLF extends PokemonFanClub {
   public set: string = 'FLF';
@@ -67,4 +72,40 @@ export class Blacksmith2FLF extends BlacksmithFLF88 {
   public setNumber = '88a';
   public fullName: string = 'Blacksmith2 FLF';
   public set = 'FLF';
+}
+
+export class DruddigonFLF extends Druddigon {
+  public set: string = 'FLF';
+  public setNumber: string = '70';
+  public fullName: string = 'Druddigon FLF';
+}
+
+export class PokemonFanClubFLF94 extends PokemonFanClubP49 {
+  public set: string = 'FLF';
+  public setNumber: string = '94a';
+  public fullName: string = 'Pokémon Fan Club FLF 94a';
+}
+
+export class CharizardEx3 extends CharizardEx {
+  public set: string = 'FLF';
+  public setNumber: string = '100';
+  public fullName: string = 'Charizard-EX FLF 100';
+}
+
+export class MagnezoneEx2 extends MagnezoneEx {
+  public set: string = 'FLF';
+  public setNumber: string = '101';
+  public fullName: string = 'Magnezone-EX FLF 101';
+}
+
+export class PokemonCenterLady2 extends PokemonCenterLady {
+  public set: string = 'FLF';
+  public setNumber: string = '105';
+  public fullName: string = 'Pokémon Center Lady FLF 105';
+}
+
+export class MCharizardEx3 extends MCharizardEX107 {
+  public set: string = 'FLF';
+  public setNumber: string = '107';
+  public fullName: string = 'M Charizard-EX FLF 107';
 }

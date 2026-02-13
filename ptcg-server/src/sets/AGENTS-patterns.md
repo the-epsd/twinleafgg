@@ -82,7 +82,7 @@ opponent.active.burnDamage = 40;
 | Card Text | Code |
 |-----------|------|
 | "Flip a coin. If heads, this attack does X more damage." | `FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, X)` |
-| "Flip a coin. If tails, this attack does nothing." | `FLIP_A_COIN_IF_TAILS_THIS_ATTACK_DOES_NOTHING(store, state, effect)` |
+| "Flip a coin. If tails, this attack does nothing." | **No prefab exists.** Use manual pattern: `COIN_FLIP_PROMPT(store, state, player, result => { if (!result) { effect.damage = 0; } });` |
 | "Flip a coin. If heads, [effect]." | See pattern below |
 | "Flip X coins. This attack does Y damage for each heads." | See pattern below |
 | "Flip a coin until you get tails. This attack does X damage times/for each heads." | `FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(store, state, effect, X)` |

@@ -335,3 +335,17 @@ Cards like Inkay's "Upside-Down Evolution" that evolve via ability use manual `m
 ### Active-slot verification for abilities that check conditions
 
 If an ability checks the active Pokemon's state (e.g., "if this Pokemon is Confused"), verify that `this` card is actually in the active slot using `StateUtils.findCardList(state, this)`. Otherwise the ability could trigger from the bench based on a different Pokemon's condition.
+
+### "Opponent can't draw at beginning of next turn" pattern
+
+`DrewTopdeckEffect` fires AFTER the card is already moved from deck to hand, so `preventDefault` does nothing. Instead, intercept `BeginTurnEffect` and throw `GameError(GameMessage.BLOCKED_BY_EFFECT)`. The `initNextTurn` function catches the exception and skips the draw while allowing the turn to proceed. Reference: `set-flashfire/luvdisc.ts` (Heart Wink).
+
+### Ability-only sleepFlips modification
+
+When the 2-coin sleep mechanic is part of an ability (e.g., Snorlax's "Stir and Snooze"), do NOT pass `sleepFlips` from the attack's `ADD_SLEEP_TO_PLAYER_ACTIVE` call. The ability's `BetweenTurnsEffect` handler should be the sole source of the `sleepFlips` override — this ensures the mechanic reverts to normal when the ability is blocked. Reference: `set-flashfire/snorlax.ts`.
+
+### Two versions of HEAL_X_DAMAGE_FROM_THIS_POKEMON
+
+Two versions exist with different argument orders — match the import source to the argument order:
+- `prefabs/attack-effects.ts`: `HEAL_X_DAMAGE_FROM_THIS_POKEMON(damage, effect, store, state)`
+- `prefabs/prefabs.ts`: `HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage)`
