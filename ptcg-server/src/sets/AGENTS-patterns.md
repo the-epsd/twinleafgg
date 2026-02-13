@@ -389,12 +389,17 @@ REMOVE_MARKER_AT_END_OF_TURN(effect, this.MY_ABILITY_MARKER, this);
 
 ### During Opponent's Next Turn
 
+Use a CLEAR marker on the opponent's player marker to ensure cleanup fires only at the end of the opponent's turn (not your own):
+
 ```typescript
 public readonly REDUCE_DAMAGE_MARKER = 'REDUCE_DAMAGE_MARKER';
+public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'CLEAR_REDUCE_DAMAGE_MARKER';
 
-// On attack - set marker
+// On attack - set marker on this Pokemon + clear marker on opponent
 if (WAS_ATTACK_USED(effect, 0, this)) {
+  const opponent = StateUtils.getOpponent(state, player);
   player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
+  opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
 }
 
 // Intercept damage
@@ -404,14 +409,18 @@ if (effect instanceof DealDamageEffect) {
   }
 }
 
-// Cleanup
-if (effect instanceof EndTurnEffect) {
+// Cleanup at end of opponent's turn only
+if (effect instanceof EndTurnEffect
+  && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
+  effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
   const opponent = StateUtils.getOpponent(state, effect.player);
-  opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
     cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
   });
 }
 ```
+
+> **WARNING**: Without the CLEAR marker pattern, the effect marker gets cleaned up at the end of YOUR turn (before the opponent even attacks), making the protection useless. Always use the 2-marker pattern for "during your opponent's next turn" effects. Reference: `set-steam-siege/seedot.ts`
 
 ### Prevent All Damage
 
@@ -657,15 +666,19 @@ Reference: `set-ancient-origins/entei.ts` (Burning Roar)
 When card text says "The Defending Pokemon can't retreat during your opponent's next turn":
 
 ```typescript
+import { MarkerConstants } from '../../game/store/prefabs/prefabs';
+
 // In WAS_ATTACK_USED block:
 BLOCK_RETREAT(store, state, effect, this);
 
-// Separate calls (order matters):
-BLOCK_RETREAT_IF_MARKER(effect, this.BLOCK_RETREAT_MARKER, this);
-REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.BLOCK_RETREAT_MARKER, this);
+// Separate calls (order matters) — MUST use MarkerConstants, not a custom marker:
+BLOCK_RETREAT_IF_MARKER(effect, this, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
+REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 ```
 
-All three calls are needed: `BLOCK_RETREAT` sets up the marker, `BLOCK_RETREAT_IF_MARKER` intercepts retreat attempts, and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` cleans up.
+All three calls are needed: `BLOCK_RETREAT` sets `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER` on the defender, `BLOCK_RETREAT_IF_MARKER` intercepts retreat attempts, and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` cleans up.
+
+> **WARNING**: Do NOT use a custom marker string (e.g., `this.BLOCK_RETREAT_MARKER`). `BLOCK_RETREAT()` always sets `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER` internally, so `BLOCK_RETREAT_IF_MARKER` and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` must check the same marker. Using a different marker name is a silent failure — retreat will never be blocked.
 
 ---
 

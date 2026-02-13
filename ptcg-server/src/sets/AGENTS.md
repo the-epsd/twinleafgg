@@ -560,6 +560,28 @@ The `REPLACE_MARKER_AT_END_OF_TURN` prefab checks `effect.player.marker` — mea
 - **"Until end of your next turn"** → Place on `player.marker` (attacker). Transitions at end of attacker's turn, cleans up at end of attacker's next turn.
 - **"Until end of opponent's next turn"** → Place on `player.marker` (attacker), NOT `opponent.marker`. Phase-1 transitions at end of attacker's turn; phase-2 cleans up at end of attacker's next turn (which is after opponent's turn). The blocking checks should inspect both players' markers.
 
+### "During your opponent's next turn" needs 2-marker cleanup pattern
+
+Simple `EndTurnEffect` cleanup fires at the end of EVERY player's turn. For effects that last "during your opponent's next turn", you must use a CLEAR marker on the opponent's player marker so cleanup fires only at the end of the opponent's turn:
+
+```typescript
+// On attack:
+player.active.marker.addMarker(this.EFFECT_MARKER, this);
+opponent.marker.addMarker(this.CLEAR_EFFECT_MARKER, this);  // <-- THIS IS KEY
+
+// Cleanup (fires only at end of opponent's turn):
+if (effect instanceof EndTurnEffect
+  && effect.player.marker.hasMarker(this.CLEAR_EFFECT_MARKER, this)) {
+  effect.player.marker.removeMarker(this.CLEAR_EFFECT_MARKER, this);
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+    cardList.marker.removeMarker(this.EFFECT_MARKER, this);
+  });
+}
+```
+
+Without the CLEAR marker, the effect gets cleaned up at the end of YOUR turn before the opponent can even attack. Reference: `set-steam-siege/seedot.ts`, `set-evolutions/gastly.ts`.
+
 ### On-play-from-hand abilities should NOT have `useWhenInPlay: true`
 
 Abilities that trigger when played from hand (intercepting `PlayPokemonEffect`) should NOT have `useWhenInPlay: true`. Only activated abilities that a player clicks to use should have this flag. This also applies to passive abilities (see existing gotcha above).
