@@ -44,7 +44,6 @@ export class Sudowoodo extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckTableStateEffect) {
-      const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
@@ -59,7 +58,7 @@ export class Sudowoodo extends PokemonCard {
         return state;
       }
 
-      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!IS_ABILITY_BLOCKED(store, state, owner, this)) {
         effect.benchSizes = state.players.map((player, index) => {
           if (player === owner) {
             return effect.benchSizes[index];
