@@ -371,3 +371,22 @@ Only activated abilities (those using `WAS_POWER_USED`) should have `useWhenInPl
 Two versions exist with different argument orders — match the import source to the argument order:
 - `prefabs/attack-effects.ts`: `HEAL_X_DAMAGE_FROM_THIS_POKEMON(damage, effect, store, state)`
 - `prefabs/prefabs.ts`: `HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage)`
+
+### DISCARD_TOP_X_CARDS_FROM_YOUR_DECK sourceEffect convention
+
+The `sourceEffect` parameter should always be `effect` (the full AttackEffect), not `effect.attack` (the Attack object). While both work because the parameter is typed as `any`, passing `effect` is the established codebase convention.
+
+### Programmatic tool attachment (non-standard sources)
+
+When attaching tools to Pokemon programmatically (e.g., from deck, not through normal play), you must manually move the card from `cards` to `tools`:
+```typescript
+source.moveCardTo(tool, target);
+const idx = target.cards.indexOf(tool);
+if (idx !== -1) { target.cards.splice(idx, 1); }
+target.tools.push(tool);
+```
+This mirrors what `play-trainer-effect.ts` does internally. Without the splice, the tool ends up in both arrays.
+
+### "Attach to opponent" tools (Team Flare Hyper Gear)
+
+Tools like Head Ringer and Jamming Net that attach to opponent's Pokemon-EX must intercept `PlayItemEffect` (not `TrainerEffect`) to bypass the normal tool attachment flow which only attaches to your own Pokemon. Reference: `set-phantom-forces/head-ringer-team-flare-hyper-gear.ts`, `set-phantom-forces/jamming-net-team-flare-hyper-gear.ts`.

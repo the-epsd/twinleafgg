@@ -660,6 +660,14 @@ Reference: `set-surging-sparks/energy-search-pro.ts`
 
 ---
 
+## Weakness Type Override
+
+"The Defending Pokemon's Weakness is now [Type] until the end of your next turn."
+
+Uses `CheckPokemonStatsEffect` to intercept and override the weakness array. The `value` field in `{ type, value? }` should preserve the existing weakness amount when present, or default to `undefined` (which means x2 for modern cards). Uses 2-phase marker pattern for "until the end of your next turn." Reference: `set-phantom-forces/pachirisu.ts` (Trick Sticker).
+
+---
+
 ## Unimplementable Effects Convention
 
 When a card effect cannot be implemented with the current engine:
