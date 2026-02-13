@@ -509,3 +509,57 @@ Reference: `set-ancient-origins/unown.ts` (Farewell Letter pattern)
 ### Energy card names must match exactly
 
 Basic energy card names are: `Fire Energy`, `Water Energy`, `Grass Energy`, `Lightning Energy`, `Psychic Energy`, `Fighting Energy`, `Darkness Energy`, `Metal Energy`, `Fairy Energy`. Common mistake: using "Dark Energy" instead of "Darkness Energy".
+
+### `SHUFFLE_CARDS_INTO_DECK` does NOT remove cards from source
+
+The `SHUFFLE_CARDS_INTO_DECK` prefab only adds cards to the deck via `unshift` and shuffles — it does NOT remove them from their source location (discard, hand, etc.). You must remove cards from the source first, or use `moveCardTo` + `SHUFFLE_DECK` instead:
+
+```typescript
+// WRONG: Cards exist in both discard AND deck (duplication bug)
+const cards = player.discard.cards.filter(c => /* ... */);
+SHUFFLE_CARDS_INTO_DECK(store, state, player, cards);
+
+// CORRECT: Move first, then shuffle
+cards.forEach(c => { player.discard.moveCardTo(c, player.deck); });
+return SHUFFLE_DECK(store, state, player);
+```
+
+### `BLOCK_RETREAT` marker must use `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER`
+
+When using the 3-call BLOCK_RETREAT pattern, `BLOCK_RETREAT_IF_MARKER` and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` must use `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER` — the exact marker that `BLOCK_RETREAT()` sets internally. Custom marker names will silently fail to block retreat.
+
+```typescript
+import { MarkerConstants } from '../../game/store/prefabs/prefabs';
+
+// In WAS_ATTACK_USED: set the marker
+BLOCK_RETREAT(player, opponent, effect);
+
+// In CheckRetreatCostEffect: enforce block
+BLOCK_RETREAT_IF_MARKER(effect, this, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
+
+// In EndTurnEffect: clean up
+REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+```
+
+### Tool presence: check `tools[]` not `cards[]`
+
+Tools are stored in `PokemonCardList.tools`, not `PokemonCardList.cards`. To check if a Pokemon has a tool attached:
+
+```typescript
+// CORRECT
+if (target.tools.length > 0) { /* has tool */ }
+
+// WRONG: tools are NOT in cards[]
+if (target.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL)) { /* never finds tools */ }
+```
+
+### `REPLACE_MARKER_AT_END_OF_TURN` only checks `effect.player.marker`
+
+The `REPLACE_MARKER_AT_END_OF_TURN` prefab checks `effect.player.marker` — meaning it only fires during the EndTurnEffect of the player whose marker object holds the marker. Place the phase-1 marker on the correct player:
+
+- **"Until end of your next turn"** → Place on `player.marker` (attacker). Transitions at end of attacker's turn, cleans up at end of attacker's next turn.
+- **"Until end of opponent's next turn"** → Place on `player.marker` (attacker), NOT `opponent.marker`. Phase-1 transitions at end of attacker's turn; phase-2 cleans up at end of attacker's next turn (which is after opponent's turn). The blocking checks should inspect both players' markers.
+
+### On-play-from-hand abilities should NOT have `useWhenInPlay: true`
+
+Abilities that trigger when played from hand (intercepting `PlayPokemonEffect`) should NOT have `useWhenInPlay: true`. Only activated abilities that a player clicks to use should have this flag. This also applies to passive abilities (see existing gotcha above).
