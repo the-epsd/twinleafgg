@@ -467,3 +467,45 @@ On-evolve abilities handled by `JUST_EVOLVED` (which intercepts `EvolveEffect`) 
 ### Mandatory vs optional prompts for public knowledge zones
 
 When card text says "Attach a basic Energy card from your discard pile to this Pokemon" (no "you may" or "up to"), the discard pile is public knowledge — the prompt must use `min: 1, allowCancel: false`. Only use `min: 0, allowCancel: true` when the card text says "you may" or the source zone is private (deck).
+
+### Tool removal to hand/discard: don't manually splice before moveCardTo
+
+When removing a tool from a Pokemon to send it to hand or discard, do NOT manually splice from `tools` before calling `moveCardTo`. The `moveCardTo` method checks `this.cards` first, then falls back to `this.tools`. If you splice the tool out of `tools` first, `moveCardTo` won't find it in either array and the card is lost.
+
+```typescript
+// WRONG: Card is lost — moveCardTo can't find it
+const idx = target.tools.indexOf(tool);
+target.tools.splice(idx, 1);
+target.moveCardTo(tool, player.hand); // Fails silently
+
+// CORRECT: Let moveCardTo handle the removal
+target.moveCardTo(tool, player.hand);
+```
+
+Reference: `set-fates-collide/genesect-ex.ts` (Drive Change)
+
+### `ignoreWeakness`/`ignoreResistance` vs `THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS`
+
+These are different things:
+- **"not affected by Weakness or Resistance"** → Set `effect.ignoreWeakness = true; effect.ignoreResistance = true;`
+- **"not affected by any effects on the Defending Pokemon"** → Use `THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, baseDamage)` which bypasses ALL defensive effects but still applies Weakness/Resistance
+
+Do NOT use `THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS` when the card only says "not affected by Weakness or Resistance".
+
+### Deck placement: `unshift()` = top, `push()` = bottom
+
+In the card list arrays, the beginning (index 0) is the top of the deck:
+- `deck.cards.unshift(card)` or moving to index 0 = **top of deck**
+- `deck.cards.push(card)` = **bottom of deck**
+
+When card text says "put on the bottom of the deck", use `push()`.
+
+### Discard is not KnockOut — no prizes
+
+When card text says "discard the Defending Pokemon and all cards attached to it", this is NOT a KnockOut. Do not use `KnockOutEffect`. Discarding does not award prize cards. Instead, manually move all cards to the discard pile.
+
+Reference: `set-ancient-origins/unown.ts` (Farewell Letter pattern)
+
+### Energy card names must match exactly
+
+Basic energy card names are: `Fire Energy`, `Water Energy`, `Grass Energy`, `Lightning Energy`, `Psychic Energy`, `Fighting Energy`, `Darkness Energy`, `Metal Energy`, `Fairy Energy`. Common mistake: using "Dark Energy" instead of "Darkness Energy".
