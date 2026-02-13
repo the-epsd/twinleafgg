@@ -150,6 +150,12 @@ run_set() {
     fi
   fi
 
+  # Check for rate limit in log output
+  if grep -q "hit your limit\|rate limit\|usage limit" "$log_file" 2>/dev/null; then
+    echo "  Rate limit hit. Stopping — no point retrying."
+    return 2
+  fi
+
   if [[ $exit_code -eq 0 ]]; then
     echo "  Claude session completed successfully."
     return 0
@@ -195,8 +201,16 @@ for set_name in "${SETS[@]}"; do
     set_result "$set_name" "dry-run"
     success=true
   else
+    rate_limited=false
     for attempt in $(seq 1 "$MAX_RETRIES"); do
-      if run_set "$set_name" "$attempt"; then
+      run_set "$set_name" "$attempt"
+      run_rc=$?
+      if [[ $run_rc -eq 2 ]]; then
+        # Rate limited — stop the entire pipeline
+        set_result "$set_name" "rate-limited"
+        rate_limited=true
+        break
+      elif [[ $run_rc -eq 0 ]]; then
         # Check if set is now complete
         if is_set_complete "$set_name"; then
           echo "  Set $set_name: COMPLETE"
@@ -209,6 +223,13 @@ for set_name in "${SETS[@]}"; do
         fi
       fi
     done
+
+    if $rate_limited; then
+      echo ""
+      echo "  Rate limit reached. Stopping pipeline."
+      echo "  Resume later with: ./implement-sets.sh"
+      break
+    fi
   fi
 
   if ! $success; then
