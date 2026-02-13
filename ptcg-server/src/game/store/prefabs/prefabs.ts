@@ -2183,10 +2183,10 @@ export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card)
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(
   store: StoreLike, state: State, player: Player, source: Card,
-  specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1
+  specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1, confusionDamage: number = 30
 ) {
   store.reduceEffect(state, new AddSpecialConditionsPowerEffect(
-    player, source, player.active, specialConditions, poisonDamage, burnDamage, sleepFlips));
+    player, source, player.active, specialConditions, poisonDamage, burnDamage, sleepFlips, confusionDamage));
 }
 
 export function ADD_SLEEP_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, sleepFlips: number = 1) {
@@ -2205,8 +2205,8 @@ export function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, p
   ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.PARALYZED]);
 }
 
-export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card) {
-  ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.CONFUSED]);
+export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, confusionDamage: number = 30) {
+  ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.CONFUSED], 10, 20, 1, confusionDamage);
 }
 
 export interface PreventAndClearSpecialConditionsOptions {
