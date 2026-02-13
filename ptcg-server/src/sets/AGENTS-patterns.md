@@ -642,3 +642,34 @@ store.prompt(state, new ChooseCardsPrompt(
 ```
 
 Reference: `set-surging-sparks/energy-search-pro.ts`
+
+---
+
+## Ability `useWhenInPlay` Convention
+
+**`useWhenInPlay: true`** — ONLY for **activated** abilities that the player clicks to use. These are handled by `WAS_POWER_USED` in `reduceEffect`.
+
+**Omit `useWhenInPlay`** — For **passive** abilities that intercept effects automatically. These trigger via effect interception (e.g., `DealDamageEffect`, `CheckPokemonStatsEffect`, `AttachEnergyEffect`, `PlayPokemonEffect`) and have no player-activated trigger.
+
+| Ability Type | `useWhenInPlay` | Handler Pattern | Examples |
+|-------------|----------------|-----------------|----------|
+| Activated (click to use) | `true` | `WAS_POWER_USED(effect, 0, this)` | Victreebel FFI (Wafting Scent), Gothitelle FFI (Teleport Room) |
+| Passive (auto-triggers) | omit | `effect instanceof DealDamageEffect` etc. | Klefki FFI (Secret Key), Noivern FFI (Echolocation), Eevee FFI (Energy Evolution) |
+
+**Why this matters:** Setting `useWhenInPlay: true` on a passive ability creates a non-functional "use ability" button in the game UI.
+
+---
+
+## Unimplementable Effects Convention
+
+When a card effect cannot be implemented with the current engine:
+- Use `// TODO:` comment (not `// Ref:`) to flag it
+- Explain the limitation clearly
+- Reference other cards with the same limitation
+- Do NOT leave empty `if` blocks or unused imports
+
+Example:
+```typescript
+// TODO: "Treat all opponent coin flips as tails" is not currently implementable in the engine.
+// See also: set-plasma-freeze/cofagrigus-2.ts (same limitation)
+```

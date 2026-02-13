@@ -344,6 +344,28 @@ If an ability checks the active Pokemon's state (e.g., "if this Pokemon is Confu
 
 When the 2-coin sleep mechanic is part of an ability (e.g., Snorlax's "Stir and Snooze"), do NOT pass `sleepFlips` from the attack's `ADD_SLEEP_TO_PLAYER_ACTIVE` call. The ability's `BetweenTurnsEffect` handler should be the sole source of the `sleepFlips` override — this ensures the mechanic reverts to normal when the ability is blocked. Reference: `set-flashfire/snorlax.ts`.
 
+### Activated abilities MUST have IS_ABILITY_BLOCKED check
+
+Every `WAS_POWER_USED` handler (activated abilities) must include an `IS_ABILITY_BLOCKED` check immediately after entering the block. Without this, the ability bypasses Garbodor's Garbotoxin, Silent Lab, etc.
+
+```typescript
+if (WAS_POWER_USED(effect, 0, this)) {
+  const player = effect.player;
+
+  if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
+  // ... rest of ability logic
+}
+```
+
+Note: Passive abilities (effect interception) also need `IS_ABILITY_BLOCKED` but handle it differently — they `return state` instead of throwing.
+
+### Passive abilities should NOT have `useWhenInPlay: true`
+
+Only activated abilities (those using `WAS_POWER_USED`) should have `useWhenInPlay: true`. Passive abilities that intercept effects automatically (DealDamageEffect, CheckPokemonStatsEffect, etc.) should omit this flag. See AGENTS-patterns.md for details.
+
 ### Two versions of HEAL_X_DAMAGE_FROM_THIS_POKEMON
 
 Two versions exist with different argument orders — match the import source to the argument order:

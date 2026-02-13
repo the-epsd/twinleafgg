@@ -5,6 +5,11 @@ import { LucarioEx as LucarioExFFI54 } from '../set-furious-fists/lucario-ex';
 import { Korrina } from './korrina';
 import { Maintenance } from '../set-base-set/maintenance';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { MLucarioEx } from './m-lucario-ex';
+import { DragoniteEx } from './dragonite-ex';
+import { BattleReporter } from './battle-reporter';
+import { FossilResearcher } from './fossil-researcher';
+import { MHeracrossEx } from './m-heracross-ex';
 
 export class KorrinaFFI extends Korrina {
   public set: string = 'FFI';
@@ -48,4 +53,58 @@ export class LucarioEx2FFI extends LucarioExFFI54 {
   public setNumber = '107';
   public fullName: string = 'Lucario EX2 FFI';
   public set = 'FFI';
+}
+
+export class MLucarioEx2 extends MLucarioEx {
+  public set: string = 'FFI';
+  public setNumber: string = '55a';
+  public fullName: string = 'M Lucario-EX FFI 55a';
+}
+
+export class MaintenanceFFI96 extends Maintenance {
+  public set: string = 'FFI';
+  public setNumber: string = '96';
+  public fullName: string = 'Maintenance FFI';
+}
+
+export class SuperScoopUpFFI100 extends SuperScoopUp {
+  public set: string = 'FFI';
+  public setNumber: string = '100';
+  public fullName: string = 'Super Scoop Up FFI';
+}
+
+export class DragoniteEx2 extends DragoniteEx {
+  public set: string = 'FFI';
+  public setNumber: string = '108';
+  public fullName: string = 'Dragonite-EX FFI 108';
+}
+
+export class BattleReporter2 extends BattleReporter {
+  public set: string = 'FFI';
+  public setNumber: string = '109';
+  public fullName: string = 'Battle Reporter FFI 109';
+}
+
+export class FossilResearcher2 extends FossilResearcher {
+  public set: string = 'FFI';
+  public setNumber: string = '110';
+  public fullName: string = 'Fossil Researcher FFI 110';
+}
+
+export class Korrina2 extends Korrina {
+  public set: string = 'FFI';
+  public setNumber: string = '111';
+  public fullName: string = 'Korrina FFI 111';
+}
+
+export class MHeracrossEx2 extends MHeracrossEx {
+  public set: string = 'FFI';
+  public setNumber: string = '112';
+  public fullName: string = 'M Heracross-EX FFI 112';
+}
+
+export class MLucarioEx3 extends MLucarioEx {
+  public set: string = 'FFI';
+  public setNumber: string = '113';
+  public fullName: string = 'M Lucario-EX FFI 113';
 }
