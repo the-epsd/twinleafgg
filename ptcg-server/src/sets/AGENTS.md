@@ -283,3 +283,55 @@ Read these files in this directory (`ptcg-server/src/sets/`) for in-depth docume
 | **CLAUDE-enums.md** | You need CardTag, GameMessage, SpecialCondition, or other enum values |
 | **CLAUDE-examples.md** | You want complete working card implementations to reference |
 | **CLAUDE.md** | General card development overview and gotchas |
+
+---
+
+## Gotchas & Learnings
+
+### "Until the end of your next turn" requires 2-phase marker cleanup
+
+Single-marker patterns only persist through the opponent's turn. To persist through the attacker's NEXT turn, you need the 2-phase pattern:
+
+```typescript
+public readonly EFFECT_TURN1_MARKER = 'EFFECT_TURN1_MARKER';
+public readonly CLEAR_EFFECT_MARKER = 'CLEAR_EFFECT_MARKER';
+
+// On attack: add phase-1 marker
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  player.marker.addMarker(this.EFFECT_TURN1_MARKER, this);
+  // ... apply the effect (e.g., add ability-blocking marker to opponent)
+}
+
+// EndTurnEffect: phase transition
+if (effect instanceof EndTurnEffect) {
+  // Phase 1 → Phase 2 (at end of current turn)
+  REPLACE_MARKER_AT_END_OF_TURN(effect, this.EFFECT_TURN1_MARKER, this.CLEAR_EFFECT_MARKER, this);
+  // Phase 2 → cleanup (at end of next turn)
+  if (effect.player.marker.hasMarker(this.CLEAR_EFFECT_MARKER, this)) {
+    effect.player.marker.removeMarker(this.CLEAR_EFFECT_MARKER, this);
+    // ... remove the applied effect
+  }
+}
+```
+
+Reference: `set-great-encounters/dialga-lv-x.ts`
+
+### ATTACH_ENERGY_PROMPT doesn't support conditional post-attachment logic
+
+When a card says "If you attached Energy in this way, then [do something]", you cannot use the `ATTACH_ENERGY_PROMPT` prefab because it doesn't expose whether attachment actually happened. Inline the `AttachEnergyPrompt` logic and set the flag inside the callback when `transfers.length > 0`.
+
+### IS_ABILITY_BLOCKED is mandatory for ALL ability types
+
+Both activated abilities (`WAS_POWER_USED`) and passive abilities (e.g., `DealDamageEffect` intercepts) MUST check `IS_ABILITY_BLOCKED()` before applying their effect. Missing this check means the ability works even under Silent Lab or Garbodor's Garbotoxin.
+
+### ChooseCardsPrompt `differentTypes` option
+
+When card text says "X different types of basic Energy cards", use `differentTypes: true` in the `ChooseCardsPrompt` options. Reference: `set-surging-sparks/energy-search-pro.ts`.
+
+### Ability-based evolution doesn't dispatch EvolveEffect
+
+Cards like Inkay's "Upside-Down Evolution" that evolve via ability use manual `moveCardTo` + `clearEffects` + `pokemonPlayedTurn`. This means other cards intercepting `EvolveEffect` won't see the evolution. This is the established pattern — see `CLAUDE-effects.md`.
+
+### Active-slot verification for abilities that check conditions
+
+If an ability checks the active Pokemon's state (e.g., "if this Pokemon is Confused"), verify that `this` card is actually in the active slot using `StateUtils.findCardList(state, this)`. Otherwise the ability could trigger from the bench based on a different Pokemon's condition.

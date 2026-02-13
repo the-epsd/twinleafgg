@@ -605,3 +605,40 @@ Pokemon card text has changed over the years. All variations map to the same cod
 ### Key Principle
 
 **Normalize all text variations to the same code pattern.** The prefabs are designed to handle the game mechanics regardless of how the text is worded. When in doubt, search for existing implementations of similar effects.
+
+---
+
+## Retreat Blocking (3-call pattern)
+
+When card text says "The Defending Pokemon can't retreat during your opponent's next turn":
+
+```typescript
+// In WAS_ATTACK_USED block:
+BLOCK_RETREAT(store, state, effect, this);
+
+// Separate calls (order matters):
+BLOCK_RETREAT_IF_MARKER(effect, this.BLOCK_RETREAT_MARKER, this);
+REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.BLOCK_RETREAT_MARKER, this);
+```
+
+All three calls are needed: `BLOCK_RETREAT` sets up the marker, `BLOCK_RETREAT_IF_MARKER` intercepts retreat attempts, and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` cleans up.
+
+---
+
+## "Search your deck for X different types of basic Energy cards"
+
+Use `differentTypes: true` option in `ChooseCardsPrompt`:
+
+```typescript
+store.prompt(state, new ChooseCardsPrompt(
+  player.id,
+  GameMessage.CHOOSE_CARD_TO_HAND,
+  player.deck,
+  { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+  { min: 0, max: 3, allowCancel: false, differentTypes: true }
+), cards => {
+  // ...
+});
+```
+
+Reference: `set-surging-sparks/energy-search-pro.ts`
