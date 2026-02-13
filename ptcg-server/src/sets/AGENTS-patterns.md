@@ -249,9 +249,17 @@ if (effect instanceof EndTurnEffect) {
 | "Discard an Energy attached to this Pokemon." | `DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1)` |
 | "Discard 2 [R] Energy attached to this Pokemon." | `DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, CardType.FIRE)` |
 | "Discard all Energy attached to this Pokemon." | `DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, player.active.getPokemonCard())` |
+| "Discard all [L] Energy attached to this Pokemon." | Manual pattern (see below) |
 
 **Import:** `from '../../game/store/prefabs/costs'` (DISCARD_X_ENERGY_FROM_THIS_POKEMON)
 **Import:** `from '../../game/store/prefabs/prefabs'` (DISCARD_ALL_ENERGY_FROM_POKEMON)
+
+> **WARNING**: `DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON` defaults to `minAmount: 0`, making the discard optional. Do NOT use it for mandatory "Discard all [type] Energy" effects. Use the manual pattern:
+> ```typescript
+> const cards = player.active.cards.filter(c => c instanceof EnergyCard && c.provides.includes(CardType.LIGHTNING));
+> cards.forEach(c => { player.active.moveCardTo(c, player.discard); });
+> ```
+> Reference: `set-primal-clash/manectric.ts`
 
 ### Discarding Energy from Opponent's Pokemon
 

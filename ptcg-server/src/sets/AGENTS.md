@@ -390,3 +390,49 @@ This mirrors what `play-trainer-effect.ts` does internally. Without the splice, 
 ### "Attach to opponent" tools (Team Flare Hyper Gear)
 
 Tools like Head Ringer and Jamming Net that attach to opponent's Pokemon-EX must intercept `PlayItemEffect` (not `TrainerEffect`) to bypass the normal tool attachment flow which only attaches to your own Pokemon. Reference: `set-phantom-forces/head-ringer-team-flare-hyper-gear.ts`, `set-phantom-forces/jamming-net-team-flare-hyper-gear.ts`.
+
+### `DISCARD_UP_TO_X_TYPE_ENERGY` is for OPTIONAL discards only
+
+`DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON` defaults to `minAmount: 0`, making the discard optional. When card text says "Discard all [type] Energy attached to this Pokemon" (mandatory), use a manual pattern that filters and discards without choice:
+
+```typescript
+// "Discard all [L] Energy attached to this Pokemon."
+const cards = player.active.cards.filter(c => c instanceof EnergyCard && c.provides.includes(CardType.LIGHTNING));
+cards.forEach(c => { player.active.moveCardTo(c, player.discard); });
+```
+
+Reference: `set-x-and-y/talonflame.ts`, `set-primal-clash/manectric.ts`
+
+### "If the Defending Pokemon is damaged, it is Knocked Out" pattern
+
+Use `CheckHpEffect` to get the target's HP, then set `effect.damage = checkHp.hp` in a `DealDamageEffect` handler. Do NOT directly mutate `effect.target.damage` during effect handling — that corrupts the engine's damage tracking.
+
+```typescript
+if (effect instanceof DealDamageEffect && effect.damage > 0
+  && effect.target.marker.hasMarker(this.KO_MARKER, this)) {
+  const checkHp = new CheckHpEffect(effect.player, effect.target);
+  store.reduceEffect(state, checkHp);
+  effect.damage = checkHp.hp;
+}
+```
+
+Reference: `set-primal-clash/beedrill.ts` (Allergic Shock)
+
+### Moving tools between Pokemon
+
+Tools live in a separate `tools` array, not `cards`. When moving a tool from one Pokemon to another, you must splice from `source.tools`, use `moveCardTo`, then splice from `dest.cards` and push to `dest.tools`:
+
+```typescript
+const toolIdx = source.tools.indexOf(tool);
+if (toolIdx !== -1) { source.tools.splice(toolIdx, 1); }
+source.moveCardTo(tool, dest);
+const cardIdx = dest.cards.indexOf(tool);
+if (cardIdx !== -1) { dest.cards.splice(cardIdx, 1); }
+dest.tools.push(tool);
+```
+
+Reference: `set-primal-clash/mr-mime.ts` (Trick)
+
+### Never use `(c as any)` to bypass TypeScript types
+
+Always import the correct type (e.g., `EnergyCard`, `PokemonCard`, `TrainerCard`) instead of using `as any` casts. If you need to check `energyType`, import `EnergyCard` and use `c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL`.
