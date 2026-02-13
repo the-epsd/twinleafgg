@@ -34,10 +34,7 @@ export class Victini2 extends PokemonCard {
   public fullName: string = 'Victini NVI 14';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Victory Star
-    // Note: Victory Star requires deep game engine integration to intercept and re-flip
-    // attack coin flips. This ability is not currently implementable with the existing
-    // effect system and would require engine-level changes to support.
+    // TODO: Implement Victory Star once coin-flip sequence rerolls are supported cleanly via CoinFlipEffect.
 
     // Attack: Stored Power
     if (WAS_ATTACK_USED(effect, 0, this)) {

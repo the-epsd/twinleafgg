@@ -73,6 +73,7 @@ import { Samurott2 } from '../set-black-and-white/samurott2';
 import { Duosion as DuosionNVI } from '../set-noble-victories/duosion';
 import { Solosis as SolosisNVI } from '../set-noble-victories/solosis';
 import { Torchic2 } from '../set-dark-explorers/torchic-2';
+import { Victini2 as Victini2NVI } from '../set-noble-victories/victini-2';
 
 export class EnergySwitchLTR extends EnergySwitch {
   public setNumber = '112';
@@ -533,4 +534,10 @@ export class TorchicLTR extends Torchic2 {
   public set: string = 'LTR';
   public setNumber: string = 'RC5';
   public fullName: string = 'Torchic LTR';
+}
+
+export class VictiniLTR extends Victini2NVI {
+  public set: string = 'LTR';
+  public setNumber: string = '23';
+  public fullName: string = 'Victini LTR';
 }

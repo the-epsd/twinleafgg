@@ -68,7 +68,6 @@ import { Teddiursa } from './teddiursa';
 // Torchic LTR is a reprint of Torchic2 DEX, imported from other-prints
 import { Trubbish } from './trubbish';
 import { Ursaring } from './ursaring';
-import { Victini } from './victini';
 import { Vulpix } from './vulpix';
 import { Woobat } from './woobat';
 import { Xatu } from './xatu';
@@ -154,6 +153,7 @@ import {
   DuosionLTR,
   SolosisLTR,
   TorchicLTR,
+  VictiniLTR,
 } from './other-prints';
 
 export const setLegendaryTreasures: Card[] = [
@@ -228,7 +228,7 @@ export const setLegendaryTreasures: Card[] = [
   new TorchicLTR(),
   new Trubbish(),
   new Ursaring(),
-  new Victini(),
+  new VictiniLTR(),
   new Vulpix(),
   new Woobat(),
   new Xatu(),
