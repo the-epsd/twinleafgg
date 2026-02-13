@@ -20,7 +20,7 @@ export class Petilil extends PokemonCard {
       cost: [G],
       damage: 10,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 10 more damage and heal 10 damage from this Pokemon.'
+      text: 'Flip a coin. If heads, this attack does 10 more damage and heal 10 damage from this Pokémon.'
     }
   ];
 
@@ -37,7 +37,7 @@ export class Petilil extends PokemonCard {
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           (effect as AttackEffect).damage += 10;
-          // Heal 10 damage from this Pokemon
+          // Heal 10 damage from this Pokémon
           const healEffect = new HealEffect(player, player.active, 10);
           store.reduceEffect(state, healEffect);
         }

@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, SlotType, GameError, GameMessage, ChoosePokemonPrompt } from '../../game';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, PlayerType, SlotType, GameError, GameMessage, ChoosePokemonPrompt, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class HolonsMagnemite extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.BASIC;
@@ -36,15 +36,25 @@ export class HolonsMagnemite extends PokemonCard implements EnergyCard {
   public name: string = 'Holon\'s Magnemite';
   public fullName: string = 'Holon\'s Magnemite DS';
 
+  // EnergyCard interface properties
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
-  // EnergyCard interface properties
-  public text: string = '';
+  public text: string = 'This card provides [C] Energy.';
   public isBlocked = false;
   public blendedEnergies: CardType[] = [];
+  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Auto-detect if we've been removed from energies (e.g. discarded, returned to hand)
+    // and reset superType back to POKEMON
+    if (this.superType === SuperType.ENERGY) {
+      const cardList = StateUtils.findCardList(state, this);
+      if (!(cardList instanceof PokemonCardList) || !cardList.energies.cards.includes(this)) {
+        this.superType = SuperType.POKEMON;
+      }
+    }
+
     // The Special Energy Stuff
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
@@ -71,10 +81,11 @@ export class HolonsMagnemite extends PokemonCard implements EnergyCard {
         if (!targets[0].energies.cards.includes(this)) {
           targets[0].energies.cards.push(this);
         }
+        this.superType = SuperType.ENERGY;
       });
     }
 
-    // Provide energy when attached as energy and included in CheckProvidedEnergyEffect
+    // Provide energy when attached as energy
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.energies.cards.includes(this)) {
       effect.energyMap.push({ card: this, provides: this.provides });
     }

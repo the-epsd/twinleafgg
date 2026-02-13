@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, State, StateUtils, StoreLike } from '../../game';
+import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -46,7 +46,7 @@ export class Tympole extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

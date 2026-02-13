@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, EnergyCard, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
@@ -28,6 +28,7 @@ export class ElectrodeGX extends PokemonCard {
     name: 'Extra Energy Bomb',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
+    knocksOutSelf: true,
     text: 'Once during your turn (before your attack), you may attach 5 Energy cards from your discard pile to your Pokémon, except Pokémon-GX or Pokémon-EX, in any way you like. If you do, this Pokémon is Knocked Out.'
   }];
 
@@ -63,7 +64,7 @@ export class ElectrodeGX extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const hasEnergyInHand = player.discard.cards.some(c => {
-        return c instanceof EnergyCard;
+        return c.superType === SuperType.ENERGY;
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -128,7 +129,7 @@ export class ElectrodeGX extends PokemonCard {
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const energyCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard
+          card.superType === SuperType.ENERGY
         ).length;
         totalEnergy += energyCount;
       });

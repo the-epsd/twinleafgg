@@ -102,6 +102,13 @@ export class ConversationComponent implements OnInit, OnChanges {
     });
   }
 
+  public handleEnterKey(event: KeyboardEvent): void {
+    if (!event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage(this.userId, this.text);
+    }
+  }
+
   private observeLastMessage() {
     this.lastMessage$.pipe(
       untilDestroyed(this),
@@ -193,10 +200,18 @@ export class ConversationComponent implements OnInit, OnChanges {
 
   private scrollToBottom(): void {
     try {
-      const scollablePane = this.elementRef.nativeElement
+      const scrollablePane = this.elementRef.nativeElement
         .getElementsByClassName('ptcg-content-container')[0] as HTMLElement;
+      if (!scrollablePane) {
+        return; // Element doesn't exist yet
+      }
       setTimeout(() => {
-        scollablePane.scrollTop = scollablePane.scrollHeight;
+        // Check again inside setTimeout - element might have been removed
+        const pane = this.elementRef.nativeElement
+          .getElementsByClassName('ptcg-content-container')[0] as HTMLElement;
+        if (pane) {
+          pane.scrollTop = pane.scrollHeight;
+        }
       });
     } catch (err) { }
   }

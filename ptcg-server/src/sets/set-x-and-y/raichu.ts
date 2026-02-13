@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -57,7 +57,7 @@ export class Raichu extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const cards = player.active.cards.filter(c => c instanceof EnergyCard);
+      const cards = player.active.cards.filter(c => c.superType === SuperType.ENERGY);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       return store.reduceEffect(state, discardEnergy);

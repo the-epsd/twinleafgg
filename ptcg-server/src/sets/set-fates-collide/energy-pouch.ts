@@ -1,5 +1,5 @@
 import { CardList, EnergyCard, GameLog } from '../../game';
-import { EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
@@ -51,7 +51,7 @@ export class EnergyPouch extends TrainerCard {
       }
 
       const basicEnergy = new CardList();
-      basicEnergy.cards = removedCards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
+      basicEnergy.cards = removedCards.filter(c => c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC);
 
       basicEnergy.cards.forEach(c => {
         store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, {

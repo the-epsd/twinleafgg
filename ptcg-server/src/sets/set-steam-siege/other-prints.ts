@@ -5,6 +5,8 @@ import { MGardevoirEx as MGardevoirExSTS79 } from '../set-steam-siege/mega-garde
 import { PokemonRanger as PokemonRangerSTS104 } from '../set-steam-siege/pokemon-ranger';
 import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
 import { MagearnaEX } from './magearna-ex';
+import { SteelixEx } from './steelix-ex';
+import { MSteelixEx } from './m-steelix-ex';
 
 export class MagearnaEXSTS extends MagearnaEX {
   public set: string = 'STS';
@@ -57,4 +59,22 @@ export class GardevoirEx3STS extends GardevoirExSTS78 {
   public setNumber = '116';
   public fullName: string = 'Gardevoir EX3 STS';
   public set = 'STS';
+}
+
+export class SteelixEx2 extends SteelixEx {
+  public set: string = 'STS';
+  public setNumber: string = '108';
+  public fullName: string = 'Steelix-EX STS 108';
+}
+
+export class MSteelixEx2 extends MSteelixEx {
+  public set: string = 'STS';
+  public setNumber: string = '109';
+  public fullName: string = 'M Steelix-EX STS 109';
+}
+
+export class MagearnaEx2 extends MagearnaEX {
+  public set: string = 'STS';
+  public setNumber: string = '110';
+  public fullName: string = 'Magearna-EX STS 110';
 }

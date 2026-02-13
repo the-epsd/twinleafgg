@@ -18,13 +18,13 @@ export class Eelektross extends PokemonCard {
       name: 'Wild Charge',
       cost: [L, C, C],
       damage: 80,
-      text: 'This Pokemon does 20 damage to itself.'
+      text: 'This Pokémon does 20 damage to itself.'
     },
     {
       name: 'Suction Drain',
       cost: [L, L, C, C],
       damage: 60,
-      text: 'Heal 30 damage from this Pokemon. The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+      text: 'Heal 30 damage from this Pokémon. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     }
   ];
 

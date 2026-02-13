@@ -14,14 +14,13 @@
   </ptcg-card-list-pane>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<div class="dialog-actions">
   <section class="ptcg-card-info-reveal-cards" *ngIf="allowReveal">
     <mat-checkbox color="primary" name="reveal-card" [checked]="!facedown" (change)="facedown = !facedown">
       {{ 'CARDS_REVEAL_CARDS' | translate }}
     </mat-checkbox>
   </section>
   <span class="ptcg-u-spacer"></span>
-  <button mat-raised-button (click)="close()">
-    {{ 'BUTTON_CLOSE' | translate }}
-  </button>
-</mat-dialog-actions>
+  <twinleaf-button [text]="'BUTTON_CLOSE' | translate" (clicked)="close()">
+  </twinleaf-button>
+</div>

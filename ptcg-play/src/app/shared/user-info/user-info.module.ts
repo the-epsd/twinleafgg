@@ -8,6 +8,7 @@ import { AvatarPopupComponent } from './avatar-popup/avatar-popup.component';
 import { BadgeComponent } from './badge/badge.component';
 import { MaterialModule } from '../material.module';
 import { RankComponent } from './rank/rank.component';
+import { TwinleafButtonModule } from '../twinleaf-button/twinleaf-button.module';
 import { UserBarComponent } from './user-bar/user-bar.component';
 import { UserInfoPaneComponent } from './user-info-pane/user-info-pane.component';
 import { UserInfoPopupComponent } from './user-info-popup/user-info-popup.component';
@@ -30,7 +31,8 @@ import { UserInfoPopupComponent } from './user-info-popup/user-info-popup.compon
     CommonModule,
     MaterialModule,
     RouterModule,
-    TranslateModule
+    TranslateModule,
+    TwinleafButtonModule
   ],
   exports: [
     AvatarComponent,

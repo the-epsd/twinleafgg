@@ -6,7 +6,7 @@
   align-items: flex-start;
   justify-content: center;
   min-height: 100vh;
-  background-color: #1c2128;
+  background-color: $bg-primary;
   padding-left: 15%;
   color: white;
   position: relative;
@@ -225,5 +225,28 @@ $duration: 1.4s;
 
   to {
     opacity: 1;
+  }
+}
+
+// Override twinleaf-form styles for Register component
+::ng-deep .register-form-container {
+  .twinleaf-form {
+    .form-field {
+      .input-wrapper {
+        .form-input {
+          border: 1px solid $twinleaf-green !important;
+
+          &:focus {
+            border-color: $twinleaf-green !important;
+            box-shadow: 0 0 0 2px rgba($twinleaf-green, 0.2);
+          }
+
+          &.input-valid,
+          &.input-invalid {
+            border-color: $twinleaf-green !important;
+          }
+        }
+      }
+    }
   }
 }

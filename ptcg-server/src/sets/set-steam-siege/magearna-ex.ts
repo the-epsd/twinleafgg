@@ -3,8 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { ADD_MARKER, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../game/store/prefabs/prefabs';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class MagearnaEX extends PokemonCard {
@@ -36,6 +35,7 @@ export class MagearnaEX extends PokemonCard {
   public fullName: string = 'Magearna-EX STS';
 
   public readonly SOUL_BLASER_MARKER = 'SOUL_BLASER_MARKER';
+  public readonly SOUL_BLASER_CLEAR_MARKER = 'SOUL_BLASER_CLEAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -81,24 +81,15 @@ export class MagearnaEX extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.SOUL_BLASER_MARKER, this, this);
-      ADD_MARKER(this.SOUL_BLASER_MARKER, effect.player, this);
-
-      if (HAS_MARKER(this.SOUL_BLASER_MARKER, this, this)) {
-        effect.damage = 60;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.SOUL_BLASER_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.SOUL_BLASER_MARKER, effect.player, this);
-    }
-
-    if (effect instanceof EndTurnEffect && !HAS_MARKER(this.SOUL_BLASER_MARKER, effect.player, this)) {
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        REMOVE_MARKER(this.SOUL_BLASER_MARKER, effect.player, card);
-      });
-    }
+    // Refs: set-jungle/scyther.ts (Swords Dance), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BASE_DAMAGE)
+    NEXT_TURN_ATTACK_BASE_DAMAGE(effect, {
+      setupAttack: this.attacks[0],
+      boostedAttack: this.attacks[0],
+      source: this,
+      baseDamage: 60,
+      bonusMarker: this.SOUL_BLASER_MARKER,
+      clearMarker: this.SOUL_BLASER_CLEAR_MARKER
+    });
 
     return state;
   }

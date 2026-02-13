@@ -19,13 +19,13 @@ export class Cryogonal2 extends PokemonCard {
       name: 'Icy Wind',
       cost: [W],
       damage: 10,
-      text: 'The Defending Pokemon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.'
     },
     {
       name: 'Ice Chain',
       cost: [W, W, C],
       damage: 50,
-      text: 'Switch the Defending Pokemon with 1 of your opponent\'s Benched Pokemon.'
+      text: 'Switch the Defending Pokémon with 1 of your opponent\'s Benched Pokémon.'
     }
   ];
 
@@ -43,7 +43,7 @@ export class Cryogonal2 extends PokemonCard {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
     }
 
-    // Ice Chain - switch defending Pokemon after attack
+    // Ice Chain - switch defending Pokémon after attack
     if (WAS_ATTACK_USED(effect, 1, this)) {
       this.usedIceChain = true;
     }

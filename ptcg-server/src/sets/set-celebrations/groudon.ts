@@ -1,5 +1,5 @@
-import { CardList, EnergyCard, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardList, State, StoreLike } from '../../game';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -42,7 +42,7 @@ export class Groudon extends PokemonCard {
 
       // Filter for Energy cards
       const energyCount = deckTop.cards.filter(c =>
-        c instanceof EnergyCard
+        c.superType === SuperType.ENERGY
       );
 
       // Move all cards to discard

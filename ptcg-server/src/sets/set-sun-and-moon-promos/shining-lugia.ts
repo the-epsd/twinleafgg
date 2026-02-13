@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
-import { Card, EnergyCard } from '../../game';
+import { Card } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -54,7 +54,7 @@ export class ShiningLugia extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

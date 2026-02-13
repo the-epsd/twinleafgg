@@ -44,17 +44,17 @@ function* useUltraEvolution(next: Function, store: StoreLike, state: State,
 
 export class Axew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType = N;
   public hp: number = 60;
   public weakness = [];
   public resistance = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Ultra Evolution',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
-    text: 'Flip a coin. If heads, search your deck for a Haxorus and put it onto this Axew to evolve it. THen shuffle your deck.'
+    text: 'Flip a coin. If heads, search your deck for a Haxorus and put it onto this Axew to evolve it. Then, shuffle your deck.'
   }];
 
   public regulationMark: string = 'F';

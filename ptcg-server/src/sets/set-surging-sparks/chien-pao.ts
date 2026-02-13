@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, StateUtils, EnergyCard, ChooseEnergyPrompt, Card } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, StateUtils, ChooseEnergyPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -73,7 +73,7 @@ export class ChienPao extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (!player.active.energies.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

@@ -24,11 +24,10 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="close()">
-    {{ 'BUTTON_CLOSE' | translate }}
-  </button>
-  <button mat-raised-button [disabled]="loading || avatars.length === 0" (click)="chooseAvatar()">
-    {{ 'BUTTON_CHOOSE' | translate }}
-  </button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_CLOSE' | translate" color="secondary" (clicked)="close()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_CHOOSE' | translate" [disabled]="loading || avatars.length === 0"
+    (clicked)="chooseAvatar()">
+  </twinleaf-button>
+</div>

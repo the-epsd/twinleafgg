@@ -38,21 +38,21 @@ export class Board3dHandService {
   ): Promise<void> {
     // Prevent concurrent updates
     if (this.isUpdating) {
-      console.log('[Board3dHandService] updateHand skipped - already updating');
       return;
     }
 
     this.isUpdating = true;
 
     try {
-      console.log('[Board3dHandService] updateHand called:', {
-        handSize: hand?.cards?.length,
-        isOwner,
-        hasScene: !!scene,
-        playableCount: playableCardIds?.length ?? 0
-      });
-
       const cards = hand.cards;
+
+      // Preload hand card textures (fire-and-forget for owner's face-up cards)
+      if (isOwner && cards.length > 0) {
+        const urls = cards
+          .map(c => this.cardsBaseService.getScanUrlFromCardList(c, hand))
+          .filter((url): url is string => !!url && !!url.trim());
+        this.assetLoader.preloadCardTextures(urls);
+      }
 
       // Ensure handGroup is in scene before operations
       if (!scene.children.includes(this.handGroup)) {
@@ -60,20 +60,14 @@ export class Board3dHandService {
       }
 
       // Clear old cards (kills animations and properly disposes)
-      console.log('[Board3dHandService] Clearing old hand cards:', this.handCards.size);
       this.clearHand(scene);
 
-      // Create new cards in arc formation
-      console.log('[Board3dHandService] Creating new hand cards in arc formation');
-      for (let i = 0; i < cards.length; i++) {
-        const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
-        await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable);
-      }
-
-      console.log('[Board3dHandService] Hand update completed:', {
-        totalCardsCreated: this.handCards.size,
-        handGroupChildren: this.handGroup.children.length
+      // Create new cards in parallel
+      const cardPromises = cards.map((card, i) => {
+        const isPlayable = isOwner && playableCardIds?.includes(card.id);
+        return this.createHandCard(card, i, cards.length, isOwner, isPlayable, hand);
       });
+      await Promise.all(cardPromises);
     } finally {
       this.isUpdating = false;
     }
@@ -87,22 +81,40 @@ export class Board3dHandService {
     index: number,
     totalCards: number,
     isOwner: boolean,
-    isPlayable?: boolean
+    isPlayable?: boolean,
+    hand?: CardList
   ): Promise<void> {
     // Calculate position in straight line
     const position = this.calculateCardPosition(index, totalCards);
     const rotation = 0; // No rotation - cards face forward
 
-    // Load texture
-    const scanUrl = this.cardsBaseService.getScanUrl(card);
+    // Load texture (checks artworksMap for overrides first, like 2D components do)
+    const scanUrl = this.cardsBaseService.getScanUrlFromCardList(card, hand);
     const isFaceDown = !isOwner;
 
-    const [frontTexture, backTexture] = await Promise.all([
-      isFaceDown
-        ? this.assetLoader.loadCardBack()
-        : this.assetLoader.loadCardTexture(scanUrl),
-      this.assetLoader.loadCardBack()
+    // Progressive loading: show card-back immediately, load front texture in background
+    const [backTexture, maskTexture] = await Promise.all([
+      this.assetLoader.loadCardBack(),
+      this.assetLoader.loadCardMaskTexture()
     ]);
+
+    let frontTexture;
+    if (isFaceDown) {
+      frontTexture = backTexture;
+    } else {
+      frontTexture = await this.assetLoader.loadCardBack();
+      const needsFrontLoad = scanUrl && scanUrl.trim();
+      if (needsFrontLoad) {
+        this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
+          const handCard = this.handCards.get(index);
+          if (handCard && handCard.getGroup().userData.cardData?.id === card.id) {
+            handCard.updateTexture(loadedFront, backTexture, maskTexture);
+          }
+        }).catch(() => {});
+      } else if (!scanUrl || !scanUrl.trim()) {
+        console.warn('Empty scanUrl for hand card:', card?.fullName, 'set:', card?.set, 'setNumber:', card?.setNumber);
+      }
+    }
 
     // Create card mesh with smaller scale
     const cardMesh = new Board3dCard(
@@ -110,7 +122,8 @@ export class Board3dHandService {
       backTexture,
       position,
       rotation,
-      1.1// Smaller size
+      1.1, // Smaller size
+      maskTexture
     );
 
     // Ensure card is completely flat like the deck (no rotation on any axis)

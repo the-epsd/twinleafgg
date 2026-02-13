@@ -20,13 +20,13 @@ export class Jellicent extends PokemonCard {
       name: 'Vengeful Wish',
       cost: [C],
       damage: 0,
-      text: 'If this Pokemon was damaged by an attack during your opponent\'s last turn, this attack does the same amount of damage done to the Defending Pokemon.'
+      text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn, this attack does the same amount of damage done to the Defending Pokémon.'
     },
     {
       name: 'Absorb Life',
       cost: [W, W, C],
       damage: 30,
-      text: 'Heal 30 damage from this Pokemon.'
+      text: 'Heal 30 damage from this Pokémon.'
     }
   ];
 

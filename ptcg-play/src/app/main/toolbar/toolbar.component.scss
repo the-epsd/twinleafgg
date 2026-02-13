@@ -312,6 +312,8 @@
     transition: all 0.3s ease;
     line-height: 1.4;
     min-height: 40px;
+    display: flex;
+    align-items: center;
 
     &:hover {
       background: rgba(68, 144, 88, 0.1);
@@ -546,6 +548,7 @@
 
 // Tablet and Mobile - Layout adjustments
 @media (max-width: 1024px) {
+
   // Ensure right section stays on the right
   .toolbar-right {
     margin-left: auto;

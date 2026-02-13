@@ -3,11 +3,10 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
 import { PowerType, StateUtils } from '../../game';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
-import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 
 export class Hitmonchan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,7 +37,6 @@ export class Hitmonchan extends PokemonCard {
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-  public usedAttack: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -59,36 +57,14 @@ export class Hitmonchan extends PokemonCard {
       }
     }
 
-    // Check if the attack was used
-    if (effect instanceof AttackEffect) {
-      this.usedAttack = true;
-    }
-
-    if (effect instanceof BeginTurnEffect) {
-      if (this.usedAttack) {
-        this.usedAttack = false;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      if (!this.usedAttack) {
-        this.usedAttack = false;
-        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Check marker
-      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-        effect.damage += 60;
-      }
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-    }
+    // Refs: set-boundaries-crossed/watchog.ts (Psych Up), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[0],
+      source: this,
+      bonusDamage: 60,
+      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+    });
 
     return state;
   }

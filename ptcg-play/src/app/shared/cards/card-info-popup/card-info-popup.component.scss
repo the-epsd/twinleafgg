@@ -1,5 +1,15 @@
-@import '../../../../theme/variables.scss';
+@import '../../../../theme/global.scss';
 
 h2 {
   display: flex;
+  color: $text-primary;
+  font-family: 'Urbanist', sans-serif;
+}
+
+mat-dialog-content {
+  color: $text-primary;
+}
+
+.dialog-actions {
+  padding-top: 24px;
 }

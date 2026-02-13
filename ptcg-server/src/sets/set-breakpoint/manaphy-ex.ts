@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, PlayerType, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -63,7 +63,7 @@ export class ManaphyEX extends PokemonCard {
       }
 
       player.active.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.name === 'Water Energy'){
+        if (card.superType === SuperType.ENERGY && card.name === 'Water Energy'){
           effect.cost = [ ];
         }
       });

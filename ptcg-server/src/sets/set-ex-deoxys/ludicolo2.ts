@@ -25,7 +25,7 @@ export class Ludicolo2 extends PokemonCard {
     cost: [C, C, C],
     damage: 40,
     damageCalculation: '+',
-    text: 'Flip a coin for each Water Energy attached to Ludicolo. This attack does 40 damage plus 20 more damage for each heads.'
+    text: 'Flip a coin for each [W] Energy attached to Ludicolo. This attack does 40 damage plus 20 more damage for each heads.'
   }];
 
   public set: string = 'DX';

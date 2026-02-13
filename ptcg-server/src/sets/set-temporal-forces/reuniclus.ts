@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { GameError, GameMessage } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { LOOK_AT_TOP_X_CARDS_AND_BENCH_UP_TO_Y_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Reuniclus extends PokemonCard {
 
@@ -61,45 +61,20 @@ export class Reuniclus extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      // Count Pokemon in top 8 cards and track non-Pokemon positions
-      const blocked: number[] = [];
-      let pokemonCount = 0;
-      player.deck.cards.forEach((c, index) => {
-        if (c instanceof PokemonCard) {
-          pokemonCount += 1;
-        } else {
-          blocked.push(index);
-        }
-      });
-
-      const maxPokemons = Math.min(pokemonCount, openSlots.length);
-      const deckTop = new CardList();
-      MOVE_CARDS(store, state, player.deck, deckTop, { count: 8 });
-
-      return store.prompt(state, new ChooseCardsPrompt(
+      // Legacy implementation:
+      // - Moved top 8 into a temporary CardList.
+      // - Prompted for any number of Pokémon to bench (up to open bench slots).
+      // - Shuffled remaining cards back into deck.
+      //
+      // Converted to prefab version (LOOK_AT_TOP_X_CARDS_AND_BENCH_UP_TO_Y_POKEMON).
+      return LOOK_AT_TOP_X_CARDS_AND_BENCH_UP_TO_Y_POKEMON(
+        store,
+        state,
         player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        deckTop,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: openSlots.length, allowCancel: false, blocked, maxPokemons }
-      ), selectedCards => {
-        const cards = selectedCards || [];
-
-        // Move selected cards to open bench slots
-        cards.forEach((card, index) => {
-          const targetSlot = openSlots[index];
-          MOVE_CARDS(store, state, deckTop, targetSlot, { cards: [card] });
-          targetSlot.pokemonPlayedTurn = state.turn;
-        });
-
-        // Move remaining cards back to deck
-        MOVE_CARDS(store, state, deckTop, player.deck);
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          return state;
-        });
-      });
+        8,
+        openSlots.length,
+        { remainderDestination: 'shuffle' }
+      );
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

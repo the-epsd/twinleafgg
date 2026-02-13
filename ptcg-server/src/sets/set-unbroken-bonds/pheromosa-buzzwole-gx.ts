@@ -2,9 +2,8 @@ import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, GamePhase, PlayerT
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../game/store/prefabs/prefabs';
 
 
 export class PheromosaBuzzwoleGX extends PokemonCard {
@@ -84,22 +83,6 @@ export class PheromosaBuzzwoleGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       this.usedBaseBeastGame = false;
       this.usedEnhancedBeastGame = false;
-
-      const marker = effect.player.marker;
-      if (marker.hasMarker(this.ELEGANT_SOLE_MARKER_2, this)) {
-        effect.damage = 60;
-      }
-      marker.addMarker(this.ELEGANT_SOLE_MARKER, this);
-    }
-
-    // Elegant Sole marker gaming
-    if (effect instanceof EndTurnEffect) {
-      const marker = effect.player.marker;
-      marker.removeMarker(this.ELEGANT_SOLE_MARKER_2, this);
-      if (marker.hasMarker(this.ELEGANT_SOLE_MARKER, this)) {
-        marker.removeMarker(this.ELEGANT_SOLE_MARKER, this);
-        marker.addMarker(this.ELEGANT_SOLE_MARKER_2, this);
-      }
     }
 
     // Beast Game-GX
@@ -153,6 +136,17 @@ export class PheromosaBuzzwoleGX extends PokemonCard {
 
       return state;
     }
+
+    // Elegant Sole
+    // Refs: set-jungle/scyther.ts (Swords Dance), set-steam-siege/magearna-ex.ts (Soul Blaster), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BASE_DAMAGE)
+    NEXT_TURN_ATTACK_BASE_DAMAGE(effect, {
+      setupAttack: this.attacks[1],
+      boostedAttack: this.attacks[1],
+      source: this,
+      baseDamage: 60,
+      bonusMarker: this.ELEGANT_SOLE_MARKER,
+      clearMarker: this.ELEGANT_SOLE_MARKER_2
+    });
 
     return state;
   }

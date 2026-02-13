@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, PowerType, PokemonCardList, EnergyCard, CardTarget } from '../../game';
+import { StoreLike, State, GameMessage, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, PowerType, PokemonCardList, CardTarget } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -74,7 +74,7 @@ export class IronLeavesex extends PokemonCard {
               return;
             }
             blockedTo.push(target);
-            if (cardList.cards.some(c => c instanceof EnergyCard)) {
+            if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
               hasEnergyOnBench = true;
             }
           });

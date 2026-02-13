@@ -25,7 +25,7 @@ export class Scolipede extends PokemonCard {
       cost: [P, P, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon is Poisoned, this attack does 60 more damage.'
+      text: 'If the Defending Pokémon is Poisoned, this attack does 60 more damage.'
     }
   ];
 

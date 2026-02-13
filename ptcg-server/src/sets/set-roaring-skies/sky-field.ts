@@ -30,7 +30,9 @@ export class SkyField extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {
-      effect.benchSizes = [8, 8];
+      effect.benchSizes = state.players.map((player, index) => {
+        return effect.benchSizes[index] === 5 ? 8 : effect.benchSizes[index];
+      });
     }
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

@@ -5,7 +5,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class EnergyRecycleSystem extends TrainerCard {
@@ -25,7 +24,7 @@ export class EnergyRecycleSystem extends TrainerCard {
       const player = effect.player;
       // Find all basic Energy cards in discard
       const basicEnergies = player.discard.cards.filter(
-        c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
       );
       if (basicEnergies.length === 0) {
         // No valid targets

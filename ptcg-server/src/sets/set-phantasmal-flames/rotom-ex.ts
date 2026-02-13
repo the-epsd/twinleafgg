@@ -20,7 +20,7 @@ export class Rotomex extends PokemonCard {
     name: 'Multi Adapter',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Your Pokemon with "Rotom" in their name may have up to 2 Pokemon Tool cards attached to them. (If this Pokemon loses this Ability, discard Pokemon Tools from your Pokemon until only 1 remains.)'
+    text: 'Each of your Pokémon that has "Rotom" in its name may have up to 2 Pokémon Tool cards attached. If this Ability goes away, discard Pokémon Tools from those Pokémon until only 1 remains on each.'
   }];
 
   public attacks = [{

@@ -12,21 +12,15 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 export class GravityMountain extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '177';
-
   public name: string = 'Gravity Mountain';
-
   public fullName: string = 'Gravity Mountain SSP';
 
   public text: string =
-    'The maximum HP of all Stage 2 Pokémon in play is reduced by 30.';
+    'Each Stage 2 Pokémon in play (both yours and your opponent\'s) gets -30 HP. ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

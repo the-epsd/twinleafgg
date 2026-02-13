@@ -2,7 +2,6 @@ import { AttachEnergyPrompt, PlayerType, SlotType } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -36,7 +35,7 @@ export class MarniesPride extends TrainerCard {
 
       const supporterTurn = player.supporterTurn;
 
-      if (!player.discard.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)) {
+      if (!player.discard.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 

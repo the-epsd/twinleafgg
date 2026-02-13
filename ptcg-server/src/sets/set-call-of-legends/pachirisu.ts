@@ -65,9 +65,9 @@ export class Pachirisu extends PokemonCard {
         if (wantToUse) {
 
           const hasEnergyInHand = player.hand.cards.some(c => {
-            return c instanceof EnergyCard
+            return c.superType === SuperType.ENERGY
               && c.energyType === EnergyType.BASIC
-              && c.provides.includes(CardType.LIGHTNING);
+              && (c as EnergyCard).provides.includes(CardType.LIGHTNING);
           });
           if (!hasEnergyInHand) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);

@@ -4,7 +4,7 @@ import { StoreLike, State, GameMessage, StateUtils, ChooseCardsPrompt, SuperType
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Decidueyeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -55,11 +55,11 @@ export class Decidueyeex extends PokemonCard {
     }
 
     // Attack: Discard an Energy from opponent's Active Pokemon
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.cards.length === 0) {
+      if (opponent.active.energies.cards.length === 0) {
         return state;
       }
 

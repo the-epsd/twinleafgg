@@ -1,4 +1,4 @@
-<body style="background-color:#1A202C;">
+<body>
   <ptcg-content [loading]="loading">
     <mat-toolbar-row>
       <h2 translate>DECK_TITLE</h2>
@@ -28,6 +28,10 @@
           <button mat-button class="format-tab" *ngIf="!isFormatHidden('standard_nightly')"
             [class.active]="selectedFormat === 'standard_nightly'" (click)="selectFormat('standard_nightly')">
             {{ 'FORMAT_STANDARD_NIGHTLY' | translate }}
+          </button>
+          <button mat-button class="format-tab" *ngIf="!isFormatHidden('standard_majors')"
+            [class.active]="selectedFormat === 'standard_majors'" (click)="selectFormat('standard_majors')">
+            {{ 'FORMAT_STANDARD_MAJORS' | translate }}
           </button>
           <button mat-button class="format-tab" *ngIf="!isFormatHidden('glc')" [class.active]="selectedFormat === 'glc'"
             (click)="selectFormat('glc')">
@@ -86,6 +90,8 @@
       </div>
 
       <twinleaf-button [text]="'DECK_CREATE' | translate" (clicked)="createDeck()">
+      </twinleaf-button>
+      <twinleaf-button [text]="'DECK_CREATE_FROM_CLIPBOARD' | translate" (clicked)="createDeckFromClipboard()">
       </twinleaf-button>
     </div>
 
@@ -163,6 +169,8 @@
         <p *ngIf="selectedFormat !== 'all'">{{ 'DECK_NO_DECKS_FORMAT' | translate:{format:
           getFormatDisplayName(selectedFormat)} }}</p>
         <twinleaf-button [text]="'DECK_CREATE' | translate" (clicked)="createDeck()">
+        </twinleaf-button>
+        <twinleaf-button [text]="'DECK_CREATE_FROM_CLIPBOARD' | translate" (clicked)="createDeckFromClipboard()">
         </twinleaf-button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/global.scss';
 
 :host {
   display: flex;
@@ -17,7 +18,7 @@
   position: relative;
   min-height: 80px;
   background: #1b202b;
-  border-bottom: 1px solid rgba(69, 144, 88, 0.3);
+  border-bottom: 1px solid rgba($twinleaf-green, 0.3);
 
   .header-content {
     position: relative;
@@ -48,7 +49,7 @@
   .subtitle {
     font-size: 12px;
     font-weight: 600;
-    color: #459058;
+    color: $twinleaf-green;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-family: 'Urbanist', sans-serif;
@@ -102,7 +103,7 @@
 
     ::ng-deep .mat-form-field-wrapper {
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(69, 144, 88, 0.3);
+      border: 1px solid rgba($twinleaf-green, 0.3);
       border-radius: 8px;
       backdrop-filter: blur(10px);
       padding: 1rem;
@@ -162,7 +163,7 @@
 
   .deck-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 2px solid rgba(69, 144, 88, 0.3);
+    border: 2px solid rgba($twinleaf-green, 0.3);
     border-radius: 12px;
     padding: 1rem;
     cursor: pointer;
@@ -180,8 +181,8 @@
     }
 
     &.selected {
-      border-color: #459058;
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+      border-color: $twinleaf-green;
+      background: linear-gradient(135deg, rgba($twinleaf-green, 0.1), rgba($twinleaf-green, 0.05));
       transform: none;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
@@ -230,7 +231,7 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    color: #459058;
+    color: $twinleaf-green;
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -297,7 +298,7 @@
 
     ::ng-deep .mat-form-field-wrapper {
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(69, 144, 88, 0.3);
+      border: 1px solid rgba($twinleaf-green, 0.3);
       border-radius: 8px;
       backdrop-filter: blur(10px);
       padding: 1rem;
@@ -340,7 +341,7 @@
     align-items: center;
     padding: 1rem;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    border: 1px solid rgba($twinleaf-green, 0.3);
     border-radius: 8px;
     backdrop-filter: blur(10px);
 
@@ -367,7 +368,7 @@
   align-items: center;
   padding: 1rem;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(69, 144, 88, 0.3);
+  border: 1px solid rgba($twinleaf-green, 0.3);
   border-radius: 8px;
   backdrop-filter: blur(10px);
 
@@ -402,7 +403,7 @@
 // Dropdown Panel Styling - Match Games Component Menu Style
 ::ng-deep .mat-select-panel {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95));
-  border: 1px solid rgba(69, 144, 88, 0.3);
+  border: 1px solid $twinleaf-green !important;
   border-radius: 12px;
   backdrop-filter: blur(20px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
@@ -424,13 +425,13 @@
 
     &:hover:not(.mat-option-disabled),
     &:focus:not(.mat-option-disabled) {
-      background: rgba(69, 144, 88, 0.1);
-      color: #459058;
+      background: rgba($twinleaf-green, 0.1);
+      color: $twinleaf-green;
     }
 
     &.mat-selected:not(.mat-option-disabled) {
-      background: rgba(69, 144, 88, 0.1);
-      color: #459058;
+      background: rgba($twinleaf-green, 0.1);
+      color: $twinleaf-green;
     }
   }
 }
@@ -442,7 +443,7 @@
   gap: 1rem;
   padding: 1.5rem;
   background: #1b202b;
-  border-top: 1px solid rgba(69, 144, 88, 0.3);
+  border-top: 1px solid rgba($twinleaf-green, 0.3);
   flex-shrink: 0;
 
   .action-button {
@@ -477,14 +478,14 @@
     }
 
     &.confirm-button {
-      background: linear-gradient(135deg, #459058, #3d7a4a);
+      background: linear-gradient(135deg, $twinleaf-green, #3d7a4a);
       color: white;
       border: none;
 
       &:hover:not([disabled]) {
         background: linear-gradient(135deg, #3d7a4a, #2e5a3a);
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(69, 144, 88, 0.3);
+        box-shadow: 0 4px 15px rgba($twinleaf-green, 0.3);
       }
     }
 

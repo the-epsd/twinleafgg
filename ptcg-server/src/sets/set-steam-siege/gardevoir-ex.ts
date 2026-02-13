@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
 import {DISCARD_X_ENERGY_FROM_THIS_POKEMON} from '../../game/store/prefabs/costs';
@@ -41,8 +41,8 @@ export class GardevoirEx extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      const playerActiveEnergy = player.active.cards.filter(card => card instanceof EnergyCard);
-      const opponentActiveEnergy = opponent.active.cards.filter(card => card instanceof EnergyCard);
+      const playerActiveEnergy = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
+      const opponentActiveEnergy = opponent.active.cards.filter(card => card.superType === SuperType.ENERGY);
 
       if (playerActiveEnergy.length === opponentActiveEnergy.length){
         effect.damage += 70;

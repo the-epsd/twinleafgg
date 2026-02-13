@@ -11,6 +11,8 @@ import { SocketService } from '../socket.service';
 @Injectable()
 export class MessageService {
 
+  private isInitialized = false;
+
   constructor(
     private api: ApiService,
     private sessionService: SessionService,
@@ -18,6 +20,12 @@ export class MessageService {
   ) { }
 
   public init() {
+    // Clean up existing listeners if already initialized
+    if (this.isInitialized) {
+      this.cleanup();
+    }
+
+    this.isInitialized = true;
     this.socketService.on('message:received', (
       data: { message: MessageInfo, user: UserInfo }
     ) => this.onMessageReceived(data.message, data.user));
@@ -107,6 +115,15 @@ export class MessageService {
     }
 
     this.setSessionConversations([conversation], [user]);
+  }
+
+  /**
+   * Clean up socket listeners to prevent memory leaks
+   */
+  public cleanup(): void {
+    this.socketService.off('message:received');
+    this.socketService.off('message:read');
+    this.isInitialized = false;
   }
 
 }

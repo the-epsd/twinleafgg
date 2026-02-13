@@ -4,7 +4,6 @@ import {
   PowerType, StoreLike, State, StateUtils, GameMessage,
   PlayerType, SlotType,
   AttachEnergyPrompt,
-  EnergyCard,
   CardTarget,
   DiscardEnergyPrompt
 } from '../../game';
@@ -25,6 +24,7 @@ export class Electrodeex extends PokemonCard {
     name: 'Extra Energy Bomb',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
+    knocksOutSelf: true,
     text: 'Once during your turn (before your attack), you may discard Electrode ex and all the cards attached to it (this counts as Knocking Out Electrode ex). If you do, search your discard pile for 5 Energy cards and attach them to any of your Pokémon (excluding Pokémon-ex) in any way you like. This power can\'t be used if Electrode ex is affected by a Special Condition.'
   }];
 
@@ -89,7 +89,7 @@ export class Electrodeex extends PokemonCard {
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const energyCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard
+          card.superType === SuperType.ENERGY
         ).length;
         totalEnergy += energyCount;
       });

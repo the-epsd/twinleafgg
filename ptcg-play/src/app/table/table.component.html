@@ -3,7 +3,7 @@
 </video> -->
 
 <ptcg-sidebar-container [class.has-sandbox]="showSandboxPanel && gameState && gameState.state && gameState.gameId"
-  [class.sandbox-collapsed]="sandboxSidebarCollapsed">
+  [class.sandbox-collapsed]="sandboxSidebarCollapsed" [class.hide-sidebar-3d]="use3dBoard && webglSupported">
 
   <!-- Sandbox Control Panel (Admin only, Sandbox mode only) - Beside sidebar -->
   <div class="sandbox-sidebar-container" *ngIf="showSandboxPanel && gameState && gameState.state && gameState.gameId">
@@ -18,7 +18,7 @@
   </div>
 
   <!-- Table sidebar -->
-  <ptcg-sidebar>
+  <ptcg-sidebar *ngIf="!use3dBoard || !webglSupported || !has3dBoardAccess">
     <ptcg-table-sidebar [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer"
       [bottomPlayer]="bottomPlayer" (join)="play()">
     </ptcg-table-sidebar>
@@ -35,13 +35,13 @@
       <!-- Table board -->
 
       <!-- Opponent's hand (only in 2D mode) -->
-      <div class="opp-hand" *ngIf="!use3dBoard || !webglSupported">
+      <div class="opp-hand" *ngIf="!use3dBoard || !webglSupported || !has3dBoardAccess">
         <ptcg-hand [player]="topPlayer" [gameState]="gameState" [clientId]="clientId" [isOpponent]="true"
           [isAdmin]="isAdmin" [isTO]="isTO"></ptcg-hand>
       </div>
 
       <!-- 3D/2D Board Toggle -->
-      <button mat-icon-button class="board-toggle" (click)="toggle3dBoard()" *ngIf="webglSupported"
+      <button mat-icon-button class="board-toggle" (click)="toggle3dBoard()" *ngIf="webglSupported && has3dBoardAccess"
         [matTooltip]="use3dBoard ? 'Switch to 2D Board' : 'Switch to 3D Board'">
         <mat-icon>{{ use3dBoard ? '3d_rotation' : 'view_in_ar' }}</mat-icon>
       </button>
@@ -50,9 +50,9 @@
       <ptcg-board-selection-overlay></ptcg-board-selection-overlay>
 
       <!-- Conditional Board Rendering -->
-      <ptcg-board-3d *ngIf="use3dBoard && webglSupported; else board2d" [clientId]="clientId" [gameState]="gameState"
-        [topPlayer]="topPlayer" [bottomPlayer]="bottomPlayer" [bottomPlayerHand]="bottomPlayer?.hand"
-        [topPlayerHand]="topPlayer?.hand">
+      <ptcg-board-3d *ngIf="use3dBoard && webglSupported && has3dBoardAccess; else board2d" [clientId]="clientId"
+        [gameState]="gameState" [topPlayer]="topPlayer" [bottomPlayer]="bottomPlayer"
+        [bottomPlayerHand]="bottomPlayer?.hand" [topPlayerHand]="topPlayer?.hand">
       </ptcg-board-3d>
 
       <ng-template #board2d>
@@ -61,8 +61,8 @@
       </ng-template>
 
       <!-- Player's hand (only in 2D mode) -->
-      <ptcg-hand *ngIf="!use3dBoard || !webglSupported" [clientId]="clientId" [gameState]="gameState"
-        [player]="bottomPlayer" [isAdmin]="isAdmin" [isTO]="isTO"></ptcg-hand>
+      <ptcg-hand *ngIf="!use3dBoard || !webglSupported || !has3dBoardAccess" [clientId]="clientId"
+        [gameState]="gameState" [player]="bottomPlayer" [isAdmin]="isAdmin" [isTO]="isTO"></ptcg-hand>
 
       <!-- <button mat-raised-button color="primary" (click)="undo()" [disabled]="!canUndoBackend"
         style="position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1000;">
@@ -76,6 +76,39 @@
       <!-- Game Over screen -->
       <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">
       </ptcg-game-over>
+
+      <!-- Floating UI Overlays for 3D Board -->
+      <div class="board-3d-overlays" *ngIf="use3dBoard && webglSupported && has3dBoardAccess && gameState">
+        <!-- Opponent info - top-left -->
+        <div class="overlay-opponent-info">
+          <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" [player]="topPlayer"
+            [replayPlayer]="topReplayPlayer" [playerStats]="topPlayerStats" [active]="isTopPlayerActive">
+          </ptcg-player-bar>
+        </div>
+
+        <!-- Player info - bottom-right -->
+        <div class="overlay-player-info">
+          <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" [player]="bottomPlayer"
+            [replayPlayer]="bottomReplayPlayer" [playerStats]="bottomPlayerStats" [active]="isBottomPlayerActive">
+          </ptcg-player-bar>
+        </div>
+
+        <!-- Replay controls - above player actions, right side -->
+        <div class="overlay-replay-controls" *ngIf="gameState?.replay">
+          <ptcg-replay-controls [gameState]="gameState"></ptcg-replay-controls>
+        </div>
+
+        <!-- End turn/leave button - far right, vertically centered -->
+        <div class="overlay-player-actions">
+          <ptcg-player-actions [gameState]="gameState" [clientId]="clientId" (join)="play()">
+          </ptcg-player-actions>
+        </div>
+
+        <!-- Game logs - below replay controls, right side -->
+        <div class="overlay-game-logs">
+          <ptcg-game-logs [gameState]="gameState" [overlayMode]="true"></ptcg-game-logs>
+        </div>
+      </div>
     </div>
   </ptcg-content>
 

@@ -6,6 +6,7 @@ import { Cobalion as CobalionLTR91 } from '../set-legendary-treasures/cobalion';
 import { N as NFCO105 } from '../set-fates-collide/n';
 import { SuperRod } from '../set-paldea-evolved/super-rod';
 import { Virizion } from './virizion';
+import { Victini2 } from './victini-2';
 
 export class SuperRodNVI extends SuperRod {
   public setNumber = '95';
@@ -51,5 +52,11 @@ export class N2NVI extends NFCO105 {
 export class Virizion2NVI extends Virizion {
   public setNumber = '97';
   public fullName: string = 'Virizion NVI 97';
+  public set = 'NVI';
+}
+
+export class Victini4NVI extends Victini2 {
+  public setNumber = '98';
+  public fullName: string = 'Victini NVI 98';
   public set = 'NVI';
 }

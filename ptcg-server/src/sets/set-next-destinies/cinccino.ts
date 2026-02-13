@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT, NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
 
 export class Cinccino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -18,14 +17,14 @@ export class Cinccino extends PokemonCard {
   public powers = [{
     name: 'Smooth Coat',
     powerType: PowerType.ABILITY,
-    text: 'If any damage is done to this Pokemon by attacks, flip a coin. If heads, prevent that damage.'
+    text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
   }];
 
   public attacks = [{
     name: 'Echoed Voice',
     cost: [C, C, C],
     damage: 50,
-    text: 'During your next turn, this Pokemon\'s Echoed Voice attack does 50 more damage (before applying Weakness and Resistance).'
+    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 50 more damage (before applying Weakness and Resistance).'
   }];
 
   public set: string = 'NXD';
@@ -35,6 +34,7 @@ export class Cinccino extends PokemonCard {
   public fullName: string = 'Cinccino NXD';
 
   public readonly ECHOED_VOICE_MARKER = 'ECHOED_VOICE_MARKER';
+  public readonly ECHOED_VOICE_CLEAR_MARKER = 'ECHOED_VOICE_CLEAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Smooth Coat - flip coin to prevent damage
@@ -56,37 +56,15 @@ export class Cinccino extends PokemonCard {
       });
     }
 
-    // Echoed Voice - add bonus damage if marker present and set marker for next turn
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      // Check if marker is present for bonus damage
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this && HAS_MARKER(this.ECHOED_VOICE_MARKER, cardList, this)) {
-          effect.damage += 50;
-        }
-      });
-
-      // Add marker for next turn
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          ADD_MARKER(this.ECHOED_VOICE_MARKER, cardList, this);
-        }
-      });
-    }
-
-    // Remove marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // When opponent's turn ends, remove marker from player's Cinccino
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          REMOVE_MARKER(this.ECHOED_VOICE_MARKER, cardList, this);
-        }
-      });
-    }
+    // Echoed Voice
+    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[0],
+      source: this,
+      bonusDamage: 50,
+      bonusMarker: this.ECHOED_VOICE_MARKER,
+      clearMarker: this.ECHOED_VOICE_CLEAR_MARKER
+    });
 
     return state;
   }

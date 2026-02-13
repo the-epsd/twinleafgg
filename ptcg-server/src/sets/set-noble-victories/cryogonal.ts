@@ -18,14 +18,14 @@ export class Cryogonal extends PokemonCard {
       name: 'Icy Wind',
       cost: [W],
       damage: 10,
-      text: 'The Defending Pokemon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.'
     },
     {
       name: 'Ice Shard',
       cost: [W, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon is a Fighting Pokemon, this attack does 40 more damage.'
+      text: 'If the Defending Pokémon is a Fighting Pokémon, this attack does 40 more damage.'
     }
   ];
 

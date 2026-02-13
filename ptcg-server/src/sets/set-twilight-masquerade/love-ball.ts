@@ -58,21 +58,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class LoveBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'H';
-
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '156';
-
   public name: string = 'Love Ball';
-
   public fullName: string = 'Love Ball TWM';
 
   public text =
-    'Search your deck for a Pokémon with the same name as one of your opponent\'s Pokémon in play, reveal it, and put it into your hand. Then shuffle your deck.';
+    'Search your deck for a Pokémon with the same name as 1 of your opponent\'s Pokémon in play, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

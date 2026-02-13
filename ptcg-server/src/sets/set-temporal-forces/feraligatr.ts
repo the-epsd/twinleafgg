@@ -4,7 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_EFFECT_IF_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_EFFECT_IF_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Feraligatr extends PokemonCard {
@@ -47,9 +47,12 @@ export class Feraligatr extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      if (!player.active.cannotUseAttacksNextTurnPending.includes('Giant Wave')) {
-        player.active.cannotUseAttacksNextTurnPending.push('Giant Wave');
-      }
+
+      // Legacy implementation:
+      // - Pushed "Giant Wave" into cannotUseAttacksNextTurnPending if missing.
+      //
+      // Converted to prefab version (THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN).
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(player, this.attacks[0]);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {

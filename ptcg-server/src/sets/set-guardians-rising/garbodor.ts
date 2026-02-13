@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, Card, SuperType, EnergyCard, CoinFlipPrompt, GameMessage, TrainerCard } from '../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, Card, SuperType, CoinFlipPrompt, GameMessage, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -75,7 +75,7 @@ export class Garbodor extends PokemonCard {
         ), flipResult => {
           if (flipResult) {
             // Defending Pokemon has no energy cards attached
-            if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+            if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
               return state;
             }
             let cards: Card[] = [];

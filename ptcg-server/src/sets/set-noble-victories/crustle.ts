@@ -24,7 +24,7 @@ export class Crustle extends PokemonCard {
     name: 'Reckless Charge',
     cost: [G, C, C],
     damage: 80,
-    text: 'This Pokemon does 10 damage to itself.'
+    text: 'This Pokémon does 10 damage to itself.'
   }];
 
   public set: string = 'NVI';

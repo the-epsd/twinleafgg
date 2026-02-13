@@ -46,6 +46,7 @@ export class Game implements StoreHandler {
   private isPaused: boolean = false;
   private pausedAt: number = 0;
   private userIdToPlayerId: Map<number, number> = new Map();
+  private previousPlayerCount: number = 0;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
     this.id = id;
@@ -120,12 +121,26 @@ export class Game implements StoreHandler {
 
     this.updateIsTimeRunning(state);
 
-    // Only notify clients that are actually in this game
+    // Check if a player was added to the game
+    const playerAdded = state.players.length > this.previousPlayerCount;
+    this.previousPlayerCount = state.players.length;
+
+    // Notify clients that are in this game
     this.clients.forEach(c => {
       if (typeof c.onStateChange === 'function') {
         c.onStateChange(this, state);
       }
     });
+
+    // If a player was added, also notify all clients so that other browser windows
+    // of the same user can receive the game info update and auto-join
+    if (playerAdded) {
+      this.core.emit(c => {
+        if (typeof c.onStateChange === 'function') {
+          c.onStateChange(this, state);
+        }
+      });
+    }
 
     // Clean up all disconnection timeouts if game is finished
     if (state.phase === GamePhase.FINISHED) {
@@ -223,6 +238,11 @@ export class Game implements StoreHandler {
     return this.userIdToPlayerId.get(userId);
   }
 
+  /** Returns user ids of all players in this game (for GameInfo.playerUserIds). */
+  public getPlayerUserIds(): number[] {
+    return Array.from(this.userIdToPlayerId.keys());
+  }
+
   /**
    * Handle player disconnection - preserve state and notify other players
    */
@@ -259,16 +279,21 @@ export class Game implements StoreHandler {
       this.pauseGame();
     }
 
-    // Schedule auto-forfeit timer (15 seconds)
-    // Note: We already checked that state.phase !== FINISHED at the start of this method
+    // Clear any existing timeout for this client before creating a new one
+    // This prevents memory leaks if handlePlayerDisconnection is called multiple times
+    const existingTimeout = this.disconnectionTimeouts.get(client.id);
+    if (existingTimeout) {
+      clearTimeout(existingTimeout);
+    }
+
+    // Schedule auto-forfeit timer (configurable, default 60s)
+    const disconnectForfeitMs = this.core.getReconnectionManager().getCurrentConfig().disconnectForfeitMs ?? 60 * 1000;
     const timeout = setTimeout(() => {
-      // Check if player is still disconnected and game is still active
       if (this.disconnectedPlayers.has(client.id) && this.state.phase !== GamePhase.FINISHED) {
         this.handleReconnectionTimeout(client.id);
       }
-      // Remove timeout reference
       this.disconnectionTimeouts.delete(client.id);
-    }, 15000); // 15 seconds
+    }, disconnectForfeitMs);
 
     this.disconnectionTimeouts.set(client.id, timeout);
 

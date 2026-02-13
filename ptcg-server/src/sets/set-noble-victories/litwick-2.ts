@@ -23,7 +23,7 @@ export class Litwick2 extends PokemonCard {
       name: 'Ambush',
       cost: [P, C],
       damage: 10,
-      text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
 

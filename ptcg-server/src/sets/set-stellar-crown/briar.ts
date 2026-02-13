@@ -6,26 +6,20 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class Briar extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'H';
-
   public set: string = 'SCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '132';
-
   public name: string = 'Briar';
-
   public fullName: string = 'Briar SCR';
 
-  public extraPrizes = false;
-
   public text: string =
-    'You can use this card only if your opponent has exactly 2 Prize cards remaining.' +
-    '' +
-    'During this turn, if your opponent\'s Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.';
+    `You can use this card only if your opponent has exactly 2 Prize cards remaining.
 
+During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.`;
+
+  public extraPrizes = false;
+  
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

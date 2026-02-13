@@ -1,135 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Player, CardList, CardTarget, PlayerType, SlotType, PokemonCardList, CardTag, SuperType, Card, Stage, PokemonCard } from 'ptcg-server';
-import { Vector3, Scene, Group, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Euler, Texture } from 'three';
+import { Vector3, Scene, PerspectiveCamera } from 'three';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
-import { Board3dEnergySprite } from '../board-3d/board-3d-energy-sprite';
-import { Board3dDamageCounter } from '../board-3d/board-3d-damage-counter';
-import { Board3dMarker } from '../board-3d/board-3d-marker';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Board3dAnimationService } from './board-3d-animation.service';
-
-// Zone positions in 3D world space
-// Layout: Stadium shared at center-left, Active near center, Bench behind Active
-const ZONE_POSITIONS = {
-  // Shared stadium position (single slot between both players)
-  stadium: new Vector3(-10, 0.1, 14),
-
-  bottomPlayer: {
-    active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
-    supporter: new Vector3(6, 0.1, 18),   // Beside Active, to the right
-    bench: [
-      new Vector3(-8, 0.1, 24),          // Moved to where Active was (was Z=18)
-      new Vector3(-4, 0.1, 24),
-      new Vector3(0, 0.1, 24),
-      new Vector3(4, 0.1, 24),
-      new Vector3(8, 0.1, 24),
-      new Vector3(12, 0.1, 24),
-      new Vector3(16, 0.1, 24),
-      new Vector3(20, 0.1, 24),
-    ],
-    prizes: new Vector3(-18, 0.1, 20),
-    deck: new Vector3(20, 0.1, 18),
-    discard: new Vector3(20, 0.1, 24),
-    lostZone: new Vector3(-10, 0.1, 18),
-  },
-  topPlayer: {
-    active: new Vector3(0, 0.1, 10),     // Moved closer to center (was Z=-12)
-    supporter: new Vector3(-6, 0.1, 10), // Beside Active, to the left
-    bench: [
-      new Vector3(8, 0.1, 4),          // Moved to where Active was (was Z=-18)
-      new Vector3(4, 0.1, 4),
-      new Vector3(0, 0.1, 4),
-      new Vector3(-4, 0.1, 4),
-      new Vector3(-8, 0.1, 4),
-      new Vector3(-12, 0.1, 4),
-      new Vector3(-16, 0.1, 4),
-      new Vector3(-20, 0.1, 4),
-    ],
-    prizes: new Vector3(20, 0.1, 8),
-    deck: new Vector3(-18, 0.1, 8),
-    discard: new Vector3(-18, 0.1, 4),
-    lostZone: new Vector3(-10, 0.1, 10),
-  }
-};
-
-// Original bench positions (before shift) - used for 8-spot benches
-// These extend further left/right than the current shifted positions
-const ORIGINAL_BENCH_POSITIONS = {
-  bottomPlayer: [
-    new Vector3(-12, 0.1, 22),
-    new Vector3(-8, 0.1, 22),
-    new Vector3(-4, 0.1, 22),
-    new Vector3(0, 0.1, 22),
-    new Vector3(4, 0.1, 22),
-    new Vector3(8, 0.1, 22),
-    new Vector3(12, 0.1, 22),
-    new Vector3(16, 0.1, 22),
-  ],
-  topPlayer: [
-    new Vector3(12, 0.1, -4),
-    new Vector3(8, 0.1, -4),
-    new Vector3(4, 0.1, -4),
-    new Vector3(0, 0.1, -4),
-    new Vector3(-4, 0.1, -4),
-    new Vector3(-8, 0.1, -4),
-    new Vector3(-12, 0.1, -4),
-    new Vector3(-16, 0.1, -4),
-  ]
-};
-
-/**
- * Get bench positions based on bench size
- * - 5 spots: Use current shifted positions (centered, first 5)
- * - 8 spots: Use original positions (extends further left/right)
- */
-function getBenchPositions(benchSize: number, playerType: PlayerType): Vector3[] {
-  if (benchSize === 8) {
-    // Use original positions for 8-spot benches
-    return playerType === PlayerType.BOTTOM_PLAYER
-      ? ORIGINAL_BENCH_POSITIONS.bottomPlayer
-      : ORIGINAL_BENCH_POSITIONS.topPlayer;
-  } else {
-    // Use first 5 positions from current shifted array (centered)
-    const currentPositions = playerType === PlayerType.BOTTOM_PLAYER
-      ? ZONE_POSITIONS.bottomPlayer.bench
-      : ZONE_POSITIONS.topPlayer.bench;
-    return currentPositions.slice(0, benchSize);
-  }
-}
-
-// Card overlay data for tracking energies, damage, markers per card
-interface CardOverlays {
-  energySprite: Board3dEnergySprite;
-  damageCounter: Board3dDamageCounter;
-  marker: Board3dMarker;
-  breakCard?: Board3dCard;
-  toolCards: Board3dCard[];
-}
+import { Board3dCardOverlayService } from './board-3d-card-overlay.service';
+import { Board3dStackService, UpdateCardCallback, GetCardByIdCallback } from './board-3d-stack.service';
+import { Board3dPrizeService, RemoveCardCallback } from './board-3d-prize.service';
+import { ZONE_POSITIONS, getBenchPositions } from '../board-3d/board-3d-zone-positions';
 
 @Injectable()
 export class Board3dStateSyncService {
   private cardsMap: Map<string, Board3dCard> = new Map();
-  private cardOverlays: Map<string, CardOverlays> = new Map();
-  private deckStacks: Map<string, InstancedMesh> = new Map();
-  private discardStacks: Map<string, InstancedMesh> = new Map();
-  private energyTextureCache: Map<string, Texture> = new Map();
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
     private cardsBaseService: CardsBaseService,
-    private animationService: Board3dAnimationService
+    private animationService: Board3dAnimationService,
+    private overlayService: Board3dCardOverlayService,
+    private stackService: Board3dStackService,
+    private prizeService: Board3dPrizeService
   ) { }
 
   /**
    * Synchronize the entire game state to the 3D scene
+   * @param topPlayer Optional: When provided (e.g., in replay/spectator mode with switchSide), use this player directly for top position
+   * @param bottomPlayer Optional: When provided (e.g., in replay/spectator mode with switchSide), use this player directly for bottom position
    */
   async syncState(
     gameState: LocalGameState,
     scene: Scene,
-    currentPlayerId: number
+    currentPlayerId: number,
+    topPlayer?: Player,
+    bottomPlayer?: Player
   ): Promise<void> {
     if (!gameState || !gameState.state) {
       return;
@@ -137,35 +43,55 @@ export class Board3dStateSyncService {
 
     const state = gameState.state;
 
-    // Clear old cards that no longer exist
-    this.cleanupOldCards(state);
+    // Use provided players if available (for replay/spectator mode with switchSide)
+    // Otherwise, look up players by ID (normal gameplay)
+    let bottomPlayerToSync: Player | undefined;
+    let topPlayerToSync: Player | undefined;
 
-    // Determine which player is the current client and which is the opponent
-    const currentClientPlayer = state.players.find(p => p.id === currentPlayerId);
-    const opponentPlayer = state.players.find(p => p.id !== currentPlayerId);
+    if (topPlayer && bottomPlayer) {
+      // Use provided players directly (already swapped if switchSide is true)
+      bottomPlayerToSync = bottomPlayer;
+      topPlayerToSync = topPlayer;
+    } else {
+      // Fall back to ID lookup (normal gameplay)
+      bottomPlayerToSync = state.players.find(p => p.id === currentPlayerId);
+      topPlayerToSync = state.players.find(p => p.id !== currentPlayerId);
+    }
 
-    // Sync current client as bottomPlayer (their own view)
-    if (currentClientPlayer) {
+    // Clear old cards that no longer match the current player assignments
+    this.cleanupOldCards(state, topPlayerToSync, bottomPlayerToSync, scene);
+
+    // Preload textures for visible cards (fire-and-forget for faster display during sync)
+    const preloadUrls = this.collectVisibleCardUrls(bottomPlayerToSync, topPlayerToSync, currentPlayerId, state);
+    this.assetLoader.preloadCardTextures(preloadUrls);
+
+    // Sync bottomPlayer
+    if (bottomPlayerToSync) {
+      // Determine isOwner: true if this is the current client's player
+      const isOwner = bottomPlayerToSync.id === currentPlayerId;
       await this.syncPlayer(
-        currentClientPlayer,
+        bottomPlayerToSync,
         'bottomPlayer',
-        true, // isOwner is always true for current client
+        isOwner,
         scene
       );
     }
 
-    // Sync opponent as topPlayer
-    if (opponentPlayer) {
+    // Sync topPlayer
+    if (topPlayerToSync) {
+      // Determine isOwner: true if this is the current client's player
+      const isOwner = topPlayerToSync.id === currentPlayerId;
       await this.syncPlayer(
-        opponentPlayer,
+        topPlayerToSync,
         'topPlayer',
-        false, // isOwner is always false for opponent
+        isOwner,
         scene
       );
     }
 
     // Sync shared stadium (only once - stadium is shared between both players)
-    const stadium = state.players[0]?.stadium || state.players[1]?.stadium;
+    // Find the stadium CardList that actually has cards (only one player will have cards at a time)
+    const stadium = state.players.find(p => p.stadium.cards.length > 0)?.stadium;
     if (stadium && stadium.cards.length > 0) {
       await this.updateCard(
         stadium,
@@ -175,7 +101,7 @@ export class Board3dStateSyncService {
         0,    // No rotation (horizontal orientation)
         scene,
         undefined, // No cardTarget
-        1.5  // Same scale as Active Pokemon
+        1.0  // Same scale as bench/supporter cards
       );
 
       // Mark stadium card for click detection
@@ -201,49 +127,48 @@ export class Board3dStateSyncService {
     const playerPrefix = `${position}_${player.id}`;
     const playerType = position === 'topPlayer' ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER;
 
-    // Active Pokemon - 1.5x larger
-    if (player.active && player.active.cards.length > 0) {
-      const sleeveImagePath = this.getSleeveImagePath(player.active, player);
-      await this.updateCard(
-        player.active,
-        `${playerPrefix}_active`,
-        ZONE_POSITIONS[position].active,
-        isOwner,
-        rotation,
-        scene,
-        { player: playerType, slot: SlotType.ACTIVE, index: 0 },
-        1.5,
-        sleeveImagePath
-      );
-    } else {
-      this.removeCard(`${playerPrefix}_active`, scene);
-    }
+    // Active and Supporter - run in parallel (independent zones)
+    const activePromise = player.active && player.active.cards.length > 0
+      ? (() => {
+          const sleeveImagePath = this.getSleeveImagePath(player.active, player);
+          return this.updateCard(
+            player.active!,
+            `${playerPrefix}_active`,
+            ZONE_POSITIONS[position].active,
+            isOwner,
+            rotation,
+            scene,
+            { player: playerType, slot: SlotType.ACTIVE, index: 0 },
+            1.5,
+            sleeveImagePath
+          );
+        })()
+      : Promise.resolve(undefined).then(() => {
+          this.removeCard(`${playerPrefix}_active`, scene);
+        });
 
-    // Supporter card
-    if (player.supporter && player.supporter.cards.length > 0) {
-      await this.updateCard(
-        player.supporter,
-        `${playerPrefix}_supporter`,
-        ZONE_POSITIONS[position].supporter,
-        isOwner,
-        rotation,
-        scene
-      );
-    } else {
-      this.removeCard(`${playerPrefix}_supporter`, scene);
-    }
+    const supporterPromise = player.supporter && player.supporter.cards.length > 0
+      ? this.updateCard(
+          player.supporter,
+          `${playerPrefix}_supporter`,
+          ZONE_POSITIONS[position].supporter,
+          isOwner,
+          rotation,
+          scene
+        )
+      : Promise.resolve(undefined).then(() => {
+          this.removeCard(`${playerPrefix}_supporter`, scene);
+        });
 
-    // Bench Pokemon - normal size
-    // Get dynamic bench positions based on bench size
+    await Promise.all([activePromise, supporterPromise]);
+
+    // Bench Pokemon - load all in parallel
     const benchPositions = getBenchPositions(player.bench.length, playerType);
-
-    for (let i = 0; i < player.bench.length; i++) {
-      const benchCard = player.bench[i];
+    const benchPromises = player.bench.map((benchCard, i) => {
       const cardId = `${playerPrefix}_bench_${i}`;
-
       if (benchCard && benchCard.cards.length > 0) {
         const sleeveImagePath = this.getSleeveImagePath(benchCard, player);
-        await this.updateCard(
+        return this.updateCard(
           benchCard,
           cardId,
           benchPositions[i],
@@ -256,58 +181,130 @@ export class Board3dStateSyncService {
         );
       } else {
         this.removeCard(cardId, scene);
+        return Promise.resolve();
       }
-    }
+    });
+    await Promise.all(benchPromises);
 
     // Deck stack
     if (player.deck && player.deck.cards.length > 0) {
-      await this.updateDeckStack(
+      await this.stackService.updateDeckStack(
         `${playerPrefix}_deck`,
         player.deck.cards.length,
         ZONE_POSITIONS[position].deck,
         rotation,
         scene,
         (player.deck as any)?.sleeveImagePath,
-        player.deck
+        player.deck,
+        this.updateCard.bind(this),
+        this.getCardById.bind(this)
       );
     }
 
     // Discard pile (stacked with latest on top)
     if (player.discard && player.discard.cards.length > 0) {
-      await this.updateDiscardStack(
+      await this.stackService.updateDiscardStack(
         player.discard,
         `${playerPrefix}_discard`,
         ZONE_POSITIONS[position].discard,
         rotation,
-        scene
+        scene,
+        this.updateCard.bind(this),
+        this.getCardById.bind(this)
       );
     } else {
       // Remove discard stack and top card
       const discardStackId = `${playerPrefix}_discard`;
-      const oldStack = this.discardStacks.get(discardStackId);
-      if (oldStack) {
-        scene.remove(oldStack);
-        oldStack.geometry.dispose();
-        (oldStack.material as MeshStandardMaterial).dispose();
-        this.discardStacks.delete(discardStackId);
-      }
+      this.stackService.removeStack(discardStackId, scene, false);
       this.removeCard(`${discardStackId}_top`, scene);
     }
 
-    // Stadium is now shared - synced separately in syncState()
+    // Lost Zone (stacked with latest on top)
+    // if (player.lostzone && player.lostzone.cards.length > 0) {
+    //   await this.stackService.updateLostZoneStack(
+    //     player.lostzone,
+    //     `${playerPrefix}_lostzone`,
+    //     ZONE_POSITIONS[position].lostZone,
+    //     rotation,
+    //     scene,
+    //     this.updateCard.bind(this),
+    //     this.getCardById.bind(this),
+    //     this.removeCard.bind(this)
+    //   );
+    // } else {
+    //   // Remove Lost Zone stack and top card
+    //   const lostZoneStackId = `${playerPrefix}_lostzone`;
+    //   this.stackService.removeLostZoneStack(lostZoneStackId, scene);
+    //   this.removeCard(`${lostZoneStackId}_top`, scene);
+    // }
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
-      await this.updatePrizeStack(
+      await this.prizeService.updatePrizes(
         playerPrefix,
         player.prizes,
         ZONE_POSITIONS[position].prizes,
         isOwner,
         rotation,
         scene,
-        player
+        player,
+        this.updateCard.bind(this),
+        this.removeCard.bind(this),
+        this.getCardById.bind(this)
       );
     }
+  }
+
+  /**
+   * Collect scan URLs for all visible face-up cards (for texture preloading)
+   */
+  private collectVisibleCardUrls(
+    bottomPlayer: Player | undefined,
+    topPlayer: Player | undefined,
+    currentPlayerId: number,
+    state: any
+  ): string[] {
+    const urls: string[] = [];
+    const collectFromCardList = (cardList: CardList, isOwner: boolean) => {
+      if (!cardList || !cardList.cards.length) return;
+      const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
+      if (isFaceDown) return;
+      if (cardList instanceof PokemonCardList) {
+        const main = cardList.getPokemonCard();
+        const mainCard = main?.tags?.includes(CardTag.BREAK)
+          ? cardList.cards.find(c => c.superType === SuperType.POKEMON && !c.tags?.includes(CardTag.BREAK)) || main
+          : main || cardList.cards[0];
+        if (mainCard) {
+          const url = this.cardsBaseService.getScanUrlFromCardList(mainCard, cardList);
+          if (url && url.trim()) urls.push(url);
+        }
+      } else {
+        const url = this.cardsBaseService.getScanUrlFromCardList(cardList.cards[0], cardList);
+        if (url && url.trim()) urls.push(url);
+      }
+    };
+
+    [bottomPlayer, topPlayer].forEach(player => {
+      if (!player) return;
+      const isOwner = player.id === currentPlayerId;
+      if (player.active) collectFromCardList(player.active, isOwner);
+      if (player.supporter) collectFromCardList(player.supporter, isOwner);
+      player.bench?.forEach(bench => collectFromCardList(bench, isOwner));
+      if (player.discard?.cards?.length) {
+        const topCard = player.discard.cards[player.discard.cards.length - 1];
+        const topList = new CardList();
+        topList.cards = [topCard];
+        topList.isPublic = player.discard.isPublic;
+        topList.isSecret = player.discard.isSecret;
+        collectFromCardList(topList, true);
+      }
+      player.prizes?.forEach(prize => collectFromCardList(prize, isOwner));
+    });
+
+    const stadium = state?.players?.find((p: Player) => p.stadium?.cards?.length > 0)?.stadium;
+    if (stadium?.cards?.length) collectFromCardList(stadium, true);
+
+    return urls;
   }
 
   /**
@@ -358,8 +355,8 @@ export class Board3dStateSyncService {
     // Determine if card should be face-down (not public or is secret)
     const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
 
-    // Get card scan URL
-    const scanUrl = this.cardsBaseService.getScanUrl(mainCard);
+    // Get card scan URL (checks artworksMap for overrides first, like 2D components do)
+    const scanUrl = this.cardsBaseService.getScanUrlFromCardList(mainCard, cardList);
 
     // Get sleeve URL if sleeve image path is provided
     const sleeveUrl = sleeveImagePath ? this.cardsBaseService.getSleeveUrl(sleeveImagePath) : undefined;
@@ -372,19 +369,41 @@ export class Board3dStateSyncService {
       return this.assetLoader.loadCardBack();
     };
 
-    const [frontTexture, backTexture] = await Promise.all([
-      isFaceDown
-        ? loadBackTexture()
-        : this.assetLoader.loadCardTexture(scanUrl),
-      loadBackTexture()
+    // Progressive loading: show card-back immediately, load front texture in background
+    const [backTexture, maskTexture] = await Promise.all([
+      loadBackTexture(),
+      this.assetLoader.loadCardMaskTexture()
     ]);
+
+    // Use card-back as front placeholder for face-up cards (will swap when loaded)
+    const placeholderFrontTexture = await this.assetLoader.loadCardBack();
+    let frontTexture = placeholderFrontTexture;
+
+    if (isFaceDown) {
+      frontTexture = backTexture;
+    } else {
+      const needsFrontLoad = scanUrl && scanUrl.trim();
+      if (needsFrontLoad) {
+        // Load front texture in background - will swap when ready
+        this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
+          const currentCard = this.cardsMap.get(cardId);
+          if (currentCard && currentCard.getGroup().userData.cardData?.id === mainCard.id) {
+            currentCard.updateTexture(loadedFront, backTexture, maskTexture);
+          }
+        }).catch(() => {
+          // Fallback already shown (card-back)
+        });
+      } else {
+        console.warn('Empty scanUrl for card:', mainCard?.fullName, 'set:', mainCard?.set, 'setNumber:', mainCard?.setNumber);
+      }
+    }
 
     // Check if card already exists
     let cardMesh = this.cardsMap.get(cardId);
 
     if (cardMesh) {
       // Update existing card
-      cardMesh.updateTexture(frontTexture, backTexture);
+      cardMesh.updateTexture(frontTexture, backTexture, maskTexture);
       cardMesh.setPosition(position);
       cardMesh.setRotation(rotation);
       cardMesh.setScale(scale);
@@ -398,7 +417,8 @@ export class Board3dStateSyncService {
         backTexture,
         position,
         rotation,
-        scale
+        scale,
+        maskTexture
       );
 
       cardMesh.getGroup().userData.cardId = cardId;
@@ -411,504 +431,17 @@ export class Board3dStateSyncService {
 
       scene.add(cardMesh.getGroup());
       this.cardsMap.set(cardId, cardMesh);
-
-      // Animate Basic Pokemon played to bench
-      if (cardTarget?.slot === SlotType.BENCH &&
-        mainCard.superType === SuperType.POKEMON &&
-        (mainCard as PokemonCard).stage === Stage.BASIC) {
-        await this.animationService.playBasicAnimation(cardMesh.getGroup());
-      }
     }
 
     // Update overlays for PokemonCardList
     if (cardList instanceof PokemonCardList) {
-      await this.updatePokemonOverlays(cardId, cardList, cardMesh, breakCard, isFaceDown, scene);
+      await this.overlayService.updateOverlays(cardId, cardList, cardMesh, breakCard, isFaceDown, scene);
     } else {
       // Clear any existing overlays for non-Pokemon cards
-      this.clearOverlays(cardId, scene);
+      this.overlayService.clearOverlays(cardId, scene);
     }
   }
 
-  /**
-   * Update overlays for a PokemonCardList (energies, damage, conditions, BREAK, tools)
-   */
-  private async updatePokemonOverlays(
-    cardId: string,
-    cardList: PokemonCardList,
-    cardMesh: Board3dCard,
-    breakCard: Card | undefined,
-    isFaceDown: boolean,
-    scene: Scene
-  ): Promise<void> {
-    // Get or create overlay objects
-    let overlays = this.cardOverlays.get(cardId);
-    if (!overlays) {
-      overlays = {
-        energySprite: new Board3dEnergySprite(),
-        damageCounter: new Board3dDamageCounter(),
-        marker: new Board3dMarker(this.assetLoader),
-        toolCards: []
-      };
-      this.cardOverlays.set(cardId, overlays);
-
-      // Add overlay groups to card group
-      cardMesh.getGroup().add(overlays.energySprite.getGroup());
-      cardMesh.getGroup().add(overlays.damageCounter.getGroup());
-      cardMesh.getGroup().add(overlays.marker.getGroup());
-    }
-
-    // Update energies
-    if (cardList.energies && cardList.energies.cards.length > 0) {
-      await this.updateEnergyOverlay(overlays, cardList.energies.cards);
-    } else {
-      overlays.energySprite.clear();
-    }
-
-    // Update damage counter
-    overlays.damageCounter.updateDamage(cardList.damage);
-
-    // Update special condition markers
-    await overlays.marker.updateConditions(cardList.specialConditions);
-
-    // Update BREAK card overlay
-    await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene);
-
-    // Update tool cards
-    await this.updateToolOverlay(cardId, overlays, cardList.tools, cardMesh, scene);
-  }
-
-  /**
-   * Update energy overlay sprites
-   */
-  private async updateEnergyOverlay(
-    overlays: CardOverlays,
-    energyCards: Card[]
-  ): Promise<void> {
-    // Load energy textures
-    const cardBackTexture = await this.assetLoader.loadCardBack();
-
-    for (const card of energyCards) {
-      const iconPath = Board3dEnergySprite.getEnergyIconPath(card);
-      if (iconPath && !this.energyTextureCache.has(iconPath)) {
-        try {
-          const texture = await this.assetLoader.loadCardTexture(iconPath);
-          this.energyTextureCache.set(iconPath, texture);
-        } catch {
-          // Use card back as fallback
-        }
-      }
-    }
-
-    overlays.energySprite.updateEnergies(energyCards, this.energyTextureCache, cardBackTexture);
-  }
-
-  /**
-   * Update BREAK card overlay
-   */
-  private async updateBreakOverlay(
-    cardId: string,
-    overlays: CardOverlays,
-    mainCardMesh: Board3dCard,
-    breakCard: Card | undefined,
-    isFaceDown: boolean,
-    scene: Scene
-  ): Promise<void> {
-    if (breakCard && !isFaceDown) {
-      const breakScanUrl = this.cardsBaseService.getScanUrl(breakCard);
-      const [breakFrontTexture, breakBackTexture] = await Promise.all([
-        this.assetLoader.loadCardTexture(breakScanUrl),
-        this.assetLoader.loadCardBack()
-      ]);
-
-      if (!overlays.breakCard) {
-        // Create BREAK card overlay
-        overlays.breakCard = new Board3dCard(
-          breakFrontTexture,
-          breakBackTexture,
-          new Vector3(0, 0.05, 0), // Slightly above main card
-          0,
-          1.0
-        );
-        mainCardMesh.getGroup().add(overlays.breakCard.getGroup());
-      } else {
-        overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture);
-      }
-    } else if (overlays.breakCard) {
-      // Remove BREAK card overlay
-      mainCardMesh.getGroup().remove(overlays.breakCard.getGroup());
-      overlays.breakCard.dispose();
-      overlays.breakCard = undefined;
-    }
-  }
-
-  /**
-   * Update tool card overlays
-   */
-  private async updateToolOverlay(
-    cardId: string,
-    overlays: CardOverlays,
-    tools: Card[],
-    mainCardMesh: Board3dCard,
-    scene: Scene
-  ): Promise<void> {
-    // Clear existing tool cards
-    for (const toolCard of overlays.toolCards) {
-      mainCardMesh.getGroup().remove(toolCard.getGroup());
-      toolCard.dispose();
-    }
-    overlays.toolCards = [];
-
-    if (tools.length === 0) {
-      return;
-    }
-
-    // Create new tool card overlays
-    const backTexture = await this.assetLoader.loadCardBack();
-
-    // Custom tool icon mapping (matching 2D board logic)
-    const customToolIcons: { [key: string]: string } = {
-      'Vitality Band': 'assets/tools/vitality-band.png',
-      'Bravery Charm': 'assets/tools/bravery-charm.png',
-    };
-
-    // Base position: left: -5px ≈ -0.2 units, top: 20% ≈ 0.7 units from top
-    const baseX = -0.2; // Left side of card
-    const baseZ = -0.7; // 20% from top (card top is at ~-1.75, so 20% down = -0.7)
-    const verticalSpacing = 0.3; // 15px offset ≈ 0.3 units in 3D space
-
-    for (let i = 0; i < tools.length; i++) {
-      const tool = tools[i];
-
-      // Check for custom tool icon first
-      let toolTexture: Texture;
-      const customIconPath = customToolIcons[tool.name];
-      if (customIconPath) {
-        // Load custom tool icon
-        try {
-          toolTexture = await this.assetLoader.loadToolIconTexture(customIconPath);
-        } catch (error) {
-          // Fall back to card texture if custom icon fails
-          const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-          toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
-        }
-      } else {
-        // Use regular card texture
-        const toolScanUrl = this.cardsBaseService.getScanUrl(tool);
-        toolTexture = await this.assetLoader.loadCardTexture(toolScanUrl);
-      }
-
-      const toolCardMesh = new Board3dCard(
-        toolTexture,
-        backTexture,
-        new Vector3(baseX, 0.02 + (i * 0.01), baseZ + (i * verticalSpacing)), // Left side, stacked vertically
-        0,
-        0.33 // Scale to match 33px width (card is ~2.5 units wide, so 33px ≈ 0.33 units)
-      );
-
-      mainCardMesh.getGroup().add(toolCardMesh.getGroup());
-      overlays.toolCards.push(toolCardMesh);
-    }
-  }
-
-  /**
-   * Clear overlays for a card
-   */
-  private clearOverlays(cardId: string, scene: Scene): void {
-    const overlays = this.cardOverlays.get(cardId);
-    if (overlays) {
-      overlays.energySprite.dispose();
-      overlays.damageCounter.dispose();
-      overlays.marker.dispose();
-      if (overlays.breakCard) {
-        overlays.breakCard.dispose();
-      }
-      for (const toolCard of overlays.toolCards) {
-        toolCard.dispose();
-      }
-      this.cardOverlays.delete(cardId);
-    }
-  }
-
-  /**
-   * Update or create a deck stack using instanced rendering
-   */
-  private async updateDeckStack(
-    stackId: string,
-    cardCount: number,
-    position: Vector3,
-    rotation: number,
-    scene: Scene,
-    sleeveImagePath?: string,
-    deckCardList?: CardList
-  ): Promise<void> {
-    // Remove old stack if it exists
-    const oldStack = this.deckStacks.get(stackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-    }
-
-    // Remove old top card if it exists
-    const oldTopCard = this.cardsMap.get(`${stackId}_top`);
-    if (oldTopCard) {
-      scene.remove(oldTopCard.getGroup());
-      this.cardsMap.delete(`${stackId}_top`);
-    }
-
-    // Load sleeve texture if available, otherwise use cardback
-    let cardBackTexture: Texture;
-    if (sleeveImagePath) {
-      const sleeveUrl = this.cardsBaseService.getSleeveUrl(sleeveImagePath);
-      if (sleeveUrl) {
-        cardBackTexture = await this.assetLoader.loadSleeveTexture(sleeveUrl);
-      } else {
-        cardBackTexture = await this.assetLoader.loadCardBack();
-      }
-    } else {
-      cardBackTexture = await this.assetLoader.loadCardBack();
-    }
-    const geometry = new Board3dCard(
-      cardBackTexture,
-      cardBackTexture,
-      new Vector3(0, 0, 0),
-      rotation,
-      1.0
-    ).getMesh().geometry;
-
-    const count = Math.min(cardCount, 60); // Max 60 instances
-    const instancedMesh = new InstancedMesh(
-      geometry,
-      new MeshStandardMaterial({ map: cardBackTexture }),
-      count
-    );
-
-    // Position and rotate each card in the stack
-    const rotationRad = (rotation * Math.PI) / 180;
-    const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, 0));
-
-    for (let i = 0; i < count; i++) {
-      const matrix = new Matrix4();
-      const pos = new Vector3(
-        position.x,
-        position.y + (i * 0.01), // Stack height
-        position.z
-      );
-      // Compose matrix from position, rotation, and scale
-      matrix.compose(pos, quaternion, new Vector3(1, 1, 1));
-      instancedMesh.setMatrixAt(i, matrix);
-    }
-
-    instancedMesh.instanceMatrix.needsUpdate = true;
-    instancedMesh.castShadow = true;
-
-    scene.add(instancedMesh);
-    this.deckStacks.set(stackId, instancedMesh);
-
-    // Create clickable top card overlay (face-down)
-    if (cardCount > 0 && deckCardList) {
-      const topCardId = `${stackId}_top`;
-      const topCard = deckCardList.cards[deckCardList.cards.length - 1]; // Latest card
-      const topCardList = new CardList();
-      topCardList.cards = [topCard];
-      topCardList.isPublic = deckCardList.isPublic;
-      topCardList.isSecret = deckCardList.isSecret;
-
-      await this.updateCard(
-        topCardList,
-        topCardId,
-        new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
-        false, // Not owner - ensures face-down
-        rotation,
-        scene,
-        undefined, // No cardTarget
-        1.0,
-        sleeveImagePath
-      );
-
-      // Mark top card as deck for click detection
-      const topCardMesh = this.cardsMap.get(topCardId);
-      if (topCardMesh) {
-        topCardMesh.getGroup().userData.isDeck = true;
-        topCardMesh.getGroup().userData.cardList = deckCardList;
-      }
-    }
-  }
-
-  /**
-   * Update or create a discard stack using instanced rendering
-   * Latest card (last in array) is shown on top as a regular clickable card
-   */
-  private async updateDiscardStack(
-    discard: CardList,
-    stackId: string,
-    position: Vector3,
-    rotation: number,
-    scene: Scene
-  ): Promise<void> {
-    // Remove old stack if it exists
-    const oldStack = this.discardStacks.get(stackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-    }
-
-    // Remove old top card if it exists
-    const oldTopCard = this.cardsMap.get(`${stackId}_top`);
-    if (oldTopCard) {
-      scene.remove(oldTopCard.getGroup());
-      this.cardsMap.delete(`${stackId}_top`);
-    }
-
-    const cardCount = discard.cards.length;
-    if (cardCount === 0) {
-      return;
-    }
-
-    // Latest card (last in array) is the top card - render as regular clickable card
-    const topCard = discard.cards[cardCount - 1];
-    const topCardId = `${stackId}_top`;
-
-    // Create top card as regular card for clickability
-    const topCardList = new CardList();
-    topCardList.cards = [topCard];
-    topCardList.isPublic = discard.isPublic;
-    topCardList.isSecret = discard.isSecret;
-
-    await this.updateCard(
-      topCardList,
-      topCardId,
-      new Vector3(position.x, position.y + ((cardCount - 1) * 0.01), position.z),
-      true, // Always visible
-      rotation,
-      scene,
-      undefined, // No cardTarget
-      1.0,
-      undefined // No sleeve for discard
-    );
-
-    // Mark top card as discard for click detection
-    const topCardMesh = this.cardsMap.get(topCardId);
-    if (topCardMesh) {
-      topCardMesh.getGroup().userData.isDiscard = true;
-      topCardMesh.getGroup().userData.cardList = discard;
-    }
-
-    // Remaining cards (if any) as instanced stack underneath
-    if (cardCount > 1) {
-      const remainingCount = cardCount - 1;
-      const cardBackTexture = await this.assetLoader.loadCardBack();
-      const geometry = new Board3dCard(
-        cardBackTexture,
-        cardBackTexture,
-        new Vector3(0, 0, 0),
-        rotation,
-        1.0
-      ).getMesh().geometry;
-
-      const instancedMesh = new InstancedMesh(
-        geometry,
-        new MeshStandardMaterial({ map: cardBackTexture }),
-        Math.min(remainingCount, 60) // Max 60 instances
-      );
-
-      // Position and rotate each card in the stack
-      const rotationRad = (rotation * Math.PI) / 180;
-      const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, 0));
-
-      for (let i = 0; i < remainingCount && i < 60; i++) {
-        const matrix = new Matrix4();
-        const pos = new Vector3(
-          position.x,
-          position.y + (i * 0.01), // Stack height
-          position.z
-        );
-        // Compose matrix from position, rotation, and scale
-        matrix.compose(pos, quaternion, new Vector3(1, 1, 1));
-        instancedMesh.setMatrixAt(i, matrix);
-      }
-
-      instancedMesh.instanceMatrix.needsUpdate = true;
-      instancedMesh.castShadow = true;
-
-      scene.add(instancedMesh);
-      this.discardStacks.set(stackId, instancedMesh);
-    }
-  }
-
-  /**
-   * Update or create prize cards in a 2x3 grid layout
-   */
-  private async updatePrizeStack(
-    playerPrefix: string,
-    prizes: CardList[],
-    basePosition: Vector3,
-    isOwner: boolean,
-    rotation: number,
-    scene: Scene,
-    player: Player
-  ): Promise<void> {
-    // Clean up old prize stack if it exists (from previous stack-based rendering)
-    const oldStackId = `${playerPrefix}_prizes`;
-    const oldStack = this.deckStacks.get(oldStackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-      this.deckStacks.delete(oldStackId);
-    }
-
-    // Ensure we have 6 prize slots
-    const prizeSlots = prizes || [];
-
-    // Get sleeve image path from player (fallback if not on individual prizes)
-    const playerSleeveImagePath = (player as any)?.sleeveImagePath;
-
-    // Loop through all 6 prize slots
-    for (let index = 0; index < 6; index++) {
-      const prizeId = `${playerPrefix}_prize_${index}`;
-      const prize = prizeSlots[index];
-
-      if (prize && prize.cards.length > 0) {
-        // Calculate grid position for this prize (2 columns, 3 rows)
-        const row = Math.floor(index / 2); // 0, 0, 1, 1, 2, 2
-        const col = index % 2; // 0, 1, 0, 1, 0, 1
-        const offsetX = (col - 0.5) * 3; // -1.25, 1.25, -1.25, 1.25, -1.25, 1.25
-        const offsetZ = (row - 1) * 4; // -4, -4, 0, 0, 4, 4
-        const gridPosition = new Vector3(
-          basePosition.x + offsetX,
-          basePosition.y,
-          basePosition.z + offsetZ
-        );
-
-        // Extract sleeve image path from prize CardList, fallback to player-level sleeve
-        const sleeveImagePath = (prize as any)?.sleeveImagePath || playerSleeveImagePath;
-
-        // Render the prize card
-        await this.updateCard(
-          prize,
-          prizeId,
-          gridPosition,
-          isOwner,
-          rotation,
-          scene,
-          undefined, // No cardTarget for prizes
-          1.0, // Normal scale
-          sleeveImagePath
-        );
-
-        // Mark prize card for click detection
-        const prizeCardMesh = this.cardsMap.get(prizeId);
-        if (prizeCardMesh) {
-          prizeCardMesh.getGroup().userData.isPrize = true;
-        }
-      } else {
-        // Remove empty prize slot
-        this.removeCard(prizeId, scene);
-      }
-    }
-  }
 
   /**
    * Remove a card from the scene
@@ -922,16 +455,127 @@ export class Board3dStateSyncService {
     }
 
     // Also clean up overlays
-    this.clearOverlays(cardId, scene);
+    this.overlayService.clearOverlays(cardId, scene);
   }
 
   /**
-   * Clean up cards that no longer exist in the game state
+   * Clean up cards that no longer match the current player assignments
+   * Removes cards, stacks, and prizes for players that are no longer in the current positions
    */
-  private cleanupOldCards(state: any): void {
-    // This is a simple implementation - in production, you'd want to track
-    // which cards should exist and remove ones that don't
-    // For now, we'll rely on the card IDs being unique per position
+  private cleanupOldCards(
+    state: any,
+    topPlayerToSync: Player | undefined,
+    bottomPlayerToSync: Player | undefined,
+    scene: Scene
+  ): void {
+    // Build map of expected positions for each player ID
+    // This ensures we check both player ID validity AND position correctness
+    const expectedPositions = new Map<number, 'topPlayer' | 'bottomPlayer'>();
+    if (topPlayerToSync) {
+      expectedPositions.set(topPlayerToSync.id, 'topPlayer');
+    }
+    if (bottomPlayerToSync) {
+      expectedPositions.set(bottomPlayerToSync.id, 'bottomPlayer');
+    }
+
+    // If no valid players, clear everything except stadium
+    if (expectedPositions.size === 0) {
+      // Clear all cards except stadium
+      const cardsToRemove: string[] = [];
+      this.cardsMap.forEach((card, cardId) => {
+        if (cardId !== 'shared_stadium') {
+          cardsToRemove.push(cardId);
+        }
+      });
+      cardsToRemove.forEach(cardId => this.removeCard(cardId, scene));
+
+      // Clear all stacks (no valid players, so remove everything)
+      const allStacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
+      (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
+        allStacksToRemove.push({ stackId, isDeck: true });
+      });
+      (this.stackService as any).discardStacks?.forEach((stack: any, stackId: string) => {
+        allStacksToRemove.push({ stackId, isDeck: false });
+      });
+      allStacksToRemove.forEach(({ stackId, isDeck }) => {
+        this.stackService.removeStack(stackId, scene, isDeck);
+      });
+      return;
+    }
+
+    // Remove cards that don't match current player assignments
+    // Card IDs are formatted as: ${position}_${playerId}_${slot}
+    // Examples: bottomPlayer_1_active, topPlayer_2_bench_0, bottomPlayer_1_deck
+    const cardsToRemove: string[] = [];
+    this.cardsMap.forEach((card, cardId) => {
+      // Skip stadium (it's shared)
+      if (cardId === 'shared_stadium') {
+        return;
+      }
+
+      // Extract player ID and position from card ID
+      // Format: position_playerId_slot or position_playerId_slot_index
+      const parts = cardId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          // Remove if player ID doesn't exist OR position doesn't match expected position
+          if (!expectedPosition || expectedPosition !== position) {
+            cardsToRemove.push(cardId);
+          }
+        }
+      }
+    });
+
+    // Remove cards that don't match
+    cardsToRemove.forEach(cardId => this.removeCard(cardId, scene));
+
+    // Clean up stacks (deck/discard) for removed players or wrong positions
+    // Stack IDs are formatted as: ${position}_${playerId}_deck or ${position}_${playerId}_discard
+    const stacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
+
+    // Check deck stacks
+    (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
+      const parts = stackId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          // Remove if player ID doesn't exist OR position doesn't match expected position
+          if (!expectedPosition || expectedPosition !== position) {
+            stacksToRemove.push({ stackId, isDeck: true });
+          }
+        }
+      }
+    });
+
+    // Check discard stacks
+    (this.stackService as any).discardStacks?.forEach((stack: any, stackId: string) => {
+      const parts = stackId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          // Remove if player ID doesn't exist OR position doesn't match expected position
+          if (!expectedPosition || expectedPosition !== position) {
+            stacksToRemove.push({ stackId, isDeck: false });
+          }
+        }
+      }
+    });
+
+    // Remove stacks for removed players or wrong positions
+    stacksToRemove.forEach(({ stackId, isDeck }) => {
+      this.stackService.removeStack(stackId, scene, isDeck);
+    });
   }
 
   /**
@@ -939,6 +583,14 @@ export class Board3dStateSyncService {
    */
   getCardById(cardId: string): Board3dCard | undefined {
     return this.cardsMap.get(cardId);
+  }
+
+  /**
+   * Update all energy sprites to face the camera (billboard behavior).
+   * Call each frame before rendering.
+   */
+  updateBillboards(camera: PerspectiveCamera): void {
+    this.overlayService.updateBillboards(camera);
   }
 
   /**
@@ -979,11 +631,14 @@ export class Board3dStateSyncService {
    * Dispose all resources
    */
   dispose(scene: Scene): void {
-    // Clean up all card overlays
-    this.cardOverlays.forEach((overlays, cardId) => {
-      this.clearOverlays(cardId, scene);
-    });
-    this.cardOverlays.clear();
+    // Clean up overlays
+    this.overlayService.dispose(scene);
+
+    // Clean up stacks
+    this.stackService.dispose(scene);
+
+    // Clean up prizes (minimal - uses cardsMap)
+    this.prizeService.dispose(scene);
 
     // Clean up cards
     this.cardsMap.forEach(card => {
@@ -991,26 +646,5 @@ export class Board3dStateSyncService {
       card.dispose();
     });
     this.cardsMap.clear();
-
-    // Clean up deck stacks
-    this.deckStacks.forEach(stack => {
-      scene.remove(stack);
-      stack.geometry.dispose();
-      (stack.material as MeshStandardMaterial).dispose();
-    });
-    this.deckStacks.clear();
-
-    this.discardStacks.forEach(stack => {
-      scene.remove(stack);
-      stack.geometry.dispose();
-      (stack.material as MeshStandardMaterial).dispose();
-    });
-    this.discardStacks.clear();
-
-    // Clean up energy texture cache
-    this.energyTextureCache.forEach(texture => {
-      texture.dispose();
-    });
-    this.energyTextureCache.clear();
   }
 }

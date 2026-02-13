@@ -9,18 +9,18 @@ export class Piplup extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [ C ];
 
   public attacks = [
     {
       name: 'Fury Attack',
-      cost: [ CardType.WATER ],
+      cost: [ W ],
       damage: 10,
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     }

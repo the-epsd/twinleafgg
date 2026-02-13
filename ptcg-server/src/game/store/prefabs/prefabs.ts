@@ -1,14 +1,15 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseEnergyPrompt, CoinFlipPrompt, ConfirmPrompt, DamageMap, EnergyCard, GameError, GameLog, GameMessage, MoveDamagePrompt, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { TrainerEffect, AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
-import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, EnergyType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
-import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
-import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPokemonTypeEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, MoveCardsEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
-import { MoveCardsEffect } from '../effects/game-effects';
+import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -131,6 +132,300 @@ export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike,
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
   effect.damage += damage;
   return state;
+}
+
+export interface NextTurnAttackBonusOptions {
+  attack: Attack;
+  source: Card;
+  bonusDamage: number;
+  bonusMarker: string;
+  clearMarker: string;
+}
+
+/**
+ * Standard marker lifecycle for:
+ * "During your next turn, this Pokemon's [Attack Name] attack does [N] more damage."
+ *
+ * Applies bonus when the same attack is used while marker is active and clears after that next turn.
+ */
+export function NEXT_TURN_ATTACK_BONUS(effect: Effect, options: NextTurnAttackBonusOptions): void {
+  const { attack, source, bonusDamage, bonusMarker, clearMarker } = options;
+
+  if (effect instanceof AttackEffect && effect.attack === attack) {
+    // Guard against copied attacks: only apply when this source card is the attacker.
+    if (source instanceof PokemonCard && effect.source.getPokemonCard() !== source) {
+      return;
+    }
+
+    if (HAS_MARKER(bonusMarker, effect.player, source)) {
+      effect.damage += bonusDamage;
+    }
+    REMOVE_MARKER(clearMarker, effect.player, source);
+    ADD_MARKER(bonusMarker, effect.player, source);
+  }
+
+  if (effect instanceof EndTurnEffect && HAS_MARKER(bonusMarker, effect.player, source)) {
+    if (HAS_MARKER(clearMarker, effect.player, source)) {
+      REMOVE_MARKER(bonusMarker, effect.player, source);
+      REMOVE_MARKER(clearMarker, effect.player, source);
+    } else {
+      ADD_MARKER(clearMarker, effect.player, source);
+    }
+  }
+}
+
+export interface NextTurnAttackBaseDamageOptions {
+  setupAttack: Attack;
+  boostedAttack: Attack;
+  source: Card;
+  baseDamage: number;
+  bonusMarker: string;
+  clearMarker: string;
+}
+
+/**
+ * Standard marker lifecycle for:
+ * "During your next turn, this Pokemon's [Attack Name] attack's base damage is [N]."
+ *
+ * `setupAttack` is the attack that applies the marker and `boostedAttack` is the attack
+ * whose base damage is overridden during the next turn.
+ */
+export function NEXT_TURN_ATTACK_BASE_DAMAGE(effect: Effect, options: NextTurnAttackBaseDamageOptions): void {
+  const { setupAttack, boostedAttack, source, baseDamage, bonusMarker, clearMarker } = options;
+
+  if (effect instanceof AttackEffect) {
+    // Guard against copied attacks: only apply when this source card is the attacker.
+    if (source instanceof PokemonCard && effect.source.getPokemonCard() !== source) {
+      return;
+    }
+
+    if (effect.attack === boostedAttack && HAS_MARKER(bonusMarker, effect.player, source)) {
+      effect.damage = baseDamage;
+    }
+
+    if (effect.attack === setupAttack) {
+      REMOVE_MARKER(clearMarker, effect.player, source);
+      ADD_MARKER(bonusMarker, effect.player, source);
+    }
+  }
+
+  if (effect instanceof EndTurnEffect && HAS_MARKER(bonusMarker, effect.player, source)) {
+    if (HAS_MARKER(clearMarker, effect.player, source)) {
+      REMOVE_MARKER(bonusMarker, effect.player, source);
+      REMOVE_MARKER(clearMarker, effect.player, source);
+    } else {
+      ADD_MARKER(clearMarker, effect.player, source);
+    }
+  }
+}
+
+export interface CopyBenchAttackOptions {
+  allowCancel?: boolean;
+  throwIfNoBenchedPokemon?: boolean;
+  disallowCopycatAttack?: boolean;
+}
+
+function* copyBenchAttackGenerator(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  options: CopyBenchAttackOptions
+): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  const { allowCancel = false, throwIfNoBenchedPokemon = true, disallowCopycatAttack = true } = options;
+
+  const hasBenchedPokemon = player.bench.some(b => b.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    if (throwIfNoBenchedPokemon) {
+      throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+    }
+    return state;
+  }
+
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel }
+  ), results => {
+    targets = results || [];
+    next();
+  });
+
+  if (targets.length === 0) {
+    return state;
+  }
+
+  const benchedPokemon = targets[0];
+  const benchedCard = benchedPokemon.getPokemonCard();
+  if (benchedCard === undefined || benchedCard.attacks.length === 0) {
+    return state;
+  }
+
+  let selected: Attack | null = null;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [benchedCard],
+    { allowCancel }
+  ), result => {
+    selected = result;
+    next();
+  });
+
+  const copiedAttack = selected as Attack | null;
+  if (copiedAttack === null) {
+    return state;
+  }
+
+  if (disallowCopycatAttack && copiedAttack.copycatAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: copiedAttack.name
+  });
+
+  const attackEffect = new AttackEffect(player, opponent, copiedAttack);
+  store.reduceEffect(state, attackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  return state;
+}
+
+/**
+ * Generic implementation for:
+ * "Choose 1 of your Benched Pokemon's attacks and use it as this attack."
+ *
+ * Call this inside your WAS_ATTACK_USED(...) block (optionally coin-gated).
+ */
+export function COPY_BENCH_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  options: CopyBenchAttackOptions = {}
+): State {
+  const generator = copyBenchAttackGenerator(() => generator.next(), store, state, effect, options);
+  return generator.next().value;
+}
+
+export interface ToolActiveDamageBonusOptions {
+  damageBonus: number;
+  sourcePokemonName?: string;
+  sourceCardType?: CardType;
+  sourceCardTag?: CardTag;
+}
+
+/**
+ * Standard Tool damage hook for text like:
+ * "If this card is attached to [condition], each of its attacks does [N] more damage
+ * to the Active Pokemon (before applying Weakness and Resistance)."
+ */
+export function TOOL_ACTIVE_DAMAGE_BONUS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  tool: TrainerCard,
+  options: ToolActiveDamageBonusOptions
+): void {
+  if (!(effect instanceof DealDamageEffect) || !effect.source.tools.includes(tool)) {
+    return;
+  }
+
+  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
+    return;
+  }
+
+  const sourcePokemon = effect.source.getPokemonCard();
+  if (sourcePokemon === undefined) {
+    return;
+  }
+
+  if (options.sourcePokemonName !== undefined && sourcePokemon.name !== options.sourcePokemonName) {
+    return;
+  }
+
+  if (options.sourceCardTag !== undefined && !sourcePokemon.tags.includes(options.sourceCardTag)) {
+    return;
+  }
+
+  if (options.sourceCardType !== undefined) {
+    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.source);
+    store.reduceEffect(state, checkPokemonTypeEffect);
+    if (!checkPokemonTypeEffect.cardTypes.includes(options.sourceCardType)) {
+      return;
+    }
+  }
+
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  if (effect.target !== opponent.active || effect.damage <= 0) {
+    return;
+  }
+
+  effect.damage += options.damageBonus;
+}
+
+export interface ToolSetHpIfOptions {
+  hp: number;
+  sourcePokemonName?: string;
+  sourceCardType?: CardType;
+  sourceCardTag?: CardTag;
+}
+
+/**
+ * Standard Tool HP hook for text like:
+ * "If this card is attached to [condition], its maximum HP is [N]."
+ */
+export function TOOL_SET_HP_IF(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  tool: TrainerCard,
+  options: ToolSetHpIfOptions
+): void {
+  if (!(effect instanceof CheckHpEffect) || !effect.target.tools.includes(tool)) {
+    return;
+  }
+
+  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
+    return;
+  }
+
+  const sourcePokemon = effect.target.getPokemonCard();
+  if (sourcePokemon === undefined) {
+    return;
+  }
+
+  if (options.sourcePokemonName !== undefined && sourcePokemon.name !== options.sourcePokemonName) {
+    return;
+  }
+
+  if (options.sourceCardTag !== undefined && !sourcePokemon.tags.includes(options.sourceCardTag)) {
+    return;
+  }
+
+  if (options.sourceCardType !== undefined) {
+    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
+    store.reduceEffect(state, checkPokemonTypeEffect);
+    if (!checkPokemonTypeEffect.cardTypes.includes(options.sourceCardType)) {
+      return;
+    }
+  }
+
+  effect.hp = options.hp;
 }
 
 export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(player: Player, store: StoreLike, state: State) {
@@ -320,6 +615,40 @@ export function DEVOLVE_POKEMON(store: StoreLike, state: State, target: PokemonC
   }
 }
 
+export type DevolutionDestination = 'hand' | 'deck' | 'discard' | 'lostzone';
+
+/**
+ * Compound helper for text like:
+ * "Devolve the Defending Pokemon and put the highest Stage Evolution card on it into your opponent's hand/deck/discard/Lost Zone."
+ */
+export function DEVOLVE_DEFENDING_AFTER_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  index: number,
+  user: PokemonCard,
+  destination: DevolutionDestination = 'hand'
+): State {
+  if (!AFTER_ATTACK(effect, index, user)) {
+    return state;
+  }
+
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  let destinationList: CardList = opponent.hand;
+  if (destination === 'deck') {
+    destinationList = opponent.deck;
+  } else if (destination === 'discard') {
+    destinationList = opponent.discard;
+  } else if (destination === 'lostzone') {
+    destinationList = opponent.lostzone;
+  }
+
+  DEVOLVE_POKEMON(store, state, opponent.active, destinationList);
+  return state;
+}
+
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number, applyWeaknessAndResistance: boolean = false, slots?: SlotType[]) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -428,6 +757,30 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
   });
 }
 
+/**
+ * Discard a specific set of Energies of the player's choice from this Pokémon (e.g. 3 [R] energy). Not restricted to Basics.
+ * @param energyMap The Energies that must be discarded.
+ */
+export function DISCARD_SPECIFIC_ENERGY_FROM_THIS_POKEMON(store: StoreLike, state: State, effect: AttackEffect, energyMap: CardType[]) {
+  const player = effect.player;
+      
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  state = store.reduceEffect(state, checkProvidedEnergy);
+
+  state = store.prompt(state, new ChooseEnergyPrompt(
+    player.id,
+    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+    checkProvidedEnergy.energyMap,
+    energyMap,
+    { allowCancel: false }
+  ), energy => {
+    const cards: Card[] = (energy || []).map(e => e.card);
+    const discardEnergy = new DiscardCardsEffect(effect, cards);
+    discardEnergy.target = player.active;
+    store.reduceEffect(state, discardEnergy);
+  });
+}
+
 export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card) {
   const player = effect.player;
   const cardList = StateUtils.findCardList(state, card);
@@ -441,6 +794,353 @@ export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, 
   const discardEnergy = new DiscardCardsEffect(effect, cards);
   discardEnergy.target = cardList;
   store.reduceEffect(state, discardEnergy);
+}
+
+const BASIC_ENERGY_NAME_BY_CARD_TYPE: Partial<Record<CardType, string>> = {
+  [CardType.GRASS]: 'Grass Energy',
+  [CardType.FIRE]: 'Fire Energy',
+  [CardType.WATER]: 'Water Energy',
+  [CardType.LIGHTNING]: 'Lightning Energy',
+  [CardType.PSYCHIC]: 'Psychic Energy',
+  [CardType.FIGHTING]: 'Fighting Energy',
+  [CardType.DARK]: 'Darkness Energy',
+  [CardType.METAL]: 'Metal Energy',
+  [CardType.DRAGON]: 'Dragon Energy',
+  [CardType.FAIRY]: 'Fairy Energy'
+};
+
+function getBasicEnergyNameByType(cardType: CardType): string | undefined {
+  return BASIC_ENERGY_NAME_BY_CARD_TYPE[cardType];
+}
+
+function getBlockedTargetsFromFilter(
+  player: Player,
+  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard) => boolean
+): CardTarget[] {
+  if (targetFilter === undefined) {
+    return [];
+  }
+
+  const blockedTargets: CardTarget[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+    if (!targetFilter(cardList, pokemonCard)) {
+      blockedTargets.push(target);
+    }
+  });
+
+  return blockedTargets;
+}
+
+export interface AsOftenAsYouLikeAttachBasicTypeEnergyFromHandOptions {
+  destinationSlots?: SlotType[];
+  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard) => boolean;
+  promptOptions?: Partial<AttachEnergyOptions>;
+}
+
+/**
+ * Compound helper for text like:
+ * "As often as you like during your turn, attach a basic [type] Energy card from your hand to 1 of your Pokémon."
+ *
+ * This helper does not include "once per turn" tracking. Pair it with
+ * `USE_ABILITY_ONCE_PER_TURN` when card text requires that limit.
+ */
+export function AS_OFTEN_AS_YOU_LIKE_ATTACH_BASIC_TYPE_ENERGY_FROM_HAND(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  cardType: CardType,
+  options: AsOftenAsYouLikeAttachBasicTypeEnergyFromHandOptions = {}
+): State {
+  const {
+    destinationSlots = [SlotType.BENCH, SlotType.ACTIVE],
+    targetFilter,
+    promptOptions = {}
+  } = options;
+
+  const basicEnergyName = getBasicEnergyNameByType(cardType);
+  if (basicEnergyName === undefined) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+
+  const hasMatchingEnergyInHand = player.hand.cards.some(card =>
+    card instanceof EnergyCard
+    && card.energyType === EnergyType.BASIC
+    && card.name === basicEnergyName
+  );
+  if (!hasMatchingEnergyInHand) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+
+  const blockedTo = getBlockedTargetsFromFilter(player, targetFilter);
+
+  return store.prompt(state, new AttachEnergyPrompt(
+    player.id,
+    GameMessage.ATTACH_ENERGY_CARDS,
+    player.hand,
+    PlayerType.BOTTOM_PLAYER,
+    destinationSlots,
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: basicEnergyName },
+    { allowCancel: true, min: 1, max: 1, blockedTo, ...promptOptions }
+  ), transfers => {
+    transfers = transfers || [];
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      const energyCard = transfer.card as EnergyCard;
+      const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+      store.reduceEffect(state, attachEnergyEffect);
+    }
+  });
+}
+
+export interface AttachXTypeEnergyFromDiscardToOnePokemonOptions {
+  destinationSlots?: SlotType[];
+  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard) => boolean;
+  energyFilter?: Partial<EnergyCard>;
+  min?: number;
+  allowCancel?: boolean;
+  onAttached?: (transfers: { to: CardTarget, card: Card }[]) => void;
+}
+
+/**
+ * Compound helper for text like:
+ * "Attach up to X [type] Energy cards from your discard pile to 1 of your Pokémon."
+ *
+ * `cardType` is optional. When omitted, any Energy is legal.
+ */
+export function ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  amount: number,
+  cardType?: CardType,
+  options: AttachXTypeEnergyFromDiscardToOnePokemonOptions = {}
+): State {
+  const {
+    destinationSlots = [SlotType.BENCH, SlotType.ACTIVE],
+    targetFilter,
+    energyFilter = {},
+    min = 1,
+    allowCancel = false,
+    onAttached
+  } = options;
+
+  if (player.discard.cards.length === 0 || amount <= 0) {
+    return state;
+  }
+
+  const blockedTo = getBlockedTargetsFromFilter(player, targetFilter);
+  const promptEnergyFilter = { superType: SuperType.ENERGY, ...energyFilter };
+  const promptOptions: Partial<AttachEnergyOptions> = {
+    allowCancel,
+    min: Math.max(0, min),
+    max: amount,
+    sameTarget: true,
+    blockedTo
+  };
+
+  if (cardType !== undefined) {
+    promptOptions.validCardTypes = [cardType];
+  }
+
+  return store.prompt(state, new AttachEnergyPrompt(
+    player.id,
+    GameMessage.ATTACH_ENERGY_CARDS,
+    player.discard,
+    PlayerType.BOTTOM_PLAYER,
+    destinationSlots,
+    promptEnergyFilter,
+    promptOptions
+  ), transfers => {
+    transfers = transfers || [];
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      const energyCard = transfer.card as EnergyCard;
+      const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+      store.reduceEffect(state, attachEnergyEffect);
+    }
+    if (onAttached !== undefined) {
+      onAttached(transfers);
+    }
+  });
+}
+
+export interface AttachUpToXEnergyFromDeckToYOfYourPokemonOptions {
+  destinationSlots?: SlotType[];
+  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard) => boolean;
+  energyFilter?: Partial<EnergyCard>;
+  min?: number;
+  allowCancel?: boolean;
+  differentTypes?: boolean;
+  differentTargets?: boolean;
+  sameTarget?: boolean;
+  validCardTypes?: CardType[];
+  maxPerType?: number;
+  onAttached?: (transfers: { to: CardTarget, card: Card }[]) => void;
+}
+
+/**
+ * Compound helper for text like:
+ * "Attach up to X Energy cards from your deck to Y of your Pokémon."
+ *
+ * - `maxEnergyCards` controls how many Energy cards may be attached.
+ * - `maxPokemonTargets` controls how many different Pokémon may receive those attachments.
+ * - For Mirage Gate-style behavior, pass:
+ *   `differentTypes: true`, `energyFilter: { energyType: EnergyType.BASIC }`.
+ */
+export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  maxEnergyCards: number,
+  maxPokemonTargets: number,
+  options: AttachUpToXEnergyFromDeckToYOfYourPokemonOptions = {}
+): State {
+  const {
+    destinationSlots = [SlotType.BENCH, SlotType.ACTIVE],
+    targetFilter,
+    energyFilter = {},
+    min = 0,
+    allowCancel = false,
+    differentTypes = false,
+    differentTargets = false,
+    sameTarget = false,
+    validCardTypes,
+    maxPerType,
+    onAttached
+  } = options;
+
+  if (player.deck.cards.length === 0 || maxEnergyCards <= 0 || maxPokemonTargets <= 0) {
+    return state;
+  }
+
+  const blockedTo = getBlockedTargetsFromFilter(player, targetFilter);
+
+  return store.prompt(state, new AttachEnergyPrompt(
+    player.id,
+    GameMessage.ATTACH_ENERGY_CARDS,
+    player.deck,
+    PlayerType.BOTTOM_PLAYER,
+    destinationSlots,
+    { superType: SuperType.ENERGY, ...energyFilter },
+    {
+      allowCancel,
+      min: Math.max(0, min),
+      max: maxEnergyCards,
+      blockedTo,
+      differentTypes,
+      differentTargets,
+      sameTarget,
+      validCardTypes,
+      maxPerType
+    }
+  ), transfers => {
+    transfers = transfers || [];
+
+    const uniqueTargets = new Set(transfers.map(transfer =>
+      `${transfer.to.player}-${transfer.to.slot}-${transfer.to.index}`
+    ));
+    if (uniqueTargets.size > maxPokemonTargets) {
+      throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+    }
+
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      const energyCard = transfer.card as EnergyCard;
+      const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+      store.reduceEffect(state, attachEnergyEffect);
+    }
+
+    if (onAttached !== undefined) {
+      onAttached(transfers);
+    }
+
+    SHUFFLE_DECK(store, state, player);
+  });
+}
+
+/**
+ * Discards the top `amount` cards of your own deck (self-mill).
+ */
+export function DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  amount: number,
+  card: Card,
+  sourceEffect: any
+): State {
+  return MOVE_CARDS(store, state, player.deck, player.discard, { count: amount, sourceCard: card, sourceEffect });
+}
+
+export type CountCardsZone = 'discard' | 'lostzone';
+
+/**
+ * Counts cards in one of your zones using a partial field filter and/or predicate.
+ * Useful for effects like Night March / United Wings that need custom matching logic.
+ */
+export function COUNT_MATCHING_CARDS_IN_ZONE(
+  player: Player,
+  zone: CountCardsZone,
+  filter: Partial<Card> = {},
+  predicate: (card: Card) => boolean = () => true
+): number {
+  const cards = zone === 'discard' ? player.discard.cards : player.lostzone.cards;
+
+  return cards.reduce((count, card) => {
+    for (const key in filter) {
+      if ((card as any)[key] !== (filter as any)[key]) {
+        return count;
+      }
+    }
+    if (!predicate(card)) {
+      return count;
+    }
+    return count + 1;
+  }, 0);
+}
+
+/**
+ * Checks whether a Pokémon has any Energy card attached.
+ */
+export function THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED(target: PokemonCardList): boolean {
+  return target.cards.some(card => card instanceof EnergyCard);
+}
+
+/**
+ * Convenience guard for cards that can only be used if your VSTAR Power is still available.
+ */
+export function BLOCK_IF_VSTAR_POWER_USED(player: Player) {
+  if (player.usedVSTAR === true) {
+    throw new GameError(GameMessage.LABEL_VSTAR_USED);
+  }
+}
+
+/**
+ * Returns true if the given player has already used their VSTAR Power this game.
+ */
+export function PLAYER_HAS_USED_VSTAR_POWER(player: Player): boolean {
+  return player.usedVSTAR === true;
+}
+
+/**
+ * Returns true if your opponent has already used their VSTAR Power this game.
+ */
+export function OPPONENT_HAS_USED_VSTAR_POWER(state: State, player: Player): boolean {
+  const opponent = StateUtils.getOpponent(state, player);
+  return opponent.usedVSTAR === true;
+}
+
+/**
+ * Discards the top `amount` cards of the opponent's deck (commonly called "milling").
+ * @param player The player ***using*** this effect. Their opponent will be milled.
+ * @param amount The number of cards to discard.
+ * @param card The card causing the effect.
+ * @param sourceEffect The attack or ability causing the effect.
+ */
+export function DISCARD_TOP_X_OF_OPPONENTS_DECK(store: StoreLike, state: State, player: Player, amount: number, card: Card, sourceEffect: any) {
+  const opponent = StateUtils.getOpponent(state, player);
+
+  MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: amount, sourceCard: card, sourceEffect: sourceEffect });
 }
 
 /**
@@ -788,6 +1488,544 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   });
 }
 
+export interface SwitchInOpponentBenchedPokemonOptions {
+  allowCancel?: boolean;
+  blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
+}
+
+/**
+ * Compound helper for "switch in" effects:
+ * "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
+ */
+export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchInOpponentBenchedPokemonOptions = {}
+): State {
+  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const opponent = StateUtils.getOpponent(state, player);
+  const hasBenchedPokemon = opponent.bench.some(bench => bench.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    return state;
+  }
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.TOP_PLAYER,
+    [SlotType.BENCH],
+    { min: 1, max: 1, allowCancel, blocked }
+  ), selected => {
+    if (!selected || selected.length === 0) {
+      return;
+    }
+    opponent.switchPokemon(selected[0], store, state);
+    if (onSwitched !== undefined) {
+      onSwitched(selected[0]);
+    }
+  });
+}
+
+export interface SwitchOutOpponentActivePokemonOptions {
+  allowCancel?: boolean;
+  blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
+}
+
+/**
+ * Compound helper for text like:
+ * "Switch out your opponent's Active Pokémon to the Bench.
+ * (Your opponent chooses the new Active Pokémon.)"
+ *
+ * Common on effects like Repel and the opponent-facing part of Escape Rope.
+ */
+export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {}
+): State {
+  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const opponent = StateUtils.getOpponent(state, player);
+  const hasBenchedPokemon = opponent.bench.some(bench => bench.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    return state;
+  }
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    opponent.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { min: 1, max: 1, allowCancel, blocked }
+  ), selected => {
+    if (!selected || selected.length === 0) {
+      return;
+    }
+    opponent.switchPokemon(selected[0], store, state);
+    if (onSwitched !== undefined) {
+      onSwitched(selected[0]);
+    }
+  });
+}
+
+/**
+ * Backward-compatible alias for `SWITCH_OUT_OPPONENT_ACTIVE_POKEMON`.
+ */
+export function OPPONENT_SWITCHES_THEIR_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {}
+): State {
+  return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchInOpponentBenchedPokemonOptions`.
+ */
+export type GustOpponentBenchedPokemonOptions = SwitchInOpponentBenchedPokemonOptions;
+
+/**
+ * Backward-compatible alias for `SWITCH_IN_OPPONENT_BENCHED_POKEMON`.
+ */
+export function GUST_OPPONENT_BENCHED_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchInOpponentBenchedPokemonOptions = {}
+): State {
+  return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchOutOpponentActivePokemonOptions`.
+ */
+export type OpponentSwitchesTheirActivePokemonOptions = SwitchOutOpponentActivePokemonOptions;
+
+export interface MoveDamageCountersOptions {
+  playerType?: PlayerType;
+  slots?: SlotType[];
+  min?: number;
+  max?: number;
+  allowCancel?: boolean;
+  blockedFrom?: CardTarget[];
+  blockedTo?: CardTarget[];
+  singleSourceTarget?: boolean;
+  singleDestinationTarget?: boolean;
+}
+
+/**
+ * Generic helper for text like:
+ * "Move X damage counters from Y to Z."
+ */
+export function MOVE_DAMAGE_COUNTERS(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: MoveDamageCountersOptions = {}
+): State {
+  const {
+    playerType = PlayerType.BOTTOM_PLAYER,
+    slots = [SlotType.ACTIVE, SlotType.BENCH],
+    min = 1,
+    max = undefined,
+    allowCancel = false,
+    blockedFrom = [],
+    blockedTo = [],
+    singleSourceTarget = false,
+    singleDestinationTarget = false
+  } = options;
+
+  const opponent = StateUtils.getOpponent(state, player);
+  const maxAllowedDamage: DamageMap[] = [];
+  const computedBlockedFrom: CardTarget[] = [...blockedFrom];
+
+  const collectTargets = (targetPlayer: Player, targetPlayerType: PlayerType) => {
+    targetPlayer.forEachPokemon(targetPlayerType, (cardList, card, target) => {
+      maxAllowedDamage.push({ target, damage: 9999 });
+      if (cardList.damage === 0) {
+        computedBlockedFrom.push(target);
+      }
+    });
+  };
+
+  if (playerType === PlayerType.BOTTOM_PLAYER || playerType === PlayerType.ANY) {
+    collectTargets(player, PlayerType.BOTTOM_PLAYER);
+  }
+  if (playerType === PlayerType.TOP_PLAYER || playerType === PlayerType.ANY) {
+    collectTargets(opponent, PlayerType.TOP_PLAYER);
+  }
+
+  if (maxAllowedDamage.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new MoveDamagePrompt(
+    player.id,
+    GameMessage.MOVE_DAMAGE,
+    playerType,
+    slots,
+    maxAllowedDamage,
+    {
+      allowCancel,
+      min,
+      max,
+      blockedFrom: computedBlockedFrom,
+      blockedTo,
+      singleSourceTarget,
+      singleDestinationTarget
+    }
+  ), transfers => {
+    transfers = transfers || [];
+    for (const transfer of transfers) {
+      const source = StateUtils.getTarget(state, player, transfer.from);
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      if (source.damage < 10) {
+        continue;
+      }
+      source.damage -= 10;
+      target.damage += 10;
+    }
+  });
+}
+
+export type TopDeckRemainderDestination = 'shuffle' | 'bottom' | 'discard' | 'lostzone';
+
+function cardMatchesPartialFilter(card: Card, filter: Partial<Card>): boolean {
+  for (const key in filter) {
+    if ((card as any)[key] !== (filter as any)[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function moveRemainingTopDeckCards(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  topCards: CardList,
+  remainderDestination: TopDeckRemainderDestination
+) {
+  if (topCards.cards.length === 0) {
+    return;
+  }
+
+  if (remainderDestination === 'discard') {
+    topCards.moveTo(player.discard);
+    return;
+  }
+
+  if (remainderDestination === 'lostzone') {
+    topCards.moveTo(player.lostzone);
+    return;
+  }
+
+  if (remainderDestination === 'bottom') {
+    player.deck.cards.push(...topCards.cards);
+    topCards.cards = [];
+    return;
+  }
+
+  player.deck.cards = [...topCards.cards, ...player.deck.cards];
+  topCards.cards = [];
+  SHUFFLE_DECK(store, state, player);
+}
+
+export interface LookAtTopXCardsAndDoWithMatchingOptions {
+  topCount: number;
+  maxMatches: number;
+  filter?: Partial<Card>;
+  predicate?: (card: Card) => boolean;
+  chooseMessage?: GameMessage;
+  allowCancel?: boolean;
+  remainderDestination?: TopDeckRemainderDestination;
+  onCardsChosen: (chosenCards: Card[], topCards: CardList) => void;
+}
+
+/**
+ * Core engine for "Look at the top X cards..." effects.
+ *
+ * Note: `onCardsChosen` is intended for synchronous card moves. If your effect
+ * needs additional prompts (for example target selection), use the dedicated
+ * wrapper helpers below instead.
+ */
+export function LOOK_AT_TOP_X_CARDS_AND_DO_WITH_MATCHING(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: LookAtTopXCardsAndDoWithMatchingOptions
+): State {
+  const {
+    topCount,
+    maxMatches,
+    filter = {},
+    predicate = () => true,
+    chooseMessage = GameMessage.CHOOSE_CARD_TO_HAND,
+    allowCancel = false,
+    remainderDestination = 'shuffle',
+    onCardsChosen
+  } = options;
+
+  if (player.deck.cards.length === 0 || topCount <= 0 || maxMatches < 0) {
+    return state;
+  }
+
+  const topCards = new CardList();
+  player.deck.moveTo(topCards, Math.min(topCount, player.deck.cards.length));
+
+  const blocked: number[] = [];
+  let matchingCount = 0;
+  topCards.cards.forEach((card, index) => {
+    const matches = cardMatchesPartialFilter(card, filter) && predicate(card);
+    if (matches) {
+      matchingCount += 1;
+    } else {
+      blocked.push(index);
+    }
+  });
+
+  const selectable = Math.min(maxMatches, matchingCount);
+  if (selectable === 0) {
+    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
+    return state;
+  }
+
+  return store.prompt(state, new ChooseCardsPrompt(
+    player,
+    chooseMessage,
+    topCards,
+    {},
+    { min: 0, max: selectable, allowCancel, blocked }
+  ), selected => {
+    const chosenCards = selected || [];
+    onCardsChosen(chosenCards, topCards);
+    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
+  });
+}
+
+export interface LookAtTopXCardsAndPutUpToYMatchingCardsIntoHandOptions {
+  filter?: Partial<Card>;
+  predicate?: (card: Card) => boolean;
+  revealChosenCards?: boolean;
+  remainderDestination?: TopDeckRemainderDestination;
+  sourceCard?: Card;
+  sourceEffect?: any;
+}
+
+/**
+ * Compound helper for text like:
+ * "Look at the top X cards of your deck, put up to Y matching cards into your hand,
+ * and move the rest [shuffle/bottom/discard/lostzone]."
+ */
+export function LOOK_AT_TOP_X_CARDS_AND_PUT_UP_TO_Y_MATCHING_CARDS_INTO_HAND(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  topCount: number,
+  maxToHand: number,
+  options: LookAtTopXCardsAndPutUpToYMatchingCardsIntoHandOptions = {}
+): State {
+  const {
+    filter = {},
+    predicate = () => true,
+    revealChosenCards = false,
+    remainderDestination = 'shuffle',
+    sourceCard,
+    sourceEffect
+  } = options;
+
+  return LOOK_AT_TOP_X_CARDS_AND_DO_WITH_MATCHING(store, state, player, {
+    topCount,
+    maxMatches: maxToHand,
+    filter,
+    predicate,
+    chooseMessage: GameMessage.CHOOSE_CARD_TO_HAND,
+    remainderDestination,
+    onCardsChosen: (chosenCards, topCards) => {
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (revealChosenCards && chosenCards.length > 0) {
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, chosenCards);
+      }
+
+      MOVE_CARDS(store, state, topCards, player.hand, { cards: chosenCards, sourceCard, sourceEffect });
+    }
+  });
+}
+
+export interface LookAtTopXCardsAndAttachUpToYEnergyOptions {
+  destinationSlots?: SlotType[];
+  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard) => boolean;
+  energyFilter?: Partial<EnergyCard>;
+  remainderDestination?: TopDeckRemainderDestination;
+  differentTypes?: boolean;
+  differentTargets?: boolean;
+  sameTarget?: boolean;
+  validCardTypes?: CardType[];
+  maxPerType?: number;
+  maxPokemonTargets?: number;
+}
+
+/**
+ * Compound helper for text like:
+ * "Look at the top X cards of your deck and attach up to Y matching Energy cards
+ * to your Pokémon in play."
+ */
+export function LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  topCount: number,
+  maxEnergyToAttach: number,
+  options: LookAtTopXCardsAndAttachUpToYEnergyOptions = {}
+): State {
+  const {
+    destinationSlots = [SlotType.BENCH, SlotType.ACTIVE],
+    targetFilter,
+    energyFilter = {},
+    remainderDestination = 'shuffle',
+    differentTypes = false,
+    differentTargets = false,
+    sameTarget = false,
+    validCardTypes,
+    maxPerType,
+    maxPokemonTargets = maxEnergyToAttach
+  } = options;
+
+  if (player.deck.cards.length === 0 || topCount <= 0 || maxEnergyToAttach <= 0) {
+    return state;
+  }
+
+  const topCards = new CardList();
+  player.deck.moveTo(topCards, Math.min(topCount, player.deck.cards.length));
+
+  const matchingEnergyCount = topCards.cards.filter(card =>
+    card instanceof EnergyCard && cardMatchesPartialFilter(card, energyFilter as Partial<Card>)
+  ).length;
+  const maxAttach = Math.min(maxEnergyToAttach, matchingEnergyCount);
+  if (maxAttach === 0) {
+    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
+    return state;
+  }
+
+  const blockedTo = getBlockedTargetsFromFilter(player, targetFilter);
+
+  return store.prompt(state, new AttachEnergyPrompt(
+    player.id,
+    GameMessage.ATTACH_ENERGY_CARDS,
+    topCards,
+    PlayerType.BOTTOM_PLAYER,
+    destinationSlots,
+    { superType: SuperType.ENERGY, ...energyFilter },
+    {
+      allowCancel: false,
+      min: 0,
+      max: maxAttach,
+      blockedTo,
+      differentTypes,
+      differentTargets,
+      sameTarget,
+      validCardTypes,
+      maxPerType
+    }
+  ), transfers => {
+    transfers = transfers || [];
+
+    const uniqueTargets = new Set(transfers.map(transfer =>
+      `${transfer.to.player}-${transfer.to.slot}-${transfer.to.index}`
+    ));
+    if (uniqueTargets.size > maxPokemonTargets) {
+      throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+    }
+
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      const energyCard = transfer.card as EnergyCard;
+      const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+      store.reduceEffect(state, attachEnergyEffect);
+    }
+
+    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
+  });
+}
+
+export interface LookAtTopXCardsAndBenchUpToYMatchingPokemonOptions {
+  filter?: Partial<PokemonCard>;
+  predicate?: (card: PokemonCard) => boolean;
+  remainderDestination?: TopDeckRemainderDestination;
+}
+
+/**
+ * Compound helper for text like:
+ * "Look at the top X cards of your deck and put up to Y matching Pokémon onto your Bench."
+ */
+export function LOOK_AT_TOP_X_CARDS_AND_BENCH_UP_TO_Y_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  topCount: number,
+  maxToBench: number,
+  options: LookAtTopXCardsAndBenchUpToYMatchingPokemonOptions = {}
+): State {
+  const {
+    filter = {},
+    predicate = () => true,
+    remainderDestination = 'shuffle'
+  } = options;
+
+  if (player.deck.cards.length === 0 || topCount <= 0 || maxToBench <= 0) {
+    return state;
+  }
+
+  const benchSlots = GET_PLAYER_BENCH_SLOTS(player);
+  if (benchSlots.length === 0) {
+    return state;
+  }
+
+  const topCards = new CardList();
+  player.deck.moveTo(topCards, Math.min(topCount, player.deck.cards.length));
+
+  const blocked: number[] = [];
+  let matchingPokemonCount = 0;
+  topCards.cards.forEach((card, index) => {
+    const pokemonCard = card instanceof PokemonCard ? card : undefined;
+    const matches = pokemonCard !== undefined
+      && cardMatchesPartialFilter(pokemonCard, filter as Partial<Card>)
+      && predicate(pokemonCard);
+    if (matches) {
+      matchingPokemonCount += 1;
+    } else {
+      blocked.push(index);
+    }
+  });
+
+  const selectable = Math.min(maxToBench, benchSlots.length, matchingPokemonCount);
+  if (selectable === 0) {
+    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
+    return state;
+  }
+
+  return store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+    topCards,
+    {},
+    { min: 0, max: selectable, allowCancel: false, blocked }
+  ), selected => {
+    const chosenPokemon = selected || [];
+    chosenPokemon.forEach((card, index) => {
+      topCards.moveCardTo(card, benchSlots[index]);
+      benchSlots[index].pokemonPlayedTurn = state.turn;
+    });
+
+    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
+  });
+}
+
 export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: State, choosingPlayer: Player, deckPlayer: Player) {
   {
     BLOCK_IF_DECK_EMPTY(deckPlayer);
@@ -848,6 +2086,29 @@ export function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, playe
   return store.prompt(state, prompts, callback);
 }
 
+/**
+ * Reusable "flip coins until tails" helper.
+ * Returns the number of heads via callback.
+ */
+export function FLIP_UNTIL_TAILS_AND_COUNT_HEADS(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  callback: (heads: number) => void
+): State {
+  const flipCoin = (heads: number): State => {
+    return store.prompt(state, [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)], result => {
+      if (result) {
+        return flipCoin(heads + 1);
+      }
+      callback(heads);
+      return state;
+    });
+  };
+
+  return flipCoin(0);
+}
+
 export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
   const result = Math.random() < 0.5;
   const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
@@ -883,6 +2144,27 @@ export function BLOCK_IF_DISCARD_EMPTY(player: Player) {
 export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
   if (player.usedGX === true)
     throw new GameError(GameMessage.LABEL_GX_USED);
+}
+
+/**
+ * Helper for text like:
+ * "This Pokémon can't use [Attack Name] during your next turn."
+ *
+ * Uses the built-in pending attack lock list, so no marker cleanup is required.
+ */
+export function THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(player: Player, attack: Attack | string) {
+  const attackName = typeof attack === 'string' ? attack : attack.name;
+  if (!player.active.cannotUseAttacksNextTurnPending.includes(attackName)) {
+    player.active.cannotUseAttacksNextTurnPending.push(attackName);
+  }
+}
+
+/**
+ * Helper for text like:
+ * "This Pokémon can't attack during your next turn."
+ */
+export function THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(player: Player) {
+  player.active.cannotAttackNextTurnPending = true;
 }
 
 export function BLOCK_IF_HAS_SPECIAL_CONDITION(player: Player, source: Card) {
@@ -926,6 +2208,43 @@ export function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, p
 export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card) {
   ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.CONFUSED]);
 }
+
+export interface PreventAndClearSpecialConditionsOptions {
+  shouldApply: (target: PokemonCardList, owner: Player) => boolean;
+  clearDuringCheckTableState?: boolean;
+}
+
+/**
+ * Compound helper for text like:
+ * "Pokémon that meet [condition] can't be affected by Special Conditions, and recover from them."
+ *
+ * Call this in reduceEffect and pass card-specific matching logic via `shouldApply`.
+ */
+export function PREVENT_AND_CLEAR_SPECIAL_CONDITIONS(
+  state: State,
+  effect: Effect,
+  options: PreventAndClearSpecialConditionsOptions
+): void {
+  const { shouldApply, clearDuringCheckTableState = true } = options;
+
+  if (effect instanceof AddSpecialConditionsEffect || effect instanceof AddSpecialConditionsPowerEffect) {
+    const owner = StateUtils.findOwner(state, effect.target);
+    if (shouldApply(effect.target, owner)) {
+      effect.preventDefault = true;
+    }
+    return;
+  }
+
+  if (clearDuringCheckTableState && effect instanceof CheckTableStateEffect) {
+    state.players.forEach(player => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.specialConditions.length > 0 && shouldApply(cardList, player)) {
+          cardList.clearAllSpecialConditions();
+        }
+      });
+    });
+  }
+}
 //#endregion
 
 //#region Markers
@@ -940,6 +2259,18 @@ export function REMOVE_MARKER(marker: string, owner: Player | Card | PokemonCard
 
 export function HAS_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): boolean {
   return owner.marker.hasMarker(marker, source);
+}
+
+/**
+ * Enforce "Once during your turn" for activated abilities.
+ * Call this after all card-specific validation, right before applying the ability effect.
+ * Pair with REMOVE_MARKER_AT_END_OF_TURN(effect, marker, source) in reduceEffect.
+ */
+export function USE_ABILITY_ONCE_PER_TURN(player: Player, marker: string, source: Card) {
+  if (HAS_MARKER(marker, player, source)) {
+    throw new GameError(GameMessage.POWER_ALREADY_USED);
+  }
+  ADD_MARKER(marker, player, source);
 }
 
 export function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card) {
@@ -1208,7 +2539,7 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
           return false;
         }
         break;
-      case TrainerType.STADIUM:
+      case TrainerType.STADIUM: {
         // Can't play stadium if one already played this turn
         if (player.stadiumPlayedTurn === state.turn) {
           return false;
@@ -1219,13 +2550,20 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
           return false;
         }
         break;
-      case TrainerType.TOOL:
-        // Tools need a Pokemon target - basic check only
-        const hasPokemon = player.active.cards.length > 0 || player.bench.some(b => b.cards.length > 0);
-        if (!hasPokemon) {
+      }
+      case TrainerType.TOOL: {
+        // Check if there are Pokemon that can accept a tool
+        let canAttachTool = false;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+          if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
+            canAttachTool = true;
+          }
+        });
+        if (!canAttachTool) {
           return false;
         }
         break;
+      }
       // Items have no basic restrictions beyond being in player's turn
     }
 
@@ -1277,8 +2615,13 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
       }
     }
 
-    // If canPlay is not implemented or returns undefined, don't show as playable
-    // We can't validate card-specific requirements without canPlay, so err on the side of caution
+    // If canPlay is not implemented or returns undefined
+    // For Tool cards, if we've passed all basic checks, return true
+    if (trainerCard.trainerType === TrainerType.TOOL) {
+      return true; // Tool cards can be played if Pokemon can accept them
+    }
+    // For other trainer types, err on the side of caution
+    // We can't validate card-specific requirements without canPlay
     return false;
   } catch (error) {
     return false;
@@ -1455,6 +2798,263 @@ export function DAMAGED_FROM_FULL_HP(store: StoreLike, state: State, effect: Put
   const checkHpEffect = new CheckHpEffect(player, target);
   store.reduceEffect(state, checkHpEffect);
   return effect.damage >= checkHpEffect.hp;
+}
+
+export interface OnDamagedByOpponentAttackEvenIfKnockedOutOptions {
+  source: PokemonCard;
+  requireActiveSpot?: boolean;
+  requireAttackPhase?: boolean;
+}
+
+/**
+ * Compound helper for text like:
+ * "If this Pokémon is in the Active Spot and is damaged by an opponent's attack
+ * (even if this Pokémon is Knocked Out)..."
+ */
+export function ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(
+  state: State,
+  effect: Effect,
+  options: OnDamagedByOpponentAttackEvenIfKnockedOutOptions
+): effect is AfterDamageEffect {
+  if (!(effect instanceof AfterDamageEffect)) {
+    return false;
+  }
+
+  const {
+    source,
+    requireActiveSpot = true,
+    requireAttackPhase = true
+  } = options;
+
+  if (effect.damage <= 0 || !effect.target.cards.includes(source)) {
+    return false;
+  }
+
+  const targetOwner = StateUtils.findOwner(state, effect.target);
+  if (targetOwner === effect.player) {
+    return false;
+  }
+
+  if (requireActiveSpot && targetOwner.active !== effect.target) {
+    return false;
+  }
+
+  if (requireAttackPhase && state.phase !== GamePhase.ATTACK) {
+    return false;
+  }
+
+  return true;
+}
+
+export interface BenchProtectionOptions {
+  owner: Player;
+  source?: PokemonCard | TrainerCard;
+  includeSourcePokemon?: boolean;
+  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard | undefined) => boolean;
+  checkBlocked?: boolean;
+}
+
+function isProtectionSourceInPlay(state: State, owner: Player, source?: PokemonCard | TrainerCard): boolean {
+  if (source === undefined) {
+    return true;
+  }
+
+  if (source instanceof PokemonCard) {
+    let inPlay = false;
+    owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard) => {
+      if (pokemonCard === source) {
+        inPlay = true;
+      }
+    });
+    return inPlay;
+  }
+
+  if (source.trainerType === TrainerType.STADIUM) {
+    return StateUtils.getStadiumCard(state) === source;
+  }
+
+  if (source.trainerType === TrainerType.TOOL) {
+    let attached = false;
+    owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      if (cardList.tools.includes(source)) {
+        attached = true;
+      }
+    });
+    return attached;
+  }
+
+  return false;
+}
+
+function isBenchProtectionBlocked(
+  store: StoreLike,
+  state: State,
+  owner: Player,
+  source?: PokemonCard | TrainerCard,
+  checkBlocked: boolean = true
+): boolean {
+  if (!checkBlocked || source === undefined) {
+    return false;
+  }
+
+  if (source instanceof PokemonCard) {
+    return IS_ABILITY_BLOCKED(store, state, owner, source);
+  }
+
+  if (source.trainerType === TrainerType.TOOL) {
+    return IS_TOOL_BLOCKED(store, state, owner, source);
+  }
+
+  return false;
+}
+
+function isProtectedBenchedTarget(
+  state: State,
+  effect: AbstractAttackEffect,
+  options: BenchProtectionOptions
+): boolean {
+  const {
+    owner,
+    source,
+    includeSourcePokemon = false,
+    targetFilter
+  } = options;
+
+  if (!owner.bench.includes(effect.target)) {
+    return false;
+  }
+
+  const attackerOwner = StateUtils.findOwner(state, effect.source);
+  if (attackerOwner === owner) {
+    return false;
+  }
+
+  if (!includeSourcePokemon && source instanceof PokemonCard && effect.target.cards.includes(source)) {
+    return false;
+  }
+
+  const targetPokemon = effect.target.getPokemonCard();
+  if (targetFilter && !targetFilter(effect.target, targetPokemon)) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Compound helper for text like:
+ * "Prevent all damage done to your other Benched Pokémon by attacks from your opponent's Pokémon."
+ */
+export function PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  options: BenchProtectionOptions
+): void {
+  if (!(effect instanceof PutDamageEffect) && !(effect instanceof PutCountersEffect)) {
+    return;
+  }
+
+  if (!isProtectionSourceInPlay(state, options.owner, options.source)) {
+    return;
+  }
+
+  if (isBenchProtectionBlocked(store, state, options.owner, options.source, options.checkBlocked)) {
+    return;
+  }
+
+  if (!isProtectedBenchedTarget(state, effect, options)) {
+    return;
+  }
+
+  effect.preventDefault = true;
+}
+
+/**
+ * Compound helper for text like:
+ * "Prevent all effects of attacks done to your other Benched Pokémon
+ * by attacks from your opponent's Pokémon. (Damage is not an effect.)"
+ */
+export function PREVENT_EFFECTS_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  options: BenchProtectionOptions
+): void {
+  if (!(effect instanceof AbstractAttackEffect)) {
+    return;
+  }
+
+  if (
+    effect instanceof DealDamageEffect
+    || effect instanceof PutDamageEffect
+    || effect instanceof PutCountersEffect
+    || effect instanceof ApplyWeaknessEffect
+    || effect instanceof AfterDamageEffect
+  ) {
+    return;
+  }
+
+  if (!isProtectionSourceInPlay(state, options.owner, options.source)) {
+    return;
+  }
+
+  if (isBenchProtectionBlocked(store, state, options.owner, options.source, options.checkBlocked)) {
+    return;
+  }
+
+  if (!isProtectedBenchedTarget(state, effect, options)) {
+    return;
+  }
+
+  effect.preventDefault = true;
+}
+
+export interface SurviveOnTenIfFullHpOptions {
+  reason: string;
+  source: PokemonCard | TrainerCard;
+  checkBlocked?: boolean;
+}
+
+/**
+ * Compound helper for text like:
+ * "If this Pokemon has full HP and would be Knocked Out by damage from an attack,
+ * this Pokemon is not Knocked Out and its remaining HP becomes 10 instead."
+ */
+export function SURVIVE_ON_TEN_IF_FULL_HP(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  options: SurviveOnTenIfFullHpOptions
+): void {
+  if (!(effect instanceof PutDamageEffect)) {
+    return;
+  }
+
+  const { reason, source, checkBlocked = true } = options;
+  const player = StateUtils.findOwner(state, effect.target);
+
+  if (source instanceof PokemonCard) {
+    if (!effect.target.cards.includes(source)) {
+      return;
+    }
+    if (checkBlocked && IS_ABILITY_BLOCKED(store, state, player, source)) {
+      return;
+    }
+  } else if (source instanceof TrainerCard) {
+    if (!effect.target.tools.includes(source)) {
+      return;
+    }
+    if (checkBlocked && IS_TOOL_BLOCKED(store, state, player, source)) {
+      return;
+    }
+  } else {
+    return;
+  }
+
+  if (DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+    effect.surviveOnTenHPReason = reason;
+  }
 }
 
 /**

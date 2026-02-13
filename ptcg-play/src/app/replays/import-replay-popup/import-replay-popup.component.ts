@@ -117,6 +117,10 @@ export class ImportReplayPopupComponent {
     fileReader.readAsText(file);
   }
 
+  public cancel(): void {
+    this.dialogRef.close();
+  }
+
   public importReplay() {
     this.loading = true;
     this.replayService.import(this.replayData, this.name)

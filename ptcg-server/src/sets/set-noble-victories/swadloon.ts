@@ -24,7 +24,7 @@ export class Swadloon extends PokemonCard {
       name: 'String Shot',
       cost: [C, C],
       damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }
   ];
 

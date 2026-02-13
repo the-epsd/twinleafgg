@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -18,13 +18,13 @@ export class Landorus extends PokemonCard {
       name: 'Abundant Harvest',
       cost: [F],
       damage: 0,
-      text: 'Attach a Fighting Energy card from your discard pile to this Pokemon.'
+      text: 'Attach a [F] Energy card from your discard pile to this Pokémon.'
     },
     {
       name: 'Gaia Hammer',
       cost: [F, F, C],
       damage: 80,
-      text: 'Does 10 damage to each Benched Pokemon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -40,7 +40,7 @@ export class Landorus extends PokemonCard {
       const player = effect.player;
 
       const fightingEnergy = player.discard.cards.filter(c =>
-        c instanceof EnergyCard &&
+        c.superType === SuperType.ENERGY &&
         c.energyType === EnergyType.BASIC &&
         c.name === 'Fighting Energy'
       );

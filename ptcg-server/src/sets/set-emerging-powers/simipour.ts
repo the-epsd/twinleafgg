@@ -19,7 +19,7 @@ export class Simipour extends PokemonCard {
       name: 'Grass\' Power',
       cost: [C, C],
       damage: 30,
-      text: 'If this Pokémon has any Grass Energy attached to it, heal 20 damage from this Pokémon.'
+      text: 'If this Pokémon has any [G] Energy attached to it, heal 20 damage from this Pokémon.'
     },
     {
       name: 'Rushing Water',
@@ -39,7 +39,7 @@ export class Simipour extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasGrassEnergy = player.active.cards.some(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.GRASS)
+        c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.GRASS)
       );
       if (hasGrassEnergy) {
         HEAL_X_DAMAGE_FROM_THIS_POKEMON(20, effect, store, state);
@@ -51,7 +51,7 @@ export class Simipour extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active;
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
-      const hasEnergy = opponentActive.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = opponentActive.cards.some(c => c.superType === SuperType.ENERGY);
 
       if (!hasBench || !hasEnergy) {
         return state;

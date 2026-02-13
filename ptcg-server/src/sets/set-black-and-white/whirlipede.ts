@@ -17,7 +17,7 @@ export class Whirlipede extends PokemonCard {
       name: 'Toxic Claws',
       cost: [P, C],
       damage: 30,
-      text: 'The Defending Pokemon is now Poisoned. Put 2 damage counters instead of 1 on that Pokemon between turns.'
+      text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on that Pokémon between turns.'
     },
     {
       name: 'Steamroller',

@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, TrainerCard, EnergyCard, GameError, GameMessage } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, SuperType, StoreLike, State, StateUtils, TrainerCard, EnergyCard, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayPokemonEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GengarMimikyuGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,20 +39,24 @@ export class GengarMimikyuGX extends PokemonCard {
   public readonly CANNOT_PLAY_CARDS_FROM_HAND_MARKER = 'CANT_PLAY_CARDS_FROM_HAND_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const trainerCount = opponent.hand.cards.filter(card => card instanceof TrainerCard).length;
       effect.damage = 50 * trainerCount;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
+
+      BLOCK_IF_GX_ATTACK_USED(player);
+      player.usedGX = true;
+
       const opponent = StateUtils.getOpponent(state, player);
       opponent.marker.addMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER, this);
 
       const extraEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.provides.includes(CardType.PSYCHIC)
+        card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.PSYCHIC)
       ).length > 1;
 
       if (extraEnergy) {

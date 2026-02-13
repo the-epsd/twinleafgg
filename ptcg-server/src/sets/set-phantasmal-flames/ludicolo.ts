@@ -22,11 +22,11 @@ export class Ludicolo extends PokemonCard {
     name: 'Excited Healing',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if you have a [G] Mega Evolution Pokémon ex in play, you may heal 60 damage from 1 of your Pokemon.'
+    text: 'Once during your turn, if you have any [G] Mega Evolution Pokémon ex in play, you may use this Ability. Heal 60 damage from 1 of your Pokémon.'
   }];
 
   public attacks = [{
-    name: 'Knock Down',
+    name: 'Lunge Out',
     cost: [G, C],
     damage: 120,
     text: ''

@@ -19,13 +19,13 @@ export class Garbodor extends PokemonCard {
       name: 'Gentle Wrap',
       cost: [P, C],
       damage: 30,
-      text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn.'
+      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     },
     {
       name: 'Sludge Toss',
       cost: [P, C, C, C],
       damage: 60,
-      text: 'The Defending Pokemon is now Poisoned.'
+      text: 'The Defending Pokémon is now Poisoned.'
     }
   ];
 

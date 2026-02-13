@@ -10,15 +10,15 @@ export class Pansage extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.FIRE
+    type: R
   }];
 
   public resistance = [{
-    type: CardType.WATER,
+    type: W,
     value: -20
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Scratch', cost: [C], damage: 10, text: '' },

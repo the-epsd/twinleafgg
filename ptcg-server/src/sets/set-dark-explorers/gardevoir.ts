@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -9,10 +9,10 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Gardevoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 110;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Psychic Mirage',
@@ -22,7 +22,7 @@ export class Gardevoir extends PokemonCard {
 
   public attacks = [{
     name: 'Mind Shock',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [P, P, C, C],
     damage: 60,
     text: 'This attack\'s damage isn\'t affected by Weakness or Resistance. '
   }];
@@ -63,8 +63,8 @@ export class Gardevoir extends PokemonCard {
         }
 
         effect.source.cards.forEach(c => {
-          if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
-            const providedTypes = c.provides.filter(type => type === CardType.PSYCHIC);
+          if (c.superType === SuperType.ENERGY && !effect.energyMap.some(e => e.card === c)) {
+            const providedTypes = (c as EnergyCard).provides.filter(type => type === CardType.PSYCHIC);
             if (providedTypes.length > 0) {
               effect.energyMap.push({ card: c, provides: [CardType.PSYCHIC, CardType.PSYCHIC] });
             }

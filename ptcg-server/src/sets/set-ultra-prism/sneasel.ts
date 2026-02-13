@@ -1,4 +1,4 @@
-import { CardTarget, CardType, ChooseCardsPrompt, ChoosePokemonPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PlayerType, PokemonCardList, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { CardTarget, CardType, ChooseCardsPrompt, ChoosePokemonPrompt, CoinFlipPrompt, GameMessage, PlayerType, PokemonCardList, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -62,13 +62,13 @@ export class Sneasel extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Opponent has no energy cards attached
-      if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard) && !opponent.bench.some(c => c.energies.cards.some(c => c instanceof EnergyCard))) {
+      if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY) && !opponent.bench.some(b => b.energies.cards.some(c => c.superType === SuperType.ENERGY))) {
         return state;
       }
 
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (!cardList.energies.cards.some(c => c instanceof EnergyCard)) {
+        if (!cardList.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
           blocked.push(target);
         }
       });

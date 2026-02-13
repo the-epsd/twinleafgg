@@ -19,13 +19,13 @@ export class Luxray extends PokemonCard {
       name: 'Flash Impact',
       cost: [L],
       damage: 60,
-      text: 'Does 20 damage to 1 of your Benched Pokemon.'
+      text: 'Does 20 damage to 1 of your Benched Pokémon.'
     },
     {
       name: 'Crunch',
       cost: [L, L, C],
       damage: 80,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
+      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
     }
   ];
 

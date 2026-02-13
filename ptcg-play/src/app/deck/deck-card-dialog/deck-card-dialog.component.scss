@@ -1,4 +1,4 @@
-@import '../../../theme/variables.scss';
+@import '../../../theme/global.scss';
 
 $ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, large) + 50;
 

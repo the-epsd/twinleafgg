@@ -58,7 +58,7 @@ export class UltraBallHR extends UltraBall {
   public set = 'BRS';
   public fullName = 'Ultra BallHR BRS';
   public setNumber = '186';
-  public regulationMark = 'G';
+  public regulationMark = 'F';
 }
 
 export class WhimsicottVFA extends WhimsicottV {
@@ -83,24 +83,28 @@ export class ZamazentaVBRS extends ZamazentaV {
 }
 
 export class BossOrdersBRS extends BossOrders {
+  public regulationMark = 'F';
   public setNumber = '132';
   public fullName: string = 'Boss\'s Orders BRS';
   public set = 'BRS';
 }
 
 export class ChoiceBeltBRS extends ChoiceBelt {
+  public regulationMark = 'F';
   public setNumber = '135';
   public fullName: string = 'Choice Belt BRS';
   public set = 'BRS';
 }
 
 export class ProfessorsResearchBRS extends ProfessorsResearch {
+  public regulationMark = 'F';
   public setNumber = '147';
   public fullName: string = 'Professor\'s Research BRS';
   public set = 'BRS';
 }
 
 export class UltraBallBRS extends UltraBall {
+  public regulationMark = 'F';
   public setNumber = '150';
   public fullName: string = 'Ultra Ball BRS';
   public set = 'BRS';
@@ -413,7 +417,7 @@ export class Gloria2BRS extends GloriaBRS141 {
 }
 
 export class SingleStrikeStyleMustardBRS extends SingleStrikeStyleMustard {
-  public setNumber = 'TG27';
+  public setNumber = 'TG28';
   public fullName: string = 'Single Strike Style Mustard BRS';
   public set = 'BRS';
 }

@@ -9,9 +9,6 @@ import { GameMessage } from '../../game/game-message';
 import { Card} from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
-import { EnergyCard } from '../../game/store/card/energy-card';
-
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperiorEnergyRetrieval, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -24,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   let basicEnergies = 0;
   player.discard.cards.forEach(c => {
-    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergies += 1;
     }
   });
@@ -84,26 +81,17 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class SuperiorEnergyRetrieval extends TrainerCard {
 
   public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'PAL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '189';
-
   public name: string = 'Superior Energy Retrieval';
-
   public fullName: string = 'Superior Energy Retrieval PAL';
 
   public text: string =
-    'You can use this card only if you discard 2 other cards from ' +
-    'your hand.'+
-    ''+
-    'Put up to 4 Basic Energy cards from your discard pile into ' +
-    'your hand. (You can\'t choose a card you discarded with the ' +
-    'effect of this card.)';
+    `You can use this card only if you discard 2 other cards from your hand. 
+
+Put up to 4 Basic Energy cards from your discard pile into your hand. (You can't choose a card you discarded with the effect of this card.)`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Latiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,16 +15,16 @@ export class Latiasex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Skyline',
+    name: 'Skyliner',
     powerType: PowerType.ABILITY,
-    text: 'Your Basic Pokémon have no Retreat Cost.'
+    text: 'Your Basic Pokémon in play have no Retreat Cost.'
   }];
 
   public attacks = [{
-    name: 'Infinity Blade',
+    name: 'Eon Blade',
     cost: [P, P, C],
     damage: 200,
-    text: 'This Pokémon can\'t attack during your next turn.'
+    text: 'During your next turn, this Pokémon can\'t attack.'
   }];
 
   public regulationMark: string = 'H';
@@ -66,7 +66,12 @@ export class Latiasex extends PokemonCard {
     // Infinity Blade
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+
+      // Legacy implementation:
+      // - Set player.active.cannotAttackNextTurnPending = true directly.
+      //
+      // Converted to prefab version (THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN).
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(player);
     }
     
     return state;

@@ -54,6 +54,7 @@ import { Ralts } from './ralts';
 import { Repel } from './repel';
 import { Riolu } from './riolu';
 import { Scorbunny } from './scorbunny';
+import { Snom } from './snom';
 import { Snover } from './snover';
 import { Sobble } from './sobble';
 import { Solrock } from './solrock';
@@ -64,6 +65,7 @@ import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
 import { Yveltal } from './yveltal';
+import { IronDefender } from './iron-defender';
 
 export const setMegaEvolution: Card[] = [
   new Abra(),
@@ -85,6 +87,7 @@ export const setMegaEvolution: Card[] = [
   new Gumshoos(),
   new Hariyama(),
   new Houndstone(),
+  new IronDefender(),
   new Ivysaur(),
   new Kadabra(),
   new Kirlia(),
@@ -120,6 +123,7 @@ export const setMegaEvolution: Card[] = [
   new Repel(),
   new Riolu(),
   new Scorbunny(),
+  new Snom(),
   new Snover(),
   new Sobble(),
   new Solrock(),

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PowerType, GamePhase, StateUtils, EnergyCard, GameError } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, PowerType, GamePhase, StateUtils, GameError } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -8,50 +8,33 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Blastoiseex extends PokemonCard {
-
-  public regulationMark = 'G';
-
   public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Wartortle';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 330;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Solid Shell',
     powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after ' +
-      'applying Weakness and Resistance).'
+    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Twin Cannons',
-      cost: [CardType.WATER, CardType.WATER],
-      damage: 140,
-      damageCalculation: 'x',
-      text: 'Discard up to 2 Basic Water Energies from your hand. This ' +
-        'attack does 140 damage for each card you discarded in ' +
-        'this way.'
-    }
-  ];
+  public attacks = [{
+    name: 'Twin Cannons',
+    cost: [W, W],
+    damage: 140,
+    damageCalculation: 'x',
+    text: 'Discard up to 2 Basic [W] Energies from your hand. This attack does 140 damage for each card you discarded in this way.'
+  }];
 
+  public regulationMark = 'G';
   public set: string = 'MEW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '9';
-
   public name: string = 'Blastoise ex';
-
   public fullName: string = 'Blastoise ex MEW';
 
   // Implement power
@@ -61,7 +44,7 @@ export class Blastoiseex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard;
+        return c.superType === SuperType.ENERGY;
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

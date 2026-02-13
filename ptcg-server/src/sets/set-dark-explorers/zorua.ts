@@ -45,26 +45,26 @@ export class Zorua extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 50;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [ C ];
 
   public attacks = [{
     name: 'Ascension',
-    cost: [ CardType.DARK ],
+    cost: [ D ],
     damage: 0,
-    text: 'Search your deck for a card that evolves from this Pokemon ' +
-      'and put it onto this Pokemon. (This counts as evolving this Pokemon.) ' +
+    text: 'Search your deck for a card that evolves from this Pokémon ' +
+      'and put it onto this Pokémon. (This counts as evolving this Pokémon.) ' +
       'Shuffle your deck afterward.'
   }, {
     name: 'Scratch',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [ C, C ],
     damage: 20,
     text: ''
   }];

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
@@ -19,14 +19,14 @@ export class Jellicent extends PokemonCard {
   public powers = [{
     name: 'Cursed Body',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokemon is your Active Pokemon and is damaged by an opponent\'s attack (even if this Pokemon is Knocked Out), discard an Energy attached to the Attacking Pokemon.'
+    text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), discard an Energy attached to the Attacking Pokémon.'
   }];
 
   public attacks = [{
     name: 'Absorb Life',
     cost: [W, W, C],
     damage: 50,
-    text: 'Heal 20 damage from this Pokemon.'
+    text: 'Heal 20 damage from this Pokémon.'
   }];
 
   public set: string = 'NVI';
@@ -41,7 +41,7 @@ export class Jellicent extends PokemonCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      // Only works if this is the active Pokemon and was damaged by opponent
+      // Only works if this is the active Pokémon and was damaged by opponent
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }
@@ -57,7 +57,7 @@ export class Jellicent extends PokemonCard {
 
       // Discard energy from attacker
       const attacker = effect.source;
-      const attackerEnergy = attacker.cards.filter(c => c instanceof EnergyCard);
+      const attackerEnergy = attacker.cards.filter(c => c.superType === SuperType.ENERGY);
 
       if (attackerEnergy.length === 0) {
         return state;

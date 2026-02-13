@@ -22,7 +22,7 @@ export class Elgyem extends PokemonCard {
       name: 'Calm Mind',
       cost: [P],
       damage: 0,
-      text: 'Heal 30 damage from this Pokemon.'
+      text: 'Heal 30 damage from this Pokémon.'
     }
   ];
 

@@ -1,5 +1,5 @@
 import { GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { CardType, EnergyType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Power, PowerType } from '../../game/store/card/pokemon-types';
@@ -63,9 +63,17 @@ export class Electrode extends PokemonCard implements EnergyCard {
   public text: string = '';
   public isBlocked = false;
   public blendedEnergies: CardType[] = [];
+  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Auto-detect if we've been removed from energies and reset superType back to POKEMON
+    if (this.superType === SuperType.ENERGY) {
+      const cardList = StateUtils.findCardList(state, this);
+      if (!(cardList instanceof PokemonCardList) || !cardList.energies.cards.includes(this)) {
+        this.superType = SuperType.POKEMON;
+      }
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
@@ -114,7 +122,6 @@ export class Electrode extends PokemonCard implements EnergyCard {
           return state;
         }
 
-        // Set energy properties but keep the superType as POKEMON
         this.chosenEnergyType = option.value;
         this.provides = [option.value, option.value];
 
@@ -137,6 +144,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
             if (!targets[0].energies.cards.includes(this)) {
               targets[0].energies.cards.push(this);
             }
+            this.superType = SuperType.ENERGY;
           }
         });
       });

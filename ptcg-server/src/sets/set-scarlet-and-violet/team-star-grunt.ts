@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StateUtils, EnergyCard, CardList, ChooseCardsPrompt, Player } from '../../game';
+import { StateUtils, CardList, ChooseCardsPrompt, Player } from '../../game';
 
 export class TeamStarGrunt extends TrainerCard {
 
@@ -35,7 +35,7 @@ export class TeamStarGrunt extends TrainerCard {
       return false;
     }
 
-    if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+    if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
       return false;
     }
     return true;
@@ -57,7 +57,7 @@ export class TeamStarGrunt extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 

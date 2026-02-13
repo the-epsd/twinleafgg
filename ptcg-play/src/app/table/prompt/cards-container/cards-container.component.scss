@@ -1,4 +1,4 @@
-@import '../../../../theme/variables.scss';
+@import '../../../../theme/global.scss';
 
 $ptcg-cards-container-padding-v: map-get($padding, small);
 $ptcg-cards-container-padding-h: map-get($padding, normal); // for easier scrolling on mobile

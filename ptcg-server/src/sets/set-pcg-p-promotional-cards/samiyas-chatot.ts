@@ -24,7 +24,7 @@ export class SamiyasChatot extends PokemonCard {
     name: 'Copy',
     cost: [C],
     damage: 0,
-    text: 'Choose 1 of the Defending Pokémon\'s attacks.Copy copies that attack. This attack does nothing if this Pokémon doesn\'t have the Energy necessary to use that attack. (You must still do anything else required for that attack.) This Pokémon performs that attack.'
+    text: 'Choose 1 of the Defending Pokémon\'s attacks. Copy copies that attack. This attack does nothing if this Pokémon doesn\'t have the Energy necessary to use that attack. (You must still do anything else required for that attack.) This Pokémon performs that attack.'
   }];
 
   public set: string = 'PCGP';

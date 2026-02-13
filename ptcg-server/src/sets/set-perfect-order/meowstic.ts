@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, SuperType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -43,7 +43,7 @@ export class Meowstic extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = effect.opponent;
       const energyCount = opponent.active.cards.filter(card =>
-        card instanceof EnergyCard
+        card.superType === SuperType.ENERGY
       ).length;
       effect.damage = 30 + (energyCount * 30);
     }

@@ -1,11 +1,8 @@
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, DAMAGED_FROM_FULL_HP, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS, SURVIVE_ON_TEN_IF_FULL_HP } from '../../game/store/prefabs/prefabs';
 
 export class Donphan extends PokemonCard {
 
@@ -38,46 +35,21 @@ export class Donphan extends PokemonCard {
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
-  public usedAttack: boolean = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const player = StateUtils.findOwner(state, effect.target);
-      if (!IS_ABILITY_BLOCKED(store, state, player, this) && DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
-        effect.surviveOnTenHPReason = this.powers[0].name;
-      }
-    }
+    SURVIVE_ON_TEN_IF_FULL_HP(store, state, effect, {
+      source: this,
+      reason: this.powers[0].name
+    });
 
-    if (effect instanceof AttackEffect) {
-      this.usedAttack = true;
-    }
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[0],
+      source: this,
+      bonusDamage: 70,
+      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+    });
 
-    if (effect instanceof BeginTurnEffect) {
-      if (this.usedAttack) {
-        this.usedAttack = false;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      if (!this.usedAttack) {
-        this.usedAttack = false;
-        REMOVE_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this);
-        REMOVE_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, effect.player, this);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this)) {
-      ADD_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, effect.player, this);
-    }
-
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Check marker
-      if (HAS_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this)) {
-        effect.damage += 70;
-      }
-      ADD_MARKER(this.NEXT_TURN_MORE_DAMAGE_MARKER, effect.player, this);
-    }
     return state;
   }
 }

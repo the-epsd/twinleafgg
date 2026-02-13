@@ -1,4 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType } from '../../game';
+import { PlayerType, PokemonCard, Stage, CardType, PowerType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Sigilyph extends PokemonCard {
 
@@ -27,25 +30,26 @@ export class Sigilyph extends PokemonCard {
   public name: string = 'Sigilyph';
   public fullName: string = 'Sigilyph PLB';
 
-  // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof CheckTableStateEffect) {
+      state.players.forEach(player => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card !== this) {
+            return;
+          }
 
-  //   if (effect instanceof CheckTableStateEffect) {
-  //     state.players.forEach(player => {
-  //       if (!StateUtils.isPokemonInPlay(player, this)) {
-  //         return;
-  //       }
-  //       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-  //         if (card !== this) {
-  //           return;
-  //         }
-  //         if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
-  //           cardList.maxTools = 4;
-  //         } else {
-  //           cardList.maxTools = 1;
-  //         }
-  //       });
-  //     });
-  //   }
-  //   return state;
-  // }
+          // Ref: set-phantasmal-flames/rotom-ex.ts (dynamic maxTools from Ability)
+          const abilityBlocked = IS_ABILITY_BLOCKED(store, state, player, this);
+          this.maxTools = abilityBlocked ? 1 : 4;
+
+          while (cardList.tools.length > this.maxTools) {
+            const tool = cardList.tools[cardList.tools.length - 1];
+            cardList.moveCardTo(tool, player.discard);
+          }
+        });
+      });
+    }
+
+    return state;
+  }
 }

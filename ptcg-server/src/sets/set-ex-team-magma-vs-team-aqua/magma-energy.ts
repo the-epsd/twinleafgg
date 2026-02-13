@@ -1,4 +1,4 @@
-import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardTag, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -26,7 +26,7 @@ export class MagmaEnergy extends EnergyCard {
 
   private getExistingEnergy(source: CardList): EnergyMap[] {
     return source.cards
-      .filter((card: Card) => card instanceof EnergyCard && card !== this)
+      .filter((card: Card) => card.superType === SuperType.ENERGY && card !== this)
       .map((card: Card) => ({
         card: card as EnergyCard,
         provides: (card as EnergyCard).provides

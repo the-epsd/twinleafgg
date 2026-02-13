@@ -39,7 +39,7 @@ export class Serperior extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // Heal 20 damage from each of your Grass Pokemon
+      // Heal 20 damage from each of your Grass Pokémon
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.cardType === CardType.GRASS) {
           const healEffect = new HealTargetEffect(effect, 20);

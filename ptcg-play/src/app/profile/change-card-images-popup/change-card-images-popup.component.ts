@@ -37,7 +37,7 @@ export class ChangeCardImagesPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    
+
     // Load card images URL for all users
     const cardImagesRequest = this.profileService.getCardImagesUrl().pipe(
       catchError(() => of({ ok: false, jsonUrl: '' }))
@@ -48,7 +48,7 @@ export class ChangeCardImagesPopupComponent implements OnInit {
       take(1)
     ).subscribe(isAdmin => {
       const requests: Observable<any>[] = [cardImagesRequest];
-      
+
       if (isAdmin) {
         requests.push(
           this.profileService.getNightlyImagesUrl().pipe(
@@ -74,6 +74,10 @@ export class ChangeCardImagesPopupComponent implements OnInit {
         }
       });
     });
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   resetCardImages(): void {

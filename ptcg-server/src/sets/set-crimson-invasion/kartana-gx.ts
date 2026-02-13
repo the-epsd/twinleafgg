@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, EnergyCard, ConfirmPrompt, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, ConfirmPrompt, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -74,7 +74,7 @@ export class KartanaGX extends PokemonCard {
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.cards.some(c =>
-          c instanceof EnergyCard &&
+          c.superType === SuperType.ENERGY &&
           c.energyType === EnergyType.SPECIAL)) {
           hasPokemonWithEnergy = true;
         } else {

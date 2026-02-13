@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, GameMessage, StateUtils, Card, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameMessage, StateUtils, Card, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -37,7 +37,7 @@ export class Dragonair extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

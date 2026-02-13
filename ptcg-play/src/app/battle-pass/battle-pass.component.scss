@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import '../../theme/global.scss';
 
 :host {
   display: block;
   height: 100vh;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(45deg, rgba($twinleaf-950, 0.9) 0%, rgba($twinleaf-900, 0.9) 100%);
   overflow: hidden;
   font-family: 'Urbanist', sans-serif;
 }
@@ -29,7 +30,7 @@
   .header-background {
     position: relative;
     height: 100%;
-    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(5, 10, 25, 0.8) 50%, rgba(10, 10, 20, 0.8) 100%);
+    background: linear-gradient(135deg, rgba($twinleaf-950, 0.8) 0%, rgba($twinleaf-900, 0.8) 50%, rgba($twinleaf-950, 0.8) 100%);
   }
 
   .header-artwork {
@@ -83,7 +84,7 @@
       display: block;
       font-size: 16px;
       font-weight: 600;
-      color: #459058;
+      color: $twinleaf-green;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 10px;
@@ -96,7 +97,7 @@
         display: block;
         font-size: 32px;
         font-weight: 800;
-        color: #e2e8f0;
+        color: $text-primary;
         letter-spacing: 3px;
         margin-bottom: 15px;
         font-family: 'Urbanist', sans-serif;
@@ -108,7 +109,7 @@
         gap: 30px;
 
         .bolt {
-          background: linear-gradient(45deg, #459058, #5ba86b);
+          background: linear-gradient(45deg, $twinleaf-500, $twinleaf-600);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -118,7 +119,7 @@
         }
 
         .flare {
-          background: linear-gradient(45deg, #f59e0b, #ef4444);
+          background: linear-gradient(45deg, $twinleaf-400, $twinleaf-600);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -148,13 +149,13 @@
     .level-number {
       font-size: 48px;
       font-weight: 800;
-      color: #e2e8f0;
+      color: $text-primary;
       font-family: 'Urbanist', sans-serif;
     }
 
     .level-badge {
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(69, 144, 88, 0.3);
+      border: 1px solid $twinleaf-green;
       border-radius: 25px;
       padding: 8px 16px;
       backdrop-filter: blur(20px);
@@ -165,11 +166,11 @@
         gap: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #e2e8f0;
+        color: $text-primary;
         font-family: 'Urbanist', sans-serif;
 
         .separator {
-          color: #64748b;
+          color: $twinleaf-400;
         }
       }
     }
@@ -181,11 +182,11 @@
     background: rgba(0, 0, 0, 0.8);
     border-radius: 6px;
     overflow: hidden;
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    border: 1px solid rgba($twinleaf-green, 0.3);
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #459058, #5ba86b);
+      background: $twinleaf-green;
       border-radius: 6px;
       transition: width 0.5s ease;
     }
@@ -200,8 +201,8 @@
   font-family: 'Urbanist', sans-serif;
 
   .status-badge {
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+    border: 1px solid $twinleaf-green;
     border-radius: 20px;
     padding: 8px 20px;
     backdrop-filter: blur(20px);
@@ -209,7 +210,7 @@
     .status-text {
       font-size: 12px;
       font-weight: 700;
-      color: #e2e8f0;
+      color: $text-primary;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
@@ -224,7 +225,7 @@
     .time-label {
       font-size: 12px;
       font-weight: 600;
-      color: #64748b;
+      color: $twinleaf-400;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-family: 'Urbanist', sans-serif;
@@ -233,7 +234,7 @@
     .time-value {
       font-size: 14px;
       font-weight: 700;
-      color: #e2e8f0;
+      color: $text-primary;
       font-family: 'Urbanist', sans-serif;
     }
   }
@@ -260,12 +261,12 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: linear-gradient(90deg, #459058, #5ba86b);
+      background: linear-gradient(90deg, $twinleaf-500, $twinleaf-600);
       border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(90deg, #5ba86b, #459058);
+      background: linear-gradient(90deg, $twinleaf-600, $twinleaf-500);
     }
   }
 
@@ -291,7 +292,7 @@
     height: 380px;
     border-radius: 0;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    border: 1px solid $twinleaf-green;
     backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
@@ -317,14 +318,14 @@
           width: 100%;
           height: 100%;
           border-radius: 8px;
-          background: linear-gradient(135deg, #0f172a, #1f2937);
-          border: 1px solid rgba(69, 144, 88, 0.3);
+          background: linear-gradient(135deg, $twinleaf-950, $twinleaf-900);
+          border: 1px solid rgba($twinleaf-500, 0.3);
         }
       }
 
       .reward-name {
         font-size: 14px;
-        color: #e2e8f0;
+        color: $text-primary;
         text-align: center;
         font-weight: 600;
         font-family: 'Urbanist', sans-serif;
@@ -337,7 +338,7 @@
       right: 10px;
       width: 22px;
       height: 22px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
+      background: $twinleaf-green;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -346,7 +347,7 @@
       svg {
         width: 12px;
         height: 12px;
-        color: #e2e8f0;
+        color: $twinleaf-green;
       }
     }
 
@@ -356,9 +357,9 @@
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      color: #e2e8f0;
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-      border: 1px solid rgba(69, 144, 88, 0.3);
+      color: $text-primary;
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
+      border: 1px solid $twinleaf-green;
       border-radius: 8px;
       cursor: pointer;
       text-transform: uppercase;
@@ -367,8 +368,8 @@
     }
 
     .claim-button:hover:not([disabled]) {
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-      border-color: rgba(69, 144, 88, 0.5);
+      background: linear-gradient(135deg, rgba($twinleaf-500, 0.2), rgba($twinleaf-500, 0.1));
+      border-color: $twinleaf-green;
     }
 
     .claim-button[disabled] {
@@ -402,26 +403,26 @@
       min-width: 36px;
       height: 36px;
       border-radius: 18px;
-      border: 2px solid #64748b;
-      background: radial-gradient(circle at 50% 40%, #0b1220, #111827);
+      border: 2px solid $twinleaf-green;
+      background: radial-gradient(circle at 50% 40%, $twinleaf-950, $twinleaf-900);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 8px;
-      color: #94a3b8;
+      color: $twinleaf-400;
       font-weight: 800;
       font-size: 12px;
 
       &.unlocked {
-        border-color: #459058;
-        color: #e2e8f0;
-        background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
+        border-color: $twinleaf-green;
+        color: $text-primary;
+        background: linear-gradient(135deg, rgba($twinleaf-500, 0.1), rgba($twinleaf-500, 0.05));
       }
 
       .lock-icon {
         width: 16px;
         height: 16px;
-        color: #64748b;
+        color: $twinleaf-400;
       }
     }
   }
@@ -436,7 +437,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(45deg, rgba($twinleaf-950, 0.9) 0%, rgba($twinleaf-900, 0.9) 100%);
 
   .spinner {
     position: relative;
@@ -452,12 +453,12 @@
       animation: spin 2s linear infinite;
 
       &:nth-child(1) {
-        border-top-color: #449058;
+        border-top-color: $twinleaf-500;
         animation-duration: 2s;
       }
 
       &:nth-child(2) {
-        border-right-color: #5ba86b;
+        border-right-color: $twinleaf-600;
         animation-duration: 1.5s;
         animation-direction: reverse;
         width: 70%;
@@ -467,7 +468,7 @@
       }
 
       &:nth-child(3) {
-        border-bottom-color: #449058;
+        border-bottom-color: $twinleaf-500;
         animation-duration: 1s;
         width: 40%;
         height: 40%;
@@ -484,7 +485,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(45deg, rgba(10, 10, 20, 0.9) 0%, rgba(5, 10, 25, 0.9) 100%);
+  background: linear-gradient(45deg, rgba($twinleaf-950, 0.9) 0%, rgba($twinleaf-900, 0.9) 100%);
 
   .no-season-content {
     text-align: center;
@@ -494,14 +495,14 @@
     h2 {
       font-size: 32px;
       font-weight: 800;
-      color: #e2e8f0;
+      color: $text-primary;
       margin-bottom: 16px;
       font-family: 'Orbitron', monospace;
     }
 
     p {
       font-size: 16px;
-      color: #64748b;
+      color: $twinleaf-400;
       margin: 0;
       line-height: 1.5;
       font-family: 'Orbitron', monospace;

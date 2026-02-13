@@ -11,25 +11,18 @@ import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class LuckyEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public regulationMark = 'E';
-
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '158';
-
   public name = 'Lucky Energy';
-
   public fullName = 'Lucky Energy CRE';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [C] Energy. ' +
-    '' +
-    'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw a card.';
+    `As long as this card is attached to a Pokémon, it provides [C] Energy. 
+
+If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if it is Knocked Out), draw a card.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

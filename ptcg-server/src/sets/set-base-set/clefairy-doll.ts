@@ -29,7 +29,7 @@ export class ClefairyDoll extends TrainerCard {
   public attacksThisTurn: number = 0;
   public maxAttacksThisTurn: number = 1;
   public allowSubsequentAttackChoice: boolean = false;
-  public maxTools: number = 0;
+  public maxTools: number = 1;
   public weakness = [];
   public resistance = [];
   public retreat = [];

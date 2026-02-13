@@ -3,7 +3,7 @@ import { Stage, CardTag, EnergyType, SuperType } from '../../game/store/card/car
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -72,7 +72,7 @@ export class SandyShocksex extends PokemonCard {
       }
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.name == 'Fighting Energy';
+        return c.superType === SuperType.ENERGY && c.name == 'Fighting Energy';
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

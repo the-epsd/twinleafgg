@@ -1,5 +1,5 @@
-import { Card, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -19,7 +19,9 @@ export class HolonResearcher extends TrainerCard {
   public fullName: string = 'Holon Researcher DS';
 
   public text: string =
-    'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) that has delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
+    `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
+    
+Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) that has delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -40,7 +42,7 @@ export class HolonResearcher extends TrainerCard {
       player.deck.cards.forEach((c, index) => {
         if (c instanceof PokemonCard && c.tags.includes(CardTag.DELTA_SPECIES)) {
           return;
-        } else if (c instanceof EnergyCard && c.name === 'Metal Energy') {
+        } else if (c.superType === SuperType.ENERGY && c.name === 'Metal Energy') {
           return;
         } else {
           blocked.push(index);

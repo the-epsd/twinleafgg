@@ -162,7 +162,7 @@ export class MorpekoVUNIONTopLeft extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const player = effect.player;
       
-      const energies = player.active.cards.filter(card => card instanceof EnergyCard );
+      const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
 
       const discardEnergy = new DiscardCardsEffect(effect, energies);
       discardEnergy.target = player.active;

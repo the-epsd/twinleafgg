@@ -31,7 +31,7 @@
   border-top-right-radius: map-get($padding, small);
   display: flex;
   padding: 12px;
-  background-color: #1a202c7a;
+  background-color: rgba($twinleaf-800, 0.48);
   font-weight: bold;
   font-size: 1.4em;
 }
@@ -40,7 +40,7 @@
   align-items: baseline;
   display: flex;
   padding: 12px;
-  background-color: #2127347a;
+  background-color: rgba($twinleaf-700, 0.48);
   border-bottom-left-radius: map-get($padding, small);
   border-bottom-right-radius: map-get($padding, small);
   margin-bottom: map-get($padding, normal);
@@ -50,7 +50,7 @@
   font-size: 10px;
   margin: map-get($padding, small) 0;
   padding: map-get($padding, small);
-  color: rgba(255, 255, 255, 0.7);
+  color: $text-secondary;
 }
 
 .subtitle-hp {
@@ -81,7 +81,7 @@
 .power {
   margin: map-get($padding, small) 0;
   padding: 12px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba($twinleaf-500, 0.05);
   border-radius: map-get($padding, small);
 }
 
@@ -92,7 +92,7 @@
 }
 
 .power-type {
-  color: #ff5c5c;
+  color: $twinleaf-red;
   text-transform: uppercase;
   font-size: 14px;
   letter-spacing: 0.5px;
@@ -112,12 +112,12 @@
 .attack {
   margin: map-get($padding, small) 0;
   padding: 12px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba($twinleaf-500, 0.05);
   border-radius: map-get($padding, small);
   transition: background-color 0.3s ease;
 
   &.disabled {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba($twinleaf-500, 0.03);
   }
 }
 
@@ -165,13 +165,13 @@
 .card-text {
   padding-top: map-get($padding, small);
   white-space: pre-wrap;
-  color: rgba(255, 255, 255, 0.9);
+  color: $text-primary;
 }
 
 .stats {
   display: flex;
   padding: 12px;
-  background-color: #2127347a;
+  background-color: rgba($twinleaf-700, 0.48);
   border-radius: 12px;
   margin: map-get($padding, normal) 0;
   justify-content: space-around;
@@ -199,7 +199,7 @@
 .stats-item-header {
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: $text-secondary;
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;

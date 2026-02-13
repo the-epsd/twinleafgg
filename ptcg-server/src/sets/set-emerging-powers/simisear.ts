@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -19,7 +19,7 @@ export class Simisear extends PokemonCard {
       name: 'Water\'s Power',
       cost: [C, C],
       damage: 30,
-      text: 'If this Pokémon has any Water Energy attached to it, the Defending Pokémon is now Asleep.'
+      text: 'If this Pokémon has any [W] Energy attached to it, the Defending Pokémon is now Asleep.'
     },
     {
       name: 'Flamethrower',
@@ -39,7 +39,7 @@ export class Simisear extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasWaterEnergy = player.active.cards.some(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.WATER)
+        c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.WATER)
       );
       if (hasWaterEnergy) {
         YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);

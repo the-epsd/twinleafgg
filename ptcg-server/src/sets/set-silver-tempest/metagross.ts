@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { DrewTopdeckEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { DrewTopdeckEffect } from '../../game/store/effects/game-phase-effects';
+import { NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
 
 export class Metagross extends PokemonCard {
 
@@ -91,23 +92,14 @@ export class Metagross extends PokemonCard {
     }
 
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        effect.damage += 100;
-      }
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-    }
+    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[0],
+      source: this,
+      bonusDamage: 100,
+      bonusMarker: this.ATTACK_USED_MARKER,
+      clearMarker: this.ATTACK_USED_2_MARKER
+    });
     return state;
   }
 }

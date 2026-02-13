@@ -22,23 +22,23 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba($bg-card, 0.05);
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba($bg-card, 0.1);
       transform: scale(1.05);
     }
 
     &.ptcg-avatar-selected {
-      background-color: rgba(68, 144, 88, 0.2);
-      border: 2px solid #449058;
+      background-color: rgba($twinleaf-500, 0.2);
+      border: 2px solid $twinleaf-500;
     }
   }
 
   .ptcg-avatar-name {
     text-align: center;
     font-size: 14px;
-    color: #fff;
+    color: $text-primary;
     margin-top: map-get($padding, small);
   }
 }

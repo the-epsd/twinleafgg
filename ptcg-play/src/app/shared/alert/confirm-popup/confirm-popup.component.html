@@ -4,11 +4,9 @@
   <p>{{ message }}</p>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="cancel()">
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
-  </button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_OK' | translate" (clicked)="confirm()">
+  </twinleaf-button>
+</div>

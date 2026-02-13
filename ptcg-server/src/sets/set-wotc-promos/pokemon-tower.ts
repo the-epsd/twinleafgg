@@ -5,7 +5,7 @@ import { MoveCardsEffect, UseStadiumEffect } from '../../game/store/effects/game
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyCard, GameError, GameMessage, PowerType } from '../../game';
+import { GameError, GameMessage, PowerType, SuperType } from '../../game';
 
 // WIP - requires changing nearly everything to use MoveCardsEffect
 export class PokemonTower extends TrainerCard {
@@ -39,7 +39,7 @@ export class PokemonTower extends TrainerCard {
           return state;
         }
 
-        if (effect.sourceCard instanceof TrainerCard || effect.sourceCard instanceof EnergyCard) {
+        if (effect.sourceCard instanceof TrainerCard || effect.sourceCard?.superType === SuperType.ENERGY) {
           effect.preventDefault = true;
           return state;
         }

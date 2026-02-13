@@ -29,11 +29,9 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button mat-dialog-close>
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button (click)="importDeck()" [disabled]="form.invalid">
-    {{ 'BUTTON_IMPORT' | translate }}
-  </button>
-</mat-dialog-actions>
+<div class="dialog-actions">
+  <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_IMPORT' | translate" (clicked)="importDeck()" [disabled]="form.invalid">
+  </twinleaf-button>
+</div>

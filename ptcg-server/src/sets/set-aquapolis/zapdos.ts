@@ -53,7 +53,7 @@ export class Zapdos extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.discard.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.LIGHTNING))) {
+      if (player.discard.cards.some(c => c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.LIGHTNING))) {
         COIN_FLIP_PROMPT(store, state, player, result => {
           if (result) {
             store.prompt(state, new ChooseCardsPrompt(

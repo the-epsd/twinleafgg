@@ -74,7 +74,7 @@ export class Krookodile extends PokemonCard {
       cost: [D],
       damage: 0,
       copycatAttack: true,
-      text: 'Choose 1 of the Defending Pokemon\'s attacks and use it as this attack.'
+      text: 'Choose 1 of the Defending Pokémon\'s attacks and use it as this attack.'
     },
     {
       name: 'Bombast',

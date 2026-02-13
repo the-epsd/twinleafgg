@@ -1,6 +1,5 @@
 import { ChooseCardsPrompt, GameError, GameLog, GameMessage } from '../../game';
-import { TrainerType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
+import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -48,7 +47,7 @@ export class RollerSkater extends TrainerCard {
         }
         let cardsToDraw = 2;
 
-        if (cards[0] instanceof EnergyCard) {
+        if (cards[0].superType === SuperType.ENERGY) {
           cardsToDraw = 4;
         }
 

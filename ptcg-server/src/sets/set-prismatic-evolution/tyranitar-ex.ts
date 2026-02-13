@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -42,7 +42,7 @@ export class Tyranitarex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
       const player = effect.player;
 
-      const energies = player.active.cards.filter( card => card instanceof EnergyCard );
+      const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
       effect.damage = 50 * energies.length;
     }
 

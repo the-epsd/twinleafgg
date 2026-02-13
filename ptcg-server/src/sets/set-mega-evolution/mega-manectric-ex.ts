@@ -22,7 +22,7 @@ export class MegaManectricEx extends PokemonCard {
     text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
   },
   {
-    name: 'Riot Blast',
+    name: 'Riotous Blasting',
     cost: [L, L, L],
     damage: 200,
     damageCalculation: '+',

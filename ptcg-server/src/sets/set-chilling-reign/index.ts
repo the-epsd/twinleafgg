@@ -20,6 +20,7 @@ import { FogCrystal } from './fog-crystal';
 import { Froslass } from './froslass';
 import { GalarianArticunoV } from './galarian-articuno-v';
 import { GalarianMoltresV } from './galarian-moltres-v';
+import { GalarianRapidashV } from './galarian-rapidash-v';
 import { GalarianWeezing } from './galarian-weezing';
 import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
@@ -46,6 +47,7 @@ import { Peonia } from './peonia';
 import { Peony } from './peony';
 import { Porygon2 } from './porygon2';
 import { Ralts } from './ralts';
+import { RapidStrikeUrshifu } from './rapid-strike-urshifu';
 import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
 import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
 import { Sneasel } from './sneasel';
@@ -81,6 +83,7 @@ export const setChillingReign: Card[] = [
   new Froslass(),
   new GalarianArticunoV(),
   new GalarianMoltresV(),
+  new GalarianRapidashV(),
   new GalarianWeezing(),
   new GalarianZapdosV(),
   new Gardevoir(),
@@ -105,6 +108,7 @@ export const setChillingReign: Card[] = [
   new Peony(),
   new Porygon2(),
   new Ralts(),
+  new RapidStrikeUrshifu(),
   new ShadowRiderCalyrexV(),
   new ShadowRiderCalyrexVMAX(),
   new Snorunt(),

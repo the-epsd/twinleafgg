@@ -16,30 +16,30 @@ export class DarkraiEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 180;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Dark Cloak',
     powerType: PowerType.ABILITY,
-    text: 'Each of your Pokemon that has any [D] Energy attached to it ' +
+    text: 'Each of your Pokémon that has any [D] Energy attached to it ' +
       'has no Retreat Cost.'
   }];
 
   public attacks = [
     {
       name: 'Night Spear',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
+      cost: [D, D, C],
       damage: 90,
-      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokémon. ' +
+        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 

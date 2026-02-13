@@ -1,12 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { EnergyType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
+import { EnergyType, SuperType } from '../../game/store/card/card-types';
 import { CardList } from '../../game/store/state/card-list';
 
 export class Lanturn extends PokemonCard {
@@ -64,7 +63,7 @@ export class Lanturn extends PokemonCard {
         return state;
       }
       // Check if there is a basic Energy in the knocked out Pokémon
-      const basicEnergies = effect.target.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
+      const basicEnergies = effect.target.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC);
       if (basicEnergies.length === 0) {
         return state;
       }
@@ -93,7 +92,7 @@ export class Lanturn extends PokemonCard {
       const player = effect.player;
       const active = player.active;
       // Find all Lightning Energy attached to this Pokémon
-      const lightningEnergies = active.cards.filter(c => c instanceof EnergyCard && c.provides.includes(CardType.LIGHTNING));
+      const lightningEnergies = active.cards.filter(c => c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.LIGHTNING));
       if (lightningEnergies.length > 0) {
         const lightningEnergiesList = new CardList();
         lightningEnergiesList.cards = lightningEnergies;

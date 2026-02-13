@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -27,7 +27,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Lightning Crash',
       cost: [L, L, C],
       damage: 0,
-      text: 'Discard all Lightning Energy attached to this Pokemon. This attack does 80 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Discard all [L] Energy attached to this Pokémon. This attack does 80 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -56,13 +56,13 @@ export class Zebstrika extends PokemonCard {
       }
     }
 
-    // Lightning Crash - discard all Lightning energy and deal 80 to any Pokemon
+    // Lightning Crash - discard all Lightning energy and deal 80 to any Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const lightningEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard &&
+        card.superType === SuperType.ENERGY &&
         card.energyType === EnergyType.BASIC &&
-        card.provides.includes(CardType.LIGHTNING)
+        (card as EnergyCard).provides.includes(CardType.LIGHTNING)
       );
 
       if (lightningEnergy.length > 0) {

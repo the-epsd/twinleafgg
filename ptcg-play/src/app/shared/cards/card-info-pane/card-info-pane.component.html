@@ -83,7 +83,8 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(power.text)"></div>
+        <div class="card-text" [innerHTML]="transformEnergyText(power.text)" [ngStyle]="getCardTextKerningStyle()">
+        </div>
       </div>
     </ptcg-hover-highlight>
 
@@ -104,7 +105,8 @@
             {{ attack.damage }}{{attack.damageCalculation ? ' ' + attack.damageCalculation : ''}}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)"></div>
+        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)" [ngStyle]="getCardTextKerningStyle()">
+        </div>
       </div>
     </ptcg-hover-highlight>
 
@@ -133,7 +135,8 @@
         </div>
       </div>
 
-      <ptcg-hover-highlight (click)="onRetreatClick()">
+      <ptcg-hover-highlight (click)="shouldEnableRetreat() && clickAction({retreat: true})"
+        [enabled]="shouldEnableRetreat()">
         <div class="stats-item">
           <div class="stats-item-header" translate>CARDS_RETREAT_COST</div>
           <div class="stats-item-value">
@@ -156,7 +159,7 @@
           {{ card.name }}
         </div>
       </div>
-      <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
+      <div class="card-text" [innerHTML]="transformEnergyText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
     </div>
 
   </div>
@@ -186,7 +189,7 @@
           {{ card.name }}
         </div>
       </div>
-      <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
+      <div class="card-text" [innerHTML]="transformEnergyText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
     </div>
 
     <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
@@ -202,7 +205,8 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(power.text)"></div>
+        <div class="card-text" [innerHTML]="transformEnergyText(power.text)" [ngStyle]="getCardTextKerningStyle()">
+        </div>
       </div>
     </ptcg-hover-highlight>
 
@@ -242,7 +246,8 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(power.text)"></div>
+        <div class="card-text" [innerHTML]="transformEnergyText(power.text)" [ngStyle]="getCardTextKerningStyle()">
+        </div>
       </div>
     </ptcg-hover-highlight>
 
@@ -262,7 +267,8 @@
             {{ attack.damage }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)"></div>
+        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)" [ngStyle]="getCardTextKerningStyle()">
+        </div>
       </div>
     </ptcg-hover-highlight>
 
@@ -274,7 +280,7 @@
             {{ card.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
+        <div class="card-text" [innerHTML]="transformEnergyText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
       </div>
     </ptcg-hover-highlight>
 

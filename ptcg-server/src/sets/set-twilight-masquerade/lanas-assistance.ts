@@ -5,8 +5,8 @@ import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/pla
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
-import { PokemonCard, EnergyCard, Card, ChooseCardsPrompt, StateUtils } from '../../game';
+import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { PokemonCard, Card, ChooseCardsPrompt, StateUtils } from '../../game';
 import { SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isPokemon = c instanceof PokemonCard && !(c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
-    const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+    const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
     if (isPokemon || isBasicEnergy) {
       pokemonsOrEnergyInDiscard += 1;
     } else {

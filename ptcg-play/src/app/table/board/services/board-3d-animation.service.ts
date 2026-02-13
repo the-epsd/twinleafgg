@@ -5,6 +5,9 @@ import gsap from 'gsap';
 @Injectable()
 export class Board3dAnimationService {
   private activeAnimations: gsap.core.Timeline[] = [];
+  private hasActiveAnimationsCache: boolean = false;
+  private lastAnimationCheck: number = 0;
+  private animationCheckInterval: number = 50; // Check every 50ms (20fps check rate)
 
   /**
    * Play basic Pokemon animation (card drops from above)
@@ -35,11 +38,12 @@ export class Board3dAnimationService {
         }, '<');
 
       this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
   /**
-   * Evolution animation (spin, scale, and glow)
+   * Evolution animation (spin, scale, and glow) - matches 2D board: 1080deg spin, scale 1.3, ~1.5s total
    */
   evolutionAnimation(card: Object3D): Promise<void> {
     return new Promise(resolve => {
@@ -51,19 +55,18 @@ export class Board3dAnimationService {
       });
 
       timeline
-        // Rise up
+        // Rise up (0.4s)
         .to(card.position, {
           y: 2,
           duration: 0.4,
           ease: 'power2.out'
         })
-        // Triple spin
+        // Triple spin (1080deg = 6*PI) + scale up, overlap with rise
         .to(card.rotation, {
-          y: Math.PI * 3,
+          y: Math.PI * 6,
           duration: 0.8,
           ease: 'power2.inOut'
         }, '<')
-        // Scale up
         .to(card.scale, {
           x: 1.3,
           y: 1.3,
@@ -71,7 +74,7 @@ export class Board3dAnimationService {
           duration: 0.4,
           ease: 'back.out(1.7)'
         }, '<')
-        // Settle back down
+        // Settle back down (0.3s)
         .to(card.position, {
           y: 0.1,
           duration: 0.3,
@@ -86,42 +89,7 @@ export class Board3dAnimationService {
         }, '<');
 
       this.activeAnimations.push(timeline);
-    });
-  }
-
-  /**
-   * Attack animation (lunge toward target)
-   */
-  attackAnimation(attacker: Object3D, defender: Object3D): Promise<void> {
-    const originalZ = attacker.position.z;
-    const targetZ = defender.position.z;
-    const lungeDistance = targetZ > originalZ ? 5 : -5;
-
-    return new Promise(resolve => {
-      const timeline = gsap.timeline({
-        onComplete: () => {
-          this.removeAnimation(timeline);
-          resolve();
-        }
-      });
-
-      timeline
-        // Lunge forward
-        .to(attacker.position, {
-          z: originalZ + lungeDistance,
-          y: 0.5,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-        // Return with elastic bounce
-        .to(attacker.position, {
-          z: originalZ,
-          y: 0.1,
-          duration: 0.4,
-          ease: 'elastic.out(1, 0.5)'
-        });
-
-      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
@@ -184,6 +152,7 @@ export class Board3dAnimationService {
       });
 
       this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
@@ -212,6 +181,7 @@ export class Board3dAnimationService {
         }, '<0.1');
 
       this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
@@ -245,6 +215,7 @@ export class Board3dAnimationService {
         }, '<0.1');
 
       this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
@@ -328,6 +299,7 @@ export class Board3dAnimationService {
         }, '<');
 
       this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
@@ -380,14 +352,34 @@ export class Board3dAnimationService {
         }, '<');
 
       this.activeAnimations.push(timeline);
+      this.updateAnimationState();
     });
   }
 
   /**
    * Check if any animations are currently active
+   * Uses cached value for performance - call updateAnimationState() to refresh
    */
   hasActiveAnimations(): boolean {
-    return this.activeAnimations.length > 0;
+    // Update cache periodically instead of every call
+    const currentTime = performance.now();
+    if (currentTime - this.lastAnimationCheck >= this.animationCheckInterval) {
+      this.updateAnimationState();
+      this.lastAnimationCheck = currentTime;
+    }
+    return this.hasActiveAnimationsCache;
+  }
+
+  /**
+   * Update the cached animation state
+   * Called automatically, but can be called manually for immediate updates
+   */
+  private updateAnimationState(): void {
+    // Filter out completed animations
+    this.activeAnimations = this.activeAnimations.filter(anim => {
+      return anim.isActive();
+    });
+    this.hasActiveAnimationsCache = this.activeAnimations.length > 0;
   }
 
   /**
@@ -398,6 +390,7 @@ export class Board3dAnimationService {
       animation.kill();
     });
     this.activeAnimations = [];
+    this.hasActiveAnimationsCache = false;
   }
 
   /**

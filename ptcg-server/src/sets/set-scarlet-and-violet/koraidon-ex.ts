@@ -50,9 +50,9 @@ export class Koraidonex extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.FIGHTING);
+          && (c as EnergyCard).provides.includes(CardType.FIGHTING);
       });
 
       if (!hasEnergyInDiscard) {

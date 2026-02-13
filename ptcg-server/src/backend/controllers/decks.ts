@@ -17,31 +17,59 @@ export class Decks extends Controller {
   @AuthToken()
   public async onList(req: Request, res: Response) {
     const userId: number = req.body.userId;
-    const user = await User.findOne(userId, { relations: ['decks'] });
+    const user = await User.findOne(userId);
 
     if (user === undefined) {
       res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
+    const summary = req.query.summary === 'true';
+    const limit = Math.min(Math.max(parseInt(String(req.query.limit || '1000'), 10) || 1000, 1), 500);
+    const offset = Math.max(parseInt(String(req.query.offset || '0'), 10) || 0, 0);
+
+    const [userDecks, total] = await Deck.findAndCount({
+      where: { user: { id: userId } },
+      order: { id: 'DESC' },
+      take: limit,
+      skip: offset
+    });
+
     const sleeves = await Sleeve.find();
     const sleeveMap = new Map(sleeves.map(sleeve => [sleeve.identifier, sleeve.imagePath]));
-    const decks = user.decks.map(deck => {
-      const cards = JSON.parse(deck.cards);
+
+    const decks = userDecks.map(deck => {
       const sleeveImagePath = deck.sleeveIdentifier ? sleeveMap.get(deck.sleeveIdentifier) : undefined;
-      return {
+      let format: number[];
+      if (deck.formats && deck.formats.trim() !== '') {
+        try {
+          format = JSON.parse(deck.formats);
+        } catch {
+          const cards = JSON.parse(deck.cards);
+          format = getValidFormatsForCardList(cards);
+        }
+      } else {
+        const cards = JSON.parse(deck.cards);
+        format = getValidFormatsForCardList(cards);
+      }
+
+      const base: Record<string, any> = {
         id: deck.id,
         name: deck.name,
         isValid: deck.isValid,
-        cards,
-        cardTypes: JSON.parse(deck.cardTypes),
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        format: getValidFormatsForCardList(cards),
-        ...(deck.artworks ? { artworks: JSON.parse(deck.artworks) } : {}),
+        format,
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
+
+      if (!summary) {
+        base.cards = JSON.parse(deck.cards);
+        base.cardTypes = JSON.parse(deck.cardTypes);
+      }
+
+      return base;
     });
 
     // Inject theme decks (with negative IDs)
@@ -52,7 +80,7 @@ export class Decks extends Controller {
       deckItems: [],
     }));
 
-    res.send({ ok: true, decks: [...decks, ...themeDecks] });
+    res.send({ ok: true, decks: [...decks, ...themeDecks], total });
   }
 
   @Get('/get/:id')
@@ -73,16 +101,6 @@ export class Decks extends Controller {
       return;
     }
 
-    // Try to parse artworks from entity if present (future-proofing)
-    let artworks: { code: string; artworkId?: number }[] | undefined = undefined;
-    if (entity.artworks) {
-      try {
-        artworks = JSON.parse(entity.artworks);
-      } catch (error) {
-        // Ignore parsing errors for artworks
-      }
-    }
-
     const sleeveImagePath = entity.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: entity.sleeveIdentifier } }))?.imagePath
       : undefined;
@@ -94,7 +112,6 @@ export class Decks extends Controller {
       cards: JSON.parse(entity.cards),
       manualArchetype1: entity.manualArchetype1,
       manualArchetype2: entity.manualArchetype2,
-      ...(artworks ? { artworks } : {}),
       ...(entity.sleeveIdentifier ? { sleeveIdentifier: entity.sleeveIdentifier } : {}),
       ...(sleeveImagePath ? { sleeveImagePath } : {})
     };
@@ -159,10 +176,7 @@ export class Decks extends Controller {
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
     deck.sleeveIdentifier = body.sleeveIdentifier || '';
-    // Save artworks if present
-    if ('artworks' in body && body.artworks) {
-      deck.artworks = JSON.stringify(body.artworks);
-    }
+    deck.formats = JSON.stringify(getValidFormatsForCardList(resolvedCards));
     try {
       deck = await deck.save();
     } catch (error) {
@@ -181,7 +195,6 @@ export class Decks extends Controller {
         cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        ...(body.artworks ? { artworks: body.artworks } : {}),
         ...(body.sleeveIdentifier ? { sleeveIdentifier: body.sleeveIdentifier } : {}),
         ...(savedSleeveImagePath ? { sleeveImagePath: savedSleeveImagePath } : {})
       }
@@ -878,6 +891,7 @@ const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
+  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -1021,8 +1035,11 @@ const SetReleaseDates: { [key: string]: Date } = {
   'M1L': new Date('2025-09-26'),
   'M1S': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
-  'M2a': new Date('2026-01-31'),
+  'M2a': new Date('2026-01-28'),
+  'ASC': new Date('2026-01-28')
 };
+
+const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
 
 function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
@@ -1133,6 +1150,7 @@ function getValidFormats(card: any): number[] {
     Format.ETERNAL,
     Format.STANDARD,
     Format.STANDARD_NIGHTLY,
+    Format.STANDARD_MAJORS,
     Format.EXPANDED,
     Format.GLC,
     Format.SV,
@@ -1160,15 +1178,60 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I';
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard (has regulation mark G, H, or I)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's regulation mark
+        if (allPrintings.length === 0) {
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+        }
+
+        return allPrintings.some((c: any) => {
+          const rm = c.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+        });
       }
-      case Format.STANDARD_NIGHTLY:
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I' ||
-          card.regulationMark === 'J';
+      case Format.STANDARD_NIGHTLY: {
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard Nightly (has regulation mark G, H, I, or J)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's regulation mark
+        if (allPrintings.length === 0) {
+          const rm = card.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        }
+
+        return allPrintings.some((c: any) => {
+          const rm = c.regulationMark;
+          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+        });
+      }
+      case Format.STANDARD_MAJORS: {
+        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
+        // is legal in Standard Majors (is in one of the allowed sets)
+        const cardManager = CardManager.getInstance();
+        const allPrintings = cardManager.getAllCards().filter((c: any) =>
+          c && c.name === card.name
+        );
+
+        // If no printings found, fall back to checking this card's set
+        if (allPrintings.length === 0) {
+          return STANDARD_MAJORS_SETS.includes(card.set);
+        }
+
+        return allPrintings.some((c: any) => {
+          return STANDARD_MAJORS_SETS.includes(c.set);
+        });
+      }
       case Format.EXPANDED: {
         // For anyPrintingAllowed cards, they are known to be legal in Expanded format
         // Just check if this specific printing is not banned
@@ -1225,6 +1288,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.regulationMark === 'H' ||
         card.regulationMark === 'I' ||
         card.regulationMark === 'J';
+    case Format.STANDARD_MAJORS:
+      return STANDARD_MAJORS_SETS.includes(card.set);
     case Format.EXPANDED: {
       const setDate = SetReleaseDates[card.set];
       return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&

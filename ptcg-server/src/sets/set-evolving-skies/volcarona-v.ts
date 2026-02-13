@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Card, ChooseEnergyPrompt, EnergyCard, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseEnergyPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
@@ -43,7 +43,7 @@ export class VolcaronaV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       // counting the energies
-      const energiesInDiscard = player.discard.cards.filter(c => c instanceof EnergyCard && c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC).length;
+      const energiesInDiscard = player.discard.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC).length;
       if (energiesInDiscard === 0) {
         return state;
       }
@@ -51,7 +51,7 @@ export class VolcaronaV extends PokemonCard {
       effect.damage += 20 * energiesInDiscard;
       // slapping those energies back into the deck
       player.discard.cards.forEach(c => {
-        if (c instanceof EnergyCard && c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
+        if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
           MOVE_CARDS(store, state, player.discard, player.deck, { cards: [c], sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });
@@ -65,7 +65,7 @@ export class VolcaronaV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

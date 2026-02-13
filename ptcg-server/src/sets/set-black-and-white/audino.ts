@@ -18,7 +18,7 @@ export class Audino extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of your Benched Pokemon.'
+      text: 'Does 20 damage times the number of your Benched Pokémon.'
     },
     {
       name: 'Hip Bump',

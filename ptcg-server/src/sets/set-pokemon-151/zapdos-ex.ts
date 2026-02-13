@@ -10,45 +10,32 @@ import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, Car
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Zapdosex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'G';
-
   public tags = [CardTag.POKEMON_ex];
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 200;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Voltaic Float',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon has any Lightning Energy attached, it has no ' +
-      'Retreat Cost.'
+    text: 'If this Pokémon has any [L] Energy attached, it has no Retreat Cost.'
   }];
 
   public attacks = [{
     name: 'Multishot Lightning',
-    cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
+    cost: [L, L, L],
     damage: 120,
     text: 'This attack also does 90 damage to 1 of your opponent\'s Benched Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
+  public regulationMark = 'G';
   public set: string = 'MEW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '145';
-
   public name: string = 'Zapdos ex';
-
   public fullName: string = 'Zapdos ex MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

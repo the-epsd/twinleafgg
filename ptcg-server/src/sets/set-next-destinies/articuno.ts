@@ -18,7 +18,7 @@ export class Articuno extends PokemonCard {
       name: 'Ice Beam',
       cost: [W, C, C],
       damage: 50,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     },
     {
       name: 'Ice Wing',

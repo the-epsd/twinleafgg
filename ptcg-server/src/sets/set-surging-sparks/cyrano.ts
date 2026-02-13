@@ -63,21 +63,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Cyrano extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '170';
-
   public name: string = 'Cyrano';
-
   public fullName: string = 'Cyrano SSP';
 
   public text: string =
-    'Search your deck for up to 3 Pokémon ex, reveal them, and put them into your hand. Then shuffle your deck.';
+    'Search your deck for up to 3 Pokémon ex, reveal them, and put them into your hand. Then, shuffle your deck.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

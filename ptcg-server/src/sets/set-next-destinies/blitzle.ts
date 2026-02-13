@@ -15,7 +15,7 @@ export class Blitzle extends PokemonCard {
     name: 'Thunder Jolt',
     cost: [L, C],
     damage: 30,
-    text: 'Flip a coin. If tails, this Pokemon does 10 damage to itself.'
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
   }];
 
   public set: string = 'NXD';

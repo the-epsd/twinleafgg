@@ -13,7 +13,7 @@ export class TelepathPsychicEnergy extends EnergyCard {
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'J';
   public set: string = 'M3';
-  public name = 'Telepath [P] Energy';
+  public name = 'Telepath Psychic Energy';
   public fullName = 'Telepath [P] Energy M3';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';

@@ -13,20 +13,18 @@ export class Thundurus extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Charge',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for a Lightning Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Disaster Volt',
-      cost: [L, L, C],
-      damage: 80,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Charge',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for a [L] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
+  },
+  {
+    name: 'Disaster Volt',
+    cost: [L, L, C],
+    damage: 80,
+    text: 'Discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

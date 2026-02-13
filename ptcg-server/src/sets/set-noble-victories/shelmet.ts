@@ -16,7 +16,7 @@ export class Shelmet extends PokemonCard {
       name: 'Mysterious Evolution',
       cost: [C],
       damage: 0,
-      text: 'If Karrablast is in play, search your deck for a card that evolves from this Pokemon and put it onto this Pokemon. (This counts as evolving this Pokemon.) Shuffle your deck afterward.'
+      text: 'If Karrablast is in play, search your deck for a card that evolves from this Pokémon and put it onto this Pokémon. (This counts as evolving this Pokémon.) Shuffle your deck afterward.'
     },
     {
       name: 'Ram',

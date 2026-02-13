@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -21,14 +21,14 @@ export class Mandibuzz extends PokemonCard {
       cost: [D],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of Darkness Energy attached to all of your Pokemon.'
+      text: 'Does 20 damage times the number of [D] Energy attached to all of your Pokémon.'
     },
     {
       name: 'Punishment',
       cost: [D, D],
       damage: 40,
       damageCalculation: '+',
-      text: 'If the Defending Pokemon has an Ability, this attack does 30 more damage.'
+      text: 'If the Defending Pokémon has an Ability, this attack does 30 more damage.'
     }
   ];
 
@@ -45,8 +45,8 @@ export class Mandibuzz extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.cards.forEach(card => {
-          if (card instanceof EnergyCard) {
-            darkEnergy += card.provides.filter(e => e === CardType.DARK).length;
+          if (card.superType === SuperType.ENERGY) {
+            darkEnergy += (card as EnergyCard).provides.filter(e => e === CardType.DARK).length;
           }
         });
       });

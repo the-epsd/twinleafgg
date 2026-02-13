@@ -4,39 +4,18 @@ import {
   Mesh,
   Texture,
   Group,
-  Vector3,
-  DoubleSide
+  DoubleSide,
+  PerspectiveCamera
 } from 'three';
-import { Card, SuperType } from 'ptcg-server';
+import { Card } from 'ptcg-server';
+import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 const MAX_VISIBLE_ENERGIES = 8;
-const ENERGY_SPRITE_SIZE = 0.6;
-const ENERGY_SPACING = 0.7;
-
-// Custom energy icon paths (matching board-card.component.ts)
-const CUSTOM_ENERGY_ICONS: { [key: string]: string } = {
-  'Grass Energy': 'assets/energy/grass.png',
-  'Fire Energy': 'assets/energy/fire.png',
-  'Water Energy': 'assets/energy/water.png',
-  'Lightning Energy': 'assets/energy/lightning.png',
-  'Psychic Energy': 'assets/energy/psychic.png',
-  'Fighting Energy': 'assets/energy/fighting.png',
-  'Darkness Energy': 'assets/energy/dark.png',
-  'Metal Energy': 'assets/energy/metal.png',
-  'Fairy Energy': 'assets/energy/fairy.png',
-  'Double Turbo Energy': 'assets/energy/double-turbo.png',
-  'Jet Energy': 'assets/energy/jet.png',
-  'Gift Energy': 'assets/energy/gift.png',
-  'Mist Energy': 'assets/energy/mist.png',
-  'Legacy Energy': 'assets/energy/legacy.png',
-  'Neo Upper Energy': 'assets/energy/neo-upper.png',
-  'Electrode': 'assets/energy/electrode.png',
-  'Holon\'s Castform': 'assets/energy/holons-castform.png',
-  'Holon\'s Magnemite': 'assets/energy/holons-magnemite.png',
-  'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
-  'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
-  'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
-};
+const ENERGY_SPRITE_HEIGHT = 0.6;
+// Energy icons are 749×1042 (portrait); preserve aspect ratio so they don't appear stretched
+const ENERGY_ICON_ASPECT = 749 / 1042;
+const ENERGY_SPRITE_WIDTH = ENERGY_SPRITE_HEIGHT * ENERGY_ICON_ASPECT;
+const ENERGY_SPACING = 0.3;
 
 export class Board3dEnergySprite {
   private group: Group;
@@ -46,9 +25,9 @@ export class Board3dEnergySprite {
   constructor() {
     this.group = new Group();
 
-    // Initialize shared geometry if not already created
+    // Initialize shared geometry if not already created (width x height to match icon aspect)
     if (!Board3dEnergySprite.geometry) {
-      Board3dEnergySprite.geometry = new PlaneGeometry(ENERGY_SPRITE_SIZE, ENERGY_SPRITE_SIZE);
+      Board3dEnergySprite.geometry = new PlaneGeometry(ENERGY_SPRITE_WIDTH, ENERGY_SPRITE_HEIGHT);
     }
   }
 
@@ -56,14 +35,7 @@ export class Board3dEnergySprite {
    * Get the custom energy icon path for a card
    */
   static getEnergyIconPath(card: Card): string | null {
-    if (card.superType === SuperType.ENERGY && CUSTOM_ENERGY_ICONS[card.name]) {
-      return CUSTOM_ENERGY_ICONS[card.name];
-    }
-    // For non-energy cards attached as energy (e.g., Holon's Pokemon)
-    if (CUSTOM_ENERGY_ICONS[card.name]) {
-      return CUSTOM_ENERGY_ICONS[card.name];
-    }
-    return null;
+    return getCustomEnergyIconPath(card, true);
   }
 
   /**
@@ -78,8 +50,10 @@ export class Board3dEnergySprite {
     this.clear();
 
     const visibleCount = Math.min(energyCards.length, MAX_VISIBLE_ENERGIES);
-    const totalWidth = (visibleCount - 1) * ENERGY_SPACING;
-    const startX = -totalWidth / 2;
+    // Card width is 2.5 units, so left edge is at X = -1.25
+    // Position first energy slightly inset from left edge
+    const cardLeftEdge = -1.25; // Card left edge
+    const startX = cardLeftEdge + 0.15; // Slight inset from left edge
 
     for (let i = 0; i < visibleCount; i++) {
       const card = energyCards[i];
@@ -93,8 +67,13 @@ export class Board3dEnergySprite {
         texture = cardBackTexture;
       }
 
+      // Clone and flip horizontally to correct mirroring from billboard orientation
+      const textureToUse = texture.clone();
+      textureToUse.repeat.x = -1;
+      textureToUse.offset.x = 1;
+
       const material = new MeshBasicMaterial({
-        map: texture,
+        map: textureToUse,
         transparent: true,
         side: DoubleSide,
         alphaTest: 0.1
@@ -102,18 +81,28 @@ export class Board3dEnergySprite {
 
       const mesh = new Mesh(Board3dEnergySprite.geometry, material);
 
-      // Position in a row below the card
+      // Position in a row below the card, starting from left edge
       mesh.position.set(
-        startX + (i * ENERGY_SPACING),
+        startX + (i * ENERGY_SPACING), // Start from left, space horizontally
         0.1, // Slightly above ground
         1.75   // Below the card (card center is at 0, card bottom is around 1.75)
       );
 
-      // Rotate to face up (like the card)
-      mesh.rotation.x = -Math.PI / 2;
-
+      // Billboard: orientation updated via updateBillboards() each frame
       this.group.add(mesh);
       this.energyMeshes.push(mesh);
+    }
+  }
+
+  /**
+   * Update all energy meshes to face the camera (billboard behavior).
+   * Call this each frame before rendering.
+   */
+  updateBillboards(camera: PerspectiveCamera): void {
+    for (const mesh of this.energyMeshes) {
+      mesh.lookAt(camera.position);
+      // Three.js lookAt makes -Z point at target; flip so front face (+Z) faces camera
+      mesh.rotateY(Math.PI);
     }
   }
 
@@ -123,7 +112,11 @@ export class Board3dEnergySprite {
   clear(): void {
     for (const mesh of this.energyMeshes) {
       this.group.remove(mesh);
-      (mesh.material as MeshBasicMaterial).dispose();
+      const material = mesh.material as MeshBasicMaterial;
+      if (material.map) {
+        material.map.dispose();
+      }
+      material.dispose();
     }
     this.energyMeshes = [];
   }

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, GameMessage } from '../../game';
+import { StoreLike, State, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
@@ -18,7 +18,7 @@ export class Klink extends PokemonCard {
       name: 'Charge Beam',
       cost: [M],
       damage: 10,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokemon.'
+      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
     },
     {
       name: 'Bind',
@@ -37,7 +37,7 @@ export class Klink extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
 
       if (hasEnergy) {
         COIN_FLIP_PROMPT(store, state, player, result => {

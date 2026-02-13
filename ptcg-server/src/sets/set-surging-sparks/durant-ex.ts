@@ -21,17 +21,18 @@ export class Durantex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Sudden Scrape',
+    name: 'Sudden Shearing',
     useWhenInPlay: false,
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokemon from your hand onto your Bench during your turn, you may use this ability. Discard the top card of your opponent\'s deck.'
+    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may discard the top card of your opponent\'s deck.'
   }];
 
   public attacks = [{
-    name: 'Revenge Crush',
+    name: 'Vengeful Crush',
     cost: [G, C, C],
     damage: 120,
-    text: 'This attack does 30 more damage for each Prize Card your opponent has taken.'
+    damageCalculation: '+',
+    text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
   }];
 
   public regulationMark = 'H';

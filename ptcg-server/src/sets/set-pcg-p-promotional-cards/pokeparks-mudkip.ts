@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class PokeParksMudkip extends PokemonCard {
@@ -41,7 +41,7 @@ export class PokeParksMudkip extends PokemonCard {
           const player = effect.player;
           const opponent = effect.opponent;
           // If defending Pokemon has no energy cards attached, return early
-          if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard)) {
+          if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
             return state;
           }
 

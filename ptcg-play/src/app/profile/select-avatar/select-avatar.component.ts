@@ -52,7 +52,8 @@ export class SelectAvatarComponent implements OnInit {
 
   public selectAvatar(avatar: AvatarInfo) {
     this.loading = true;
-    this.avatarService.markAsDefault(avatar.id)
+    const fileName = avatar.id === 0 ? avatar.fileName : undefined;
+    this.avatarService.markAsDefault(avatar.id, fileName)
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this)

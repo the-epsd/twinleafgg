@@ -1,10 +1,10 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, TrainerType } from '../../game/store/card/card-types';
+import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { EnergyCard, PlayerType } from '../..';
+import { PlayerType } from '../..';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
@@ -48,7 +48,7 @@ export class Cheryl extends TrainerCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           const pokemon = cardList.getPokemonCard();
           if (pokemon && pokemon.stage !== Stage.BASIC) {
-            const energyCards = cardList.cards.filter(c => c instanceof EnergyCard);
+            const energyCards = cardList.cards.filter(c => c.superType === SuperType.ENERGY);
             MOVE_CARDS(store, state, cardList, player.discard, { cards: energyCards, sourceCard: this });
           }
           CLEAN_UP_SUPPORTER(effect, player);

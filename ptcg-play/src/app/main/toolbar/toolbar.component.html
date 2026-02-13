@@ -23,7 +23,8 @@
       <a class="sidebar-menu-item" routerLink="/replays" routerLinkActive="active" (click)="closeMenu()">
         {{ 'MAIN_REPLAYS' | translate }}
       </a>
-      <a class="sidebar-menu-item" routerLink="/friends" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin$ | async">
+      <a class="sidebar-menu-item" routerLink="/friends" routerLinkActive="active" (click)="closeMenu()"
+        *ngIf="isAdmin$ | async">
         FRIENDS
       </a>
       <a class="sidebar-menu-item" routerLink="/ranking" routerLinkActive="active" (click)="closeMenu()">
@@ -32,15 +33,17 @@
       <a class="sidebar-menu-item" routerLink="/message" routerLinkActive="active" (click)="closeMenu()">
         {{ 'MAIN_MESSAGES' | translate }}
       </a>
-      <a class="sidebar-menu-item battle-pass-item" routerLink="/battle-pass" routerLinkActive="active" (click)="closeMenu()" *ngIf="isAdmin$ | async">
+      <a class="sidebar-menu-item battle-pass-item" routerLink="/battle-pass" routerLinkActive="active"
+        (click)="closeMenu()" *ngIf="isAdmin$ | async">
         BATTLE PASS
       </a>
       <div class="sidebar-menu-item tables-item" *ngIf="(gameStates$ | async)?.length > 0">
         <button mat-button [matMenuTriggerFor]="gamesMenu" class="tables-menu-button">
           {{ 'MAIN_TABLES' | translate }}
           <mat-icon>arrow_drop_down</mat-icon>
-          <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
-            [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
+          <span *ngIf="hasTableNotifications$ | async" class="notification-badge"
+            [matBadge]="tableBadgeContent$ | async" [matBadgeColor]="tableBadgeColor$ | async"
+            matBadgeOverlap="false"></span>
         </button>
       </div>
     </div>
@@ -76,9 +79,9 @@
       <a routerLink="/replays" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_REPLAYS' | translate }}</span>
       </a>
-      <a routerLink="/friends" class="nav-item" routerLinkActive="active" *ngIf="loggedUser && (isAdmin$ | async)">
+      <!-- <a routerLink="/friends" class="nav-item" routerLinkActive="active" *ngIf="loggedUser && (isAdmin$ | async)">
         <span class="nav-text">FRIENDS</span>
-      </a>
+      </a> -->
       <a routerLink="/ranking" class="nav-item" routerLinkActive="active" *ngIf="loggedUser">
         <span class="nav-text">{{ 'MAIN_RANKING' | translate }}</span>
       </a>

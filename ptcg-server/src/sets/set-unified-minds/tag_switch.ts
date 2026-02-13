@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, CardTransfer, SlotType, StateUtils, CardTarget } from '../../game';
+import { StoreLike, State, PlayerType, GameError, GameMessage, MoveEnergyPrompt, CardTransfer, SlotType, StateUtils, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -15,7 +15,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       tagTeamPokemonCount++;
 
       const energyAttached = cardList.energies.cards.some(c => {
-        return c instanceof EnergyCard;
+        return c.superType === SuperType.ENERGY;
       });
       hasEnergy = hasEnergy || energyAttached;
     }

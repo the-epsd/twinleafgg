@@ -12,6 +12,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { FavoritesService } from '../../api/services/favorites.service';
 import { ProfileService } from '../../api/services/profile.service';
+import { CardArtwork } from '../../api/interfaces/cards.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,12 @@ export class CardsBaseService implements OnDestroy {
 
   private cards: Card[] = [];
   private names: string[] = [];
+  private cardIndex = new Map<string, Card>();
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
   private nightlyImages: { [key: string]: string } = {};
   private favoriteCards: { [cardName: string]: string } = {};
+  private unlockedArtworks: CardArtwork[] = [];
 
   private overridesChangedSubject = new Subject<string>();
   public overridesChanged$ = this.overridesChangedSubject.asObservable();
@@ -52,6 +55,7 @@ export class CardsBaseService implements OnDestroy {
   public loadCardsInfo(cardsInfo: CardsInfo) {
     this.cardManager.loadCardsInfo(cardsInfo);
     this.cards = this.cardManager.getAllCards().slice();
+    this.rebuildCardIndex();
     this.names = this.cards.map(c => c.fullName);
     this.cards.sort(this.compareCards);
     StateSerializer.setKnownCards(this.cards);
@@ -59,9 +63,21 @@ export class CardsBaseService implements OnDestroy {
 
   public setCards(cards: Card[]) {
     this.cards = cards;
+    this.rebuildCardIndex();
     this.names = this.cards.map(c => c.fullName);
     this.cards.sort(this.compareCards);
     StateSerializer.setKnownCards(this.cards);
+  }
+
+  private rebuildCardIndex(): void {
+    this.cardIndex.clear();
+    for (const card of this.cards) {
+      this.cardIndex.set(card.fullName, card);
+      const p = card as any;
+      if (p.legacyFullName) {
+        this.cardIndex.set(p.legacyFullName, card);
+      }
+    }
   }
 
   private compareCards(c1: Card, c2: Card) {
@@ -317,25 +333,88 @@ export class CardsBaseService implements OnDestroy {
       return '';
     }
 
+    // Validate card has required properties
+    if (!card.set || !card.setNumber) {
+      console.warn('Card missing set or setNumber:', card);
+      // Still try to generate default URL if cardImage exists
+      if (card.cardImage) {
+        const config = this.sessionService.session.config;
+        const scansUrl = config && config.scansUrl || '';
+        return scansUrl
+          .replace('{cardImage}', card.cardImage || '')
+          .replace('{setNumber}', card.setNumber || '')
+          .replace('{name}', card.fullName || '');
+      }
+      return '';
+    }
+
     const fullCardIdentifier = `${card.set} ${card.setNumber}`;
+
     // Check nightly images first (supplements custom images)
-    const nightlyUrl = this.nightlyImages[fullCardIdentifier];
+    let nightlyUrl = this.nightlyImages[fullCardIdentifier];
+    if (!nightlyUrl && card.setNumber) {
+      // Try alternative formats for 2-character sets (padded set numbers)
+      const paddedSetNumber = card.setNumber.padStart(3, '0');
+      const altIdentifier = `${card.set} ${paddedSetNumber}`;
+      nightlyUrl = this.nightlyImages[altIdentifier];
+    }
     if (nightlyUrl) {
       return nightlyUrl;
     }
+
     // Then check custom images
-    const customUrl = this.customImages[fullCardIdentifier];
+    let customUrl = this.customImages[fullCardIdentifier];
+    if (!customUrl && card.setNumber) {
+      // Try alternative formats for 2-character sets (padded set numbers)
+      const paddedSetNumber = card.setNumber.padStart(3, '0');
+      const altIdentifier = `${card.set} ${paddedSetNumber}`;
+      customUrl = this.customImages[altIdentifier];
+    }
     if (customUrl) {
       return customUrl;
     }
 
-    // Fall back to default
+    // Fall back to default URL template
     const config = this.sessionService.session.config;
     const scansUrl = config && config.scansUrl || '';
+    if (!scansUrl) {
+      return '';
+    }
     return scansUrl
-      .replace('{cardImage}', card.cardImage)
-      .replace('{setNumber}', card.setNumber)
-      .replace('{name}', card.fullName);
+      .replace('{cardImage}', card.cardImage || '')
+      .replace('{setNumber}', card.setNumber || '')
+      .replace('{name}', card.fullName || '');
+  }
+
+  /**
+   * Get scan URL for a card, checking for artwork overrides in the cardList's artworksMap first.
+   * This matches the behavior of CardComponent's overlayUrl getter - if artworksMap has an entry,
+   * use that imageUrl directly. Otherwise fall back to getScanUrl() to ensure identical behavior.
+   * Used by 3D board components that need a single texture (can't use overlay like 2D components).
+   * Priority order: artworksMap → nightly images → custom images → default URL
+   */
+  public getScanUrlFromCardList(card: Card, cardList?: any): string {
+    // Don't generate URLs for Unknown cards
+    if (!card || card.fullName === 'Unknown' || card.name === 'Unknown') {
+      return '';
+    }
+
+    // 1. Check for artwork override in cardList's artworksMap first (player-selected artwork)
+    if (cardList) {
+      const artworksMap = (cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+      if (artworksMap && artworksMap[card.fullName]?.imageUrl) {
+        return artworksMap[card.fullName].imageUrl;
+      }
+      // Also check if cardList itself is a map (fallback pattern from CardComponent)
+      const map = cardList as any;
+      if (map && map[card.fullName]?.imageUrl) {
+        return map[card.fullName].imageUrl;
+      }
+    }
+
+    // 2. If no artworksMap override, use getScanUrl() directly
+    // This checks nightly images → custom images → default URL (same as 2D board)
+    return this.getScanUrl(card);
   }
 
   public getSleeveUrl(imagePath?: string): string | undefined {
@@ -438,7 +517,7 @@ export class CardsBaseService implements OnDestroy {
 
 
   public getCardByName(cardName: string): Card | undefined {
-    return this.cards.find(c => c.fullName === cardName);
+    return this.cardIndex.get(cardName);
   }
 
   public getCardByNameSetNumber(name: string, set: string, setNumber: string): Card | undefined {
@@ -461,7 +540,7 @@ export class CardsBaseService implements OnDestroy {
     }
     const dialog = this.dialog.open(CardInfoPopupComponent, {
       maxWidth: '100%',
-      width: '650px',
+      width: '50vw',
       data
     });
 
@@ -536,6 +615,14 @@ export class CardsBaseService implements OnDestroy {
   public isFavoriteCard(card: Card): boolean {
     const favoriteFullName = this.favoriteCards[card.name];
     return favoriteFullName === card.fullName;
+  }
+
+  public setUnlockedArtworks(artworks: CardArtwork[]): void {
+    this.unlockedArtworks = artworks || [];
+  }
+
+  public getUnlockedArtworks(): CardArtwork[] {
+    return this.unlockedArtworks;
   }
 
   ngOnDestroy(): void {

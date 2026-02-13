@@ -22,7 +22,19 @@ import { BrocksGrit as BrocksGritEVO74 } from '../set-evolutions/brocks-grit';
 import { HereComesTeamRocket } from '../set-team-rocket/here-comes-team-rocket';
 import { Pokedex } from '../set-black-and-white/pokedex';
 import { DarknessEnergy } from '../set-scarlet-and-violet-energy/darkness-energy';
-import { MVenusaurEX } from "../set-x-and-y/m-venusaur-ex";
+import { MVenusaurEX } from '../set-x-and-y/m-venusaur-ex';
+import { VenusaurEx } from '../set-x-and-y/venusaur-ex';
+import { Charmander } from '../set-base-set/charmander';
+import { Charmeleon } from '../set-base-set/charmeleon';
+import { CharizardEx2 } from '../set-flashfire/charizard-ex-2';
+import { BlastoiseEx } from '../set-x-and-y/blastoise-ex';
+import { MBlastoiseEx } from '../set-x-and-y/m-blastoise-ex';
+import { Clefairy } from '../set-base-set/clefairy';
+import { MCharizardEx } from './m-charizard-ex';
+import { MewtwoEx } from './mewtwo-ex';
+import { PidgeotEx } from './pidgeot-ex';
+import { MPidgeotEx } from './m-pidgeot-ex';
+import { MistysDetermination } from './mistys-determination';
 
 export class PokedexEVO extends Pokedex {
   public set = 'EVO';
@@ -177,4 +189,82 @@ export class MVenusaurEXEVOSR extends MVenusaurEX {
   public setNumber = '100';
   public fullName: string = 'M Venusaur-EX SR EVO';
   public set = 'EVO';
+}
+
+export class VenusaurExEVO extends VenusaurEx {
+  public set: string = 'EVO';
+  public setNumber: string = '1';
+  public fullName: string = 'Venusaur-EX EVO';
+}
+
+export class CharmanderEVO extends Charmander {
+  public set: string = 'EVO';
+  public setNumber: string = '9';
+  public fullName: string = 'Charmander EVO';
+}
+
+export class CharmeleonEVO extends Charmeleon {
+  public set: string = 'EVO';
+  public setNumber: string = '10';
+  public fullName: string = 'Charmeleon EVO';
+}
+
+export class CharizardExEVO extends CharizardEx2 {
+  public set: string = 'EVO';
+  public setNumber: string = '12';
+  public fullName: string = 'Charizard-EX EVO';
+}
+
+export class BlastoiseExEVO extends BlastoiseEx {
+  public set: string = 'EVO';
+  public setNumber: string = '21';
+  public fullName: string = 'Blastoise-EX EVO';
+}
+
+export class MBlastoiseExEVO extends MBlastoiseEx {
+  public set: string = 'EVO';
+  public setNumber: string = '22';
+  public fullName: string = 'M Blastoise-EX EVO';
+}
+
+export class ClefairyEVO extends Clefairy {
+  public set: string = 'EVO';
+  public setNumber: string = '63';
+  public fullName: string = 'Clefairy EVO';
+}
+
+export class MCharizardEx2 extends MCharizardEx {
+  public set: string = 'EVO';
+  public setNumber: string = '101';
+  public fullName: string = 'M Charizard-EX EVO 101';
+}
+
+export class MBlastoiseEx2 extends MBlastoiseEx {
+  public set: string = 'EVO';
+  public setNumber: string = '102';
+  public fullName: string = 'M Blastoise-EX EVO 102';
+}
+
+export class MewtwoEx2 extends MewtwoEx {
+  public set: string = 'EVO';
+  public setNumber: string = '103';
+  public fullName: string = 'Mewtwo-EX EVO 103';
+}
+
+export class PidgeotEx2 extends PidgeotEx {
+  public set: string = 'EVO';
+  public setNumber: string = '104';
+  public fullName: string = 'Pidgeot-EX EVO 104';
+}
+
+export class MPidgeotEx2 extends MPidgeotEx {
+  public set: string = 'EVO';
+  public setNumber: string = '105';
+  public fullName: string = 'M Pidgeot-EX EVO 105';
+}
+
+export class MistysDetermination2 extends MistysDetermination {
+  public set: string = 'EVO';
+  public setNumber: string = '108';
+  public fullName: string = 'Misty\'s Determination EVO 108';
 }

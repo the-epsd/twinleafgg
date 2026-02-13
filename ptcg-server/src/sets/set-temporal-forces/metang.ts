@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, ShowCardsPrompt } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
 
 export class Metang extends PokemonCard {
 
@@ -26,7 +27,7 @@ export class Metang extends PokemonCard {
     name: 'Metal Maker',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may look at the top 4 cards of your deck and attach any number of Metal Energy you find there to your Pokémon in any way you like. Shuffle the other cards and put them at the bottom of your deck.'
+    text: 'Once during your turn, you may look at the top 4 cards of your deck and attach any number of [M] Energy you find there to your Pokémon in any way you like. Shuffle the other cards and put them at the bottom of your deck.'
   }];
 
   public attacks = [{
@@ -64,89 +65,32 @@ export class Metang extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
-      const temp = new CardList();
-      // Create deckBottom and move hand into it
-      const deckBottom = new CardList();
 
       if (player.marker.hasMarker(this.METAL_MAKER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      player.deck.moveTo(temp, 4);
-      // Check if any cards drawn are basic energy
-      const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy';
-      });
+      // Legacy implementation:
+      // - Took top 4 into a temporary CardList.
+      // - Allowed attaching found Metal Energy to your Pokémon.
+      // - Put the remaining cards on the bottom of deck.
+      // - Set once-per-turn marker and board effect in both attach/non-attach paths.
+      //
+      // Converted to prefab version (LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY).
+      player.marker.addMarker(this.METAL_MAKER_MARKER, this);
+      ABILITY_USED(player, this);
 
-      // If no energy cards were drawn, move all cards to deck & shuffle
-      if (energyCardsDrawn.length == 0) {
-
-        store.prompt(state, [new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_EFFECT,
-          temp.cards
-        )], () => {
-          temp.cards.forEach(card => {
-            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              temp.applyOrder(order);
-              temp.moveCardTo(card, deckBottom);
-              deckBottom.applyOrder(order);
-              deckBottom.moveTo(player.deck);
-              player.marker.addMarker(this.METAL_MAKER_MARKER, this);
-
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                }
-              });
-
-            });
-            return state;
-          });
-          return state;
-        });
-      }
-
-      if (energyCardsDrawn.length >= 1) {
-
-        // Prompt to attach energy if any were drawn
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          temp, // Only show drawn energies
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
-          { min: 0, max: energyCardsDrawn.length }
-        ), transfers => {
-
-          // Attach energy based on prompt selection
-          if (transfers) {
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              temp.moveCardTo(transfer.card, target); // Move card to target
-            }
-            temp.cards.forEach(card => {
-              store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                temp.applyOrder(order);
-                temp.moveCardTo(card, deckBottom);
-                deckBottom.applyOrder(order);
-                deckBottom.moveTo(player.deck);
-                player.marker.addMarker(this.METAL_MAKER_MARKER, this);
-
-                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                  if (cardList.getPokemonCard() === this) {
-                    cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                  }
-                });
-
-              });
-              return state;
-            });
-          }
-        });
-      }
-      return state;
+      return LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY(
+        store,
+        state,
+        player,
+        4,
+        4,
+        {
+          validCardTypes: [CardType.METAL],
+          remainderDestination: 'bottom'
+        }
+      );
     }
     return state;
   }

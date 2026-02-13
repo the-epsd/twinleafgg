@@ -9,17 +9,16 @@
   </ptcg-card-info-pane>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button *ngIf="cardList" [disabled]="!card" (click)="showCardList()">
-    {{ 'CARDS_SHOW_CARD_LIST' | translate }}
-  </button>
+<div class="dialog-actions">
+  <twinleaf-button *ngIf="cardList && isInGame()" [text]="'CARDS_SHOW_CARD_LIST' | translate" [disabled]="!card"
+    (clicked)="showCardList()">
+  </twinleaf-button>
   <section class="ptcg-card-info-reveal-cards" *ngIf="allowReveal">
     <mat-checkbox color="primary" name="reveal-card" [checked]="!facedown" (change)="facedown = !facedown">
       {{ 'CARDS_REVEAL_CARDS' | translate }}
     </mat-checkbox>
   </section>
   <span class="ptcg-u-spacer"></span>
-  <button mat-raised-button (click)="close()" cdkFocusInitial>
-    {{ 'BUTTON_CLOSE' | translate }}
-  </button>
-</mat-dialog-actions>
+  <twinleaf-button [text]="'BUTTON_CLOSE' | translate" (clicked)="close()" cdkFocusInitial>
+  </twinleaf-button>
+</div>

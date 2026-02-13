@@ -7,8 +7,7 @@
     </ptcg-deck-edit-toolbar>
 
     <ptcg-deck-edit-panes [toolbarFilter]="toolbarFilter" [(deckItems)]="deckItems" [disabled]="isThemeDeck || loading"
-      [isThemeDeck]="isThemeDeck" [unlockedArtworks]="unlockedArtworks" [selectedArtworks]="selectedArtworks"
-      (artworkChange)="onArtworkChange($event)">
+      [isThemeDeck]="isThemeDeck">
     </ptcg-deck-edit-panes>
 
     <ptcg-deck-edit-info [deckItems]="deckItems">

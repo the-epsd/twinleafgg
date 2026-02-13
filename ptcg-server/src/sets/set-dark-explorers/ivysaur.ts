@@ -10,26 +10,26 @@ export class Ivysaur extends PokemonCard {
 
   public evolvesFrom = 'Bulbasaur';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
 
   public hp: number = 90;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
-  public resistance = [{ type: CardType.WATER, value: -20 }];
+  public resistance = [{ type: W, value: -20 }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Sleep Powder',
-      cost: [CardType.GRASS, CardType.COLORLESS],
+      cost: [G, C],
       damage: 30,
       text: 'The Defending Pokémon is now Asleep.',
     },
     {
       name: 'Poison Powder',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+      cost: [G, G, C],
       damage: 80,
       text: 'The Defending Pokémon is now Poisoned.',
     }

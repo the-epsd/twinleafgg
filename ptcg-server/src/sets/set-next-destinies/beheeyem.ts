@@ -26,7 +26,7 @@ export class Beheeyem extends PokemonCard {
       name: 'Psybeam',
       cost: [P, C, C],
       damage: 40,
-      text: 'The Defending Pokemon is now Confused.'
+      text: 'The Defending Pokémon is now Confused.'
     }
   ];
 

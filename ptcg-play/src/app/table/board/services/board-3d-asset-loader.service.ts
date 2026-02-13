@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TextureLoader, Texture, sRGBEncoding, RepeatWrapping } from 'three';
-import { ImageCacheService } from '../../../shared/image-cache/image-cache.service';
+import { TextureLoader, Texture, RepeatWrapping } from 'three';
 
 @Injectable()
 export class Board3dAssetLoaderService {
@@ -9,100 +8,104 @@ export class Board3dAssetLoaderService {
   private cardBackTexture: Texture | null = null;
   private boardGridTexture: Texture | null = null;
   private slotGridTexture: Texture | null = null;
+  private cardMaskTexture: Texture | null = null;
 
-  constructor(private imageCacheService: ImageCacheService) {
+  private readonly MAX_CONCURRENT_LOADS = 6;
+  private activeLoads = 0;
+  private loadQueue: Array<() => void> = [];
+
+  constructor() {
     this.textureLoader = new TextureLoader();
     this.textureCache = new Map();
+  }
+
+  private async withConcurrencyLimit<T>(loadFn: () => Promise<T>): Promise<T> {
+    while (this.activeLoads >= this.MAX_CONCURRENT_LOADS) {
+      await new Promise<void>(resolve => this.loadQueue.push(resolve));
+    }
+    this.activeLoads++;
+    try {
+      return await loadFn();
+    } finally {
+      this.activeLoads--;
+      const next = this.loadQueue.shift();
+      if (next) next();
+    }
   }
 
   /**
    * Load a card texture using the existing image cache service
    */
   async loadCardTexture(scanUrl: string): Promise<Texture> {
-    // Check Three.js texture cache first
+    // Check Three.js texture cache first (no concurrency needed for cache hit)
     if (this.textureCache.has(scanUrl)) {
       return this.textureCache.get(scanUrl)!;
     }
 
-    try {
-      // Use imgcache.js to get cached image URL
-      const cachedUrl = await this.imageCacheService.fetchFromCache(scanUrl).toPromise();
+    return this.withConcurrencyLimit(async () => {
+      // Re-check cache after acquiring slot (another request may have loaded it)
+      if (this.textureCache.has(scanUrl)) {
+        return this.textureCache.get(scanUrl)!;
+      }
 
-      // Load texture with Three.js
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
+      try {
+        const isExternal = scanUrl.startsWith('http://') || scanUrl.startsWith('https://');
+        const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+        const texture = await loader.loadAsync(scanUrl);
 
-      // Configure texture
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16; // High quality filtering
-      texture.flipY = true; // Fix texture orientation
+        texture.colorSpace = 'srgb';
+        texture.anisotropy = 4;
+        texture.flipY = true;
 
-      // Cache and return
-      this.textureCache.set(scanUrl, texture);
-      return texture;
+        this.textureCache.set(scanUrl, texture);
+        return texture;
     } catch (error) {
-      console.error('Failed to load card texture:', scanUrl, error);
-      // Return card back as fallback
+      console.warn('Failed to load card texture:', scanUrl, (error as Error)?.message);
       return this.loadCardBack();
     }
+    });
   }
 
   /**
-   * Load a custom tool icon texture
+   * Load a custom tool icon texture - direct from URL, same as 2D.
    */
   async loadToolIconTexture(iconPath: string): Promise<Texture> {
-    // Check Three.js texture cache first
     if (this.textureCache.has(iconPath)) {
       return this.textureCache.get(iconPath)!;
     }
-
     try {
-      // Use imgcache.js to get cached image URL
-      const cachedUrl = await this.imageCacheService.fetchFromCache(iconPath).toPromise();
-
-      // Load texture with Three.js
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-
-      // Configure texture
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16; // High quality filtering
-      texture.flipY = true; // Fix texture orientation
-
-      // Cache and return
+      const isExternal = iconPath.startsWith('http://') || iconPath.startsWith('https://');
+      const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+      const texture = await loader.loadAsync(iconPath);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
+      texture.flipY = true;
       this.textureCache.set(iconPath, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load tool icon texture:', iconPath, error);
-      throw error; // Let caller handle fallback
+      console.warn('Failed to load tool icon texture:', iconPath);
+      throw error;
     }
   }
 
   /**
-   * Load a sleeve texture using the existing image cache service
+   * Load a sleeve texture - direct from URL, same as 2D.
    */
   async loadSleeveTexture(sleeveUrl: string): Promise<Texture> {
-    // Check Three.js texture cache first
     if (this.textureCache.has(sleeveUrl)) {
       return this.textureCache.get(sleeveUrl)!;
     }
-
     try {
-      // Use imgcache.js to get cached image URL
-      const cachedUrl = await this.imageCacheService.fetchFromCache(sleeveUrl).toPromise();
-
-      // Load texture with Three.js
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-
-      // Configure texture
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16; // High quality filtering
-      texture.flipY = true; // Fix texture orientation
-
-      // Cache and return
+      const isExternal = sleeveUrl.startsWith('http://') || sleeveUrl.startsWith('https://');
+      const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+      const texture = await loader.loadAsync(sleeveUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
+      texture.flipY = true;
       this.textureCache.set(sleeveUrl, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load sleeve texture:', sleeveUrl, error);
-      // Return card back as fallback
+      console.warn('Failed to load sleeve texture:', sleeveUrl);
       return this.loadCardBack();
     }
   }
@@ -117,13 +120,9 @@ export class Board3dAssetLoaderService {
 
     try {
       const cardBackUrl = 'assets/cardback.png';
-
-      // Try to use cached version
-      const cachedUrl = await this.imageCacheService.fetchFromCache(cardBackUrl).toPromise();
-
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16;
+      const texture = await this.textureLoader.loadAsync(cardBackUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
       texture.flipY = true;
 
       this.cardBackTexture = texture;
@@ -139,18 +138,16 @@ export class Board3dAssetLoaderService {
    * Load a marker texture (for status conditions)
    */
   async loadMarkerTexture(condition: string): Promise<Texture> {
-    const markerUrl = `assets/markers/${condition}.webp`;
+    const markerUrl = `assets/${condition}.webp`;
 
     if (this.textureCache.has(markerUrl)) {
       return this.textureCache.get(markerUrl)!;
     }
 
     try {
-      const cachedUrl = await this.imageCacheService.fetchFromCache(markerUrl).toPromise();
-
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 8;
+      const texture = await this.textureLoader.loadAsync(markerUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
 
       this.textureCache.set(markerUrl, texture);
       return texture;
@@ -170,13 +167,11 @@ export class Board3dAssetLoaderService {
 
     try {
       const gridUrl = 'assets/textures/black_grid.png';
-      const cachedUrl = await this.imageCacheService.fetchFromCache(gridUrl).toPromise();
-
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16;
+      const texture = await this.textureLoader.loadAsync(gridUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
       texture.flipY = false; // Don't flip for board texture
-      
+
       // Configure for tiling
       texture.wrapS = RepeatWrapping;
       texture.wrapT = RepeatWrapping;
@@ -201,17 +196,39 @@ export class Board3dAssetLoaderService {
     }
 
     try {
-      const cachedUrl = await this.imageCacheService.fetchFromCache(centerUrl).toPromise();
-
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16;
+      const texture = await this.textureLoader.loadAsync(centerUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
       texture.flipY = false; // Don't flip for board texture
 
       this.textureCache.set(centerUrl, texture);
       return texture;
     } catch (error) {
       console.error('Failed to load board center texture:', error);
+      return this.createFallbackTexture();
+    }
+  }
+
+  /**
+   * Load the card mask texture for rounded corners
+   */
+  async loadCardMaskTexture(): Promise<Texture> {
+    if (this.cardMaskTexture) {
+      return this.cardMaskTexture;
+    }
+
+    try {
+      const maskUrl = 'assets/3d-card-mask.png';
+      const texture = await this.textureLoader.loadAsync(maskUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
+      texture.flipY = true; // Match card texture orientation
+
+      this.cardMaskTexture = texture;
+      return texture;
+    } catch (error) {
+      console.error('Failed to load card mask texture:', error);
+      // Return a fallback texture (fully opaque white) so cards still render
       return this.createFallbackTexture();
     }
   }
@@ -226,11 +243,9 @@ export class Board3dAssetLoaderService {
 
     try {
       const gridUrl = 'assets/textures/aqua_grid.png';
-      const cachedUrl = await this.imageCacheService.fetchFromCache(gridUrl).toPromise();
-
-      const texture = await this.textureLoader.loadAsync(cachedUrl);
-      texture.encoding = sRGBEncoding;
-      texture.anisotropy = 16;
+      const texture = await this.textureLoader.loadAsync(gridUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
       texture.flipY = false; // Don't flip for slot texture
 
       this.slotGridTexture = texture;
@@ -259,7 +274,7 @@ export class Board3dAssetLoaderService {
 
     const texture = new Texture(canvas);
     texture.needsUpdate = true;
-    texture.encoding = sRGBEncoding;
+    texture.colorSpace = 'srgb';
 
     return texture;
   }
@@ -287,6 +302,11 @@ export class Board3dAssetLoaderService {
       this.slotGridTexture.dispose();
       this.slotGridTexture = null;
     }
+
+    if (this.cardMaskTexture) {
+      this.cardMaskTexture.dispose();
+      this.cardMaskTexture = null;
+    }
   }
 
   /**
@@ -294,5 +314,16 @@ export class Board3dAssetLoaderService {
    */
   getCacheSize(): number {
     return this.textureCache.size;
+  }
+
+  /**
+   * Preload card textures in background. Textures land in textureCache for faster
+   * display when updateCard/createHandCard runs. Fire-and-forget - does not block.
+   */
+  preloadCardTextures(urls: string[]): void {
+    const uniqueUrls = [...new Set(urls)].filter(url => url && url.trim() && !this.textureCache.has(url));
+    uniqueUrls.forEach(url => {
+      this.loadCardTexture(url).catch(() => {});
+    });
   }
 }

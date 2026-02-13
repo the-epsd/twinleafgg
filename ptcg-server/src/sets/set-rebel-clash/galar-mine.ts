@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
@@ -30,16 +30,10 @@ export class GalarMine extends TrainerCard {
 
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
       const playerActive = player.active.getPokemonCard();
 
-      if (opponentActive) {
-        effect.cost.push(C, C);
-      }
-
       if (playerActive) {
-        effect.cost.push(C, C);
+        effect.cost.push(CardType.COLORLESS, CardType.COLORLESS);
       }
       return state;
     }

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -17,7 +17,7 @@ export class Gourgeist extends PokemonCard {
   public powers = [{
     name: 'Gourgantic',
     powerType: PowerType.ABILITY,
-    text: ' If this Pokemon has any [G] Energy attached to it, its maximum HP is 200.'
+    text: 'If this Pokémon has any [G] Energy attached to it, its maximum HP is 200.'
   }];
 
   public attacks = [{
@@ -59,7 +59,7 @@ export class Gourgeist extends PokemonCard {
         if (em.provides.includes(CardType.GRASS)) {
           grassProvided = true;
         }
-        if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.GRASS)) ||
+        if ((em.card.superType === SuperType.ENERGY && (em.card as EnergyCard).blendedEnergies.includes(CardType.GRASS)) ||
           (em.provides.includes(CardType.GRASS) || em.provides.includes(CardType.ANY))) {
           grassProvided = true;
         }

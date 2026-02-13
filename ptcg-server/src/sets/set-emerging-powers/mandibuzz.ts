@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -29,7 +29,7 @@ export class Mandibuzz extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each Darkness Energy attached to all of your Pokémon.'
+      text: 'Does 10 more damage for each [D] Energy attached to all of your Pokémon.'
     }
   ];
 
@@ -64,7 +64,7 @@ export class Mandibuzz extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.cards.forEach(card => {
-          if (card instanceof EnergyCard && card.provides.includes(CardType.DARK)) {
+          if (card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.DARK)) {
             darkEnergy++;
           }
         });

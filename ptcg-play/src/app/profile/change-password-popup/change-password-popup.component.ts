@@ -29,6 +29,10 @@ export class ChangePasswordPopupComponent {
     private translate: TranslateService
   ) { }
 
+  public cancel(): void {
+    this.dialogRef.close();
+  }
+
   public changePassword() {
     this.loading = true;
     this.profileService.changePassword(this.currentPassword, this.newPassword).pipe(

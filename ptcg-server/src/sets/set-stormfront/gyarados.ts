@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { Card, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CoinFlipPrompt, EnergyCard, CardTarget, PokemonCardList, ChooseCardsPrompt } from '../../game';
+import { Card, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CoinFlipPrompt, CardTarget, PokemonCardList, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE } from '../../game/store/prefabs/attack-effects';
@@ -74,7 +74,7 @@ export class Gyarados extends PokemonCard {
           let hasPokemonWithEnergy = false;
           const blocked: CardTarget[] = [];
           opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-            if (cardList.cards.some(c => c instanceof EnergyCard)) {
+            if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
               hasPokemonWithEnergy = true;
               oppSpecialPokemon++;
             } else {

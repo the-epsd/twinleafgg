@@ -1,20 +1,33 @@
 <div class="ptcg-message-entry" [class.ptcg-written-by-me]="writtenByMe" *ngIf="user$ | async as user">
-  <div class="ptcg-message-avatar-box">
-    <ptcg-avatar class="ptcg-message-avatar" [avatarFile]="user.avatarFile" (click)="onAvatarClick()">
+  <div class="ptcg-message-avatar-box" *ngIf="!writtenByMe">
+    <ptcg-avatar class="ptcg-message-avatar" [avatarFile]="user.avatarFile">
     </ptcg-avatar>
   </div>
-  <div class="ptcg-message-content">
-    <div class="ptcg-message-header">
-      <span class="ptcg-message-sender" [routerLink]="['/profile', message.senderId]">
-        {{ 'MESSAGES_MESSAGE_FROM' | translate: { name: user.name } }},
-        {{ message.created | date: ('DATE_FORMAT' | translate) }}
+
+  <div class="ptcg-message-content-wrapper">
+    <div class="ptcg-message-header" *ngIf="!writtenByMe">
+      <span class="ptcg-message-sender" [routerLink]="['/profile', message.senderId]"
+        [style.color]="user.ranking ? user.ranking.color : null">
+        {{ user.name }}
       </span>
-      <div class="ptcg-message-seen" *ngIf="message.isRead">
-        <mat-icon>done</mat-icon>
+      <span class="ptcg-message-timestamp">
+        {{ formatTimestamp(message.created) }}
+      </span>
+    </div>
+
+    <div class="ptcg-message-bubble" [class.ptcg-message-bubble-sent]="writtenByMe">
+      <div class="ptcg-message-text">
+        {{ message.text }}
+      </div>
+      <div class="ptcg-message-status" *ngIf="writtenByMe">
+        <mat-icon class="ptcg-message-status-icon" [class.ptcg-message-read]="message.isRead">check</mat-icon>
       </div>
     </div>
-    <div class="ptcg-message-text">
-      {{ message.text }}
+
+    <div class="ptcg-message-header ptcg-message-header-sent" *ngIf="writtenByMe">
+      <span class="ptcg-message-timestamp">
+        {{ formatTimestamp(message.created) }}
+      </span>
     </div>
   </div>
 </div>

@@ -13,21 +13,19 @@ export class Dewott extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Water Gun',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Razor Shell',
-      cost: [W, W, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Water Gun',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  },
+  {
+    name: 'Razor Shell',
+    cost: [W, W, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

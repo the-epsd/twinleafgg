@@ -23,7 +23,7 @@ export class RaikouEx extends PokemonCard {
       name: 'Thunder Fang',
       cost: [L, C],
       damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }, {
       name: 'Volt Bolt',
       cost: [L, L, C],

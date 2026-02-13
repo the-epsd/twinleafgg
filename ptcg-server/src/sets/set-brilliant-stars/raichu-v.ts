@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, StateUtils, AttachEnergyPrompt, EnergyCard } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, StateUtils, AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
@@ -83,7 +83,7 @@ export class RaichuV extends PokemonCard {
       let totalLightningEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const lightningCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard && card.name === 'Lightning Energy'
+          card.superType === SuperType.ENERGY && card.name === 'Lightning Energy'
         ).length;
         totalLightningEnergy += lightningCount;
       });

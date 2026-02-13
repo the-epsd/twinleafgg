@@ -1,34 +1,34 @@
-import { PokemonCard, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike, GameError, CardTag, Stage } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike, GameError, CardTag, Stage } from '../../game';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { StateUtils } from '../../game/store/state-utils';
 
 export class MedichamV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_V];
-  public cardType = CardType.FIGHTING;
+  public cardType = F;
   public hp = 210;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Yoga Loop',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 0,
-      text: 'Put 2 damage counters on 1 of your opponent\'s Pokémon. If your opponent\'s Pokémon is Knocked Out by this attack, take another turn after this one. (Skip Pokémon Checkup.) If 1 of your Pokémon used Yoga Loop during your last turn, this attack can\'t be used.'
-    },
-    {
-      name: 'Smash Uppercut',
-      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }
-  ];
+  public attacks = [{
+    name: 'Yoga Loop',
+    cost: [C, C],
+    damage: 0,
+    text: 'Put 2 damage counters on 1 of your opponent\'s Pokémon. If your opponent\'s Pokémon is Knocked Out by this attack, take another turn after this one. (Skip Pokémon Checkup.) If 1 of your Pokémon used Yoga Loop during your last turn, this attack can\'t be used.'
+  },
+  {
+    name: 'Smash Uppercut',
+    cost: [F, C, C],
+    damage: 100,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  }];
 
+  public regulationMark = 'E';
   public set: string = 'EVS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
@@ -42,27 +42,27 @@ export class MedichamV extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER, this);
+      effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER_2, this);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.YOGA_LOOP_MARKER_2, this)) {
+      // Second turn ending - clear everything
       effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER, this);
       effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER_2, this);
       effect.player.usedTurnSkip = false;
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.YOGA_LOOP_MARKER, this)) {
+      // First turn ending - mark for cleanup next turn
       effect.player.marker.addMarker(this.YOGA_LOOP_MARKER_2, this);
-      effect.player.usedTurnSkip = false;
-      console.log('marker added');
+      // DON'T clear usedTurnSkip here - it needs to stay true for initNextTurn
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      // Check marker
-      if (effect.player.marker.hasMarker(this.YOGA_LOOP_MARKER, this)) {
-        console.log('attack blocked');
+      // Check if Yoga Loop was used last turn
+      if (player.marker.hasMarker(this.YOGA_LOOP_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
@@ -74,18 +74,26 @@ export class MedichamV extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 20);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
+        if (targets.length === 0) {
+          return state;
+        }
 
-          if (effect instanceof KnockOutEffect && effect.target === target) {
-            player.marker.addMarker(this.YOGA_LOOP_MARKER, this);
-            effect.player.usedTurnSkip = true;
-            return state;
-          }
+        const target = targets[0];
+        const putCountersEffect = new PutCountersEffect(effect, 20);
+        putCountersEffect.target = target;
+        state = store.reduceEffect(state, putCountersEffect);
 
-        });
+        // Check if target was knocked out
+        const targetOwner = StateUtils.findOwner(state, target);
+        const checkHpEffect = new CheckHpEffect(targetOwner, target);
+        store.reduceEffect(state, checkHpEffect);
+
+        if (target.damage >= checkHpEffect.hp) {
+          // Pokémon was knocked out - set marker and enable turn skip
+          player.marker.addMarker(this.YOGA_LOOP_MARKER, this);
+          player.usedTurnSkip = true;
+        }
+
         return state;
       });
     }

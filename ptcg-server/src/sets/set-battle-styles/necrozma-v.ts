@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
 
@@ -72,7 +71,7 @@ export class NecrozmaV extends PokemonCard {
       let hasSpecialEnergy: boolean = false;
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
+        if (energyCard.superType === SuperType.ENERGY && energyCard.energyType === EnergyType.SPECIAL) {
           hasSpecialEnergy = true;
         }
       });

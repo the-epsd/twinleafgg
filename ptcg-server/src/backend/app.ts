@@ -24,9 +24,9 @@ import {
   Replays,
   ResetPassword,
   BattlePass,
-  Artworks,
   Sleeves,
   MemoryHealthController,
+  ImageProxy,
 } from './controllers';
 import { ApiErrorEnum } from './common/errors';
 
@@ -87,6 +87,7 @@ export class App {
     app.use('/sleeves', express.static(config.backend.sleevesDir));
 
     // API routes
+    define('/v1/image-proxy', ImageProxy);
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
@@ -100,7 +101,6 @@ export class App {
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
     define('/v1/battlepass', BattlePass);
-    define('/v1/artworks', Artworks);
     define('/v1/sleeves', Sleeves);
     define('/v1/memory', MemoryHealthController);
 

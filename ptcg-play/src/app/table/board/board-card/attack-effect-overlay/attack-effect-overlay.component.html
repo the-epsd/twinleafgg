@@ -1,0 +1,9 @@
+<div class="attack-effect-overlay" [ngStyle]="getStyle()" *ngIf="cardType && config">
+  <div 
+    class="particle" 
+    *ngFor="let particle of particles; let i = index"
+    [style.animation-delay]="getParticleDelay(i) + 'ms'"
+    [style.left]="(50 + getParticleOffsetX(i)) + '%'"
+    [style.top]="(50 + getParticleOffsetY(i)) + '%'"
+  ></div>
+</div>

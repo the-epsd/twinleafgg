@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, SlotType, EnergyCard, MoveEnergyPrompt, CardTarget } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType, SlotType, MoveEnergyPrompt, CardTarget } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
@@ -20,14 +20,14 @@ export class Serperior2 extends PokemonCard {
   public powers = [{
     name: 'Royal Heal',
     powerType: PowerType.ABILITY,
-    text: 'At any time between turns, heal 10 damage from each of your Pokemon.'
+    text: 'At any time between turns, heal 10 damage from each of your Pokémon.'
   }];
 
   public attacks = [{
     name: 'Leaf Tornado',
     cost: [G, C],
     damage: 60,
-    text: 'Move as many [G] Energy attached to your Pokemon to your other Pokemon in any way you like.'
+    text: 'Move as many [G] Energy attached to your Pokémon to your other Pokémon in any way you like.'
   }];
 
   public set: string = 'BLW';
@@ -52,7 +52,7 @@ export class Serperior2 extends PokemonCard {
       });
 
       if (hasSerperior) {
-        // Heal 10 from each of this player's Pokemon
+        // Heal 10 from each of this player's Pokémon
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.damage > 0) {
             cardList.damage = Math.max(0, cardList.damage - 10);
@@ -74,7 +74,7 @@ export class Serperior2 extends PokemonCard {
         const blocked: number[] = [];
         cardList.cards.forEach((c, index) => {
           // Block cards that are not Grass energy
-          if (c instanceof EnergyCard) {
+          if (c.superType === SuperType.ENERGY) {
             const energyMap = checkProvidedEnergy.energyMap.find(em => em.card === c);
             if (!energyMap || (!energyMap.provides.includes(CardType.GRASS) && !energyMap.provides.includes(CardType.ANY))) {
               blocked.push(index);

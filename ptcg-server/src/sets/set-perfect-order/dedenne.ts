@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, AttachEnergyPrompt, PlayerType, SlotType, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { WAS_ATTACK_USED, ADD_PARALYZED_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
-import { SuperType } from '../../game/store/card/card-types';
 
 export class Dedenne extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,9 +50,9 @@ export class Dedenne extends PokemonCard {
 
       // Count Basic Lightning Energy in discard
       const lightningEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard &&
+        c.superType === SuperType.ENERGY &&
         c.energyType === EnergyType.BASIC &&
-        c.provides.includes(CardType.LIGHTNING)
+        (c as import('../../game/store/card/energy-card').EnergyCard).provides.includes(CardType.LIGHTNING)
       );
 
       if (lightningEnergyInDiscard.length === 0) {

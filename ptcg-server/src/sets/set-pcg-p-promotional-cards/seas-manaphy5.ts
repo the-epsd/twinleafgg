@@ -19,7 +19,7 @@ export class SeasManaphy5 extends PokemonCard {
     name: 'Natural Cure',
     useWhenInPlay: false,
     powerType: PowerType.POKEBODY,
-    text: 'Whenever you attach a Water Energy card from your hand to Sea\'s Manaphy, remove all Special Conditions from Sea\'s Manaphy.'
+    text: 'Whenever you attach a [W] Energy card from your hand to Sea\'s Manaphy, remove all Special Conditions from Sea\'s Manaphy.'
   }];
 
   public attacks = [{

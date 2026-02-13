@@ -17,7 +17,7 @@ export class Lapras2 extends PokemonCard {
       name: 'Water Arrow',
       cost: [W, C],
       damage: 0,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Surf',
@@ -34,7 +34,7 @@ export class Lapras2 extends PokemonCard {
   public fullName: string = 'Lapras NXD 26';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Water Arrow - 20 damage to any of opponent's Pokemon
+    // Water Arrow - 20 damage to any of opponent's Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(20, effect, store, state);
     }

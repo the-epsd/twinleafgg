@@ -25,7 +25,7 @@ export class Simisear extends PokemonCard {
       cost: [R, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 30 more damage and the Defending Pokemon is now Burned.'
+      text: 'If there is any Stadium card in play, this attack does 30 more damage and the Defending Pokémon is now Burned.'
     }
   ];
 

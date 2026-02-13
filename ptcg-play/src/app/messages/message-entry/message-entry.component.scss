@@ -1,39 +1,167 @@
-@import '../../../theme/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/global.scss';
 
 .ptcg-message-entry {
   display: flex;
+  align-items: flex-start;
+  gap: map-get($padding, small);
   margin-bottom: map-get($padding, normal);
+  padding: 0 map-get($padding, small);
+  animation: messageFadeIn 0.3s ease-out;
 
-  &.myself {
+  &.ptcg-written-by-me {
     flex-direction: row-reverse;
+    gap: 4px; // Reduced gap for current user's messages
+
+    .ptcg-message-content-wrapper {
+      align-items: flex-end;
+    }
+
+    .ptcg-message-bubble {
+      background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.15));
+      border: 1px solid rgba($twinleaf-green, 0.3);
+      border-radius: 18px 18px 4px 18px;
+    }
   }
 }
 
-.ptcg-message-avatar {
-  flex: 0 0;
-  margin: 0 map-get($padding, small);
+@keyframes messageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ptcg-message-avatar-box {
+  flex: 0 0 auto;
+  margin-top: 4px;
+
+  .ptcg-message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+}
+
+.ptcg-message-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  max-width: 70%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.ptcg-message-header {
+  display: flex;
+  align-items: center;
+  gap: map-get($padding, small);
+  margin-bottom: 4px;
+  width: 100%;
+
+  &.ptcg-message-header-sent {
+    justify-content: flex-end;
+  }
+
+  .ptcg-message-sender {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-primary;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  }
+
+  .ptcg-message-timestamp {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.ptcg-message-bubble {
+  background: linear-gradient(135deg, rgba($bg-card, 0.6), rgba($bg-card, 0.4));
+  border: 1px solid rgba($twinleaf-green, 0.1);
+  border-radius: 18px 18px 18px 4px;
+  padding: 10px 14px;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+
+  &.ptcg-message-bubble-sent {
+    background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.15));
+    border-color: rgba($twinleaf-green, 0.3);
+  }
 }
 
 .ptcg-message-text {
-  flex: 1 1;
-  margin: 0 map-get($padding, small);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+}
 
-  mat-card-content {
-    margin-bottom: 0;
+.ptcg-message-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 4px;
+  margin-left: auto;
+
+  .ptcg-message-status-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    color: $text-muted;
+    transition: color 0.3s ease;
+
+    &.ptcg-message-read {
+      color: $twinleaf-green;
+    }
   }
 }
 
-.ptcg-message-footer {
-  align-items: flex-end;
-  display: flex;
-  padding: map-get($padding, small);
-  justify-content: space-between;
-}
+// Responsive adjustments
+@media (max-width: 768px) {
+  .ptcg-message-content-wrapper {
+    max-width: 85%;
+  }
 
-.ptcg-message-from {
-  margin: 0 map-get($padding, small);
-}
+  .ptcg-message-bubble {
+    padding: 8px 12px;
+  }
 
-.ptcg-message-seen {
-  height: 24px;
+  .ptcg-message-text {
+    font-size: 13px;
+  }
 }

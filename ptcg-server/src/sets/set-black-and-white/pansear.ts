@@ -10,10 +10,10 @@ export class Pansear extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{
-    type: CardType.WATER
+    type: W
   }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     { name: 'Scratch', cost: [C], damage: 10, text: '' },

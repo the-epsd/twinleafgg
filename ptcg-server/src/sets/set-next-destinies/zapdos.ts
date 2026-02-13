@@ -19,13 +19,13 @@ export class Zapdos extends PokemonCard {
       name: 'Thunder Claw',
       cost: [L, C],
       damage: 30,
-      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Random Spark',
       cost: [L, L, C],
       damage: 50,
-      text: 'This attack does 50 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'This attack does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -63,7 +63,7 @@ export class Zapdos extends PokemonCard {
       }
     }
 
-    // Random Spark - 50 damage to chosen benched Pokemon
+    // Random Spark - 50 damage to chosen benched Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

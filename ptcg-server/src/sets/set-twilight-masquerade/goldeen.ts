@@ -1,5 +1,5 @@
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
-import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -48,7 +48,7 @@ export class Goldeen extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

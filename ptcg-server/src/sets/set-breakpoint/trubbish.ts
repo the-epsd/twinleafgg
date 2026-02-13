@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage } from '../../game/game-message';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { ChooseCardsPrompt, EnergyCard } from '../../game';
+import { ChooseCardsPrompt } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Trubbish extends PokemonCard {
@@ -37,7 +37,7 @@ export class Trubbish extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check for energy to discard
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

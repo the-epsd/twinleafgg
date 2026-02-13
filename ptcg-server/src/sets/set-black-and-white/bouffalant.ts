@@ -17,7 +17,7 @@ export class Bouffalant extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'If any of your Pokemon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 70 more damage.'
+      text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 70 more damage.'
     },
     {
       name: 'Head Charge',
@@ -29,9 +29,9 @@ export class Bouffalant extends PokemonCard {
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '90';
+  public setNumber: string = '91';
   public name: string = 'Bouffalant';
-  public fullName: string = 'Bouffalant BLW 90';
+  public fullName: string = 'Bouffalant BLW 91';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

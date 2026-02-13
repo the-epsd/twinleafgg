@@ -6,7 +6,6 @@ import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -62,7 +61,7 @@ export class RadiantGreninja extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard;
+        return c.superType === SuperType.ENERGY;
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

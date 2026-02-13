@@ -20,14 +20,14 @@ export class Scrafty extends PokemonCard {
       name: 'Rock Head',
       cost: [D],
       damage: 20,
-      text: 'During your opponent\'s next turn, any damage done to this Pokemon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
     },
     {
       name: 'Hammer Kick',
       cost: [D, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If this Pokemon has fewer remaining HP than the Defending Pokemon, this attack does 30 more damage.'
+      text: 'If this Pokémon has fewer remaining HP than the Defending Pokémon, this attack does 30 more damage.'
     }
   ];
 

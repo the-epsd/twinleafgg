@@ -18,14 +18,14 @@ export class Arcanine2 extends PokemonCard {
   public powers = [{
     name: 'Blazing Mane',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokemon is your Active Pokemon and is damaged by an opponent\'s attack (even if this Pokemon is Knocked Out), the Attacking Pokemon is now Burned.'
+    text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Burned.'
   }];
 
   public attacks = [{
     name: 'Fire Spin',
     cost: [R, R, C],
     damage: 100,
-    text: 'Flip a coin. If tails, discard 2 Energy attached to this Pokemon.'
+    text: 'Flip a coin. If tails, discard 2 Energy attached to this Pokémon.'
   }];
 
   public set: string = 'NXD';
@@ -40,7 +40,7 @@ export class Arcanine2 extends PokemonCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      // Only works if this is the active Pokemon and was damaged by opponent
+      // Only works if this is the active Pokémon and was damaged by opponent
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
       }
@@ -54,7 +54,7 @@ export class Arcanine2 extends PokemonCard {
         return state;
       }
 
-      // Burn the attacking Pokemon
+      // Burn the attacking Pokémon
       player.active.addSpecialCondition(SpecialCondition.BURNED);
     }
 

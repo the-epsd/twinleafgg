@@ -6,7 +6,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, GameMessage } from '../../game';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class Ceruledge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,7 +35,7 @@ export class Ceruledge extends PokemonCard {
 
       // Check if player has at least 4 Basic Fire Energy cards in hand
       const fireEnergyInHand = player.hand.cards.filter(card =>
-        card instanceof EnergyCard &&
+        card.superType === SuperType.ENERGY &&
         card.energyType === EnergyType.BASIC &&
         card.name === 'Fire Energy'
       );
@@ -58,7 +57,7 @@ export class Ceruledge extends PokemonCard {
         cards = cards || [];
         // Filter to ensure only Fire Energy cards are selected
         const fireEnergyCards = cards.filter(card =>
-          card instanceof EnergyCard &&
+          card.superType === SuperType.ENERGY &&
           card.energyType === EnergyType.BASIC &&
           card.name === 'Fire Energy'
         );

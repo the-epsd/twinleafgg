@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -40,13 +40,13 @@ export class Sawsbuck extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Count all Grass Energy attached to all of your Pokemon
+      // Count all Grass Energy attached to all of your Pokémon
       let grassEnergyCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.cards.forEach(card => {
-          if (card instanceof EnergyCard && card.provides.includes(CardType.GRASS)) {
+          if (card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.GRASS)) {
             // Count each Grass energy provided
-            grassEnergyCount += card.provides.filter(t => t === CardType.GRASS).length;
+            grassEnergyCount += (card as EnergyCard).provides.filter(t => t === CardType.GRASS).length;
           }
         });
       });

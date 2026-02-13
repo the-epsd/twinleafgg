@@ -93,25 +93,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class CrossSwitcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.FUSION_STRIKE];
-
   public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '230';
-
   public set: string = 'FST';
-
   public name: string = 'Cross Switcher';
-
   public fullName: string = 'Cross Switcher FST';
 
   public text: string =
-    'You must play 2 Cross Switcher cards at once. (This effect works one time for 2 cards.)' +
-    '' +
-    'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
+    `You must play 2 Cross Switcher cards at once. (This effect works one time for 2 cards.)
+
+Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

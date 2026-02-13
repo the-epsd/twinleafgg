@@ -1,12 +1,10 @@
 <div class="ptcg-match-table">
-
   <h3 translate>GAMES_RECENT_GAMES_TITLE</h3>
 
   <ptcg-content [loading]="loading">
     <!-- Match Cards Grid -->
     <div class="matches-grid">
       <div class="match-card" *ngFor="let match of matches; let i = index">
-
         <!-- Match Header -->
         <div class="match-card-header">
           <div class="match-date">
@@ -64,10 +62,8 @@
 
         <!-- Match Actions -->
         <div class="match-actions">
-          <button class="action-button" [matMenuTriggerFor]="menu">
-            <mat-icon>play_arrow</mat-icon>
-            <span>{{ 'BUTTON_REPLAY' | translate }}</span>
-          </button>
+          <twinleaf-button [text]="'BUTTON_REPLAY' | translate" [icon]="'play_arrow'" [matMenuTriggerFor]="menu">
+          </twinleaf-button>
           <mat-menu #menu="matMenu" class="modern-menu">
             <button mat-menu-item [disabled]="loading" (click)="showReplay(match.matchId)">
               <mat-icon>play_arrow</mat-icon>
@@ -95,7 +91,5 @@
         {{ 'BUTTON_TRY_AGAIN' | translate }}
       </button>
     </div>
-
   </ptcg-content>
-
 </div>

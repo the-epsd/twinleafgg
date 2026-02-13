@@ -20,7 +20,7 @@ export class Simisear extends PokemonCard {
       name: 'Flame Burst',
       cost: [R],
       damage: 20,
-      text: 'Does 20 damage to 2 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 20 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Fury Swipes',

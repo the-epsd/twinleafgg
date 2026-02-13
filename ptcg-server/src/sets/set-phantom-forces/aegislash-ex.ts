@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -70,8 +70,8 @@ export class AegislashEX extends PokemonCard {
 
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard &&
-          energyCard.energyType === EnergyType.SPECIAL) {
+        if (energyCard.superType === SuperType.ENERGY &&
+          (energyCard as EnergyCard).energyType === EnergyType.SPECIAL) {
 
           if (effect instanceof PutDamageEffect
             && opponent.active.cards.includes(energyCard)) {

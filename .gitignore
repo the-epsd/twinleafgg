@@ -64,3 +64,4 @@ frontend-cleanup-report.md
 ptcg-server/implementedCardIds.json
 ptcg-server/generate-implemented-card-ids-json.js
 fetch-set-cards.sh
+fetch-all-sets.sh

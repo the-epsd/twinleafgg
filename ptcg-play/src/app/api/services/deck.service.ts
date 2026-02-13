@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '../api.service';
-import { DeckListResponse, DeckResponse, DeckStatsResponse } from '../interfaces/deck.interface';
+import { DeckListResponse, DeckListOptions, DeckResponse, DeckStatsResponse } from '../interfaces/deck.interface';
 import { Response } from '../interfaces/response.interface';
 import { Format, Archetype } from 'ptcg-server';
 import { map } from 'rxjs/operators';
@@ -16,15 +16,25 @@ export class DeckService {
     private cardsBaseService: CardsBaseService
   ) { }
 
-  public getList() {
-    return this.api.get<DeckListResponse>('/v1/decks/list');
+  public getList(options?: DeckListOptions) {
+    const params: { [key: string]: any } = {};
+    if (options?.summary) {
+      params.summary = 'true';
+    }
+    if (options?.limit !== undefined) {
+      params.limit = options.limit;
+    }
+    if (options?.offset !== undefined) {
+      params.offset = options.offset;
+    }
+    return this.api.get<DeckListResponse>('/v1/decks/list', Object.keys(params).length ? params : undefined);
   }
 
-  public getListByFormat(format: Format) {
+  public getListByFormat(format: Format, options?: DeckListOptions) {
     if (!format) {
-      return this.getList().pipe(map(decks => decks.decks));
+      return this.getList(options).pipe(map(decks => decks.decks));
     }
-    return this.getList().pipe(
+    return this.getList(options).pipe(
       map(decks => {
         return decks.decks.filter(deck => {
           return Array.isArray(deck.format) && deck.format.includes(format);

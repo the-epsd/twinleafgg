@@ -16,7 +16,7 @@ export class Grimer extends PokemonCard {
     name: 'Nasty Goo',
     cost: [P, C],
     damage: 20,
-    text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
   }];
 
   public set: string = 'NXD';

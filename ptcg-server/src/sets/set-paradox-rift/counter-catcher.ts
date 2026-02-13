@@ -7,37 +7,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt, Player, PlayerType, SlotType } from '../../game';
-
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const hasBench = opponent.bench.some(b => b.cards.length > 0);
-
-  if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  if (!hasBench) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
-
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), result => {
-    const cardList = result[0];
-    opponent.switchPokemon(cardList);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  });
-}
+import { Player } from '../../game';
+import { SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class CounterCatcher extends TrainerCard {
 
@@ -52,7 +23,7 @@ export class CounterCatcher extends TrainerCard {
   public text: string =
     `You can play this card only if you have more Prize Cards remaining than your opponent.
 
-Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.`;
+Switch in 1 of your opponent's Benched Pokémon to the Active Spot.`;
 
   public readonly COUNTER_CATCHER_MARKER = 'COUNTER_CATCHER_MARKER';
 
@@ -73,8 +44,24 @@ Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
+      if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      // Legacy implementation:
+      // - Used a ChoosePokemonPrompt targeting opponent Bench.
+      // - Switched opponent Active to selected Bench target.
+      //
+      // Converted to prefab version (SWITCH_IN_OPPONENT_BENCHED_POKEMON).
+      return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, { allowCancel: false });
     }
 
     return state;

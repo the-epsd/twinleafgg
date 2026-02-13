@@ -11,23 +11,17 @@ import { StoreLike } from '../../game/store/store-like';
 export class BellelbaAndBrycenMan extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'CEC';
-
   public tags = [CardTag.TAG_TEAM];
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '186';
-
   public name: string = 'Bellelba & Brycen-Man';
-
   public fullName: string = 'Bellelba & Brycen-Man CEC';
 
   public text: string =
-    'Discard 3 cards from the top of each player\'s deck.' +
-    '' +
-    'When you play this card, you may discard 3 other cards from your hand. If you do, each player discards their Benched Pokémon until they have 3 Benched Pokémon. Your opponent discards first.';
+    `Discard 3 cards from the top of each player's deck.
+
+When you play this card, you may discard 3 other cards from your hand. If you do, each player discards their Benched Pokémon until they have 3 Benched Pokémon. Your opponent discards first.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

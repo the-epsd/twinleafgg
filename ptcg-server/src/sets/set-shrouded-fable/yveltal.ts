@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PlayerType, StateUtils } from '../../game';
+import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PlayerType, StateUtils } from '../../game';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -56,7 +56,7 @@ export class Yveltal extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

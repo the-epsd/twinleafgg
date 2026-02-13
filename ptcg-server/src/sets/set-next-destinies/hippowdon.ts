@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage, EnergyCard, ChooseCardsPrompt, Card } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage, ChooseCardsPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -48,7 +48,7 @@ export class Hippowdon extends PokemonCard {
       const player = effect.player;
 
       const hasBenched = player.bench.some(b => b.cards.length > 0);
-      const hasEnergy = player.active.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.active.cards.some(c => c.superType === SuperType.ENERGY);
       if (!hasBenched || !hasEnergy) {
         return state;
       }
@@ -56,7 +56,7 @@ export class Hippowdon extends PokemonCard {
       // Get blocked indices for non-energy cards
       const blocked: number[] = [];
       player.active.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard)) {
+        if (card.superType !== SuperType.ENERGY) {
           blocked.push(index);
         }
       });

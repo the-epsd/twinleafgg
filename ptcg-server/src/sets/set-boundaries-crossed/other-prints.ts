@@ -12,6 +12,10 @@ import { Altaria } from '../set-dragons-exalted/altaria';
 import { RockyHelmet as RockyHelmetSVI193 } from '../set-scarlet-and-violet/rocky-helmet';
 import { KeldeoEx } from './keldeo-ex';
 import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
+import { CelebiEx } from './celebi-ex';
+import { CresseliaEx } from './cresselia-ex';
+import { BlackKyuremEx } from './black-kyurem-ex';
+import { WhiteKyuremEx } from './white-kyurem-ex';
 
 export class KeldeoExBCR extends KeldeoEx {
   public setNumber = '142';
@@ -94,4 +98,28 @@ export class RockyHelmet2BCR extends RockyHelmetSVI193 {
   public setNumber = '153';
   public fullName: string = 'Rocky Helmet2 BCR';
   public set = 'BCR';
+}
+
+export class CelebiEx2 extends CelebiEx {
+  public set: string = 'BCR';
+  public setNumber: string = '141';
+  public fullName: string = 'Celebi-EX BCR 141';
+}
+
+export class CresseliaEx2 extends CresseliaEx {
+  public set: string = 'BCR';
+  public setNumber: string = '143';
+  public fullName: string = 'Cresselia-EX BCR 143';
+}
+
+export class BlackKyuremEx2 extends BlackKyuremEx {
+  public set: string = 'BCR';
+  public setNumber: string = '145';
+  public fullName: string = 'Black Kyurem-EX BCR 145';
+}
+
+export class WhiteKyuremEx2 extends WhiteKyuremEx {
+  public set: string = 'BCR';
+  public setNumber: string = '146';
+  public fullName: string = 'White Kyurem-EX BCR 146';
 }

@@ -3,9 +3,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { Card, ChooseEnergyPrompt, GameMessage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
 
 export class Metagross extends PokemonCard {
 
@@ -53,36 +53,9 @@ export class Metagross extends PokemonCard {
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
-  public usedAttack: boolean = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect) {
-      this.usedAttack = true;
-    }
-
-    if (effect instanceof BeginTurnEffect) {
-      if (this.usedAttack) {
-        this.usedAttack = false;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      if (!this.usedAttack) {
-        this.usedAttack = false;
-        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-        effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-      effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -102,13 +75,15 @@ export class Metagross extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Check marker
-      if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-        effect.damage += 60;
-      }
-      effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-    }
+    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[0],
+      source: this,
+      bonusDamage: 60,
+      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+    });
+
     return state;
   }
 }

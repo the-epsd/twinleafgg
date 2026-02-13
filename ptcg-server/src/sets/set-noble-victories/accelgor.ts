@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -20,13 +20,13 @@ export class Accelgor extends PokemonCard {
       name: 'Acid Spray',
       cost: [G],
       damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
+      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
     },
     {
       name: 'Deck and Cover',
       cost: [C, C],
       damage: 50,
-      text: 'The Defending Pokemon is now Paralyzed and Poisoned. Shuffle this Pokemon and all cards attached to it into your deck.'
+      text: 'The Defending Pokémon is now Paralyzed and Poisoned. Shuffle this Pokémon and all cards attached to it into your deck.'
     }
   ];
 
@@ -44,7 +44,7 @@ export class Accelgor extends PokemonCard {
 
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          const oppEnergy = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          const oppEnergy = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
           if (oppEnergy.length === 0) {
             return;
           }
@@ -79,7 +79,7 @@ export class Accelgor extends PokemonCard {
       store.reduceEffect(state, addSpecialCondition);
     }
 
-    // Shuffle this Pokemon and all attached cards into deck (after attack)
+    // Shuffle this Pokémon and all attached cards into deck (after attack)
     if (AFTER_ATTACK(effect, 1, this)) {
       return SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
     }

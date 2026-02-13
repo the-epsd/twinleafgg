@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
@@ -15,6 +15,7 @@ import {
   AttackEffect,
   EvolveEffect,
   HealEffect, KnockOutEffect,
+  PlaceDamageCountersEffect,
   PowerEffect,
   PutDamageCountersEffect,
   TrainerPowerEffect,
@@ -156,6 +157,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   //  (attackingPokemon as any).pendingAttackTargets = [];
 
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
+  attackEffect.source = attackingPokemon;
   state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {
@@ -178,6 +180,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
   const card = attackingPokemon.getPokemonCard();
   const cardId = card ? card.id : undefined;
+  const cardType = card ? card.cardType : undefined;
 
   // Emit attack animation event
   const game = (store as any).handler;
@@ -188,7 +191,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
           playerId: player.id,
           cardId,
           slot,
-          index
+          index,
+          cardType,
+          opponentId: opponent.id
         });
       }
     });
@@ -312,20 +317,15 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       if (effect.target.marker.hasMarker('LOST_CITY_MARKER') || card.tags.includes(CardTag.PRISM_STAR)) {
         const lostZoned = new CardList();
         const attachedCards = new CardList();
-        const tools = [...effect.target.tools];
-        const pokemonIndices = effect.target.cards.map((card, index) => index);
 
-        // Move tools to discard BEFORE clearing effects (directly)
-        for (const tool of tools) {
-          effect.target.moveCardTo(tool, effect.player.discard);
-        }
-
-        // Clear damage and effects
+        // Clear damage and effects before splitting cards
         effect.target.damage = 0;
         effect.target.clearEffects();
 
-        for (let i = pokemonIndices.length - 1; i >= 0; i--) {
-          const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
+        // Splice in reverse so indices remain valid; do NOT pre-move tools/energies
+        // or effect.target.cards shrinks and later splice(indices[i], 1) can be out of bounds
+        while (effect.target.cards.length > 0) {
+          const removedCard = effect.target.cards.splice(effect.target.cards.length - 1, 1)[0];
 
           // Handle cardlist cards (energy, tools, etc.)
           if (removedCard.cards) {
@@ -338,12 +338,16 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           }
 
           // Handle the main card
-          if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC || removedCard.tags.includes(CardTag.PRISM_STAR)) {
+          if (removedCard.superType === SuperType.POKEMON || removedCard.tags.includes(CardTag.PRISM_STAR)) {
             lostZoned.cards.push(removedCard);
           } else {
             attachedCards.cards.push(removedCard);
           }
         }
+
+        // Clear refs so the slot is fully emptied
+        effect.target.tools = [];
+        effect.target.energies.cards = [];
 
         // Move attached cards to discard
         if (attachedCards.cards.length > 0) {
@@ -457,6 +461,40 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
             target: targetCard.name,
             effect: effect.power.name,
           });
+        }
+      }
+    }
+    return state;
+  }
+
+  if (effect instanceof PlaceDamageCountersEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+
+    const target = effect.target;
+    const targetCard = target.getPokemonCard();
+    if (targetCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    const damage = Math.max(0, effect.damage);
+    target.damage += damage;
+
+    if (damage > 0) {
+      const effectName = effect.source ? effect.source.name : '';
+      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+        name: effect.player.name,
+        damage: damage,
+        target: targetCard.name,
+        effect: effectName,
+      });
+
+      // Track damage dealt if source is provided
+      if (effect.source) {
+        const sourceCardList = StateUtils.findPokemonSlot(state, effect.source);
+        if (sourceCardList) {
+          GameStatsTracker.trackDamageDealt(effect.player, sourceCardList, damage);
         }
       }
     }

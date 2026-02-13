@@ -10,25 +10,19 @@ import { TrainerType } from '../../game/store/card/card-types';
 export class Carmine extends TrainerCard {
 
   public regulationMark = 'H';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '145';
-
   public name: string = 'Carmine';
-
   public fullName: string = 'Carmine TWM';
 
-  public firstTurn = true;
-
   public text: string =
-    'If you go first, you can use this card on your first turn.'+
-    ''+
-    'Discard your hand and draw 5 cards.';
+    `If you go first, you can use this card on your first turn.
+
+Discard your hand and draw 5 cards.`;
+  
+  public firstTurn = true;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

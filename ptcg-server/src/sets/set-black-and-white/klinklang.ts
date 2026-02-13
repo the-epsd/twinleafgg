@@ -70,14 +70,14 @@ export class Klinklang extends PokemonCard {
     name: 'Shift Gear',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), you may move a [M] Energy from 1 of your Pokemon to another of your Pokemon.'
+    text: 'As often as you like during your turn (before your attack), you may move a [M] Energy from 1 of your Pokémon to another of your Pokémon.'
   }];
 
   public attacks = [{
     name: 'Gear Saucer',
     cost: [M, M, C],
     damage: 80,
-    text: 'Does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'Does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public set: string = 'BLW';
@@ -111,7 +111,7 @@ export class Klinklang extends PokemonCard {
       return generator.next().value;
     }
 
-    // Gear Saucer - damage to benched Pokemon
+    // Gear Saucer - damage to benched Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(20, effect, store, state);
     }

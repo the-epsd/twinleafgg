@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { PlayerType, EnergyCard, GameError, GameMessage } from '../../game';
+import { PlayerType, GameError, GameMessage } from '../../game';
 
 
 export class LucarioVSTAR extends PokemonCard {
@@ -76,7 +76,7 @@ export class LucarioVSTAR extends PokemonCard {
 
       let totalEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
+        totalEnergy += cardList.cards.filter(c => c.superType === SuperType.ENERGY).length;
       });
       effect.damage += totalEnergy * 70;
       player.usedVSTAR = true;

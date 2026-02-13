@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Attack, CardTag, CardTarget, CardType, ChooseCardsPrompt, EnergyCard, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../game';
+import { AttachEnergyPrompt, Attack, CardTag, CardTarget, CardType, ChooseCardsPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -38,7 +38,7 @@ export class ThundurusEX extends PokemonCard {
 
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => c instanceof EnergyCard);
+      const hasEnergyInDiscard = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
       let validTargets = false;
       const blockedTo: CardTarget[] = [];
 
@@ -90,10 +90,10 @@ export class ThundurusEX extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let hasPlasmaEnergy: boolean = false;
-      const defendingPokemonHasEnergy = opponent.active.energies.cards.some(c => c instanceof EnergyCard);
+      const defendingPokemonHasEnergy = opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY);
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.name === 'Plasma Energy') {
+        if (energyCard.superType === SuperType.ENERGY && energyCard.name === 'Plasma Energy') {
           hasPlasmaEnergy = true;
         }
       });

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, EnergyCard, ChooseCardsPrompt, GameMessage, Card } from '../../game';
+import { StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
@@ -16,7 +16,7 @@ export class SamiyasBuizel extends PokemonCard {
   public powers = [{
     name: 'Aqua Lift',
     powerType: PowerType.POKEBODY,
-    text: 'If Samiya\'s Buizel has any Water Energy attached to it, the Retreat Cost for Samiya\'s Buizel is 0.'
+    text: 'If Samiya\'s Buizel has any [W] Energy attached to it, the Retreat Cost for Samiya\'s Buizel is 0.'
   }];
 
   public attacks = [{
@@ -65,7 +65,7 @@ export class SamiyasBuizel extends PokemonCard {
           const player = effect.player;
           const opponent = effect.opponent;
           // If defending Pokemon has no energy cards attached, return early
-          if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard)) {
+          if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
             return state;
           }
 

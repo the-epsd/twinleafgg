@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ChooseEnergyPrompt, Card, EnergyCard, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -37,8 +37,8 @@ export class Slugma extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.GRASS)) &&
-        !opponent.active.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.ANY))) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.GRASS)) &&
+        !opponent.active.cards.some(c => c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.ANY))) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 

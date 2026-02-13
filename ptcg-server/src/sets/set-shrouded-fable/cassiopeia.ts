@@ -12,23 +12,17 @@ import { ShuffleDeckPrompt } from '../../game';
 export class Cassiopeia extends TrainerCard {
 
   public regulationMark = 'H';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '56';
-
   public name: string = 'Cassiopeia';
-
   public fullName: string = 'Cassiopeia SFA';
 
   public text: string =
-    'You can play this card only when it is the last card in your hand. ' +
-    '' +
-    'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.';
+    `You can play this card only when it is the last card in your hand.
+
+Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

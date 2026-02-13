@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt } from '../../game';
 import { ShuffleDeckPrompt } from '../../game';
 import { PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -16,7 +16,7 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
 
   // Defending Pokemon has no energy cards attached
-  if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+  if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
     return state;
   }
 

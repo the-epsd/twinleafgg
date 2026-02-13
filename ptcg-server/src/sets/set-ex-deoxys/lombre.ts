@@ -14,7 +14,7 @@ export class Lombre extends PokemonCard {
   public powers = [{
     name: 'Aqua Lift',
     powerType: PowerType.POKEBODY,
-    text: 'If Lombre has any Water Energy attached to it, the Retreat Cost for Lombre is 0.'
+    text: 'If Lombre has any [W] Energy attached to it, the Retreat Cost for Lombre is 0.'
   }];
 
   public attacks = [

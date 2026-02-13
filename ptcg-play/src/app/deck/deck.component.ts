@@ -38,6 +38,7 @@ export class DeckComponent implements OnInit {
   public formatNameMap: { [key: number]: string } = {
     [Format.STANDARD]: 'standard',
     [Format.STANDARD_NIGHTLY]: 'standard_nightly',
+    [Format.STANDARD_MAJORS]: 'standard_majors',
     [Format.EXPANDED]: 'expanded',
     [Format.UNLIMITED]: 'unlimited',
     [Format.ETERNAL]: 'eternal',
@@ -124,7 +125,7 @@ export class DeckComponent implements OnInit {
 
   private refreshList() {
     this.loading = true;
-    this.deckService.getList().pipe(
+    this.deckService.getList({ summary: true, limit: 100, offset: 0 }).pipe(
       finalize(() => {
         this.loading = false;
         // Update filtered decks based on current format
@@ -135,19 +136,23 @@ export class DeckComponent implements OnInit {
       .subscribe(response => {
         this.decks = response.decks;
 
-        this.decks.forEach(deck => {
-          const deckCards: DeckItem[] = [];
-          deck.cards.forEach(card => {
-            deckCards.push({
-              card: this.cardsBaseService.getCardByName(card),
-              count: 0,
-              pane: null,
-              scanUrl: null
-            });
+        // Only build deckItems when full card data is present (non-summary response)
+        if (response.decks.some(d => d.cards)) {
+          this.decks.forEach(deck => {
+            if (deck.cards) {
+              const deckCards: DeckItem[] = [];
+              deck.cards.forEach(card => {
+                deckCards.push({
+                  card: this.cardsBaseService.getCardByName(card)!,
+                  count: 0,
+                  pane: null,
+                  scanUrl: null
+                });
+              });
+              deck.deckItems = deckCards;
+            }
           });
-
-          deck.deckItems = deckCards;
-        });
+        }
       }, (error: ApiError) => {
         this.handleError(error);
       });
@@ -175,18 +180,78 @@ export class DeckComponent implements OnInit {
     );
   }
 
+  public async createDeckFromClipboard() {
+    // Read clipboard first while user gesture is still active (before any async work)
+    let clipboardText: string;
+    try {
+      clipboardText = await navigator.clipboard.readText();
+    } catch (e) {
+      console.error('[Deck] Clipboard read failed', e);
+      this.alertService.toast(this.translate.instant('ERROR_CLIPBOARD_ACCESS'));
+      return;
+    }
+
+    const name = await this.getDeckName();
+    if (name === undefined) {
+      return;
+    }
+
+    this.loading = true;
+    this.deckService.createDeck(name).pipe(
+      finalize(() => { this.loading = false; }),
+      untilDestroyed(this)
+    ).subscribe(
+      (response) => {
+        // Pass clipboard text via router state - deck editor will import and save
+        this.router.navigate(['/deck', response.deck.id], { state: { importFromClipboard: clipboardText } });
+        this.refreshList();
+      },
+      (error: ApiError) => {
+        console.error('[Deck] createDeckFromClipboard failed', error);
+        this.handleError(error);
+      }
+    );
+  }
+
   public exportDeckList(deck: DeckListEntry): void {
-    const deckList = this.generateDeckList(deck);
-    navigator.clipboard.writeText(deckList).then(() => {
-      this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));
-    });
+    if (deck.deckItems && deck.deckItems.length > 0) {
+      const deckList = this.generateDeckList(deck);
+      navigator.clipboard.writeText(deckList).then(() => {
+        this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));
+      });
+      return;
+    }
+    // Lazy load full deck when deckItems not available (summary mode)
+    this.deckService.getDeck(deck.id).pipe(untilDestroyed(this)).subscribe(
+      response => {
+        const deckCards: DeckItem[] = [];
+        response.deck.cards.forEach(card => {
+          const c = this.cardsBaseService.getCardByName(card);
+          if (c) {
+            deckCards.push({ card: c, count: 0, pane: null, scanUrl: null });
+          }
+        });
+        const deckList = this.generateDeckListFromCards(deckCards);
+        navigator.clipboard.writeText(deckList).then(() => {
+          this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));
+        });
+      },
+      (error: ApiError) => this.handleError(error)
+    );
   }
 
   private generateDeckList(deck: DeckListEntry): string {
+    if (!deck.deckItems) return '';
+    return this.generateDeckListFromCards(deck.deckItems);
+  }
+
+  private generateDeckListFromCards(deckItems: DeckItem[]): string {
     const cardCounts = new Map<string, number>();
-    deck.deckItems.forEach(item => {
-      const cardName = `${item.card.name} ${item.card.set} ${item.card.setNumber}`;
-      cardCounts.set(cardName, (cardCounts.get(cardName) || 0) + 1);
+    deckItems.forEach(item => {
+      if (item.card) {
+        const cardName = `${item.card.name} ${item.card.set} ${item.card.setNumber}`;
+        cardCounts.set(cardName, (cardCounts.get(cardName) || 0) + 1);
+      }
     });
 
     return Array.from(cardCounts.entries())
@@ -264,7 +329,10 @@ export class DeckComponent implements OnInit {
       return returnSingle ? archetypes[0] : archetypes;
     }
 
-    // Otherwise use auto-detection
+    // Otherwise use auto-detection (requires deckItems - in summary mode we show placeholder)
+    if (!deck.deckItems || deck.deckItems.length === 0) {
+      return returnSingle ? Archetype.UNOWN : [Archetype.UNOWN];
+    }
     return ArchetypeUtils.getArchetype(deck.deckItems, returnSingle);
   }
 
@@ -323,6 +391,7 @@ export class DeckComponent implements OnInit {
     const formatDisplayNames = {
       'standard': this.translate.instant('FORMAT_STANDARD'),
       'standard_nightly': this.translate.instant('FORMAT_STANDARD_NIGHTLY'),
+      'standard_majors': this.translate.instant('FORMAT_STANDARD_MAJORS'),
       'expanded': this.translate.instant('FORMAT_EXPANDED'),
       'unlimited': this.translate.instant('FORMAT_UNLIMITED'),
       'eternal': this.translate.instant('FORMAT_ETERNAL'),
@@ -344,6 +413,7 @@ export class DeckComponent implements OnInit {
     const formatEnumMap: { [key: string]: Format } = {
       'standard': Format.STANDARD,
       'standard_nightly': Format.STANDARD_NIGHTLY,
+      'standard_majors': Format.STANDARD_MAJORS,
       'glc': Format.GLC,
       'expanded': Format.EXPANDED,
       'unlimited': Format.UNLIMITED,

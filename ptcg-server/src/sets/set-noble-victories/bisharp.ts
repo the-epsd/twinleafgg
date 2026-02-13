@@ -14,21 +14,19 @@ export class Bisharp extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Energy Stream',
-      cost: [C],
-      damage: 20,
-      text: 'Attach a Metal Energy card from your discard pile to this Pokemon.'
-    },
-    {
-      name: 'Metal Scissors',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Does 20 more damage for each Metal Energy attached to this Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Stream',
+    cost: [C],
+    damage: 20,
+    text: 'Attach a [M] Energy card from your discard pile to this Pokémon.'
+  },
+  {
+    name: 'Metal Scissors',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Does 20 more damage for each [M] Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';
@@ -41,9 +39,9 @@ export class Bisharp extends PokemonCard {
       const player = effect.player;
 
       const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides && c.provides.includes(CardType.METAL);
+          && (c as EnergyCard).provides && (c as EnergyCard).provides.includes(CardType.METAL);
       });
 
       if (!hasMetalEnergyInDiscard) {
@@ -74,7 +72,7 @@ export class Bisharp extends PokemonCard {
       let metalEnergyCount = 0;
 
       player.active.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.provides && card.provides.includes(CardType.METAL)) {
+        if (card.superType === SuperType.ENERGY && (card as EnergyCard).provides && (card as EnergyCard).provides.includes(CardType.METAL)) {
           metalEnergyCount++;
         }
       });

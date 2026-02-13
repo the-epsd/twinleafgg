@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { GamePhase } from 'ptcg-server';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -36,7 +37,8 @@ export class SidenavItemComponent {
     private alertService: AlertService,
     private gameService: GameService,
     private sessionService: SessionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) { }
 
   private checkPlaying(gameState: LocalGameState, clientId: number): boolean {
@@ -91,7 +93,11 @@ export class SidenavItemComponent {
     });
   }
 
-  async onClose() {
+  async onClose(event: Event) {
+    // Prevent the router link from being triggered
+    event.preventDefault();
+    event.stopPropagation();
+
     if (this.isPlaying) {
       const result = await this.alertService.confirm(
         this.translate.instant('MAIN_LEAVE_GAME')
@@ -102,7 +108,19 @@ export class SidenavItemComponent {
       }
     }
 
-    if (this.isDeleted) {
+    // Check if we're currently viewing this table
+    const currentRoute = this.router.url;
+    const isCurrentlyViewing = currentRoute.startsWith(`/table/${this.localId}`);
+
+    // Navigate away if we're currently viewing this table
+    if (isCurrentlyViewing) {
+      // Navigate to a safe route before removing the game state
+      await this.router.navigate(['/games']);
+    }
+
+    // For non-playing games (spectated/replays), use removeLocalGameState
+    // For playing games, use leave() which handles server-side cleanup
+    if (this.isDeleted || !this.isPlaying) {
       this.gameService.removeLocalGameState(this.localId);
     } else {
       this.gameService.leave(this.gameId);

@@ -5,7 +5,7 @@
       <span class="ptcg-sidenav-label-inner">{{ label }}</span>
     </div>
   </div>
-  <button mat-icon-button class="close-button" (click)="onClose(); $event.stopPropagation()">
+  <button mat-icon-button class="close-button" (click)="onClose($event)">
     <mat-icon>close</mat-icon>
   </button>
 </div>

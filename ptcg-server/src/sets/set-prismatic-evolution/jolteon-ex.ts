@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, StateUtils } from '../../game';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { StoreLike, State, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage } from '../../game/game-message';
-import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON } from '../../game/store/prefabs/costs';
 
 
 export class Jolteonex extends PokemonCard {
@@ -41,45 +40,34 @@ export class Jolteonex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      effect.damage = 60;
 
-      if (!hasBenched) {
-        return state;
-      }
-
-      state = store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
+      // Legacy implementation:
+      // - Checked for any Benched Pokémon before prompting.
+      // - Used DiscardEnergyPrompt restricted to BENCH + Basic Energy.
+      // - Moved each selected Energy to discard manually.
+      // - Set damage to 60 + 90 * discardedCount.
+      //
+      // Converted to prefab version (DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON).
+      return DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
+        store,
+        state,
+        effect,
+        2,
+        { energyType: EnergyType.BASIC },
+        0,
         [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 0, max: 2, allowCancel: false }
-      ), transfers => {
-
-        if (transfers === null) {
-          return state;
+        transfers => {
+          effect.damage = 60 + (transfers.length * 90);
         }
-
-        const baseDamage = 60;
-        const additionalDamage = transfers.length * 90;
-        effect.damage = baseDamage + additionalDamage;
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = player.discard;
-          source.moveCardTo(transfer.card, target);
-        }
-
-        return state;
-      });
+      );
     }
 
     // Carnelian
     // Rampage Thunder
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(player);
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {

@@ -6,28 +6,22 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, EnergyCard, GameError, StateUtils } from '../../game';
+import { AttachEnergyPrompt, GameError, StateUtils } from '../../game';
 
 export class GlassTrumpet extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'H';
-
   public set: string = 'SCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '135';
-
   public name: string = 'Glass Trumpet';
-
   public fullName: string = 'Glass Trumpet SCR';
 
   public text: string =
-    'You can use this card only if you have any Tera Pokémon in play.' +
-    '' +
-    'Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from your discard pile to each of them.';
+    `You can use this card only if you have any Tera Pokémon in play.
+
+Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from your discard pile to each of them.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -39,7 +33,7 @@ export class GlassTrumpet extends TrainerCard {
       effect.preventDefault = true;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC;
       });
 

@@ -16,7 +16,7 @@ export class Elgyem2 extends PokemonCard {
       name: 'Round Up',
       cost: [P],
       damage: 0,
-      text: 'Search your deck for 2 Basic Pokemon and put them onto your Bench. Shuffle your deck afterward.'
+      text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
     },
     {
       name: 'Headbutt',
@@ -33,7 +33,7 @@ export class Elgyem2 extends PokemonCard {
   public fullName: string = 'Elgyem NVI 55';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Round Up - search deck for 2 basic Pokemon
+    // Round Up - search deck for 2 basic Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(

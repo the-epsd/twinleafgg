@@ -59,25 +59,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class PokeVitalA extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'H';
-
   public tags = [CardTag.ACE_SPEC];
-
   public set: string = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '62';
-
   public name: string = 'Poké Vital A';
-
   public fullName: string = 'PokéVital A SFA';
 
   public text: string =
-    'Heal 150 damage from 1 of your Pokémon.' +
-    '' +
-    'If this card is in your discard pile, it can\'t be put into your deck or hand.';
+    `Heal 150 damage from 1 of your Pokémon.
+
+If this card is in your discard pile, it can't be put into your deck or hand.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

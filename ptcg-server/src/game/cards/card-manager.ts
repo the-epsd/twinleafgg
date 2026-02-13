@@ -44,7 +44,13 @@ export class CardManager {
   }
 
   public defineCard(card: Card): void {
+    if (this.cardIndex[card.fullName] !== undefined) {
+      throw new Error('Multiple cards with the same name: ' + card.fullName);
+    }
+
+    const index = this.cards.length;
     this.cards.push(card);
+    this.cardIndex[card.fullName] = index;
   }
 
   public getCardByName(name: string): Card | undefined {

@@ -42,9 +42,9 @@ export class Kyogre extends PokemonCard {
 
       // Count Water Energy cards in discard
       const waterEnergyCards = player.discard.cards.filter(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.WATER);
+          && (c as EnergyCard).provides.includes(CardType.WATER);
       });
 
       // If there are 0 Water Energy, return state without prompting
@@ -74,10 +74,10 @@ export class Kyogre extends PokemonCard {
 
         // Filter to only Water Energy cards
         const validTransfers = transfers.filter(transfer => {
-          const card = transfer.card as EnergyCard;
-          return card instanceof EnergyCard
+          const card = transfer.card;
+          return card.superType === SuperType.ENERGY
             && card.energyType === EnergyType.BASIC
-            && card.provides.includes(CardType.WATER);
+            && (card as EnergyCard).provides.includes(CardType.WATER);
         });
 
         if (validTransfers.length < minToAttach) {

@@ -3,8 +3,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, EnergyCard, CardTarget } from '../../game';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, CardTarget } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: CardTarget[] = [];
   let hasMegaPokemon = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (card.tags.includes(CardTag.MEGA) && card.tags.includes(CardTag.POKEMON_ex) && cardList.damage > 0) {
+    if (card.tags.includes(CardTag.POKEMON_SV_MEGA) && card.tags.includes(CardTag.POKEMON_ex) && cardList.damage > 0) {
       hasMegaPokemon = true;
     } else {
       blocked.push(target);
@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const healEffect = new HealEffect(player, target, target.damage);
   store.reduceEffect(state, healEffect);
 
-  const energy = target.cards.filter(c => c instanceof EnergyCard);
+  const energy = target.cards.filter(c => c.superType === SuperType.ENERGY);
   target.moveCardsTo(energy, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;

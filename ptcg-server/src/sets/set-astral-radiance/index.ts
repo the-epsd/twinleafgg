@@ -69,6 +69,7 @@ import { TempleofSinnoh } from './temple-of-sinnoh';
 import { Togepi } from './togepi';
 import { TrekkingShoes } from './trekking-shoes';
 import { Ursaluna } from './ursaluna';
+import { Uxie } from './uxie';
 import { WyrdeerV } from './wyrdeer-v';
 import { Yanma } from './yanma';
 
@@ -145,6 +146,7 @@ export const setAstralRadiance: Card[] = [
   new Togepi(),
   new TrekkingShoes(),
   new Ursaluna(),
+  new Uxie(),
   new WyrdeerV(),
   new Yanma(),
   new Absol(),

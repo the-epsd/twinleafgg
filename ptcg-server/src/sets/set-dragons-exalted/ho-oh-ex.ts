@@ -129,8 +129,8 @@ export class HoOhEx extends PokemonCard {
       let basicEnergies = 0;
       const typeMap: { [key: number]: boolean } = {};
       player.active.cards.forEach(c => {
-        if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
-          const cardType = c.provides[0];
+        if (c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC) {
+          const cardType = (c as EnergyCard).provides[0];
           if (typeMap[cardType] === undefined) {
             basicEnergies += 1;
             typeMap[cardType] = true;

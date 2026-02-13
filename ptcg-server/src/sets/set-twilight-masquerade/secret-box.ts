@@ -113,25 +113,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class SecretBox extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.ACE_SPEC];
-
   public regulationMark = 'H';
-
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '163';
-
   public name: string = 'Secret Box';
-
   public fullName: string = 'Secret Box TWM';
 
   public text: string =
-    'You can use this card only if you discard 3 other cards from your hand.' +
-    '' +
-    'Search your deck for an Item card, a Pokémon Tool card, a Supporter card, and a Stadium card, reveal them, and put them into your hand.Then, shuffle your deck.';
+    `You can use this card only if you discard 3 other cards from your hand.
+
+Search your deck for an Item card, a Pokémon Tool card, a Supporter card, and a Stadium card, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

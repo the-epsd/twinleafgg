@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, PokemonCardList, EnergyCard } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
@@ -78,7 +78,7 @@ export class TapuKokoGX extends PokemonCard {
               return;
             }
             blockedTo.push(target);
-            if (cardList.cards.some(c => c instanceof EnergyCard && c.name === 'Lightning Energy')) {
+            if (cardList.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Lightning Energy')) {
               hasEnergyOnBench = true;
             }
           });

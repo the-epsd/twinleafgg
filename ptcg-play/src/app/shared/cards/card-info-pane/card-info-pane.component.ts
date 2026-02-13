@@ -18,6 +18,7 @@ export interface CardInfoPaneOptions {
   };
   enableAttack?: boolean;
   enableTrainer?: boolean;
+  enableRetreat?: boolean;
 }
 
 export interface CardInfoPaneAction {
@@ -25,6 +26,7 @@ export interface CardInfoPaneAction {
   attack?: string;
   ability?: string;
   trainer?: boolean;
+  retreat?: boolean;
   cardList?: PokemonCardList;
 }
 
@@ -52,6 +54,7 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
 
   public enabledAbilities: { [name: string]: boolean } = {};
   public showTags = false;
+  public cardTextKerning = 0;
   public SuperType = SuperType;
   public Stage = Stage;
   public PowerType = PowerType;
@@ -118,6 +121,11 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     this.subscriptions.push(
       this.settingsService.showTags$.subscribe(showTags => {
         this.showTags = showTags;
+      })
+    );
+    this.subscriptions.push(
+      this.settingsService.cardTextKerning$.subscribe(kerning => {
+        this.cardTextKerning = kerning;
       })
     );
   }
@@ -439,6 +447,10 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     return this.options.enableAttack || false;
   }
 
+  public shouldEnableRetreat(): boolean {
+    return !!(this.card?.superType === SuperType.POKEMON && this.options.enableRetreat);
+  }
+
   public getDisplayTags(): string[] {
     if (!this.showTags || !this.card || this.card.superType !== SuperType.POKEMON) {
       return [];
@@ -541,6 +553,10 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     } else {
       this.cardsBaseService.setFavoriteCard(this.card.name, this.card.fullName);
     }
+  }
+
+  public getCardTextKerningStyle(): { [key: string]: string } {
+    return { 'letter-spacing': this.cardTextKerning + 'px' };
   }
 
 }

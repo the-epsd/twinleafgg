@@ -85,6 +85,25 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       return state;
     }
 
+    // If all attached energy is identical, no meaningful choice - auto-select minimal and retreat
+    if (StateUtils.allEnergyProvidesIdentical(checkProvidedEnergy.energyMap)) {
+      const selection = StateUtils.selectMinimalEnergyForCost(
+        checkProvidedEnergy.energyMap, checkRetreatCost.cost
+      );
+      if (selection && selection.length > 0) {
+        const cards = selection.map(e => e.card);
+        player.active.clearEffects();
+        player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
+        retreatPokemon(store, state, effect);
+        const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
+        if (!player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
+          player.movedToActiveThisTurn.push(activePokemonCard.id);
+        }
+        activePokemonCard.movedToActiveThisTurn = true;
+        return state;
+      }
+    }
+
     return store.prompt(state, new ChooseEnergyPrompt(
       player.id,
       GameMessage.CHOOSE_ENERGY_TO_PAY_RETREAT_COST,

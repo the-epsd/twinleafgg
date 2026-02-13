@@ -64,7 +64,8 @@ export class EnergyCoin extends TrainerCard {
   public setNumber: string = '81';
   public name = 'Energy Coin';
   public fullName: string = 'Energy Coin SV11B';
-  public text: string = 'Flip 2 coins. If both of them are heads, search your deck for 1 Basic Energy card and attach it to one of your Pokémon. Then shuffle your deck.';
+  
+  public text: string = 'Flip 2 coins. If both of them are heads, search your deck for a Basic Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

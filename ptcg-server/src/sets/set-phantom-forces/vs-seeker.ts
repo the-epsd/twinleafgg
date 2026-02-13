@@ -38,7 +38,7 @@ export class VsSeeker extends TrainerCard {
       }
 
       const blocked: number[] = [];
-      player.deck.cards.forEach((card, index) => {
+      player.discard.cards.forEach((card, index) => {
         if (!(card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER)) {
           blocked.push(index);
         }

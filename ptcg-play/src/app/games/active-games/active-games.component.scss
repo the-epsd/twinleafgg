@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap');
+@import '../../../theme/global.scss';
 
 .active-games-container {
   min-height: 100vh;
@@ -36,16 +37,16 @@
 
   .back-button {
     color: rgba(255, 255, 255, 0.8);
-    background: linear-gradient(135deg, rgba(69, 144, 88, 0.1), rgba(69, 144, 88, 0.05));
-    border: 1px solid rgba(69, 144, 88, 0.3);
+    background: linear-gradient(135deg, rgba($twinleaf-green, 0.1), rgba($twinleaf-green, 0.05));
+    border: 1px solid rgba($twinleaf-green, 0.3);
     border-radius: 12px;
     backdrop-filter: blur(20px);
     transition: all 0.3s ease;
 
     &:hover {
-      color: #459058;
-      background: linear-gradient(135deg, rgba(69, 144, 88, 0.2), rgba(69, 144, 88, 0.1));
-      border-color: rgba(69, 144, 88, 0.5);
+      color: $twinleaf-green;
+      background: linear-gradient(135deg, rgba($twinleaf-green, 0.2), rgba($twinleaf-green, 0.1));
+      border-color: rgba($twinleaf-green, 0.5);
       transform: translateX(-2px);
     }
 
@@ -68,13 +69,13 @@
       letter-spacing: 2px;
       margin-bottom: 8px;
       font-family: 'Urbanist', sans-serif;
-      text-shadow: 0 0 10px rgba(69, 144, 88, 0.2);
+      text-shadow: 0 0 10px rgba($twinleaf-green, 0.2);
     }
 
     .title-accent {
       width: 80px;
       height: 3px;
-      background: linear-gradient(90deg, #459058, #5ba86b);
+      background: linear-gradient(90deg, $twinleaf-green, #5ba86b);
       border-radius: 2px;
     }
   }
@@ -85,7 +86,7 @@
   flex: 1;
   padding: 20px;
   background: linear-gradient(45deg, rgba(10, 10, 20, 0.6) 0%, rgba(5, 10, 25, 0.6) 100%);
-  border-top: 1px solid rgba(69, 144, 88, 0.2);
+  border-top: 1px solid rgba($twinleaf-green, 0.2);
 }
 
 // Responsive Design

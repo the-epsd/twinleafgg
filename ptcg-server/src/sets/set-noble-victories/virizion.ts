@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DRAW_CARDS, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayerType } from '../../game/store/actions/play-card-action';
+import { WAS_ATTACK_USED, DRAW_CARDS, NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
 
 export class Virizion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -26,7 +24,7 @@ export class Virizion extends PokemonCard {
       cost: [G, G, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'During your next turn, this Pokemon\'s Leaf Wallop attack does 40 more damage (before applying Weakness and Resistance).'
+      text: 'During your next turn, this Pokémon\'s Leaf Wallop attack does 40 more damage (before applying Weakness and Resistance).'
     }
   ];
 
@@ -37,6 +35,7 @@ export class Virizion extends PokemonCard {
   public fullName: string = 'Virizion NVI';
 
   public readonly LEAF_WALLOP_MARKER = 'LEAF_WALLOP_MARKER';
+  public readonly LEAF_WALLOP_CLEAR_MARKER = 'LEAF_WALLOP_CLEAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Draw
@@ -46,38 +45,14 @@ export class Virizion extends PokemonCard {
     }
 
     // Leaf Wallop
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-
-      // Check if marker is already present for bonus damage
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          if (HAS_MARKER(this.LEAF_WALLOP_MARKER, cardList, this)) {
-            effect.damage += 40;
-          }
-        }
-      });
-
-      // Add marker for next turn
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          ADD_MARKER(this.LEAF_WALLOP_MARKER, cardList, this);
-        }
-      });
-    }
-
-    // Remove marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Remove marker from opponent's Pokemon (this card)
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          REMOVE_MARKER(this.LEAF_WALLOP_MARKER, cardList, this);
-        }
-      });
-    }
+    // Refs: set-boundaries-crossed/watchog.ts (Psych Up), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[1],
+      source: this,
+      bonusDamage: 40,
+      bonusMarker: this.LEAF_WALLOP_MARKER,
+      clearMarker: this.LEAF_WALLOP_CLEAR_MARKER
+    });
 
     return state;
   }

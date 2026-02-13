@@ -21,13 +21,13 @@ export class Lilligant extends PokemonCard {
       name: 'Aromax',
       cost: [G],
       damage: 0,
-      text: 'Heal all damage from 1 of your Benched Pokemon.'
+      text: 'Heal all damage from 1 of your Benched Pokémon.'
     },
     {
       name: 'Windmill',
       cost: [G, C],
       damage: 30,
-      text: 'Switch this Pokemon with 1 of your Benched Pokemon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
 
@@ -40,7 +40,7 @@ export class Lilligant extends PokemonCard {
   private usedWindmill: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Aromax - heal all damage from benched Pokemon
+    // Aromax - heal all damage from benched Pokémon
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBenched = player.bench.some(b => b.cards.length > 0);
