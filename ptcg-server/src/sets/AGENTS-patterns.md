@@ -212,8 +212,11 @@ Use these before writing custom marker/prompt logic.
 | Card Text | Code |
 |-----------|------|
 | "Switch this Pokemon with 1 of your Benched Pokemon." | `SWITCH_ACTIVE_WITH_BENCHED(store, state, player)` |
-| "Your opponent switches their Active Pokemon..." | `SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent)` |
+| "Your opponent switches their Active Pokemon..." | `SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent)` (opponent chooses) |
+| "Switch 1 of your opponent's Benched Pokemon with their Active Pokemon." | `GUST_OPPONENT_BENCHED_POKEMON(store, state, player)` (you choose) |
 | "Switch the Defending Pokemon with 1 of your opponent's Benched Pokemon." | Use AfterAttackEffect pattern (see below) |
+
+> **WARNING**: `SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent)` lets the **opponent** choose which benched Pokemon to switch in. For effects where the **attacker** chooses which of the opponent's benched Pokemon comes in (gust effects), use `GUST_OPPONENT_BENCHED_POKEMON(store, state, player)` instead. Reference: `set-ancient-origins/malamar.ts` (Entangling Control).
 
 ### Post-Damage Switching (CRITICAL - use AfterAttackEffect)
 
@@ -427,6 +430,25 @@ PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect, this.PREVENT_MARKER, this);
 THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(30, effect, store, state);
 ```
 
+> **WARNING**: `THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON` uses `DealDamageEffect` for the active (applies Weakness/Resistance). If the card text says "not affected by Weakness or Resistance", use `PutDamageEffect` for ALL targets instead:
+
+```typescript
+// "This attack does 50 damage to 1 of your opponent's Pokemon.
+//  This attack's damage isn't affected by Weakness or Resistance."
+const targets = [...opponent.bench.filter(b => b.cards.length > 0), opponent.active];
+store.prompt(state, new ChoosePokemonPrompt(
+  player.id, GameMessage.CHOOSE_POKEMON, PlayerType.TOP_PLAYER,
+  [SlotType.ACTIVE, SlotType.BENCH], { min: 1, max: 1, allowCancel: false }
+), selected => {
+  const target = selected[0];
+  const damage = new PutDamageEffect(effect, 50);
+  damage.target = target;
+  store.reduceEffect(state, damage);
+});
+```
+
+Reference: `set-ancient-origins/gardevoir.ts` (Telekinesis), `set-emerging-powers/sigilyph.ts` (Telekinesis)
+
 ### Choose 1 of Opponent's Benched Pokemon
 
 ```typescript
@@ -609,6 +631,20 @@ Pokemon card text has changed over the years. All variations map to the same cod
 |-----|------|------|
 | Classic | "Attach a [R] Energy card from your discard pile to this Pokemon." | Manual `moveCardTo` or `ATTACH_ENERGY_PROMPT` |
 | Modern | "Attach a basic [R] Energy card from your discard pile to this Pokemon." | Same (note: "basic" added for clarity) |
+
+### "[R] Energy cards" vs "basic [R] Energy cards"
+
+When card text refers to `[R] Energy cards` (or any type shorthand), this means **basic energy only** unless specified otherwise. Check `card.energyType === EnergyType.BASIC` in addition to `card.provides.includes(CardType.FIRE)`. Do NOT match special energies that happen to provide the type.
+
+```typescript
+// CORRECT: "[R] Energy cards" = basic Fire Energy only
+card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.provides.includes(CardType.FIRE)
+
+// WRONG: matches special energies too
+card instanceof EnergyCard && card.provides.includes(CardType.FIRE)
+```
+
+Reference: `set-ancient-origins/entei.ts` (Burning Roar)
 
 ### Key Principle
 
