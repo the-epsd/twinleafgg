@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, AttachEnergyPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
@@ -47,7 +47,7 @@ export class Leafeon extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+        return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
       });
 
       const hasBenched = player.bench.some(b => b.cards.length > 0);

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
@@ -59,7 +59,7 @@ export class TornadusEx extends PokemonCard {
 
       let plasmaEnergyCount = 0;
       checkEnergy.energyMap.forEach(em => {
-        if (em.card instanceof EnergyCard && em.card.name === 'Plasma Energy') {
+        if (em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy') {
           plasmaEnergyCount++;
         }
       });

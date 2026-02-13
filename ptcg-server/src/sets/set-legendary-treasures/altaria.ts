@@ -3,8 +3,8 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { EnergyCard, StateUtils, StoreLike, State } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StateUtils, StoreLike, State } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -47,7 +47,7 @@ export class Altaria extends PokemonCard {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         const heads = results.filter(r => r).length;
         if (heads === 2) {
-          const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
           if (energyCards.length > 0) {
             const discardEnergy = new DiscardCardsEffect(effect, energyCards);
             discardEnergy.target = opponent.active;

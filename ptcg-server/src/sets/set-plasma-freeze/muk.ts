@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import {
   WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON
@@ -55,7 +55,7 @@ export class Muk extends PokemonCard {
 
       FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, headsCount => {
         // Discard up to headsCount energy from defending
-        const energyCount = opponent.active.cards.filter(c => c instanceof EnergyCard).length;
+        const energyCount = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY).length;
         const toDiscard = Math.min(headsCount, energyCount);
 
         if (toDiscard <= 0) {

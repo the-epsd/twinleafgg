@@ -8,9 +8,9 @@ import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
+import { EnergyCard } from '../../game/store/card/energy-card';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class WonderPatch extends TrainerCard {
@@ -28,9 +28,9 @@ export class WonderPatch extends TrainerCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.PSYCHIC);
+          && (c as EnergyCard).provides.includes(CardType.PSYCHIC);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);

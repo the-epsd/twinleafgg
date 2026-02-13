@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, EnergyCard, GameMessage, ChooseCardsPrompt, CardList, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
@@ -44,8 +44,8 @@ export class Eelektross extends PokemonCard {
       const energyCards: { card: EnergyCard, source: PokemonCardList }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.cards.forEach(c => {
-          if (c instanceof EnergyCard) {
-            energyCards.push({ card: c, source: cardList });
+          if (c.superType === SuperType.ENERGY) {
+            energyCards.push({ card: c as EnergyCard, source: cardList });
           }
         });
       });

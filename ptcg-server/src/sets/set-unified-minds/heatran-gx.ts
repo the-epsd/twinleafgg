@@ -101,7 +101,7 @@ export class HeatranGX extends PokemonCard {
             blockedMap.push({ source: target, blocked });
           }
 
-          if (cardList.cards.some(c => c instanceof EnergyCard && (c.provides.includes(CardType.FIRE) || c.provides.includes(CardType.ANY)))) {
+          if (cardList.cards.some(c => c.superType === SuperType.ENERGY && ((c as EnergyCard).provides.includes(CardType.FIRE) || (c as EnergyCard).provides.includes(CardType.ANY)))) {
             hasEnergyOnBench = true;
           }
         });

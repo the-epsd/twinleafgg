@@ -1,4 +1,4 @@
-import { Attack, CardTag, CardType, EnergyCard, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
@@ -58,7 +58,7 @@ export class PalkiaEX extends PokemonCard {
       let totalPlasmaEnergy = 0;
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.name === 'Plasma Energy') {
+        if (energyCard.superType === SuperType.ENERGY && energyCard.name === 'Plasma Energy') {
           totalPlasmaEnergy += 1;
         }
       });

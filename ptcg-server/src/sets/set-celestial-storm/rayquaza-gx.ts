@@ -4,7 +4,6 @@ import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType,
   ConfirmPrompt,
-  EnergyCard,
   AttachEnergyPrompt,
   CardTarget,
   SlotType
@@ -84,7 +83,7 @@ export class RayquazaGX extends PokemonCard {
 
       // Check if there's any basic energy in the discard pile
       const hasBasicEnergyInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
       );
 
       if (!hasBasicEnergyInDiscard) {

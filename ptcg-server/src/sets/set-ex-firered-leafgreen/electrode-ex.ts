@@ -4,7 +4,6 @@ import {
   PowerType, StoreLike, State, StateUtils, GameMessage,
   PlayerType, SlotType,
   AttachEnergyPrompt,
-  EnergyCard,
   CardTarget,
   DiscardEnergyPrompt
 } from '../../game';
@@ -90,7 +89,7 @@ export class Electrodeex extends PokemonCard {
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const energyCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard
+          card.superType === SuperType.ENERGY
         ).length;
         totalEnergy += energyCount;
       });

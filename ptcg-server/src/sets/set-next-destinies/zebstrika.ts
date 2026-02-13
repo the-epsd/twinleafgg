@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -60,9 +60,9 @@ export class Zebstrika extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const lightningEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard &&
+        card.superType === SuperType.ENERGY &&
         card.energyType === EnergyType.BASIC &&
-        card.provides.includes(CardType.LIGHTNING)
+        (card as EnergyCard).provides.includes(CardType.LIGHTNING)
       );
 
       if (lightningEnergy.length > 0) {

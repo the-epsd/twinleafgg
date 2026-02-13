@@ -1,4 +1,4 @@
-import { EnergyCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
@@ -14,7 +14,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Special
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const specialEnergyCards = player.discard.cards.filter(c => {
-    return c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL;
+    return c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL;
   }).length;
 
   if (specialEnergyCards === 0) {

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -39,7 +39,7 @@ export class Excadrill extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active;
-      const energyCards = opponentActive.cards.filter(c => c instanceof EnergyCard);
+      const energyCards = opponentActive.cards.filter(c => c.superType === SuperType.ENERGY);
 
       if (energyCards.length > 0) {
         opponentActive.moveCardTo(energyCards[0], opponent.discard);

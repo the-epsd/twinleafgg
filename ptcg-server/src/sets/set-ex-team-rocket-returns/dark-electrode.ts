@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PowerType, EnergyCard, Card, ChooseCardsPrompt, PlayerType, SlotType, StateUtils, CardTarget, MoveEnergyPrompt } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PowerType, Card, ChooseCardsPrompt, PlayerType, SlotType, StateUtils, CardTarget, MoveEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -79,7 +79,7 @@ export class DarkElectrode extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard && (card.name === 'Darkness Energy' || card.name === 'Dark Metal Energy'))) {
+        if (!(card.superType === SuperType.ENERGY && (card.name === 'Darkness Energy' || card.name === 'Dark Metal Energy'))) {
           blocked.push(index);
         }
       });

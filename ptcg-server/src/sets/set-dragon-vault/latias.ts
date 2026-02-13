@@ -39,7 +39,7 @@ export class Latias extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC
       );
       const hasBenched = player.bench.some(b => b.cards.length > 0);
 

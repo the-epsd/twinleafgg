@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType, SlotType, EnergyCard, MoveEnergyPrompt, CardTarget } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, PlayerType, SlotType, MoveEnergyPrompt, CardTarget } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
@@ -72,7 +72,7 @@ export class Serperior extends PokemonCard {
 
         const blocked: number[] = [];
         cardList.cards.forEach((c, index) => {
-          if (c instanceof EnergyCard) {
+          if (c.superType === SuperType.ENERGY) {
             const energyMap = checkProvidedEnergy.energyMap.find(em => em.card === c);
             if (!energyMap || (!energyMap.provides.includes(CardType.GRASS) && !energyMap.provides.includes(CardType.ANY))) {
               blocked.push(index);

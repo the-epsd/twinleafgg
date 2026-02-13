@@ -8,9 +8,9 @@ import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
+import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class Blacksmith extends TrainerCard {
 
@@ -34,9 +34,9 @@ export class Blacksmith extends TrainerCard {
       const player = effect.player;
 
       const fireEnergyCount = player.discard.cards.filter(c =>
-        c instanceof EnergyCard
+        c.superType === SuperType.ENERGY
         && c.energyType === EnergyType.BASIC
-        && c.provides.includes(CardType.FIRE)
+        && (c as EnergyCard).provides.includes(CardType.FIRE)
       ).length;
 
       if (fireEnergyCount === 0) {

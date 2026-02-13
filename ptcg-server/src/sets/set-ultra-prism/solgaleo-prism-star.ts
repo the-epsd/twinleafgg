@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, AttachEnergyPrompt } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -40,7 +40,7 @@ export class SolgaleoPrismStar extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
           && c.name === 'Metal Energy';
       });

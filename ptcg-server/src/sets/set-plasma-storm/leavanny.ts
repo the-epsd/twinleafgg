@@ -3,8 +3,8 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { EnergyCard, StateUtils, StoreLike, State } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StateUtils, StoreLike, State } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
@@ -49,7 +49,7 @@ export class Leavanny extends PokemonCard {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         const heads = results.filter(r => r).length;
         if (heads === 2) {
-          const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
           if (energyCards.length > 0) {
             const discardEnergy = new DiscardCardsEffect(effect, energyCards);
             discardEnergy.target = opponent.active;

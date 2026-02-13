@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, EnergyCard, PlayerType, PokemonCardList } from '../../game';
+import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, PlayerType, PokemonCardList } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -162,7 +162,7 @@ export class Girafarig extends PokemonCard {
       let specialEnergyCount = 0;
 
       pokemon.cards.forEach(c => {
-        if (c instanceof EnergyCard) {
+        if (c.superType === SuperType.ENERGY) {
           if (c.energyType === EnergyType.SPECIAL) {
             specialEnergyCount++;
           }

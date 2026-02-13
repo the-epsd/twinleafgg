@@ -2,7 +2,7 @@ import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Chansey extends PokemonCard {
@@ -38,7 +38,7 @@ export class Chansey extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+        return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);

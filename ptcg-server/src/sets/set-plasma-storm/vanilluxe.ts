@@ -45,7 +45,7 @@ export class Vanilluxe extends PokemonCard {
       const player = effect.player;
 
       const basicEnergyCount = player.hand.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC
       ).length;
 
       if (basicEnergyCount === 0) {

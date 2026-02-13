@@ -9,7 +9,6 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
 import { IS_TOOL_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { CardList } from '../../game/store/state/card-list';
 
 
@@ -56,7 +55,7 @@ export class WishfulBaton extends TrainerCard {
       }
 
       // Get all basic energy cards from the active Pokemon
-      const basicEnergyCards = active.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
+      const basicEnergyCards = active.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC);
 
       if (basicEnergyCards.length === 0) {
         return state;

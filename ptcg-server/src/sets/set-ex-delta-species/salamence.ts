@@ -43,8 +43,8 @@ export class Salamence extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.provides.includes(CardType.FIRE);
+        return c.superType === SuperType.ENERGY
+          && (c as EnergyCard).provides.includes(CardType.FIRE);
       });
       if (!hasEnergyInDiscard) {
         return state;

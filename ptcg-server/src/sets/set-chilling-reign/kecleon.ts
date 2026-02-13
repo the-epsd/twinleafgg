@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -41,7 +41,7 @@ export class Kecleon extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this){
           const energies = new CardList();
-          energies.cards = cardList.cards.filter(card => card instanceof EnergyCard && card.energyType === EnergyType.BASIC);
+          energies.cards = cardList.cards.filter(card => card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.BASIC);
 
           if (energies.cards.length === 0){
             effect.cardTypes = [C];

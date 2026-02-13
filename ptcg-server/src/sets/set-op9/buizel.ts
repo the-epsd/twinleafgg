@@ -9,7 +9,6 @@ import { GameMessage } from '../../game/game-message';
 import { DiscardCardsEffect, AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { Card } from '../../game/store/card/card';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -21,7 +20,7 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
 
   // Defending Pokemon has no energy cards attached
-  if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+  if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
     return state;
   }
 

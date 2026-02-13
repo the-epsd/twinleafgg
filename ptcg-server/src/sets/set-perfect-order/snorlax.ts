@@ -1,7 +1,6 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, EnergyType, SuperType, SpecialCondition } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
@@ -48,7 +47,7 @@ export class Snorlax extends PokemonCard {
           }
 
           const basicEnergyInDeck = player.deck.cards.filter(card =>
-            card instanceof EnergyCard && card.energyType === EnergyType.BASIC
+            card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC
           );
 
           if (basicEnergyInDeck.length === 0) {

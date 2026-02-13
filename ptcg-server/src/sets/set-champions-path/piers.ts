@@ -1,7 +1,7 @@
-import { EnergyCard, GameError, PokemonCard } from '../../game';
+import { GameError, PokemonCard } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let pokemon = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    if (c instanceof EnergyCard) {
+    if (c.superType === SuperType.ENERGY) {
       energy += 1;
     } else if (c instanceof PokemonCard && c.cardType === CardType.DARK) {
       pokemon += 1;

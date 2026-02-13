@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, EnergyCard, SuperType, ChooseCardsPrompt, GameMessage } from '../../game';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, SuperType, ChooseCardsPrompt, GameMessage } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -56,7 +56,7 @@ export class MegaClefableex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const energiesInHand = player.hand.cards.filter(card =>
-        card instanceof EnergyCard && card.superType === SuperType.ENERGY
+        card.superType === SuperType.ENERGY
       );
 
       if (energiesInHand.length === 0) {

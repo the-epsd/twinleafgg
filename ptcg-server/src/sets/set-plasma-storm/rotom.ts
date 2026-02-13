@@ -47,7 +47,7 @@ export class Rotom extends PokemonCard {
       const player = effect.player;
 
       const lightningEnergyInHand = player.hand.cards.filter(card =>
-        card instanceof EnergyCard && card.provides.includes(CardType.LIGHTNING)
+        card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.LIGHTNING)
       );
 
       if (lightningEnergyInHand.length === 0) {
@@ -56,7 +56,7 @@ export class Rotom extends PokemonCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((c, index) => {
-        if (!(c instanceof EnergyCard) || !c.provides.includes(CardType.LIGHTNING)) {
+        if (c.superType !== SuperType.ENERGY || !(c as EnergyCard).provides.includes(CardType.LIGHTNING)) {
           blocked.push(index);
         }
       });

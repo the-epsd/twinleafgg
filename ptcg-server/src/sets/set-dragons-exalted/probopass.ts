@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { EnergyCard, GameMessage, PlayerType, SlotType, StateUtils, StoreLike, State, CardTarget } from '../../game';
+import { GameMessage, PlayerType, SlotType, StateUtils, StoreLike, State, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { MoveEnergyPrompt } from '../../game/store/prompts/move-energy-prompt';
@@ -43,7 +43,7 @@ export class Probopass extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active;
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
-      const hasEnergy = opponentActive.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = opponentActive.cards.some(c => c.superType === SuperType.ENERGY);
 
       if (!hasBench || !hasEnergy) {
         return state;

@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { EnergyCard, GameError, GameMessage, StateUtils } from '../../game';
+import { GameError, GameMessage, StateUtils } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 function* moveEnergy(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
@@ -13,7 +13,7 @@ function* moveEnergy(next: Function, store: StoreLike, state: State, effect: Pow
 
   let pokemonWithEnergy = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-    if (cardList.cards.some(c => c instanceof EnergyCard)) {
+    if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
       pokemonWithEnergy++;
     }
   });

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
@@ -43,7 +43,7 @@ export class Torkoal extends PokemonCard {
         }
 
         const fireEnergy = player.discard.cards.filter(c =>
-          c instanceof EnergyCard &&
+          c.superType === SuperType.ENERGY &&
           c.energyType === EnergyType.BASIC &&
           c.name === 'Fire Energy'
         );

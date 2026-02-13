@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, State, StateUtils, StoreLike } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -46,7 +46,7 @@ export class Machamp extends PokemonCard {
 
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
+        if (energyCard.superType === SuperType.ENERGY && energyCard.energyType === EnergyType.SPECIAL) {
 
           let cards: Card[] = [];
           store.prompt(state, new ChooseCardsPrompt(

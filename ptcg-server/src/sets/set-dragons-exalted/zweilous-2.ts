@@ -40,9 +40,9 @@ export class Zweilous2 extends PokemonCard {
       const player = effect.player;
 
       const darkEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard
-        && c.energyType === EnergyType.BASIC
-        && c.provides.includes(CardType.DARK)
+        c.superType === SuperType.ENERGY
+        && (c as EnergyCard).energyType === EnergyType.BASIC
+        && (c as EnergyCard).provides.includes(CardType.DARK)
       );
 
       if (darkEnergyInDiscard.length === 0) {

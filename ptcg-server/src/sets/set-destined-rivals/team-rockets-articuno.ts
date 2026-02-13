@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, EnergyCard, GamePhase, PlayerType } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, GamePhase, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -60,7 +60,7 @@ export class TeamRocketsArticuno extends PokemonCard {
 
     // Dark Frost
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.player.active.cards.some(c => c instanceof EnergyCard && c.name === 'Team Rocket Energy')) { effect.damage += 60; }
+      if (effect.player.active.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Team Rocket Energy')) { effect.damage += 60; }
     }
 
     return state;

@@ -55,7 +55,7 @@ export class ExcadrillEx extends PokemonCard {
       player.deck.moveTo(topOfDeck, 1);
 
       const discardedEnergy = topOfDeck.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC;
+        return card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.BASIC;
       });
 
       if (discardedEnergy.length === 0) {

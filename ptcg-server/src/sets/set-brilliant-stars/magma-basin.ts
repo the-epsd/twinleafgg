@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError, CardTarget, PokemonCard } from '../../game';
+import { AttachEnergyPrompt, PlayerType, SlotType, GameError, CardTarget, PokemonCard } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
@@ -49,7 +49,7 @@ export class MagmaBasin extends TrainerCard {
       });
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.name == 'Fire Energy';
+        return c.superType === SuperType.ENERGY && c.name == 'Fire Energy';
       });
 
       if (!hasEnergyInDiscard) {

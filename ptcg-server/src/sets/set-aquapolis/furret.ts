@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, Card, ChooseCardsPrompt, EnergyCard, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, Card, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -31,7 +31,7 @@ function* usePower(next: Function, store: StoreLike, state: State, effect: Power
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (!(card instanceof EnergyCard)) {
+    if (card.superType !== SuperType.ENERGY) {
       blocked.push(index);
     }
   });

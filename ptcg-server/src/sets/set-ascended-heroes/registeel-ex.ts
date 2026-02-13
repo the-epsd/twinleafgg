@@ -37,9 +37,9 @@ export class Registeelex extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides && c.provides.includes(CardType.METAL);
+        return c.superType === SuperType.ENERGY
+          && (c as EnergyCard).energyType === EnergyType.BASIC
+          && (c as EnergyCard).provides && (c as EnergyCard).provides.includes(CardType.METAL);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);

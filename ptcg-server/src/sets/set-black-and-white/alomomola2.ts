@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -45,8 +45,8 @@ export class Alomomola2 extends PokemonCard {
       let waterEnergy = 0;
 
       player.active.cards.forEach(card => {
-        if (card instanceof EnergyCard) {
-          waterEnergy += card.provides.filter(e => e === CardType.WATER).length;
+          if (card.superType === SuperType.ENERGY) {
+            waterEnergy += (card as EnergyCard).provides.filter(e => e === CardType.WATER).length;
         }
       });
 

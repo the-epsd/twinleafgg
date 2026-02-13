@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, CardList, GameLog, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class Tyrantrum extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -48,7 +47,7 @@ export class Tyrantrum extends PokemonCard {
 
       const hasSpecialEnergy = checkEnergy.energyMap.some(em => {
         const card = em.card;
-        return card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL;
+        return card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL;
       });
 
       if (hasSpecialEnergy) {

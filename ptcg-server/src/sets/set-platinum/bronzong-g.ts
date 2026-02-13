@@ -2,7 +2,7 @@ import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CardTarget, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
+import { CardTarget, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -61,7 +61,7 @@ export class BronzongG extends PokemonCard {
         pokemonCount += 1;
         // Only consider Pokémon SP for energy movement
         if (card.tags?.includes(CardTag.POKEMON_SP)) {
-          const basicEnergyAttached = cardList.cards.some(c => c instanceof EnergyCard);
+          const basicEnergyAttached = cardList.cards.some(c => c.superType === SuperType.ENERGY);
           hasEnergy = hasEnergy || basicEnergyAttached;
         }
       });

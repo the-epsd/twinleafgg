@@ -1,8 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -69,7 +68,7 @@ export class Rayquaza extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const energies = player.active.cards.filter(card => card instanceof EnergyCard && card.name.includes('Holon Energy'));
+      const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY && card.name.includes('Holon Energy'));
 
       if (energies.length === 0) {
         player.active.damage += 70;

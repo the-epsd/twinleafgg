@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, CardTag, StoreLike, State, EnergyCard, EnergyType, GameError, GameMessage, CardTarget, PlayerType, AttachEnergyPrompt, SlotType, SuperType, StateUtils } from '../../game';
+import { TrainerCard, TrainerType, CardTag, StoreLike, State, EnergyType, GameError, GameMessage, CardTarget, PlayerType, AttachEnergyPrompt, SlotType, SuperType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -19,7 +19,7 @@ export class MegaTurbo extends TrainerCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC;
       });
 

@@ -41,9 +41,9 @@ export class Magnezone extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.METAL);
+          && (c as EnergyCard).provides.includes(CardType.METAL);
       });
 
       if (!hasEnergyInHand) {

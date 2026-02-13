@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, PlayerType, AttachEnergyPrompt, GameMessage, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, PlayerType, AttachEnergyPrompt, GameMessage, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -49,7 +49,7 @@ export class TeamRocketsZapdos extends PokemonCard {
             return state;
           }
 
-          if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+          if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
             return state;
           }
 
@@ -75,7 +75,7 @@ export class TeamRocketsZapdos extends PokemonCard {
 
     // Bad Thunder
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (effect.player.active.cards.some(c => c instanceof EnergyCard && c.name === 'Team Rocket Energy')) { effect.damage += 60; }
+      if (effect.player.active.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Team Rocket Energy')) { effect.damage += 60; }
     }
 
     return state;

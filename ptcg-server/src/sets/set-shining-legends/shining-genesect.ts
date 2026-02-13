@@ -75,7 +75,7 @@ export class ShiningGenesect extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card !== this) {
           pokemonCount += 1;
-          const hasAttachedEnergy = cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.GRASS || c instanceof EnergyCard && c.provides.includes(CardType.ANY)));
+          const hasAttachedEnergy = cardList.cards.some(c => c.superType === SuperType.ENERGY && ((c as EnergyCard).provides.includes(CardType.GRASS) || (c as EnergyCard).provides.includes(CardType.ANY)));
           otherPokemonWithEnergy = otherPokemonWithEnergy || hasAttachedEnergy;
         }
       });

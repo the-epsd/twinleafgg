@@ -2,13 +2,13 @@ import { Card } from '../../game/store/card/card';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { EnergyCard, GameError, PokemonCard } from '../../game';
+import { GameError, PokemonCard } from '../../game';
 import { Player } from '../../game/store/state/player';
 import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.cards.forEach((c, index) => {
     if (c instanceof PokemonCard && c.tags.includes(CardTag.POKEMON_SP)) {
       SPMons += 1;
-    } else if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+    } else if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergy += 1;
     } else {
       blocked.push(index);

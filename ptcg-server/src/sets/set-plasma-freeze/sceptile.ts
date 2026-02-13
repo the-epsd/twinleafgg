@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PlayerType, StoreLike, State } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -47,7 +46,7 @@ export class Sceptile extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const hasEnergy = cardList.cards.some(c => c instanceof EnergyCard);
+        const hasEnergy = cardList.cards.some(c => c.superType === SuperType.ENERGY);
         if (hasEnergy && cardList.damage > 0) {
           const healEffect = new HealEffect(player, cardList, 20);
           store.reduceEffect(state, healEffect);

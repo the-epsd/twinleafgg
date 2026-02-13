@@ -3,8 +3,8 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { EnergyCard, StoreLike, State, StateUtils } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -65,7 +65,7 @@ export class ArticunoEx extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       const hasPlasmaEnergy = checkEnergy.energyMap.some(em =>
-        em.card instanceof EnergyCard && em.card.name === 'Plasma Energy'
+        em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy'
       );
 
       if (hasPlasmaEnergy) {

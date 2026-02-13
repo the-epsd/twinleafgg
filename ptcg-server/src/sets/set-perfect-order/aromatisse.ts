@@ -1,7 +1,6 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils, EnergyType, SuperType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { WAS_ATTACK_USED, WAS_POWER_USED, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Aromatisse extends PokemonCard {
@@ -49,9 +48,9 @@ export class Aromatisse extends PokemonCard {
 
       // Filter deck for Basic Psychic Energy
       const basicPsychicEnergy = player.deck.cards.filter(card =>
-        card instanceof EnergyCard &&
+        card.superType === SuperType.ENERGY &&
         card.energyType === EnergyType.BASIC &&
-        card.provides.includes(CardType.PSYCHIC)
+        (card as import('../../game/store/card/energy-card').EnergyCard).provides.includes(CardType.PSYCHIC)
       );
 
       if (basicPsychicEnergy.length === 0) {

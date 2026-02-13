@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { PlayerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
@@ -69,7 +69,7 @@ export class Accelgor extends PokemonCard {
 
       if (player.marker.hasMarker(this.ESCAVALIER_KO_MARKER, this)) {
         // Put all energy from defending Pokemon into opponent's hand
-        const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+        const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
         energyCards.forEach(card => {
           opponent.active.moveCardTo(card, opponent.hand);
         });

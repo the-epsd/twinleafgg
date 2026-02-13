@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, CardTag, CardTarget, EnergyCard, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, CardTag, CardTarget, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -44,7 +44,7 @@ export class Flygon extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && (c.energyType === EnergyType.BASIC || c.name === 'Delta Rainbow Energy');
+        return c.superType === SuperType.ENERGY && (c.energyType === EnergyType.BASIC || c.name === 'Delta Rainbow Energy');
       });
 
       if (HAS_MARKER(this.DELTA_SUPPLY_MARKER, player, this)) {
@@ -59,7 +59,7 @@ export class Flygon extends PokemonCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard && (card.energyType === EnergyType.BASIC || card.name === 'Delta Rainbow Energy'))) {
+        if (!(card.superType === SuperType.ENERGY && (card.energyType === EnergyType.BASIC || card.name === 'Delta Rainbow Energy'))) {
           blocked.push(index);
         }
       });

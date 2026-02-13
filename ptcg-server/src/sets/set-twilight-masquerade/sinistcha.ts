@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, GameMessage, SlotType, EnergyCard, DiscardEnergyPrompt } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType, GameMessage, SlotType, DiscardEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
@@ -50,7 +50,7 @@ export class Sinistcha extends PokemonCard {
       let totalGrassEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const grassCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard && card.name === 'Grass Energy'
+          card.superType === SuperType.ENERGY && card.name === 'Grass Energy'
         ).length;
         totalGrassEnergy += grassCount;
       });

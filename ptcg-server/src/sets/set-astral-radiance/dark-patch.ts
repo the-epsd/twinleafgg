@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardType, EnergyType } from '../../game/store/card/card-types';
+import { TrainerType, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -35,9 +35,9 @@ export class DarkPatch extends TrainerCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.DARK);
+        return c.superType === SuperType.ENERGY
+          && (c as EnergyCard).energyType === EnergyType.BASIC
+          && (c as EnergyCard).provides.includes(CardType.DARK);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);

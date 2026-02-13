@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, SlotType, EnergyCard, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -49,9 +49,9 @@ export class Glalie extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const waterProvidingCards = new Set<EnergyCard>();
+      const waterProvidingCards = new Set<typeof checkProvidedEnergy.energyMap[0]['card']>();
       checkProvidedEnergy.energyMap.forEach(em => {
-        if (em.card instanceof EnergyCard
+        if (em.card.superType === SuperType.ENERGY
           && (em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY))) {
           waterProvidingCards.add(em.card);
         }
@@ -59,7 +59,7 @@ export class Glalie extends PokemonCard {
 
       const blocked: number[] = [];
       player.active.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard) || !waterProvidingCards.has(card)) {
+        if (card.superType !== SuperType.ENERGY || !waterProvidingCards.has(card)) {
           blocked.push(index);
         }
       });

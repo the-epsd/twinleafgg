@@ -41,14 +41,14 @@ export class Garchomp extends PokemonCard {
 
       // Check if defending has special energy
       const hasSpecialEnergy = opponent.active.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.SPECIAL
       );
 
       if (hasSpecialEnergy) {
         // Build blocked list for non-special energy cards
         const blocked: number[] = [];
         opponent.active.cards.forEach((c, index) => {
-          if (!(c instanceof EnergyCard) || c.energyType !== EnergyType.SPECIAL) {
+          if (c.superType !== SuperType.ENERGY || (c as EnergyCard).energyType !== EnergyType.SPECIAL) {
             blocked.push(index);
           }
         });

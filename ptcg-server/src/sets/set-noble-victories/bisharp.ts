@@ -39,9 +39,9 @@ export class Bisharp extends PokemonCard {
       const player = effect.player;
 
       const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides && c.provides.includes(CardType.METAL);
+          && (c as EnergyCard).provides && (c as EnergyCard).provides.includes(CardType.METAL);
       });
 
       if (!hasMetalEnergyInDiscard) {
@@ -72,7 +72,7 @@ export class Bisharp extends PokemonCard {
       let metalEnergyCount = 0;
 
       player.active.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.provides && card.provides.includes(CardType.METAL)) {
+        if (card.superType === SuperType.ENERGY && (card as EnergyCard).provides && (card as EnergyCard).provides.includes(CardType.METAL)) {
           metalEnergyCount++;
         }
       });

@@ -4,8 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, GameMessage, StateUtils, AttachEnergyPrompt } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
+import { StoreLike, State, PlayerType, SlotType, GameMessage, StateUtils, AttachEnergyPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
@@ -52,7 +51,7 @@ export class Swoobat extends PokemonCard {
           }
 
           const psychicEnergyCount = player.deck.cards.filter(c =>
-            c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.PSYCHIC)
+            c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC && (c as EnergyCard).provides.includes(CardType.PSYCHIC)
           ).length;
 
           if (psychicEnergyCount === 0) {

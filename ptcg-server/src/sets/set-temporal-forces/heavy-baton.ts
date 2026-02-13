@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase, EnergyCard, CardList, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, GamePhase, CardList, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { IS_TOOL_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
@@ -57,7 +57,7 @@ export class HeavyBaton extends TrainerCard {
       }
 
       // Get all basic energy cards from the active Pokemon
-      const basicEnergyCards = active.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
+      const basicEnergyCards = active.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC);
 
       if (basicEnergyCards.length === 0) {
         return state;

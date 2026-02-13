@@ -9,9 +9,6 @@ import { GameMessage } from '../../game/game-message';
 import { Card} from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
-import { EnergyCard } from '../../game/store/card/energy-card';
-
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperiorEnergyRetrieval, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -24,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   let basicEnergies = 0;
   player.discard.cards.forEach(c => {
-    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergies += 1;
     }
   });

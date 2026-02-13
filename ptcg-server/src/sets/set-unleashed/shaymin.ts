@@ -4,7 +4,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, PlayerType, SlotType,
-  MoveEnergyPrompt, StateUtils, PokemonCardList, EnergyCard } from '../../game';
+  MoveEnergyPrompt, StateUtils, PokemonCardList } from '../../game';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import {HealTargetEffect} from '../../game/store/effects/attack-effects';
 
@@ -92,7 +92,7 @@ export class Shaymin extends PokemonCard {
       const targets: PokemonCardList[] = [];
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        const hasEnergy = cardList.cards.some(c => c instanceof EnergyCard);
+        const hasEnergy = cardList.cards.some(c => c.superType === SuperType.ENERGY);
         if (hasEnergy && cardList.damage > 0) {
           targets.push(cardList);
         }

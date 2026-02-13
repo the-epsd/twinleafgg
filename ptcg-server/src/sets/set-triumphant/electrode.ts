@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShowCardsPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, CardList, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShowCardsPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
@@ -47,7 +47,7 @@ export class Electrode extends PokemonCard {
       player.deck.moveTo(temp, 7);
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard;
+        return card.superType === SuperType.ENERGY;
       });
 
       // If no energy cards were drawn, move all cards to deck & shuffle

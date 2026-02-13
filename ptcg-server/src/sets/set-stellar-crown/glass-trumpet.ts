@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, EnergyCard, GameError, StateUtils } from '../../game';
+import { AttachEnergyPrompt, GameError, StateUtils } from '../../game';
 
 export class GlassTrumpet extends TrainerCard {
 
@@ -33,7 +33,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
       effect.preventDefault = true;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC;
       });
 

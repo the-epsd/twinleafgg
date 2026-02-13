@@ -42,9 +42,9 @@ export class Snivy extends PokemonCard {
     // Ref: set-boundaries-crossed/zebstrika.ts (Flame Charge)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const hasGrassEnergyInHand = effect.player.hand.cards.some(c =>
-        c instanceof EnergyCard
-        && c.energyType === EnergyType.BASIC
-        && c.provides.includes(CardType.GRASS)
+        c.superType === SuperType.ENERGY
+        && (c as EnergyCard).energyType === EnergyType.BASIC
+        && (c as EnergyCard).provides.includes(CardType.GRASS)
       );
       if (!hasGrassEnergyInHand) {
         return state;

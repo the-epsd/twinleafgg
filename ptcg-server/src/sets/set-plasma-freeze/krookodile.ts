@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, EnergyCard } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -42,7 +42,7 @@ export class Krookodile extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if defending has energy
-      const hasEnergy = opponent.active.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
       // Check if opponent has benched Pokemon
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
 

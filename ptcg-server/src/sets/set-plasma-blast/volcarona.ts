@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, Card, ShowCardsPrompt, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, GameMessage, Card, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -54,7 +54,7 @@ export class Volcarona extends PokemonCard {
           teamPlasmaCards.push(card);
         } else if (card instanceof TrainerCard && card.tags.includes(CardTag.TEAM_PLASMA)) {
           teamPlasmaCards.push(card);
-        } else if (card instanceof EnergyCard && card.tags.includes(CardTag.TEAM_PLASMA)) {
+        } else if (card.superType === SuperType.ENERGY && card.tags.includes(CardTag.TEAM_PLASMA)) {
           teamPlasmaCards.push(card);
         } else {
           otherCards.push(card);

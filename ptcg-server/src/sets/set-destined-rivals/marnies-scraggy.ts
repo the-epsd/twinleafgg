@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, EnergyCard, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -33,7 +33,7 @@ export class MarniesScraggy extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // If defending Pokemon has no energy cards attached, return early
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

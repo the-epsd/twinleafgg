@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, PlayerType, SlotType, GameMessage, StateUtils, AttachEnergyPrompt, EnergyCard } from '../../game';
+import { PowerType, StoreLike, State, PlayerType, SlotType, GameMessage, StateUtils, AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -46,7 +46,7 @@ export class Victini2 extends PokemonCard {
       }
 
       const attachedEnergies = player.active.cards.filter(card => {
-        return card instanceof EnergyCard;
+        return card.superType === SuperType.ENERGY;
       });
 
       if (attachedEnergies.length === 0) {

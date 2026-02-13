@@ -1,4 +1,4 @@
-import { Attack, CardTag, CardType, EnergyCard, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Attack, CardTag, CardType, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -49,7 +49,7 @@ export class DeoxysEX extends PokemonCard {
       let hasPlasmaEnergy: boolean = false;
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.name === 'Plasma Energy') {
+        if (energyCard.superType === SuperType.ENERGY && energyCard.name === 'Plasma Energy') {
           hasPlasmaEnergy = true;
         }
       });

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
@@ -41,7 +41,7 @@ export class Unfezant extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergyInHand = player.hand.cards.some(c => c instanceof EnergyCard);
+      const hasEnergyInHand = player.hand.cards.some(c => c.superType === SuperType.ENERGY);
       if (!hasEnergyInHand) {
         return state;
       }
@@ -71,7 +71,7 @@ export class Unfezant extends PokemonCard {
         if (result) {
           (effect as AttackEffect).damage += 40;
         } else {
-          const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
           if (energyCards.length > 0) {
             opponent.active.moveCardTo(energyCards[0], opponent.discard);
           }

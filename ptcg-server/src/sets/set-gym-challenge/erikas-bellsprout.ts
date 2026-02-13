@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, MoveEnergyPrompt, GameMessage, PlayerType, SlotType, SuperType, StateUtils, GameError, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, MoveEnergyPrompt, GameMessage, PlayerType, SlotType, SuperType, StateUtils, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_POWER_USED, ABILITY_USED, WAS_ATTACK_USED, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
@@ -53,7 +53,7 @@ export class ErikasBellsprout extends PokemonCard {
 
       let grassEnergyCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.cards.some(card => card instanceof EnergyCard && card.name === 'Grass Energy')) {
+        if (cardList.cards.some(card => card.superType === SuperType.ENERGY && card.name === 'Grass Energy')) {
           grassEnergyCount++;
         }
       });

@@ -5,7 +5,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, Card, GameError } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
@@ -77,11 +76,11 @@ export class Ursaring extends PokemonCard {
           slot.pokemonPlayedTurn = state.turn;
 
           // Now attach an energy card from discard to that Teddiursa
-          const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+          const hasEnergy = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
           if (hasEnergy) {
             const energyBlocked: number[] = [];
             player.discard.cards.forEach((card, index) => {
-              if (!(card instanceof EnergyCard)) {
+              if (card.superType !== SuperType.ENERGY) {
                 energyBlocked.push(index);
               }
             });

@@ -4,7 +4,7 @@ import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Melony extends TrainerCard {
@@ -33,7 +33,7 @@ export class Melony extends TrainerCard {
 
       // Check if there's Water Energy in discard
       const hasWaterEnergyInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy'
+        c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Water Energy'
       );
 
       if (!hasWaterEnergyInDiscard) {

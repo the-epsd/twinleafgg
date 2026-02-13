@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, EnergyCard, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -42,9 +42,9 @@ export class Kingdra extends PokemonCard {
 
       // Count [W] and [L] basic energy cards in discard
       const matchingEnergy = player.discard.cards.filter(c =>
-        c instanceof EnergyCard &&
-        c.energyType === EnergyType.BASIC &&
-        (c.provides.includes(CardType.WATER) || c.provides.includes(CardType.LIGHTNING))
+        c.superType === SuperType.ENERGY &&
+        (c as EnergyCard).energyType === EnergyType.BASIC &&
+        ((c as EnergyCard).provides.includes(CardType.WATER) || (c as EnergyCard).provides.includes(CardType.LIGHTNING))
       );
 
       effect.damage = 20 * matchingEnergy.length;

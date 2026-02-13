@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { GameMessage, EnergyCard, StateUtils } from '../../game';
+import { GameMessage, StateUtils, SuperType } from '../../game';
 import { COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 
 export class Beautifly extends PokemonCard {
@@ -64,7 +64,7 @@ export class Beautifly extends PokemonCard {
         // Count Energy cards in opponent's hand
         let energyCount = 0;
         opponent.hand.cards.forEach(card => {
-          if (card instanceof EnergyCard) {
+          if (card.superType === SuperType.ENERGY) {
             energyCount++;
           }
         });

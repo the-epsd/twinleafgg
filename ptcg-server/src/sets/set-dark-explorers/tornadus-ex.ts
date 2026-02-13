@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, Card, EnergyCard, CoinFlipPrompt,
+  StoreLike, State, StateUtils, Card, CoinFlipPrompt,
   ChooseCardsPrompt
 } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -14,7 +14,7 @@ function* usePowerBlast(next: Function, store: StoreLike, state: State,
   const player = effect.player;
 
   // Active Pokemon has no energy cards attached
-  if (!player.active.energies.cards.some(c => c instanceof EnergyCard)) {
+  if (!player.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
     return state;
   }
 

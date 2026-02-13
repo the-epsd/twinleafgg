@@ -48,7 +48,7 @@ export class Beautifly extends PokemonCard {
 
       // Find available basic energy types in deck
       const basicEnergyInDeck = player.deck.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC
       );
 
       if (basicEnergyInDeck.length === 0) {
@@ -58,8 +58,8 @@ export class Beautifly extends PokemonCard {
       // Get unique types available
       const typesAvailable = new Set<CardType>();
       basicEnergyInDeck.forEach(c => {
-        if (c instanceof EnergyCard) {
-          c.provides.forEach(t => typesAvailable.add(t));
+        if (c.superType === SuperType.ENERGY) {
+          (c as EnergyCard).provides.forEach(t => typesAvailable.add(t));
         }
       });
 
@@ -68,7 +68,7 @@ export class Beautifly extends PokemonCard {
       // Let player choose up to 3 basic energy cards of different types
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
+        if (card.superType !== SuperType.ENERGY || (card as EnergyCard).energyType !== EnergyType.BASIC) {
           blocked.push(index);
         }
       });

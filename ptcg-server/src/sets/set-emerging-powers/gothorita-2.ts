@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, EnergyCard, PlayerType, SlotType, Card } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
@@ -44,7 +44,7 @@ export class Gothorita2 extends PokemonCard {
       // Check if any opponent Pokémon has energy
       let hasEnergyOnField = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard)) {
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
           hasEnergyOnField = true;
         }
       });
@@ -64,7 +64,7 @@ export class Gothorita2 extends PokemonCard {
           ), targets => {
             if (targets && targets.length > 0) {
               const target = targets[0];
-              const energyCards = target.cards.filter(c => c instanceof EnergyCard);
+              const energyCards = target.cards.filter(c => c.superType === SuperType.ENERGY);
               if (energyCards.length > 0) {
                 let cards: Card[] = [];
                 return store.prompt(state, new ChooseCardsPrompt(

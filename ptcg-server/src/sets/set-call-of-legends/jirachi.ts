@@ -37,7 +37,7 @@ export class Jirachi extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
-      if (!player.discard.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.PSYCHIC))) {
+      if (!player.discard.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && (c as EnergyCard).provides.includes(CardType.PSYCHIC))) {
         return state;
       }
 
@@ -49,7 +49,7 @@ export class Jirachi extends PokemonCard {
         if (wantToUse) {
           const blocked: number[] = [];
           player.discard.cards.forEach((c, index) => {
-            if (!(c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.PSYCHIC))) {
+            if (!(c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && (c as EnergyCard).provides.includes(CardType.PSYCHIC))) {
               blocked.push(index);
             }
           });
@@ -62,7 +62,7 @@ export class Jirachi extends PokemonCard {
               if (r) heads++;
             });
 
-            const energyCount = Math.min(heads, player.discard.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.PSYCHIC)).length);
+            const energyCount = Math.min(heads, player.discard.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && (c as EnergyCard).provides.includes(CardType.PSYCHIC)).length);
 
             const blockedTo: CardTarget[] = [];
             player.bench.forEach((list, index) => {

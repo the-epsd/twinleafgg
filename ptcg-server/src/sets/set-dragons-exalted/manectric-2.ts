@@ -49,7 +49,7 @@ export class Manectric2 extends PokemonCard {
       }
 
       const basicEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC
       );
 
       if (basicEnergyInDiscard.length === 0) {
@@ -75,7 +75,7 @@ export class Manectric2 extends PokemonCard {
         // Then choose up to 2 basic Energy from discard
         const blocked: number[] = [];
         player.discard.cards.forEach((card, index) => {
-          if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
+          if (card.superType !== SuperType.ENERGY || (card as EnergyCard).energyType !== EnergyType.BASIC) {
             blocked.push(index);
           }
         });

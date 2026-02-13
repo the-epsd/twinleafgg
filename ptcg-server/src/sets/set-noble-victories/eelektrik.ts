@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State,
   GameError, GameMessage, EnergyCard, SlotType } from '../../game';
 import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
@@ -69,9 +69,9 @@ export class Eelektrik extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.LIGHTNING);
+        return c.superType === SuperType.ENERGY
+          && (c as EnergyCard).energyType === EnergyType.BASIC
+          && (c as EnergyCard).provides.includes(CardType.LIGHTNING);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
