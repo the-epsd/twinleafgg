@@ -10,43 +10,32 @@ import { PlayerType, StateUtils } from '../../game';
 export class Golisopod extends PokemonCard {
 
   public stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Wimpod';
-
-  public cardType = CardType.GRASS;
-
+  public cardType = G;
   public hp = 130;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
+  public weakness = [{ type: F}];
+  public retreat = [C, C];
   public attacks = [
     {
       name: 'Hard Time Slash',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each of your opponent\'s Pokémon V and Pokémon GX in play.'
+      text: 'This attack does 50 more damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
     },
     {
       name: 'Smash Turn',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, C, C],
       damage: 70,
       text: 'Switch this Pokemon with 1 of your Benched Pokemon'
     }
   ];
 
   public set: string = 'DAA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '18';
-
   public name: string = 'Golisopod';
-
   public fullName: string = 'Golisopod DAA';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -77,5 +66,3 @@ export class Golisopod extends PokemonCard {
           return state;
         }    
   }
-
-
