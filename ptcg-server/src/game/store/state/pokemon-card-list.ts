@@ -14,6 +14,7 @@ export class PokemonCardList extends CardList {
   public specialConditions: SpecialCondition[] = [];
   public poisonDamage: number = 10;
   public burnDamage: number = 20;
+  public confusionDamage: number = 30;
   public marker = new Marker();
   public pokemonPlayedTurn: number = 0;
   public sleepFlips = 1;
@@ -190,6 +191,7 @@ export class PokemonCardList extends CardList {
 
     this.poisonDamage = 10;
     this.burnDamage = 20;
+    this.confusionDamage = 30;
     this.damageReductionNextTurn = 0;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
@@ -225,6 +227,9 @@ export class PokemonCardList extends CardList {
     }
     if (sp === SpecialCondition.BURNED) {
       this.burnDamage = 20;
+    }
+    if (sp === SpecialCondition.CONFUSED) {
+      this.confusionDamage = 30;
     }
     if (this.specialConditions.includes(sp)) {
       return;
