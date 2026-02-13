@@ -3,12 +3,12 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
 import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 
 export class Aromatisse extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -24,7 +24,6 @@ export class Aromatisse extends PokemonCard {
       name: 'Heavy Perfume',
       cost: [Y],
       damage: 0,
-      // Note: "Put 6 damage counters instead of 3" for confusion is not implementable - confusion damage is hardcoded in the engine.
       text: 'Your opponent\'s Active Pokémon is now Confused. Put 6 damage counters instead of 3 on that Pokémon for this Special Condition.'
     },
     {
@@ -42,10 +41,12 @@ export class Aromatisse extends PokemonCard {
   public fullName: string = 'Aromatisse BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Heavy Perfume
-    // Ref: AGENTS-patterns.md (Confused)
+    // Attack 1: Heavy Perfume - Confuse with 60 damage instead of 30
+    // Ref: set-breakthrough/aromatisse.ts (custom confusionDamage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      specialConditionEffect.confusionDamage = 60;
+      store.reduceEffect(state, specialConditionEffect);
     }
 
     // Attack 2: Hug
