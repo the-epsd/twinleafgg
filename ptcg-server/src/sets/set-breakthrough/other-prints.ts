@@ -8,6 +8,16 @@ import { ProfessorsLetter as ProfessorsLetterXY123 } from '../set-x-and-y/profes
 import { Fisherman } from '../set-celestial-storm/fisherman';
 import { FloatStone } from '../set-plasma-freeze/float-stone';
 import { ProfessorsLetter } from '../set-x-and-y/professors-letter';
+import { Swablu } from '../set-roaring-skies/swablu';
+import { HoundoomEx } from './houndoom-ex';
+import { MHoundoomEx } from './m-houndoom-ex';
+import { GlalieEx } from './glalie-ex';
+import { MGlalieEx } from './m-glalie-ex';
+import { MewtwoEx } from './mewtwo-ex';
+import { MewtwoEx2 } from './mewtwo-ex-2';
+import { MMewtwoEx } from './m-mewtwo-ex';
+import { MMewtwoEx2 } from './m-mewtwo-ex-2';
+import { GiovannisScheme } from './giovannis-scheme';
 
 export class FishermanBKT extends Fisherman {
   public fullName = 'Fisherman BKT';
@@ -67,4 +77,76 @@ export class ProfessorsLetter2BKT extends ProfessorsLetterXY123 {
   public setNumber = '146a';
   public fullName: string = 'Professor\'s Letter2 BKT';
   public set = 'BKT';
+}
+
+export class SwabluBKT extends Swablu {
+  public set: string = 'BKT';
+  public setNumber: string = '124';
+  public fullName: string = 'Swablu BKT';
+}
+
+export class HoundoomEx2 extends HoundoomEx {
+  public set: string = 'BKT';
+  public setNumber: string = '153';
+  public fullName: string = 'Houndoom-EX BKT 153';
+}
+
+export class MHoundoomEx2 extends MHoundoomEx {
+  public set: string = 'BKT';
+  public setNumber: string = '154';
+  public fullName: string = 'M Houndoom-EX BKT 154';
+}
+
+export class GlalieEx2 extends GlalieEx {
+  public set: string = 'BKT';
+  public setNumber: string = '155';
+  public fullName: string = 'Glalie-EX BKT 155';
+}
+
+export class MGlalieEx2 extends MGlalieEx {
+  public set: string = 'BKT';
+  public setNumber: string = '156';
+  public fullName: string = 'M Glalie-EX BKT 156';
+}
+
+export class MewtwoEx3 extends MewtwoEx {
+  public set: string = 'BKT';
+  public setNumber: string = '157';
+  public fullName: string = 'Mewtwo-EX BKT 157';
+}
+
+export class MewtwoEx4 extends MewtwoEx2 {
+  public set: string = 'BKT';
+  public setNumber: string = '158';
+  public fullName: string = 'Mewtwo-EX BKT 158';
+}
+
+export class MMewtwoEx3 extends MMewtwoEx {
+  public set: string = 'BKT';
+  public setNumber: string = '159';
+  public fullName: string = 'M Mewtwo-EX BKT 159';
+}
+
+export class MMewtwoEx4 extends MMewtwoEx2 {
+  public set: string = 'BKT';
+  public setNumber: string = '160';
+  public fullName: string = 'M Mewtwo-EX BKT 160';
+}
+
+export class GiovannisScheme2 extends GiovannisScheme {
+  public set: string = 'BKT';
+  public setNumber: string = '162';
+  public fullName: string = 'Giovanni\'s Scheme BKT 162';
+}
+
+export class MewtwoEx5 extends MewtwoEx {
+  public set: string = 'BKT';
+  public setNumber: string = '163';
+  public fullName: string = 'Mewtwo-EX BKT 163';
+}
+
+export class MewtwoEx6 extends MewtwoEx2 {
+  public set: string = 'BKT';
+  public setNumber: string = '164';
+  public fullName: string = 'Mewtwo-EX BKT 164';
 }

@@ -661,6 +661,62 @@ Reference: `set-ancient-origins/entei.ts` (Burning Roar)
 
 ---
 
+## Swift / Full Damage Bypass
+
+There are three levels of damage bypass. Choose the correct one based on card text:
+
+| Card Text | Code | What It Bypasses |
+|-----------|------|------------------|
+| "not affected by Weakness or Resistance" | `effect.ignoreWeakness = true; effect.ignoreResistance = true;` | W/R only |
+| "not affected by any effects on the Defending Pokemon" | `THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, baseDamage)` | Defensive effects only (still applies W/R) |
+| "not affected by Weakness, Resistance, or any other effects" (Swift) | Manual pattern below | Everything: W/R AND effects |
+
+### Swift Pattern (bypasses ALL damage modifiers)
+
+```typescript
+// Ref: set-next-destinies/starmie.ts (Swift)
+if (WAS_ATTACK_USED(effect, 0, this)) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  // Dispatch ApplyWeaknessEffect so interceptors see the attack
+  const applyWeakness = new ApplyWeaknessEffect(effect, 80);
+  store.reduceEffect(state, applyWeakness);
+
+  // Zero out normal damage pipeline
+  effect.damage = 0;
+
+  // Apply flat damage directly, bypassing all modifiers
+  opponent.active.damage += 80;
+
+  // Dispatch AfterDamageEffect for damage tracking
+  const afterDamage = new AfterDamageEffect(effect, 80);
+  state = store.reduceEffect(state, afterDamage);
+}
+```
+
+Reference: `set-next-destinies/starmie.ts`, `set-breakthrough/sandslash.ts`
+
+---
+
+## SelectPrompt for Multi-Option Supporters
+
+When a Supporter lets the player choose between two effects (e.g., Giovanni's Scheme):
+
+```typescript
+// Ref: set-breakthrough/giovannis-scheme.ts
+const options: { message: GameMessage, action: () => void }[] = [
+  { message: GameMessage.DRAW_CARDS, action: () => { DRAW_CARDS(player, 5); } },
+  { message: GameMessage.DEAL_MORE_DAMAGE, action: () => { /* set marker */ } }
+];
+
+return SELECT_PROMPT_WITH_OPTIONS(store, state, player, GameMessage.SELECT_OPTION, options);
+```
+
+Reference: `set-breakthrough/giovannis-scheme.ts`
+
+---
+
 ## Retreat Blocking (3-call pattern)
 
 When card text says "The Defending Pokemon can't retreat during your opponent's next turn":

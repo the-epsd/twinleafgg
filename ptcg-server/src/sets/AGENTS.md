@@ -585,3 +585,40 @@ Without the CLEAR marker, the effect gets cleaned up at the end of YOUR turn bef
 ### On-play-from-hand abilities should NOT have `useWhenInPlay: true`
 
 Abilities that trigger when played from hand (intercepting `PlayPokemonEffect`) should NOT have `useWhenInPlay: true`. Only activated abilities that a player clicks to use should have this flag. This also applies to passive abilities (see existing gotcha above).
+
+### 2-phase marker ordering: REMOVE before REPLACE
+
+When using the 2-phase marker pattern for "until the end of your next turn" effects, the order of `REMOVE_MARKER_AT_END_OF_TURN` and `REPLACE_MARKER_AT_END_OF_TURN` calls is critical. REMOVE must come before REPLACE:
+
+```typescript
+// CORRECT ordering:
+REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_MARKER, this);
+REPLACE_MARKER_AT_END_OF_TURN(effect, this.MARKER, this.CLEAR_MARKER, this);
+```
+
+If REPLACE comes before REMOVE, the newly-created CLEAR marker gets immediately removed in the same EndTurnEffect pass, causing the effect to last only one turn instead of two.
+
+Also: when checking whether the effect is active, check BOTH phase markers, since the effect persists through both phases.
+
+### `PokemonCardList.tools` is a separate array from `cards`
+
+Tools attached to a Pokemon are stored in `PokemonCardList.tools`, not in `PokemonCardList.cards`. When implementing effects that move "all cards attached to a Pokemon" (return to hand, discard all, etc.), you must handle both arrays:
+
+```typescript
+const tools = cardList.tools.slice();
+tools.forEach(card => { cardList.moveCardTo(card, destination); });
+const cards = cardList.cards.slice();
+cards.forEach(card => { cardList.moveCardTo(card, destination); });
+```
+
+### `cards[0]` is NOT the top Pokemon in an evolution stack
+
+`PokemonCardList.cards[0]` is the Basic Pokemon at the bottom of the evolution line. For Stage 1+ Pokemon, `cards[0]` is NOT the current Pokemon. Use `getPokemonCard()` to get the current (top) Pokemon:
+
+```typescript
+// WRONG: For evolved Pokemon, this is the Basic, not the Stage 1/2
+if (player.active.cards[0] === this) { ... }
+
+// CORRECT: Gets the topmost Pokemon card
+if (player.active.getPokemonCard() === this) { ... }
+```
