@@ -25,7 +25,7 @@ export class Marowak extends PokemonCard {
       name: 'Vortex Chop',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If the Defending Pokémon has any Resistance, this attack does 30 more damage.'
     }
   ];

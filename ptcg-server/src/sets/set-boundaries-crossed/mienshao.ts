@@ -27,7 +27,7 @@ export class Mienshao extends PokemonCard {
       name: 'Double Whip',
       cost: [F, C, C],
       damage: 70,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 70 damage times the number of heads.'
     }
   ];

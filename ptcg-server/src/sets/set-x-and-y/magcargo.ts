@@ -22,7 +22,7 @@ export class Magcargo extends PokemonCard {
       name: 'Magma Mantle',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard the top card of your deck. If that card is a [R] Energy card, this attack does 50 more damage.'
     },
     {

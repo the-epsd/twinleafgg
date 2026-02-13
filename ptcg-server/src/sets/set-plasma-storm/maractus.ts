@@ -28,7 +28,7 @@ export class Maractus extends PokemonCard {
       name: 'Ambush',
       cost: [G, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

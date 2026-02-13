@@ -21,7 +21,7 @@ export class Roggenrola extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {

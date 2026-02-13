@@ -20,7 +20,7 @@ export class Dwebble extends PokemonCard {
       name: 'Flail',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 10 damage times the number of damage counters on this Pokémon.'
     }
   ];

@@ -27,7 +27,7 @@ export class Corsola extends PokemonCard {
       name: 'Spiny Rush',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     }
   ];

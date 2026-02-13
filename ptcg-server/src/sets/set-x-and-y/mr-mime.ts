@@ -29,7 +29,7 @@ export class MrMime extends PokemonCard {
       name: 'Slap Down',
       cost: [Y, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];

@@ -25,7 +25,7 @@ export class Gible2 extends PokemonCard {
       name: 'Knock Away',
       cost: [W, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

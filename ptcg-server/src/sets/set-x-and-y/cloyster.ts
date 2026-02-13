@@ -28,7 +28,7 @@ export class Cloyster extends PokemonCard {
       name: 'Spike Cannon',
       cost: [W, W, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 5 coins. This attack does 30 damage times the number of heads.'
     }
   ];

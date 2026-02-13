@@ -27,7 +27,7 @@ export class Charmeleon extends PokemonCard {
       name: 'Raging Claws',
       cost: [R, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 10 more damage for each damage counter on this Pokémon.'
     }
   ];

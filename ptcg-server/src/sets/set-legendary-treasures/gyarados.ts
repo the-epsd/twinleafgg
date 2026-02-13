@@ -21,7 +21,7 @@ export class Gyarados extends PokemonCard {
       name: 'Howling Rampage',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 damage times the number of Prize cards both players have taken.'
     },
     {

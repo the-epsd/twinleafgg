@@ -28,7 +28,7 @@ export class Meloetta2 extends PokemonCard {
       name: 'Shooting Star Pirouette',
       cost: [F, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];

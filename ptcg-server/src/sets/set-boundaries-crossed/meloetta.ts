@@ -20,7 +20,7 @@ export class Meloetta extends PokemonCard {
       name: 'Psychic',
       cost: [P],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 more damage for each Energy attached to the Defending Pokémon.'
     },
     {

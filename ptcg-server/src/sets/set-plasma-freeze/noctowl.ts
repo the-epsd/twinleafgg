@@ -20,7 +20,7 @@ export class Noctowl extends PokemonCard {
       name: 'Powerful Vision',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 10 damage times the number of cards in your opponent\'s hand.'
     },
     {

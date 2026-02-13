@@ -21,7 +21,7 @@ export class Weedle extends PokemonCard {
       name: 'Leaf Munch',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Grass Pokémon, this attack does 20 more damage.'
     }
   ];

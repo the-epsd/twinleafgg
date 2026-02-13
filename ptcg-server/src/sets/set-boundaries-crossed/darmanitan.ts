@@ -22,14 +22,14 @@ export class Darmanitan extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
     },
     {
       name: 'Damage Counterpunch',
       cost: [R, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 60 more damage.'
     }
   ];

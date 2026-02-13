@@ -22,7 +22,7 @@ export class Doublade extends PokemonCard {
       name: 'Dual Blades',
       cost: [M, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     }
   ];

@@ -29,7 +29,7 @@ export class Braviary extends PokemonCard {
       name: 'Wild Edge',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];

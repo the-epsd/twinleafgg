@@ -22,14 +22,14 @@ export class Conkeldurr extends PokemonCard {
       name: 'Wake-Up Slap',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 60 more damage. Then, remove all Special Conditions from that Pokémon.'
     },
     {
       name: 'Dynamic Punch',
       cost: [F, F, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage and your opponent\'s Active Pokémon is now Confused.'
     }
   ];

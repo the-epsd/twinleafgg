@@ -27,7 +27,7 @@ export class Genesect extends PokemonCard {
       name: 'Gaia Blaster',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 more damage for each [G] Energy attached to this Pokémon.'
     }
   ];

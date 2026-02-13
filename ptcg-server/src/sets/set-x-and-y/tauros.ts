@@ -26,7 +26,7 @@ export class Tauros extends PokemonCard {
       name: 'Seething Anger',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each damage counter on this Pokémon. This attack does 30 damage times the number of heads.'
     }
   ];

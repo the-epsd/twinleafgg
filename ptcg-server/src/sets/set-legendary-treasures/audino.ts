@@ -21,7 +21,7 @@ export class Audino extends PokemonCard {
       name: 'Relaxed Roll',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage times the number heads.'
     }
   ];

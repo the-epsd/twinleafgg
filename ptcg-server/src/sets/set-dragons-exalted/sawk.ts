@@ -23,7 +23,7 @@ export class Sawk extends PokemonCard {
       name: 'Karate Chop',
       cost: [F, C, C],
       damage: 70,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'Does 70 damage minus 10 damage for each damage counter on this Pokémon.'
     }
   ];

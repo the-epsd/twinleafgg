@@ -17,7 +17,7 @@ export class Haxorus extends PokemonCard {
       name: 'Axe Slugger',
       cost: [C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If the Defending Pok\u00e9mon is a Colorless Pok\u00e9mon, this attack does 60 more damage.'
     },
     {

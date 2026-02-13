@@ -88,14 +88,14 @@ export class Sableye extends PokemonCard {
           { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
           { min, max, allowCancel: false }
         )], selected => {
-          const cards = selected || [];
-          player.discard.moveCardsTo(cards, player.hand);
+        const cards = selected || [];
+        player.discard.moveCardsTo(cards, player.hand);
 
-          cards.forEach((card, index) => {
-            player.deck.moveCardTo(card, player.hand);
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
+        cards.forEach((card, index) => {
+          player.deck.moveCardTo(card, player.hand);
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -21,7 +21,7 @@ export class Doduo extends PokemonCard {
       name: 'Gatling Peck',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 5 coins. This attack does 10 damage times the number of heads.'
     }
   ];

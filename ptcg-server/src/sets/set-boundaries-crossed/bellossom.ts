@@ -22,14 +22,14 @@ export class Bellossom extends PokemonCard {
       name: 'Grass Knot',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 more damage for each Colorless in the Defending Pokémon\'s Retreat Cost.'
     },
     {
       name: 'Petal Dance',
       cost: [G, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pokémon is now Confused.'
     }
   ];

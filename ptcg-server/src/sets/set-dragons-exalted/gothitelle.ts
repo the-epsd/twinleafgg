@@ -24,7 +24,7 @@ export class Gothitelle extends PokemonCard {
       name: 'Black Magic',
       cost: [P, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 more damage for each of your opponent\'s Benched Pokemon.'
     }
   ];

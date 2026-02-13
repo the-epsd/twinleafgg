@@ -28,7 +28,7 @@ export class Piloswine extends PokemonCard {
       name: 'Quintuple Headbutt',
       cost: [W, W, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 5 coins. This attack does 40 damage times the number of heads.'
     }
   ];

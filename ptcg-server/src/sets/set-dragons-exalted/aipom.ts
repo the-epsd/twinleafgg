@@ -20,7 +20,7 @@ export class Aipom extends PokemonCard {
       name: 'Double Hit',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     }
   ];

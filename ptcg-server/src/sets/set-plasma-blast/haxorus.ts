@@ -19,7 +19,7 @@ export class Haxorus extends PokemonCard {
       name: 'Dragonaxe',
       cost: [M],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 40 damage times the amount of [M] Energy attached to this Pokémon.'
     },
     {

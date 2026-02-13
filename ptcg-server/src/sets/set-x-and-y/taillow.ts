@@ -22,7 +22,7 @@ export class Taillow extends PokemonCard {
       name: 'Aerial Ace',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

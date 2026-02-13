@@ -25,7 +25,7 @@ export class TornadusEx extends PokemonCard {
       name: 'Jet Blast',
       cost: [C, C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Plasma Energy attached to this Pokémon.'
     }
   ];

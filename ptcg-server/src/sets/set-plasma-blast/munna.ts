@@ -23,7 +23,7 @@ export class Munna extends PokemonCard {
       name: 'Focused Wish',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

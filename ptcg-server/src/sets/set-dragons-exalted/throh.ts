@@ -17,14 +17,14 @@ export class Throh extends PokemonCard {
       name: 'Squeeze',
       cost: [F, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Paralyzed.'
     },
     {
       name: 'Superpower',
       cost: [F, C, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];

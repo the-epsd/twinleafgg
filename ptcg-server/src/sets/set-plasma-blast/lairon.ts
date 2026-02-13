@@ -25,7 +25,7 @@ export class Lairon extends PokemonCard {
       name: 'Iron Head',
       cost: [M, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 50 damage times the number of heads.'
     }
   ];

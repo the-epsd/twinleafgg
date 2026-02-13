@@ -17,14 +17,14 @@ export class Throh extends PokemonCard {
       name: 'Freestyle Strike',
       cost: [F, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     },
     {
       name: 'Shoulder Throw',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'Does 80 damage minus 20 damage for each Colorless in the Defending Pok\u00e9mon\'s Retreat Cost.'
     }
   ];

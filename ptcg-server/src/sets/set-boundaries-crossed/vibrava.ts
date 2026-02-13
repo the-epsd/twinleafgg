@@ -21,7 +21,7 @@ export class Vibrava extends PokemonCard {
       name: 'Quick Turn',
       cost: [G],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     },
     {

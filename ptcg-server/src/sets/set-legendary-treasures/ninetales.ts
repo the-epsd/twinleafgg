@@ -22,7 +22,7 @@ export class Ninetales extends PokemonCard {
       name: 'Color Coordination',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any basic Energy attached to it that is the same type as the Defending Pokémon, this attack does 40 more damage.'
     }
   ];

@@ -23,14 +23,14 @@ export class Swanna extends PokemonCard {
       name: 'Aerial Ace',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
       name: 'Defog',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard any Stadium card in play. If you do, this attack does 40 more damage.'
     }
   ];
