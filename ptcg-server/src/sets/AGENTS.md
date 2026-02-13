@@ -436,3 +436,34 @@ Reference: `set-primal-clash/mr-mime.ts` (Trick)
 ### Never use `(c as any)` to bypass TypeScript types
 
 Always import the correct type (e.g., `EnergyCard`, `PokemonCard`, `TrainerCard`) instead of using `as any` casts. If you need to check `energyType`, import `EnergyCard` and use `c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL`.
+
+### `getPokemons()` vs `getPokemonCard()` — evolution chain handling
+
+When filtering "cards attached to a Pokemon" (energy + tools), always use `getPokemons()` to exclude the **entire evolution chain**, not `getPokemonCard()` which only returns the **top** evolution card. Using `getPokemonCard()` on an evolved Pokemon (e.g., Stage 2) will incorrectly treat pre-evolution cards as "attached cards."
+
+```typescript
+// WRONG: Only excludes the top Pokemon card
+const pokemonCard = cardList.getPokemonCard();
+const attached = cardList.cards.filter(c => c !== pokemonCard);
+
+// CORRECT: Excludes all Pokemon in the evolution chain
+const pokemons = cardList.getPokemons();
+const attached = cardList.cards.filter(c => !pokemons.includes(c as PokemonCard));
+```
+
+### Delayed KO timing: "end of opponent's next turn" vs "during your next turn"
+
+These two timings require different marker placements:
+
+- **"At the end of your opponent's next turn"** → Place marker on `opponent.marker` (single-phase). The marker is set during your turn, skips your EndTurnEffect (wrong player), then triggers at end of opponent's turn.
+- **"During your next turn"** → Place marker on `player.marker` (2-phase with `REPLACE_MARKER_AT_END_OF_TURN`). Needs to persist across opponent's entire turn.
+
+Reference: `set-roaring-skies/jirachi.ts` (Doom Desire) for opponent's-turn timing.
+
+### On-evolve abilities must NOT have `useWhenInPlay: true`
+
+On-evolve abilities handled by `JUST_EVOLVED` (which intercepts `EvolveEffect`) should NOT have `useWhenInPlay: true` in their power definition. Only activated abilities (those using `WAS_POWER_USED`) should have `useWhenInPlay: true`. Adding it to on-evolve abilities creates a non-functional "Use Ability" button in the game UI.
+
+### Mandatory vs optional prompts for public knowledge zones
+
+When card text says "Attach a basic Energy card from your discard pile to this Pokemon" (no "you may" or "up to"), the discard pile is public knowledge — the prompt must use `min: 1, allowCancel: false`. Only use `min: 0, allowCancel: true` when the card text says "you may" or the source zone is private (deck).
