@@ -217,7 +217,7 @@ for set_name in "${SETS[@]}"; do
   fi
 
   # Cooldown between sets
-  if ! $DRY_RUN && [[ "$set_name" != "${SETS[-1]}" ]]; then
+  if ! $DRY_RUN && [[ "$set_name" != "${SETS[${#SETS[@]}-1]}" ]]; then
     echo "  Cooling down for ${COOLDOWN}s..."
     sleep "$COOLDOWN"
   fi
