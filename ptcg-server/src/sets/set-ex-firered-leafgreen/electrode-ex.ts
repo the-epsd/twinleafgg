@@ -2,14 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameMessage,
-  PlayerType, SlotType,
+  PlayerType, SlotType, PokemonCardList,
   AttachEnergyPrompt,
   CardTarget,
-  DiscardEnergyPrompt
+  DiscardEnergyPrompt,
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARD_TO, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARD_TO, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Electrodeex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -45,24 +44,40 @@ export class Electrodeex extends PokemonCard {
   public setNumber: string = '107';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    //Versatile pokebody
+    //Extra Energy Bomb
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.damage += 999;
-          const checkHpEffect = new CheckHpEffect(player, cardList);
-          store.reduceEffect(state, checkHpEffect);
-        }
-      });
+      BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
+      ABILITY_USED(player, this);
 
+      // Find Electrode's slot and move attached cards to discard first,
+      // so energy that was attached becomes available for the prompt
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      const pokemons = cardList.getPokemons();
+      const attachedCards = cardList.cards.filter(c => !pokemons.includes(c as PokemonCard));
+      const tools = cardList.tools.slice();
+
+      attachedCards.forEach(c => cardList.moveCardTo(c, player.discard));
+      tools.forEach(c => cardList.moveCardTo(c, player.discard));
+
+      // Mark for KO - engine will handle the actual KO (prizes, slot cleanup)
+      cardList.damage += 999;
+
+      // Block Pokemon-ex from receiving energy
+      let validTargets = 0;
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (card.tags.includes(CardTag.POKEMON_ex)) {
           blocked2.push(target);
         }
+        validTargets++;
       });
+
+      if (validTargets === 0) {
+        return state;
+      }
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -74,7 +89,6 @@ export class Electrodeex extends PokemonCard {
         { allowCancel: false, min: 0, max: 5, blockedTo: blocked2 },
       ), transfers => {
         transfers = transfers || [];
-        // cancelled by user
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARD_TO(state, transfer.card, target);
