@@ -7,7 +7,6 @@ import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types'
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
@@ -121,10 +120,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   const pokemonCard = targets[0].getPokemonCard();
 
-  const endTurnEffect = new EndTurnEffect(player);
-
   if (pokemonCard === undefined) {
-    store.reduceEffect(state, endTurnEffect);
     return state; // invalid target?
   }
 
@@ -135,8 +131,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   SHUFFLE_DECK(store, state, player);
-
-  store.reduceEffect(state, endTurnEffect);
 }
 
 export class LevelMax extends TrainerCard {
