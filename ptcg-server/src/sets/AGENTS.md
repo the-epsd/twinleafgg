@@ -670,3 +670,11 @@ For effects that select cards from a public zone (discard pile), `min` should eq
 ### AttachEnergyPrompt `validCardTypes` for type-restricted moves
 
 When card text says "Move a [X] Energy", use `validCardTypes: [CardType.X]` in AttachEnergyPrompt options to restrict which energy type can be selected. Without this, players can move any energy type. Reference: `set-burning-shadows/simipour.ts` (Aqua Reflect).
+
+### Verify evolution stage matches `evolvesFrom` after stub generation
+
+The stub generator may incorrectly set `Stage.BASIC` for evolved Pokemon (especially when card data comes from TCGdex). Always verify: if `evolvesFrom` is present, the stage should be `Stage.STAGE_1` or `Stage.STAGE_2`, not `Stage.BASIC`. This was the most common bug found during set-shining-legends review (11 out of 37 cards affected).
+
+### Passive abilities: use `IS_ABILITY_BLOCKED` prefab, not manual `PowerEffect` try/catch
+
+For passive abilities that intercept effects (e.g., `PutDamageEffect`, `DealDamageEffect`, `RetreatEffect`), use `IS_ABILITY_BLOCKED(store, state, player, this)` followed by `return state` instead of the manual `try { new PowerEffect(...) } catch { return state }` pattern. The prefab is cleaner and the established preferred pattern.
