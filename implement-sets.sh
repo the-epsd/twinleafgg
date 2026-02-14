@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# implement-sets.sh — Loops through XY-era sets, invoking Claude per set.
+# implement-sets.sh — Loops through Sun & Moon block sets (through Cosmic Eclipse), invoking Claude per set.
 # Usage:
 #   ./implement-sets.sh              # Run all sets (skips completed)
 #   ./implement-sets.sh --resume     # Same as default (skips completed)
@@ -14,20 +14,23 @@ LOG_DIR="$SCRIPT_DIR/.claude/set-logs"
 
 mkdir -p "$PROGRESS_DIR" "$LOG_DIR"
 
-# XY-era sets in release order
+# Sun & Moon block sets in release order (through Cosmic Eclipse)
 SETS=(
-  "set-x-and-y"
-  "set-flashfire"
-  "set-furious-fists"
-  "set-phantom-forces"
-  "set-primal-clash"
-  "set-roaring-skies"
-  "set-ancient-origins"
-  "set-breakthrough"
-  "set-breakpoint"
-  "set-fates-collide"
-  "set-steam-siege"
-  "set-evolutions"
+  "set-sun-and-moon"
+  "set-guardians-rising"
+  "set-burning-shadows"
+  "set-shining-legends"
+  "set-crimson-invasion"
+  "set-ultra-prism"
+  "set-forbidden-light"
+  "set-celestial-storm"
+  "set-dragon-majesty"
+  "set-lost-thunder"
+  "set-team-up"
+  "set-unbroken-bonds"
+  "set-unified-minds"
+  "set-hidden-fates"
+  "set-cosmic-eclipse"
 )
 
 MAX_RETRIES=10
@@ -73,7 +76,7 @@ if [[ -n "$SINGLE_SET" ]]; then
     fi
   done
   if ! $found; then
-    echo "Error: Set '$SINGLE_SET' not found in XY-era sets."
+    echo "Error: Set '$SINGLE_SET' not found in Sun & Moon sets."
     echo "Available sets:"
     printf '  %s\n' "${SETS[@]}"
     exit 1
@@ -175,7 +178,7 @@ set_result() { echo "$1=$2" >> "$RESULTS_FILE"; }
 get_result() { grep "^$1=" "$RESULTS_FILE" 2>/dev/null | tail -1 | cut -d= -f2-; }
 
 echo "========================================"
-echo "  XY-Era Set Implementation Pipeline"
+echo "  Sun & Moon Set Implementation Pipeline"
 echo "========================================"
 echo ""
 echo "Sets to process: ${#SETS[@]}"
@@ -226,9 +229,9 @@ for set_name in "${SETS[@]}"; do
 
     if $rate_limited; then
       echo ""
-      echo "  Rate limit reached. Stopping pipeline."
+      echo "  Usage/rate limit reached. Exiting now."
       echo "  Resume later with: ./implement-sets.sh"
-      break
+      exit 2
     fi
   fi
 
