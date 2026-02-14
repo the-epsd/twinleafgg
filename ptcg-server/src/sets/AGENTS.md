@@ -650,3 +650,23 @@ if (effect instanceof EndTurnEffect) {
 ### Generator trainers: never call `next()` outside of prompt callbacks
 
 In generator-pattern Supporter/Item cards, only call `next()` (which calls `generator.next()`) from inside prompt callbacks. Calling `next()` synchronously in an `else` branch while the generator is already running causes `TypeError: Generator is already running`. If a `yield` is conditional, let the generator flow naturally without an else branch. Reference: Shauna XY pattern.
+
+### "Prevent all effects of attacks" abilities must use `AbstractAttackEffect`
+
+When a card says "Prevent all effects of attacks, including damage, done to this Pokemon by [condition]", intercept `AbstractAttackEffect` — not just `PutDamageEffect` or `DealDamageEffect`. `AbstractAttackEffect` is the parent class of all attack sub-effects and catches damage, special conditions, and other effects. Reference: `set-cosmic-eclipse/alolan-persian-gx.ts` (Smug Face).
+
+### First-turn checks: `state.turn <= 2`, not `state.turn <= 1`
+
+For "during your first turn" effects, use `state.turn <= 2`. Turn 1 is the first player's first turn, turn 2 is the second player's first turn. Using `state.turn <= 1` misses the going-second player entirely.
+
+### `BLOCK_RETREAT()` returns State — always `return` the result
+
+`BLOCK_RETREAT(store, state, effect, this)` dispatches a sub-effect via `store.reduceEffect` and returns `State`. Always capture and return the result: `return BLOCK_RETREAT(store, state, effect, this);`. Discarding the return value can lose state mutations.
+
+### Public-zone mandatory selection: `min` must equal `max`
+
+For effects that select cards from a public zone (discard pile), `min` should equal `max` (the computed available amount) when the card text doesn't say "up to". The opponent can verify the count in public zones. Only use `min: 1` when the source is private (deck) or text says "up to". Reference: `set-burning-shadows/ho-oh-gx.ts` (Eternal Flame-GX).
+
+### AttachEnergyPrompt `validCardTypes` for type-restricted moves
+
+When card text says "Move a [X] Energy", use `validCardTypes: [CardType.X]` in AttachEnergyPrompt options to restrict which energy type can be selected. Without this, players can move any energy type. Reference: `set-burning-shadows/simipour.ts` (Aqua Reflect).

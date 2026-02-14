@@ -24,6 +24,16 @@ import { RescueStretcher } from '../set-guardians-rising/rescue-stretcher';
 import { WeaknessPolicy } from '../set-primal-clash/weakness-policy';
 import { Charmander } from './charmander';
 import { CharizardGX } from './charizard-gx';
+import { Kirlia } from './kirlia';
+import { Meowth } from '../set-boundaries-crossed/meowth';
+import { PorygonZ } from './porygon-z';
+import { GolisopodGx } from './golisopod-gx';
+import { HoOhGx } from './ho-oh-gx';
+import { MachampGx } from './machamp-gx';
+import { Wicke } from './wicke';
+import { LycanrocGx } from './lycanroc-gx';
+import { AlolanMukGx2 } from './alolan-muk-gx-2';
+import { MultiSwitch } from '../set-guardians-rising/multi-switch';
 
 export class EscapeRopeBUS extends EscapeRope {
   public fullName = 'Escape Rope BUS';
@@ -254,4 +264,76 @@ export class CharizardGXBUS150 extends CharizardGX {
   public setNumber = '150';
   public fullName: string = 'Charizard-GX BUS 150';
   public set = 'BUS';
+}
+
+export class Kirlia2 extends Kirlia {
+  public set: string = 'BUS';
+  public setNumber: string = '92a';
+  public fullName: string = 'Kirlia BUS 92a';
+}
+
+export class MeowthBUS extends Meowth {
+  public set: string = 'BUS';
+  public setNumber: string = '101';
+  public fullName: string = 'Meowth BUS';
+}
+
+export class PorygonZ2 extends PorygonZ {
+  public set: string = 'BUS';
+  public setNumber: string = '105a';
+  public fullName: string = 'Porygon-Z BUS 105a';
+}
+
+export class GolisopodGx2 extends GolisopodGx {
+  public set: string = 'BUS';
+  public setNumber: string = '129';
+  public fullName: string = 'Golisopod-GX BUS 129';
+}
+
+export class HoOhGx2 extends HoOhGx {
+  public set: string = 'BUS';
+  public setNumber: string = '131';
+  public fullName: string = 'Ho-Oh-GX BUS 131';
+}
+
+export class MachampGx2 extends MachampGx {
+  public set: string = 'BUS';
+  public setNumber: string = '135';
+  public fullName: string = 'Machamp-GX BUS 135';
+}
+
+export class Wicke2 extends Wicke {
+  public set: string = 'BUS';
+  public setNumber: string = '147';
+  public fullName: string = 'Wicke BUS 147';
+}
+
+export class GolisopodGx3 extends GolisopodGx {
+  public set: string = 'BUS';
+  public setNumber: string = '148';
+  public fullName: string = 'Golisopod-GX BUS 148';
+}
+
+export class MachampGx3 extends MachampGx {
+  public set: string = 'BUS';
+  public setNumber: string = '154';
+  public fullName: string = 'Machamp-GX BUS 154';
+}
+
+export class LycanrocGx2 extends LycanrocGx {
+  public set: string = 'BUS';
+  public setNumber: string = '155';
+  public fullName: string = 'Lycanroc-GX BUS 155';
+}
+
+export class AlolanMukGx3 extends AlolanMukGx2 {
+  public set: string = 'BUS';
+  public setNumber: string = '157';
+  public fullName: string = 'Alolan Muk-GX BUS 157';
+}
+
+export class MultiSwitchBUS extends MultiSwitch {
+  public set: string = 'BUS';
+  public setNumber: string = '164';
+  public fullName: string = 'Multi Switch BUS';
 }
