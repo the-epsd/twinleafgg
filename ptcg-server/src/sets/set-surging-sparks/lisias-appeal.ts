@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, GameError, GameMessage, CardTarget, PlayerType, SlotType } from '../../game';
-import { SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class LisiasAppeal extends TrainerCard {
 
@@ -51,13 +51,14 @@ export class LisiasAppeal extends TrainerCard {
       // - Switched opponent Active to chosen target and then added Confused.
       //
       // Converted to prefab version (SWITCH_IN_OPPONENT_BENCHED_POKEMON).
-      return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, {
+      SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, {
         allowCancel: false,
         blocked,
         onSwitched: () => {
           opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
         }
       });
+      CLEAN_UP_SUPPORTER(effect, player);
     }
     return state;
   }

@@ -142,7 +142,7 @@ import {
   SkarmoryEx2,
 } from './other-prints';
 
-export const setXAndY: Card[] = [
+export const setXY: Card[] = [
   // Pokemon
   new Aegislash(),
   new Aegislash2(),

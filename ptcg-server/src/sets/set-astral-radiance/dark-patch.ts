@@ -8,7 +8,7 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { SlotType } from '../../game/store/actions/play-card-action';
-import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON } from '../../game/store/prefabs/prefabs';
+import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class DarkPatch extends TrainerCard {
 
@@ -60,7 +60,7 @@ export class DarkPatch extends TrainerCard {
        * - manually cleaned up trainer slot after prompt resolution
        */
       // Converted to prefab version (ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON).
-      return ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
+      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
         store,
         state,
         player,
@@ -74,9 +74,9 @@ export class DarkPatch extends TrainerCard {
           allowCancel: false
         }
       );
+      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;
   }
-
 }

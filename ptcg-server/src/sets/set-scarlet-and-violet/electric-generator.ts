@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, SlotType, Player } from '../../game';
-import { LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
 
 export class ElectricGenerator extends TrainerCard {
 
@@ -74,7 +74,7 @@ export class ElectricGenerator extends TrainerCard {
        * - manually returned remaining cards to deck and shuffled
        */
       // Converted to prefab version (LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY).
-      return LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY(
+      LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY(
         store,
         state,
         player,
@@ -87,7 +87,9 @@ export class ElectricGenerator extends TrainerCard {
           remainderDestination: 'shuffle'
         }
       );
+      CLEAN_UP_SUPPORTER(effect, player);
     }
+
     return state;
   }
 }

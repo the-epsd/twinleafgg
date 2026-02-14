@@ -23,7 +23,6 @@ import { Popplio } from './popplio';
 import { Primarina } from './primarina';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
-import { Repel } from './repel';
 import { RotomDex } from './rotom-dex';
 import { Rowlet } from './rowlet';
 import { Snubbull } from './snubbull';
@@ -34,7 +33,7 @@ import { Vikavolt } from './vikavolt';
 import { Wishiwashi } from './wishiwashi';
 import { Dartrix } from './dartrix';
 import { DarknessEnergy, FairyEnergy, FightingEnergy, FireEnergy, GrassEnergy, LightningEnergy, MetalEnergy, PsychicEnergy, WaterEnergy } from './basic-energies';
-
+import { Repel } from './repel';
 
 export const setSunAndMoon: Card[] = [
   new AlolanGrimer(),
