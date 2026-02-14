@@ -7,7 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
-import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DrawCardForTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Luvdisc extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,7 +40,7 @@ export class Luvdisc extends PokemonCard {
   public fullName: string = 'Luvdisc FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: BeginTurnEffect throw pattern (skips beginning-of-turn draw without skipping turn)
+    // Ref: DrawCardForTurnEffect throw pattern (blocks draw-for-turn without affecting other begin-turn effects)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -53,8 +53,7 @@ export class Luvdisc extends PokemonCard {
     }
 
     // Block the opponent's beginning-of-turn draw
-    // Ref: BeginTurnEffect fires before the draw; throwing skips the draw but allows the turn to continue
-    if (effect instanceof BeginTurnEffect) {
+    if (effect instanceof DrawCardForTurnEffect) {
       if (effect.player.marker.hasMarker(this.BLOCK_DRAW_MARKER, this)) {
         effect.player.marker.removeMarker(this.BLOCK_DRAW_MARKER, this);
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
