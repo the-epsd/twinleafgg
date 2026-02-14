@@ -794,3 +794,32 @@ Example:
 // TODO: "Treat all opponent coin flips as tails" is not currently implementable in the engine.
 // See also: set-plasma-freeze/cofagrigus-2.ts (same limitation)
 ```
+
+---
+
+## Common Gotchas
+
+### "You may" vs mandatory actions
+- **"Move an Energy"** / **"Switch your opponent's Pokemon"** = mandatory (`min: 1, allowCancel: false`)
+- **"You may switch"** / **"you may draw"** = optional (use `ConfirmPrompt` before the action, or `min: 0`)
+- Example mistake: Coding an optional switch as mandatory (missing `ConfirmPrompt`), or a mandatory energy move as optional (`min: 0`)
+
+### Damage `=` vs `+=` for "X+" cards
+When a card has `damageCalculation: '+'` (printed as e.g. "10+"), the `effect.damage` already contains the base damage value. Always use `+=` for the bonus, never `=`:
+```typescript
+// CORRECT: preserves base damage
+effect.damage += 50 * energyCount;
+
+// WRONG: overwrites base damage (gives 0 when energyCount is 0)
+effect.damage = 50 * energyCount;
+```
+
+### Damage reduction: use `Math.max(0, ...)`
+When reducing damage, always use `Math.max(0, ...)` to prevent negative damage values (which could cause unintended healing):
+```typescript
+// CORRECT: prevents negative damage
+effect.damage = Math.max(0, effect.damage - 20);
+
+// RISKY: could go negative if attack does less than 20
+effect.damage -= 20;
+```
