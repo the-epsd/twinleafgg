@@ -18,6 +18,7 @@ import { MaxElixir } from './max-elixir';
 import { Phantump } from './phantump';
 import { PuzzleOfTime } from './puzzle-of-time';
 import { ReverseValley } from './reverse-valley';
+import { Slowbro } from './slowbro';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
 import { Sudowoodo } from './sudowoodo';
@@ -42,6 +43,7 @@ export const setBreakpoint: Card[] = [
   new Phantump(),
   new PuzzleOfTime(),
   new ReverseValley(),
+  new Slowbro(),
   new SplashEnergy(),
   new Staryu(),
   new Sudowoodo(),

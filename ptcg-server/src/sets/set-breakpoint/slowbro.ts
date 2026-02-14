@@ -1,41 +1,37 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameWinner } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { endGame } from '../../game/store/effect-reducers/check-effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-export class NsSigilyph extends PokemonCard {
+export class Slowbro extends PokemonCard {
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Slowpoke';
+  public cardType: CardType = W;
+  public hp: number = 100;
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
-  public tags = [CardTag.NS];
-  public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
-  public hp: number = 110;
-  public weakness = [{ type: L }];
-  public resistance = [{ type: F, value: -30 }];
-  public retreat = [C];
+  public attacks = [{
+    name: 'Careless Head',
+    cost: [W],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 50 more damage.'
+  },
+  {
+    name: 'Walk-Off Homer',
+    cost: [C, C, C],
+    damage: 0,
+    text: 'If you use this attack when you have only 1 Prize card left, you win this game.'
+  }];
 
-  public attacks = [
-    {
-      name: 'Psychic Sphere',
-      cost: [P],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Victory Symbol',
-      cost: [P, C, C],
-      damage: 0,
-      text: 'If you use this attack when you have exactly 1 Prize card remaining, you win this game. '
-    }
-  ];
-
-  public regulationMark = 'I';
-  public set: string = 'JTG';
+  public set: string = 'BKP';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '64';
-  public name: string = 'N\'s Sigilyph';
-  public fullName: string = 'N\'s Sigilyph JTG';
+  public setNumber: string = '20';
+  public name: string = 'Slowbro';
+  public fullName: string = 'Slowbro BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
