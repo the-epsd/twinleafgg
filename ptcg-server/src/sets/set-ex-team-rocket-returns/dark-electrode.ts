@@ -132,12 +132,6 @@ export class DarkElectrode extends PokemonCard {
               }
             });
 
-            cardList.cards.forEach(em => {
-              if (cardList.getPokemons().includes(em as PokemonCard)) {
-                blockedCards.push(em);
-              }
-            });
-
             const blocked: number[] = [];
             blockedCards.forEach(bc => {
               const index = cardList.cards.indexOf(bc);
