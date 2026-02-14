@@ -49,14 +49,14 @@ export class SeismitoadEx extends PokemonCard {
 
   public setNumber: string = '20';
 
-  public readonly QUAKING_PUNCH_MAREKER = 'QUAKING_PUNCH_MAREKER';
+  public readonly QUAKING_PUNCH_MARKER = 'QUAKING_PUNCH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.QUAKING_PUNCH_MAREKER, this);
+      opponent.marker.addMarker(this.QUAKING_PUNCH_MARKER, this, 'attack', 'player');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -88,13 +88,13 @@ export class SeismitoadEx extends PokemonCard {
 
     if (effect instanceof PlayItemEffect) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.QUAKING_PUNCH_MAREKER, this)) {
+      if (player.marker.hasMarker(this.QUAKING_PUNCH_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.QUAKING_PUNCH_MAREKER, this);
+      effect.player.marker.removeMarker(this.QUAKING_PUNCH_MARKER, this);
     }
 
     return state;
