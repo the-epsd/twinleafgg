@@ -3,10 +3,12 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, PlayerType, SlotType,
-  MoveEnergyPrompt, StateUtils, PokemonCardList } from '../../game';
+import {
+  PowerType, StoreLike, State, PlayerType, SlotType,
+  MoveEnergyPrompt, StateUtils, PokemonCardList
+} from '../../game';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
-import {HealTargetEffect} from '../../game/store/effects/attack-effects';
+import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 
 
 export class Shaymin extends PokemonCard {
@@ -21,7 +23,7 @@ export class Shaymin extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Celebration Wind',
@@ -34,7 +36,7 @@ export class Shaymin extends PokemonCard {
   public attacks = [
     {
       name: 'Energy Bloom',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 30,
       text: 'Remove 3 damage counters from each of your Pokemon that has ' +
         'any Energy attached to it.'
@@ -59,7 +61,7 @@ export class Shaymin extends PokemonCard {
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
-          powerType: PowerType.ABILITY,
+          powerType: PowerType.POKEPOWER,
           text: ''
         }, this);
         store.reduceEffect(state, stub);
@@ -71,7 +73,7 @@ export class Shaymin extends PokemonCard {
         effect.player.id,
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: true }
       ), transfers => {
