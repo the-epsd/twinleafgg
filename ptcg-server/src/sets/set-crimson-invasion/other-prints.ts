@@ -12,6 +12,11 @@ import { CounterEnergy as CounterEnergyCIN100 } from '../set-crimson-invasion/co
 import { WarpEnergySF } from '../set-stormfront/other-prints';
 import { WaterEnergy } from '../set-base-set-energy/water-energy';
 import { Regigigas as RegigigasCIN84 } from '../set-crimson-invasion/regigigas';
+import { GyaradosGx } from './gyarados-gx';
+import { AlolanGolemGx } from './alolan-golem-gx';
+import { NihilegoGx } from './nihilego-gx';
+import { AlolanExeggutorGx } from './alolan-exeggutor-gx';
+import { Olivia } from '../set-burning-shadows/olivia';
 export class SilvallyGXCIN extends SilvallyGX {
   public setNumber = '90';
   public fullName: string = 'Silvally-GX CIN';
@@ -124,4 +129,58 @@ export class Regigigas2CIN extends RegigigasCIN84 {
   public setNumber = '84a';
   public fullName: string = 'Regigigas2 CIN';
   public set = 'CIN';
+}
+
+export class GyaradosGx2 extends GyaradosGx {
+  public set: string = 'CIN';
+  public setNumber: string = '101';
+  public fullName: string = 'Gyarados-GX CIN 101';
+}
+
+export class AlolanGolemGx2 extends AlolanGolemGx {
+  public set: string = 'CIN';
+  public setNumber: string = '102';
+  public fullName: string = 'Alolan Golem-GX CIN 102';
+}
+
+export class NihilegoGx2 extends NihilegoGx {
+  public set: string = 'CIN';
+  public setNumber: string = '103';
+  public fullName: string = 'Nihilego-GX CIN 103';
+}
+
+export class AlolanExeggutorGx2 extends AlolanExeggutorGx {
+  public set: string = 'CIN';
+  public setNumber: string = '107';
+  public fullName: string = 'Alolan Exeggutor-GX CIN 107';
+}
+
+export class OliviaCIN extends Olivia {
+  public set: string = 'CIN';
+  public setNumber: string = '111';
+  public fullName: string = 'Olivia CIN';
+}
+
+export class GyaradosGx3 extends GyaradosGx {
+  public set: string = 'CIN';
+  public setNumber: string = '112';
+  public fullName: string = 'Gyarados-GX CIN 112';
+}
+
+export class AlolanGolemGx3 extends AlolanGolemGx {
+  public set: string = 'CIN';
+  public setNumber: string = '113';
+  public fullName: string = 'Alolan Golem-GX CIN 113';
+}
+
+export class NihilegoGx3 extends NihilegoGx {
+  public set: string = 'CIN';
+  public setNumber: string = '114';
+  public fullName: string = 'Nihilego-GX CIN 114';
+}
+
+export class AlolanExeggutorGx3 extends AlolanExeggutorGx {
+  public set: string = 'CIN';
+  public setNumber: string = '118';
+  public fullName: string = 'Alolan Exeggutor-GX CIN 118';
 }
