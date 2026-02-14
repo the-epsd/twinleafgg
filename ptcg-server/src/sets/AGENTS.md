@@ -622,3 +622,31 @@ if (player.active.cards[0] === this) { ... }
 // CORRECT: Gets the topmost Pokemon card
 if (player.active.getPokemonCard() === this) { ... }
 ```
+
+### Effect intercepts MUST verify `getPokemonCard() === this`
+
+When intercepting effects like `DealDamageEffect`, `PutDamageEffect`, or `PutCountersEffect` for a specific Pokemon, always verify BOTH that the card is in the target AND that it's the active (top) Pokemon:
+
+```typescript
+// WRONG: Triggers even if this card is under an evolution
+if (effect.target.cards.includes(this)) { ... }
+
+// CORRECT: Ensures this card is the current Pokemon
+if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) { ... }
+```
+
+Reference: `set-unified-minds/sewaddle.ts`
+
+### Boolean flags for AfterAttackEffect MUST have EndTurnEffect cleanup
+
+When using a boolean flag (e.g., `this.usedAttack = true`) to coordinate between `WAS_ATTACK_USED` and `AfterAttackEffect`, always add an `EndTurnEffect` cleanup block to reset the flag. If the `AfterAttackEffect` handler is skipped for any reason, the flag persists to the next turn:
+
+```typescript
+if (effect instanceof EndTurnEffect) {
+  this.usedAttack = false;
+}
+```
+
+### Generator trainers: never call `next()` outside of prompt callbacks
+
+In generator-pattern Supporter/Item cards, only call `next()` (which calls `generator.next()`) from inside prompt callbacks. Calling `next()` synchronously in an `else` branch while the generator is already running causes `TypeError: Generator is already running`. If a `yield` is conditional, let the generator flow naturally without an else branch. Reference: Shauna XY pattern.

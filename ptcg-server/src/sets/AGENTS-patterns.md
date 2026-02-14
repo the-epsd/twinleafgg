@@ -160,12 +160,28 @@ opponent.bench.forEach(benched => {
 
 ### Damage Counters (not "damage")
 
+**CRITICAL DISTINCTION:** "Put X damage counters" and "does X damage" are DIFFERENT mechanics:
+- **"does X damage to 1 of your opponent's Pokemon"** → Uses `THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON` (applies W/R for active via `DealDamageEffect`, bypasses for bench via `PutDamageEffect`)
+- **"Put X damage counters on 1 of your opponent's Pokemon"** → Use manual `PutCountersEffect` pattern below (bypasses W/R for ALL targets including active)
+
 ```typescript
 // Put X damage counters = X * 10 damage
 PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(3, store, state, effect);  // 30 damage
 
 // Distribute damage counters
 PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(5, store, state, effect);  // 50 damage total
+
+// Put X damage counters on 1 of your opponent's Pokemon (choosing any, including active)
+// Reference: set-triumphant/gastly.ts (Sneaky Placement)
+store.prompt(state, new ChoosePokemonPrompt(
+  player.id, GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+  PlayerType.TOP_PLAYER, [SlotType.ACTIVE, SlotType.BENCH],
+  { min: 1, max: 1, allowCancel: false }
+), selected => {
+  const damageEffect = new PutCountersEffect(effect, 10);  // 1 damage counter = 10
+  damageEffect.target = selected[0];
+  store.reduceEffect(state, damageEffect);
+});
 ```
 
 **Import:** `from '../../game/store/prefabs/attack-effects'`
