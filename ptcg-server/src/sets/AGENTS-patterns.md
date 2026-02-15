@@ -847,3 +847,27 @@ effect.damage = Math.max(0, effect.damage - 20);
 // RISKY: could go negative if attack does less than 20
 effect.damage -= 20;
 ```
+
+### Energy counting: `.length` vs `.reduce()` for energyMap
+When counting energy attached to a Pokemon, there are two different approaches depending on what you need:
+
+```typescript
+// Count energy CARDS (number of energy card objects):
+checkEnergy.energyMap.length
+
+// Count total energy PROVIDED (accounts for multi-energy cards like DCE):
+checkEnergy.energyMap.reduce((total, p) => total + p.provides.length, 0)
+```
+
+**IMPORTANT:** For card text like "for each Energy attached" or "+X damage for each Energy", always use `.reduce()` since Double Colorless and other multi-energy cards provide 2+ energy from a single card.
+
+### Retreat cost type filtering
+When card text references specific types in retreat cost:
+
+```typescript
+// "for each Colorless in Retreat Cost" - filter for Colorless only:
+checkRetreat.cost.filter(c => c === CardType.COLORLESS).length
+
+// "for each Energy in Retreat Cost" - count all:
+checkRetreat.cost.length
+```
