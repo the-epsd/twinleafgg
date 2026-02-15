@@ -21,14 +21,14 @@ export class Primeape extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     },
     {
       name: 'Karate Chop',
       cost: [F, F],
       damage: 80,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'Does 80 damage minus 10 damage for each damage counter on this Pokémon.'
     }
   ];

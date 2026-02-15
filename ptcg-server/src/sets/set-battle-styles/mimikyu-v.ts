@@ -35,7 +35,7 @@ export class MimikyuV extends PokemonCard {
     {
       name: 'Jealous Eyes',
       cost: [CardType.PSYCHIC],
-      damage: 30,
+      damage: 0,
       text: 'Put 3 damage counters on your opponent\'s Active Pokémon ' +
         'for each Prize card your opponent has taken. '
     }

@@ -22,7 +22,7 @@ export class Beartic extends PokemonCard {
       name: 'Powerful Rage',
       cost: [W, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 20 damage times the number of damage counters on this Pokémon.'
     },
     {

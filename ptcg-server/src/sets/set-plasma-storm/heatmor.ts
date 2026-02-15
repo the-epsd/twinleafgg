@@ -28,7 +28,7 @@ export class Heatmor extends PokemonCard {
       name: 'Fiery Licks',
       cost: [R, R, R],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard the top 4 cards of your deck. This attack does 50 damage times the number of [R] Energy cards discarded.'
     }
   ];

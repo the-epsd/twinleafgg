@@ -81,12 +81,6 @@ export class Electrode extends PokemonCard {
               }
             });
 
-            cardList.cards.forEach(c => {
-              if (cardList.getPokemons().includes(c as PokemonCard)) {
-                blockedCards.push(c);
-              }
-            });
-
             const blocked: number[] = [];
             blockedCards.forEach(bc => {
               const index = cardList.cards.indexOf(bc);

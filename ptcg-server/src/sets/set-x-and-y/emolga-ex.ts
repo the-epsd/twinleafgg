@@ -33,7 +33,7 @@ export class EmolgaEx extends PokemonCard {
       name: 'Electron Crush',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
     }
   ];

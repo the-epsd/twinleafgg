@@ -4,64 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GameLog, GameMessage, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { Attack } from '../../game/store/card/pokemon-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { ChooseAttackPrompt } from '../../game/store/prompts/choose-attack-prompt';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-
-function* useFoulPlay(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const pokemonCard = opponent.active.getPokemonCard();
-
-  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-    return state;
-  }
-
-  let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [pokemonCard],
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
-
-  const attack: Attack | null = selected;
-
-  if (attack === null) {
-    return state;
-  }
-
-  if (attack.copycatAttack === true) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
-
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COPY_OPPONENT_ACTIVE_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ZoroarkBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -87,12 +33,10 @@ export class ZoroarkBreak extends PokemonCard {
   public name: string = 'Zoroark BREAK';
   public fullName: string = 'Zoroark BREAK BKT';
 
+  // Ref: set-black-and-white/zoroark.ts (Foul Play)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Foul Play
-    // Ref: set-black-and-white/zoroark.ts (Foul Play - generator pattern for copying opponent's attack)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const generator = useFoulPlay(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      return COPY_OPPONENT_ACTIVE_ATTACK(store, state, effect as AttackEffect);
     }
 
     return state;

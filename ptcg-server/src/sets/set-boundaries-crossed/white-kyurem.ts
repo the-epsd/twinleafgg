@@ -21,14 +21,14 @@ export class WhiteKyurem extends PokemonCard {
       name: 'Damage Rush',
       cost: [R, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
     },
     {
       name: 'Cold Fire',
       cost: [R, W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

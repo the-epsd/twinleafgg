@@ -22,7 +22,7 @@ export class Rhyperior extends PokemonCard {
       name: 'Rock Black',
       cost: [F],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each [F] Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
     },
     {

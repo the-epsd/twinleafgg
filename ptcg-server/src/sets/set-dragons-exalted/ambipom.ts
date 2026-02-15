@@ -17,14 +17,14 @@ export class Ambipom extends PokemonCard {
       name: 'Double Hit',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     },
     {
       name: 'Hand Fling',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 10 damage times the number of cards in your hand.'
     }
   ];

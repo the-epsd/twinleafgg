@@ -24,7 +24,7 @@ export class Braviary extends PokemonCard {
       name: 'Fury Attack',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
     }
   ];

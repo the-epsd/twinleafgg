@@ -21,7 +21,7 @@ export class Makuhita extends PokemonCard {
       name: 'Continuous Slap',
       cost: [F, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
     },
     {

@@ -22,7 +22,7 @@ export class Prinplup extends PokemonCard {
       name: 'Water Splash',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

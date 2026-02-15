@@ -28,7 +28,7 @@ export class Ursaring extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
     }
   ];

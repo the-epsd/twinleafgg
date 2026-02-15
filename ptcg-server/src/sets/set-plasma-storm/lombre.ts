@@ -22,7 +22,7 @@ export class Lombre extends PokemonCard {
       name: 'Jump On',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {

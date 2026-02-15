@@ -28,7 +28,7 @@ export class Maractus extends PokemonCard {
       name: 'Reinforced Needle',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 40 more damage.'
     }
   ];

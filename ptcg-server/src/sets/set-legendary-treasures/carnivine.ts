@@ -22,7 +22,7 @@ export class Carnivine extends PokemonCard {
       name: 'Ambush Bite',
       cost: [G, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage and discard an Energy attached to the Defending Pokémon.'
     }
   ];

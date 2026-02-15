@@ -20,7 +20,7 @@ export class Trubbish3 extends PokemonCard {
       name: 'Tool Drop',
       cost: [P, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 20 damage for each Pokémon Tool card attached to Pokémon in play (both yours and your opponent\'s).'
     }
   ];

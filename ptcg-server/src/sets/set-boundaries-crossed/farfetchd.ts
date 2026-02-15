@@ -22,7 +22,7 @@ export class Farfetchd extends PokemonCard {
       name: 'Hard Swing',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

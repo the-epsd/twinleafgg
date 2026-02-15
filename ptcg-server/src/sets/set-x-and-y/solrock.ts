@@ -20,7 +20,7 @@ export class Solrock extends PokemonCard {
       name: 'Cosmic Spin',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Lunatone is on your Bench, this attack does 30 more damage.'
     },
     {

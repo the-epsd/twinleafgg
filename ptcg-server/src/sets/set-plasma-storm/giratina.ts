@@ -21,7 +21,7 @@ export class Giratina extends PokemonCard {
       name: 'Hex',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If the Defending Pokémon is affected by a Special Condition, this attack does 50 more damage.'
     },
     {

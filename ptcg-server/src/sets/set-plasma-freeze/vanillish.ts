@@ -17,7 +17,7 @@ export class Vanillish extends PokemonCard {
       name: 'Surefire Spin',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
     }
   ];

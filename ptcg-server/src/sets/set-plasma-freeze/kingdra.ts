@@ -18,7 +18,7 @@ export class Kingdra extends PokemonCard {
       name: 'Dragon Vortex',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 20 damage times the number of [W] Energy cards and [L] Energy cards in your discard pile. Then, shuffle all of those cards back into your deck.'
     },
     {

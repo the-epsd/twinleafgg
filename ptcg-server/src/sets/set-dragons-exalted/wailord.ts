@@ -22,7 +22,7 @@ export class Wailord extends PokemonCard {
       name: 'Water Cannon',
       cost: [W],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin. If heads, this attack does 30 damage times the amount of [W] Energy attached to this Pokémon.'
     },
     {

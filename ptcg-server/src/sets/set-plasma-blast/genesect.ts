@@ -23,7 +23,7 @@ export class Genesect extends PokemonCard {
       name: 'Jet Impact',
       cost: [G, G, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

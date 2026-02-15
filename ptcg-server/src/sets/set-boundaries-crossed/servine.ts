@@ -27,7 +27,7 @@ export class Servine extends PokemonCard {
       name: 'Double Slash',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
     }
   ];

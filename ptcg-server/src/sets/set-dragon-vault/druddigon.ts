@@ -23,7 +23,7 @@ export class Druddigon extends PokemonCard {
       name: 'Dragon Tail',
       cost: [R, W, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
     }
   ];

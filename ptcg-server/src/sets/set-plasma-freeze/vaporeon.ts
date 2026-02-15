@@ -25,7 +25,7 @@ export class Vaporeon extends PokemonCard {
       name: 'Gold Breaker',
       cost: [W, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If the Defending Pokémon is a Pokémon-EX, this attack does 50 more damage.'
     }
   ];

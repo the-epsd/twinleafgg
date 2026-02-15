@@ -21,14 +21,14 @@ export class Bibarel extends PokemonCard {
       name: 'Double Headbutt',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     },
     {
       name: 'Hypno Headbutt',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 30 more damage. If you do, this Pokémon is now Asleep.'
     }
   ];

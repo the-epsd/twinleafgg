@@ -29,7 +29,7 @@ export class Leavanny extends PokemonCard {
       name: 'Leaf Blade',
       cost: [G, G, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

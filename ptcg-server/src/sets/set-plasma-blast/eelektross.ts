@@ -18,14 +18,14 @@ export class Eelektross extends PokemonCard {
       name: 'Crush and Burn',
       cost: [L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard as many Energy attached to your Pok\u00e9mon as you like. This attack does 30 damage times the number of Energy cards you discarded.'
     },
     {
       name: 'Thunder Tempest',
       cost: [L, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
     }
   ];

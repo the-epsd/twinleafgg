@@ -22,7 +22,7 @@ export class Rufflet extends PokemonCard {
       name: 'Incessant Peck',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     }
   ];

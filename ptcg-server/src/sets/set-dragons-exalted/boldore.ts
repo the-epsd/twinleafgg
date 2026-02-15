@@ -19,7 +19,7 @@ export class Boldore extends PokemonCard {
       name: 'Rock Cannon',
       cost: [F],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
     },
     {

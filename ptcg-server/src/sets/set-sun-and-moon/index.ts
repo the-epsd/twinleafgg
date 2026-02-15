@@ -120,11 +120,11 @@ import { PoisonBarb } from './poison-barb';
 import { ProfessorKukui } from './professor-kukui';
 import { RareCandy } from './rare-candy';
 import { Repel } from './repel';
+import { RainbowEnergy } from './rainbow-energy';
 import { RotomDex } from './rotom-dex';
 import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
-import { GrassEnergy } from './basic-energies';
-import { RainbowEnergy } from './rainbow-energy';
+import { DarknessEnergy, FairyEnergy, FightingEnergy, FireEnergy, GrassEnergy, LightningEnergy, MetalEnergy, PsychicEnergy, WaterEnergy } from './basic-energies';
 
 import {
   DoubleColorlessEnergySUM,
@@ -165,7 +165,7 @@ import {
   LunalaGx3,
   UmbreonGx3,
   SolgaleoGx3,
-  GumshoosGx3,
+  GumssoosGx3,
 } from './other-prints';
 
 export const setSunAndMoon: Card[] = [
@@ -300,6 +300,14 @@ export const setSunAndMoon: Card[] = [
 
   // Energy
   new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
+  new FairyEnergy(),
   new RainbowEnergy(),
 
   // Other Prints (Reprints & Alt Arts)

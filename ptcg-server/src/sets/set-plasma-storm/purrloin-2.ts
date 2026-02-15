@@ -28,7 +28,7 @@ export class Purrloin2 extends PokemonCard {
       name: 'Fasten Claws',
       cost: [D, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

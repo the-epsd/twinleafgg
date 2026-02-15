@@ -21,7 +21,7 @@ export class Timburr extends PokemonCard {
       name: 'Pummel',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

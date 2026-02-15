@@ -322,6 +322,135 @@ export function COPY_BENCH_ATTACK(
   return generator.next().value;
 }
 
+/**
+ * "Choose 1 of your opponent's Active Pokemon's attacks and use it as this attack."
+ * Used by: Zoroark (Foul Play), Krookodile (Foul Play), Mew ex (Genome Hacking), etc.
+ */
+function* copyOpponentActiveAttackGenerator(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  const pokemonCard = opponent.active.getPokemonCard();
+
+  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+    return state;
+  }
+
+  let selected: any;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [pokemonCard],
+    { allowCancel: false }
+  ), result => {
+    selected = result;
+    next();
+  });
+
+  const attack: Attack | null = selected;
+
+  if (attack === null || attack.copycatAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: attack.name
+  });
+
+  const attackEffect = new AttackEffect(player, opponent, attack);
+  state = store.reduceEffect(state, attackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  return state;
+}
+
+export function COPY_OPPONENT_ACTIVE_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): State {
+  const generator = copyOpponentActiveAttackGenerator(() => generator.next(), store, state, effect);
+  return generator.next().value;
+}
+
+/**
+ * "If your opponent's Pokemon used an attack during their last turn, use it as this attack."
+ * Used by: Mimikyu (Copycat), Sudowoodo (Watch and Learn), etc.
+ */
+function* copyOpponentsLastAttackGenerator(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const lastAttackInfo = state.playerLastAttack[opponent.id];
+
+  if (!lastAttackInfo) {
+    return state;
+  }
+
+  const { attack: lastAttack, sourceCard } = lastAttackInfo;
+
+  if (lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: lastAttack.name
+  });
+
+  const copiedAttackEffect = new AttackEffect(player, opponent, lastAttack);
+  copiedAttackEffect.source = player.active;
+  copiedAttackEffect.target = opponent.active;
+
+  // Call the source card's reduceEffect directly so attack logic runs even if card is not in play
+  state = sourceCard.reduceEffect(store, state, copiedAttackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (copiedAttackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  const afterAttackEffect = new AfterAttackEffect(player, opponent, lastAttack);
+  state = store.reduceEffect(state, afterAttackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  return state;
+}
+
+export function COPY_OPPONENTS_LAST_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): State {
+  const generator = copyOpponentsLastAttackGenerator(() => generator.next(), store, state, effect);
+  return generator.next().value;
+}
+
 export interface ToolActiveDamageBonusOptions {
   damageBonus: number;
   sourcePokemonName?: string;

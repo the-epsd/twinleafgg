@@ -29,7 +29,7 @@ export class Starmie extends PokemonCard {
       name: 'Core Splash',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [P] Energy attached to it, this attack does 30 more damage.'
     }
   ];

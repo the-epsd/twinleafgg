@@ -28,7 +28,7 @@ export class Lilligant extends PokemonCard {
       name: 'Magical Leaf',
       cost: [G, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
     }
   ];

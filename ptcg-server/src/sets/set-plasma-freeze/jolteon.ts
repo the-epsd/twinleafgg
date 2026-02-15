@@ -20,7 +20,7 @@ export class Jolteon extends PokemonCard {
       name: 'Pin Missile',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
     },
     {

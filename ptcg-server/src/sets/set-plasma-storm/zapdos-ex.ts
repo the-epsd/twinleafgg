@@ -31,7 +31,7 @@ export class ZapdosEx extends PokemonCard {
       name: 'Powervolt',
       cost: [L, L, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
     }
   ];

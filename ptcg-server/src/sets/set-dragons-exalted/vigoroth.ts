@@ -22,7 +22,7 @@ export class Vigoroth extends PokemonCard {
       name: 'Ambush',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

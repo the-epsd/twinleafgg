@@ -17,7 +17,7 @@ export class Machoke extends PokemonCard {
       name: 'Last-Chance Chop',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pok\u00e9mon\'s remaining HP is 10, this attack does 70 more damage.'
     },
     {

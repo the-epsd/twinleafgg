@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
 
 
 export class BossOrders extends TrainerCard {
@@ -34,7 +34,8 @@ export class BossOrders extends TrainerCard {
       // - Switched opponent Active to chosen Benched target.
       //
       // Converted to prefab version (SWITCH_IN_OPPONENT_BENCHED_POKEMON).
-      return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, effect.player, { allowCancel: false });
+      SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, effect.player, { allowCancel: false });
+      CLEAN_UP_SUPPORTER(effect, effect.player);
     }
     return state;
   }

@@ -29,7 +29,7 @@ export class Lapras extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];

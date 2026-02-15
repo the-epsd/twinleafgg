@@ -26,7 +26,7 @@ export class Houndoom extends PokemonCard {
     name: 'Dark Clamp',
     cost: [D, D, C],
     damage: 70,
-    text: "The Defending Pokémon can\'t retreat during your opponent\'s next turn."
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
   }];
 
   public set: string = 'UD';

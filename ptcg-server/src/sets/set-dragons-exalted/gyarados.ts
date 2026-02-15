@@ -23,7 +23,7 @@ export class Gyarados extends PokemonCard {
       name: 'Swing Around',
       cost: [W, C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     }
   ];

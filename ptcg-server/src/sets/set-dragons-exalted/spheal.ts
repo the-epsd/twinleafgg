@@ -20,7 +20,7 @@ export class Spheal extends PokemonCard {
       name: 'Unstoppable Roll',
       cost: [W, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. If both of them are heads, this attack does 30 more damage.'
     }
   ];

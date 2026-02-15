@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, StoreLike, State } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage, GamePhase, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -46,6 +46,7 @@ export class UmbreonEx extends PokemonCard {
     // Attack 1: Veil of Darkness
     // Ref: set-skyridge/haunter.ts (Shadow Hand)
     if (WAS_ATTACK_USED(effect, 0, this)) {
+      this.usedEndgame = false;
       const player = effect.player;
 
       if (player.hand.cards.length > 0) {
@@ -72,8 +73,25 @@ export class UmbreonEx extends PokemonCard {
       this.usedEndgame = true;
     }
 
-    // Endgame - take 2 more prizes if Mega was KO'd
+    // Endgame - take 2 more prizes only for this card's attacking context.
+    // This mirrors established extra-prize checks in other cards.
     if (effect instanceof KnockOutEffect && this.usedEndgame) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
+      }
+
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard !== this) {
+        return state;
+      }
+
+      if (effect.prizeCount <= 0) {
+        return state;
+      }
+
       this.usedEndgame = false;
       const targetCard = effect.target.getPokemonCard();
 
