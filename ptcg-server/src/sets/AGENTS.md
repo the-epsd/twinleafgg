@@ -824,6 +824,37 @@ REMOVE_MARKER_AT_END_OF_TURN(effect, this.RECURSION_MARKER, this);
 
 Reference: `set-lost-thunder/primarina.ts` (Harmonics)
 
+### `useWhenInPlay` abilities must NOT assume `player.active`
+
+Activated abilities with `useWhenInPlay: true` can be used from **both** the active slot and the bench. Never use `player.active` to reference "this Pokemon" — use `StateUtils.findCardList(state, this)` instead:
+
+```typescript
+// WRONG: Assumes this Pokemon is active
+player.active.damage += 30;
+
+// CORRECT: Works from active or bench
+const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+cardList.damage += 30;
+```
+
+Reference: `set-team-up/incineroar-gx.ts` (Scar Charge)
+
+### `[X] Energy` in card text means basic energy only
+
+When card text says "Discard all [L] Energy" or counts "[W] Energy", always filter with BOTH `provides.includes(CardType.X)` AND `energyType === EnergyType.BASIC`. Without the `EnergyType.BASIC` check, special energy cards that provide the type will incorrectly match:
+
+```typescript
+// WRONG: Matches special energy too
+const lightningEnergy = cards.filter(c => c.provides.includes(CardType.LIGHTNING));
+
+// CORRECT: Basic energy only
+const lightningEnergy = cards.filter(c =>
+  c.provides.includes(CardType.LIGHTNING) && c.energyType === EnergyType.BASIC
+);
+```
+
+Reference: `set-team-up/ampharos-gx.ts` (Impact Bolt)
+
 ### Counting Pokemon with a specific named attack
 
 When card text says "for each of your Pokemon that has [Attack Name]", search the bench and active for Pokemon whose `attacks` array includes the named attack:

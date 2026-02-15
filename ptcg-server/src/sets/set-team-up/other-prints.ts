@@ -25,6 +25,19 @@ import { DarknessEnergy } from '../set-diamond-and-pearl/basic-energies';
 import { MetalEnergy } from '../set-diamond-and-pearl/basic-energies';
 import { FairyEnergy } from '../set-x-and-y/basic-energies';
 import { BrocksGrit } from '../set-evolutions/brocks-grit';
+import { AlolanMarowak } from '../set-forbidden-light/alolan-marowak';
+import { AlolanExeggutor } from '../set-forbidden-light/alolan-exeggutor';
+import { AmpharosGx } from './ampharos-gx';
+import { HoopaGx } from './hoopa-gx';
+import { IncineroarGx } from './incineroar-gx';
+import { LatiasAndLatiosGx } from './latias-and-latios-gx';
+import { Dana } from './dana';
+import { Evelyn } from './evelyn';
+import { Morgan } from './morgan';
+import { Nanu } from './nanu';
+import { Nita } from './nita';
+import { SabrinasSuggestion } from './sabrinas-suggestion';
+import { Electrocharger } from './electrocharger';
 
 export class BrocksGritTEU extends BrocksGrit {
   public fullName = 'Brock\'s Grit TEU';
@@ -239,4 +252,112 @@ export class FairyEnergyTEU extends FairyEnergy {
   public setNumber = 'Y';
   public fullName: string = 'Fairy Energy TEU';
   public set = 'TEU';
+}
+
+export class AlolanMarowakTEU extends AlolanMarowak {
+  public set: string = 'TEU';
+  public setNumber: string = '64';
+  public fullName: string = 'Alolan Marowak TEU';
+}
+
+export class AlolanExeggutorTEU extends AlolanExeggutor {
+  public set: string = 'TEU';
+  public setNumber: string = '114';
+  public fullName: string = 'Alolan Exeggutor TEU';
+}
+
+export class AmpharosGx2 extends AmpharosGx {
+  public set: string = 'TEU';
+  public setNumber: string = '163';
+  public fullName: string = 'Ampharos-GX TEU 163';
+}
+
+export class HoopaGx2 extends HoopaGx {
+  public set: string = 'TEU';
+  public setNumber: string = '166';
+  public fullName: string = 'Hoopa-GX TEU 166';
+}
+
+export class IncineroarGx2 extends IncineroarGx {
+  public set: string = 'TEU';
+  public setNumber: string = '167';
+  public fullName: string = 'Incineroar-GX TEU 167';
+}
+
+export class LatiasAndLatiosGx2 extends LatiasAndLatiosGx {
+  public set: string = 'TEU';
+  public setNumber: string = '169';
+  public fullName: string = 'Latias & Latios-GX TEU 169';
+}
+
+export class LatiasAndLatiosGx3 extends LatiasAndLatiosGx {
+  public set: string = 'TEU';
+  public setNumber: string = '170';
+  public fullName: string = 'Latias & Latios-GX TEU 170';
+}
+
+export class Dana2 extends Dana {
+  public set: string = 'TEU';
+  public setNumber: string = '173';
+  public fullName: string = 'Dana TEU 173';
+}
+
+export class Evelyn2 extends Evelyn {
+  public set: string = 'TEU';
+  public setNumber: string = '175';
+  public fullName: string = 'Evelyn TEU 175';
+}
+
+export class Morgan2 extends Morgan {
+  public set: string = 'TEU';
+  public setNumber: string = '178';
+  public fullName: string = 'Morgan TEU 178';
+}
+
+export class Nanu2 extends Nanu {
+  public set: string = 'TEU';
+  public setNumber: string = '179';
+  public fullName: string = 'Nanu TEU 179';
+}
+
+export class Nita2 extends Nita {
+  public set: string = 'TEU';
+  public setNumber: string = '180';
+  public fullName: string = 'Nita TEU 180';
+}
+
+export class SabrinasSuggestion2 extends SabrinasSuggestion {
+  public set: string = 'TEU';
+  public setNumber: string = '181';
+  public fullName: string = 'Sabrina\'s Suggestion TEU 181';
+}
+
+export class AmpharosGx3 extends AmpharosGx {
+  public set: string = 'TEU';
+  public setNumber: string = '185';
+  public fullName: string = 'Ampharos-GX TEU 185';
+}
+
+export class HoopaGx3 extends HoopaGx {
+  public set: string = 'TEU';
+  public setNumber: string = '187';
+  public fullName: string = 'Hoopa-GX TEU 187';
+}
+
+export class IncineroarGx3 extends IncineroarGx {
+  public set: string = 'TEU';
+  public setNumber: string = '188';
+  public fullName: string = 'Incineroar-GX TEU 188';
+}
+
+export class LatiasAndLatiosGx4 extends LatiasAndLatiosGx {
+  public set: string = 'TEU';
+  public setNumber: string = '190';
+  public fullName: string = 'Latias & Latios-GX TEU 190';
+}
+
+export class Electrocharger2 extends Electrocharger {
+  public set: string = 'TEU';
+  public setNumber: string = '193';
+  public fullName: string = 'Electrocharger TEU 193';
 }

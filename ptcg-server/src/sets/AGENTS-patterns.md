@@ -920,3 +920,47 @@ if (effect instanceof BetweenTurnsEffect && this.movedToActiveThisTurn) {
 ```
 
 Reference: `set-lost-thunder/xerneas.ts` (Path of Life)
+
+### "Search for Pokemon with a specific named attack"
+
+When card text says "search for a Pokemon that has the [Attack Name] attack", use a `blocked` array on `ChooseCardsPrompt` to filter out Pokemon without that attack:
+
+```typescript
+const blocked: number[] = [];
+player.deck.cards.forEach((c, index) => {
+  if (!(c instanceof PokemonCard) || !c.attacks.some(a => a.name === 'Nuzzle')) {
+    blocked.push(index);
+  }
+});
+// Pass blocked to ChooseCardsPrompt options
+```
+
+Reference: `set-team-up/emolga.ts` (Nuzzly Gathering)
+
+### "If you have used your GX attack" condition
+
+When card text gives a bonus for having used your GX attack, check `player.usedGX`:
+
+```typescript
+if (player.usedGX) {
+  effect.damage += 70;
+}
+```
+
+Reference: `set-team-up/skarmory.ts` (Calm Strike)
+
+### Trainer Effect Prevention (TrainerTargetEffect)
+
+For abilities like "prevent all effects of Item or Supporter cards done to this Pokemon", intercept `TrainerTargetEffect`:
+
+```typescript
+if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  if (effect.player === opponent && !IS_ABILITY_BLOCKED(store, state, player, this)) {
+    effect.target = undefined; // Nullify the targeting
+  }
+}
+```
+
+Reference: `set-team-up/galvantula.ts` (Unnerve), `set-forbidden-light/pyroar.ts` (Unnerve)
