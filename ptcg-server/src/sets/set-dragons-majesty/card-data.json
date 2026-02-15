@@ -1,0 +1,3648 @@
+[
+  {
+    "id": "sm75-1",
+    "name": "Charmander",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "1"
+  },
+  {
+    "id": "sm75-2",
+    "name": "Charmeleon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "80",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Charmander",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80",
+        "text": "Discard an Energy from this Pok\u00e9mon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Burning Fighter",
+        "text": "When you play this Pok\u00e9mon from your hand to evolve 1 of your Pok\u00e9mon during your turn, you may discard the top 5 cards of your deck. If any of those cards are Fire Energy cards, attach them to this Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "2"
+  },
+  {
+    "id": "sm75-3",
+    "name": "Charizard",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "160",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Charmeleon",
+    "attacks": [
+      {
+        "name": "Fiery Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "130",
+        "text": "Discard an Energy from this Pok\u00e9mon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Resolute Flame",
+        "text": "This Pok\u00e9mon\u2019s attacks do 30 more damage to your opponent\u2019s Active Pok\u00e9mon for each of their Pok\u00e9mon-GX and Pok\u00e9mon-EX in play.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "3"
+  },
+  {
+    "id": "sm75-4",
+    "name": "Torchic",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent\u2019s Active Pok\u00e9mon is now Burned."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "4"
+  },
+  {
+    "id": "sm75-5",
+    "name": "Combusken",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "80",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Torchic",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Natural Cure",
+        "text": "Whenever you attach an Energy card from your hand to this Pok\u00e9mon, remove all Special Conditions from it.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "5"
+  },
+  {
+    "id": "sm75-6",
+    "name": "Blaziken",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "150",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Combusken",
+    "attacks": [
+      {
+        "name": "Fire Stream",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "90",
+        "text": "Discard a Fire Energy from this Pok\u00e9mon. This attack does 20 damage to each of your opponent\u2019s Benched Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Firestarter",
+        "text": "Once during your turn (before your attack), you may attach a Fire Energy card from your discard pile to 1 of your Benched Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "6"
+  },
+  {
+    "id": "sm75-7",
+    "name": "Victini Prism Star",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "Prism Star"
+    ],
+    "hp": "90",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Infinity",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20\u00d7",
+        "text": "This attack does 20 damage for each basic Energy card in your discard pile. Then, shuffle those cards into your deck."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "7"
+  },
+  {
+    "id": "sm75-8",
+    "name": "Darumaka",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Damage Rush",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "10+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "8"
+  },
+  {
+    "id": "sm75-9",
+    "name": "Darmanitan",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "130",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Darumaka",
+    "attacks": [
+      {
+        "name": "Heat Assist",
+        "cost": [
+          "Fire"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Attach up to 3 Fire Energy cards from your hand to your Pok\u00e9mon in any way you like."
+      },
+      {
+        "name": "Darmani-Hands",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "30+",
+        "text": "Flip 4 coins. This attack does 50 more damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "9"
+  },
+  {
+    "id": "sm75-10",
+    "name": "Heatmor",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "110",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned."
+      },
+      {
+        "name": "Charring Breath",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "120",
+        "text": "If your opponent\u2019s Active Pok\u00e9mon isn\u2019t Burned, this attack does nothing."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "10"
+  },
+  {
+    "id": "sm75-11",
+    "name": "Reshiram GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "180",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pok\u00e9mon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "110",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned."
+      },
+      {
+        "name": "Vermilion GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pok\u00e9mon in any way you like. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "11"
+  },
+  {
+    "id": "sm75-12",
+    "name": "Litten",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Fire"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10\u00d7",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "12"
+  },
+  {
+    "id": "sm75-13",
+    "name": "Salandit",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Search your deck for a Basic Pok\u00e9mon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "13"
+  },
+  {
+    "id": "sm75-14",
+    "name": "Salazzle",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "110",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Salandit",
+    "attacks": [
+      {
+        "name": "Ring of Fire",
+        "cost": [
+          "Fire"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned. It can\u2019t retreat during your opponent\u2019s next turn."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "80",
+        "text": "Discard an Energy from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "14"
+  },
+  {
+    "id": "sm75-15",
+    "name": "Horsea",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "40",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Splatter",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent\u2019s Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "15"
+  },
+  {
+    "id": "sm75-16",
+    "name": "Horsea",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "50",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10+",
+        "text": "This attack does 10 more damage times the amount of Water Energy attached to this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "16"
+  },
+  {
+    "id": "sm75-17",
+    "name": "Seadra",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "90",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Horsea",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10+",
+        "text": "This attack does 20 more damage times the amount of Water Energy attached to this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "17"
+  },
+  {
+    "id": "sm75-18",
+    "name": "Kingdra GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "230",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Seadra",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10+",
+        "text": "This attack does 50 more damage times the amount of Water Energy attached to this Pok\u00e9mon."
+      },
+      {
+        "name": "Reverse Thrust",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": "Switch this Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+      },
+      {
+        "name": "Maelstrom GX",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "This attack does 40 damage to each of your opponent\u2019s Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.) (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "18"
+  },
+  {
+    "id": "sm75-19",
+    "name": "Magikarp",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "30",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Water Splash",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "19"
+  },
+  {
+    "id": "sm75-20",
+    "name": "Gyarados",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "160",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Magikarp",
+    "attacks": [
+      {
+        "name": "Wild Tail",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "160",
+        "text": "You may discard any Stadium card in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Commotion",
+        "text": "If this Pok\u00e9mon is your Active Pok\u00e9mon and is damaged by an opponent\u2019s attack (even if this Pok\u00e9mon is Knocked Out), put 2 damage counters on each of your Benched Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "20"
+  },
+  {
+    "id": "sm75-21",
+    "name": "Lapras",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "120",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Aqua Bullet",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "This attack does 20 damage to 1 of your opponent\u2019s Benched Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "70+",
+        "text": "This attack does 10 more damage times the amount of Water Energy attached to this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "21"
+  },
+  {
+    "id": "sm75-22",
+    "name": "Totodile",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Leer",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent\u2019s Active Pok\u00e9mon is now Paralyzed."
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10\u00d7",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "22"
+  },
+  {
+    "id": "sm75-23",
+    "name": "Croconaw",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "90",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Totodile",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Sweep Away",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "90",
+        "text": "Discard the top 3 cards of your deck."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "23"
+  },
+  {
+    "id": "sm75-24",
+    "name": "Feraligatr",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "160",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Croconaw",
+    "attacks": [
+      {
+        "name": "Riptide",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "10+",
+        "text": "This attack does 20 more damage for each Water Energy card in your discard pile. Then, shuffle those cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Downpour",
+        "text": "As often as you like during your turn (before your attack), you may discard a Water Energy card from your hand.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "24"
+  },
+  {
+    "id": "sm75-25",
+    "name": "Wooper",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "25"
+  },
+  {
+    "id": "sm75-26",
+    "name": "Quagsire",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "120",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Wooper",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "60+",
+        "text": "This attack does 20 more damage times the amount of Water Energy attached to this Pok\u00e9mon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wash Out",
+        "text": "As often as you like during your turn (before your attack), you may move a Water Energy from 1 of your Benched Pok\u00e9mon to your Active Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "26"
+  },
+  {
+    "id": "sm75-27",
+    "name": "Corsola",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "90",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Bubble Shoot",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "This attack does 20 damage times the amount of Water Energy attached to this Pok\u00e9mon to 1 of your opponent\u2019s Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "27"
+  },
+  {
+    "id": "sm75-28",
+    "name": "Feebas",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "30",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Submerge",
+        "text": "As long as this Pok\u00e9mon is on your Bench, prevent all damage done to this Pok\u00e9mon by attacks (both yours and your opponent\u2019s).",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "28"
+  },
+  {
+    "id": "sm75-29",
+    "name": "Milotic",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "120",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Feebas",
+    "attacks": [
+      {
+        "name": "Aurora Wave",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Confused."
+      },
+      {
+        "name": "Aqua Split",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "40",
+        "text": "This attack does 40 damage to 2 of your opponent\u2019s Benched Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "29"
+  },
+  {
+    "id": "sm75-30",
+    "name": "Phione",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Murmurs of the Sea",
+        "text": "Your Water Pok\u00e9mon can\u2019t be Confused. If those Pok\u00e9mon are already Confused, remove that Special Condition.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "30"
+  },
+  {
+    "id": "sm75-31",
+    "name": "Wishiwashi",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "30",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Meet Up",
+        "text": "Your Wishiwashi-GX in play get +20 HP, and their attacks do 20 more damage to your opponent\u2019s Active Pok\u00e9mon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "31"
+  },
+  {
+    "id": "sm75-32",
+    "name": "Trapinch",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Mini Earthquake",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "This attack does 10 damage to each of your Benched Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "32"
+  },
+  {
+    "id": "sm75-33",
+    "name": "Hydreigon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "160",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Zweilous",
+    "attacks": [
+      {
+        "name": "Dark Destruction",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "120",
+        "text": "You may discard an Energy from this Pok\u00e9mon. If you do, discard an Energy from your opponent\u2019s Active Pok\u00e9mon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Weed Out",
+        "text": "Once during your turn (before your attack), you may choose 3 of your Benched Pok\u00e9mon. Then, discard your other Benched Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Psychic",
+        "value": "-20"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "33"
+  },
+  {
+    "id": "sm75-34",
+    "name": "Dratini",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Lightning"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent\u2019s Active Pok\u00e9mon is now Paralyzed."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "34"
+  },
+  {
+    "id": "sm75-35",
+    "name": "Dratini",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "35"
+  },
+  {
+    "id": "sm75-36",
+    "name": "Dragonair",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "100",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Dratini",
+    "attacks": [
+      {
+        "name": "Dragon Tail",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "60\u00d7",
+        "text": "Flip 2 coins. This attack does 60 damage for each heads."
+      },
+      {
+        "name": "Waterfall",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "36"
+  },
+  {
+    "id": "sm75-37",
+    "name": "Dragonite GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "250",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Dragonair",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "200",
+        "text": "This Pok\u00e9mon can\u2019t attack during your next turn."
+      },
+      {
+        "name": "Dragonporter GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "",
+        "text": "Put 3 Dragon Pok\u00e9mon from your discard pile onto your Bench. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "37"
+  },
+  {
+    "id": "sm75-38",
+    "name": "Vibrava",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "80",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Trapinch",
+    "attacks": [
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "50",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "38"
+  },
+  {
+    "id": "sm75-39",
+    "name": "Flygon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "140",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Vibrava",
+    "attacks": [
+      {
+        "name": "Sand Tomb",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "110",
+        "text": "The Defending Pok\u00e9mon can\u2019t retreat during your opponent\u2019s next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Guard",
+        "text": "Prevent all effects of your opponent\u2019s attacks, except damage, done to your Dragon Pok\u00e9mon. (Existing effects are not removed.)",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "39"
+  },
+  {
+    "id": "sm75-40",
+    "name": "Altaria",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "80",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Swablu",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fight Song",
+        "text": "Your Dragon Pok\u00e9mon\u2019s attacks do 20 more damage to your opponent\u2019s Active Pok\u00e9mon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "40"
+  },
+  {
+    "id": "sm75-41",
+    "name": "Altaria GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "200",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Swablu",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "50",
+        "text": "During your opponent\u2019s next turn, prevent all damage done to this Pok\u00e9mon by attacks from Pok\u00e9mon-GX and Pok\u00e9mon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "110",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      },
+      {
+        "name": "Euphoria GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Asleep. Heal all damage from all of your Pok\u00e9mon. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "41"
+  },
+  {
+    "id": "sm75-42",
+    "name": "Bagon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Risky Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Dragon Eye",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Asleep."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "42"
+  },
+  {
+    "id": "sm75-43",
+    "name": "Shelgon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "80",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Bagon",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Guard",
+        "text": "If this Pok\u00e9mon has any basic Energy attached to it, it takes 20 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "43"
+  },
+  {
+    "id": "sm75-44",
+    "name": "Salamence GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "250",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Shelgon",
+    "attacks": [
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pok\u00e9mon."
+      },
+      {
+        "name": "Flame Jet GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "",
+        "text": "This attack does 120 damage to 1 of your opponent\u2019s Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.) (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Lift",
+        "text": "Your Pok\u00e9mon in play have no Retreat Cost, except Pok\u00e9mon-GX and Pok\u00e9mon-EX.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "44"
+  },
+  {
+    "id": "sm75-45",
+    "name": "Druddigon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "110",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rough Skin",
+        "text": "If this Pok\u00e9mon is your Active Pok\u00e9mon and is damaged by an opponent\u2019s attack (even if this Pok\u00e9mon is Knocked Out), put 3 damage counters on the Attacking Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "45"
+  },
+  {
+    "id": "sm75-46",
+    "name": "Zekrom",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "130",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "70",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      },
+      {
+        "name": "Bolt Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "150",
+        "text": "Flip a coin. If tails, this Pok\u00e9mon does 50 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "46"
+  },
+  {
+    "id": "sm75-47",
+    "name": "Kyurem",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "130",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on this Pok\u00e9mon."
+      },
+      {
+        "name": "Frost Spear",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "100",
+        "text": "This attack does 20 damage to 1 of your opponent\u2019s Benched Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "47"
+  },
+  {
+    "id": "sm75-48",
+    "name": "White Kyurem GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "190",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "40",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80+",
+        "text": "If this Pok\u00e9mon has any damage counters on it, this attack does 80 more damage."
+      },
+      {
+        "name": "Dragon Nova GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "200",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned and Paralyzed. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "48"
+  },
+  {
+    "id": "sm75-49",
+    "name": "Zygarde",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "130",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Rumble",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "The Defending Pok\u00e9mon can\u2019t retreat during your opponent\u2019s next turn."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "60+",
+        "text": "If this Pok\u00e9mon has any damage counters on it, this attack does 60 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "49"
+  },
+  {
+    "id": "sm75-50",
+    "name": "Turtonator",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "110",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Explosive Jet",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "50\u00d7",
+        "text": "Discard any amount of Fire Energy from your Pok\u00e9mon. This attack does 50 damage for each card you discarded in this way."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "50"
+  },
+  {
+    "id": "sm75-51",
+    "name": "Drampa",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "120",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Dragon Wisdom",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Dragon Pok\u00e9mon."
+      },
+      {
+        "name": "Hyper Voice",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "51"
+  },
+  {
+    "id": "sm75-52",
+    "name": "Jangmo-o",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Rigidify",
+        "cost": [
+          "Lightning"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "During your opponent\u2019s next turn, this Pok\u00e9mon takes 20 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "52"
+  },
+  {
+    "id": "sm75-53",
+    "name": "Hakamo-o",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "90",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Jangmo-o",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": "During your opponent\u2019s next turn, this Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "53"
+  },
+  {
+    "id": "sm75-54",
+    "name": "Kommo-o",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "160",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Hakamo-o",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60",
+        "text": "During your opponent\u2019s next turn, this Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Raging Uppercut",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "90+",
+        "text": "If this Pok\u00e9mon has 8 or more damage counters on it, this attack does 120 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "54"
+  },
+  {
+    "id": "sm75-55",
+    "name": "Kangaskhan",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "120",
+    "types": [
+      "Colorless"
+    ],
+    "attacks": [
+      {
+        "name": "Fetch",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "One-Two Punch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "55"
+  },
+  {
+    "id": "sm75-56",
+    "name": "Swablu",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "50",
+    "types": [
+      "Colorless"
+    ],
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-20"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "56"
+  },
+  {
+    "id": "sm75-57",
+    "name": "Swablu",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "50",
+    "types": [
+      "Colorless"
+    ],
+    "attacks": [
+      {
+        "name": "Sing",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Asleep."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-20"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "57"
+  },
+  {
+    "id": "sm75-58",
+    "name": "Blaine\u2019s Last Stand",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "58",
+    "rules": [
+      "You can play this card only when it is the last card in your hand.\n\nDraw 2 cards for each Fire Pok\u00e9mon you have in play."
+    ]
+  },
+  {
+    "id": "sm75-59",
+    "name": "Dragon Talon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pok\u00e9mon Tool"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "59",
+    "rules": [
+      "If the Dragon Pok\u00e9mon this card is attached to is your Active Pok\u00e9mon and is damaged by an opponent\u2019s attack (even if that Pok\u00e9mon is Knocked Out), put 3 damage counters on the Attacking Pok\u00e9mon."
+    ]
+  },
+  {
+    "id": "sm75-60",
+    "name": "Fiery Flint",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "60",
+    "rules": [
+      "You can play this card only if you discard 2 other cards from your hand.\n\nSearch your deck for up to 4 Fire Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+    ]
+  },
+  {
+    "id": "sm75-61",
+    "name": "Lance Prism Star",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Prism Star",
+      "Supporter"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "61",
+    "rules": [
+      "You can play this card only if 1 of your Pok\u00e9mon was Knocked Out during your opponent\u2019s last turn.\n\nSearch your deck for up to 2 Dragon Pok\u00e9mon and put them onto your Bench. Then, shuffle your deck."
+    ]
+  },
+  {
+    "id": "sm75-62",
+    "name": "Switch Raft",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "62",
+    "rules": [
+      "Switch your Active Water Pok\u00e9mon with 1 of your Benched Pok\u00e9mon. If you do, heal 30 damage from the Pok\u00e9mon you moved to your Bench."
+    ]
+  },
+  {
+    "id": "sm75-63",
+    "name": "Wela Volcano Park",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "63",
+    "rules": [
+      "Whenever a player flips a coin for the Special Condition Burned between turns, that Special Condition isn\u2019t removed even if the result is heads."
+    ]
+  },
+  {
+    "id": "sm75-64",
+    "name": "Zinnia",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "64",
+    "rules": [
+      "You can play this card only if 1 of your Pok\u00e9mon was Knocked Out during your opponent\u2019s last turn.\n\nAttach up to 2 basic Energy cards from your hand to 1 of your Dragon Pok\u00e9mon."
+    ]
+  },
+  {
+    "id": "sm75-65",
+    "name": "Reshiram GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "180",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pok\u00e9mon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "110",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned."
+      },
+      {
+        "name": "Vermilion GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pok\u00e9mon in any way you like. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "65"
+  },
+  {
+    "id": "sm75-66",
+    "name": "Kingdra GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "230",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Seadra",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10+",
+        "text": "This attack does 50 more damage times the amount of Water Energy attached to this Pok\u00e9mon."
+      },
+      {
+        "name": "Reverse Thrust",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": "Switch this Pok\u00e9mon with 1 of your Benched Pok\u00e9mon."
+      },
+      {
+        "name": "Maelstrom GX",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "This attack does 40 damage to each of your opponent\u2019s Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.) (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "66"
+  },
+  {
+    "id": "sm75-67",
+    "name": "Dragonite GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "250",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Dragonair",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "200",
+        "text": "This Pok\u00e9mon can\u2019t attack during your next turn."
+      },
+      {
+        "name": "Dragonporter GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "",
+        "text": "Put 3 Dragon Pok\u00e9mon from your discard pile onto your Bench. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "67"
+  },
+  {
+    "id": "sm75-68",
+    "name": "Altaria GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "200",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Swablu",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "50",
+        "text": "During your opponent\u2019s next turn, prevent all damage done to this Pok\u00e9mon by attacks from Pok\u00e9mon-GX and Pok\u00e9mon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "110",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      },
+      {
+        "name": "Euphoria GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Asleep. Heal all damage from all of your Pok\u00e9mon. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "68"
+  },
+  {
+    "id": "sm75-69",
+    "name": "Blaine\u2019s Last Stand",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "69",
+    "rules": [
+      "You can play this card only when it is the last card in your hand.\n\nDraw 2 cards for each Fire Pok\u00e9mon you have in play."
+    ]
+  },
+  {
+    "id": "sm75-70",
+    "name": "Zinnia",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "70",
+    "rules": [
+      "You can play this card only if 1 of your Pok\u00e9mon was Knocked Out during your opponent\u2019s last turn.\n\nAttach up to 2 basic Energy cards from your hand to 1 of your Dragon Pok\u00e9mon."
+    ]
+  },
+  {
+    "id": "sm75-71",
+    "name": "Reshiram GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "180",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pok\u00e9mon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "110",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned."
+      },
+      {
+        "name": "Vermilion GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pok\u00e9mon in any way you like. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "71"
+  },
+  {
+    "id": "sm75-72",
+    "name": "Altaria GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "200",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Swablu",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "50",
+        "text": "During your opponent\u2019s next turn, prevent all damage done to this Pok\u00e9mon by attacks from Pok\u00e9mon-GX and Pok\u00e9mon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "110",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      },
+      {
+        "name": "Euphoria GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Asleep. Heal all damage from all of your Pok\u00e9mon. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "72"
+  },
+  {
+    "id": "sm75-73",
+    "name": "Salamence GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "250",
+    "types": [
+      "Dragon"
+    ],
+    "evolvesFrom": "Shelgon",
+    "attacks": [
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pok\u00e9mon."
+      },
+      {
+        "name": "Flame Jet GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "",
+        "text": "This attack does 120 damage to 1 of your opponent\u2019s Pok\u00e9mon. (Don\u2019t apply Weakness and Resistance for Benched Pok\u00e9mon.) (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Lift",
+        "text": "Your Pok\u00e9mon in play have no Retreat Cost, except Pok\u00e9mon-GX and Pok\u00e9mon-EX.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "73"
+  },
+  {
+    "id": "sm75-74",
+    "name": "White Kyurem GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "190",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "40",
+        "text": "This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80+",
+        "text": "If this Pok\u00e9mon has any damage counters on it, this attack does 80 more damage."
+      },
+      {
+        "name": "Dragon Nova GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "200",
+        "text": "Your opponent\u2019s Active Pok\u00e9mon is now Burned and Paralyzed. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "74"
+  },
+  {
+    "id": "sm75-75",
+    "name": "Dragon Talon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pok\u00e9mon Tool"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "75",
+    "rules": [
+      "If the Dragon Pok\u00e9mon this card is attached to is your Active Pok\u00e9mon and is damaged by an opponent\u2019s attack (even if that Pok\u00e9mon is Knocked Out), put 3 damage counters on the Attacking Pok\u00e9mon."
+    ]
+  },
+  {
+    "id": "sm75-76",
+    "name": "Fiery Flint",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "76",
+    "rules": [
+      "You can play this card only if you discard 2 other cards from your hand.\n\nSearch your deck for up to 4 Fire Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+    ]
+  },
+  {
+    "id": "sm75-77",
+    "name": "Switch Raft",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "77",
+    "rules": [
+      "Switch your Active Water Pok\u00e9mon with 1 of your Benched Pok\u00e9mon. If you do, heal 30 damage from the Pok\u00e9mon you moved to your Bench."
+    ]
+  },
+  {
+    "id": "sm75-78",
+    "name": "Ultra Necrozma GX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "GX"
+    ],
+    "hp": "190",
+    "types": [
+      "Dragon"
+    ],
+    "attacks": [
+      {
+        "name": "Photon Geyser",
+        "cost": [
+          "Psychic",
+          "Metal"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20+",
+        "text": "Discard all basic Psychic Energy from this Pok\u00e9mon. This attack does 80 more damage for each card you discarded in this way."
+      },
+      {
+        "name": "Sky-Scorching Light GX",
+        "cost": [
+          "Psychic",
+          "Metal"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "",
+        "text": "You can use this attack only if the total of both players\u2019 remaining Prize cards is 6 or less. Put 6 damage counters on each of your opponent\u2019s Pok\u00e9mon. (You can\u2019t use more than 1 GX attack in a game.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fairy",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "set": {
+      "id": "sm75",
+      "name": "Dragon Majesty",
+      "series": "Sun & Moon",
+      "ptcgoCode": "DRM",
+      "releaseDate": "2018/09/07"
+    },
+    "number": "78"
+  }
+]

@@ -336,6 +336,23 @@ Cards like Inkay's "Upside-Down Evolution" that evolve via ability use manual `m
 
 If an ability checks the active Pokemon's state (e.g., "if this Pokemon is Confused"), verify that `this` card is actually in the active slot using `StateUtils.findCardList(state, this)`. Otherwise the ability could trigger from the bench based on a different Pokemon's condition.
 
+### PlayerType convention for forEachPokemon
+
+When calling `opponent.forEachPokemon(...)`, use `PlayerType.TOP_PLAYER` (not `BOTTOM_PLAYER`). While the iteration works either way, the `PlayerType` is embedded in `CardTarget` and should be semantically correct. Use `PlayerType.BOTTOM_PLAYER` only when iterating the current player's own Pokemon.
+
+### BLOCK_RETREAT must return its value
+
+`BLOCK_RETREAT()` returns `State` via `store.reduceEffect`. Always `return BLOCK_RETREAT(...)` — do not call it as a void expression. When combining with other effects in the same attack, apply non-returning effects first, then `return BLOCK_RETREAT(...)`.
+
+### burnFlipResult for stadium effects
+
+The `BetweenTurnsEffect` has a `burnFlipResult` property for stadium cards that modify burn behavior:
+- `undefined` (default): Normal coin flip for burn
+- `true`: Skip the coin flip, burn is NOT removed (heads result forced — burn persists)
+- `false`: Skip the coin flip, treat as tails (extra burn damage applied)
+
+Reference: `set-dragons-majesty/wela-volcano-park.ts`
+
 ### "Opponent can't draw at beginning of next turn" pattern
 
 `DrewTopdeckEffect` fires AFTER the card is already moved from deck to hand, so `preventDefault` does nothing. Instead, intercept `BeginTurnEffect` and throw `GameError(GameMessage.BLOCKED_BY_EFFECT)`. The `initNextTurn` function catches the exception and skips the draw while allowing the turn to proceed. Reference: `set-flashfire/luvdisc.ts` (Heart Wink).

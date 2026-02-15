@@ -64,6 +64,8 @@ Card text from different Pokemon TCG eras uses varying grammar. This reference m
 
 **Import:** `from '../../game/store/prefabs/prefabs'`
 
+> **IMPORTANT: Attack vs Ability sourcing.** The `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_*` prefabs dispatch `AddSpecialConditionsEffect` (attack-sourced). The `ADD_SLEEP_TO_PLAYER_ACTIVE` / `ADD_POISON_TO_PLAYER_ACTIVE` prefabs dispatch `AddSpecialConditionsPowerEffect` (ability-sourced). **Always use the attack-sourced version (`YOUR_OPPPONENTS_*`) inside attack effects**, even for GX attacks. Only use the ability-sourced version (`ADD_*_TO_PLAYER_ACTIVE`) for ability effects. Some cards intercept these differently.
+
 ### Custom Poison/Burn Damage
 
 ```typescript
@@ -748,8 +750,8 @@ When card text says "The Defending Pokemon can't retreat during your opponent's 
 ```typescript
 import { MarkerConstants } from '../../game/store/prefabs/prefabs';
 
-// In WAS_ATTACK_USED block:
-BLOCK_RETREAT(store, state, effect, this);
+// In WAS_ATTACK_USED block (MUST return the result):
+return BLOCK_RETREAT(store, state, effect, this);
 
 // Separate calls (order matters) — MUST use MarkerConstants, not a custom marker:
 BLOCK_RETREAT_IF_MARKER(effect, this, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
@@ -757,6 +759,12 @@ REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEM
 ```
 
 All three calls are needed: `BLOCK_RETREAT` sets `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER` on the defender, `BLOCK_RETREAT_IF_MARKER` intercepts retreat attempts, and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` cleans up.
+
+> **IMPORTANT**: `BLOCK_RETREAT()` returns `State`. You **must** `return` its result. If combining with other effects (e.g., burn + block retreat), apply the non-returning effects first, then `return BLOCK_RETREAT(...)`:
+> ```typescript
+> YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+> return BLOCK_RETREAT(store, state, effect, this);
+> ```
 
 > **WARNING**: Do NOT use a custom marker string (e.g., `this.BLOCK_RETREAT_MARKER`). `BLOCK_RETREAT()` always sets `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER` internally, so `BLOCK_RETREAT_IF_MARKER` and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` must check the same marker. Using a different marker name is a silent failure — retreat will never be blocked.
 
