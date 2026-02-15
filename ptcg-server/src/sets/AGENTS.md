@@ -741,3 +741,52 @@ this.usedInvitingPoison = false;
 ```
 
 Reference: `set-ultra-prism/roserade.ts` (Inviting Poison)
+
+### Status conditions in AfterAttackEffect cannot use status prefabs
+
+The `YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_*` prefabs require an `AttackEffect` parameter. When applying status conditions inside an `AfterAttackEffect` block (e.g., after a gust), do NOT cast `AfterAttackEffect` to `AttackEffect` — they are different classes. Use direct `addSpecialCondition` instead:
+
+```typescript
+// WRONG: Unsafe cast — AfterAttackEffect is NOT an AttackEffect
+YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect as unknown as AttackEffect);
+
+// CORRECT: Direct application
+opponent.active.addSpecialCondition(SpecialCondition.POISONED);
+```
+
+Reference: `set-ultra-prism/roserade.ts` (Inviting Poison)
+
+### "X of your opponent's Pokemon" (including active) targeting
+
+When card text says "X of your opponent's Pokemon" (NOT "Benched Pokemon"), use `ChoosePokemonPrompt` with `[SlotType.ACTIVE, SlotType.BENCH]` + `DAMAGE_OPPONENT_POKEMON`. Do NOT use `THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON` which defaults to bench only.
+
+Reference: `set-dark-explorers/kyogre-ex.ts` (Dual Splash)
+
+### Generator-pattern Supporters require lifecycle management
+
+All generator-pattern Supporters (using `function*` with `yield`) MUST include three lifecycle calls:
+1. `effect.preventDefault = true` — prevents the engine from discarding the card before yields
+2. `player.hand.moveCardTo(effect.trainerCard, player.supporter)` — moves to supporter zone
+3. `CLEAN_UP_SUPPORTER(effect, player)` — moves from supporter zone to discard when done
+
+Non-generator Supporters using `store.prompt()` callbacks are handled automatically.
+
+### `PokemonCardList.moveTo()` does NOT move tools
+
+The `moveTo()` method moves `cards` and `energies` but NOT `tools`. Any effect that shuffles/bounces/discards a Pokemon with "all cards attached to it" needs explicit tool handling:
+
+```typescript
+// Move tools first
+const tools = target.tools.slice();
+tools.forEach(t => { target.moveCardTo(t, destination); });
+// Then move the rest
+target.moveTo(destination);
+```
+
+### `useFromHand: true` vs `useWhenInPlay: true` for abilities
+
+- `useFromHand: true` — abilities that trigger from the player's hand (e.g., "if this Pokemon is in your hand, you may...")
+- `useWhenInPlay: true` — activated abilities that the player clicks to use while the Pokemon is in play
+- Neither flag — passive abilities that intercept effects automatically
+
+Using the wrong flag prevents the ability from working correctly.
