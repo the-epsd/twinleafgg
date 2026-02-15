@@ -807,3 +807,75 @@ target.moveTo(destination);
 - Neither flag — passive abilities that intercept effects automatically
 
 Using the wrong flag prevents the ability from working correctly.
+
+### AttachEnergyEffect interception requires recursion guard
+
+Abilities that intercept `AttachEnergyEffect` to attach additional energy (e.g., "when you attach energy, attach one more") will trigger themselves infinitely. Use a marker-based recursion guard:
+
+```typescript
+public readonly RECURSION_MARKER = 'RECURSION_MARKER';
+
+if (effect instanceof AttachEnergyEffect && !HAS_MARKER(this.RECURSION_MARKER, effect.player, this)) {
+  ADD_MARKER(this.RECURSION_MARKER, effect.player, this);
+  // ... attach additional energy
+}
+REMOVE_MARKER_AT_END_OF_TURN(effect, this.RECURSION_MARKER, this);
+```
+
+Reference: `set-lost-thunder/primarina.ts` (Harmonics)
+
+### Counting Pokemon with a specific named attack
+
+When card text says "for each of your Pokemon that has [Attack Name]", search the bench and active for Pokemon whose `attacks` array includes the named attack:
+
+```typescript
+let count = 0;
+player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+  const pokemonCard = cardList.getPokemonCard();
+  if (pokemonCard && pokemonCard.attacks.some(a => a.name === 'Attack Name')) {
+    count++;
+  }
+});
+```
+
+Reference: `set-lost-thunder/dedenne-2.ts` (Nuzzle Shot), `set-lost-thunder/meloetta.ts` (Miracle Harmony)
+
+### "Prevent all damage" vs "Prevent all effects of attacks"
+
+These are DIFFERENT effects — use the correct intercept:
+
+- **"Prevent all damage"** → Intercept `DealDamageEffect` (set `damage = 0`) AND `PutDamageEffect` (`preventDefault`). Does NOT block status conditions or other non-damage effects.
+- **"Prevent all effects of attacks, including damage"** → Intercept `AbstractAttackEffect` (`preventDefault`). Blocks everything: damage, status, and other effects.
+
+Using `AbstractAttackEffect` when the card only says "prevent all damage" incorrectly blocks status conditions too.
+
+Reference: `set-lost-thunder/lusamine.ts` (damage only), `set-cosmic-eclipse/alolan-persian-gx.ts` (all effects)
+
+### Simple supporters: use `WAS_TRAINER_USED` without generator pattern
+
+Supporters that only draw cards, shuffle, or perform a single action (no multi-step prompts) should NOT use the generator pattern. Just use `WAS_TRAINER_USED` directly:
+
+```typescript
+if (WAS_TRAINER_USED(effect, this)) {
+  const player = effect.player;
+  DRAW_CARDS(player, 3);
+}
+```
+
+Only use the generator pattern (with `effect.preventDefault`, supporter zone management, and `CLEAN_UP_SUPPORTER`) when the card requires multiple sequential prompts (yields).
+
+Reference: `set-lost-thunder/whitney.ts`
+
+### Overly broad ability type check: `powers.length > 0` vs `PowerType.ABILITY`
+
+When card text says "Pokemon that has an Ability", filter specifically for `PowerType.ABILITY`, not just any power:
+
+```typescript
+// WRONG: Matches Poke-Powers, Poke-Bodies, AND Abilities
+sourceCard.powers.length > 0
+
+// CORRECT: Only matches Abilities
+sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)
+```
+
+Reference: `set-lost-thunder/carbink-2.ts` (Wonder Ray)

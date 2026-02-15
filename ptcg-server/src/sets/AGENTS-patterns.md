@@ -879,3 +879,44 @@ checkRetreat.cost.filter(c => c === CardType.COLORLESS).length
 // "for each Energy in Retreat Cost" - count all:
 checkRetreat.cost.length
 ```
+
+### Energy counting on opponent's Pokemon (for "X damage for each Energy attached to opponent")
+
+When counting energy on any Pokemon (yours or opponent's), use `CheckProvidedEnergyEffect` + `.reduce()` to account for multi-energy cards:
+
+```typescript
+const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
+store.reduceEffect(state, checkEnergy);
+const totalEnergy = checkEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+effect.damage = 20 * totalEnergy;
+```
+
+Do NOT count energy cards directly (`.filter(c => c instanceof EnergyCard).length`) — this undercounts DCE and similar multi-energy cards.
+
+Reference: `set-lost-thunder/espeon.ts` (Energy Crush)
+
+### "When this Pokemon is damaged by an attack" abilities
+
+Use the `ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT` prefab for abilities that trigger when the Pokemon takes damage:
+
+```typescript
+if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(effect, this)) {
+  // Effect triggers after being damaged
+}
+```
+
+This handles `AfterDamageEffect` type guard and active slot check.
+
+Reference: `set-lost-thunder/shiinotic.ts`
+
+### "When this Pokemon moves from Bench to Active" abilities
+
+Use the `movedToActiveThisTurn` boolean with marker-based once-per-turn enforcement:
+
+```typescript
+if (effect instanceof BetweenTurnsEffect && this.movedToActiveThisTurn) {
+  // Trigger the ability
+}
+```
+
+Reference: `set-lost-thunder/xerneas.ts` (Path of Life)
