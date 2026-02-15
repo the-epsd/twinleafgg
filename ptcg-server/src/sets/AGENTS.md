@@ -678,3 +678,66 @@ The stub generator may incorrectly set `Stage.BASIC` for evolved Pokemon (especi
 ### Passive abilities: use `IS_ABILITY_BLOCKED` prefab, not manual `PowerEffect` try/catch
 
 For passive abilities that intercept effects (e.g., `PutDamageEffect`, `DealDamageEffect`, `RetreatEffect`), use `IS_ABILITY_BLOCKED(store, state, player, this)` followed by `return state` instead of the manual `try { new PowerEffect(...) } catch { return state }` pattern. The prefab is cleaner and the established preferred pattern.
+
+### Special energy cards MUST check EnergyEffect before providing modified types
+
+Every special energy card that modifies `CheckProvidedEnergyEffect` must first check whether special energy effects are blocked (e.g., by Enhanced Hammer or similar). Without this check, the energy provides its enhanced types even when special energy effects are suppressed.
+
+```typescript
+// In CheckProvidedEnergyEffect handler, BEFORE modifying energyMap:
+try {
+  const energyEffect = new EnergyEffect(effect.player, this);
+  store.reduceEffect(state, energyEffect);
+} catch {
+  return state;
+}
+```
+
+Reference: `set-ultra-prism/super-boost-energy.ts`
+
+### BetweenTurnsEffect: finding the ability owner
+
+`BetweenTurnsEffect` fires for the player whose turn it is. If a passive ability modifies between-turns effects (e.g., burn damage), the handler needs to find its own owner since `effect.player` may not be the ability's owner:
+
+```typescript
+let owner = null;
+[player, opponent].forEach(p => {
+  p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+    if (card === this) owner = p;
+  });
+});
+```
+
+Reference: `set-ultra-prism/infernape.ts` (Flaming Fighter)
+
+### Use `CheckPokemonTypeEffect` for type-based conditionals
+
+Never check `card.cardType` directly for type-conditional effects. Use `CheckPokemonTypeEffect` to get the dynamic type, which accounts for type-changing effects (Memory tools, Delta Pokemon):
+
+```typescript
+const checkType = new CheckPokemonTypeEffect(cardList);
+store.reduceEffect(state, checkType);
+if (checkType.cardTypes.includes(CardType.PSYCHIC)) { ... }
+```
+
+Reference: `set-ultra-prism/bronzong.ts` (Psychic Resonance)
+
+### Gust + Status Condition combo requires AfterAttackEffect
+
+When an attack switches the opponent's active Pokemon AND applies a status condition, the status must be applied in `AfterAttackEffect` (after the switch resolves), not in `WAS_ATTACK_USED`:
+
+```typescript
+// In WAS_ATTACK_USED: set flag + gust
+this.usedInvitingPoison = true;
+GUST_OPPONENT_BENCHED_POKEMON(store, state, player, opponent);
+
+// In AfterAttackEffect: apply status after switch
+if (this.usedInvitingPoison) {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+}
+
+// In EndTurnEffect: cleanup
+this.usedInvitingPoison = false;
+```
+
+Reference: `set-ultra-prism/roserade.ts` (Inviting Poison)

@@ -598,6 +598,14 @@ if (effect instanceof CheckProvidedEnergyEffect) {
     return state;
   }
 
+  // MANDATORY: Check if special energy effects are blocked before modifying
+  try {
+    const energyEffect = new EnergyEffect(effect.player, this);
+    store.reduceEffect(state, energyEffect);
+  } catch {
+    return state;
+  }
+
   // Find this energy in the map and modify what it provides
   effect.energyMap.forEach(em => {
     if (em.card === this) {

@@ -17,6 +17,16 @@ import { EscapeBoard as EscapeBoardUPR122 } from '../set-ultra-prism/escape-boar
 import { UnitEnergyGRW as UnitEnergyGRWUPR137 } from '../set-ultra-prism/unit-energy-grw';
 import { UnitEnergyLPM as UnitEnergyLPMUPR138 } from '../set-ultra-prism/unit-energy-lpm';
 import { Lusamine as LusamineCIN96 } from '../set-crimson-invasion/lusamine';
+import { Dewpider } from '../set-sun-and-moon/dewpider';
+import { LeafeonGx } from './leafeon-gx';
+import { PalkiaGx } from './palkia-gx';
+import { Lana } from '../set-burning-shadows/lana';
+import { Looker } from './looker';
+import { PheromosaGx } from './pheromosa-gx';
+import { XurkitreeGx } from './xurkitree-gx';
+import { CelesteelaGx } from './celesteela-gx';
+import { MissingClover } from './missing-clover';
+import { PeekingRedCard } from '../set-crimson-invasion/peeking-red-card';
 export class CosmoemUPR extends Cosmoem {
   public setNumber = '61';
   public fullName: string = 'Cosmoem UPR';
@@ -177,4 +187,94 @@ export class Lusamine2UPR extends LusamineCIN96 {
   public setNumber = '153a';
   public fullName: string = 'Lusamine2 UPR';
   public set = 'UPR';
+}
+
+export class DewpiderUPR extends Dewpider {
+  public set: string = 'UPR';
+  public setNumber: string = '16';
+  public fullName: string = 'Dewpider UPR';
+}
+
+export class LeafeonGx2 extends LeafeonGx {
+  public set: string = 'UPR';
+  public setNumber: string = '139';
+  public fullName: string = 'Leafeon-GX UPR 139';
+}
+
+export class PalkiaGx2 extends PalkiaGx {
+  public set: string = 'UPR';
+  public setNumber: string = '147';
+  public fullName: string = 'Palkia-GX UPR 147';
+}
+
+export class LanaUPR extends Lana {
+  public set: string = 'UPR';
+  public setNumber: string = '150';
+  public fullName: string = 'Lana UPR';
+}
+
+export class Looker2 extends Looker {
+  public set: string = 'UPR';
+  public setNumber: string = '152';
+  public fullName: string = 'Looker UPR 152';
+}
+
+export class LeafeonGx3 extends LeafeonGx {
+  public set: string = 'UPR';
+  public setNumber: string = '157';
+  public fullName: string = 'Leafeon-GX UPR 157';
+}
+
+export class PheromosaGx2 extends PheromosaGx {
+  public set: string = 'UPR';
+  public setNumber: string = '158';
+  public fullName: string = 'Pheromosa-GX UPR 158';
+}
+
+export class XurkitreeGx2 extends XurkitreeGx {
+  public set: string = 'UPR';
+  public setNumber: string = '160';
+  public fullName: string = 'Xurkitree-GX UPR 160';
+}
+
+export class CelesteelaGx2 extends CelesteelaGx {
+  public set: string = 'UPR';
+  public setNumber: string = '162';
+  public fullName: string = 'Celesteela-GX UPR 162';
+}
+
+export class PalkiaGx3 extends PalkiaGx {
+  public set: string = 'UPR';
+  public setNumber: string = '165';
+  public fullName: string = 'Palkia-GX UPR 165';
+}
+
+export class MissingClover2 extends MissingClover {
+  public set: string = 'UPR';
+  public setNumber: string = '168';
+  public fullName: string = 'Missing Clover UPR 168';
+}
+
+export class PeekingRedCardUPR extends PeekingRedCard {
+  public set: string = 'UPR';
+  public setNumber: string = '169';
+  public fullName: string = 'Peeking Red Card UPR';
+}
+
+export class DewpiderUPR16 extends Dewpider {
+  public set: string = 'UPR';
+  public setNumber: string = '16';
+  public fullName: string = 'Dewpider UPR';
+}
+
+export class LanaUPR150 extends Lana {
+  public set: string = 'UPR';
+  public setNumber: string = '150';
+  public fullName: string = 'Lana UPR';
+}
+
+export class PeekingRedCardUPR169 extends PeekingRedCard {
+  public set: string = 'UPR';
+  public setNumber: string = '169';
+  public fullName: string = 'Peeking Red Card UPR';
 }
