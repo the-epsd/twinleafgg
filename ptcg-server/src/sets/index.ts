@@ -181,6 +181,7 @@ export * from './set-mega-evolution';
 export * from './set-phantasmal-flames';
 export * from './set-ascended-heroes';
 export * from './set-perfect-order';
+export * from './set-chaos-rising';
 
 //TEST
 export * from './set-test';

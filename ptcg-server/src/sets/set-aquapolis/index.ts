@@ -6,6 +6,7 @@ import { Chinchou } from './chinchou';
 import { Chinchou2 } from './chinchou2';
 import { Eevee } from './eevee';
 import { Espeon } from './espeon';
+import { Furret } from './furret';
 import { Gloom } from './gloom';
 import { Horsea } from './horsea';
 import { Kingdra } from './kingdra';
@@ -33,6 +34,7 @@ export const setAquapolis: Card[] = [
   new Chinchou2(),
   new Eevee(),
   new Espeon(),
+  new Furret(),
   new Gloom(),
   new Horsea(),
   new Kingdra(),

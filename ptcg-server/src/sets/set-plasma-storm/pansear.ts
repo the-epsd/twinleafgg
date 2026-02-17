@@ -26,7 +26,7 @@ export class Pansear extends PokemonCard {
       name: 'Double Fire',
       cost: [R, R, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
     }
   ];

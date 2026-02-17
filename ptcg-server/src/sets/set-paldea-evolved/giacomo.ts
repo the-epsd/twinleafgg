@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { StateUtils, CardTarget, PlayerType, EnergyCard, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt } from '../../game';
+import { StateUtils, CardTarget, PlayerType, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt } from '../../game';
 
 export class Giacomo extends TrainerCard {
 
@@ -36,7 +36,7 @@ export class Giacomo extends TrainerCard {
       let hasPokemonWithEnergy = false;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
           hasPokemonWithEnergy = true;
           oppSpecialPokemon++;
         } else {

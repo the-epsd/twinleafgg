@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, EnergyCard } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
@@ -42,7 +42,7 @@ export class Klinklang extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
 
       if (hasEnergy) {
         return store.prompt(state, new ChooseCardsPrompt(

@@ -189,6 +189,7 @@ cardManager.defineSet(sets.setMegaEvolution);
 cardManager.defineSet(sets.setPhantasmalFlames);
 cardManager.defineSet(sets.setAscendedHeroes);
 cardManager.defineSet(sets.setPerfectOrder);
+cardManager.defineSet(sets.setChaosRising);
 
 cardManager.defineSet(sets.setTest);
 
@@ -207,12 +208,12 @@ const botManager = BotManager.getInstance();
 // lugiaBot.setDeck(Format.STANDARD_NIGHTLY, ["Lillie's Clefairy ex JTG", "Team Rocket's Articuno DRI", "Team Rocket's Mewtwo ex DRI", "Team Rocket's Mewtwo ex DRI", "Team Rocket's Mimikyu DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Tarountula DRI", "Team Rocket's Spidops DRI", "Team Rocket's Spidops DRI", "Team Rocket's Spidops DRI", "Team Rocket's Spidops DRI", "Team Rocket's Archer DRI", "Team Rocket's Ariana DRI", "Team Rocket's Ariana DRI", "Team Rocket's Ariana DRI", "Team Rocket's Ariana DRI", "Team Rocket's Giovanni DRI", "Team Rocket's Giovanni DRI", "Team Rocket's Giovanni DRI", "Team Rocket's Petrel DRI", "Team Rocket's Proton DRI", "Team Rocket's Proton DRI", "Earthen Vessel PAR", "Earthen Vessel PAR", "Earthen Vessel PAR", "Energy Switch SVI", "Energy Switch SVI", "Energy Switch SVI", "Energy Switch SVI", "Night Stretcher SFA", "Night Stretcher SFA", "Team Rocket's Great Ball DRI", "Team Rocket's Great Ball DRI", "Team Rocket's Receiver DRI", "Team Rocket's Receiver DRI", "Team Rocket's Receiver DRI", "Team Rocket's Receiver DRI", "Ultra Ball PAF", "Ultra Ball PAF", "Ultra Ball PAF", "Ultra Ball PAF", "Bravery Charm PAL", "Bravery Charm PAL", "Lucky Helmet TWM", "Lucky Helmet TWM", "Maximum Belt TEF", "Team Rocket's Factory DRI", "Team Rocket's Factory DRI", "Team Rocket's Factory DRI", "Grass Energy SVE", "Grass Energy SVE", "Grass Energy SVE", "Psychic Energy SVE", "Psychic Energy SVE", "Team Rocket Energy DRI", "Team Rocket Energy DRI", "Team Rocket Energy DRI", "Team Rocket Energy DRI"]);
 // botManager.registerBot(lugiaBot);
 // botManager.registerBot(new SimpleBot('Dragapult'));
-botManager.registerBot(new SimpleBot('Standard', {}, [Format.STANDARD]));
-botManager.registerBot(new SimpleBot('Standard Nightly', {}, [Format.STANDARD_NIGHTLY]));
-botManager.registerBot(new SimpleBot('Expanded', {}, [Format.EXPANDED]));
-botManager.registerBot(new SimpleBot('GLC', {}, [Format.GLC]));
-botManager.registerBot(new SimpleBot('Retro', {}, [Format.RETRO]));
-botManager.registerBot(new SimpleBot('Theme', {}, [Format.THEME]));
+// botManager.registerBot(new SimpleBot('Standard', {}, [Format.STANDARD]));
+// botManager.registerBot(new SimpleBot('Standard Nightly', {}, [Format.STANDARD_NIGHTLY]));
+// botManager.registerBot(new SimpleBot('Expanded', {}, [Format.EXPANDED]));
+// botManager.registerBot(new SimpleBot('GLC', {}, [Format.GLC]));
+// botManager.registerBot(new SimpleBot('Retro', {}, [Format.RETRO]));
+// botManager.registerBot(new SimpleBot('Theme', {}, [Format.THEME]));
 
 const app = new App();
 

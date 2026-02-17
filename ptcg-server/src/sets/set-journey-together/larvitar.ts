@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt, StateUtils, EnergyCard, Card, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameMessage, CoinFlipPrompt, StateUtils, Card, ChooseCardsPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -40,7 +40,7 @@ export class Larvitar extends PokemonCard {
         if (result === true) {
 
           // Defending Pokemon has no energy cards attached
-          if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+          if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
             return state;
           }
 

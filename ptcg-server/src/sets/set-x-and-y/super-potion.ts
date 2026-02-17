@@ -7,7 +7,7 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
   PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList, Card, ChooseCardsPrompt, EnergyCard
+  PokemonCardList, Card, ChooseCardsPrompt
 } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: CardTarget[] = [];
   let hasPokemonWithDamage: boolean = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.damage === 0 || !cardList.cards.some(c => c instanceof EnergyCard)) {
+    if (cardList.damage === 0 || !cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
       blocked.push(target);
     } else {
       hasPokemonWithDamage = true;

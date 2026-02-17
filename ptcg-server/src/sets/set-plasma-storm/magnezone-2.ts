@@ -28,7 +28,7 @@ export class Magnezone2 extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [L, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -46,7 +46,7 @@ export class Magnezone2 extends PokemonCard {
       const player = effect.player;
 
       const basicEnergyCount = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC
       ).length;
 
       if (basicEnergyCount === 0) {

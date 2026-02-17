@@ -1,4 +1,4 @@
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, Player, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -22,7 +22,7 @@ export class Blowtorch extends TrainerCard {
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
 
-    if (!player.hand.cards.some(c => c instanceof EnergyCard && c.name === 'Fire Energy')) {
+    if (!player.hand.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Fire Energy')) {
       return false;
     }
 
@@ -35,7 +35,7 @@ export class Blowtorch extends TrainerCard {
 
     let specialEnergy = 0;
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-      if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+      if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
         specialEnergy += 1;
       }
     });
@@ -56,7 +56,7 @@ export class Blowtorch extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!player.hand.cards.some(c => c instanceof EnergyCard && c.name === 'Fire Energy')) {
+      if (!player.hand.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Fire Energy')) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -72,7 +72,7 @@ export class Blowtorch extends TrainerCard {
 
       let specialEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
@@ -162,7 +162,7 @@ export class Blowtorch extends TrainerCard {
 
         const specialEnergyBlocked: CardTarget[] = [];
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-          if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+          if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
             return;
           } else {
             specialEnergyBlocked.push(target);

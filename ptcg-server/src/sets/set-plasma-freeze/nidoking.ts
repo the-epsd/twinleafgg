@@ -18,7 +18,7 @@ export class Nidoking extends PokemonCard {
       name: 'Lovestrike',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 40 more damage for each Nidoqueen on your Bench.'
     },
     {

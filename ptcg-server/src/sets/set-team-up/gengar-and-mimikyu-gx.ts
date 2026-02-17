@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, TrainerCard, EnergyCard, GameError, GameMessage } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, SuperType, StoreLike, State, StateUtils, TrainerCard, EnergyCard, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayPokemonEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
@@ -56,7 +56,7 @@ export class GengarMimikyuGX extends PokemonCard {
       opponent.marker.addMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER, this);
 
       const extraEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.provides.includes(CardType.PSYCHIC)
+        card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.PSYCHIC)
       ).length > 1;
 
       if (extraEnergy) {

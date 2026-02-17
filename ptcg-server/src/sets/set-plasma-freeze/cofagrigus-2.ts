@@ -25,7 +25,7 @@ export class Cofagrigus2 extends PokemonCard {
       name: 'Crazy Slap',
       cost: [P, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
     }
   ];

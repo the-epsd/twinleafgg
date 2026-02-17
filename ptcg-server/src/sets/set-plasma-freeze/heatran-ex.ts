@@ -18,14 +18,14 @@ export class HeatranEx extends PokemonCard {
       name: 'Heat Boiler',
       cost: [R, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon is affected by a Special Condition, this attack does 60 more damage.'
     },
     {
       name: 'Dynamite Press',
       cost: [R, R, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 10 more damage for each damage counter on the Defending Pokémon.'
     }
   ];

@@ -1,7 +1,7 @@
-import { EnergyCard, GameError, PokemonCard } from '../../game';
+import { GameError, PokemonCard } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardType, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tarrago
   let energies = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy') {
+    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy') {
       energies += 1;
     } else if (c instanceof PokemonCard && c.cardType === CardType.FIGHTING) {
       pokemons += 1;

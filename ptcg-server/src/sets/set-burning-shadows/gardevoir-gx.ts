@@ -5,7 +5,6 @@ import {
   PlayerType, SlotType,
   AttachEnergyPrompt,
   Card,
-  EnergyCard,
   ShuffleDeckPrompt,
   ChooseCardsPrompt
 } from '../../game';
@@ -88,7 +87,7 @@ export class GardevoirGX extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && c.name === 'Fairy Energy';
+        return c.superType === SuperType.ENERGY && c.name === 'Fairy Energy';
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

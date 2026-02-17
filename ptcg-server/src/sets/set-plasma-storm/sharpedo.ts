@@ -31,7 +31,7 @@ export class Sharpedo extends PokemonCard {
       name: 'Hard Bite',
       cost: [W, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

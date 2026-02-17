@@ -59,7 +59,7 @@ export class Clawitizer extends PokemonCard {
           return state;
         }
 
-        const energyCards = player.hand.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy');
+        const energyCards = player.hand.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Water Energy');
         if (energyCards.length === 0) {
           return state;
         }
@@ -70,9 +70,9 @@ export class Clawitizer extends PokemonCard {
         ), wantToUse => {
           if (wantToUse) {
             const hasEnergyInHand = player.hand.cards.some(c => {
-              return c instanceof EnergyCard
+              return c.superType === SuperType.ENERGY
                 && c.energyType === EnergyType.BASIC
-                && c.provides.includes(CardType.WATER);
+                && (c as EnergyCard).provides.includes(CardType.WATER);
             });
             if (!hasEnergyInHand) {
               throw new GameError(GameMessage.CANNOT_USE_POWER);

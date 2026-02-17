@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTarget, GameMessage, PlayerType, SlotType, StateUtils, GameError, DamageMap, MoveDamagePrompt } from '../../game';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTarget, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_DAMAGE_COUNTERS } from '../../game/store/prefabs/prefabs';
 
 export class Sableye extends PokemonCard {
 
@@ -48,15 +48,15 @@ export class Sableye extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const blocked: CardTarget[] = [];
+      const blockedFrom: CardTarget[] = [];
       let hasDamagedBench = false;
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.damage === 0 && target.slot !== SlotType.ACTIVE) {
-          blocked.push(target);
+          blockedFrom.push(target);
         }
         if (target.slot === SlotType.ACTIVE) {
-          blocked.push(target);
+          blockedFrom.push(target);
         }
         if (cardList.damage > 0 && target.slot === SlotType.BENCH) {
           hasDamagedBench = true;
@@ -66,6 +66,7 @@ export class Sableye extends PokemonCard {
       if (!hasDamagedBench) {
         return state;
       }
+
       const blockedTo: CardTarget[] = [];
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -74,50 +75,20 @@ export class Sableye extends PokemonCard {
         }
       });
 
-
-      const maxAllowedDamage: DamageMap[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(opponent, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-      });
-
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        {
-          min: 0,
-          allowCancel: false,
-          blockedTo: blockedTo,
-          singleDestinationTarget: true
-        }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-
-          if (target !== opponent.active) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-
-          if (source == opponent.active) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-
-          if (source.damage > 0) {
-            const damageToMove = Math.min(source.damage);
-            source.damage -= damageToMove;
-            target.damage += damageToMove;
-          }
-        }
-        return state;
+      // Legacy implementation:
+      // - Built a custom MoveDamagePrompt scoped to opponent targets.
+      // - Manually enforced source != opponent active and destination == opponent active.
+      // - Moved damage counters one by one from benched sources to opponent active.
+      //
+      // Converted to prefab version (MOVE_DAMAGE_COUNTERS).
+      return MOVE_DAMAGE_COUNTERS(store, state, player, {
+        playerType: PlayerType.TOP_PLAYER,
+        slots: [SlotType.ACTIVE, SlotType.BENCH],
+        min: 0,
+        allowCancel: false,
+        blockedFrom,
+        blockedTo,
+        singleDestinationTarget: true
       });
     }
     return state;

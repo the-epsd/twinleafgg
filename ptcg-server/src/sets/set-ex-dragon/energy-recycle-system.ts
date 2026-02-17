@@ -1,4 +1,4 @@
-import { EnergyCard, GameError, SelectPrompt } from '../../game';
+import { GameError, SelectPrompt } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
@@ -34,7 +34,7 @@ export class EnergyRecycleSystem extends TrainerCard {
       let basicEnergyInDiscard: number = 0;
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+        const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
         if (isBasicEnergy) {
           basicEnergyInDiscard += 1;
         } else {

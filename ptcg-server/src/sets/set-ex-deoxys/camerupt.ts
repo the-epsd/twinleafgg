@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { AttachEnergyPrompt, ChoosePokemonPrompt, EnergyCard, PlayerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { DAMAGE_OPPONENT_POKEMON, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Camerupt extends PokemonCard {
@@ -40,7 +40,7 @@ export class Camerupt extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC;
       });
 

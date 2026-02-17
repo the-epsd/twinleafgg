@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import {
   StoreLike, State,
   PlayerType,
-  EnergyCard,
   StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -61,7 +60,7 @@ export class Hoopaex extends PokemonCard {
 
       let totalEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
+        totalEnergy += cardList.cards.filter(c => c.superType === SuperType.ENERGY).length;
       });
       effect.damage = totalEnergy * 50;
     }

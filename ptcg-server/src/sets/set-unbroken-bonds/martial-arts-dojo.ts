@@ -1,5 +1,5 @@
 import { EnergyCard, GameError, GameMessage, StateUtils } from '../../game';
-import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -33,7 +33,7 @@ export class MartialArtsDojo extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBasicFightingEnergy = player.active.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy').length > 0;
+      const hasBasicFightingEnergy = player.active.cards.filter(c => c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC && c.name === 'Fighting Energy').length > 0;
 
       if (player.active.cards.some(c => c.tags.includes(CardTag.ULTRA_BEAST)) ||
         !hasBasicFightingEnergy) {

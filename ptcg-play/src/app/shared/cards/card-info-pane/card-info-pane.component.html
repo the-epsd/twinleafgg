@@ -135,7 +135,8 @@
         </div>
       </div>
 
-      <ptcg-hover-highlight (click)="onRetreatClick()">
+      <ptcg-hover-highlight (click)="shouldEnableRetreat() && clickAction({retreat: true})"
+        [enabled]="shouldEnableRetreat()">
         <div class="stats-item">
           <div class="stats-item-header" translate>CARDS_RETREAT_COST</div>
           <div class="stats-item-value">

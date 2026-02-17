@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage, EnergyCard, ChooseCardsPrompt, Card } from '../../game';
+import { StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage, ChooseCardsPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -43,7 +43,7 @@ export class Nuzleaf extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      const hasEnergy = opponent.active.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
       if (!hasBenched || !hasEnergy) {
         return state;
       }
@@ -51,7 +51,7 @@ export class Nuzleaf extends PokemonCard {
       // Get blocked indices for non-energy cards
       const blocked: number[] = [];
       opponent.active.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard)) {
+        if (card.superType !== SuperType.ENERGY) {
           blocked.push(index);
         }
       });

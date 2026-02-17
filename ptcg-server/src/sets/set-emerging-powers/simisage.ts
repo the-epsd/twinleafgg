@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -39,7 +39,7 @@ export class Simisage extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasFireEnergy = player.active.cards.some(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.FIRE)
+        c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.FIRE)
       );
       if (hasFireEnergy) {
         YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);

@@ -213,6 +213,8 @@ export class AddSpecialConditionsEffect extends AbstractAttackEffect implements 
   readonly type: string = AttackEffects.ADD_SPECIAL_CONDITIONS_EFFECT;
   public preventDefault = false;
   public poisonDamage?: number;
+  public burnDamage?: number;
+  public confusionDamage?: number;
   public specialConditions: SpecialCondition[];
 
   constructor(base: AttackEffect, specialConditions: SpecialCondition[]) {

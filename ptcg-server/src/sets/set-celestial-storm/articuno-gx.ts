@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, Card, PokemonCardList,/* GameError,*/ EnergyCard } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, Card, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -89,7 +89,7 @@ export class ArticunoGX extends PokemonCard {
               return;
             }
             blockedTo.push(target);
-            if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.name === 'Water Energy')) {
+            if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Water Energy')) {
               hasEnergyOnBench = true;
             }
           });

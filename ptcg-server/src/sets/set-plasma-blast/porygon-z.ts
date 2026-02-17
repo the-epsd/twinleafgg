@@ -26,7 +26,7 @@ export class PorygonZ extends PokemonCard {
       name: 'Tri Attack',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
     }
   ];
@@ -75,6 +75,12 @@ export class PorygonZ extends PokemonCard {
         }
 
         for (const transfer of transfers) {
+          if (transfer.from.player === transfer.to.player
+            && transfer.from.slot === transfer.to.slot
+            && transfer.from.index === transfer.to.index) {
+            continue;
+          }
+
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);

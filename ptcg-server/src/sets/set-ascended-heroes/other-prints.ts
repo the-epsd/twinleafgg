@@ -558,7 +558,6 @@ export class LushForestASC extends LushForest {
   public setNumber = '188';
   public fullName: string = 'Forest of Vitality ASC';
   public set = 'ASC';
-  public legacyFullName = 'Lush Forest ASC';
 }
 
 export class GlassTrumpetASC extends GlassTrumpet {

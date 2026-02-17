@@ -65,9 +65,9 @@ export class TapuKokoPrismStar extends PokemonCard {
       }
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.LIGHTNING);
+          && (c as EnergyCard).provides.includes(CardType.LIGHTNING);
       });
 
       if (!hasEnergyInDiscard) {

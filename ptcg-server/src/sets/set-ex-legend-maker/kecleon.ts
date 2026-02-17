@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CardList, EnergyCard, PlayerType, PowerType, StateUtils } from '../../game';
+import { CardList, PlayerType, PowerType, StateUtils } from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE, THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
@@ -49,7 +49,7 @@ export class Kecleon extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this){
           const energies = new CardList();
-          energies.cards = cardList.cards.filter(card => card instanceof EnergyCard && card.name === 'React Energy');
+          energies.cards = cardList.cards.filter(card => card.superType === SuperType.ENERGY && card.name === 'React Energy');
 
           if (energies.cards.length === 0){
             effect.cardTypes = [C];

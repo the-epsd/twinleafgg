@@ -7,6 +7,14 @@ import { ManaphyEX as ManaphyEXBKP32 } from '../set-breakpoint/manaphy-ex';
 import { Skyla } from '../set-boundaries-crossed/skyla';
 import { Delinquent as DelinquentBKP98 } from '../set-breakpoint/delinquent';
 import { ProfessorSycamoreXY as ProfessorSycamoreXYXY122 } from '../set-x-and-y/other-prints';
+import { MistysDetermination } from '../set-evolutions/mistys-determination';
+import { Tierno } from '../set-phantom-forces/tierno';
+import { GyaradosEx } from './gyarados-ex';
+import { MGyaradosEx } from './m-gyarados-ex';
+import { EspeonEX } from './espeon-ex';
+import { DarkraiEx } from './darkrai-ex';
+import { ScizorEx } from './scizor-ex';
+import { MScizorEx } from './m-scizor-ex';
 export class GreatBallBKP extends GreatBall {
   public setNumber = '100';
   public fullName: string = 'Great Ball BKP';
@@ -65,4 +73,58 @@ export class ProfessorSycamoreXY2BKP extends ProfessorSycamoreXYXY122 {
   public setNumber = '107a';
   public fullName: string = 'Professor Sycamore2 BKP';
   public set = 'BKP';
+}
+
+export class MistysDeterminationBKP extends MistysDetermination {
+  public set: string = 'BKP';
+  public setNumber: string = '104';
+  public fullName: string = 'Misty\'s Determination BKP';
+}
+
+export class TiernoBKP extends Tierno {
+  public set: string = 'BKP';
+  public setNumber: string = '112';
+  public fullName: string = 'Tierno BKP';
+}
+
+export class GyaradosEx2 extends GyaradosEx {
+  public set: string = 'BKP';
+  public setNumber: string = '114';
+  public fullName: string = 'Gyarados-EX BKP 114';
+}
+
+export class MGyaradosEx2 extends MGyaradosEx {
+  public set: string = 'BKP';
+  public setNumber: string = '115';
+  public fullName: string = 'M Gyarados-EX BKP 115';
+}
+
+export class EspeonEx2 extends EspeonEX {
+  public set: string = 'BKP';
+  public setNumber: string = '117';
+  public fullName: string = 'Espeon-EX BKP 117';
+}
+
+export class DarkraiEx2 extends DarkraiEx {
+  public set: string = 'BKP';
+  public setNumber: string = '118';
+  public fullName: string = 'Darkrai-EX BKP 118';
+}
+
+export class ScizorEx2 extends ScizorEx {
+  public set: string = 'BKP';
+  public setNumber: string = '119';
+  public fullName: string = 'Scizor-EX BKP 119';
+}
+
+export class MScizorEx2 extends MScizorEx {
+  public set: string = 'BKP';
+  public setNumber: string = '120';
+  public fullName: string = 'M Scizor-EX BKP 120';
+}
+
+export class GyaradosEx3 extends GyaradosEx {
+  public set: string = 'BKP';
+  public setNumber: string = '123';
+  public fullName: string = 'Gyarados-EX BKP 123';
 }

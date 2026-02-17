@@ -4,68 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { ChooseAttackPrompt, GameError, GameLog, GameMessage, PlayerType, StateUtils } from '../../game';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { GameError, GameMessage, PlayerType } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-
-function* useGenomeHacking(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const pokemonCard = opponent.active.getPokemonCard();
-
-  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-    return state;
-  }
-
-  const attacks = pokemonCard.attacks.map(a => a.name);
-  if (attacks.includes(effect.attack.name + ' (Genome Hacking)')) {
-    return state;
-  }
-
-  let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [pokemonCard],
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
-
-  const attack: Attack | null = selected;
-
-  if (attack === null) {
-    return state;
-  }
-
-  if (attack.copycatAttack === true) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
-
-  // Perform attack
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COPY_OPPONENT_ACTIVE_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mewex extends PokemonCard {
 
@@ -162,9 +105,8 @@ export class Mewex extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const generator = useGenomeHacking(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return COPY_OPPONENT_ACTIVE_ATTACK(store, state, effect as AttackEffect);
     }
 
     return state;

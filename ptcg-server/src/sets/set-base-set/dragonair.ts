@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, StateUtils } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
@@ -69,7 +69,7 @@ export class Dragonair extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

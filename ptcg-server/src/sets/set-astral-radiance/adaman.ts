@@ -12,7 +12,6 @@ import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { EnergyCard } from '../../game';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
@@ -23,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
 
   const hasEnergyInHand = player.hand.cards.filter(c => {
-    return c instanceof EnergyCard && c.name === 'Metal Energy';
+    return c.superType === SuperType.ENERGY && c.name === 'Metal Energy';
   }).length >= 2;
 
   if (!hasEnergyInHand) {

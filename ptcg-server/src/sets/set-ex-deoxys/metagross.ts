@@ -52,8 +52,8 @@ export class Metagross extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && (c.provides.includes(CardType.PSYCHIC) || (c.provides.includes(CardType.METAL)));
+        return c.superType === SuperType.ENERGY
+          && ((c as EnergyCard).provides.includes(CardType.PSYCHIC) || (c as EnergyCard).provides.includes(CardType.METAL));
       });
 
       if (!hasEnergyInDiscard) {

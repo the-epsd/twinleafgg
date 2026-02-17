@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { ChooseEnergyPrompt } from '../../game';
-import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, EnergyCard, Card } from '../../game';
+import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, Card } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -68,7 +68,7 @@ export class AlolanNinetalesGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

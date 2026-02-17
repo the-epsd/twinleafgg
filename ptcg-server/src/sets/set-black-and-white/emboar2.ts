@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -40,7 +40,7 @@ export class Emboar2 extends PokemonCard {
 
       // Discard all Fire Energy attached to this Pokémon
       const fireEnergies = player.active.cards.filter(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.FIRE)
+        c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.FIRE)
       );
 
       const discardEnergy = new DiscardCardsEffect(effect, fireEnergies);

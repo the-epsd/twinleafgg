@@ -1,4 +1,4 @@
-import { BoardEffect, CardTag, CardTarget, CardType, EnergyCard, EnergyType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { BoardEffect, CardTag, CardTarget, CardType, EnergyType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -77,7 +77,7 @@ export class IronMoth extends PokemonCard {
             return;
           }
           blockedTo.push(target);
-          if (cardList.energies.cards.some(c => c instanceof EnergyCard)) {
+          if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
             hasEnergyOnBench = true;
           }
         });

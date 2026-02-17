@@ -1,4 +1,4 @@
-import { CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -26,7 +26,7 @@ If the Pokémon this card is attached to has any other Special Energy attached, 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const attachedTo = effect.source;
       const otherSpecialEnergy = attachedTo.cards.some(card => {
-        return card instanceof EnergyCard
+        return card.superType === SuperType.ENERGY
           && card.energyType === EnergyType.SPECIAL
           && card !== this;
       });

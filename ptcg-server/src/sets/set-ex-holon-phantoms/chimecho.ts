@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameError, GameMessage, EnergyCard, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
@@ -66,7 +66,7 @@ export class Chimecho extends PokemonCard {
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && (c.energyType === EnergyType.BASIC || c.name === 'Delta Rainbow Energy');
+        return c.superType === SuperType.ENERGY && (c.energyType === EnergyType.BASIC || c.name === 'Delta Rainbow Energy');
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -74,7 +74,7 @@ export class Chimecho extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard && (card.energyType === EnergyType.BASIC || card.name === 'Delta Rainbow Energy'))) {
+        if (!(card.superType === SuperType.ENERGY && (card.energyType === EnergyType.BASIC || card.name === 'Delta Rainbow Energy'))) {
           blocked.push(index);
         }
       });

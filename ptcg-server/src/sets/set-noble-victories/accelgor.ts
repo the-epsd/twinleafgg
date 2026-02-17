@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -44,7 +44,7 @@ export class Accelgor extends PokemonCard {
 
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          const oppEnergy = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          const oppEnergy = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
           if (oppEnergy.length === 0) {
             return;
           }

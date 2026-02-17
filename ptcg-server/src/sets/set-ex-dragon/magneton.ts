@@ -6,7 +6,6 @@ import {
   StateUtils,
   ShowCardsPrompt,
   GameLog,
-  EnergyCard,
   PlayerType
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -55,7 +54,7 @@ export class Magneton extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const energyInDiscard = player.discard.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC).length;
+      const energyInDiscard = player.discard.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC).length;
 
       // Must have energy in discard
       if (energyInDiscard === 0) {

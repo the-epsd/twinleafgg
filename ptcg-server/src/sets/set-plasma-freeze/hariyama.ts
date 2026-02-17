@@ -4,9 +4,12 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { GamePhase, PlayerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
 
 export class Hariyama extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,17 +40,45 @@ export class Hariyama extends PokemonCard {
   public name: string = 'Hariyama';
   public fullName: string = 'Hariyama PLF';
 
+  public readonly PIVOT_THROW_MARKER = 'PIVOT_THROW_MARKER';
+  public readonly CLEAR_PIVOT_THROW_MARKER = 'CLEAR_PIVOT_THROW_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fake Out
-    // TODO: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.
+    // Ref: set-plasma-blast/squirtle.ts (Bubble)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+        }
+      });
     }
 
     // Attack 2: Pivot Throw
-    // TODO: During your opponent's next turn, any damage done to this Pokémon by attacks is increased by 20 (after applying Weakness and Resistance).
+    // Ref: set-plasma-blast/machamp.ts (Close Combat)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.active.marker.addMarker(this.PIVOT_THROW_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_PIVOT_THROW_MARKER, this);
+    }
+
+    // Ref: set-plasma-blast/machamp.ts (Close Combat)
+    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.PIVOT_THROW_MARKER, this)) {
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      if (state.phase === GamePhase.ATTACK && effect.player !== targetOwner) {
+        effect.damage += 20;
+      }
+    }
+
+    // Ref: set-plasma-blast/machamp.ts (Close Combat)
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_PIVOT_THROW_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_PIVOT_THROW_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.PIVOT_THROW_MARKER, this);
+      });
     }
 
     return state;

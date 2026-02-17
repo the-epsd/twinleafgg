@@ -56,7 +56,7 @@ export class Chandelure extends PokemonCard {
       // Build blocked list: only allow [R] Energy cards
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        if (!(c instanceof EnergyCard) || c.energyType !== EnergyType.BASIC || !c.provides.includes(CardType.FIRE)) {
+        if (c.superType !== SuperType.ENERGY || (c as EnergyCard).energyType !== EnergyType.BASIC || !(c as EnergyCard).provides.includes(CardType.FIRE)) {
           blocked.push(index);
         }
       });

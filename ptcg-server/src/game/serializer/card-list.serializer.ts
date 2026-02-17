@@ -1,6 +1,7 @@
 import { SerializerContext, Serialized, Serializer } from './serializer.interface';
 import { CardList } from '../store/state/card-list';
 import { Card } from '../store/card/card';
+import { SuperType } from '../store/card/card-types';
 import { GameError } from '../game-error';
 import { GameCoreError } from '../game-message';
 import { PokemonCardList } from '../store/state/pokemon-card-list';
@@ -63,7 +64,21 @@ export class CardListSerializer implements Serializer<CardList> {
       instance.triggerAttackAnimation = data.triggerAttackAnimation || false;
     }
 
-    return Object.assign(instance, data);
+    const result = Object.assign(instance, data);
+
+    // Fix superType for Pokemon cards acting as energy (e.g., Holon's cards, Base Set Electrode).
+    // These are PokemonCard instances that implement EnergyCard and get attached as energy.
+    // The superType mutation doesn't survive serialization since cards are reconstructed
+    // fresh from knownCards, so we restore it here based on the energies list.
+    if (result instanceof PokemonCardList) {
+      result.energies.cards.forEach(card => {
+        if (card.superType === SuperType.POKEMON) {
+          card.superType = SuperType.ENERGY;
+        }
+      });
+    }
+
+    return result;
   }
 
   private fromIndex(index: number, context: SerializerContext): Card {

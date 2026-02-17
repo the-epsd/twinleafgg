@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, CardTarget, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -50,7 +50,7 @@ export class Milotic extends PokemonCard {
       const player = effect.player;
 
       const energyInDiscard = player.discard.cards.filter(c => {
-        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+        return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
       }).length;
 
       if (energyInDiscard === 0) {
@@ -59,7 +59,7 @@ export class Milotic extends PokemonCard {
 
       /*const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
-        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC) {
+        if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC) {
           // Allow basic energy cards to be selected
         } else {
           blocked.push(index);

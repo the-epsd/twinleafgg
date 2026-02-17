@@ -1,5 +1,5 @@
-import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
-import { CardTag, EnergyType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
+import { CardTag, EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -35,7 +35,7 @@ export class TeamAquaConspirator extends TrainerCard {
       player.deck.cards.forEach((card, index) => {
         if (card instanceof PokemonCard && card.tags.includes(CardTag.TEAM_AQUA) && card.stage === Stage.BASIC) {
           return;
-        } else if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC) {
+        } else if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC) {
           return;
         } else {
           blocked.push(index);

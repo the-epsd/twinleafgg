@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameMessage, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { GameMessage, ChooseCardsPrompt } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class LugiaEx extends PokemonCard {
@@ -53,7 +53,7 @@ export class LugiaEx extends PokemonCard {
 
       // Check if there's at least one Plasma Energy attached
       const hasPlasmaEnergy = checkEnergy.energyMap.some(em =>
-        em.card instanceof EnergyCard && em.card.name === 'Plasma Energy'
+        em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy'
       );
 
       // If no Plasma Energy is attached, the attack does nothing

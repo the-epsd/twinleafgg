@@ -28,7 +28,7 @@ export class Exploud extends PokemonCard {
       name: 'Round',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 50 damage times the number of your Pokémon that have the Round attack.'
     }
   ];

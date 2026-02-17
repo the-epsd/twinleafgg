@@ -18,6 +18,18 @@ import { LostBlender as LostBlenderLOT181 } from '../set-lost-thunder/lost-blend
 import { NetBall as NetBallLOT187 } from '../set-lost-thunder/net-ball';
 import { SpellTag as SpellTagLOT190 } from '../set-lost-thunder/spell-tag';
 import { Sightseer as SightseerLOT189 } from '../set-lost-thunder/sightseer';
+import { SceptileGx } from './sceptile-gx';
+import { VirizionGx } from './virizion-gx';
+import { SuicuneGx } from './suicune-gx';
+import { ZeraoraGX as ZeraoraGX201 } from './zeraora-gx';
+import { SigilyphGx } from './sigilyph-gx';
+import { TyranitarGx } from './tyranitar-gx';
+import { GenesectGx } from './genesect-gx';
+import { Kahili } from './kahili';
+import { Morty } from './morty';
+import { Whitney } from './whitney';
+import { ChoiceHelmet } from './choice-helmet';
+import { WaitAndSeeHammer } from './wait-and-see-hammer';
 export class ZeraoraGXLOT extends ZeraoraGX {
   public setNumber = '86';
   public fullName: string = 'Zeraora-GX LOT';
@@ -190,4 +202,112 @@ export class Sightseer2LOT extends SightseerLOT189 {
   public setNumber = '189a';
   public fullName: string = 'Sightseer2 LOT';
   public set = 'LOT';
+}
+
+export class SceptileGx2 extends SceptileGx {
+  public set: string = 'LOT';
+  public setNumber: string = '196';
+  public fullName: string = 'Sceptile-GX LOT 196';
+}
+
+export class VirizionGx2 extends VirizionGx {
+  public set: string = 'LOT';
+  public setNumber: string = '197';
+  public fullName: string = 'Virizion-GX LOT 197';
+}
+
+export class SuicuneGx2 extends SuicuneGx {
+  public set: string = 'LOT';
+  public setNumber: string = '200';
+  public fullName: string = 'Suicune-GX LOT 200';
+}
+
+export class ZeraoraGx2 extends ZeraoraGX201 {
+  public set: string = 'LOT';
+  public setNumber: string = '201';
+  public fullName: string = 'Zeraora-GX LOT 201';
+}
+
+export class SigilyphGx2 extends SigilyphGx {
+  public set: string = 'LOT';
+  public setNumber: string = '202';
+  public fullName: string = 'Sigilyph-GX LOT 202';
+}
+
+export class TyranitarGx2 extends TyranitarGx {
+  public set: string = 'LOT';
+  public setNumber: string = '203';
+  public fullName: string = 'Tyranitar-GX LOT 203';
+}
+
+export class GenesectGx2 extends GenesectGx {
+  public set: string = 'LOT';
+  public setNumber: string = '204';
+  public fullName: string = 'Genesect-GX LOT 204';
+}
+
+export class Kahili2 extends Kahili {
+  public set: string = 'LOT';
+  public setNumber: string = '210';
+  public fullName: string = 'Kahili LOT 210';
+}
+
+export class Morty2 extends Morty {
+  public set: string = 'LOT';
+  public setNumber: string = '212';
+  public fullName: string = 'Morty LOT 212';
+}
+
+export class Whitney2 extends Whitney {
+  public set: string = 'LOT';
+  public setNumber: string = '214';
+  public fullName: string = 'Whitney LOT 214';
+}
+
+export class SceptileGx3 extends SceptileGx {
+  public set: string = 'LOT';
+  public setNumber: string = '216';
+  public fullName: string = 'Sceptile-GX LOT 216';
+}
+
+export class VirizionGx3 extends VirizionGx {
+  public set: string = 'LOT';
+  public setNumber: string = '217';
+  public fullName: string = 'Virizion-GX LOT 217';
+}
+
+export class SuicuneGx3 extends SuicuneGx {
+  public set: string = 'LOT';
+  public setNumber: string = '220';
+  public fullName: string = 'Suicune-GX LOT 220';
+}
+
+export class SigilyphGx3 extends SigilyphGx {
+  public set: string = 'LOT';
+  public setNumber: string = '222';
+  public fullName: string = 'Sigilyph-GX LOT 222';
+}
+
+export class TyranitarGx3 extends TyranitarGx {
+  public set: string = 'LOT';
+  public setNumber: string = '223';
+  public fullName: string = 'Tyranitar-GX LOT 223';
+}
+
+export class GenesectGx3 extends GenesectGx {
+  public set: string = 'LOT';
+  public setNumber: string = '224';
+  public fullName: string = 'Genesect-GX LOT 224';
+}
+
+export class ChoiceHelmet2 extends ChoiceHelmet {
+  public set: string = 'LOT';
+  public setNumber: string = '229';
+  public fullName: string = 'Choice Helmet LOT 229';
+}
+
+export class WaitAndSeeHammer2 extends WaitAndSeeHammer {
+  public set: string = 'LOT';
+  public setNumber: string = '236';
+  public fullName: string = 'Wait and See Hammer LOT 236';
 }

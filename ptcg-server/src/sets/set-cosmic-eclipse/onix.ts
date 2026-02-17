@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -36,7 +36,7 @@ export class Onix extends PokemonCard {
       //I couldn't find a prefab that moves energies from the discard to the hand.
       const player = effect.player;
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard;
+        return c.superType === SuperType.ENERGY;
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);

@@ -1,7 +1,7 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTarget, MoveEnergyPrompt, PokemonCard, Card } from '../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTarget, MoveEnergyPrompt, Card } from '../../game';
 import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -56,12 +56,6 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
                 }
               });
 
-              cardList.cards.forEach(em => {
-                if (cardList.getPokemons().includes(em as PokemonCard)) {
-                  blockedCards.push(em);
-                }
-              });
-
               const blocked: number[] = [];
               blockedCards.forEach(bc => {
                 const index = cardList.cards.indexOf(bc);
@@ -92,23 +86,7 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
                 const source = StateUtils.getTarget(state, player, transfer.from);
                 const target = StateUtils.getTarget(state, player, transfer.to);
 
-                if (transfer.card instanceof PokemonCard) {
-                  // If card is in source energies, move it from there; otherwise move from main cards array
-                  if (source.energies.cards.includes(transfer.card)) {
-                    source.energies.moveCardTo(transfer.card, target.energies);
-                    // Also ensure it's in target's main cards array
-                    if (!target.cards.includes(transfer.card)) {
-                      target.cards.push(transfer.card);
-                    }
-                  } else {
-                    source.moveCardTo(transfer.card, target);
-                    if (!target.energies.cards.includes(transfer.card)) {
-                      target.energies.cards.push(transfer.card);
-                    }
-                  }
-                } else {
-                  source.moveCardTo(transfer.card, target);
-                }
+                source.moveCardTo(transfer.card, target);
               }
             });
             player.supporter.moveCardTo(effect.trainerCard, player.discard);

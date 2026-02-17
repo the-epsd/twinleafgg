@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, GameError, StateUtils, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { StoreLike, State, GameError, SlotType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
+import { DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON } from '../../game/store/prefabs/costs';
 
 
 export class RagingBoltex extends PokemonCard {
@@ -63,43 +63,26 @@ export class RagingBoltex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
+      effect.damage = 0;
 
-      let totalEnergy = 0;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const basicEnergyCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard && card.energyType === EnergyType.BASIC
-        ).length;
-        totalEnergy += basicEnergyCount;
-      });
-
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, max: totalEnergy, allowCancel: false }
-      ), transfers => {
-
-        if (transfers === null) {
-          return;
+      // Legacy implementation:
+      // - Counted Basic Energy across Active + Bench manually.
+      // - Used DiscardEnergyPrompt and moved selected cards by hand.
+      // - Set damage to discardedCount * 70.
+      //
+      // Converted to prefab version (DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON).
+      return DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
+        store,
+        state,
+        effect,
+        Number.MAX_SAFE_INTEGER,
+        { energyType: EnergyType.BASIC },
+        0,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        transfers => {
+          effect.damage = transfers.length * 70;
         }
-
-        for (const transfer of transfers) {
-          let totalDiscarded = 0;
-
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = player.discard;
-          source.moveCardTo(transfer.card, target);
-
-          totalDiscarded = transfers.length;
-
-          effect.damage = totalDiscarded * 70;
-
-        }
-        return state;
-      });
+      );
     }
     return state;
   }

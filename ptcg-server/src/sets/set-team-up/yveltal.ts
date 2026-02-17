@@ -43,7 +43,7 @@ export class Yveltal extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const specialEnergy = opponent.active.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL);
+      const specialEnergy = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.SPECIAL);
 
       if (specialEnergy.length === 0) {
         return state;

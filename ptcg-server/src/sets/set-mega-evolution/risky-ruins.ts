@@ -12,7 +12,6 @@ export class DangerousRuins extends TrainerCard {
   public set = 'MEG';
   public name = 'Risky Ruins';
   public fullName = 'Risky Ruins MEG';
-  public legacyFullName = 'Dangerous Ruins M1L';
   public text = 'Whenever either player puts a non-[D] Basic Pokémon onto their Bench, put 2 damage counters on that Pokémon.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -2,7 +2,6 @@ import { Attack, GameError, GameMessage } from '../../game';
 import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -12,16 +11,10 @@ import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-  const opponent = effect.opponent;
 
   if (player.active.getPokemonCard()?.name !== 'Genesect-EX') { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
 
-  if (effect.damage > 0) {
-    opponent.active.damage += effect.damage;
-    const afterDamage = new AfterDamageEffect(effect, effect.damage);
-    state = store.reduceEffect(state, afterDamage);
-  }
-
+  // Ref: set-paradox-rift/technical-machine-turbo-energize.ts (tool-provided attack execution)
   DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
 
   return state;
@@ -52,6 +45,9 @@ export class GBooster extends TrainerCard {
 
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const pokemonCard = effect.player.active.getPokemonCard();
+      if (pokemonCard?.name !== 'Genesect-EX') {
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+      }
 
       if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
         const colorlessReudction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
@@ -63,7 +59,9 @@ export class GBooster extends TrainerCard {
         }
       }
     }
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
+    if (effect instanceof CheckPokemonAttacksEffect
+      && effect.player.active.getPokemonCard()?.name === 'Genesect-EX'
+      && effect.player.active.getPokemonCard()?.tools.includes(this) &&
       !effect.attacks.includes(this.attacks[0])) {
       effect.attacks.push(this.attacks[0]);
     }

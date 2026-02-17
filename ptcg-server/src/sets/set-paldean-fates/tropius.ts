@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AFTER_ATTACK, HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -47,7 +47,7 @@ export class Tropius extends PokemonCard {
 
       // Get attached energy cards
       const attachedEnergies = player.active.cards.filter(card => {
-        return card instanceof EnergyCard;
+        return card.superType === SuperType.ENERGY;
       });
 
       store.prompt(state, new AttachEnergyPrompt(

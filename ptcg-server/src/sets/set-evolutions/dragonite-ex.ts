@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, StateUtils, ChooseCardsPrompt, Card, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, StateUtils, ChooseCardsPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardToHandEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -105,7 +105,7 @@ export class DragoniteEX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.energies.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

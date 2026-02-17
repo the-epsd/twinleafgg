@@ -22,7 +22,7 @@ export class Zekrom extends PokemonCard {
       name: 'Fusion Bolt',
       cost: [L, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Reshiram is on your Bench, this attack does 40 more damage.'
     }
   ];

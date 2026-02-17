@@ -1,14 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import {
-  PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+  PowerType, StoreLike, State
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
-import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { AS_OFTEN_AS_YOU_LIKE_ATTACH_BASIC_TYPE_ENERGY_FROM_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Blastoise extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -62,32 +60,20 @@ export class Blastoise extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.WATER);
-      });
-      if (!hasEnergyInHand) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
-        }
-      });
+      /*
+       * Legacy pre-prefab implementation:
+       * - manually checked for basic Water Energy in hand
+       * - opened AttachEnergyPrompt against hand -> Active/Bench
+       * - resolved transfer targets with StateUtils.getTarget
+       * - attached cards with AttachEnergyEffect
+       */
+      // Converted to prefab version (AS_OFTEN_AS_YOU_LIKE_ATTACH_BASIC_TYPE_ENERGY_FROM_HAND).
+      return AS_OFTEN_AS_YOU_LIKE_ATTACH_BASIC_TYPE_ENERGY_FROM_HAND(
+        store,
+        state,
+        player,
+        CardType.WATER
+      );
     }
 
     return state;

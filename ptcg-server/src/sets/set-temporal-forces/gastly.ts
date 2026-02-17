@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, StateUtils } from '../../game';
+import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, CoinFlipPrompt, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
@@ -10,7 +10,7 @@ function* useMysteriousBeam(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
 
   // Active Pokemon has no energy cards attached
-  if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+  if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
     return state;
   }
 

@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Latiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -66,7 +66,12 @@ export class Latiasex extends PokemonCard {
     // Infinity Blade
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+
+      // Legacy implementation:
+      // - Set player.active.cannotAttackNextTurnPending = true directly.
+      //
+      // Converted to prefab version (THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN).
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(player);
     }
     
     return state;

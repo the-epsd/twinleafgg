@@ -18,6 +18,19 @@ import { UTurnBoard as UTurnBoardUNM211 } from '../set-unified-minds/u-turn-boar
 import { ViridianForest } from '../set-team-up/viridian-forest';
 import { RecycleEnergyN1 as RecycleEnergyN1N1105 } from '../set-neo-genesis/other-prints';
 import { WeaknessGuardEnergy as WeaknessGuardEnergyUNM213 } from '../set-unified-minds/weakness-guard-energy';
+import { Litwick } from './litwick';
+import { JirachiGx } from './jirachi-gx';
+import { HeatranGX } from './heatran-gx';
+import { LatiosGx } from './latios-gx';
+import { AerodactylGx } from './aerodactyl-gx';
+import { MawileGX } from './mawile-gx';
+import { DragoniteGx } from './dragonite-gx';
+import { NaganadelGx } from './naganadel-gx';
+import { BluesTactics } from './blues-tactics';
+import { Channeler } from './channeler';
+import { CoachTrainer } from './coach-trainer';
+import { PokeManiac } from './poke-maniac';
+import { GiantBomb } from './giant-bomb';
 export class Riolu2UNM extends RioluUNM115 {
   public setNumber = '116';
   public fullName: string = 'Riolu2 UNM';
@@ -214,4 +227,118 @@ export class ResetStamp2UNM extends ResetStampUNM206 {
   public setNumber = '206a';
   public fullName: string = 'Reset Stamp2 UNM';
   public set = 'UNM';
+}
+
+export class Litwick2 extends Litwick {
+  public set: string = 'UNM';
+  public setNumber: string = '28';
+  public fullName: string = 'Litwick UNM 28';
+}
+
+export class JirachiGx2 extends JirachiGx {
+  public set: string = 'UNM';
+  public setNumber: string = '79a';
+  public fullName: string = 'Jirachi-GX UNM 79a';
+}
+
+export class HeatranGx2 extends HeatranGX {
+  public set: string = 'UNM';
+  public setNumber: string = '216';
+  public fullName: string = 'Heatran-GX UNM 216';
+}
+
+export class LatiosGx2 extends LatiosGx {
+  public set: string = 'UNM';
+  public setNumber: string = '223';
+  public fullName: string = 'Latios-GX UNM 223';
+}
+
+export class AerodactylGx2 extends AerodactylGx {
+  public set: string = 'UNM';
+  public setNumber: string = '224';
+  public fullName: string = 'Aerodactyl-GX UNM 224';
+}
+
+export class MawileGx2 extends MawileGX {
+  public set: string = 'UNM';
+  public setNumber: string = '227';
+  public fullName: string = 'Mawile-GX UNM 227';
+}
+
+export class DragoniteGx2 extends DragoniteGx {
+  public set: string = 'UNM';
+  public setNumber: string = '229';
+  public fullName: string = 'Dragonite-GX UNM 229';
+}
+
+export class NaganadelGx2 extends NaganadelGx {
+  public set: string = 'UNM';
+  public setNumber: string = '230';
+  public fullName: string = 'Naganadel-GX UNM 230';
+}
+
+export class BluesTactics2 extends BluesTactics {
+  public set: string = 'UNM';
+  public setNumber: string = '231';
+  public fullName: string = 'Blue\'s Tactics UNM 231';
+}
+
+export class Channeler2 extends Channeler {
+  public set: string = 'UNM';
+  public setNumber: string = '232';
+  public fullName: string = 'Channeler UNM 232';
+}
+
+export class CoachTrainer2 extends CoachTrainer {
+  public set: string = 'UNM';
+  public setNumber: string = '233';
+  public fullName: string = 'Coach Trainer UNM 233';
+}
+
+export class PokeManiac2 extends PokeManiac {
+  public set: string = 'UNM';
+  public setNumber: string = '236';
+  public fullName: string = 'Poké Maniac UNM 236';
+}
+
+export class HeatranGx3 extends HeatranGX {
+  public set: string = 'UNM';
+  public setNumber: string = '238';
+  public fullName: string = 'Heatran-GX UNM 238';
+}
+
+export class LatiosGx3 extends LatiosGx {
+  public set: string = 'UNM';
+  public setNumber: string = '243';
+  public fullName: string = 'Latios-GX UNM 243';
+}
+
+export class AerodactylGx3 extends AerodactylGx {
+  public set: string = 'UNM';
+  public setNumber: string = '244';
+  public fullName: string = 'Aerodactyl-GX UNM 244';
+}
+
+export class MawileGx3 extends MawileGX {
+  public set: string = 'UNM';
+  public setNumber: string = '246';
+  public fullName: string = 'Mawile-GX UNM 246';
+}
+
+export class DragoniteGx3 extends DragoniteGx {
+  public set: string = 'UNM';
+  public setNumber: string = '248';
+  public fullName: string = 'Dragonite-GX UNM 248';
+}
+
+export class NaganadelGx3 extends NaganadelGx {
+  public set: string = 'UNM';
+  public setNumber: string = '249';
+  public fullName: string = 'Naganadel-GX UNM 249';
+}
+
+export class GiantBomb2 extends GiantBomb {
+  public set: string = 'UNM';
+  public setNumber: string = '251';
+  public fullName: string = 'Giant Bomb UNM 251';
 }

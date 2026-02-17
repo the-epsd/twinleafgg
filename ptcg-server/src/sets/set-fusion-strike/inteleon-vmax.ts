@@ -75,7 +75,7 @@ export class InteleonVMAX extends PokemonCard {
       ), wantToUse => {
         if (wantToUse) {
 
-          const energyCards = player.active.cards.filter(c => c instanceof EnergyCard);
+          const energyCards = player.active.cards.filter(c => c.superType === SuperType.ENERGY);
           const cardList = new CardList();
           cardList.cards = energyCards;
 

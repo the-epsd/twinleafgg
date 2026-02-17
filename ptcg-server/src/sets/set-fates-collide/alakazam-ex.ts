@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, StateUtils, ChoosePokemonPrompt, GameMessage, SlotType, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, PlayerType, StateUtils, ChoosePokemonPrompt, GameMessage, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import {CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
 import {PutCountersEffect} from '../../game/store/effects/attack-effects';
@@ -79,7 +79,7 @@ export class AlakazamEx extends PokemonCard {
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
         const goodEnergy = card.cards.filter(card =>
-          card instanceof EnergyCard
+          card.superType === SuperType.ENERGY
         );
 
         if (goodEnergy.length > 0){

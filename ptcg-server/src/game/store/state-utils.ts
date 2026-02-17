@@ -146,6 +146,95 @@ export class StateUtils {
     return true;
   }
 
+  /**
+   * Returns true when every energy entry has the same provides array.
+   * Used to skip the energy selection prompt when all options are interchangeable.
+   */
+  public static allEnergyProvidesIdentical(energyMap: EnergyMap[]): boolean {
+    if (energyMap.length === 0) {
+      return false;
+    }
+    const providesKey = (e: EnergyMap) => [...e.provides].sort().join(',');
+    const firstKey = providesKey(energyMap[0]);
+    return energyMap.every(e => providesKey(e) === firstKey);
+  }
+
+  /**
+   * Returns a minimal set of EnergyMap entries that satisfies the cost, or null if impossible.
+   * Satisfies typed costs first, then colorless, then trims excess.
+   */
+  public static selectMinimalEnergyForCost(energyMap: EnergyMap[], cost: CardType[]): EnergyMap[] | null {
+    if (cost.length === 0) {
+      return [];
+    }
+    let result: EnergyMap[] = [];
+    const provides = energyMap.slice();
+    const costs = cost.filter(c => c !== CardType.COLORLESS);
+
+    // Satisfy typed costs first
+    while (costs.length > 0 && provides.length > 0) {
+      const costType = costs[0];
+      let index = provides.findIndex(p => p.provides.includes(costType));
+      if (index === -1) {
+        index = provides.findIndex(p => p.provides.includes(CardType.ANY));
+      }
+      if (index === -1) {
+        return null;
+      }
+      const provide = provides[index];
+      provides.splice(index, 1);
+      result.push(provide);
+      provide.provides.forEach(c => {
+        if (c === CardType.ANY && costs.length > 0) {
+          costs.shift();
+        } else {
+          const i = costs.indexOf(c);
+          if (i !== -1) {
+            costs.splice(i, 1);
+          }
+        }
+      });
+    }
+
+    if (costs.length > 0) {
+      return null;
+    }
+
+    // Satisfy colorless with remaining provides
+    provides.sort((p1, p2) => {
+      const s1 = p1.provides.length;
+      const s2 = p2.provides.length;
+      return s1 - s2;
+    });
+    while (provides.length > 0 && !StateUtils.checkEnoughEnergy(result, cost)) {
+      const provide = provides.shift();
+      if (provide) {
+        result.push(provide);
+      }
+    }
+
+    if (!StateUtils.checkEnoughEnergy(result, cost)) {
+      return null;
+    }
+
+    // Trim to minimal
+    let needCheck = true;
+    while (needCheck) {
+      needCheck = false;
+      for (let i = 0; i < result.length; i++) {
+        const tempCards = result.slice();
+        tempCards.splice(i, 1);
+        if (StateUtils.checkEnoughEnergy(tempCards, cost)) {
+          result = tempCards;
+          needCheck = true;
+          break;
+        }
+      }
+    }
+
+    return result;
+  }
+
   public static getPlayerById(state: State, playerId: number): Player {
     const player = state.players.find(p => p.id === playerId);
     if (player === undefined) {

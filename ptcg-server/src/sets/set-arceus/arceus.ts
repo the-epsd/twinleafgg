@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -81,7 +81,7 @@ export class Arceus extends PokemonCard {
 
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(80, effect, store, state);
 
-      const energies = player.active.cards.filter(card => card instanceof EnergyCard);
+      const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
       MOVE_CARDS(store, state, player.active, player.lostzone, { cards: energies });
     }
 

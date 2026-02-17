@@ -42,7 +42,7 @@ export class Swampert extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (!player.hand.cards.some(card => card instanceof EnergyCard && card.provides.includes(CardType.WATER))) {
+      if (!player.hand.cards.some(card => card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.WATER))) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

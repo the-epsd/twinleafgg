@@ -12,7 +12,6 @@ export class LushForest extends TrainerCard {
   public set = 'MEG';
   public name = 'Forest of Vitality';
   public fullName = 'Forest of Vitality MEG';
-  public legacyFullName = 'Lush Forest M1S';
   public regulationMark = 'I';
   public text = 'Each player\'s [G] Pokémon can evolve into another [G] Pokémon during the turn they play those Pokémon. (Players can\'t evolve a Pokémon during their first turn.)';
 

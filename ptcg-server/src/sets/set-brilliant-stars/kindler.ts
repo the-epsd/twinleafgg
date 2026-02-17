@@ -1,4 +1,4 @@
-import { CardList, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { CardList, ChooseCardsPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
@@ -25,7 +25,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   const hasEnergyInHand = player.hand.cards.some(c => {
-    return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy';
+    return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy';
   });
 
   if (!hasEnergyInHand) {

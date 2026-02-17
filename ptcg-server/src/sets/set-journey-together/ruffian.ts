@@ -1,4 +1,4 @@
-import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, EnergyType, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
+import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyType, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -25,7 +25,7 @@ export class Ruffian extends TrainerCard {
       let energyOrToolcard = false;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
           energyOrToolcard = true;
         } else if (cardList.tools.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL)) {
           energyOrToolcard = true;
@@ -69,7 +69,7 @@ export class Ruffian extends TrainerCard {
               // removing special energies
               let specialEnergies = 0;
               target.energies.cards.forEach(card => {
-                if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
+                if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
               });
 
               if (specialEnergies > 0) {
@@ -95,7 +95,7 @@ export class Ruffian extends TrainerCard {
         // removing special energies
         let specialEnergies = 0;
         target.energies.cards.forEach(card => {
-          if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
+          if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
         });
 
         if (specialEnergies > 0) {

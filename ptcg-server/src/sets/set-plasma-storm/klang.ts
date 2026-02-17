@@ -28,7 +28,7 @@ export class Klang extends PokemonCard {
       name: 'Gear Smash',
       cost: [M, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];

@@ -1,8 +1,8 @@
-import { Attack, CardTag, CardType, EnergyCard, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, CONFIRMATION_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class PalkiaEX extends PokemonCard {
 
@@ -38,7 +38,14 @@ export class PalkiaEX extends PokemonCard {
 
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      if (hasBenched) {
+        CONFIRMATION_PROMPT(store, state, player, result => {
+          if (result) {
+            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+          }
+        });
+      }
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -51,7 +58,7 @@ export class PalkiaEX extends PokemonCard {
       let totalPlasmaEnergy = 0;
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.name === 'Plasma Energy') {
+        if (energyCard.superType === SuperType.ENERGY && energyCard.name === 'Plasma Energy') {
           totalPlasmaEnergy += 1;
         }
       });

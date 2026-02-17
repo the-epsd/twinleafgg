@@ -37,13 +37,13 @@ export class Starmie extends PokemonCard {
 
       const blocked: number[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.WATER))) {
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.WATER))) {
           blocked.push();
         }
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.ANY))) {
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.ANY))) {
           blocked.push();
         }
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.blendedEnergies.includes(CardType.WATER))) {
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY && (c as EnergyCard).blendedEnergies.includes(CardType.WATER))) {
           blocked.push();
         }
       });

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, ChooseCardsPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -71,7 +71,7 @@ export class Polteageist extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard;
+        return c.superType === SuperType.ENERGY;
       });
 
       if (!hasEnergyInHand)

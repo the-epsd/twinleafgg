@@ -9,6 +9,12 @@ import { Winona as WinonaROS96 } from '../set-roaring-skies/winona';
 import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
 import { VsSeekerSV } from '../set-supreme-victors/other-prints';
 import { TrainersMail } from './trainers-mail';
+import { ThundurusEx } from './thundurus-ex';
+import { GalladeEx } from './gallade-ex';
+import { MGalladeEx } from './m-gallade-ex';
+import { LatiosEx } from './latios-ex';
+import { MLatiosEx } from './m-latios-ex';
+import { HydreigonEx } from './hydreigon-ex';
 
 export class TrainersMailROS extends TrainersMail {
   public set: string = 'ROS';
@@ -79,4 +85,46 @@ export class ShayminEx2ROS extends ShayminExROS77 {
   public setNumber = '77a';
   public fullName: string = 'Shaymin EX2 ROS';
   public set = 'ROS';
+}
+
+export class TrainersMail2 extends TrainersMail {
+  public set: string = 'ROS';
+  public setNumber: string = '92a';
+  public fullName: string = 'Trainers\' Mail ROS 92a';
+}
+
+export class ThundurusEx2 extends ThundurusEx {
+  public set: string = 'ROS';
+  public setNumber: string = '98';
+  public fullName: string = 'Thundurus-EX ROS 98';
+}
+
+export class GalladeEx2 extends GalladeEx {
+  public set: string = 'ROS';
+  public setNumber: string = '99';
+  public fullName: string = 'Gallade-EX ROS 99';
+}
+
+export class MGalladeEx2 extends MGalladeEx {
+  public set: string = 'ROS';
+  public setNumber: string = '100';
+  public fullName: string = 'M Gallade-EX ROS 100';
+}
+
+export class LatiosEx2 extends LatiosEx {
+  public set: string = 'ROS';
+  public setNumber: string = '101';
+  public fullName: string = 'Latios-EX ROS 101';
+}
+
+export class MLatiosEx2 extends MLatiosEx {
+  public set: string = 'ROS';
+  public setNumber: string = '102';
+  public fullName: string = 'M Latios-EX ROS 102';
+}
+
+export class HydreigonEx2 extends HydreigonEx {
+  public set: string = 'ROS';
+  public setNumber: string = '103';
+  public fullName: string = 'Hydreigon-EX ROS 103';
 }

@@ -22,14 +22,14 @@ export class Mamoswine extends PokemonCard {
       name: 'Frost Stone',
       cost: [W, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Paralyzed.'
     },
     {
       name: 'Continuous Headbutt',
       cost: [W, W, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 90 damage times the number of heads.'
     }
   ];

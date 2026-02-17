@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import {
   StoreLike, State, StateUtils, PowerType,
-  PlayerType,
-  EnergyCard
+  PlayerType
 } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -94,7 +93,7 @@ export class EspeonVMAX extends PokemonCard {
         return state;
       }
 
-      if (sourceCard && effect.target.cards.some(c => c instanceof EnergyCard)) {
+      if (sourceCard && effect.target.cards.some(c => c.superType === SuperType.ENERGY)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {

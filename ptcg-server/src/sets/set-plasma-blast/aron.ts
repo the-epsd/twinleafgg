@@ -18,7 +18,7 @@ export class Aron extends PokemonCard {
       name: 'Iron Head',
       cost: [M],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 10 damage times the number of heads.'
     },
     {

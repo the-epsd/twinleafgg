@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
@@ -57,7 +57,7 @@ export class Jellicent extends PokemonCard {
 
       // Discard energy from attacker
       const attacker = effect.source;
-      const attackerEnergy = attacker.cards.filter(c => c instanceof EnergyCard);
+      const attackerEnergy = attacker.cards.filter(c => c.superType === SuperType.ENERGY);
 
       if (attackerEnergy.length === 0) {
         return state;

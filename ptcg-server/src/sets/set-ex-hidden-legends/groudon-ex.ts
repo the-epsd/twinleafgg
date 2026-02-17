@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CardTag, GameError, GameMessage, SuperType, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CardTag, GameError, GameMessage, SuperType, ChooseCardsPrompt } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -52,7 +52,7 @@ export class Groudonex extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const energiesInHand = player.hand.cards.filter(card => card instanceof EnergyCard && card.superType === SuperType.ENERGY);
+      const energiesInHand = player.hand.cards.filter(card => card.superType === SuperType.ENERGY);
 
       // Prompt player to choose cards to discard 
       return store.prompt(state, new ChooseCardsPrompt(

@@ -50,6 +50,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   DRAW_CARDS(player, 6);
 
   CLEAN_UP_SUPPORTER(effect, player);
+
+  return state;
 }
 
 export class Roxanne extends TrainerCard {

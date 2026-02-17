@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
+import { ChooseCardsPrompt, ConfirmPrompt, GameError, GameLog, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { BoardEffect, CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
@@ -59,7 +59,7 @@ export class Mantine extends PokemonCard {
       }
 
       //Must have basic energy in discard
-      if (!player.discard.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)) {
+      if (!player.discard.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

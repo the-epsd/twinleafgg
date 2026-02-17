@@ -46,6 +46,14 @@ export class Board3dHandService {
     try {
       const cards = hand.cards;
 
+      // Preload hand card textures (fire-and-forget for owner's face-up cards)
+      if (isOwner && cards.length > 0) {
+        const urls = cards
+          .map(c => this.cardsBaseService.getScanUrlFromCardList(c, hand))
+          .filter((url): url is string => !!url && !!url.trim());
+        this.assetLoader.preloadCardTextures(urls);
+      }
+
       // Ensure handGroup is in scene before operations
       if (!scene.children.includes(this.handGroup)) {
         scene.add(this.handGroup);
@@ -54,11 +62,12 @@ export class Board3dHandService {
       // Clear old cards (kills animations and properly disposes)
       this.clearHand(scene);
 
-      // Create new cards in arc formation
-      for (let i = 0; i < cards.length; i++) {
-        const isPlayable = isOwner && playableCardIds?.includes(cards[i].id);
-        await this.createHandCard(cards[i], i, cards.length, isOwner, isPlayable, hand);
-      }
+      // Create new cards in parallel
+      const cardPromises = cards.map((card, i) => {
+        const isPlayable = isOwner && playableCardIds?.includes(card.id);
+        return this.createHandCard(card, i, cards.length, isOwner, isPlayable, hand);
+      });
+      await Promise.all(cardPromises);
     } finally {
       this.isUpdating = false;
     }
@@ -83,28 +92,29 @@ export class Board3dHandService {
     const scanUrl = this.cardsBaseService.getScanUrlFromCardList(card, hand);
     const isFaceDown = !isOwner;
 
-    // Validate URL before loading - if empty or invalid, use cardback
-    const loadFrontTexture = async () => {
-      if (isFaceDown) {
-        return this.assetLoader.loadCardBack();
-      }
-      if (!scanUrl || !scanUrl.trim()) {
-        console.warn('Empty scanUrl for hand card:', card?.fullName, 'set:', card?.set, 'setNumber:', card?.setNumber);
-        return this.assetLoader.loadCardBack();
-      }
-      try {
-        return await this.assetLoader.loadCardTexture(scanUrl);
-      } catch (error) {
-        console.error('Failed to load hand card texture:', scanUrl, error);
-        return this.assetLoader.loadCardBack();
-      }
-    };
-
-    const [frontTexture, backTexture, maskTexture] = await Promise.all([
-      loadFrontTexture(),
+    // Progressive loading: show card-back immediately, load front texture in background
+    const [backTexture, maskTexture] = await Promise.all([
       this.assetLoader.loadCardBack(),
       this.assetLoader.loadCardMaskTexture()
     ]);
+
+    let frontTexture;
+    if (isFaceDown) {
+      frontTexture = backTexture;
+    } else {
+      frontTexture = await this.assetLoader.loadCardBack();
+      const needsFrontLoad = scanUrl && scanUrl.trim();
+      if (needsFrontLoad) {
+        this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
+          const handCard = this.handCards.get(index);
+          if (handCard && handCard.getGroup().userData.cardData?.id === card.id) {
+            handCard.updateTexture(loadedFront, backTexture, maskTexture);
+          }
+        }).catch(() => {});
+      } else if (!scanUrl || !scanUrl.trim()) {
+        console.warn('Empty scanUrl for hand card:', card?.fullName, 'set:', card?.set, 'setNumber:', card?.setNumber);
+      }
+    }
 
     // Create card mesh with smaller scale
     const cardMesh = new Board3dCard(

@@ -3,7 +3,7 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard, GameMessage, StateUtils, StoreLike, State } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -49,13 +49,13 @@ export class CobalionEx extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const specialEnergy = opponent.active.cards.filter(card =>
-        card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL
+        card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.SPECIAL
       );
 
       if (specialEnergy.length > 0) {
         const blocked: number[] = [];
         opponent.active.cards.forEach((c, index) => {
-          if (!(c instanceof EnergyCard) || c.energyType !== EnergyType.SPECIAL) {
+          if (c.superType !== SuperType.ENERGY || (c as EnergyCard).energyType !== EnergyType.SPECIAL) {
             blocked.push(index);
           }
         });

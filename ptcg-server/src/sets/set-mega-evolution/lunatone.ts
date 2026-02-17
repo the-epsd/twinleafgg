@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ABILITY_USED, DRAW_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
@@ -60,7 +60,7 @@ export class Lunatone extends PokemonCard {
       }
 
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy';
+        return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy';
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

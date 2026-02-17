@@ -35,7 +35,7 @@ export class MegaCharizardXex extends PokemonCard {
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const basicEnergyCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard && (card.provides.includes(CardType.FIRE) || card.provides.includes(CardType.ANY))
+          card.superType === SuperType.ENERGY && ((card as EnergyCard).provides.includes(CardType.FIRE) || (card as EnergyCard).provides.includes(CardType.ANY))
         ).length;
         totalEnergy += basicEnergyCount;
       });
@@ -47,9 +47,9 @@ export class MegaCharizardXex extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const blockedIndices: number[] = [];
         cardList.cards.forEach((energyCard, index) => {
-          if (energyCard instanceof EnergyCard) {
+          if (energyCard.superType === SuperType.ENERGY) {
             // Block energy that doesn't provide Fire or Any type
-            if (!energyCard.provides.includes(CardType.FIRE) && !energyCard.provides.includes(CardType.ANY)) {
+            if (!(energyCard as EnergyCard).provides.includes(CardType.FIRE) && !(energyCard as EnergyCard).provides.includes(CardType.ANY)) {
               blockedIndices.push(index);
             }
           }

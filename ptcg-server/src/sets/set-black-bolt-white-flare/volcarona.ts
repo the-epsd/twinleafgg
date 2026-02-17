@@ -58,7 +58,7 @@ export class Volcarona extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && c.provides.includes(CardType.FIRE);
+        return c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.FIRE);
       });
 
       if (!hasEnergyInHand) {

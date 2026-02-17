@@ -37,8 +37,8 @@ export class Yveltal extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.provides.includes(D);
+        return c.superType === SuperType.ENERGY
+          && (c as EnergyCard).provides.includes(D);
       });
 
       if (!hasEnergyInDiscard) {

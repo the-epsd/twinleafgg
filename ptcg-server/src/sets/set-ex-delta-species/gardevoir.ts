@@ -78,12 +78,6 @@ export class Gardevoir extends PokemonCard {
           }
         });
 
-        cardList.cards.forEach(em => {
-          if (cardList.getPokemons().includes(em as PokemonCard)) {
-            blockedCards.push(em);
-          }
-        });
-
         const blocked: number[] = [];
         blockedCards.forEach(bc => {
           const index = cardList.cards.indexOf(bc);
@@ -116,23 +110,7 @@ export class Gardevoir extends PokemonCard {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
 
-          if (transfer.card instanceof PokemonCard) {
-            // If card is in source energies, move it from there; otherwise move from main cards array
-            if (source.energies.cards.includes(transfer.card)) {
-              source.energies.moveCardTo(transfer.card, target.energies);
-              // Also ensure it's in target's main cards array
-              if (!target.cards.includes(transfer.card)) {
-                target.cards.push(transfer.card);
-              }
-            } else {
-              source.moveCardTo(transfer.card, target);
-              if (!target.energies.cards.includes(transfer.card)) {
-                target.energies.cards.push(transfer.card);
-              }
-            }
-          } else {
-            source.moveCardTo(transfer.card, target);
-          }
+          source.moveCardTo(transfer.card, target);
         }
 
         return state;

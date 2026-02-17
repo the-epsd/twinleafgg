@@ -21,7 +21,7 @@ export class Cryogonal extends PokemonCard {
       name: 'Ice Edge',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

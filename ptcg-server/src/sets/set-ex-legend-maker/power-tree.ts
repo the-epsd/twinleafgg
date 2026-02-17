@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, EnergyCard, ShowCardsPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, ShowCardsPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
@@ -40,7 +40,7 @@ export class PowerTree extends TrainerCard {
       let specialEnergyInDiscard: number = 0;
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (c instanceof EnergyCard) {
+        if (c.superType === SuperType.ENERGY) {
           if (c.energyType === EnergyType.BASIC) {
             basicEnergyInDiscard += 1;
           }

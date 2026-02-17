@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Floragato extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -31,34 +31,16 @@ export class Floragato extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public regulationMark = 'G';
-  public magicWhip: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      this.magicWhip = true;
-    }
-
-    if (effect instanceof EndTurnEffect && this.magicWhip == true) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        if (result) {
-          if (result.length > 0) {
-            opponent.active.clearEffects();
-            opponent.switchPokemon(result[0]);
-            this.magicWhip = false;
-            return state;
-          }
-        }
-      });
+      // Legacy implementation:
+      // - Set a `magicWhip` flag on attack use and switched on EndTurnEffect.
+      // - Used a custom ChoosePokemonPrompt where the opponent chose their replacement Active.
+      //
+      // Converted to prefab version (SWITCH_OUT_OPPONENT_ACTIVE_POKEMON).
+      return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, effect.player, { allowCancel: false });
     }
     return state;
   }

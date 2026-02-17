@@ -265,6 +265,12 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     if (effect.poisonDamage !== undefined) {
       target.poisonDamage = effect.poisonDamage;
     }
+    if (effect.burnDamage !== undefined) {
+      target.burnDamage = effect.burnDamage;
+    }
+    if (effect.confusionDamage !== undefined) {
+      target.confusionDamage = effect.confusionDamage;
+    }
     return state;
   }
 

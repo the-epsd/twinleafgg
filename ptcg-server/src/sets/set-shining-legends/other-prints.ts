@@ -13,6 +13,8 @@ import { MewtwoGX as MewtwoGXSLG39 } from '../set-shining-legends/mewtwo-gx';
 import { PokemonBreeder as PokemonBreederBS76 } from '../set-base-set/pokemon-breeder';
 import { ZoroarkGX as ZoroarkGXSLG53 } from '../set-shining-legends/zoroark-gx';
 import { UltraBall as UltraBallSVI196 } from '../set-scarlet-and-violet/ultra-ball';
+import { EnteiGx } from './entei-gx';
+import { RaichuGx } from './raichu-gx';
 export class EnergyRetrievalSLG extends EnergyRetrieval {
   public setNumber = '59';
   public fullName: string = 'Energy Retrieval SLG';
@@ -119,4 +121,22 @@ export class ZoroarkGX3SLG extends ZoroarkGXSLG53 {
   public setNumber = '77a';
   public fullName: string = 'Zoroark-GX3 SLG';
   public set = 'SLG';
+}
+
+export class EnteiGx2 extends EnteiGx {
+  public set: string = 'SLG';
+  public setNumber: string = '71';
+  public fullName: string = 'Entei GX SLG 71';
+}
+
+export class EnteiGx3 extends EnteiGx {
+  public set: string = 'SLG';
+  public setNumber: string = '74';
+  public fullName: string = 'Entei GX SLG 74';
+}
+
+export class RaichuGx2 extends RaichuGx {
+  public set: string = 'SLG';
+  public setNumber: string = '75';
+  public fullName: string = 'Raichu GX SLG 75';
 }

@@ -322,6 +322,135 @@ export function COPY_BENCH_ATTACK(
   return generator.next().value;
 }
 
+/**
+ * "Choose 1 of your opponent's Active Pokemon's attacks and use it as this attack."
+ * Used by: Zoroark (Foul Play), Krookodile (Foul Play), Mew ex (Genome Hacking), etc.
+ */
+function* copyOpponentActiveAttackGenerator(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  const pokemonCard = opponent.active.getPokemonCard();
+
+  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+    return state;
+  }
+
+  let selected: any;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [pokemonCard],
+    { allowCancel: false }
+  ), result => {
+    selected = result;
+    next();
+  });
+
+  const attack: Attack | null = selected;
+
+  if (attack === null || attack.copycatAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: attack.name
+  });
+
+  const attackEffect = new AttackEffect(player, opponent, attack);
+  state = store.reduceEffect(state, attackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  return state;
+}
+
+export function COPY_OPPONENT_ACTIVE_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): State {
+  const generator = copyOpponentActiveAttackGenerator(() => generator.next(), store, state, effect);
+  return generator.next().value;
+}
+
+/**
+ * "If your opponent's Pokemon used an attack during their last turn, use it as this attack."
+ * Used by: Mimikyu (Copycat), Sudowoodo (Watch and Learn), etc.
+ */
+function* copyOpponentsLastAttackGenerator(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const lastAttackInfo = state.playerLastAttack[opponent.id];
+
+  if (!lastAttackInfo) {
+    return state;
+  }
+
+  const { attack: lastAttack, sourceCard } = lastAttackInfo;
+
+  if (lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: lastAttack.name
+  });
+
+  const copiedAttackEffect = new AttackEffect(player, opponent, lastAttack);
+  copiedAttackEffect.source = player.active;
+  copiedAttackEffect.target = opponent.active;
+
+  // Call the source card's reduceEffect directly so attack logic runs even if card is not in play
+  state = sourceCard.reduceEffect(store, state, copiedAttackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (copiedAttackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  const afterAttackEffect = new AfterAttackEffect(player, opponent, lastAttack);
+  state = store.reduceEffect(state, afterAttackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  return state;
+}
+
+export function COPY_OPPONENTS_LAST_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): State {
+  const generator = copyOpponentsLastAttackGenerator(() => generator.next(), store, state, effect);
+  return generator.next().value;
+}
+
 export interface ToolActiveDamageBonusOptions {
   damageBonus: number;
   sourcePokemonName?: string;
@@ -898,6 +1027,7 @@ export interface AttachXTypeEnergyFromDiscardToOnePokemonOptions {
   energyFilter?: Partial<EnergyCard>;
   min?: number;
   allowCancel?: boolean;
+  onAttached?: (transfers: { to: CardTarget, card: Card }[]) => void;
 }
 
 /**
@@ -919,7 +1049,8 @@ export function ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
     targetFilter,
     energyFilter = {},
     min = 1,
-    allowCancel = false
+    allowCancel = false,
+    onAttached
   } = options;
 
   if (player.discard.cards.length === 0 || amount <= 0) {
@@ -956,6 +1087,9 @@ export function ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
       const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
       store.reduceEffect(state, attachEnergyEffect);
     }
+    if (onAttached !== undefined) {
+      onAttached(transfers);
+    }
   });
 }
 
@@ -970,6 +1104,7 @@ export interface AttachUpToXEnergyFromDeckToYOfYourPokemonOptions {
   sameTarget?: boolean;
   validCardTypes?: CardType[];
   maxPerType?: number;
+  onAttached?: (transfers: { to: CardTarget, card: Card }[]) => void;
 }
 
 /**
@@ -999,7 +1134,8 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
     differentTargets = false,
     sameTarget = false,
     validCardTypes,
-    maxPerType
+    maxPerType,
+    onAttached
   } = options;
 
   if (player.deck.cards.length === 0 || maxEnergyCards <= 0 || maxPokemonTargets <= 0) {
@@ -1041,6 +1177,10 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
       const energyCard = transfer.card as EnergyCard;
       const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
       store.reduceEffect(state, attachEnergyEffect);
+    }
+
+    if (onAttached !== undefined) {
+      onAttached(transfers);
     }
 
     SHUFFLE_DECK(store, state, player);
@@ -1477,22 +1617,23 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   });
 }
 
-export interface GustOpponentBenchedPokemonOptions {
+export interface SwitchInOpponentBenchedPokemonOptions {
   allowCancel?: boolean;
   blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
 }
 
 /**
- * Compound helper for "gust" effects:
+ * Compound helper for "switch in" effects:
  * "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
  */
-export function GUST_OPPONENT_BENCHED_POKEMON(
+export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
   store: StoreLike,
   state: State,
   player: Player,
-  options: GustOpponentBenchedPokemonOptions = {}
+  options: SwitchInOpponentBenchedPokemonOptions = {}
 ): State {
-  const { allowCancel = false, blocked = [] } = options;
+  const { allowCancel = false, blocked = [], onSwitched } = options;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBenchedPokemon = opponent.bench.some(bench => bench.cards.length > 0);
   if (!hasBenchedPokemon) {
@@ -1510,8 +1651,88 @@ export function GUST_OPPONENT_BENCHED_POKEMON(
       return;
     }
     opponent.switchPokemon(selected[0], store, state);
+    if (onSwitched !== undefined) {
+      onSwitched(selected[0]);
+    }
   });
 }
+
+export interface SwitchOutOpponentActivePokemonOptions {
+  allowCancel?: boolean;
+  blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
+}
+
+/**
+ * Compound helper for text like:
+ * "Switch out your opponent's Active Pokémon to the Bench.
+ * (Your opponent chooses the new Active Pokémon.)"
+ *
+ * Common on effects like Repel and the opponent-facing part of Escape Rope.
+ */
+export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {}
+): State {
+  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const opponent = StateUtils.getOpponent(state, player);
+  const hasBenchedPokemon = opponent.bench.some(bench => bench.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    return state;
+  }
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    opponent.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { min: 1, max: 1, allowCancel, blocked }
+  ), selected => {
+    if (!selected || selected.length === 0) {
+      return;
+    }
+    opponent.switchPokemon(selected[0], store, state);
+    if (onSwitched !== undefined) {
+      onSwitched(selected[0]);
+    }
+  });
+}
+
+/**
+ * Backward-compatible alias for `SWITCH_OUT_OPPONENT_ACTIVE_POKEMON`.
+ */
+export function OPPONENT_SWITCHES_THEIR_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {}
+): State {
+  return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchInOpponentBenchedPokemonOptions`.
+ */
+export type GustOpponentBenchedPokemonOptions = SwitchInOpponentBenchedPokemonOptions;
+
+/**
+ * Backward-compatible alias for `SWITCH_IN_OPPONENT_BENCHED_POKEMON`.
+ */
+export function GUST_OPPONENT_BENCHED_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchInOpponentBenchedPokemonOptions = {}
+): State {
+  return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchOutOpponentActivePokemonOptions`.
+ */
+export type OpponentSwitchesTheirActivePokemonOptions = SwitchOutOpponentActivePokemonOptions;
 
 export interface MoveDamageCountersOptions {
   playerType?: PlayerType;
@@ -2091,10 +2312,10 @@ export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card)
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(
   store: StoreLike, state: State, player: Player, source: Card,
-  specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1
+  specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1, confusionDamage: number = 30
 ) {
   store.reduceEffect(state, new AddSpecialConditionsPowerEffect(
-    player, source, player.active, specialConditions, poisonDamage, burnDamage, sleepFlips));
+    player, source, player.active, specialConditions, poisonDamage, burnDamage, sleepFlips, confusionDamage));
 }
 
 export function ADD_SLEEP_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, sleepFlips: number = 1) {
@@ -2113,8 +2334,8 @@ export function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, p
   ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.PARALYZED]);
 }
 
-export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card) {
-  ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.CONFUSED]);
+export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, confusionDamage: number = 30) {
+  ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.CONFUSED], 10, 20, 1, confusionDamage);
 }
 
 export interface PreventAndClearSpecialConditionsOptions {

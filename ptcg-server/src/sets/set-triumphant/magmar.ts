@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { StoreLike, State, StateUtils, CardType, Stage, EnergyCard, CardList } from '../../game';
+import { StoreLike, State, StateUtils, CardType, Stage, SuperType, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -44,10 +44,10 @@ export class Magmar extends PokemonCard {
       player.deck.moveTo(playerTopDeck, 1);
       opponent.deck.moveTo(opponentTopDeck, 1);
 
-      if (playerTopDeck.cards[0] instanceof EnergyCard) {
+      if (playerTopDeck.cards[0]?.superType === SuperType.ENERGY) {
         damageScaling++;
       }
-      if (opponentTopDeck.cards[0] instanceof EnergyCard) {
+      if (opponentTopDeck.cards[0]?.superType === SuperType.ENERGY) {
         damageScaling++;
       }
 

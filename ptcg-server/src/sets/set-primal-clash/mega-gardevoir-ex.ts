@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, EnergyCard } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
 import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
@@ -58,7 +58,7 @@ export class MGardevoirEx extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
         const goodEnergy = card.cards.filter(card =>
-          card instanceof EnergyCard && card.name === 'Fairy Energy'
+          card.superType === SuperType.ENERGY && card.name === 'Fairy Energy'
         );
 
         fairyEnergies += goodEnergy.length;

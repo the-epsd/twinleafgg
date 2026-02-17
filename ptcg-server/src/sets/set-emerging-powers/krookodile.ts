@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, EnergyCard } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, GameError, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -63,7 +63,7 @@ export class Krookodile extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+          const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
           if (energyCards.length > 0) {
             opponent.active.moveCardTo(energyCards[0], opponent.discard);
           }

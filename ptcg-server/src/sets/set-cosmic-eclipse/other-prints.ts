@@ -31,6 +31,19 @@ import { TagCall as TagCallCEC206 } from '../set-cosmic-eclipse/tag-call';
 import { DrawEnergy as DrawEnergyCEC209 } from '../set-cosmic-eclipse/draw-energy';
 import { TogepiCleffaIgglybuffGX as TogepiCleffaIgglybuffGXCEC143 } from '../set-cosmic-eclipse/togepi-cleffa-igglybuff-gx';
 import { GuzmaAndHala } from './guzma-and-hala';
+import { VolcaronaGx } from './volcarona-gx';
+import { FlygonGx } from './flygon-gx';
+import { ReshiramAndZekromGx } from './reshiram-and-zekrom-gx';
+import { SilvallyGx } from './silvally-gx';
+import { NsResolve } from './ns-resolve';
+import { RedAndBlue } from './red-and-blue';
+import { RollerSkater } from './roller-skater';
+import { Torkoal } from './torkoal';
+import { Weavile } from './weavile';
+import { Piplup } from './piplup';
+import { Magnemite } from './magnemite';
+import { Gallade } from './gallade';
+import { IslandChallengeAmulet } from './island-challenge-amulet';
 
 export class GuzmaAndHalaCEC extends GuzmaAndHala {
   public set: string = 'CEC';
@@ -311,4 +324,106 @@ export class TogepiCleffaIgglybuffGX2CEC extends TogepiCleffaIgglybuffGXCEC143 {
   public setNumber = '143a';
   public fullName: string = 'Togepi & Cleffa & Igglybuff-GX2 CEC';
   public set = 'CEC';
+}
+
+export class VolcaronaGx2 extends VolcaronaGx {
+  public set: string = 'CEC';
+  public setNumber: string = '213';
+  public fullName: string = 'Volcarona-GX CEC 213';
+}
+
+export class FlygonGx2 extends FlygonGx {
+  public set: string = 'CEC';
+  public setNumber: string = '218';
+  public fullName: string = 'Flygon-GX CEC 218';
+}
+
+export class ReshiramAndZekromGx2 extends ReshiramAndZekromGx {
+  public set: string = 'CEC';
+  public setNumber: string = '222';
+  public fullName: string = 'Reshiram & Zekrom-GX CEC 222';
+}
+
+export class SilvallyGx2 extends SilvallyGx {
+  public set: string = 'CEC';
+  public setNumber: string = '227';
+  public fullName: string = 'Silvally-GX CEC 227';
+}
+
+export class NsResolve2 extends NsResolve {
+  public set: string = 'CEC';
+  public setNumber: string = '232';
+  public fullName: string = 'N\'s Resolve CEC 232';
+}
+
+export class RedAndBlue2 extends RedAndBlue {
+  public set: string = 'CEC';
+  public setNumber: string = '234';
+  public fullName: string = 'Red & Blue CEC 234';
+}
+
+export class RollerSkater2 extends RollerSkater {
+  public set: string = 'CEC';
+  public setNumber: string = '235';
+  public fullName: string = 'Roller Skater CEC 235';
+}
+
+export class Torkoal2 extends Torkoal {
+  public set: string = 'CEC';
+  public setNumber: string = '237';
+  public fullName: string = 'Torkoal CEC 237';
+}
+
+export class Weavile2 extends Weavile {
+  public set: string = 'CEC';
+  public setNumber: string = '238';
+  public fullName: string = 'Weavile CEC 238';
+}
+
+export class Piplup2 extends Piplup {
+  public set: string = 'CEC';
+  public setNumber: string = '239';
+  public fullName: string = 'Piplup CEC 239';
+}
+
+export class Magnemite2 extends Magnemite {
+  public set: string = 'CEC';
+  public setNumber: string = '242';
+  public fullName: string = 'Magnemite CEC 242';
+}
+
+export class Gallade2 extends Gallade {
+  public set: string = 'CEC';
+  public setNumber: string = '244';
+  public fullName: string = 'Gallade CEC 244';
+}
+
+export class VolcaronaGx3 extends VolcaronaGx {
+  public set: string = 'CEC';
+  public setNumber: string = '252';
+  public fullName: string = 'Volcarona-GX CEC 252';
+}
+
+export class FlygonGx3 extends FlygonGx {
+  public set: string = 'CEC';
+  public setNumber: string = '256';
+  public fullName: string = 'Flygon-GX CEC 256';
+}
+
+export class ReshiramAndZekromGx3 extends ReshiramAndZekromGx {
+  public set: string = 'CEC';
+  public setNumber: string = '259';
+  public fullName: string = 'Reshiram & Zekrom-GX CEC 259';
+}
+
+export class SilvallyGx3 extends SilvallyGx {
+  public set: string = 'CEC';
+  public setNumber: string = '262';
+  public fullName: string = 'Silvally-GX CEC 262';
+}
+
+export class IslandChallengeAmulet2 extends IslandChallengeAmulet {
+  public set: string = 'CEC';
+  public setNumber: string = '265';
+  public fullName: string = 'Island Challenge Amulet CEC 265';
 }

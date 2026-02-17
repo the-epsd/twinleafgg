@@ -7,7 +7,7 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
   PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
-  PokemonCardList, ChooseCardsPrompt, Card, EnergyCard
+  PokemonCardList, ChooseCardsPrompt, Card
 } from '../../game';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let hasPokemonWithEnergy = false;
   const blocked: CardTarget[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.energies.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+    if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
       hasPokemonWithEnergy = true;
     } else {
       blocked.push(target);

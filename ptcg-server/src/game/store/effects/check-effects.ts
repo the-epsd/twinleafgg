@@ -201,19 +201,21 @@ export class AddSpecialConditionsPowerEffect implements Effect {
   public preventDefault = false;
   public poisonDamage?: number;
   public burnDamage?: number;
+  public confusionDamage?: number;
   public sleepFlips?: number;
   public specialConditions: SpecialCondition[];
   public player: Player;
   public source: Card;
   public target: PokemonCardList;
 
-  constructor(player: Player, source: Card, target: PokemonCardList, specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1) {
+  constructor(player: Player, source: Card, target: PokemonCardList, specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1, confusionDamage: number = 30) {
     this.player = player;
     this.source = source;
     this.target = target;
     this.specialConditions = specialConditions;
     this.poisonDamage = poisonDamage;
     this.burnDamage = burnDamage;
+    this.confusionDamage = confusionDamage;
     this.sleepFlips = sleepFlips;
   }
 }

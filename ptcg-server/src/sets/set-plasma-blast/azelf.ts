@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { CardTarget, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -67,7 +67,7 @@ export class Azelf extends PokemonCard {
         const blocked: number[] = [];
 
         cardList.cards.forEach((c, index) => {
-          if (!(c instanceof EnergyCard) || c.energyType !== EnergyType.SPECIAL) {
+          if (c.superType !== SuperType.ENERGY || (c as EnergyCard).energyType !== EnergyType.SPECIAL) {
             blocked.push(index);
           }
         });
@@ -94,6 +94,12 @@ export class Azelf extends PokemonCard {
         }
 
         for (const transfer of transfers) {
+          if (transfer.from.player === transfer.to.player
+            && transfer.from.slot === transfer.to.slot
+            && transfer.from.index === transfer.to.index) {
+            continue;
+          }
+
           const source = StateUtils.getTarget(state, opponent, transfer.from);
           const target = StateUtils.getTarget(state, opponent, transfer.to);
           source.moveCardTo(transfer.card, target);

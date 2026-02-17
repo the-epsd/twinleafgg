@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, EnergyCard, ChooseEnergyPrompt, Card } from '../../game';
+import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, GameMessage, GameError, ChooseEnergyPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -62,7 +62,7 @@ export class VikavoltV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

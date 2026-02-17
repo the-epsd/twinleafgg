@@ -1,4 +1,4 @@
-import { EnergyCard, Card, ChooseCardsPrompt, CoinFlipPrompt, PlayerType } from '../../game';
+import { Card, ChooseCardsPrompt, CoinFlipPrompt, PlayerType } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
@@ -58,7 +58,7 @@ export class AlolanMuk extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

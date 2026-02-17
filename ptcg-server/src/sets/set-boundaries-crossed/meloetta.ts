@@ -3,8 +3,8 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { EnergyCard, StoreLike, State } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { NEXT_TURN_ATTACK_BONUS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -20,7 +20,7 @@ export class Meloetta extends PokemonCard {
       name: 'Psychic',
       cost: [P],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 more damage for each Energy attached to the Defending Pokémon.'
     },
     {
@@ -43,7 +43,7 @@ export class Meloetta extends PokemonCard {
     // Attack 1: Psychic
     // Ref: set-team-up/moltres.ts (count attached energy)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const defendingEnergy = effect.opponent.active.cards.filter(c => c instanceof EnergyCard).length;
+      const defendingEnergy = effect.opponent.active.cards.filter(c => c.superType === SuperType.ENERGY).length;
       effect.damage += defendingEnergy * 20;
     }
 

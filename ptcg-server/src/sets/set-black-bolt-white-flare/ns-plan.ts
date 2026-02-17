@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, MoveEnergyPrompt, StateUtils, PlayerType, SlotType, EnergyCard } from '../../game';
+import { GameError, GameMessage, MoveEnergyPrompt, StateUtils, PlayerType, SlotType } from '../../game';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class NsPlan extends TrainerCard {
@@ -32,7 +32,7 @@ export class NsPlan extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         pokemonCount += 1;
         const basicEnergyAttached = cardList.cards.some(c => {
-          return c instanceof EnergyCard;
+          return c.superType === SuperType.ENERGY;
         });
         hasEnergy = hasEnergy || basicEnergyAttached;
       });

@@ -16,7 +16,7 @@ export class Weedle extends PokemonCard {
       name: 'Triple Stab',
       cost: [G],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     }
   ];

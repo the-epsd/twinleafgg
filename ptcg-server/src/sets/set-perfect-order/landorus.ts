@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard, GameLog, ChooseCardsPrompt, GameMessage, SuperType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, GameLog, ChooseCardsPrompt, GameMessage, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -40,7 +40,7 @@ export class Landorus extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this) && effect instanceof AttackEffect) {
       const player = effect.player;
       const energiesAttached = player.active.cards.filter(card =>
-        card instanceof EnergyCard
+        card.superType === SuperType.ENERGY
       );
 
       if (energiesAttached.length === 0) {

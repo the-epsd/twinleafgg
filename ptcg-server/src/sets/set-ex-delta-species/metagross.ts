@@ -1,4 +1,4 @@
-import { DiscardEnergyPrompt, EnergyCard, GameError, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
+import { DiscardEnergyPrompt, GameError, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
@@ -92,7 +92,7 @@ export class Metagross extends PokemonCard {
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const energyCount = cardList.cards.filter(card =>
-          card instanceof EnergyCard
+          card.superType === SuperType.ENERGY
         ).length;
         totalEnergy += energyCount;
       });

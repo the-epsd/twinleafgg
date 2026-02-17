@@ -177,4 +177,72 @@ describe('StateUtils', () => {
       expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
     });
   });
+
+  describe('allEnergyProvidesIdentical', () => {
+    const dark = [CardType.DARK];
+    const fire = [CardType.FIRE];
+
+    it('Should return true when all energy has same provides', () => {
+      const energy: EnergyMap[] = [
+        createEnergy('dark1', dark),
+        createEnergy('dark2', dark),
+        createEnergy('dark3', dark)
+      ];
+      expect(StateUtils.allEnergyProvidesIdentical(energy)).toBeTruthy();
+    });
+
+    it('Should return false when energy has different provides', () => {
+      const energy: EnergyMap[] = [
+        createEnergy('dark', dark),
+        createEnergy('fire', fire)
+      ];
+      expect(StateUtils.allEnergyProvidesIdentical(energy)).toBeFalsy();
+    });
+
+    it('Should return true for single entry', () => {
+      const energy: EnergyMap[] = [createEnergy('dark', dark)];
+      expect(StateUtils.allEnergyProvidesIdentical(energy)).toBeTruthy();
+    });
+
+    it('Should return false for empty array', () => {
+      expect(StateUtils.allEnergyProvidesIdentical([])).toBeFalsy();
+    });
+  });
+
+  describe('selectMinimalEnergyForCost', () => {
+    const dark = [CardType.DARK];
+    const colorless2 = [CardType.COLORLESS, CardType.COLORLESS];
+
+    it('Should return 1 entry when 3x dark for 1 colorless cost', () => {
+      const energy: EnergyMap[] = [
+        createEnergy('dark1', dark),
+        createEnergy('dark2', dark),
+        createEnergy('dark3', dark)
+      ];
+      const cost: CardType[] = [CardType.COLORLESS];
+      const result = StateUtils.selectMinimalEnergyForCost(energy, cost);
+      expect(result).not.toBeNull();
+      expect(result!.length).toBe(1);
+      expect(StateUtils.checkEnoughEnergy(result!, cost)).toBeTruthy();
+    });
+
+    it('Should return 1 entry when 2x DCE for 2 colorless cost', () => {
+      const energy: EnergyMap[] = [
+        createEnergy('dce1', colorless2),
+        createEnergy('dce2', colorless2)
+      ];
+      const cost: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+      const result = StateUtils.selectMinimalEnergyForCost(energy, cost);
+      expect(result).not.toBeNull();
+      expect(result!.length).toBe(1);
+      expect(StateUtils.checkEnoughEnergy(result!, cost)).toBeTruthy();
+    });
+
+    it('Should return null for insufficient energy', () => {
+      const energy: EnergyMap[] = [createEnergy('dark', dark)];
+      const cost: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+      const result = StateUtils.selectMinimalEnergyForCost(energy, cost);
+      expect(result).toBeNull();
+    });
+  });
 });

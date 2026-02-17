@@ -90,8 +90,8 @@ export class Manaphy extends PokemonCard {
 
         // Count available water energy in discard
         const waterEnergy = player.discard.cards.filter(c =>
-          c instanceof EnergyCard && c.energyType === EnergyType.BASIC &&
-          c.provides.includes(CardType.WATER)
+          c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC &&
+          (c as EnergyCard).provides.includes(CardType.WATER)
         );
 
         const hasBench = player.bench.some(b => b.cards.length > 0);

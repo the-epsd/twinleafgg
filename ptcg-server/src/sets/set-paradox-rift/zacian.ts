@@ -43,7 +43,7 @@ export class Zacian extends PokemonCard {
       }
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard && c.provides.includes(M);
+        return c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(M);
       });
 
       if (!hasEnergyInDiscard) {
@@ -52,7 +52,7 @@ export class Zacian extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
-        if (card instanceof EnergyCard && !card.provides.includes(M)) {
+        if (card.superType === SuperType.ENERGY && !(card as EnergyCard).provides.includes(M)) {
           blocked.push(index);
         }
       });

@@ -21,7 +21,7 @@ export class Vanillite extends PokemonCard {
       name: 'Jump On',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

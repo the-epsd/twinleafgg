@@ -38,7 +38,7 @@ export class Cobalion extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;
 
-      const specialEnergies = active.cards.filter(card => card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL);
+      const specialEnergies = active.cards.filter(card => card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.SPECIAL);
       if (specialEnergies.length === 0) {
         return state; // Nothing to discard
       }

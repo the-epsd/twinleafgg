@@ -24,7 +24,7 @@ export class Galvantula extends PokemonCard {
       name: 'Discharge',
       cost: [L],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard all [L] Energy attached to this Pokémon. This attack does 30 damage times the number of Energy cards you discarded.'
     },
     {

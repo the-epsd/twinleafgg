@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { GamePhase, PlayerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
@@ -50,8 +50,12 @@ export class Reuniclus extends PokemonCard {
     }
 
     // Intercept incoming damage for Barrier Attack
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 30);
+    // Ref: set-base-set/pluspower.ts (AfterWeaknessAndResistance timing via post-W/R hook)
+    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      if (state.phase === GamePhase.ATTACK && effect.player !== targetOwner) {
+        effect.damage = Math.max(0, effect.damage - 30);
+      }
     }
 
     // Cleanup Barrier Attack marker

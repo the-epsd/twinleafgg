@@ -30,7 +30,7 @@ export class Musharna extends PokemonCard {
       name: 'Dream Waltz',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack can be used even if this Pokémon is Asleep. If this Pokémon is Asleep, this attack does 30 more damage.'
     }
   ];

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -8,6 +8,7 @@ export class ErikasWeepinbell extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Erika\'s Bellsprout';
   public cardType: CardType = G;
+  public tags = [CardTag.ERIKAS];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];

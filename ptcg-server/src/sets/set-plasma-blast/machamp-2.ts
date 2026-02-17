@@ -24,7 +24,7 @@ export class Machamp2 extends PokemonCard {
       name: 'Reinforced Lariat',
       cost: [F, F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pok\u00e9mon has a Pok\u00e9mon Tool card attached to it, this attack does 40 more damage.'
     }
   ];

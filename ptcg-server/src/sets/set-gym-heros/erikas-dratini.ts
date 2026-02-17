@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition, CardTag } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -10,6 +10,7 @@ import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 export class ErikasDratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
+  public tags = [CardTag.ERIKAS];
   public hp: number = 40;
   public weakness = [];
   public resistance = [{ type: P, value: -30 }];

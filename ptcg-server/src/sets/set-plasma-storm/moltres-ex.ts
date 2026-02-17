@@ -3,8 +3,8 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { EnergyCard, StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
@@ -30,7 +30,7 @@ export class MoltresEx extends PokemonCard {
       name: 'Power Flame',
       cost: [R, R, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
     }
   ];
@@ -61,7 +61,7 @@ export class MoltresEx extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       const hasPlasmaEnergy = checkEnergy.energyMap.some(em =>
-        em.card instanceof EnergyCard && em.card.name === 'Plasma Energy'
+        em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy'
       );
 
       if (hasPlasmaEnergy) {

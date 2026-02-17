@@ -11,6 +11,8 @@ import { Chandelure as ChandelureNVI60 } from '../set-noble-victories/chandelure
 import { Zoroark } from '../set-black-and-white/zoroark';
 import { Hydreigon as HydreigonNVI79 } from '../set-noble-victories/hydreigon';
 import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
+import { KyuremEx as KyuremExNXD38 } from '../set-next-destinies/kyurem-ex';
+import { RegigigasEx as RegigigasExNXD82 } from '../set-next-destinies/regigigas-ex';
 import { LevelBall } from './level-ball';
 
 export class DoubleColorlessEnergyNXD extends DoubleColorlessEnergy {
@@ -61,6 +63,11 @@ export class ReshiramEx2NXD extends ReshiramExNXD22 {
   public set = 'NXD';
 }
 
+export class KyuremEx2NXD extends KyuremExNXD38 {
+  public setNumber = '96';
+  public fullName: string = 'Kyurem-EX NXD 96';
+}
+
 export class ZekromEx2NXD extends ZekromExNXD51 {
   public setNumber = '97';
   public fullName: string = 'Zekrom EX2 NXD';
@@ -71,6 +78,11 @@ export class MewtwoEx2NXD extends MewtwoExNXD54 {
   public setNumber = '98';
   public fullName: string = 'Mewtwo EX2 NXD';
   public set = 'NXD';
+}
+
+export class RegigigasEx2NXD extends RegigigasExNXD82 {
+  public setNumber = '99';
+  public fullName: string = 'Regigigas-EX NXD 99';
 }
 
 export class EmboarNXD extends Emboar {

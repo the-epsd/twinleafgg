@@ -1,5 +1,5 @@
-import { Card, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -42,7 +42,7 @@ Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) t
       player.deck.cards.forEach((c, index) => {
         if (c instanceof PokemonCard && c.tags.includes(CardTag.DELTA_SPECIES)) {
           return;
-        } else if (c instanceof EnergyCard && c.name === 'Metal Energy') {
+        } else if (c.superType === SuperType.ENERGY && c.name === 'Metal Energy') {
           return;
         } else {
           blocked.push(index);

@@ -40,7 +40,7 @@ export class Pikachu extends PokemonCard {
       const player = effect.player;
 
       const hasLightningEnergyInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.LIGHTNING)
+        c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && (c as EnergyCard).provides.includes(CardType.LIGHTNING)
       );
 
       if (!hasLightningEnergyInDiscard) {
@@ -78,7 +78,7 @@ export class Pikachu extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const allEnergies = player.active.cards.filter(c => c instanceof EnergyCard);
+      const allEnergies = player.active.cards.filter(c => c.superType === SuperType.ENERGY);
 
       if (allEnergies.length > 0) {
         const discardEnergy = new DiscardCardsEffect(effect, allEnergies);

@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { GameMessage, StoreLike, State, TrainerCard } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { WAS_ATTACK_USED, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
@@ -89,7 +88,7 @@ export class Raticate extends PokemonCard {
               // Step 3: Choose a Team Plasma Energy from discard
               const plasmaEnergyBlocked: number[] = [];
               player.discard.cards.forEach((card, index) => {
-                const isPlasmaEnergy = card instanceof EnergyCard
+                const isPlasmaEnergy = card.superType === SuperType.ENERGY
                   && card.tags.includes(CardTag.TEAM_PLASMA);
                 if (!isPlasmaEnergy) {
                   plasmaEnergyBlocked.push(index);
@@ -123,7 +122,7 @@ export class Raticate extends PokemonCard {
             // Step 3 (no trainer): Choose a Team Plasma Energy from discard
             const plasmaEnergyBlocked: number[] = [];
             player.discard.cards.forEach((card, index) => {
-              const isPlasmaEnergy = card instanceof EnergyCard
+              const isPlasmaEnergy = card.superType === SuperType.ENERGY
                 && card.tags.includes(CardTag.TEAM_PLASMA);
               if (!isPlasmaEnergy) {
                 plasmaEnergyBlocked.push(index);

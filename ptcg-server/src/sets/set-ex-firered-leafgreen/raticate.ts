@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, PowerType, State, StoreLike, TrainerCard } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Card, ChooseCardsPrompt, GameMessage, PowerType, State, StoreLike, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AFTER_ATTACK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -55,7 +55,7 @@ export class Raticate extends PokemonCard {
       let trainers = 0;
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (c instanceof EnergyCard) {
+        if (c.superType === SuperType.ENERGY) {
           energies += 1;
         } else if (c instanceof PokemonCard) {
           pokemons += 1;

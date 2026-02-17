@@ -18,7 +18,7 @@ export class Carracosta extends PokemonCard {
       name: 'Fossil Clutch',
       cost: [W, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard an Item card that has Fossil in its name from your hand. If you do, this attack does 50 more damage.'
     },
     {

@@ -1,5 +1,5 @@
-import { Card, ChooseEnergyPrompt, EnergyCard, GameMessage } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { Card, ChooseEnergyPrompt, GameMessage } from '../../game';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -34,7 +34,7 @@ export class Dipplin extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

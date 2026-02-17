@@ -64,9 +64,9 @@ export class ChiYu extends PokemonCard {
       // this.damageDealt = false;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
+        return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.FIRE);
+          && (c as EnergyCard).provides.includes(CardType.FIRE);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);

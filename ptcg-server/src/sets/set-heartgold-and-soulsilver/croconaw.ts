@@ -23,7 +23,7 @@ export class Croconaw extends PokemonCard {
     name: 'Big Bite',
     cost: [W, C, C],
     damage: 50,
-    text: "The Defending Pokémon can\'t retreat during your opponent\'s next turn."
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
   }];
 
   public set: string = 'HS';

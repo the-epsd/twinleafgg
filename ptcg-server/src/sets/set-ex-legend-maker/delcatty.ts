@@ -2,7 +2,7 @@ import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../game/
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -65,7 +65,7 @@ export class Delcatty extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         pokemonCount += 1;
         const reactEnergyAttached = cardList.cards.some(c => {
-          return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+          return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
         });
         hasReactEnergy = hasReactEnergy || reactEnergyAttached;
       });

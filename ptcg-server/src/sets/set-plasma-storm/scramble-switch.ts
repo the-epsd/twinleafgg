@@ -1,11 +1,11 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, GameError, PokemonCardList, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { PlayerType, SlotType, GameError, PokemonCardList, ChooseCardsPrompt } from '../../game';
 import { GameMessage } from '../../game/game-message';
 
 
@@ -38,7 +38,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const target = targets[0];
-  const hasEnergies = player.active.cards.some(c => c instanceof EnergyCard);
+  const hasEnergies = player.active.cards.some(c => c.superType === SuperType.ENERGY);
 
   if (hasEnergies) {
     yield store.prompt(state, new ChooseCardsPrompt(

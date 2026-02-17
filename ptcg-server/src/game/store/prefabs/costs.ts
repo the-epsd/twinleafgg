@@ -31,11 +31,13 @@ function energyCardProvidesType(card: Card, cardType: CardType): boolean {
   return card.provides.includes(cardType) || card.provides.includes(CardType.ANY);
 }
 
+type EnergyDiscardTransfer = { from: CardTarget, card: Card };
+
 function discardTransfersAsEffects(
   store: StoreLike,
   state: State,
   effect: AttackEffect,
-  transfers: { from: CardTarget, card: Card }[]
+  transfers: EnergyDiscardTransfer[]
 ): State {
   const player = effect.player;
   const grouped = new Map<PokemonCardList, Card[]>();
@@ -62,6 +64,8 @@ function discardTransfersAsEffects(
  * Defaults:
  * - `minAmount`: 0 (fully optional)
  * - `filter`: all Energy cards
+ *
+ * Optional `onDiscarded` receives the resolved transfers after discard effects are applied.
  */
 export function DISCARD_UP_TO_X_ENERGY_FROM_THIS_POKEMON(
   store: StoreLike,
@@ -69,7 +73,8 @@ export function DISCARD_UP_TO_X_ENERGY_FROM_THIS_POKEMON(
   effect: AttackEffect,
   maxAmount: number,
   filter: Partial<EnergyCard> = {},
-  minAmount: number = 0
+  minAmount: number = 0,
+  onDiscarded?: (transfers: EnergyDiscardTransfer[]) => void
 ): State {
   return DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
     store,
@@ -78,7 +83,8 @@ export function DISCARD_UP_TO_X_ENERGY_FROM_THIS_POKEMON(
     maxAmount,
     filter,
     minAmount,
-    [SlotType.ACTIVE]
+    [SlotType.ACTIVE],
+    onDiscarded
   );
 }
 
@@ -89,6 +95,8 @@ export function DISCARD_UP_TO_X_ENERGY_FROM_THIS_POKEMON(
  * - `minAmount`: 0 (fully optional)
  * - `filter`: all Energy cards
  * - `slots`: Active + Bench
+ *
+ * Optional `onDiscarded` receives the resolved transfers after discard effects are applied.
  */
 export function DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
   store: StoreLike,
@@ -97,7 +105,8 @@ export function DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
   maxAmount: number,
   filter: Partial<EnergyCard> = {},
   minAmount: number = 0,
-  slots: SlotType[] = [SlotType.ACTIVE, SlotType.BENCH]
+  slots: SlotType[] = [SlotType.ACTIVE, SlotType.BENCH],
+  onDiscarded?: (transfers: EnergyDiscardTransfer[]) => void
 ): State {
   const player = effect.player;
 
@@ -133,6 +142,9 @@ export function DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
       return state;
     }
     state = discardTransfersAsEffects(store, state, effect, transfers);
+    if (onDiscarded !== undefined) {
+      onDiscarded(transfers);
+    }
     return state;
   });
 }
@@ -142,6 +154,8 @@ export function DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON(
  *
  * This defaults to all attached Energy and validates type server-side so callers
  * can safely use broad selection filters.
+ *
+ * Optional `onDiscarded` receives the resolved transfers after discard effects are applied.
  */
 export function DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON(
   store: StoreLike,
@@ -150,7 +164,8 @@ export function DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON(
   maxAmount: number,
   cardType: CardType,
   minAmount: number = 0,
-  slots: SlotType[] = [SlotType.ACTIVE, SlotType.BENCH]
+  slots: SlotType[] = [SlotType.ACTIVE, SlotType.BENCH],
+  onDiscarded?: (transfers: EnergyDiscardTransfer[]) => void
 ): State {
   const player = effect.player;
 
@@ -203,6 +218,9 @@ export function DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON(
     }
 
     state = discardTransfersAsEffects(store, state, effect, transfers);
+    if (onDiscarded !== undefined) {
+      onDiscarded(transfers);
+    }
     return state;
   });
 }

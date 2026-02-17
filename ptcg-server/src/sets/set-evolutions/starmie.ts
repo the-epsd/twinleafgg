@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, EnergyCard, GameError, PlayerType } from '../../game';
+import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, GameError, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -19,7 +19,7 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
 
   let basicEnergies = 0;
   player.discard.cards.forEach(c => {
-    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergies += 1;
     }
   });

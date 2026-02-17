@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { EnergyCard, GameError } from '../../game';
+import { GameError } from '../../game';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     c instanceof PokemonCard ||
     (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) ||
     (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) ||
-    c instanceof EnergyCard
+    c.superType === SuperType.ENERGY
   );
 
   if (!hasValidCard) {
@@ -55,9 +55,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
       tools += 1;
     } else if (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) {
       stadiums += 1;
-    } else if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+    } else if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergies += 1;
-    } else if (c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL) {
+    } else if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL) {
       specialEnergies += 1;
     } else {
       blocked.push(index);

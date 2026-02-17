@@ -23,7 +23,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Hundred Furious Lashes',
       cost: [G],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Does 30 damage times the amount of [G] Energy attached to this Pokémon. This Pokémon can\'t use Hundred Furious Lashes during your next turn.'
     },
     {

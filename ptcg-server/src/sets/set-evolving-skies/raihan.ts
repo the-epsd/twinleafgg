@@ -3,7 +3,6 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
@@ -34,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   const hasEnergyInDiscard = player.discard.cards.some(c => {
-    return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+    return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
   });
   if (!hasEnergyInDiscard) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -42,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+    const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
     if (!isBasicEnergy) {
       blocked.push(index);
     }

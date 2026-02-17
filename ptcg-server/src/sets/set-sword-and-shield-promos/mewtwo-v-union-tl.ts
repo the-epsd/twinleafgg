@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, CardTarget, DamageMap, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, CardTarget, DamageMap, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -139,7 +139,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
       let psychicsInDiscard = 0;
       // checking for energies in the discard
       player.discard.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy') {
+        if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy') {
           psychicsInDiscard++;
         }
       });

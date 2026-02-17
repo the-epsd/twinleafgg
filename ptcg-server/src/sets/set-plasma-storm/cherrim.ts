@@ -33,7 +33,7 @@ export class Cherrim extends PokemonCard {
       name: 'Random Peck',
       cost: [G, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];

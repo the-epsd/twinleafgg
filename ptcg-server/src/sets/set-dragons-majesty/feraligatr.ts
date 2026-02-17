@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, EnergyCard, GameError, GameMessage, ChooseCardsPrompt, Card, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, Card, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -40,7 +40,7 @@ export class Feraligatr extends PokemonCard {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard && c.name === 'Water Energy';
+        return c.superType === SuperType.ENERGY && c.name === 'Water Energy';
       });
 
       if (!hasEnergyInHand) {
@@ -72,7 +72,7 @@ export class Feraligatr extends PokemonCard {
       const blocked: number[] = [];
       const basicEnergyCards: Card[] = [];
       player.discard.cards.forEach((c, index) => {
-        const isBasicWaterEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy';
+        const isBasicWaterEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Water Energy';
         if (isBasicWaterEnergy) {
           energyInDiscard += 1;
           basicEnergyCards.push(c);
@@ -84,7 +84,7 @@ export class Feraligatr extends PokemonCard {
       effect.damage += energyInDiscard * 20;
 
       player.discard.cards.forEach(cards => {
-        if (cards instanceof EnergyCard && cards.energyType === EnergyType.BASIC && cards.name === 'Water Energy') {
+        if (cards.superType === SuperType.ENERGY && cards.energyType === EnergyType.BASIC && cards.name === 'Water Energy') {
           MOVE_CARDS(store, state, player.discard, player.deck, { cards: basicEnergyCards, sourceCard: this, sourceEffect: this.attacks[0] });
         }
       });

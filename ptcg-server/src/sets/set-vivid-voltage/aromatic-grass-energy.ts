@@ -7,27 +7,16 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class AromaticGrassEnergy extends EnergyCard {
-
   public provides: CardType[] = [C];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'VIV';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '162';
-
   public regulationMark = 'D';
-
   public name = 'Aromatic Grass Energy';
-
   public fullName = 'Aromatic Grass Energy VIV';
 
-  public legacyFullName = 'Aromatic Energy VIV';
-
-  public text =
-    `As long as this card is attached to a Pokémon, it provides[G] Energy.
+  public text = `As long as this card is attached to a Pokémon, it provides[G] Energy.
     
 The [G] Pokémon this card is attached to recovers from all Special Conditions and can't be affected by any Special Conditions.`;
 

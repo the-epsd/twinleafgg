@@ -22,7 +22,7 @@ export class Sandile extends PokemonCard {
       name: 'Gentle Slap',
       cost: [D, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

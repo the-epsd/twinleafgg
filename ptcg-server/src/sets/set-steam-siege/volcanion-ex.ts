@@ -45,7 +45,7 @@ export class VolcanionEX extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (player.hand.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy').length === 0) {
+      if (player.hand.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy').length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

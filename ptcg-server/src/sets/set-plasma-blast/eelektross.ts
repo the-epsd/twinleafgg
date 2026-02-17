@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, EnergyCard, GameMessage, ChooseCardsPrompt, CardList, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
@@ -18,14 +18,14 @@ export class Eelektross extends PokemonCard {
       name: 'Crush and Burn',
       cost: [L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard as many Energy attached to your Pok\u00e9mon as you like. This attack does 30 damage times the number of Energy cards you discarded.'
     },
     {
       name: 'Thunder Tempest',
       cost: [L, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
     }
   ];
@@ -44,8 +44,8 @@ export class Eelektross extends PokemonCard {
       const energyCards: { card: EnergyCard, source: PokemonCardList }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.cards.forEach(c => {
-          if (c instanceof EnergyCard) {
-            energyCards.push({ card: c, source: cardList });
+          if (c.superType === SuperType.ENERGY) {
+            energyCards.push({ card: c as EnergyCard, source: cardList });
           }
         });
       });

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -19,7 +19,7 @@ export class Lanturn extends PokemonCard {
       name: 'Special Tackle',
       cost: [L],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage.'
     },
     {
@@ -40,7 +40,7 @@ export class Lanturn extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasSpecial = player.active.cards.some(
-        c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+        c => c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.SPECIAL
       );
       if (hasSpecial) {
         effect.damage += 30;

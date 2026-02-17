@@ -174,7 +174,7 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[3]){
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

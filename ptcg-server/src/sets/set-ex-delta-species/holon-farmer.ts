@@ -1,5 +1,5 @@
-import { Card, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
-import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, StateUtils } from '../../game';
+import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -39,7 +39,7 @@ export class HolonFarmer extends TrainerCard {
       let energies = 0;
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+        if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
           energies += 1;
         } else if (c instanceof PokemonCard) {
           pokemons += 1;

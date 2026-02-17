@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, PokemonCardList, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, EnergyCard, ChooseEnergyPrompt, Card } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, SuperType, State, StoreLike, PokemonCardList, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, ChooseEnergyPrompt, Card } from '../../game';
 import {AfterDamageEffect} from '../../game/store/effects/attack-effects';
 import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
 import {Effect} from '../../game/store/effects/effect';
@@ -89,7 +89,7 @@ export class Quaquavalex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof EnergyCard)) {
+      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 

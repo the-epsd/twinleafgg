@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State/*, CardTag*/ } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { COUNT_MATCHING_CARDS_IN_ZONE } from '../../game/store/prefabs/prefabs';
 
 export class Jumpluff extends PokemonCard {
 
@@ -43,13 +44,18 @@ export class Jumpluff extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      let pokemonCount = 0;
-      player.lostzone.cards.forEach(c => {
-        if (c instanceof PokemonCard/* && !c.tags.includes(CardTag.PRISM_STAR)*/) {
-          pokemonCount += 1;
-        }
-      });
-
+      /*
+       * Legacy pre-prefab implementation:
+       * - looped player.lostzone and counted Pokemon cards
+       * - optional Prism Star exclusion was commented in-place
+       */
+      // Converted to prefab version (COUNT_MATCHING_CARDS_IN_ZONE).
+      const pokemonCount = COUNT_MATCHING_CARDS_IN_ZONE(
+        player,
+        'lostzone',
+        {},
+        c => c instanceof PokemonCard/* && !c.tags.includes(CardTag.PRISM_STAR)*/
+      );
       effect.damage = pokemonCount * 20;
     }
 

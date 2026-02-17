@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard } from '../../game';
+import { StoreLike, State, StateUtils, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
@@ -41,7 +41,7 @@ export class Krokorok extends PokemonCard {
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           const opponentActive = opponent.active;
-          const energyCards = opponentActive.cards.filter(c => c instanceof EnergyCard);
+          const energyCards = opponentActive.cards.filter(c => c.superType === SuperType.ENERGY);
           if (energyCards.length > 0) {
             const energyToDiscard = energyCards[0];
             opponentActive.moveCardTo(energyToDiscard, opponent.discard);

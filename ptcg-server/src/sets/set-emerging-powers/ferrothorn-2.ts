@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -51,7 +51,7 @@ export class Ferrothorn2 extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const energyCount = player.active.cards.filter(c => c instanceof EnergyCard).length;
+      const energyCount = player.active.cards.filter(c => c.superType === SuperType.ENERGY).length;
       const damage = 10 * energyCount;
 
       return store.prompt(state, new ChoosePokemonPrompt(

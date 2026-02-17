@@ -1,8 +1,8 @@
-import { EnergyCard, PokemonCard, ShowCardsPrompt, StateUtils } from '../../game';
+import { PokemonCard, ShowCardsPrompt, StateUtils } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardTag, EnergyType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty    
     if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.tags.includes(CardTag.TEAM_AQUA)) ||
-      (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy')) {
+      (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC && card.name === 'Water Energy')) {
       /**/
     } else {
       blocked.push(index);

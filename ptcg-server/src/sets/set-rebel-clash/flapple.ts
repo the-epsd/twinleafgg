@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, StateUtils, PokemonCardList, ChooseCardsPrompt, Card, EnergyCard, CoinFlipPrompt } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, StateUtils, PokemonCardList, ChooseCardsPrompt, Card, CoinFlipPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
@@ -89,7 +89,7 @@ export class Flapple extends PokemonCard {
       ), flipResult => {
         if (flipResult) {
           // Defending Pokemon has no energy cards attached
-          if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+          if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
             return state;
           }
           let cards: Card[] = [];

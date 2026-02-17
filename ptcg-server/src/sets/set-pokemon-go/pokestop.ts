@@ -17,7 +17,6 @@ export class Pokestop extends TrainerCard {
   public set = 'PGO';
   public name = 'PokéStop';
   public fullName = 'PokéStop PGO';
-  public legacyFullName = 'PokeStop PGO';
   public text = 'Once during each player\'s turn, that player may discard 3 cards from the top of their deck. If a player discarded any Item cards in this way, they put those Item cards into their hand.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {

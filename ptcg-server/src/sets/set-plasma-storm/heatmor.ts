@@ -3,7 +3,7 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -28,7 +28,7 @@ export class Heatmor extends PokemonCard {
       name: 'Fiery Licks',
       cost: [R, R, R],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard the top 4 cards of your deck. This attack does 50 damage times the number of [R] Energy cards discarded.'
     }
   ];
@@ -82,7 +82,7 @@ export class Heatmor extends PokemonCard {
 
       const cardsToDiscard = player.deck.cards.slice(0, Math.min(4, player.deck.cards.length));
       const fireEnergyCount = cardsToDiscard.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+        c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC && (c as EnergyCard).provides.includes(CardType.FIRE)
       ).length;
 
       player.deck.moveCardsTo(cardsToDiscard, player.discard);

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils, PlayerType, ChoosePokemonPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -9,6 +9,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, COIN_FLIP
 export class ErikasVictreebel extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Erika\'s Weepinbell';
+  public tags = [CardTag.ERIKAS];
   public cardType: CardType = G;
   public hp: number = 150;
   public weakness = [{ type: R }];

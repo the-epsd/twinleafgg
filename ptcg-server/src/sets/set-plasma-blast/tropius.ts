@@ -25,7 +25,7 @@ export class Tropius extends PokemonCard {
       name: 'Energy Press',
       cost: [G, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 20 more damage for each Energy attached to the Defending Pok\u00e9mon.'
     }
   ];

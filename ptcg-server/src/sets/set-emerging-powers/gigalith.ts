@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard } from '../../game';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -42,7 +42,7 @@ export class Gigalith extends PokemonCard {
       const cardsToDiscard = player.deck.cards.slice(0, 5);
 
       cardsToDiscard.forEach(card => {
-        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy') {
+        if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy') {
           player.deck.moveCardTo(card, player.active);
         } else {
           player.deck.moveCardTo(card, player.discard);

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, SuperType, StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -40,7 +40,7 @@ export class Volcanion extends PokemonCard {
 
       // Count Water Energy attached to this Pokemon
       const waterEnergyCount = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.provides.includes(CardType.WATER)
+        card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.WATER)
       ).length;
 
       if (waterEnergyCount === 0) {

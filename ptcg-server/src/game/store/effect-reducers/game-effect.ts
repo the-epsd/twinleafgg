@@ -144,7 +144,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
-      player.active.damage += 30;
+      player.active.damage += player.active.confusionDamage;
       state = store.reduceEffect(state, new EndTurnEffect(player));
       return state;
     }
@@ -420,6 +420,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     }
     if (effect.burnDamage !== undefined) {
       target.burnDamage = effect.burnDamage;
+    }
+    if (effect.confusionDamage !== undefined) {
+      target.confusionDamage = effect.confusionDamage;
     }
     if (effect.sleepFlips !== undefined) {
       target.sleepFlips = effect.sleepFlips;

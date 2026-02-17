@@ -1,4 +1,4 @@
-import { CardTag, CardTarget, CardType, EnergyCard, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { CardTag, CardTarget, CardType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -91,7 +91,7 @@ export class WyrdeerV extends PokemonCard {
             return;
           }
           blockedTo.push(target);
-          if (cardList.cards.some(c => c instanceof EnergyCard)) {
+          if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
             hasEnergyOnBench = true;
           }
         });

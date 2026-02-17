@@ -2,7 +2,6 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -22,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   let basicEnergies = 0;
   player.discard.cards.forEach(c => {
-    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
+    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergies += 1;
     }
   });

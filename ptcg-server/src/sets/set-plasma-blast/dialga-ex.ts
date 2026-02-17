@@ -1,8 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class DialgaEx extends PokemonCard {
@@ -63,7 +62,7 @@ export class DialgaEx extends PokemonCard {
 
       // Count Plasma Energy attached
       const plasmaCount = player.active.cards.filter(c =>
-        c instanceof EnergyCard && c.name === 'Plasma Energy'
+        c.superType === SuperType.ENERGY && c.name === 'Plasma Energy'
       ).length;
 
       if (plasmaCount > 0 && opponent.deck.cards.length > 0) {

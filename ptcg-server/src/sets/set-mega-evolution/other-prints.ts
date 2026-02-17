@@ -1,4 +1,5 @@
 import { BossOrders } from '../set-paldea-evolved/boss-orders';
+import { Repel } from '../set-sun-and-moon/repel';
 import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { Switch } from '../set-base-set/switch';
@@ -91,6 +92,13 @@ export class RareCandyM1S extends RareCandy {
 export class BossOrdersMEG extends BossOrders {
   public setNumber = '114';
   public fullName: string = 'Boss\'s Orders MEG';
+  public set = 'MEG';
+  public regulationMark = 'I';
+}
+
+export class RepelMEG extends Repel {
+  public setNumber = '126';
+  public fullName = 'Repel M1L';
   public set = 'MEG';
   public regulationMark = 'I';
 }

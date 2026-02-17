@@ -32,7 +32,7 @@ export class Torterra extends PokemonCard {
       name: 'Rumble Stomp',
       cost: [G, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     }
   ];

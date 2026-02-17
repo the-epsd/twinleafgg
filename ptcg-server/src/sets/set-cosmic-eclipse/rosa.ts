@@ -3,8 +3,7 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { EnergyCard } from '../../game/store/card/energy-card';
-import { EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -34,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     const isPokemon = c instanceof PokemonCard;
-    const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+    const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
     const isTrainer = c instanceof TrainerCard;
     if (!isPokemon && !isBasicEnergy && !isTrainer) {
       blocked.push(index);

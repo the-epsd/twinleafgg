@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog } from '../../game';
+import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, PlayerType, CardTarget, SlotType, GameError, GameMessage, ChoosePokemonPrompt, ChooseEnergyPrompt, Card, GameLog, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DRAW_UP_TO_X_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -45,6 +45,14 @@ export class HolonsCastform extends PokemonCard implements EnergyCard {
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Auto-detect if we've been removed from energies and reset superType back to POKEMON
+    if (this.superType === SuperType.ENERGY) {
+      const cardList = StateUtils.findCardList(state, this);
+      if (!(cardList instanceof PokemonCardList) || !cardList.energies.cards.includes(this)) {
+        this.superType = SuperType.POKEMON;
+      }
+    }
+
     // The Special Energy Stuff
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
@@ -127,6 +135,7 @@ export class HolonsCastform extends PokemonCard implements EnergyCard {
           if (!targets[0].energies.cards.includes(this)) {
             targets[0].energies.cards.push(this);
           }
+          this.superType = SuperType.ENERGY;
         });
       });
     }

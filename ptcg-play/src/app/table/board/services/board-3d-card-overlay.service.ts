@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Scene, Vector3, Texture } from 'three';
+import { Scene, Vector3, Texture, PerspectiveCamera } from 'three';
 import { PokemonCardList, Card, BoardEffect, SpecialCondition } from 'ptcg-server';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
@@ -264,6 +264,16 @@ export class Board3dCardOverlayService {
       mainCardMesh.getGroup().add(toolCardMesh.getGroup());
       overlays.toolCards.push(toolCardMesh);
     }
+  }
+
+  /**
+   * Update all energy sprites to face the camera (billboard behavior).
+   * Call each frame before rendering.
+   */
+  updateBillboards(camera: PerspectiveCamera): void {
+    this.cardOverlays.forEach(overlays => {
+      overlays.energySprite.updateBillboards(camera);
+    });
   }
 
   /**

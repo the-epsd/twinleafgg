@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
+import { TrainerType, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { EnergyCard, PokemonCard } from '../../game';
+import { PokemonCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let trainers = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy') {
+    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy') {
       trainers += 1;
     } else if (c instanceof PokemonCard && c.cardType === CardType.FIGHTING && c.stage === Stage.BASIC) {
       pokemons += 1;

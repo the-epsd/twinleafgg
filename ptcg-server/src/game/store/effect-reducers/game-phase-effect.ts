@@ -1,5 +1,5 @@
 import { Effect } from '../effects/effect';
-import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
+import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrawCardForTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Player } from '../state/player';
@@ -75,9 +75,14 @@ export function initNextTurn(store: StoreLike, state: State): State {
     return state;
   }
 
+  // Signal beginning of turn (for cards like Slumbering Forest, Oran Berry, etc.)
+  const beginTurn = new BeginTurnEffect(player);
+  store.reduceEffect(state, beginTurn);
+
+  // Draw card for turn (can be blocked by effects like Luvdisc's Heart Wink)
   try {
-    const beginTurn = new BeginTurnEffect(player);
-    store.reduceEffect(state, beginTurn);
+    const drawCardForTurn = new DrawCardForTurnEffect(player);
+    store.reduceEffect(state, drawCardForTurn);
   } catch {
     return state;
   }

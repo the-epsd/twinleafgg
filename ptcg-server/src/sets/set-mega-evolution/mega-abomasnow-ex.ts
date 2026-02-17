@@ -1,8 +1,8 @@
-import { CardTag, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CardList, EnergyCard, PlayerType, PokemonCard, StateUtils } from '../../game';
+import { CardList, PlayerType, PokemonCard, StateUtils } from '../../game';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -51,7 +51,7 @@ export class MegaAbomasnowEx extends PokemonCard {
 
       // Filter for Energy cards
       const energyCount = deckTop.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy'
+        c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Water Energy'
       );
 
       // Move all cards to discard

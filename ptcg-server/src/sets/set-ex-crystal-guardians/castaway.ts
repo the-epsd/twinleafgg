@@ -1,5 +1,5 @@
-import { StoreLike, State, Card, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
-import { EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, Card, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -23,7 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
     const isSupporter = c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
-    const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+    const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
     const isTool = c instanceof TrainerCard && c.trainerType === TrainerType.TOOL;
     if (!isSupporter && !isBasicEnergy && !isTool) {
       blocked.push(index);

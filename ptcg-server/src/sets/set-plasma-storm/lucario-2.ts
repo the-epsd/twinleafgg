@@ -29,7 +29,7 @@ export class Lucario2 extends PokemonCard {
       name: 'Hurricane Kick',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Does 30 more damage for each Prize card your opponent has taken.'
     }
   ];

@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, IS_ABILITY_BLOCKED, THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED } from '../../game/store/prefabs/prefabs';
 
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -74,12 +74,11 @@ export class Dragonair extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Check if this Pokémon has any Energy attached
-      const energyCount = dragonairCardList.cards.filter((card: any) =>
-        card.superType === SuperType.ENERGY
-      ).length;
-
-      if (energyCount === 0) {
+      // Legacy implementation:
+      // - Counted attached Energy cards by filtering `card.superType === SuperType.ENERGY`.
+      //
+      // Converted to prefab version (THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED).
+      if (!THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED(dragonairCardList)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

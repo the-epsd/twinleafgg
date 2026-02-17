@@ -1,7 +1,10 @@
-import { Attack, CardType, ChoosePokemonPrompt, EnergyCard, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Attack, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, StateUtils, StoreLike, State, Weakness } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 
 export class Drifblim extends PokemonCard {
 
@@ -38,8 +41,7 @@ export class Drifblim extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-
-      effect.damage = 50 * opponent.discard.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL).length;
+      effect.damage = 50 * opponent.discard.cards.filter(c => c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.SPECIAL).length;
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -54,7 +56,7 @@ export class Drifblim extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutCountersEffect(effect, 20);
+          const damageEffect = new PutCountersEffect(effect, 40);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
@@ -62,8 +64,6 @@ export class Drifblim extends PokemonCard {
       });
     }
 
-
     return state;
   }
-
 }

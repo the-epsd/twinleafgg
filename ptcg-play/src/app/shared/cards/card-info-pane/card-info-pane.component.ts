@@ -18,6 +18,7 @@ export interface CardInfoPaneOptions {
   };
   enableAttack?: boolean;
   enableTrainer?: boolean;
+  enableRetreat?: boolean;
 }
 
 export interface CardInfoPaneAction {
@@ -25,6 +26,7 @@ export interface CardInfoPaneAction {
   attack?: string;
   ability?: string;
   trainer?: boolean;
+  retreat?: boolean;
   cardList?: PokemonCardList;
 }
 
@@ -443,6 +445,10 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     }
 
     return this.options.enableAttack || false;
+  }
+
+  public shouldEnableRetreat(): boolean {
+    return !!(this.card?.superType === SuperType.POKEMON && this.options.enableRetreat);
   }
 
   public getDisplayTags(): string[] {

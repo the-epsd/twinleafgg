@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { StoreLike, State, GameError, GameMessage, StateUtils, CardTag, CardType, Stage, Card, ChooseCardsPrompt, EnergyCard, SuperType } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, CardTag, CardType, Stage, Card, ChooseCardsPrompt, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
@@ -73,7 +73,7 @@ export class ScreamTailex extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
 
         // Defending Pokemon has no energy cards attached
-        if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+        if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
           return state;
         }
 

@@ -95,6 +95,9 @@ import { Scraggy2 } from './scraggy2';
 import { Mandibuzz } from './mandibuzz';
 import { Lillipup2 } from './lillipup2';
 import { Stoutland } from './stoutland';
+import { Basculin } from './basculin';
+import { Scrafty } from './scrafty';
+import { Unfezant } from './unfezant';
 
 // Other Prints
 import {
@@ -197,6 +200,9 @@ export const setBlackAndWhite: Card[] = [
   new Mandibuzz(),
   new Lillipup2(),
   new Stoutland(),
+  new Basculin(),
+  new Scrafty(),
+  new Unfezant(),
 
   // Other Prints
   new EnergyRetrievalBLW(),

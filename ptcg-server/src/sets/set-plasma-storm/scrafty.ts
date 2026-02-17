@@ -30,7 +30,7 @@ export class Scrafty extends PokemonCard {
       name: 'Reinforced Headbutt',
       cost: [D, D, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
     }
   ];

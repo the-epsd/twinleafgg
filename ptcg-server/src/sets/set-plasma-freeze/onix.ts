@@ -26,7 +26,7 @@ export class Onix extends PokemonCard {
       name: 'Swing Around',
       cost: [F, C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
     }
   ];

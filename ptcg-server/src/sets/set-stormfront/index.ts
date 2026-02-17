@@ -17,6 +17,7 @@ import { Magikarp } from './magikarp';
 import { MarleysRequest } from './marleys-request';
 import { PokeBlower } from './poke-blower';
 import { PokeDrawer } from './poke-drawer';
+import { RegigigasLVX } from './regigigas-lv-x';
 import { Sableye } from './sableye';
 
 // Other prints
@@ -43,9 +44,9 @@ export const setStormfront: Card[] = [
   new MarleysRequest(),
   new PokeBlower(),
   new PokeDrawer(),
+  new RegigigasLVX(),
   new Sableye(),
   new Gastly(),
-
   // Other prints
   new CycloneEnergySF(),
   new PremierBallSF(),

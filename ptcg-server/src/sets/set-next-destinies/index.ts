@@ -1,4 +1,4 @@
-import { ReshiramNXD, ZekromNXD, RioluNXD, ExpShareNXD, ShayminEX2NXD, ReshiramEx2NXD, ZekromEx2NXD, MewtwoEx2NXD, EmboarNXD, Chandelure2NXD, ZoroarkNXD, HydreigonNXD } from './other-prints';
+import { ReshiramNXD, ZekromNXD, RioluNXD, ExpShareNXD, ShayminEX2NXD, ReshiramEx2NXD, KyuremEx2NXD, ZekromEx2NXD, MewtwoEx2NXD, RegigigasEx2NXD, EmboarNXD, Chandelure2NXD, ZoroarkNXD, HydreigonNXD } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Amoonguss } from './amoonguss';
 import { Arcanine } from './arcanine';
@@ -194,8 +194,10 @@ export const setNextDestinies: Card[] = [
   new ExpShareNXD(),
   new ShayminEX2NXD(),
   new ReshiramEx2NXD(),
+  new KyuremEx2NXD(),
   new ZekromEx2NXD(),
   new MewtwoEx2NXD(),
+  new RegigigasEx2NXD(),
   new EmboarNXD(),
   new Chandelure2NXD(),
   new ZoroarkNXD(),

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, EnergyCard, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, PowerType, PlayerType, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -84,7 +84,7 @@ export class Regigigas extends PokemonCard {
 
 
         // Check if player has energy cards in discard pile
-        const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+        const hasEnergy = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
         if (!hasEnergy) {
           throw new GameError(GameMessage.CANNOT_USE_POWER);
         }

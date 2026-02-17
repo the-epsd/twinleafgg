@@ -25,6 +25,16 @@ import { FieldBlower } from './field-blower';
 import { MaxPotion } from '../set-emerging-powers/max-potion';
 import { RescueStretcher } from './rescue-stretcher';
 import { EnergyLoto } from '../set-astral-radiance/energy-loto';
+import { AlolanSandshrew } from './alolan-sandshrew';
+import { Machop } from '../set-evolutions/machop';
+import { TurtonatorGx } from './turtonator-gx';
+import { WishiwashiGx } from './wishiwashi-gx';
+import { VikavoltGx } from './vikavolt-gx';
+import { ToxapexGx } from './toxapex-gx';
+import { KommoOGx } from './kommo-o-gx';
+import { Hala } from './hala';
+import { IncineroarGx } from '../set-sun-and-moon/incineroar-gx';
+import { PrimarinaGx } from '../set-sun-and-moon/primarina-gx';
 
 export class AlolanVulpixGRI extends AlolanVulpix {
   public fullName = 'Alolan Vulpix GRI';
@@ -271,4 +281,94 @@ export class MetagrossGX4GRI extends MetagrossGXGRI85 {
   public setNumber = '157a';
   public fullName: string = 'Metagross-GX4 GRI';
   public set = 'GRI';
+}
+
+export class AlolanSandshrew2 extends AlolanSandshrew {
+  public set: string = 'GRI';
+  public setNumber: string = '19a';
+  public fullName: string = 'Alolan Sandshrew GRI 19a';
+}
+
+export class MachopGRI extends Machop {
+  public set: string = 'GRI';
+  public setNumber: string = '62';
+  public fullName: string = 'Machop GRI';
+}
+
+export class TurtonatorGx2 extends TurtonatorGx {
+  public set: string = 'GRI';
+  public setNumber: string = '131';
+  public fullName: string = 'Turtonator-GX GRI 131';
+}
+
+export class WishiwashiGx2 extends WishiwashiGx {
+  public set: string = 'GRI';
+  public setNumber: string = '133';
+  public fullName: string = 'Wishiwashi-GX GRI 133';
+}
+
+export class VikavoltGx2 extends VikavoltGx {
+  public set: string = 'GRI';
+  public setNumber: string = '134';
+  public fullName: string = 'Vikavolt-GX GRI 134';
+}
+
+export class ToxapexGx2 extends ToxapexGx {
+  public set: string = 'GRI';
+  public setNumber: string = '136';
+  public fullName: string = 'Toxapex-GX GRI 136';
+}
+
+export class KommoOGx2 extends KommoOGx {
+  public set: string = 'GRI';
+  public setNumber: string = '141';
+  public fullName: string = 'Kommo-o-GX GRI 141';
+}
+
+export class Hala2 extends Hala {
+  public set: string = 'GRI';
+  public setNumber: string = '143';
+  public fullName: string = 'Hala GRI 143';
+}
+
+export class IncineroarGxGRI extends IncineroarGx {
+  public set: string = 'GRI';
+  public setNumber: string = '147';
+  public fullName: string = 'Incineroar-GX GRI';
+}
+
+export class TurtonatorGx3 extends TurtonatorGx {
+  public set: string = 'GRI';
+  public setNumber: string = '148';
+  public fullName: string = 'Turtonator-GX GRI 148';
+}
+
+export class PrimarinaGxGRI extends PrimarinaGx {
+  public set: string = 'GRI';
+  public setNumber: string = '149';
+  public fullName: string = 'Primarina-GX GRI';
+}
+
+export class WishiwashiGx3 extends WishiwashiGx {
+  public set: string = 'GRI';
+  public setNumber: string = '151';
+  public fullName: string = 'Wishiwashi-GX GRI 151';
+}
+
+export class VikavoltGx3 extends VikavoltGx {
+  public set: string = 'GRI';
+  public setNumber: string = '152';
+  public fullName: string = 'Vikavolt-GX GRI 152';
+}
+
+export class ToxapexGx3 extends ToxapexGx {
+  public set: string = 'GRI';
+  public setNumber: string = '154';
+  public fullName: string = 'Toxapex-GX GRI 154';
+}
+
+export class KommoOGx3 extends KommoOGx {
+  public set: string = 'GRI';
+  public setNumber: string = '159';
+  public fullName: string = 'Kommo-o-GX GRI 159';
 }

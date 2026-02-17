@@ -132,6 +132,10 @@ ptcg-card {
   background-color: rgba($bg-primary, 0.6);
   color: $twinleaf-500;
   opacity: 0.9;
+
+  &.favorited {
+    color: $twinleaf-red;
+  }
   transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
   z-index: 12;
   width: 28px;

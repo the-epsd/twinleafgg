@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, EnergyType, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -46,7 +46,7 @@ export class MegatonBlower extends TrainerCard {
       // Function to discard special energy and tools from a PokemonCardList
       const discardSpecialEnergyAndTools = (pokemonCardList: PokemonCardList) => {
         const cardsToDiscard = pokemonCardList.cards.filter(card =>
-          (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) ||
+          (card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.SPECIAL) ||
           (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL)
         );
         if (cardsToDiscard.length > 0) {

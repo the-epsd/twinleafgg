@@ -28,7 +28,7 @@ export class Grumpig extends PokemonCard {
       name: 'Extrasensory',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 60 more damage.'
     }
   ];

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard, PokemonCardList } from '../../game';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -41,7 +41,7 @@ export class Ceruledge extends PokemonCard {
       // Function to discard special energy and tools from a PokemonCardList
       const discardSpecialEnergy = (pokemonCardList: PokemonCardList) => {
         const cardsToDiscard = pokemonCardList.cards.filter(card =>
-          (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL)
+          (card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL)
         );
         if (cardsToDiscard.length > 0) {
           state = MOVE_CARDS(store, state, pokemonCardList, opponent.discard, { cards: cardsToDiscard });

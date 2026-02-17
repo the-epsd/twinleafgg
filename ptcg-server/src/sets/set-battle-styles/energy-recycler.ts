@@ -8,7 +8,6 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
@@ -19,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let energyInDiscard: number = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
+    const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
     if (isBasicEnergy) {
       energyInDiscard += 1;
     } else {

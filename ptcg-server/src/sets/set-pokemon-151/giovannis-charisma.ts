@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt, EnergyCard, GameError, PlayerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, GameError, PlayerType, SlotType, StateUtils } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   // Defending Pokemon has no energy cards attached
-  if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
+  if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
     return state;
   }
 
