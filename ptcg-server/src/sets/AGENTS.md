@@ -1112,3 +1112,64 @@ Reference: `set-shining-fates/arctozolt.ts` (Numbing Vortex)
 When card text says "look at the top X cards" or "reveal" cards, you must call `SHOW_CARDS_TO_PLAYER(store, state, player, cards)` to display the cards to the player before they make their selection. Omitting this step means players can't see the cards they're choosing from.
 
 Reference: `set-shining-fates/manaphy.ts` (Ocean Search)
+
+### Never mutate `this.attacks[n].cost` directly
+
+When implementing "this attack can be used for [X] energy" conditionally, never mutate the static card property. Instead, intercept `CheckAttackCostEffect` and modify `effect.cost`:
+
+```typescript
+if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[1]) {
+  if (effect.player.active.getPokemonCard() === this && effect.player.active.damage > 0) {
+    effect.cost = [CardType.LIGHTNING];
+  }
+}
+```
+
+Reference: `set-surging-sparks/grapploct.ts` (Raging Tentacles)
+
+### Energy type checks must include `CardType.ANY`
+
+When checking if a Pokemon has a specific energy type attached, always include `CardType.ANY` to account for Rainbow Energy and similar multi-type energy cards:
+
+```typescript
+// CORRECT
+em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY)
+
+// WRONG - misses Rainbow Energy
+em.provides.includes(CardType.DARK)
+```
+
+### Use `StateUtils.isPokemonInPlay()` — not `findCardList` null checks
+
+`StateUtils.findCardList()` and `StateUtils.findOwner()` throw `GameError` rather than returning null. Code checking their return values `!== null` always passes. For passive abilities, use `StateUtils.isPokemonInPlay(owner, this)` to properly verify the card is in play.
+
+### Sequential prompts require the generator pattern
+
+When a card requires two prompts in sequence (e.g., player selects a card, then opponent decides), use `function* playCard` with `yield`. Without the generator pattern, both prompts fire simultaneously on the first `reduceEffect` call.
+
+```typescript
+function* playCard(next: Function, store: StoreLike, state: State, ...): IterableIterator<State> {
+  let selectedCard: Card | undefined;
+  yield store.prompt(state, new ChooseCardsPrompt(...), selected => {
+    selectedCard = selected?.[0];
+    next();
+  });
+  // selectedCard is now set — safe to use in subsequent prompts
+  yield store.prompt(state, new ConfirmPrompt(opponent.id, ...), result => {
+    // ...
+    next();
+  });
+}
+```
+
+Reference: `set-battle-styles/sordward-and-shielbert.ts`
+
+### Marker source consistency
+
+Always pass `this` as the source parameter to all three marker methods — `addMarker`, `hasMarker`, and `removeMarker`. Omitting the source from `hasMarker`/`removeMarker` while including it in `addMarker` causes issues when multiple copies of a Pokemon are in play.
+
+### `burnFlipResult` works for Pokemon abilities too
+
+The `BetweenTurnsEffect.burnFlipResult` property can be used for Pokemon abilities (not just stadiums). For ability-sourced use, note that `effect.player` is the player whose Pokemon is being checked for burn, so use `StateUtils.getOpponent(state, effect.player)` to find the ability owner.
+
+Reference: `set-battle-styles/centiskorch.ts` (Overheater)

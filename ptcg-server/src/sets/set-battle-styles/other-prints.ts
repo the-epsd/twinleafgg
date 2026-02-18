@@ -25,6 +25,13 @@ import { ExpShare as ExpShareSVI174 } from '../set-scarlet-and-violet/exp-share'
 import { LevelBall as LevelBallBST129 } from '../set-battle-styles/level-ball';
 import { RapidStrikeEnergy as RapidStrikeEnergyBST140 } from '../set-battle-styles/rapid-strike-energy';
 import { SingleStrikeEnergy as SingleStrikeEnergyBST141 } from '../set-battle-styles/single-strike-energy';
+import { Tepig } from '../set-sword-and-shield-promos/tepig';
+import { Timburr } from '../set-black-and-white/timburr';
+import { Spearow } from '../set-roaring-skies/spearow';
+import { CorviknightV } from './corviknight-v';
+import { Phoebe } from './phoebe';
+import { RapidStrikeStyleMustard } from './rapid-strike-style-mustard';
+import { CorviknightVmax } from './corviknight-vmax';
 export class ExpShareBST extends ExpShare {
   public setNumber = '126';
   public fullName: string = 'Exp. Share BST';
@@ -245,4 +252,58 @@ export class SingleStrikeEnergy2BST extends SingleStrikeEnergyBST141 {
   public setNumber = '183';
   public fullName: string = 'Single Strike Energy2 BST';
   public set = 'BST';
+}
+
+export class TepigBST extends Tepig {
+  public set: string = 'BST';
+  public setNumber: string = '23';
+  public fullName: string = 'Tepig BST';
+}
+
+export class TimburrBST extends Timburr {
+  public set: string = 'BST';
+  public setNumber: string = '73';
+  public fullName: string = 'Timburr BST';
+}
+
+export class SpearowBST extends Spearow {
+  public set: string = 'BST';
+  public setNumber: string = '111';
+  public fullName: string = 'Spearow BST';
+}
+
+export class CorviknightV2 extends CorviknightV {
+  public set: string = 'BST';
+  public setNumber: string = '156';
+  public fullName: string = 'Corviknight V BST 156';
+}
+
+export class Phoebe2 extends Phoebe {
+  public set: string = 'BST';
+  public setNumber: string = '161';
+  public fullName: string = 'Phoebe BST 161';
+}
+
+export class RapidStrikeStyleMustard2 extends RapidStrikeStyleMustard {
+  public set: string = 'BST';
+  public setNumber: string = '162';
+  public fullName: string = 'Rapid Strike Style Mustard BST 162';
+}
+
+export class CorviknightVmax2 extends CorviknightVmax {
+  public set: string = 'BST';
+  public setNumber: string = '171';
+  public fullName: string = 'Corviknight VMAX BST 171';
+}
+
+export class Phoebe3 extends Phoebe {
+  public set: string = 'BST';
+  public setNumber: string = '175';
+  public fullName: string = 'Phoebe BST 175';
+}
+
+export class RapidStrikeStyleMustard3 extends RapidStrikeStyleMustard {
+  public set: string = 'BST';
+  public setNumber: string = '176';
+  public fullName: string = 'Rapid Strike Style Mustard BST 176';
 }
