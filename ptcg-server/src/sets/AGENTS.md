@@ -1173,3 +1173,46 @@ Always pass `this` as the source parameter to all three marker methods — `addM
 The `BetweenTurnsEffect.burnFlipResult` property can be used for Pokemon abilities (not just stadiums). For ability-sourced use, note that `effect.player` is the player whose Pokemon is being checked for burn, so use `StateUtils.getOpponent(state, effect.player)` to find the ability owner.
 
 Reference: `set-battle-styles/centiskorch.ts` (Overheater)
+
+### "You may" effects always require `ConfirmPrompt`
+
+When card text says "You may draw", "You may switch", "You may heal", etc., always show a `ConfirmPrompt` before taking the action. Prefab versions (e.g., `DRAW_CARDS_UNTIL_CARDS_IN_HAND`, `SWITCH_ACTIVE_WITH_BENCHED`) are MANDATORY — they don't ask the player. For optional effects, inline the logic with a `ConfirmPrompt`:
+
+```typescript
+state = store.prompt(state, new ConfirmPrompt(
+  player.id,
+  GameMessage.WANT_TO_SWITCH_POKEMON
+), wantToSwitch => {
+  if (wantToSwitch) {
+    SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+  }
+});
+```
+
+Reference: `set-chilling-reign/tapu-fini.ts` (Smash Turn), `set-chilling-reign/shaymin.ts` (Return)
+
+### Post-prompt code must go inside the callback
+
+Any code that must execute AFTER a prompt resolves must be placed inside the prompt's callback function. Code placed synchronously after `store.prompt()` executes BEFORE the player responds to the prompt:
+
+```typescript
+// WRONG: shuffle runs before damage placement
+store.prompt(state, new PutDamagePrompt(...), targets => {
+  // place damage...
+});
+SHUFFLE_DECK(store, state, opponent); // Runs BEFORE callback!
+
+// CORRECT: shuffle inside callback
+return store.prompt(state, new PutDamagePrompt(...), targets => {
+  // place damage...
+  SHUFFLE_DECK(store, state, opponent); // Runs AFTER callback
+});
+```
+
+Reference: `set-chilling-reign/spiritomb.ts` (Ghostly Cries)
+
+### `SEARCH_DECK_FOR_CARDS_TO_HAND` already shuffles the deck
+
+Do NOT call `SHUFFLE_DECK` after `SEARCH_DECK_FOR_CARDS_TO_HAND` — the prefab shuffles internally. Calling it again causes a double-shuffle.
+
+Reference: `set-chilling-reign/delibird.ts` (Package Delivery)
