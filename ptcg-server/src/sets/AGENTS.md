@@ -1216,3 +1216,57 @@ Reference: `set-chilling-reign/spiritomb.ts` (Ghostly Cries)
 Do NOT call `SHUFFLE_DECK` after `SEARCH_DECK_FOR_CARDS_TO_HAND` — the prefab shuffles internally. Calling it again causes a double-shuffle.
 
 Reference: `set-chilling-reign/delibird.ts` (Package Delivery)
+
+### On-evolve abilities must use `PlayPokemonEffect`, not `WAS_POWER_USED`
+
+Abilities with text "When you play this Pokemon from your hand to evolve..." must intercept `PlayPokemonEffect`, NOT use `WAS_POWER_USED`. Use a `PowerEffect` try/catch for the ability-blocked check, and `ConfirmPrompt` for the "you may" choice:
+
+```typescript
+if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+  const player = effect.player;
+
+  // Ability-blocked check (try/catch is correct here — IS_ABILITY_BLOCKED doesn't apply to PlayPokemonEffect)
+  try {
+    const stub = new PowerEffect(player, { name: 'test', powerType: PowerType.ABILITY, text: '' }, this);
+    store.reduceEffect(state, stub);
+  } catch {
+    return state;
+  }
+
+  state = store.prompt(state, new ConfirmPrompt(
+    player.id,
+    GameMessage.WANT_TO_USE_ABILITY,
+  ), wantToUse => {
+    if (wantToUse) {
+      player.marker.addMarker(this.MY_MARKER, this);
+    }
+  });
+}
+```
+
+The stub generator emits `WAS_POWER_USED` for all ability stubs — this is always wrong for on-evolve abilities. Delete the `WAS_POWER_USED` block entirely and replace with the `PlayPokemonEffect` intercept.
+
+Reference: `set-evolving-skies/ludicolo.ts` (Enthusiastic Dance)
+
+### Tool-blocked checks must use `IS_TOOL_BLOCKED`, not inline `try { new ToolEffect }`
+
+Always use `IS_TOOL_BLOCKED(store, state, player, this)` to check whether a tool's effect is blocked. Do NOT inline the old pattern directly:
+
+```typescript
+// WRONG (deprecated): inline ToolEffect try/catch
+try {
+  const toolEffect = new ToolEffect(player, this);
+  store.reduceEffect(state, toolEffect);
+} catch {
+  return state;
+}
+
+// CORRECT: use the prefab
+if (IS_TOOL_BLOCKED(store, state, player, this)) {
+  return state;
+}
+```
+
+`IS_TOOL_BLOCKED` wraps the same `ToolEffect` logic internally, but the prefab is the established pattern. Never mix both approaches in the same card.
+
+Reference: `set-evolving-skies/spirit-mask.ts`, `set-evolving-skies/digging-gloves.ts`
