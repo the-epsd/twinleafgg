@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface TwinleafFormField {
@@ -31,11 +31,11 @@ export class TwinleafFormComponent implements OnInit, OnDestroy {
   @Output() formSubmit = new EventEmitter<any>();
   @Output() formChange = new EventEmitter<any>();
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private translate: TranslateService
   ) {
     this.form = this.fb.group({});

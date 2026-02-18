@@ -93,7 +93,7 @@ export class Pokegear30HSSSH extends Pokegear30HS {
 
 export class PokemonCatcherSSH extends PokemonCatcher {
   public setNumber = '175';
-  public fullName: string = 'Pokemon Catcher SSH';
+  public fullName: string = 'Pokémon Catcher SSH';
   public set = 'SSH';
 }
 

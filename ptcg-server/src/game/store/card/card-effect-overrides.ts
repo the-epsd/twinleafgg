@@ -50,7 +50,7 @@ const effectOverrides: {
   //   [Format.DP]: QuickBallMD.prototype.reduceEffect,
   //   default: QuickBallSSH.prototype.reduceEffect
   // },
-  'Pokemon Catcher': {
+  'Pokémon Catcher': {
     [Format.BW]: PokemonCatcherEPO.prototype.reduceEffect,
     default: PokemonCatcherSVI.prototype.reduceEffect
   },

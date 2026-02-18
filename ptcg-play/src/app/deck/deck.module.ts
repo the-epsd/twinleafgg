@@ -25,38 +25,33 @@ import { DeckStatsComponent } from './deck-stats/deck-stats.component';
 import { SleeveSelectPopupComponent } from './sleeve-select-popup/sleeve-select-popup.component';
 
 @NgModule({
-  imports: [
-    ScrollingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DeckValidityModule,
-    SharedModule,
-    TypeIconsModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatTableModule
-  ],
-  entryComponents: [
-    ImportDeckPopupComponent,
-    ArchetypeSelectPopupComponent,
-    SleeveSelectPopupComponent
-  ],
-  declarations: [
-    DeckCardComponent,
-    DeckComponent,
-    DeckEditComponent,
-    DeckEditToolbarComponent,
-    FilterCardsPipe,
-    DeckEditPanesComponent,
-    DeckEditInfoComponent,
-    ImportDeckPopupComponent,
-    DeckCardDialogComponent,
-    ArchetypeSelectPopupComponent,
-    DeckStatsComponent,
-    SleeveSelectPopupComponent
-  ]
+    imports: [
+        ScrollingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DeckValidityModule,
+        SharedModule,
+        TypeIconsModule,
+        MatSlideToggleModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatTableModule
+    ],
+    declarations: [
+        DeckCardComponent,
+        DeckComponent,
+        DeckEditComponent,
+        DeckEditToolbarComponent,
+        FilterCardsPipe,
+        DeckEditPanesComponent,
+        DeckEditInfoComponent,
+        ImportDeckPopupComponent,
+        DeckCardDialogComponent,
+        ArchetypeSelectPopupComponent,
+        DeckStatsComponent,
+        SleeveSelectPopupComponent
+    ]
 })
 export class DeckModule { }

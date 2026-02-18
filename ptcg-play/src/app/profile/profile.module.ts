@@ -19,37 +19,30 @@ import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
 import { GamesModule } from '../games/games.module';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    GamesModule,
-    MatDialogModule,
-    MatTableModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatToolbarModule,
-    TranslateModule.forChild({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
-        deps: [HttpClient]
-      }
-    })
-  ],
-  declarations: [
-    ChangeEmailPopupComponent,
-    ChangeCardImagesPopupComponent,
-    ChangePasswordPopupComponent,
-    EditAvatarsPopupComponent,
-    ProfileComponent,
-    SelectAvatarComponent
-  ],
-  entryComponents: [
-    ChangeEmailPopupComponent,
-    ChangeCardImagesPopupComponent,
-    ChangePasswordPopupComponent,
-    EditAvatarsPopupComponent
-  ],
-  exports: [
-  ]
+    imports: [
+        SharedModule,
+        GamesModule,
+        MatDialogModule,
+        MatTableModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatProgressBarModule,
+        MatToolbarModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
+                deps: [HttpClient]
+            }
+        })
+    ],
+    declarations: [
+        ChangeEmailPopupComponent,
+        ChangeCardImagesPopupComponent,
+        ChangePasswordPopupComponent,
+        EditAvatarsPopupComponent,
+        ProfileComponent,
+        SelectAvatarComponent
+    ],
+    exports: []
 }) export class ProfileModule { }

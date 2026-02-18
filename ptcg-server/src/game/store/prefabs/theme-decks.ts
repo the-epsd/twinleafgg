@@ -4,9 +4,7 @@ export const THEME_DECKS = [
   {
     id: -1,
     name: 'Soaring Skies',
-    cards: [
-      'Alolan Grimer UNM', 'Alolan Grimer UNM', 'Chinchou CES', 'Chinchou CES', 'Lanturn CES', 'Lanturn CES', 'Dratini UNM', 'Dratini UNM', 'Dratini UNM', 'Dragonair UNM', 'Dragonair UNM', 'Dragonair UNM', 'Dragonite UNM', 'Dragonite UNM', 'Pidgey TEU', 'Pidgey TEU', 'Pidgey TEU', 'Pidgeotto TEU', 'Pidgeotto TEU', 'Pidgeot TEU', 'Thundurus UNM', 'Thundurus UNM', 'Tornadus UNM', 'Tornadus UNM', 'Bug Catcher UNM', 'Bug Catcher UNM', 'Cynthia UPR', 'Cynthia UPR', 'Fisherman CES', 'Hau CES', 'Hau CES', 'Lillie UPR', 'Lillie UPR', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Tate & Liza CES', 'Energy Recycle System CES', 'Pokemon Communication TEU', 'Pokemon Communication TEU', 'Switch CES', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM'
-    ],
+    cards: ['Alolan Grimer UNM', 'Alolan Grimer UNM', 'Chinchou CES', 'Chinchou CES', 'Lanturn CES', 'Lanturn CES', 'Dratini UNM', 'Dratini UNM', 'Dratini UNM', 'Dragonair UNM', 'Dragonair UNM', 'Dragonair UNM', 'Dragonite UNM', 'Dragonite UNM', 'Pidgey TEU', 'Pidgey TEU', 'Pidgey TEU', 'Pidgeotto TEU', 'Pidgeotto TEU', 'Pidgeot TEU', 'Thundurus UNM', 'Thundurus UNM', 'Tornadus UNM', 'Tornadus UNM', 'Bug Catcher UNM', 'Bug Catcher UNM', 'Cynthia UPR', 'Cynthia UPR', 'Fisherman CES', 'Hau CES', 'Hau CES', 'Lillie UPR', 'Lillie UPR', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Tate & Liza CES', 'Energy Recycle System CES', 'Pokemon Communication TEU', 'Pokemon Communication TEU', 'Switch CES', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM'],
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
@@ -16,9 +14,7 @@ export const THEME_DECKS = [
   {
     id: -2,
     name: 'Relentless Flame',
-    cards: [
-      'Charmander TEU2', 'Charmander TEU2', 'Charmander TEU2', 'Charmeleon TEU', 'Charmeleon TEU', 'Farfetch\'d TEU', 'Farfetch\'d TEU', 'Farfetch\'d TEU', 'Charizard TEU', 'Charizard TEU', 'Nidoran F TEU', 'Nidoran F TEU', 'Nidoran F TEU', 'Nidorina TEU', 'Nidorina TEU', 'Ponyta TEU', 'Ponyta TEU', 'Ponyta TEU', 'Nidoqueen TEU', 'Nidoqueen TEU', 'Rapidash TEU', 'Rapidash TEU', 'Brock\'s Grit TEU', 'Brock\'s Grit TEU', 'Copycat CES', 'Copycat CES', 'Cynthia UPR', 'Cynthia UPR', 'Hau CES', 'Hau CES', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Professor Kukui SUM', 'Professor Kukui SUM', 'Nest Ball SUM', 'Nest Ball SUM', 'Switch CES', 'Switch CES', 'Timer Ball SUM', 'Timer Ball SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM'
-    ],
+    cards: ['Charmander TEU2', 'Charmander TEU2', 'Charmander TEU2', 'Charmeleon TEU', 'Charmeleon TEU', 'Farfetch\'d TEU', 'Farfetch\'d TEU', 'Farfetch\'d TEU', 'Charizard TEU', 'Charizard TEU', 'Nidoran F TEU', 'Nidoran F TEU', 'Nidoran F TEU', 'Nidorina TEU', 'Nidorina TEU', 'Ponyta TEU', 'Ponyta TEU', 'Ponyta TEU', 'Nidoqueen TEU', 'Nidoqueen TEU', 'Rapidash TEU', 'Rapidash TEU', 'Brock\'s Grit TEU', 'Brock\'s Grit TEU', 'Copycat CES', 'Copycat CES', 'Cynthia UPR', 'Cynthia UPR', 'Hau CES', 'Hau CES', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Professor Kukui SUM', 'Professor Kukui SUM', 'Nest Ball SUM', 'Nest Ball SUM', 'Switch CES', 'Switch CES', 'Timer Ball SUM', 'Timer Ball SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM', 'Fire Energy SUM'],
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
@@ -43,5 +39,45 @@ export const THEME_DECKS = [
     cardTypes: '[]',
     manualArchetype1: Archetype.LYCANROC,
     manualArchetype2: Archetype.DUSKNOIR,
+  },
+  {
+    id: -5,
+    name: 'Towering Heights',
+    cards: ['Gible UNM', 'Gible UNM', 'Gible UNM', 'Gabite UNM', 'Gabite UNM', 'Gabite UNM', 'Garchomp UNM', 'Garchomp UNM', 'Groudon CEC', 'Groudon CEC', 'Mew UNB', 'Passimian CEC', 'Passimian CEC', 'Throh CEC', 'Throh CEC', 'Tympole CEC', 'Tympole CEC', 'Tympole CEC', 'Palpitoad CEC', 'Palpitoad CEC', 'Palpitoad CEC', 'Seismitoad CEC', 'Seismitoad CEC', 'Bug Catcher UNM', 'Bug Catcher UNM', 'Cynthia UPR', 'Cynthia UPR', 'Hau CES', 'Hau CES', 'Lady FLI', 'Lillie UPR', 'Lillie UPR', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Tate & Liza CES', 'Tate & Liza CES', 'Pokemon Communication TEU', 'Pokemon Communication TEU', 'Switch CES', 'Switch CES', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Fighting Energy SUM', 'Draw Energy CEC', 'Draw Energy CEC'],
+    format: [Format.THEME],
+    isValid: true,
+    cardTypes: '[]',
+    manualArchetype1: Archetype.GROUDON,
+    manualArchetype2: Archetype.GARCHOMP,
+  },
+  {
+    id: -6,
+    name: 'Unseen Depths',
+    cards: ['Aipom CEC', 'Aipom CEC', 'Aipom CEC', 'Ambipom CEC', 'Ambipom CEC', 'Kyogre CEC', 'Kyogre CEC', 'Phione CEC', 'Piplup CEC', 'Piplup CEC', 'Piplup CEC', 'Prinplup CEC', 'Prinplup CEC', 'Prinplup CEC', 'Empoleon CEC', 'Empoleon CEC', 'Psyduck CEC', 'Psyduck CEC', 'Psyduck CEC', 'Golduck CEC', 'Golduck CEC', 'Pyukumuku UNB', 'Pyukumuku UNB', 'Cynthia UPR', 'Cynthia UPR', 'Hau CES', 'Hau CES', 'Lillie UPR', 'Lillie UPR', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Roller Skater CEC', 'Roller Skater CEC', 'Tate & Liza CES', 'Tate & Liza CES', 'Pokemon Communication TEU', 'Pokemon Communication TEU', 'Switch CES', 'Switch CES', 'Viridian Forest TEU', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Water Energy SUM', 'Draw Energy CEC', 'Draw Energy CEC'],
+    format: [Format.THEME],
+    isValid: true,
+    cardTypes: '[]',
+    manualArchetype1: Archetype.KYOGRE,
+    manualArchetype2: Archetype.EMPOLEON,
+  },
+  {
+    id: -7,
+    name: 'Laser Focus',
+    cards: ['Audino UNM', 'Audino UNM', 'Dedenne UNM', 'Dedenne UNM', 'Inkay FLI', 'Inkay FLI', 'Malamar FLI', 'Malamar FLI', 'Mesprit UNM', 'Mesprit UNM', 'Necrozma UNM', 'Necrozma UNM', 'Tauros UNM', 'Tauros UNM', 'Type: Null UNM', 'Type: Null UNM', 'Type: Null UNM', 'Silvally UNM', 'Silvally UNM', 'Yungoos UNM', 'Yungoos UNM', 'Yungoos UNM', 'Gumshoos UNM', 'Gumshoos UNM', 'Bug Catcher UNM', 'Bug Catcher UNM', 'Cynthia UPR', 'Cynthia UPR', 'Hau CES', 'Hau CES', 'Lillie UPR', 'Lillie UPR', 'Pokémon Fan Club UPR', 'Pokémon Fan Club UPR', 'Tate & Liza CES', 'Mysterious Treasure FLI', 'Mysterious Treasure FLI', 'Switch CES', 'U-Turn Board UNM', 'U-Turn Board UNM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Psychic Energy SUM', 'Weakness Guard Energy UNM', 'Weakness Guard Energy UNM'],
+    format: [Format.THEME],
+    isValid: true,
+    cardTypes: '[]',
+    manualArchetype1: Archetype.NECROZMA,
+    manualArchetype2: Archetype.MALAMAR,
+  },
+  {
+    id: -8,
+    name: 'Storm Caller',
+    cards: ['Blitzle LOT', 'Blitzle LOT', 'Blitzle LOT', 'Zebstrika LOT', 'Furfrou FLI', 'Mareep LOT 76', 'Mareep LOT 76', 'Mareep LOT 76', 'Flaaffy LOT', 'Flaaffy LOT', 'Ampharos LOT', 'Ampharos LOT', 'Poipole LOT', 'Poipole LOT', 'Poipole LOT', 'Naganadel LOT', 'Naganadel LOT', 'Raikou LOT', 'Raikou LOT', 'Smeargle LOT', 'Copycat CES', 'Hau CES', 'Hau CES', 'Kahili LOT', 'Lady FLI', 'Lillie UPR', 'Pokémon Fan Club UPR', 'Professor Kukui SUM', 'Professor Kukui SUM', 'Tate & Liza CES', 'Energy Switch CES', 'Escape Rope BUS', 'Nest Ball SUM', 'Nest Ball SUM', 'Rescue Stretcher GRI', 'Rescue Stretcher GRI', 'Switch CES', 'Timer Ball SUM', 'Timer Ball SUM', 'Ultra Ball SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM', 'Lightning Energy SUM'],
+    format: [Format.THEME],
+    isValid: true,
+    cardTypes: '[]',
+    manualArchetype1: Archetype.RAIKOU,
+    manualArchetype2: Archetype.AMPHAROS,
   }
 ]; 

@@ -14,30 +14,23 @@ import { TwinleafButtonModule } from '../twinleaf-button/twinleaf-button.module'
 import { ValidationModule } from '../validation/validation.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    MaterialModule,
-    TwinleafButtonModule,
-    TranslateModule,
-    ValidationModule
-  ],
-  declarations: [
-    AlertPopupComponent,
-    ConfirmPopupComponent,
-    InputNumberPopupComponent,
-    InputNamePopupComponent,
-    SelectPopupComponent
-  ],
-  entryComponents: [
-    AlertPopupComponent,
-    ConfirmPopupComponent,
-    InputNumberPopupComponent,
-    InputNamePopupComponent,
-    SelectPopupComponent
-  ],
-  providers: [
-    AlertService
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MaterialModule,
+        TwinleafButtonModule,
+        TranslateModule,
+        ValidationModule
+    ],
+    declarations: [
+        AlertPopupComponent,
+        ConfirmPopupComponent,
+        InputNumberPopupComponent,
+        InputNamePopupComponent,
+        SelectPopupComponent
+    ],
+    providers: [
+        AlertService
+    ]
 })
 export class AlertModule { }

@@ -103,7 +103,7 @@ export class PokeBallSUM extends PokeBall {
 
 export class PokemonCatcherSUM extends PokemonCatcher {
   public setNumber = '126';
-  public fullName: string = 'Pokemon Catcher SUM';
+  public fullName: string = 'Pokémon Catcher SUM';
   public set = 'SUM';
 }
 

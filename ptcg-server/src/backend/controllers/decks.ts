@@ -1198,7 +1198,7 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       }
       case Format.STANDARD_NIGHTLY: {
         // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-        // is legal in Standard Nightly (has regulation mark G, H, I, or J)
+        // is legal in Standard Nightly (has regulation mark H, I, or J - excludes G)
         const cardManager = CardManager.getInstance();
         const allPrintings = cardManager.getAllCards().filter((c: any) =>
           c && c.name === card.name
@@ -1207,12 +1207,12 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         // If no printings found, fall back to checking this card's regulation mark
         if (allPrintings.length === 0) {
           const rm = card.regulationMark;
-          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+          return rm && (rm === 'H' || rm === 'I' || rm === 'J');
         }
 
         return allPrintings.some((c: any) => {
           const rm = c.regulationMark;
-          return rm && (rm === 'G' || rm === 'H' || rm === 'I' || rm === 'J');
+          return rm && (rm === 'H' || rm === 'I' || rm === 'J');
         });
       }
       case Format.STANDARD_MAJORS: {
@@ -1284,8 +1284,7 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
       return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
     }
     case Format.STANDARD_NIGHTLY:
-      return card.regulationMark === 'G' ||
-        card.regulationMark === 'H' ||
+      return card.regulationMark === 'H' ||
         card.regulationMark === 'I' ||
         card.regulationMark === 'J';
     case Format.STANDARD_MAJORS:

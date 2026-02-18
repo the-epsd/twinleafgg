@@ -144,6 +144,63 @@ import { IrisFightingSpirit as IrisFightingSpiritJTG149 } from '../set-journey-t
 import { Surfer as SurferSSP187 } from '../set-surging-sparks/surfer';
 import { MegaCharizardYex as MegaCharizardYexASC22 } from '../set-ascended-heroes/mega-charizard-y-ex';
 import { BossOrders } from '../set-paldea-evolved/boss-orders';
+import { Judge } from '../set-scarlet-and-violet/judge';
+import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
+import { SuperPotion } from '../set-x-and-y/super-potion';
+import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
+import { CrushingHammer } from '../set-scarlet-and-violet/crushing-hammer';
+import { Potion } from '../set-scarlet-and-violet/potion';
+import { PokemonCatcher } from '../set-scarlet-and-violet/pokemon-catcher';
+
+// Start Deck 100 Reprints
+export class SuperPotionMC extends SuperPotion {
+  public setNumber = '634';
+  public fullName: string = 'Super Potion MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
+
+export class EnergySearchMC extends EnergySearch {
+  public setNumber = '639';
+  public fullName: string = 'Energy Search MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
+
+export class PotionMC extends Potion {
+  public setNumber = '643';
+  public fullName: string = 'Potion MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
+
+export class CrushingHammerMC extends CrushingHammer {
+  public setNumber = '644';
+  public fullName: string = 'Crushing Hammer MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
+
+export class PokeGear30MC extends Pokegear30 {
+  public setNumber = '660';
+  public fullName: string = 'Pokégear 3.0 MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
+
+export class PokemonCatcherMC extends PokemonCatcher {
+  public setNumber = '665';
+  public fullName: string = 'Pokémon Catcher MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
+
+export class JudgeMC extends Judge {
+  public setNumber = '711';
+  public fullName: string = 'Judge MC';
+  public set = 'MC';
+  public regulationMark = 'I';
+}
 
 export class BudewASC extends Budew {
   public setNumber = '16';

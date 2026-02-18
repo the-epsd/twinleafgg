@@ -57,7 +57,7 @@ export class PokemonCatcher extends TrainerCard {
 
   public setNumber: string = '187';
 
-  public name: string = 'Pokemon Catcher';
+  public name: string = 'Pokémon Catcher';
 
   public fullName: string = 'Pokemon Catcher SVI';
 

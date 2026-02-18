@@ -48,7 +48,7 @@ export class PokemonCatcher extends TrainerCard {
 
   public set: string = 'BW';
 
-  public name: string = 'Pokemon Catcher';
+  public name: string = 'Pokémon Catcher';
 
   public fullName: string = 'Pokemon Catcher SSH';
 

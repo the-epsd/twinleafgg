@@ -1,9 +1,12 @@
 import { FormGroupDirective, NgControl, NgForm } from '@angular/forms';
-import { CanUpdateErrorStateCtor, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
+import { ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
+import { Subject } from 'rxjs';
 
 // Boilerplate for applying mixins to FileInput
 /** @docs-private */
 export class FileInputBase {
+  stateChanges = new Subject<void>();
+
   constructor(
     public _defaultErrorStateMatcher: ErrorStateMatcher,
     public _parentForm: NgForm,
@@ -15,5 +18,4 @@ export class FileInputBase {
 /**
  * Allows to use a custom ErrorStateMatcher with the file-input component
  */
-export const FileInputMixinBase: CanUpdateErrorStateCtor & typeof FileInputBase
-  = mixinErrorState(FileInputBase);
+export const FileInputMixinBase = mixinErrorState(FileInputBase);

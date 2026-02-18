@@ -1,5 +1,5 @@
-@use '~@angular/material' as mat;
-@use '~@angular/cdk' as cdk;
+@use '@angular/material' as mat;
+@use '@angular/cdk' as cdk;
 @import '../../../theme/variables.scss';
 
 @mixin ptcg-prompt-theme($theme) {

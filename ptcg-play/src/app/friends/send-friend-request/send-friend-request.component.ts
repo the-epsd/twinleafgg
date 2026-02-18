@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FriendsService } from '../../api/services/friends.service';
 
 @Component({
@@ -11,13 +11,13 @@ export class SendFriendRequestComponent {
 
   @Output() requestSent = new EventEmitter<void>();
 
-  friendRequestForm: FormGroup;
+  friendRequestForm: UntypedFormGroup;
   loading = false;
   errorMessage = '';
   successMessage = '';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private friendsService: FriendsService
   ) {
     this.friendRequestForm = this.formBuilder.group({

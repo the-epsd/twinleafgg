@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -23,7 +23,7 @@ export class UiShowcaseComponent implements OnInit {
   mockStatusIndicators = MOCK_STATUS_INDICATORS;
 
   // Form examples
-  exampleForm: FormGroup;
+  exampleForm: UntypedFormGroup;
   formData = MOCK_FORM_DATA;
 
   // Twinleaf form field definitions
@@ -112,7 +112,7 @@ export class UiShowcaseComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'score', 'games', 'winRate'];
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private alertService: AlertService

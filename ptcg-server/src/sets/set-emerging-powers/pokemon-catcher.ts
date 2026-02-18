@@ -39,7 +39,7 @@ export class PokemonCatcher extends TrainerCard {
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
-  public name: string = 'Pokemon Catcher';
+  public name: string = 'Pokémon Catcher';
   public fullName: string = 'Pokemon Catcher EPO';
   public text: string = 'Switch your opponent\'s Active Pokémon with 1 of their Benched Pokémon.';
 

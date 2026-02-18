@@ -453,14 +453,6 @@
   perspective: 1000px;
   position: relative;
   overflow: visible;
-
-  &.ptcg-player-card {
-    // Optional: Add specific styling for player card
-  }
-
-  &.ptcg-opponent-card {
-    // Optional: Add specific styling for opponent card
-  }
 }
 
 // Card perspective for flip animation

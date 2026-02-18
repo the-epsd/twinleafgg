@@ -48,7 +48,7 @@ $ptcg-energy-card-offset: 13%;
   }
 
   &.face-down:after {
-    background-image: var(--cardback-url, url(~src/assets/cardback.png));
+    background-image: var(--cardback-url, url('/assets/cardback.png'));
     background-repeat: no-repeat;
     background-size: 100% 100%;
     content: "";

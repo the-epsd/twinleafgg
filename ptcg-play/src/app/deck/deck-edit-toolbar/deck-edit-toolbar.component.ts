@@ -3,7 +3,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { Deck } from '../../api/interfaces/deck.interface';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
-import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
+import { ControlContainer, UntypedFormBuilder, FormGroupDirective } from '@angular/forms';
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, Archetype } from 'ptcg-server';
@@ -234,7 +234,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.onFormChange$,
   ).subscribe();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: UntypedFormBuilder) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

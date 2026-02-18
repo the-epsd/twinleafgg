@@ -13,28 +13,25 @@ import { PlayersComponent } from './players/players.component';
 import { OnlinePlayersComponent } from './online-players/online-players.component';
 
 @NgModule({
-  declarations: [
-    GamesComponent,
-    GameActionsComponent,
-    MatchTableComponent,
-    CreateGamePopupComponent,
-    GamesTableComponent,
-    MatchmakingLobbyComponent,
-    ActiveGamesComponent,
-    GameHistoryComponent,
-    PlayersComponent,
-    OnlinePlayersComponent
-  ],
-  entryComponents: [
-    CreateGamePopupComponent
-  ],
-  imports: [
-    SharedModule
-  ],
-  exports: [
-    MatchTableComponent,
-    GamesTableComponent
-  ],
-  providers: []
+    declarations: [
+        GamesComponent,
+        GameActionsComponent,
+        MatchTableComponent,
+        CreateGamePopupComponent,
+        GamesTableComponent,
+        MatchmakingLobbyComponent,
+        ActiveGamesComponent,
+        GameHistoryComponent,
+        PlayersComponent,
+        OnlinePlayersComponent
+    ],
+    imports: [
+        SharedModule
+    ],
+    exports: [
+        MatchTableComponent,
+        GamesTableComponent
+    ],
+    providers: []
 })
 export class GamesModule { }

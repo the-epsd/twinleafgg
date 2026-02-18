@@ -18,28 +18,24 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [
-    ChangeServerPopupComponent,
-    RegisterComponent,
-    ResetPasswordComponent,
-    ServerPasswordPopupComponent,
-    SetNewPasswordComponent,
-    LoginComponent
-  ],
-  entryComponents: [
-    ChangeServerPopupComponent,
-    ServerPasswordPopupComponent
-  ],
-  providers: [
-    ServerPasswordPopupService
-  ],
-  exports: [
-    RegisterComponent,
-    ResetPasswordComponent
-  ]
+    imports: [
+        SharedModule,
+        RouterModule.forChild(routes)
+    ],
+    declarations: [
+        ChangeServerPopupComponent,
+        RegisterComponent,
+        ResetPasswordComponent,
+        ServerPasswordPopupComponent,
+        SetNewPasswordComponent,
+        LoginComponent
+    ],
+    providers: [
+        ServerPasswordPopupService
+    ],
+    exports: [
+        RegisterComponent,
+        ResetPasswordComponent
+    ]
 })
 export class LoginModule { }

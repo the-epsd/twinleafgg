@@ -25,48 +25,41 @@ import { FormsModule } from '@angular/forms';
 import { TwinleafButtonModule } from '../twinleaf-button/twinleaf-button.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ImageCacheModule,
-    MaterialModule,
-    DndMultiBackendModule,
-    DndModule,
-    TranslateModule,
-    MatDialogModule,
-    TwinleafButtonModule
-  ],
-  declarations: [
-    CardComponent,
-    CardImagePopupComponent,
-    CardInfoPaneComponent,
-    CardInfoPopupComponent,
-    CardListPaneComponent,
-    CardListPopupComponent,
-    CardPlaceholderDirective,
-    ArchetypeComponent,
-    EnergyComponent,
-    DropHighlightDirective,
-    TrainerTypeComponent,
-    HoverHighlightComponent,
-    CardInfoListPopupComponent,
-    PokemonCardInfoPaneComponent,
-    CardSwapDialogComponent
-  ],
-  entryComponents: [
-    CardImagePopupComponent,
-    CardInfoPopupComponent,
-    CardInfoListPopupComponent,
-    CardListPopupComponent,
-    CardSwapDialogComponent
-  ],
-  exports: [
-    CardComponent,
-    CardPlaceholderDirective,
-    EnergyComponent,
-    ArchetypeComponent,
-    DropHighlightDirective,
-    PokemonCardInfoPaneComponent
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ImageCacheModule,
+        MaterialModule,
+        DndMultiBackendModule,
+        DndModule,
+        TranslateModule,
+        MatDialogModule,
+        TwinleafButtonModule
+    ],
+    declarations: [
+        CardComponent,
+        CardImagePopupComponent,
+        CardInfoPaneComponent,
+        CardInfoPopupComponent,
+        CardListPaneComponent,
+        CardListPopupComponent,
+        CardPlaceholderDirective,
+        ArchetypeComponent,
+        EnergyComponent,
+        DropHighlightDirective,
+        TrainerTypeComponent,
+        HoverHighlightComponent,
+        CardInfoListPopupComponent,
+        PokemonCardInfoPaneComponent,
+        CardSwapDialogComponent
+    ],
+    exports: [
+        CardComponent,
+        CardPlaceholderDirective,
+        EnergyComponent,
+        ArchetypeComponent,
+        DropHighlightDirective,
+        PokemonCardInfoPaneComponent
+    ]
 })
 export class CardsModule { }
