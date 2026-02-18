@@ -9,6 +9,51 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { StateUtils } from '../state-utils';
 import { CardTag, TrainerType } from '../card/card-types';
+import { Player } from '../state/player';
+import { TrainerCard } from '../card/trainer-card';
+
+function getTrainerCleanupTarget(player: Player, trainerCard: TrainerCard) {
+  return trainerCard.tags.includes(CardTag.PRISM_STAR) ? player.lostzone : player.discard;
+}
+
+function restorePlayedTrainerToPlayZoneIfNeeded(store: StoreLike, player: Player, trainerCard: TrainerCard) {
+  // Legacy card implementations may discard immediately even though prompts are pending.
+  // If prompts exist, keep the played trainer visible in the play zone until completion.
+  if (!store.hasPrompts()) {
+    return;
+  }
+
+  if (player.discard.cards.includes(trainerCard)) {
+    player.discard.moveCardTo(trainerCard, player.supporter);
+  }
+}
+
+function finalizeTrainerCleanup(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  trainerCard: TrainerCard,
+  keepSupporterUntilEndTurn: boolean
+): State {
+  if (keepSupporterUntilEndTurn) {
+    return state;
+  }
+
+  const cleanup = () => {
+    if (!player.supporter.cards.includes(trainerCard)) {
+      return;
+    }
+    const target = getTrainerCleanupTarget(player, trainerCard);
+    player.supporter.moveCardTo(trainerCard, target);
+  };
+
+  if (store.hasPrompts()) {
+    return store.waitPrompt(state, cleanup);
+  }
+
+  cleanup();
+  return state;
+}
 
 
 export function playTrainerReducer(store: StoreLike, state: State, effect: Effect): State {
@@ -23,6 +68,14 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
 
     const playTrainer = new TrainerEffect(player, effect.trainerCard, effect.target);
     state = store.reduceEffect(state, playTrainer);
+    restorePlayedTrainerToPlayZoneIfNeeded(store, player, effect.trainerCard);
+    state = finalizeTrainerCleanup(
+      store,
+      state,
+      player,
+      effect.trainerCard,
+      state.rules.supporterCleanupAtEndTurn
+    );
     store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, {
       name: player.name,
       card: effect.trainerCard.name
@@ -116,6 +169,8 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
     const playTrainer = new TrainerEffect(effect.player, effect.trainerCard, effect.target);
     effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
     state = store.reduceEffect(state, playTrainer);
+    restorePlayedTrainerToPlayZoneIfNeeded(store, effect.player, effect.trainerCard);
+    state = finalizeTrainerCleanup(store, state, effect.player, effect.trainerCard, false);
     store.log(state, GameLog.LOG_PLAYER_PLAYS_ITEM, {
       name: effect.player.name,
       card: effect.trainerCard.name

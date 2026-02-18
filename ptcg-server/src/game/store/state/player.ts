@@ -29,6 +29,11 @@ export class Player {
 
   supporter: CardList = new CardList();
 
+  // Alias for newer naming; the underlying serialized field remains "supporter".
+  get playZone(): CardList {
+    return this.supporter;
+  }
+
   active: PokemonCardList = new PokemonCardList();
 
   bench: PokemonCardList[] = [];
