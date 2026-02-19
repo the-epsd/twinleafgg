@@ -7,7 +7,6 @@ import { Core } from '../game/core/core';
 import { Storage } from '../storage';
 import { cors } from './services/cors';
 import { WebSocketServer } from './socket/websocket-server';
-import { MemoryOptimizationService } from './services/memory-optimization.service';
 
 import {
   Avatars,
@@ -25,7 +24,6 @@ import {
   ResetPassword,
   BattlePass,
   Sleeves,
-  MemoryHealthController,
   ImageProxy,
 } from './controllers';
 import { ApiErrorEnum } from './common/errors';
@@ -36,13 +34,11 @@ export class App {
   private ws: WebSocketServer;
   private storage: Storage;
   private core: Core = new Core();
-  private memoryOptimization: MemoryOptimizationService;
 
   constructor() {
     this.storage = new Storage();
     this.app = this.configureExpress();
     this.ws = this.configureWebSocket();
-    this.memoryOptimization = MemoryOptimizationService.getInstance();
   }
 
   private configureExpress(): express.Application {
@@ -102,7 +98,6 @@ export class App {
     define('/v1/resetPassword', ResetPassword);
     define('/v1/battlepass', BattlePass);
     define('/v1/sleeves', Sleeves);
-    define('/v1/memory', MemoryHealthController);
 
     app.use((err: any, req: any, res: any, next: any) => {
       // Handle request aborted errors
@@ -167,11 +162,6 @@ export class App {
     });
 
     this.ws.listen(httpServer);
-
-    // Start memory optimization service
-    this.memoryOptimization.start();
-
-    console.log('Memory optimization service started.');
   }
 
 }

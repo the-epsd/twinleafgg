@@ -12,7 +12,7 @@ import {
   ReconnectionResult,
   ReconnectionStatus
 } from '../interfaces/reconnection.interface';
-import { ReconnectionConfigManager, ConfigUpdateEvent, ResourceMetrics } from './reconnection-config-manager';
+import { ReconnectionConfigManager, ConfigUpdateEvent } from './reconnection-config-manager';
 import { ReconnectionCleanupService } from './reconnection-cleanup.service';
 import { ReconnectionMaintenanceScheduler } from './reconnection-maintenance-scheduler';
 import { ReconnectionConflictResolver, ConflictResolutionResult } from './reconnection-conflict-resolver';
@@ -25,8 +25,6 @@ export class ReconnectionManager {
   private maintenanceScheduler: ReconnectionMaintenanceScheduler;
   private conflictResolver: ReconnectionConflictResolver;
   private errorRecovery: ReconnectionErrorRecovery;
-  private cleanupInterval: NodeJS.Timeout | null = null;
-  private resourceMetricsInterval: NodeJS.Timeout | null = null;
 
   constructor(config: ReconnectionConfig) {
     this.configManager = new ReconnectionConfigManager(config);
@@ -62,12 +60,6 @@ export class ReconnectionManager {
 
     // Listen for configuration changes
     this.configManager.on('configUpdated', this.handleConfigUpdate.bind(this));
-
-    // Start cleanup interval (legacy - now handled by cleanup service)
-    this.startCleanupInterval();
-
-    // Start resource metrics collection
-    this.startResourceMetricsCollection();
   }
 
   /**
@@ -588,46 +580,6 @@ export class ReconnectionManager {
   }
 
   /**
-   * Check for sessions approaching timeout and send warnings
-   */
-  public async checkTimeoutWarnings(): Promise<void> {
-    try {
-      const now = Date.now();
-      const warningThreshold = 60000; // 1 minute before timeout
-
-      const approachingTimeoutSessions = await DisconnectedSession.createQueryBuilder('session')
-        .where('session.expiresAt > :now', { now })
-        .andWhere('session.expiresAt <= :warningTime', { warningTime: now + warningThreshold })
-        .getMany();
-
-      for (const session of approachingTimeoutSessions) {
-        const timeRemaining = Math.max(0, session.expiresAt - now);
-
-        // Find the game and send warning to the disconnected player if they reconnect
-        // This would be handled by the Core when the player reconnects
-        logger.log(`[ReconnectionManager] Session approaching timeout: userId=${session.userId} gameId=${session.gameId} timeRemaining=${timeRemaining}ms`);
-      }
-
-    } catch (error) {
-      logger.log(`[ReconnectionManager] Error checking timeout warnings: ${error}`);
-    }
-  }
-
-  /**
-   * Start the cleanup interval
-   */
-  private startCleanupInterval(): void {
-    this.cleanupInterval = setInterval(
-      async () => {
-        await this.cleanupExpiredSessions();
-        await this.checkTimeoutWarnings();
-      },
-      this.getCurrentConfig().cleanupIntervalMs
-    );
-    logger.log(`[ReconnectionManager] Started cleanup interval (${this.getCurrentConfig().cleanupIntervalMs}ms)`);
-  }
-
-  /**
    * Handle configuration updates
    */
   private handleConfigUpdate(event: ConfigUpdateEvent): void {
@@ -648,83 +600,6 @@ export class ReconnectionManager {
       maxPreservedSessionsPerUser: event.newConfig.maxPreservedSessionsPerUser
     });
 
-    // Restart cleanup interval if the interval changed
-    if (event.oldConfig.cleanupIntervalMs !== event.newConfig.cleanupIntervalMs) {
-      this.restartCleanupInterval();
-    }
-  }
-
-  /**
-   * Start resource metrics collection
-   */
-  private startResourceMetricsCollection(): void {
-    this.resourceMetricsInterval = setInterval(
-      async () => {
-        await this.collectAndUpdateResourceMetrics();
-      },
-      30 * 1000 // Collect metrics every 30 seconds
-    );
-    logger.log('[ReconnectionManager] Started resource metrics collection');
-  }
-
-  /**
-   * Collect and update resource metrics
-   */
-  private async collectAndUpdateResourceMetrics(): Promise<void> {
-    try {
-      const metrics: Partial<ResourceMetrics> = {
-        preservedSessions: await this.getPreservedSessionCount(),
-        activeSessions: await this.getActiveSessionCount(),
-        // Note: Memory and CPU metrics would typically come from system monitoring
-        // For now, we'll use placeholder values or skip them
-        timestamp: Date.now()
-      };
-
-      this.configManager.updateResourceMetrics(metrics);
-    } catch (error) {
-      logger.logStructured({
-        level: LogLevel.ERROR,
-        category: 'reconnection',
-        message: 'Error collecting resource metrics',
-        data: { error: error instanceof Error ? error.message : String(error) }
-      });
-    }
-  }
-
-  /**
-   * Get count of preserved sessions
-   */
-  private async getPreservedSessionCount(): Promise<number> {
-    try {
-      return await DisconnectedSession.count();
-    } catch (error) {
-      logger.logStructured({
-        level: LogLevel.ERROR,
-        category: 'reconnection',
-        message: 'Error getting preserved session count',
-        data: { error: error instanceof Error ? error.message : String(error) }
-      });
-      return 0;
-    }
-  }
-
-  /**
-   * Get count of active sessions (placeholder - would need actual session tracking)
-   */
-  private async getActiveSessionCount(): Promise<number> {
-    // This would typically come from the WebSocket server or session manager
-    // For now, return a placeholder value
-    return 0;
-  }
-
-  /**
-   * Restart cleanup interval with new configuration
-   */
-  private restartCleanupInterval(): void {
-    if (this.cleanupInterval) {
-      clearInterval(this.cleanupInterval);
-    }
-    this.startCleanupInterval();
   }
 
   /**
@@ -876,16 +751,6 @@ export class ReconnectionManager {
    * Dispose of the reconnection manager
    */
   public async dispose(): Promise<void> {
-    if (this.cleanupInterval) {
-      clearInterval(this.cleanupInterval);
-      this.cleanupInterval = null;
-    }
-
-    if (this.resourceMetricsInterval) {
-      clearInterval(this.resourceMetricsInterval);
-      this.resourceMetricsInterval = null;
-    }
-
     // Stop maintenance scheduler
     this.maintenanceScheduler.stop();
 

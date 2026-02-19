@@ -165,13 +165,9 @@ export class ReconnectionCleanupService {
       // Clean up orphaned game states
       const orphanedCount = await this.cleanupOrphanedGameStates();
 
-      // Perform memory cleanup if needed
-      const memoryFreed = await this.performMemoryCleanup();
-
       // Update metrics
       this.metrics.expiredSessionsRemoved += expiredCount;
       this.metrics.orphanedStatesRemoved += orphanedCount;
-      this.metrics.memoryFreed += memoryFreed;
       this.metrics.lastCleanupTime = Date.now();
       this.metrics.totalCleanupOperations++;
 
@@ -187,7 +183,6 @@ export class ReconnectionCleanupService {
           operationId,
           expiredSessionsRemoved: expiredCount,
           orphanedStatesRemoved: orphanedCount,
-          memoryFreedMb: Math.round(memoryFreed / (1024 * 1024)),
           durationMs: duration
         }
       });
@@ -291,112 +286,10 @@ export class ReconnectionCleanupService {
   }
 
   /**
-   * Perform memory cleanup if memory usage exceeds threshold
+   * Perform memory cleanup - no-op, Node.js GC handles this automatically
    */
   public async performMemoryCleanup(): Promise<number> {
-    if (!this.config.enableMemoryManagement) {
-      return 0;
-    }
-
-    const startTime = Date.now();
-
-    try {
-      const memoryUsage = process.memoryUsage();
-      const heapUsedMb = memoryUsage.heapUsed / (1024 * 1024);
-
-      if (heapUsedMb > this.config.memoryCleanupThresholdMb) {
-        logger.logStructured({
-          level: LogLevel.WARN,
-          category: 'memory-management',
-          message: 'Memory usage exceeds threshold, performing cleanup',
-          data: {
-            heapUsedMb: Math.round(heapUsedMb),
-            thresholdMb: this.config.memoryCleanupThresholdMb,
-            rss: Math.round(memoryUsage.rss / (1024 * 1024)),
-            external: Math.round(memoryUsage.external / (1024 * 1024))
-          }
-        });
-
-        // Perform aggressive cleanup before GC
-        await this.performAggressiveCleanup();
-
-        // Force garbage collection if available
-        if (global.gc) {
-          const beforeGc = process.memoryUsage().heapUsed;
-          global.gc();
-          const afterGc = process.memoryUsage().heapUsed;
-          const freed = beforeGc - afterGc;
-
-          logger.logStructured({
-            level: LogLevel.INFO,
-            category: 'memory-management',
-            message: 'Garbage collection completed',
-            data: {
-              memoryFreedMb: Math.round(freed / (1024 * 1024)),
-              heapBeforeMb: Math.round(beforeGc / (1024 * 1024)),
-              heapAfterMb: Math.round(afterGc / (1024 * 1024))
-            }
-          });
-
-          return freed;
-        } else {
-          logger.logStructured({
-            level: LogLevel.WARN,
-            category: 'memory-management',
-            message: 'Garbage collection not available (run with --expose-gc)',
-            data: { heapUsedMb: Math.round(heapUsedMb) }
-          });
-        }
-      }
-
-      return 0;
-
-    } catch (error) {
-      const duration = Date.now() - startTime;
-      logger.logStructured({
-        level: LogLevel.ERROR,
-        category: 'memory-management',
-        message: 'Error during memory cleanup',
-        data: { durationMs: duration },
-        error: error as Error
-      });
-      return 0;
-    }
-  }
-
-  /**
-   * Perform aggressive memory cleanup operations
-   */
-  private async performAggressiveCleanup(): Promise<void> {
-    try {
-      // Clean up expired sessions more aggressively
-      const expiredCount = await this.cleanupExpiredSessions();
-
-      // Clean up orphaned game states
-      const orphanedCount = await this.cleanupOrphanedGameStates();
-
-      // Clean up old sessions beyond normal retention
-      const oldCount = await this.cleanupOldSessions();
-
-      logger.logStructured({
-        level: LogLevel.INFO,
-        category: 'memory-management',
-        message: 'Aggressive cleanup completed',
-        data: {
-          expiredSessionsRemoved: expiredCount,
-          orphanedStatesRemoved: orphanedCount,
-          oldSessionsRemoved: oldCount
-        }
-      });
-
-    } catch (error) {
-      logger.logStructured({
-        level: LogLevel.ERROR,
-        category: 'memory-management',
-        message: 'Error during aggressive cleanup',
-        error: error as Error
-      });
-    }
+    return 0;
   }
 
   /**
