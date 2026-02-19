@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, ConfirmPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class Tornadus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -18,7 +20,6 @@ export class Tornadus extends PokemonCard {
 
   public powers = [  {
     name: 'Sudden Cyclone',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand onto your Bench, you may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon.'
   }];
@@ -40,10 +41,35 @@ export class Tornadus extends PokemonCard {
   public fullName: string = 'Tornadus (BRS 126)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Sudden Cyclone
-    // TODO: When you play this Pokémon from your hand onto your Bench, you may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ability: Sudden Cyclone (on-play-from-hand trigger)
+    // Ref: set-steam-siege/hawlucha.ts (Sudden Cyclone - identical ability implementation)
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Check if opponent has benched Pokemon
+      if (!opponent.bench.some(b => b.cards.length > 0)) {
+        return state;
+      }
+
+      state = store.prompt(state, new ConfirmPrompt(
+        player.id,
+        GameMessage.WANT_TO_USE_ABILITY
+      ), wantToUse => {
+        if (!wantToUse) {
+          return;
+        }
+
+        // Check if ability is blocked
+        try {
+          const stub = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return;
+        }
+
+        SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+      });
     }
 
     return state;

@@ -72,13 +72,13 @@ export class UltraBallHR extends UltraBall {
 }
 
 export class WhimsicottVFA extends WhimsicottV {
-  public fullName = 'Ultra Ball (BRS 186)';
+  public fullName = 'Whimsicott V (BRS 160)';
   public legacyFullName = 'Whimsicott V BRS FA';
   public setNumber = '160';
 }
 
 export class WhimsicottVSTARRR extends WhimsicottVSTAR {
-  public fullName = 'Whimsicott V (BRS 160)';
+  public fullName = 'Whimsicott VSTAR (BRS 175)';
   public legacyFullName = 'Whimsicott VSTAR BRS RR';
   public setNumber = '175';
 }
@@ -375,14 +375,14 @@ export class ZekromBRS extends Zekrom {
 
 export class Dusknoir2BRS extends DusknoirVIV71 {
   public setNumber = 'TG6';
-  public fullName: string = 'Dusknoir2 (BRS TG6)';
+  public fullName: string = 'Dusknoir (BRS TG6)';
   public legacyFullName = 'Dusknoir2 BRS';
   public set = 'BRS';
 }
 
 export class Alcremie2BRS extends AlcremieBRS71 {
   public setNumber = 'TG8';
-  public fullName: string = 'Alcremie2 (BRS TG8)';
+  public fullName: string = 'Alcremie (BRS TG8)';
   public legacyFullName = 'Alcremie2 BRS';
   public set = 'BRS';
 }
@@ -417,7 +417,7 @@ export class SylveonVMAXBRS extends SylveonVMAX {
 
 export class MimikyuV2BRS extends MimikyuVBST62 {
   public setNumber = 'TG16';
-  public fullName: string = 'Mimikyu V2 (BRS TG16)';
+  public fullName: string = 'Mimikyu V (BRS TG16)';
   public legacyFullName = 'Mimikyu V2 BRS';
   public set = 'BRS';
 }
@@ -466,21 +466,21 @@ export class UmbreonVMAXBRS extends UmbreonVMAX {
 
 export class AcerolasPremonition2BRS extends AcerolasPremonitionBRS129 {
   public setNumber = 'TG24';
-  public fullName: string = 'Acerola\'s Premonition2 (BRS TG24)';
+  public fullName: string = 'Acerola\'s Premonition (BRS TG24)';
   public legacyFullName = 'Acerola\'s Premonition2 BRS';
   public set = 'BRS';
 }
 
 export class CafeMaster2BRS extends CafeMasterBRS133 {
   public setNumber = 'TG25';
-  public fullName: string = 'Café Master2 (BRS TG25)';
+  public fullName: string = 'Café Master (BRS TG25)';
   public legacyFullName = 'Café Master2 BRS';
   public set = 'BRS';
 }
 
 export class Gloria2BRS extends GloriaBRS141 {
   public setNumber = 'TG26';
-  public fullName: string = 'Gloria2 (BRS TG26)';
+  public fullName: string = 'Gloria (BRS TG26)';
   public legacyFullName = 'Gloria2 BRS';
   public set = 'BRS';
 }
@@ -494,14 +494,14 @@ export class SingleStrikeStyleMustardBRS extends SingleStrikeStyleMustard {
 
 export class SingleStrikeUrshifuVMAX2BRS extends SingleStrikeUrshifuVMAXBST86 {
   public setNumber = 'TG29';
-  public fullName: string = 'Single Strike Urshifu VMAX2 (BRS TG29)';
+  public fullName: string = 'Single Strike Urshifu VMAX (BRS TG29)';
   public legacyFullName = 'Single Strike Urshifu VMAX2 BRS';
   public set = 'BRS';
 }
 
 export class RapidStrikeUrshifuVMAX2BRS extends RapidStrikeUrshifuVMAXBST88 {
   public setNumber = 'TG30';
-  public fullName: string = 'Rapid Strike Urshifu VMAX2 (BRS TG30)';
+  public fullName: string = 'Rapid Strike Urshifu VMAX (BRS TG30)';
   public legacyFullName = 'Rapid Strike Urshifu VMAX2 BRS';
   public set = 'BRS';
 }

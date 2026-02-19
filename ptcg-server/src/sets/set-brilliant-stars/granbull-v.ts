@@ -5,9 +5,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/attack-effects';
 
 export class GranbullV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -50,9 +50,12 @@ export class GranbullV extends PokemonCard {
     }
 
     // Attack 2: Bull Dash
-    // Ref: AGENTS-patterns.md (THIS_POKEMON_DOES_DAMAGE_TO_ITSELF)
+    // Ref: set-brilliant-stars/kingler-v.ts (Raging Pincer - DealDamageEffect to self)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
+      const player = effect.player;
+      const dealDamage = new DealDamageEffect(effect, 30);
+      dealDamage.target = player.active;
+      store.reduceEffect(state, dealDamage);
     }
 
     return state;

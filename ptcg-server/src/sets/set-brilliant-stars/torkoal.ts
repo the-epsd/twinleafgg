@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Torkoal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -14,6 +16,9 @@ export class Torkoal extends PokemonCard {
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C, C];
+
+  public readonly REDUCE_DAMAGE_MARKER = 'TORKOAL_BRS_REDUCE_DAMAGE_MARKER';
+  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'TORKOAL_BRS_CLEAR_REDUCE_DAMAGE_MARKER';
 
   public attacks = [
     {
@@ -40,15 +45,37 @@ export class Torkoal extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Firebreathing
-    // TODO: Flip a coin. If heads, this attack does 30 more damage.
+    // Ref: set-rebel-clash/galarian-darumaka.ts (coin flip, if heads more damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          effect.damage += 30;
+        }
+      });
     }
 
     // Attack 2: Guard Press
-    // TODO: During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).
+    // Ref: set-unbroken-bonds/slowpoke.ts (damage reduction marker pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+    }
+
+    if (effect instanceof DealDamageEffect
+      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
+      effect.damage = Math.max(0, effect.damage - 30);
+    }
+
+    if (effect instanceof EndTurnEffect
+      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
+      });
     }
 
     return state;

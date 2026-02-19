@@ -1191,3 +1191,13 @@ When intercepting `DealDamageEffect`, `PutDamageEffect`, or `PutCountersEffect` 
 effect.target.cards.includes(this) && effect.target.getPokemonCard() === this
 ```
 The `cards.includes(this)` check alone fails for evolved Pokemon where this card is buried under a Stage 2. Missing `getPokemonCard() === this` is the most commonly missed pattern.
+
+### ConfirmPrompt GameMessage Selection
+
+When using `ConfirmPrompt` in attacks or abilities, use the correct `GameMessage` for the context:
+
+- `GameMessage.WANT_TO_USE_ABILITY` — only for ability activation confirm dialogs (WAS_POWER_USED pattern)
+- `GameMessage.WANT_TO_DISCARD_ENERGY` — for optional energy discard during attacks (e.g., "You may discard all [L] Energy...")
+- `GameMessage.WANT_TO_SWITCH_POKEMON` — for optional switch during/after attacks
+
+Using the wrong message doesn't break the game but shows incorrect dialog text to the player.

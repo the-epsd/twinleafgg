@@ -3,10 +3,10 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
 
 export class KinglerV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -40,15 +40,43 @@ export class KinglerV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Falling Bubbles
-    // TODO: Flip a coin. If heads, search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.
+    // Ref: set-brilliant-stars/arceus-v.ts (AttachEnergyPrompt from deck) + COIN_FLIP_PROMPT
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (!result) {
+          return;
+        }
+
+        if (player.deck.cards.length === 0) {
+          return;
+        }
+
+        store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, name: 'Water Energy' },
+          { allowCancel: false, min: 0, max: 5 }
+        ), transfers => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
+        });
+      });
     }
 
     // Attack 2: Raging Pincer
-    // TODO: This Pokémon also does 30 damage to itself.
+    // Ref: set-brilliant-stars/probopass.ts (Iron Tackle - THIS_POKEMON_DOES_DAMAGE_TO_ITSELF)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
     }
 
     return state;

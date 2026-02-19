@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../game/store/prefabs/prefabs';
 
 export class DracovishV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -40,15 +40,27 @@ export class DracovishV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Slosh 'n' Crash
-    // TODO: Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon. If you discarded a Pokémon Tool in this way, this attack does 120 more damage.
+    // Ref: set-unbroken-bonds/lickilicky.ts (Eat Up - discard all tools from opponent's active)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const activePokemon = opponent.active;
+
+      let toolDiscarded = false;
+      if (activePokemon.tools.length > 0) {
+        activePokemon.moveCardsTo([...activePokemon.tools], opponent.discard);
+        toolDiscarded = true;
+      }
+
+      if (toolDiscarded) {
+        effect.damage += 120;
+      }
     }
 
     // Attack 2: Dragon Strike
-    // TODO: During your next turn, this Pokémon can't use Dragon Strike.
+    // Ref: AGENTS-patterns.md (can't use this attack next turn - THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(effect.player, this.attacks[1]);
     }
 
     return state;

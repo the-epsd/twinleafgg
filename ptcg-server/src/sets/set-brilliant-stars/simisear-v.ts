@@ -3,10 +3,12 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class SimisearV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -41,15 +43,43 @@ export class SimisearV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bursting Power
-    // TODO: You may attach up to 2 basic Energy cards from your hand to your Pokémon in any way you like.
+    // Ref: set-vivid-voltage/zarude-v.ts (Jungle Rising - AttachEnergyPrompt from hand to any Pokemon)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      const hasBasicEnergyInHand = player.hand.cards.some(c =>
+        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      );
+      if (!hasBasicEnergyInHand) {
+        return state;
+      }
+
+      store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.hand,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: true, min: 0, max: 2 }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.hand.moveCardTo(transfer.card, target);
+        }
+      });
     }
 
     // Attack 2: Flare Juggling
-    // TODO: This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon.
+    // Ref: set-brilliant-stars/starmie.ts (Psychic - CheckProvidedEnergyEffect for energy count)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
+      store.reduceEffect(state, checkEnergy);
+      const energyCount = checkEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      effect.damage += 30 * energyCount;
     }
 
     return state;

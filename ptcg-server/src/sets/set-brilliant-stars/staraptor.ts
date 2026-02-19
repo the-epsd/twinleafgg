@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Staraptor extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,17 +41,38 @@ export class Staraptor extends PokemonCard {
   public name: string = 'Staraptor';
   public fullName: string = 'Staraptor (BRS 119)';
 
+  public usedStrongBreeze = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strong Breeze
-    // TODO: Your opponent shuffles their Active Pokémon and all attached cards into their deck.
+    // Ref: set-plasma-freeze/staraptor.ts (Strong Breeze - shuffle opponent's active and all attached into deck)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      this.usedStrongBreeze = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedStrongBreeze) {
+      this.usedStrongBreeze = false;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Move all cards from opponent's active to their deck
+      const cardsToShuffle = opponent.active.cards.slice();
+      cardsToShuffle.forEach(card => {
+        opponent.active.moveCardTo(card, opponent.deck);
+      });
+      opponent.active.clearEffects();
+
+      SHUFFLE_DECK(store, state, opponent);
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      this.usedStrongBreeze = false;
     }
 
     // Attack 2: Spinning Bird
-    // TODO: Discard 2 Energy from this Pokémon.
+    // Ref: AGENTS-patterns.md (discard X energy from this Pokemon - DISCARD_X_ENERGY_FROM_THIS_POKEMON)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
 
     return state;

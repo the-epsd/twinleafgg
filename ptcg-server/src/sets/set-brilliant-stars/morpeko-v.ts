@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, GameMessage, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, ADD_MARKER, HAS_MARKER } from '../../game/store/prefabs/prefabs';
 
 export class MorpekoV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -39,17 +41,59 @@ export class MorpekoV extends PokemonCard {
   public name: string = 'Morpeko V';
   public fullName: string = 'Morpeko V (BRS 95)';
 
+  public readonly MARNIES_PRIDE_MARKER = 'MORPEKO_V_BRS_MARNIES_PRIDE_MARKER';
+  public usedGnawAndRun = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Track if Marnie's Pride was played this turn
+    // Ref: set-unbroken-bonds/gligar.ts (Shinobi Strike - track supporter by name)
+    if (effect instanceof TrainerEffect && effect.trainerCard.name === 'Marnie\'s Pride') {
+      const player = effect.player;
+      ADD_MARKER(this.MARNIES_PRIDE_MARKER, player, this);
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MARNIES_PRIDE_MARKER, this)) {
+      effect.player.marker.removeMarker(this.MARNIES_PRIDE_MARKER, this);
+    }
+
     // Attack 1: Gnaw and Run
-    // TODO: You may switch this Pokémon with 1 of your Benched Pokémon.
+    // Ref: AGENTS-patterns.md (Post-Damage Switching - AfterAttackEffect pattern)
+    // Ref: set-steam-siege/hawlucha.ts (optional switch via ConfirmPrompt)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+      if (hasBench) {
+        this.usedGnawAndRun = true;
+      }
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedGnawAndRun) {
+      this.usedGnawAndRun = false;
+      const player = effect.player;
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+      if (hasBench) {
+        state = store.prompt(state, new ConfirmPrompt(
+          player.id,
+          GameMessage.WANT_TO_SWITCH_POKEMON
+        ), (wantToSwitch: boolean) => {
+          if (wantToSwitch) {
+            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+          }
+        });
+      }
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      this.usedGnawAndRun = false;
     }
 
     // Attack 2: Hangry Spike
-    // TODO: If you played Marnie's Pride from your hand during this turn, this attack does 120 more damage.
+    // Ref: set-unbroken-bonds/gligar.ts (Shinobi Strike - supporter bonus damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      if (HAS_MARKER(this.MARNIES_PRIDE_MARKER, player, this)) {
+        effect.damage += 120;
+      }
     }
 
     return state;

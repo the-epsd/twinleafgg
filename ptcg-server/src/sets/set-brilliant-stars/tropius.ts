@@ -3,10 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Tropius extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,7 +18,6 @@ export class Tropius extends PokemonCard {
 
   public powers = [  {
     name: 'Curative Bower',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'All of your Pokémon that have [G] Energy attached can\'t be Confused, and if they are already Confused, they recover from that Special Condition.'
   }];
@@ -39,10 +39,50 @@ export class Tropius extends PokemonCard {
   public fullName: string = 'Tropius (BRS 5)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Curative Bower
-    // TODO: All of your Pokémon that have [G] Energy attached can't be Confused, and if they are already Confused, they recover from that Special Condition.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ability: Curative Bower (passive)
+    // Ref: set-plasma-blast/virizion-ex.ts (Verdant Wind - CheckTableStateEffect + CheckProvidedEnergyEffect per Pokemon)
+    if (effect instanceof CheckTableStateEffect) {
+      state.players.forEach(player => {
+        // Check if this Tropius is in play for this player
+        let isTropiusInPlay = false;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === this) {
+            isTropiusInPlay = true;
+          }
+        });
+
+        if (!isTropiusInPlay) {
+          return;
+        }
+
+        // Check if ability is blocked
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return;
+        }
+
+        // For each of the player's Pokemon with G energy attached, remove Confused
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (!cardList.specialConditions.includes(SpecialCondition.CONFUSED)) {
+            return;
+          }
+
+          // Check if this individual Pokemon has G energy attached
+          const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
+          store.reduceEffect(state, checkEnergy);
+          const hasGrassEnergy = StateUtils.checkEnoughEnergy(checkEnergy.energyMap, [CardType.GRASS]);
+
+          if (hasGrassEnergy) {
+            cardList.removeSpecialCondition(SpecialCondition.CONFUSED);
+          }
+        });
+      });
     }
 
     return state;

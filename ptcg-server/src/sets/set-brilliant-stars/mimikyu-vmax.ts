@@ -4,9 +4,13 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/prefabs/attack-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AcerolasPremonition } from './acerolas-premonition';
 
 export class MimikyuVmax extends PokemonCard {
   public tags = [CardTag.POKEMON_VMAX];
@@ -40,17 +44,39 @@ export class MimikyuVmax extends PokemonCard {
   public name: string = 'Mimikyu VMAX';
   public fullName: string = 'Mimikyu VMAX (BRS 69)';
 
+  public readonly ACEROLA_PLAYED_MARKER = 'MIMIKYU_VMAX_BRS_ACEROLA_PLAYED_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Track when Acerola's Premonition is played from hand
+    // Ref: set-vivid-voltage/hitmontop.ts (Bea played marker pattern)
+    if (effect instanceof TrainerEffect && effect.trainerCard instanceof AcerolasPremonition) {
+      effect.player.marker.addMarker(this.ACEROLA_PLAYED_MARKER, this);
+    }
+
     // Attack 1: Ominous Numbers
-    // TODO: Put 4 damage counters on your opponent's Pokémon in any way you like. If you played Acerola's Premonition from your hand during this turn, place 13 damage counters instead.
+    // Ref: set-phantom-forces/lampent.ts (PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE)
+    // Ref: set-vivid-voltage/hitmontop.ts (TrainerEffect marker pattern for conditional damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const counters = player.marker.hasMarker(this.ACEROLA_PLAYED_MARKER, this) ? 13 : 4;
+      PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(counters, store, state, effect);
     }
 
     // Attack 2: Max Shadow
-    // TODO: Discard a random card from your opponent's hand.
+    // Ref: set-plasma-blast/machamp-2.ts (Knock Off - discard random card from opponent's hand)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (opponent.hand.cards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+        const card = opponent.hand.cards[randomIndex];
+        opponent.hand.moveCardTo(card, opponent.discard);
+      }
+    }
+
+    // Clean up Acerola played marker at end of turn
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.ACEROLA_PLAYED_MARKER, this);
     }
 
     return state;

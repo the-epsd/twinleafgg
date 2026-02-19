@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HonchkrowV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -19,7 +19,6 @@ export class HonchkrowV extends PokemonCard {
 
   public powers = [  {
     name: 'Boss Pockets',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'This Pokémon may have up to 4 Pokémon Tools attached to it. If it loses this Ability, discard Pokémon Tools from it until only 1 remains.'
   }];
@@ -42,15 +41,24 @@ export class HonchkrowV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Boss Pockets
-    // TODO: This Pokémon may have up to 4 Pokémon Tools attached to it. If it loses this Ability, discard Pokémon Tools from it until only 1 remains.
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
-    }
+    // TODO: The "up to 4 tools" mechanic requires engine-level support for the tool limit (currently hardcoded to 1).
+    // The "discard tools until 1 remains when ability lost" clause also requires intercepting ability-blocked events
+    // which is not currently supported in the engine. Declared for display only.
+    // See also: set-surging-sparks/honchkrow-v.ts (same limitation if any)
 
     // Attack 1: Fearsome Shadow
-    // TODO: Your opponent reveals their hand.
+    // Ref: set-team-up/sabrinas-suggestion.ts (ShowCardsPrompt for opponent's hand)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (opponent.hand.cards.length > 0) {
+        store.prompt(state, new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards
+        ), () => { });
+      }
     }
 
     return state;

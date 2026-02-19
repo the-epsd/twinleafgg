@@ -3,9 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Card, EnergyCard, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Hawlucha extends PokemonCard {
@@ -41,15 +43,72 @@ export class Hawlucha extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Showboating Pose
-    // TODO: Attach up to 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon.
+    // Ref: set-phantom-forces/m-manectric-ex.ts (Turbo Bolt - attach up to 2 basic Energy from discard to bench)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+      if (!hasBench) {
+        return state;
+      }
+
+      const basicEnergyInDiscard = player.discard.cards.filter(c =>
+        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      );
+
+      if (basicEnergyInDiscard.length === 0) {
+        return state;
+      }
+
+      // Choose a Benched Pokemon first
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+
+        const target = targets[0];
+
+        // Block non-basic-energy cards
+        const blocked: number[] = [];
+        player.discard.cards.forEach((card, index) => {
+          if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
+            blocked.push(index);
+          }
+        });
+
+        const availableCount = basicEnergyInDiscard.length;
+        const maxCount = Math.min(2, availableCount);
+
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: maxCount, allowCancel: false, blocked }
+        ), (selected: Card[]) => {
+          const cards = selected || [];
+          cards.forEach(card => {
+            player.discard.moveCardTo(card, target);
+          });
+        });
+      });
     }
 
     // Attack 2: Cross-Cut
-    // TODO: If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.
+    // Ref: set-silver-tempest/zeraora.ts (Battle Claw - +30 damage vs Evolution Pokemon)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (!opponent.active.isStage(Stage.BASIC)) {
+        effect.damage += 30;
+      }
     }
 
     return state;

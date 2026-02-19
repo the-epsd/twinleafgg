@@ -3,10 +3,10 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard, GameMessage, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
 
 export class PikachuV extends PokemonCard {
@@ -53,7 +53,7 @@ export class PikachuV extends PokemonCard {
 
       state = store.prompt(state, new ConfirmPrompt(
         player.id,
-        GameMessage.WANT_TO_USE_ABILITY
+        GameMessage.WANT_TO_DISCARD_ENERGY
       ), wantToDiscard => {
         if (wantToDiscard) {
           lightningEnergies.forEach(c => {

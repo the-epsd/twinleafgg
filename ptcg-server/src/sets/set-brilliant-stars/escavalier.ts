@@ -3,10 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { GamePhase } from '../../game/store/state/state';
 
 export class Escavalier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -19,7 +22,6 @@ export class Escavalier extends PokemonCard {
 
   public powers = [  {
     name: 'Miraculous Armor',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'This Pokémon takes 100 less damage from attacks from your opponent\'s Pokémon V (after applying Weakness and Resistance).'
   }];
@@ -42,15 +44,65 @@ export class Escavalier extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Miraculous Armor
-    // TODO: This Pokémon takes 100 less damage from attacks from your opponent's Pokémon V (after applying Weakness and Resistance).
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ref: set-silver-tempest/v-guard-energy.ts (PutDamageEffect + POKEMON_V tag check + reduceDamage)
+    // Ref: set-darkness-ablaze/decidueye.ts (Deep Forest Camo - PutDamageEffect passive ability pattern)
+    if (effect instanceof PutDamageEffect
+      && effect.target.cards.includes(this)
+      && effect.target.getPokemonCard() === this) {
+      if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      const player = StateUtils.findOwner(state, effect.target);
+
+      if (!StateUtils.isPokemonInPlay(player, this)) {
+        return state;
+      }
+
+      const attacker = StateUtils.findOwner(state, effect.source);
+
+      // Only reduce damage from opponent's attacks
+      if (player === attacker) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      const sourceCard = effect.source.getPokemonCard();
+      if (sourceCard && (
+        sourceCard.tags.includes(CardTag.POKEMON_V) ||
+        sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
+        sourceCard.tags.includes(CardTag.POKEMON_VSTAR)
+      )) {
+        effect.reduceDamage(100);
+      }
     }
 
     // Attack 1: Pike
-    // TODO: This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-brilliant-stars/luxray.ts (Flash Impact - 30 to one of your benched)
+    // but targeting OPPONENT's bench instead
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+
+      if (hasBenched) {
+        store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          if (selected && selected.length > 0) {
+            const damageEffect = new PutDamageEffect(effect, 30);
+            damageEffect.target = selected[0];
+            store.reduceEffect(state, damageEffect);
+          }
+        });
+      }
     }
 
     return state;

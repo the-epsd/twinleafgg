@@ -4,9 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { GamePhase } from '../../game/store/state/state';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Klinklang extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -19,7 +21,6 @@ export class Klinklang extends PokemonCard {
 
   public powers = [  {
     name: 'Gear Wall',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Your Basic Pokémon take 20 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).'
   }];
@@ -42,16 +43,41 @@ export class Klinklang extends PokemonCard {
   public fullName: string = 'Klinklang (BRS 104)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Gear Wall
-    // TODO: Your Basic Pokémon take 20 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+    // Ability: Gear Wall (passive)
+    // Ref: set-stellar-crown/bouffalant.ts (Curly Wall - Basic Pokemon take less damage from opponent's attacks)
+    // Ref: set-vivid-voltage/circhester-bath.ts (Basic Pokemon stage check pattern)
+    // Ref: set-unbroken-bonds/wartortle.ts (passive DealDamageEffect damage reduction with IS_ABILITY_BLOCKED)
+    if (effect instanceof DealDamageEffect && state.phase === GamePhase.ATTACK) {
+      const targetPokemonCard = effect.target.getPokemonCard();
+      if (!targetPokemonCard || targetPokemonCard.stage !== Stage.BASIC) {
+        // Not a Basic Pokemon, ability doesn't apply
+        // Fall through to attack logic
+      } else {
+        const targetOwner = StateUtils.findOwner(state, effect.target);
+
+        // Check if this Klinklang is in play for the target's owner
+        if (!StateUtils.isPokemonInPlay(targetOwner, this)) {
+          // Fall through
+        } else if (IS_ABILITY_BLOCKED(store, state, targetOwner, this)) {
+          // Ability blocked - fall through
+        } else {
+          // Make sure the attacker is the opponent (not the same owner)
+          const attackerOwner = StateUtils.findOwner(state, effect.source);
+          if (attackerOwner !== targetOwner) {
+            effect.damage = Math.max(0, effect.damage - 20);
+          }
+        }
+      }
     }
 
     // Attack 1: Tumbling Attack
-    // TODO: Flip a coin. If heads, this attack does 90 more damage.
+    // Ref: AGENTS-patterns.md (Single Coin Flip - COIN_FLIP_PROMPT)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      COIN_FLIP_PROMPT(store, state, effect.player, (result: boolean) => {
+        if (result) {
+          effect.damage += 90;
+        }
+      });
     }
 
     return state;

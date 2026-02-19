@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, ShowCardsPrompt, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Weavile extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,9 +40,49 @@ export class Weavile extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ransack
-    // TODO: Flip 2 coins. If either of them is heads, your opponent reveals their hand. For each heads, choose a card you find there and put it on the bottom of your opponent's deck in any order.
+    // Ref: set-rebel-clash/galarian-mr-mime.ts (MULTIPLE_COIN_FLIPS_PROMPT)
+    // Ref: set-plasma-blast/lileep.ts (bottom of deck pattern)
+    // Ref: set-team-up/sabrinas-suggestion.ts (ShowCardsPrompt for opponent's hand)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
+        const heads = results.filter(r => r).length;
+
+        if (heads === 0 || opponent.hand.cards.length === 0) {
+          return;
+        }
+
+        // Reveal opponent's hand
+        store.prompt(state, new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards
+        ), () => {
+          // For each heads, choose one card to put on bottom of opponent's deck
+          const cardsToMove = Math.min(heads, opponent.hand.cards.length);
+
+          store.prompt(state, new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARDS_TO_PUT_ON_BOTTOM_OF_THE_DECK,
+            opponent.hand,
+            {},
+            { allowCancel: false, min: cardsToMove, max: cardsToMove }
+          ), selected => {
+            selected = selected || [];
+            for (const card of selected) {
+              opponent.hand.moveCardTo(card, opponent.deck);
+              // Move card to bottom of deck
+              const index = opponent.deck.cards.indexOf(card);
+              if (index !== -1) {
+                opponent.deck.cards.splice(index, 1);
+                opponent.deck.cards.push(card);
+              }
+            }
+          });
+        });
+      });
     }
 
     return state;

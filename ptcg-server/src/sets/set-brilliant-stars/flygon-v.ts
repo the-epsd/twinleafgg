@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class FlygonV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -40,9 +41,17 @@ export class FlygonV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Draconic Impulse
-    // TODO: If your opponent's Active Pokémon is a Pokémon VMAX, this attack does 160 more damage, and discard 3 Energy from this Pokémon.
+    // Ref: set-battle-styles/aegislash-2.ts (VMAX tag check with CardTag.POKEMON_VMAX)
+    // Ref: set-phantom-forces/m-manectric-ex.ts (discard energy from this Pokemon - DISCARD_X_ENERGY_FROM_THIS_POKEMON)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const defending = opponent.active.getPokemonCard();
+
+      if (defending && defending.tags.includes(CardTag.POKEMON_VMAX)) {
+        effect.damage += 160;
+        DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3);
+      }
     }
 
     return state;

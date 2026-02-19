@@ -3,10 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 export class Wormadam2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,16 +42,21 @@ export class Wormadam2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Matron's Anger
-    // TODO: This attack does 10 more damage for each Pokémon in your discard pile.
+    // Ref: AGENTS-patterns.md (count Pokemon in discard pile for bonus damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const pokemonInDiscard = player.discard.cards.filter(c => c.superType === SuperType.POKEMON).length;
+      effect.damage += 10 * pokemonInDiscard;
     }
 
     // Attack 2: Bind Down
-    // TODO: During your opponent's next turn, the Defending Pokémon can't retreat.
+    // Ref: set-battle-styles/carnivine.ts (Big Bite - BLOCK_RETREAT pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      return BLOCK_RETREAT(store, state, effect, this);
     }
+
+    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
     return state;
   }

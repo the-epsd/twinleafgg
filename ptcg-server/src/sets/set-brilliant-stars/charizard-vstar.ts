@@ -4,9 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class CharizardVstar extends PokemonCard {
   public tags = [CardTag.POKEMON_VSTAR];
@@ -42,15 +43,23 @@ export class CharizardVstar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Explosive Fire
-    // TODO: If this Pokémon has any damage counters on it, this attack does 100 more damage.
+    // Ref: AGENTS-patterns.md (damage counters on this Pokemon - player.active.damage > 0)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      if (player.active.damage > 0) {
+        effect.damage += 100;
+      }
     }
 
     // Attack 2: Star Blaze
-    // TODO: Discard 2 Energy from this Pokémon. (You can't use more than 1 VSTAR Power in a game.)
+    // Ref: set-brilliant-stars/whimsicott-vstar.ts (Fluffball Star - usedVSTAR check)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      const player = effect.player;
+      if (player.usedVSTAR) {
+        throw new GameError(GameMessage.LABEL_VSTAR_USED);
+      }
+      player.usedVSTAR = true;
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
 
     return state;

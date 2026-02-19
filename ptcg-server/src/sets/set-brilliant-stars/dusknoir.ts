@@ -3,10 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardTarget, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class Dusknoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -42,9 +43,54 @@ export class Dusknoir extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Special Transfer
-    // TODO: As often as you like during your turn, you may move a Special Energy from 1 of your Pokémon to another of your Pokémon.
+    // Ref: set-plasma-blast/porygon-z.ts (Plasma Transfer - MoveEnergyPrompt with blockedMap)
     if (WAS_POWER_USED(effect, 0, this)) {
-      // Implement ability here
+      const player = effect.player;
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+
+      // Build blocked map - only allow moving Special Energy cards
+      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const blocked: number[] = [];
+
+        cardList.cards.forEach((c, index) => {
+          if (!(c instanceof EnergyCard) || c.energyType !== EnergyType.SPECIAL) {
+            blocked.push(index);
+          }
+        });
+
+        if (blocked.length !== cardList.cards.length) {
+          blockedMap.push({ source: target, blocked });
+        }
+      });
+
+      return store.prompt(state, new MoveEnergyPrompt(
+        effect.player.id,
+        GameMessage.MOVE_ENERGY_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        {},
+        { allowCancel: true, blockedMap }
+      ), transfers => {
+        if (transfers === null) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          if (transfer.from.player === transfer.to.player
+            && transfer.from.slot === transfer.to.slot
+            && transfer.from.index === transfer.to.index) {
+            continue;
+          }
+
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          source.moveCardTo(transfer.card, target);
+        }
+      });
     }
 
     return state;

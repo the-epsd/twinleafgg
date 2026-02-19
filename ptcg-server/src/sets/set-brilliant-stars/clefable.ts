@@ -3,10 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { CardTarget, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,9 +43,129 @@ export class Clefable extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Moonlit Miracle
-    // TODO: Flip 3 coins. Choose a number of your Pokémon in play up to the number of heads. For each of those Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.
+    // Ref: set-plasma-storm/clefable.ts (Moon Guidance - flip coin, evolve Pokemon from deck)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
+        const heads = results.filter(r => r).length;
+        if (heads === 0) {
+          SHUFFLE_DECK(store, state, player);
+          return;
+        }
+
+        if (player.deck.cards.length === 0) {
+          return;
+        }
+
+        // Build list of Pokemon names that can be evolved (not played this turn)
+        const pokemonInPlay: string[] = [];
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (cardList.pokemonPlayedTurn === state.turn) {
+            return;
+          }
+          const card = cardList.getPokemonCard();
+          if (card) {
+            pokemonInPlay.push(card.name);
+          }
+        });
+
+        // Find evolutions in deck that match in-play Pokemon
+        const blocked: number[] = [];
+        player.deck.cards.forEach((card, index) => {
+          if (!(card instanceof PokemonCard) || !pokemonInPlay.includes(card.evolvesFrom)) {
+            blocked.push(index);
+          }
+        });
+
+        if (blocked.length === player.deck.cards.length) {
+          SHUFFLE_DECK(store, state, player);
+          return;
+        }
+
+        // Evolve up to `heads` times - use recursive approach
+        let evolvesRemaining = heads;
+
+        const doOneEvolve = () => {
+          if (evolvesRemaining <= 0 || player.deck.cards.length === 0) {
+            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
+            return;
+          }
+
+          // Rebuild blocked list based on current deck state
+          const currentPokemonInPlay: string[] = [];
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.pokemonPlayedTurn === state.turn) {
+              return;
+            }
+            const card = cardList.getPokemonCard();
+            if (card) {
+              currentPokemonInPlay.push(card.name);
+            }
+          });
+
+          const currentBlocked: number[] = [];
+          player.deck.cards.forEach((card, index) => {
+            if (!(card instanceof PokemonCard) || !currentPokemonInPlay.includes((card as PokemonCard).evolvesFrom)) {
+              currentBlocked.push(index);
+            }
+          });
+
+          if (currentBlocked.length === player.deck.cards.length) {
+            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
+            return;
+          }
+
+          store.prompt(state, new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_EVOLVE,
+            player.deck,
+            { superType: SuperType.POKEMON },
+            { min: 0, max: 1, allowCancel: true, blocked: currentBlocked }
+          ), selected => {
+            if (!selected || selected.length === 0) {
+              store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
+              return;
+            }
+
+            const evolutionCard = selected[0] as PokemonCard;
+            const blockedTargets: CardTarget[] = [];
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+              if (card.name !== evolutionCard.evolvesFrom || cardList.pokemonPlayedTurn === state.turn) {
+                blockedTargets.push(target);
+              }
+            });
+
+            store.prompt(state, new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false, blocked: blockedTargets }
+            ), targets => {
+              if (targets && targets.length > 0) {
+                const target = targets[0];
+                player.deck.moveCardTo(evolutionCard, target);
+                target.clearEffects();
+                target.pokemonPlayedTurn = state.turn;
+
+                const evolveEffect = new EvolveEffect(player, target, evolutionCard);
+                store.reduceEffect(state, evolveEffect);
+              }
+              evolvesRemaining--;
+              doOneEvolve();
+            });
+          });
+        };
+
+        doOneEvolve();
+      });
     }
 
     return state;

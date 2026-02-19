@@ -5,8 +5,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Grimmsnarl extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,9 +42,25 @@ export class Grimmsnarl extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Longhair Shot
-    // TODO: This attack does 30 damage to 1 of your opponent's Pokémon for each [D] Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)
+    // Ref: set-breakpoint/darkrai-ex.ts (Dark Pulse - count D Energy per Pokemon)
+    // Ref: AGENTS-patterns.md (THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+
+      // Count Darkness energy attached to this Pokemon
+      const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      store.reduceEffect(state, checkEnergy);
+      let darkEnergyCount = 0;
+      checkEnergy.energyMap.forEach(em => {
+        darkEnergyCount += em.provides.filter(t => t === CardType.DARK || t === CardType.ANY).length;
+      });
+
+      if (darkEnergyCount === 0) {
+        return state;
+      }
+
+      const damagePerTarget = 30 * darkEnergyCount;
+      THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(damagePerTarget, effect, store, state);
     }
 
     return state;

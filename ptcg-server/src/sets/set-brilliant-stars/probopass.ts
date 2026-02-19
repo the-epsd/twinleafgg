@@ -4,9 +4,12 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
 
 export class Probopass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,17 +42,58 @@ export class Probopass extends PokemonCard {
   public name: string = 'Probopass';
   public fullName: string = 'Probopass (BRS 99)';
 
+  public usedMagneticTension = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Magnetic Tension
-    // TODO: Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. This attack does 40 damage to the new Active Pokémon.
+    // Ref: set-team-up/nidoking.ts (Drag Off - gust + deal damage to new active in AfterAttackEffect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Implement effect here
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      if (hasBench) {
+        this.usedMagneticTension = true;
+      }
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedMagneticTension) {
+      this.usedMagneticTension = false;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBench) {
+        return state;
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), result => {
+        if (!result || result.length === 0) {
+          return;
+        }
+        const cardList = result[0];
+        opponent.switchPokemon(cardList);
+
+        const damageEffect = new DealDamageEffect(effect as AttackEffect, 40);
+        damageEffect.target = opponent.active;
+        store.reduceEffect(state, damageEffect);
+      });
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      this.usedMagneticTension = false;
     }
 
     // Attack 2: Iron Tackle
-    // TODO: This Pokémon also does 20 damage to itself.
+    // Ref: AGENTS-patterns.md (Self-damage - THIS_POKEMON_DOES_DAMAGE_TO_ITSELF)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Implement effect here
+      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 20);
     }
 
     return state;

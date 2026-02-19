@@ -3,12 +3,15 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class HuntingGloves extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.TOOL;
   public regulationMark: string = 'E';
   public set: string = 'BRS';
   public setNumber: string = '142';
@@ -18,10 +21,26 @@ export class HuntingGloves extends TrainerCard {
   public text: string = 'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Dragon Pokémon (before applying Weakness and Resistance). You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // TODO: Implement trainer effect
-    // The attacks of the Pokémon this card is attached to do 30 more damage to your opponent's Active Dragon Pokémon (before applying Weakness and Resistance).
-    // You may play any number of Item cards during your turn.
-    // Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached.
+    // Tool: 30 more damage to opponent's Active Dragon Pokemon
+    // Ref: set-guardians-rising/choice-band.ts (DealDamageEffect source.tools.includes(this) pattern)
+    if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (IS_TOOL_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      if (effect.damage > 0 && effect.target === opponent.active) {
+        // Check if the opponent's active Pokemon is a Dragon type
+        const checkType = new CheckPokemonTypeEffect(opponent.active);
+        store.reduceEffect(state, checkType);
+
+        if (checkType.cardTypes.includes(CardType.DRAGON)) {
+          effect.damage += 30;
+        }
+      }
+    }
 
     return state;
   }
