@@ -35,5 +35,6 @@ export class Mudkip extends PokemonCard {
 
   public name: string = 'Mudkip';
 
-  public fullName: string = 'Mudkip FST';
+  public fullName: string = 'Mudkip (FST 62)';
+  public legacyFullName = 'Mudkip FST';
 }

@@ -33,7 +33,8 @@ export class Maractus extends PokemonCard {
 
   public name: string = 'Maractus';
 
-  public fullName: string = 'Maractus FST';
+  public fullName: string = 'Maractus (FST 12)';
+  public legacyFullName = 'Maractus FST';
 
   public cardImage: string = 'assets/cardback.png';
 

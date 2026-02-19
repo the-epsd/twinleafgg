@@ -32,7 +32,8 @@ export class Butterfree extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree';
-  public fullName: string = 'Butterfree FST';
+  public fullName: string = 'Butterfree (FST 3)';
+  public legacyFullName = 'Butterfree FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

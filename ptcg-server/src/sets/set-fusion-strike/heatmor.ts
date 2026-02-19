@@ -43,7 +43,8 @@ export class Heatmor extends PokemonCard {
 
   public name: string = 'Heatmor';
 
-  public fullName: string = 'Heatmor FST';
+  public fullName: string = 'Heatmor (FST 41)';
+  public legacyFullName = 'Heatmor FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

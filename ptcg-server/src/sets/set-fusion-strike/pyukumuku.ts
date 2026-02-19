@@ -40,7 +40,8 @@ export class Pyukumuku extends PokemonCard {
 
   public name: string = 'Pyukumuku';
 
-  public fullName: string = 'Pyukumuku FST';
+  public fullName: string = 'Pyukumuku (FST 77)';
+  public legacyFullName = 'Pyukumuku FST';
 
   public readonly PYUK_MARKER = 'PYUK_MARKER';
 

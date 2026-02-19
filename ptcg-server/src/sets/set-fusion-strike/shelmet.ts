@@ -34,6 +34,7 @@ export class Shelmet extends PokemonCard {
 
   public name: string = 'Shelmet';
 
-  public fullName: string = 'Shelmet FST';
+  public fullName: string = 'Shelmet (FST 13)';
+  public legacyFullName = 'Shelmet FST';
 
 }

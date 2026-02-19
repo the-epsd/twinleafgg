@@ -25,7 +25,8 @@ export class FusionStrikeEnergy extends EnergyCard {
 
   public name = 'Fusion Strike Energy';
 
-  public fullName = 'Fusion Strike Energy FST';
+  public fullName = 'Fusion Strike Energy (FST 244)';
+  public legacyFullName = 'Fusion Strike Energy FST';
 
   public text =
     'This card can only be attached to a Fusion Strike Pokémon. If this card is attached to anything other than a Fusion Strike Pokémon, discard this card.' +

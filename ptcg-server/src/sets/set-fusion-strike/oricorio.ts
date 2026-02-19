@@ -47,7 +47,8 @@ export class Oricorio extends PokemonCard {
 
   public name: string = 'Oricorio';
 
-  public fullName: string = 'Oricorio FST';
+  public fullName: string = 'Oricorio (FST 42)';
+  public legacyFullName = 'Oricorio FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

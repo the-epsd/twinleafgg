@@ -44,7 +44,8 @@ export class GengarV extends PokemonCard {
   
   public name: string = 'Gengar V';
   
-  public fullName: string = 'Gengar V FST';
+  public fullName: string = 'Gengar V (FST 156)';
+  public legacyFullName = 'Gengar V FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

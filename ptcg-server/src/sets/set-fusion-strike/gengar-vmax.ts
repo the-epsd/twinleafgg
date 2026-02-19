@@ -38,7 +38,8 @@ export class GengarVMAX extends PokemonCard {
 
   public name: string = 'Gengar VMAX';
 
-  public fullName: string = 'Gengar VMAX FST';
+  public fullName: string = 'Gengar VMAX (FST 157)';
+  public legacyFullName = 'Gengar VMAX FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

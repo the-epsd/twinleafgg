@@ -26,7 +26,8 @@ export class Dreepy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '128';
   public name: string = 'Dreepy';
-  public fullName: string = 'Dreepy FST';
+  public fullName: string = 'Dreepy (FST 128)';
+  public legacyFullName = 'Dreepy FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Infestation

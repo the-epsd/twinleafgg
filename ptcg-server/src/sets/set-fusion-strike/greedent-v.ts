@@ -33,7 +33,8 @@ export class GreedentV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '217';
   public name: string = 'Greedent V';
-  public fullName: string = 'Greedent V FST';
+  public fullName: string = 'Greedent V (FST 217)';
+  public legacyFullName = 'Greedent V FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Body Slam

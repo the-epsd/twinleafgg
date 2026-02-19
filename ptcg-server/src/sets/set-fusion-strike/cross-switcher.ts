@@ -99,7 +99,8 @@ export class CrossSwitcher extends TrainerCard {
   public setNumber: string = '230';
   public set: string = 'FST';
   public name: string = 'Cross Switcher';
-  public fullName: string = 'Cross Switcher FST';
+  public fullName: string = 'Cross Switcher (FST 230)';
+  public legacyFullName = 'Cross Switcher FST';
 
   public text: string =
     `You must play 2 Cross Switcher cards at once. (This effect works one time for 2 cards.)

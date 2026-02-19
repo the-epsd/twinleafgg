@@ -44,7 +44,8 @@ export class InteleonV extends PokemonCard {
 
   public name: string = 'Inteleon V';
 
-  public fullName: string = 'Inteleon V FST';
+  public fullName: string = 'Inteleon V (FST 78)';
+  public legacyFullName = 'Inteleon V FST';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

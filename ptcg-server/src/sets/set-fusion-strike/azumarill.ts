@@ -30,7 +30,8 @@ export class Azumarill extends PokemonCard {
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill FST';
+  public fullName: string = 'Azumarill (FST 59)';
+  public legacyFullName = 'Azumarill FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

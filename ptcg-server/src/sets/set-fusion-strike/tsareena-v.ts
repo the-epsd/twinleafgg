@@ -27,7 +27,8 @@ export class TsareenaV extends PokemonCard {
   public regulationMark: string = 'E';
   public set: string = 'FST';
   public name: string = 'Tsareena V';
-  public fullName: string = 'Tsareena V FST';
+  public fullName: string = 'Tsareena V (FST 21)';
+  public legacyFullName = 'Tsareena V FST';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
 

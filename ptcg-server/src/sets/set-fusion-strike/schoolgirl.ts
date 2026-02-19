@@ -22,7 +22,8 @@ export class Schoolgirl extends TrainerCard {
 
   public name: string = 'Schoolgirl';
 
-  public fullName: string = 'Schoolgirl FST';
+  public fullName: string = 'Schoolgirl (FST 239)';
+  public legacyFullName = 'Schoolgirl FST';
 
   public text: string =
     'Draw 2 cards. If your opponent has exactly 2, 4, or 6 Prize cards remaining, draw 2 more cards.';

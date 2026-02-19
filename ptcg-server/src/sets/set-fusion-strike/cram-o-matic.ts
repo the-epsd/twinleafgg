@@ -87,7 +87,8 @@ export class Creamomatic extends TrainerCard {
   public setNumber: string = '229';
   public regulationMark = 'E';
   public name: string = 'Cram-o-matic';
-  public fullName: string = 'Cram-o-matic FST';
+  public fullName: string = 'Cram-o-matic (FST 229)';
+  public legacyFullName = 'Cram-o-matic FST';
 
   public text: string = `You can use this card only if you discard another Item card from your hand.
 

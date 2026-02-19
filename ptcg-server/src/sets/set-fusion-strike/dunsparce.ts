@@ -46,7 +46,8 @@ export class Dunsparce extends PokemonCard {
 
   public name: string = 'Dunsparce';
 
-  public fullName: string = 'Dunsparce FST';
+  public fullName: string = 'Dunsparce (FST 207)';
+  public legacyFullName = 'Dunsparce FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckPokemonStatsEffect) {

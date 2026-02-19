@@ -96,7 +96,8 @@ export class MewVMAX extends PokemonCard {
 
   public name: string = 'Mew VMAX';
 
-  public fullName: string = 'Mew VMAX FST';
+  public fullName: string = 'Mew VMAX (FST 114)';
+  public legacyFullName = 'Mew VMAX FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

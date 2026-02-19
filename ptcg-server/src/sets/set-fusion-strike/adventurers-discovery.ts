@@ -74,7 +74,8 @@ export class AdventurersDiscovery extends TrainerCard {
 
   public name: string = 'Adventurer\'s Discovery';
 
-  public fullName: string = 'Adventurer\'s Discovery FST';
+  public fullName: string = 'Adventurer\'s Discovery (FST 224)';
+  public legacyFullName = 'Adventurer\'s Discovery FST';
 
   public text: string =
     'Search your deck for up to 3 Pokémon V, reveal them, and put them into your hand. Then, shuffle your deck.';

@@ -16,7 +16,8 @@ export class SkatersPark extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '242';
   public name: string = 'Skaters\' Park';
-  public fullName: string = 'Skaters\' Park FST';
+  public fullName: string = 'Skaters\' Park (FST 242)';
+  public legacyFullName = 'Skaters\' Park FST';
 
   public text: string =
     'Whenever either player\'s Active Pokémon retreats, put any basic Energy ' +

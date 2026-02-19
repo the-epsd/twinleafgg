@@ -13,7 +13,8 @@ export class BattleVIPPass extends TrainerCard {
   public setNumber: string = '225';
   public regulationMark = 'E';
   public name: string = 'Battle VIP Pass';
-  public fullName: string = 'Battle VIP Pass FST';
+  public fullName: string = 'Battle VIP Pass (FST 225)';
+  public legacyFullName = 'Battle VIP Pass FST';
 
   public text: string =
     `You can use this card only during your first turn.

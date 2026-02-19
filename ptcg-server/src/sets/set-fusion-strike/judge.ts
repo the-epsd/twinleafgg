@@ -24,7 +24,8 @@ export class Judge extends TrainerCard {
 
   public name: string = 'Judge';
 
-  public fullName: string = 'Judge FST';
+  public fullName: string = 'Judge (FST 235)';
+  public legacyFullName = 'Judge FST';
 
   public text: string =
     'Each player shuffles their hand into their deck and draws 4 cards.';

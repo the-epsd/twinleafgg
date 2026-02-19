@@ -34,7 +34,8 @@ export class Swampert extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Swampert';
-  public fullName: string = 'Swampert FST';
+  public fullName: string = 'Swampert (FST 64)';
+  public legacyFullName = 'Swampert FST';
 
   public readonly MUDDY_MAKER_MARKER = 'MUDDY_MAKER_MARKER';
 

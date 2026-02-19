@@ -25,7 +25,8 @@ export class ElesasSparkle extends TrainerCard {
 
   public name: string = 'Elesa\'s Sparkle';
 
-  public fullName: string = 'Elesa\'s Sparkle FST';
+  public fullName: string = 'Elesa\'s Sparkle (FST 233)';
+  public legacyFullName = 'Elesa\'s Sparkle FST';
 
   public text: string =
     'Choose up to 2 of your Fusion Strike Pokémon. For each of those Pokémon, search your deck for a Fusion Strike Energy card and attach it to that Pokémon. Then, shuffle your deck.';

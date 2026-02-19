@@ -39,7 +39,8 @@ export class Shauna extends TrainerCard {
 
   public name: string = 'Shauna';
 
-  public fullName: string = 'Shauna FST';
+  public fullName: string = 'Shauna (FST 240)';
+  public legacyFullName = 'Shauna FST';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 5 cards.';

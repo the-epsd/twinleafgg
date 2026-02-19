@@ -24,7 +24,8 @@ export class PowerTablet extends TrainerCard {
 
   public name: string = 'Power Tablet';
 
-  public fullName: string = 'Power Tablet FST';
+  public fullName: string = 'Power Tablet (FST 236)';
+  public legacyFullName = 'Power Tablet FST';
 
   public text: string =
     'During this turn, your Fusion Strike Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';

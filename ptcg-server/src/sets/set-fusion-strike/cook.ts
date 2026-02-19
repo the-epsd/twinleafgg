@@ -18,7 +18,8 @@ export class Cook extends TrainerCard {
   
   public name: string = 'Cook';
   
-  public fullName: string = 'Cook FST';
+  public fullName: string = 'Cook (FST 228)';
+  public legacyFullName = 'Cook FST';
 
   public text = 'Heal 70 damage from your Active Pokémon.';
 
