@@ -37,6 +37,17 @@ import { BossOrders } from '../set-paldea-evolved/boss-orders';
 import { Cook } from '../set-fusion-strike/cook';
 import { Nessa } from '../set-vivid-voltage/nessa';
 import { MewVMAX } from '../set-fusion-strike/mew-vmax';
+import { Blipbug } from '../set-sword-and-shield/blipbug';
+import { Ducklett } from '../set-boundaries-crossed/ducklett';
+import { Rhyhorn } from '../set-primal-clash/rhyhorn';
+import { Murkrow } from '../set-dragons-exalted/murkrow';
+import { Goomy } from '../set-fusion-strike/goomy';
+import { HisuianElectrodeV } from '../set-sword-and-shield-promos/hisuian-electrode-v';
+import { EnamorusV } from './enamorus-v';
+import { AerodactylV } from './aerodactyl-v';
+import { Fantina } from './fantina';
+import { Iscan } from './iscan';
+import { AerodactylVstar } from './aerodactyl-vstar';
 export class DelphoxV2LOR extends DelphoxVLOR27 {
   public setNumber = '173';
   public fullName: string = 'Delphox V (LOR 173)';
@@ -385,4 +396,88 @@ export class MewVMAXLOR extends MewVMAX {
   public fullName: string = 'Mew VMAX (LOR TG30)';
   public legacyFullName = 'Mew VMAX LOR';
   public set = 'LOR';
+}
+
+export class BlipbugLOR extends Blipbug {
+  public set: string = 'LOR';
+  public setNumber: string = '18';
+  public fullName: string = 'Blipbug (LOR 18)';
+}
+
+export class DucklettLOR extends Ducklett {
+  public set: string = 'LOR';
+  public setNumber: string = '46';
+  public fullName: string = 'Ducklett (LOR 46)';
+}
+
+export class RhyhornLOR extends Rhyhorn {
+  public set: string = 'LOR';
+  public setNumber: string = '89';
+  public fullName: string = 'Rhyhorn (LOR 89)';
+}
+
+export class MurkrowLOR extends Murkrow {
+  public set: string = 'LOR';
+  public setNumber: string = '114';
+  public fullName: string = 'Murkrow (LOR 114)';
+}
+
+export class GoomyLOR extends Goomy {
+  public set: string = 'LOR';
+  public setNumber: string = '132';
+  public fullName: string = 'Goomy (LOR 132)';
+}
+
+export class HisuianElectrodeVLOR extends HisuianElectrodeV {
+  public set: string = 'LOR';
+  public setNumber: string = '172';
+  public fullName: string = 'Hisuian Electrode V (LOR 172)';
+}
+
+export class EnamorusV2 extends EnamorusV {
+  public set: string = 'LOR';
+  public setNumber: string = '178';
+  public fullName: string = 'Enamorus V (LOR 178)';
+}
+
+export class AerodactylV2 extends AerodactylV {
+  public set: string = 'LOR';
+  public setNumber: string = '179';
+  public fullName: string = 'Aerodactyl V (LOR 179)';
+}
+
+export class AerodactylV3 extends AerodactylV {
+  public set: string = 'LOR';
+  public setNumber: string = '180';
+  public fullName: string = 'Aerodactyl V (LOR 180)';
+}
+
+export class Fantina2 extends Fantina {
+  public set: string = 'LOR';
+  public setNumber: string = '191';
+  public fullName: string = 'Fantina (LOR 191)';
+}
+
+export class Iscan2 extends Iscan {
+  public set: string = 'LOR';
+  public setNumber: string = '192';
+  public fullName: string = 'Iscan (LOR 192)';
+}
+
+export class AerodactylVstar2 extends AerodactylVstar {
+  public set: string = 'LOR';
+  public setNumber: string = '199';
+  public fullName: string = 'Aerodactyl VSTAR (LOR 199)';
+}
+
+export class Fantina3 extends Fantina {
+  public set: string = 'LOR';
+  public setNumber: string = '206';
+  public fullName: string = 'Fantina (LOR 206)';
+}
+
+export class Iscan3 extends Iscan {
+  public set: string = 'LOR';
+  public setNumber: string = '207';
+  public fullName: string = 'Iscan (LOR 207)';
 }
